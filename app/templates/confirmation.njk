@@ -1,0 +1,24 @@
+{% extends '.layout.njk' %}
+
+{% from "govuk/components/panel/macro.njk" import govukPanel %}
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+
+{% block beforeContent %}
+  {{ govukBreadcrumbs({
+    items: [
+      {
+        text: "Home",
+        href: "/"
+      },
+      {
+        text: "Apply for a large grant",
+        href: "/"
+      }
+    ]
+  }) }}
+{% endblock %}
+
+{% block content %}
+  {{ govukPanel(output) }}
+  <p class="govuk-body"><a href={{ output.link }}>Check details link</a></p>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends '.layout.njk' %}
+
+{% from "govuk/components/header/macro.njk" import govukHeader %}
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+
+{% block beforeContent %}
+  {{ govukBreadcrumbs({
+    items: [
+      {
+        text: "Home",
+        href: "/"
+      },
+      {
+        text: "Apply for a large grant",
+        href: "/"
+      }
+    ]
+  }) }}
+{% endblock %}
+
+
+{% block content %}
+{{ govukErrorSummary(errorMessage) }}
+{% endblock %}

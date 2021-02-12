@@ -1,0 +1,8 @@
+{{- include "ffc-helm-library.deployment" (list . "ffc-grants-eoi.deployment") -}}
+{{- define "ffc-grants-eoi.deployment" -}}
+spec:
+  template:
+    spec:
+      containers:
+      - {{ include "ffc-helm-library.container" (list . "ffc-grants-eoi.container") }}
+{{- end -}}

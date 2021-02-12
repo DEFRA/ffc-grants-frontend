@@ -1,0 +1,58 @@
+environment: development
+name: ffc-grants-eoi
+namespace: ffc-grants
+workstream: ffc-grants
+image: ffc-grants-eoi
+
+labels: {}
+
+azureIdentity:
+  clientID: not-a-real-clientID
+  resourceID: not-a-real-resourceID
+
+containerConfigMap:
+  name: ffc-grants-eoi-config-map
+
+deployment:
+  restartPolicy: Always
+  priorityClassName: low
+  replicas: 1
+  minReadySeconds: 5
+  redeployOnChange: update this field to force a change
+  runAsNonRoot: true
+  runAsUser: 1000
+
+container:
+  imagePullPolicy: IfNotPresent
+  requestMemory: 60Mi
+  requestCpu: 60m
+  limitMemory: 120Mi
+  limitCpu: 120m
+  readOnlyRootFilesystem: true
+  allowPrivilegeEscalation: false
+  port: 3000
+  messageQueueHost: dummy
+  eoiQueueAddress: eoi
+  eligibilityUrl: ffc-grants-eligibility.ffc-grants
+
+livenessProbe:
+  path: /healthz
+  port: 3000
+  initialDelaySeconds: 10
+  periodSeconds: 10
+  failureThreshold: 3
+
+readinessProbe:
+  path: /healthy
+  port: 3000
+  initialDelaySeconds: 10
+  periodSeconds: 10
+  failureThreshold: 3
+
+service:
+  port: 80
+
+ingress:
+  class: nginx
+  endpoint: ffc-grants-eoi
+  server: example.com

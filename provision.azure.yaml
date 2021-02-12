@@ -1,0 +1,3 @@
+resources:
+  queues:
+    - name: eoi

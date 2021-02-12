@@ -1,0 +1,15 @@
+version: '3.8'
+
+# This override file should be used when running automated tests so
+# that test output is saved to the host
+
+services:
+  ffc-grants-eoi:
+    build:
+      target: development
+    image: ffc-grants-eoi-development
+    environment:
+      NODE_ENV: test
+    command: npm run test
+    volumes:
+      - ./test-output/:/home/node/test-output/

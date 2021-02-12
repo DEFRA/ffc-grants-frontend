@@ -1,0 +1,15 @@
+version: '3.8'
+
+# This override file should be used in development environments to
+# connect this service to sibling services from other repositories.
+# Dependencies shared with other projects should be started separately.
+
+services:
+  ffc-grants-eoi:
+    networks:
+      - default
+      - ffc-grants
+
+networks:
+  ffc-grants:
+    external: true

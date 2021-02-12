@@ -1,0 +1,14 @@
+{{- include "ffc-helm-library.container-config-map" (list . "ffc-grants-eoi.config-map") -}}
+{{- define "ffc-grants-eoi.config-map" -}}
+data:
+  NODE_ENV: {{ quote .Values.environment }}
+  PORT: {{ quote .Values.container.port }}
+  MESSAGE_QUEUE_HOST: {{ quote .Values.container.messageQueueHost }}
+  EOI_QUEUE_ADDRESS: {{ quote .Values.container.eoiQueueAddress }}
+  ELIGIBILITY_URL: {{ quote .Values.container.eligibilityUrl }}
+  {{- if .Values.pr }}
+  SITE_URL: "{{ .Values.ingress.endpoint }}-{{ .Values.pr }}.{{ .Values.ingress.server }}"
+  {{- else }}
+  SITE_URL: "{{ .Values.ingress.endpoint }}.{{ .Values.ingress.server }}"
+  {{- end }}
+{{- end -}}

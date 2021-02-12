@@ -1,0 +1,24 @@
+{% extends '.layout.njk' %}
+
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+
+{% block beforeContent %}
+  {{ govukBreadcrumbs({
+    items: [
+      {
+        text: "Home",
+        href: "/"
+      },
+      {
+        text: "Apply for a large grant",
+        href: "/"
+      }
+    ]
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <h1 class="govuk-heading-l">Application details</h1>
+  {{ govukSummaryList(details) }}
+{% endblock %}

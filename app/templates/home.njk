@@ -1,0 +1,57 @@
+{% extends '.layout.njk' %}
+
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+
+{% block beforeContent %}
+  {{ govukBreadcrumbs({
+    items: [
+      {
+        text: "Home",
+        href: "/"
+      },
+      {
+        text: "Apply for a large grant",
+        href: "/"
+      }
+    ]
+  }) }}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l">Apply for a large grant</h1>
+
+    {{ govukWarningText({
+      text: "This is not a real service and is for demonstration purposes only. Actual financial aid is not available.",
+      iconFallbackText: "Warning"
+    }) }}
+
+    {{ govukButton({
+      classes: "govuk-!-margin-top-2 govuk-!-margin-bottom-8",
+      href: button.nextLink,
+      isStartButton: true,
+      text: button.text
+    }) }}
+  </div>
+  <div class="govuk-grid-column-one-third" style="background:#f3f2f1; padding-top:20px">
+    <h1 class="govuk-heading-m">Return to an application</h1>
+    <form method="POST" action="/load-application" novalidate>
+    {{ govukInput({
+      id: "application",
+      name: "application",
+      label: {
+        text: "Enter your reference"
+      }
+    }) }}
+
+    {{ govukButton({
+      text: "Continue"
+    }) }}
+    </form>
+  </div>
+</div>
+{% endblock %}
