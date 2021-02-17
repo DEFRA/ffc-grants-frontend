@@ -13,7 +13,7 @@
         href: "/"
       },
       {
-        text: "Apply for a large grant",
+        text: "Check if you can apply for a water resource management grant",
         href: "/"
       }
     ]
@@ -22,13 +22,18 @@
 
 {% block content %}
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-l">Apply for a large grant</h1>
+  <div class="govuk-grid-column-two-thirds govuk-body">
+    <h1 class="govuk-heading-l">Check if you can apply for a water resource management grant</h1>
 
-    {{ govukWarningText({
-      text: "This is not a real service and is for demonstration purposes only. Actual financial aid is not available.",
-      iconFallbackText: "Warning"
-    }) }}
+    <p>Use this service to:</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>check if you can apply for a grant for your project (takes about 5 minutes)</li>
+      <li>check how well your project fits the funding priorities (takes about 15 minutes if you have all the project details)</li>
+    </ul>
+
+    <p>Depending on how well your project scores, you may want to submit your details to RPA to get the full application.</p>
+    <p>You will not automatically get a grant. The grant is highly competitive and you are competing against other projects.</p>
 
     {{ govukButton({
       classes: "govuk-!-margin-top-2 govuk-!-margin-bottom-8",
@@ -36,7 +41,19 @@
       isStartButton: true,
       text: button.text
     }) }}
+
+     <h2 class="govuk-heading-m">Before you start</h2>
+
+    <p>You need:</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>information about your business (number of employees, turnover etc)</li>
+      <li>information about the project (irrigated land in hectares etc)</li>
+      <li>to know what items you'd like to buy for the project</li>
+      <li>an estimate of the total cost of the items</li>
+      <li>to either have or be confident you will have any planning permission and abstraction licences before 21 October 2021</li>
+    </ul>
   </div>
+
   <div class="govuk-grid-column-one-third" style="background:#f3f2f1; padding-top:20px">
     <h1 class="govuk-heading-m">Return to an application</h1>
     <form method="POST" action="/load-application" novalidate>
