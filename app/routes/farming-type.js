@@ -37,7 +37,7 @@ function createModelNotEligible () {
   return {
     backLink: '/farming-type',
     sentences: [
-      'You cannot apply for a grant from this scheme'
+      'This is only available to arable and horticultural farming businesses that supply the food industry, nurseries growing flowers or forestry nurseries.'
     ]
   }
 }
