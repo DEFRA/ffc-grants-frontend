@@ -2,7 +2,7 @@ function createModel () {
   return {
     button: {
       text: 'Start now',
-      nextLink: '/arable'
+      nextLink: '/farming-type'
     }
   }
 }

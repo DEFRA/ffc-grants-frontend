@@ -6,7 +6,7 @@
 {% block header %}
   {{ govukHeader({
     homepageUrl: "/",
-    serviceName: "Apply for a large grant",
+    serviceName: "Check if you can apply for a water resource management grant",
     serviceUrl: "/"
   }) }}
 {% endblock %}
@@ -21,7 +21,7 @@
 {% block content %}
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-l">You cannot apply for a large grant</h1>
+    <h1 class="govuk-heading-l">You cannot apply for a grant from this scheme</h1>
     {% for s in sentences %}
       <p class="govuk-body">{{ s }}</p>
     {% endfor %}
