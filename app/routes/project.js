@@ -1,9 +1,9 @@
 const Joi = require('joi')
 
-function createModel(errorMessage,errorSummary) {
+function createModel(errorMessage, errorSummary) {
     return {
         backLink: '/farming-type',
-        ...(errorSummary ? { errorText: errorSummary }  : {}),
+        ...(errorSummary ? { errorText: errorSummary } : {}),
         checkboxes: {
             idPrefix: "project",
             name: "project",
@@ -16,33 +16,24 @@ function createModel(errorMessage,errorSummary) {
             },
             items: [
                 {
-                    value: "Change water source",
-                    text: "Change water source "
-                },
-                {
-                    value: "Improve irrigation efficiency",
-                    text: "Improve irrigation efficiency "
+                    value: "Introduce irrigation",
+                    text: "Introduce irrigation "
                 },
                 {
                     value: "Increase irrigation",
                     text: "Increase irrigation "
                 },
                 {
-                    value: "Introduce irrigation",
-                    text: "Introduce irrigation "
+                    value: "Improve irrigation efficiency",
+                    text: "Improve irrigation efficiency "
+                },
+                {
+                    value: "Change water source",
+                    text: "Change water source "
                 }
             ],
             ...(errorMessage ? { errorMessage: { text: errorMessage } } : {})
         }
-    }
-}
-
-function createModelNotEligible() {
-    return {
-        backLink: '/project',
-        sentences: [
-            'This is only available to arable and horticultural farming businesses that supply the food industry, nurseries growing flowers or forestry nurseries.'
-        ]
     }
 }
 
@@ -66,14 +57,14 @@ module.exports = [
                         .takeover()
             },
             handler: (request, h) => {
-                if (request.payload.project.length <=2) {
+                if (request.payload.project.length <= 2) {
                     request.yar.set('project', request.payload.project)
                     return h.redirect('./legal-status')
                 }
 
                 return h
-                .view('project', createModel('Only one or two selections are allowed','Only one or two selections are allowed'))
-                .takeover()
+                    .view('project', createModel('Only one or two selections are allowed', 'Only one or two selections are allowed'))
+                    .takeover()
             }
         }
     }
