@@ -1,6 +1,6 @@
 const Joi = require('joi')
 
-function createModel(errorMessage, errorSummary) {
+function createModel(errorMessage, errorSummary, data) {
     return {
         backLink: '/farming-type',
         ...(errorSummary ? { errorText: errorSummary } : {}),
@@ -17,19 +17,23 @@ function createModel(errorMessage, errorSummary) {
             items: [
                 {
                     value: "Introduce irrigation",
-                    text: "Introduce irrigation "
+                    text: "Introduce irrigation",
+                    checked: !!data && (data.includes('Introduce irrigation'))
                 },
                 {
                     value: "Increase irrigation",
-                    text: "Increase irrigation "
+                    text: "Increase irrigation",
+                    checked: !!data && (data.includes('Increase irrigation'))
                 },
                 {
                     value: "Improve irrigation efficiency",
-                    text: "Improve irrigation efficiency "
+                    text: "Improve irrigation efficiency",
+                    checked: !!data && (data.includes('Improve irrigation efficiency'))
                 },
                 {
                     value: "Change water source",
-                    text: "Change water source "
+                    text: "Change water source",
+                    checked: !!data && (data.includes('Change water source'))
                 }
             ],
             ...(errorMessage ? { errorMessage: { text: errorMessage } } : {})
@@ -41,7 +45,13 @@ module.exports = [
     {
         method: 'GET',
         path: '/project',
-        handler: (request, h) => h.view('project', createModel(null))
+        handler: (request, h) => {
+            const project = request.yar.get('project');
+            const data = !!project ?
+                project : null
+            
+                return h.view('project', createModel(null, null, data))
+        }
     },
     {
         method: 'POST',
@@ -53,7 +63,7 @@ module.exports = [
                 }),
                 failAction: (request, h) =>
                     h
-                        .view('project', createModel('Please select an option'))
+                        .view('project', createModel('Please select an option', null, null))
                         .takeover()
             },
             handler: (request, h) => {
@@ -63,7 +73,13 @@ module.exports = [
                 }
 
                 return h
-                    .view('project', createModel('Only one or two selections are allowed', 'Only one or two selections are allowed'))
+                    .view(
+                        'project',
+                        createModel(
+                            'Only one or two selections are allowed',
+                            'Only one or two selections are allowed',
+                            null
+                        ))
                     .takeover()
             }
         }
