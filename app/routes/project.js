@@ -59,28 +59,31 @@ module.exports = [
         options: {
             validate: {
                 payload: Joi.object({
-                    project: Joi.array().required()
+                    project: Joi.any().required()
                 }),
                 failAction: (request, h) =>
                     h
-                        .view('project', createModel('Please select an option', null, null))
-                        .takeover()
+                            .view('project', createModel('Please select an option', null, null))
+                            .takeover()
             },
             handler: (request, h) => {
-                if (request.payload.project.length <= 2) {
-                    request.yar.set('project', request.payload.project)
-                    return h.redirect('./legal-status')
+
+                if (Array.isArray(request.payload.project) && request.payload.project.length > 2)
+                {
+                    return h
+                        .view(
+                            'project',
+                            createModel(
+                                'Only one or two selections are allowed',
+                                'Only one or two selections are allowed',
+                                null
+                            ))
+                        .takeover()
                 }
 
-                return h
-                    .view(
-                        'project',
-                        createModel(
-                            'Only one or two selections are allowed',
-                            'Only one or two selections are allowed',
-                            null
-                        ))
-                    .takeover()
+                request.yar.set('project', request.payload.project)
+                return h.redirect('./legal-status')
+
             }
         }
     }
