@@ -23,7 +23,7 @@ function createModel(errorMessage, data) {
                 },
                 {
                     value: 'Protected cropping',
-                    text: 'Protected cropping (e.g glass house or poly tunnel)',
+                    text: 'Protected cropping (e.g glass house or polly tunnel)',
                     checked: !!data && (data.includes('Protected cropping'))
                 },
                 {
