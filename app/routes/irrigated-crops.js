@@ -5,8 +5,8 @@ function createModel(errorMessage, data) {
         backLink: '/project',
         radios: {
             classes: '',
-            idPrefix: 'mainCrops',
-            name: 'mainCrops',
+            idPrefix: 'irrigatedCrops',
+            name: 'irrigatedCrops',
             fieldset: {
                 legend: {
                     text: 'What main crops will be irrigated?',
@@ -40,25 +40,25 @@ function createModel(errorMessage, data) {
 module.exports = [
     {
         method: 'GET',
-        path: '/main-crops',
+        path: '/irrigated-crops',
         handler: (request, h) => {
-            const mainCrops = request.yar.get('mainCrops');
-            const data = !!mainCrops ? mainCrops : null
-            return h.view('main-crops', createModel(null, data))
+            const irrigatedCrops = request.yar.get('irrigatedCrops');
+            const data = !!irrigatedCrops ? irrigatedCrops : null
+            return h.view('irrigated-crops', createModel(null, data))
         }
     },
     {
         method: 'POST',
-        path: '/main-crops',
+        path: '/irrigated-crops',
         options: {
             validate: {
                 payload: Joi.object({
-                    mainCrops: Joi.string().required()
+                    irrigatedCrops: Joi.string().required()
                 }),
-                failAction: (request, h) => h.view('main-crops', createModel('Please select an option')).takeover()
+                failAction: (request, h) => h.view('irrigated-crops', createModel('Please select an option')).takeover()
             },
             handler: (request, h) => { 
-                request.yar.set('mainCrops', request.payload.mainCrops)
+                request.yar.set('irrigatedCrops', request.payload.irrigatedCrops)
                 return h.redirect('./legal-status')
             }
         }
