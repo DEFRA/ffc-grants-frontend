@@ -69,7 +69,7 @@ module.exports = [
             handler: (request, h) => {
                 if (request.payload.project.length <= 2) {
                     request.yar.set('project', request.payload.project)
-                    return h.redirect('./legal-status')
+                    return h.redirect('./main-crops')
                 }
 
                 return h
