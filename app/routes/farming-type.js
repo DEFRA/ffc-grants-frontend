@@ -1,6 +1,6 @@
 const Joi = require('joi')
 
-function createModel (errorMessage) {
+function createModel (errorMessage,data) {
   return {
     backLink: '/',
     radios: {
@@ -18,15 +18,18 @@ function createModel (errorMessage) {
         
         {
           value: 'Crops for the food industry',
-          text: 'Crops for the food industry'
+          text: 'Crops for the food industry',
+          checked: !!data && (data.includes('Crops for the food industry'))
         },
         {
           value: 'Horticulture',
-          text: 'Horticulture (including ornamentals)'
+          text: 'Horticulture (including ornamentals)',
+          checked: !!data && (data.includes('Horticulture'))
         },
         {
           value: 'Something else',
-          text: 'Something else'
+          text: 'Something else',
+          checked: !!data && (data.includes('Something else'))
         }
       ],
       ...(errorMessage ? { errorMessage: { text: errorMessage } } : {})
@@ -47,7 +50,11 @@ module.exports = [
   {
     method: 'GET',
     path: '/farming-type',
-    handler: (request, h) => h.view('farming-type', createModel(null))
+    handler: (request, h) => {
+      const farmingType = request.yar.get('farmingType');
+      const data = !!farmingType ? farmingType : null
+      return h.view('farming-type', createModel(null,data))
+    }
   },
   {
     method: 'POST',
