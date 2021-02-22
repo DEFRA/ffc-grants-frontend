@@ -82,7 +82,7 @@ module.exports = [
                 }
 
                 request.yar.set('project', request.payload.project)
-                return h.redirect('./legal-status')
+                return h.redirect('./irrigated-crops')
 
             }
         }
