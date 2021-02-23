@@ -59,7 +59,7 @@ module.exports = [
             },
             handler: (request, h) => { 
                 request.yar.set('irrigatedCrops', request.payload.irrigatedCrops)
-                return h.redirect('./legal-status')
+                return h.redirect('./irrigated-land')
             }
         }
     }
