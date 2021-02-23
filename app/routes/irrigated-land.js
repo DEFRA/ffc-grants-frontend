@@ -3,7 +3,6 @@ const Joi = require('joi')
 function createModel(irrigatedLandCurrent, irrigatedLandTarget, errorMessage) {
     return {
         backLink: '/irrigated-crops',
-        //heading: 'How much land is currently irrigated per year?',
         currentInput: {
             label: {
                 text: 'How much land is currently irrigated per year?',
