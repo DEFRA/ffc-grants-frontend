@@ -22,11 +22,9 @@
 
 {% block content %}
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds govuk-body">
+  <div class="govuk-grid-column-full govuk-body">
     <h1 class="govuk-heading-l">Check if you can apply for a water resource management grant</h1>
-
     <p>Use this service to:</p>
-
     <ul class="govuk-list govuk-list--bullet">
       <li>check if you can apply for a grant for your project (takes about 5 minutes)</li>
       <li>check how well your project fits the funding priorities (takes about 15 minutes if you have all the project details)</li>
@@ -52,23 +50,6 @@
       <li>an estimate of the total cost of the items</li>
       <li>to either have or be confident you will have any planning permission and abstraction licences before 21 October 2021</li>
     </ul>
-  </div>
-
-  <div class="govuk-grid-column-one-third" style="background:#f3f2f1; padding-top:20px">
-    <h1 class="govuk-heading-m">Return to an application</h1>
-    <form method="POST" action="/load-application" novalidate>
-    {{ govukInput({
-      id: "application",
-      name: "application",
-      label: {
-        text: "Enter your reference"
-      }
-    }) }}
-
-    {{ govukButton({
-      text: "Continue"
-    }) }}
-    </form>
   </div>
 </div>
 {% endblock %}
