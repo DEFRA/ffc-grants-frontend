@@ -33,7 +33,7 @@
     "@hapi/yar": "^10.1.0",
     "govuk-frontend": "^3.8.1",
     "joi": "^17.2.1",
-    "nunjucks": "^3.2.2"
+    "nunjucks": "^3.2.3"
   },
   "devDependencies": {
     "clean-webpack-plugin": "^3.0.0",
