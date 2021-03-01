@@ -1,0 +1,18 @@
+version: '3.8'
+
+# This override file should be used when running automated tests so
+# that test output is saved to the host
+
+services:
+  ffc-template-node:
+    build:
+      target: development
+    image: ffc-template-node-development
+    container_name: ffc-template-node-test
+    command: npm run test
+    volumes:
+      - ./app/:/home/node/app/
+      - ./test/:/home/node/test/
+      - ./test-output/:/home/node/test-output/
+      - ./jest.config.js:/home/node/jest.config.js
+      - ./package.json:/home/node/package.json

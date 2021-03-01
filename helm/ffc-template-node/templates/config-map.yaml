@@ -1,0 +1,6 @@
+{{- include "ffc-helm-library.container-config-map" (list . "ffc-template-node.config-map") -}}
+{{- define "ffc-template-node.config-map" -}}
+data:
+  NODE_ENV: {{ quote .Values.environment }}
+  PORT: {{ quote .Values.container.port }}
+{{- end -}}

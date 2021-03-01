@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  ffc-template-node:
+    build:
+      context: .
+      target: production
+    image: ffc-template-node
+    container_name: ffc-template-node
+    environment: {}

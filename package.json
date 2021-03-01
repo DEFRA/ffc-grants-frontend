@@ -1,0 +1,41 @@
+{
+  "name": "ffc-template-node",
+  "version": "0.1.0",
+  "description": "description-of-project-goes-here",
+  "homepage": "https://github.com/DEFRA/ffc-template-node",
+  "main": "app/index.js",
+  "scripts": {
+    "test": "jest --runInBand",
+    "test:watch": "jest --coverage=false --onlyChanged --watch --runInBand",
+    "start:watch": "nodemon --inspect=0.0.0.0 --ext js --legacy-watch app/index.js"
+  },
+  "author": "Defra",
+  "contributors": [],
+  "license": "OGL-UK-3.0",
+  "dependencies": {
+    "@hapi/hapi": "^20.0.0"
+  },
+  "devDependencies": {
+    "jest": "^26.4.0",
+    "jest-junit": "^11.1.0",
+    "nodemon": "^2.0.4",
+    "standard": "^14.3.4"
+  },
+  "standard": {
+    "globals": [
+      "describe",
+      "beforeEach",
+      "expect",
+      "test",
+      "afterEach",
+      "jest",
+      "beforeAll",
+      "afterAll"
+    ]
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "**/test-output/**"
+    ]
+  }
+}
