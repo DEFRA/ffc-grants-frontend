@@ -1,7 +1,8 @@
 {
-  "name": "ffc-grants-eoi",
-  "version": "1.11.0",
-  "description": "For prototyping and technical spikes.",
+
+  "name": "ffc-grants-frontend",
+  "version": "1.10.0",
+  "description": "Frontend Grants microservice.",
   "main": "app/index.js",
   "scripts": {
     "build": "webpack",
@@ -12,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/DEFRA/ffc-grants-eoi.git"
+    "url": "git+https://github.com/DEFRA/ffc-grants-frontend.git"
   },
   "author": "Defra",
   "contributors": [
@@ -20,9 +21,9 @@
   ],
   "license": "OGL-UK-3.0",
   "bugs": {
-    "url": "https://github.com/DEFRA/ffc-grants-eoi/issues"
+    "url": "https://github.com/DEFRA/ffc-grants-frontend/issues"
   },
-  "homepage": "https://github.com/DEFRA/ffc-grants-eoi#readme",
+  "homepage": "https://github.com/DEFRA/ffc-grants-frontend#readme",
   "dependencies": {
     "@azure/ms-rest-nodeauth": "^3.0.6",
     "@azure/service-bus": "^1.1.10",
@@ -33,7 +34,7 @@
     "@hapi/yar": "^10.1.0",
     "govuk-frontend": "^3.8.1",
     "joi": "^17.2.1",
-    "nunjucks": "^3.2.2"
+    "nunjucks": "^3.2.3"
   },
   "devDependencies": {
     "clean-webpack-plugin": "^3.0.0",

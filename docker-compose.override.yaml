@@ -4,11 +4,11 @@ version: '3.8'
 # to provide dependencies and expose ports for local testing
 
 services:
-  ffc-grants-eoi:
+  ffc-grants-frontend:
     build:
       context: .
       target: development
-    image: ffc-grants-eoi-development
+    image: ffc-grants-frontend-development
     environment:
       NODE_ENV: development
     ports:
