@@ -1,16 +1,11 @@
 version: '3.8'
 
 services:
-  ffc-grants-eoi:
+  ffc-grants-frontend:
     build:
       context: .
       target: production
-    image: ffc-grants-eoi
+    image: ffc-grants-frontend
     environment:
       NODE_ENV: production
-      EOI_QUEUE_ADDRESS: ffc-grants-eoi-${MESSAGE_QUEUE_SUFFIX}
-      MESSAGE_QUEUE_HOST: ${MESSAGE_QUEUE_HOST:-notset}
-      MESSAGE_QUEUE_PASSWORD: ${MESSAGE_QUEUE_PASSWORD:-notset}
-      MESSAGE_QUEUE_USER: ${MESSAGE_QUEUE_USER:-notset}
       SITE_URL: localhost:3000
-      ELIGIBILITY_URL: ffc-grants-eligibility:3000

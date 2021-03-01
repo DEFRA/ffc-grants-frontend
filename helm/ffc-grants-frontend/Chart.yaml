@@ -1,9 +1,9 @@
 apiVersion: v2
-description: A Helm chart to deploy the FFC Grant Expression of Interest sample application to Kubernetes
-name: ffc-grants-eoi
+description: A Helm chart to deploy the FFC Grants Frontend to Kubernetes
+name: ffc-grants-frontend
 # this version is automatically updated in the build pipline
 version: 1.0.0
 dependencies:
 - name: ffc-helm-library
-  version: ^1.0.0
+  version: ^2.0.0
   repository: https://raw.githubusercontent.com/defra/ffc-helm-repository/master/
