@@ -1,6 +1,6 @@
 const Joi = require('joi')
 
-function createModel(errorMessage) {
+function createModel (errorMessage) {
   return {
     backLink: '/farming-type',
     radios: {
@@ -57,21 +57,11 @@ function createModel(errorMessage) {
   }
 }
 
-function createModelNotEligible() {
+function createModelNotEligible () {
   return {
     backLink: '/legal-status',
-    sentences: [
-      'This is only open to a business with a legal status of:',
-      '\n\u2022 Charity',
-      '\n\u2022 Community interest organisation',
-      '\n\u2022 Limited company',
-      '\n\u2022 Limited liability partnership',
-      '\n\u2022 Partnership',
-      '\n\u2022 Public organisation',
-      '\n\u2022 Sole Trader',
-      '\n\u2022 Trust',
-      'Other types of business may be supported in future schemes.'
-    ]
+    messageContent:
+      'This is only open to a business with a legal status of: <ul class="govuk-list govuk-list--bullet"><li>Charity</li><li>Community interest organisation</li><li>Limited company</li><li>Limited liability partnership</li><li>Partnership</li><li>Public organisation</li><li>Sole Trader</li><li>Trust</li></ul><p class="govuk-body">Other types of business may be supported in future schemes.</p>'
   }
 }
 
@@ -89,12 +79,12 @@ module.exports = [
         payload: Joi.object({
           legalStatus: Joi.string().required()
         }),
-        failAction: (request, h) => h.view('legal-status', createModel('Select one option')).takeover()
+        failAction: (request, h) =>
+          h.view('legal-status', createModel('Select one option')).takeover()
       },
       handler: (request, h) => {
         if (request.payload.legalStatus === 'Other') {
           return h.view('./not-eligible', createModelNotEligible())
-
         }
         request.yar.set('legalStatus', request.payload.legalStatus)
         return h.redirect('./project')
