@@ -72,7 +72,7 @@ module.exports = [
           request.payload.farmingType === 'Horticulture'
         ) {
           request.yar.set('farmingType', request.payload.farmingType)
-          return h.redirect('./project')
+          return h.redirect('./legal-status')
         }
 
         return h.view('./not-eligible', createModelNotEligible())
