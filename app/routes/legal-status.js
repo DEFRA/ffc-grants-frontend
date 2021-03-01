@@ -1,12 +1,12 @@
 const Joi = require('joi')
 
-function createModel (errorMessage) {
+function createModel(errorMessage) {
   return {
     backLink: '/farming-type',
     radios: {
       classes: '',
-      idPrefix: 'isArable',
-      name: 'isArable',
+      idPrefix: 'legalStatus',
+      name: 'legalStatus',
       fieldset: {
         legend: {
           text: 'What is the legal status of the farm business?',
@@ -16,16 +16,40 @@ function createModel (errorMessage) {
       },
       items: [
         {
+          value: 'Limited Company',
+          text: 'Limited Company'
+        },
+        {
+          value: 'Partnership',
+          text: 'Partnership'
+        },
+        {
+          value: 'Sole trader',
+          text: 'Sole trader'
+        },
+        {
+          value: 'Limited Liability Company',
+          text: 'Limited Liability Company'
+        },
+        {
+          value: 'Trust',
+          text: 'Trust'
+        },
+        {
           value: 'Charity',
           text: 'Charity'
         },
         {
-          value: 'Community interest organisation',
-          text: 'Community interest organisation'
+          value: 'Community Interest Company',
+          text: 'Community Interest Company'
         },
         {
-          value: '...',
-          text: '...'
+          value: 'Public Organisation',
+          text: 'Public Organisation'
+        },
+        {
+          value: 'Other',
+          text: 'Other'
         }
       ],
       ...(errorMessage ? { errorMessage: { text: errorMessage } } : {})
@@ -33,11 +57,20 @@ function createModel (errorMessage) {
   }
 }
 
-function createModelNotEligible () {
+function createModelNotEligible() {
   return {
     backLink: '/legal-status',
     sentences: [
-      'This is only for projects for an arable or horticultural farming businesses.'
+      'This is only open to a business with a legal status of:',
+      '\n\u2022 Charity',
+      '\n\u2022 Community interest organisation',
+      '\n\u2022 Limited company',
+      '\n\u2022 Limited liability partnership',
+      '\n\u2022 Partnership',
+      '\n\u2022 Public organisation',
+      '\n\u2022 Sole Trader',
+      '\n\u2022 Trust',
+      'Other types of business may be supported in future schemes.'
     ]
   }
 }
@@ -54,17 +87,17 @@ module.exports = [
     options: {
       validate: {
         payload: Joi.object({
-          isArable: Joi.string().required()
+          legalStatus: Joi.string().required()
         }),
-        failAction: (request, h) => h.view('legal-status', createModel('Select yes if the planned project is for an arable or horticultural farming businesses')).takeover()
+        failAction: (request, h) => h.view('legal-status', createModel('Select one option')).takeover()
       },
       handler: (request, h) => {
-        if (request.payload.isArable === 'yes') {
-          request.yar.set('isArable', request.payload.isArable)
-          return h.redirect('./country')
-        }
+        if (request.payload.legalStatus === 'Other') {
+          return h.view('./not-eligible', createModelNotEligible())
 
-        return h.view('./not-eligible', createModelNotEligible())
+        }
+        request.yar.set('legalStatus', request.payload.legalStatus)
+        return h.redirect('./project')
       }
     }
   }
