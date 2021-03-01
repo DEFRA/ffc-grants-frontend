@@ -1,6 +1,6 @@
 {
   "name": "ffc-grants-eoi",
-  "version": "1.10.0",
+  "version": "1.11.0",
   "description": "For prototyping and technical spikes.",
   "main": "app/index.js",
   "scripts": {
