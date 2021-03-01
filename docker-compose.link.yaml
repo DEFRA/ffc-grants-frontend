@@ -5,7 +5,7 @@ version: '3.8'
 # Dependencies shared with other projects should be started separately.
 
 services:
-  ffc-grants-eoi:
+  ffc-grants-frontend:
     networks:
       - default
       - ffc-grants

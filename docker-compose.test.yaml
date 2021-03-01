@@ -4,10 +4,10 @@ version: '3.8'
 # that test output is saved to the host
 
 services:
-  ffc-grants-eoi:
+  ffc-grants-frontend:
     build:
       target: development
-    image: ffc-grants-eoi-development
+    image: ffc-grants-frontend-development
     environment:
       NODE_ENV: test
     command: npm run test

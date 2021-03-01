@@ -1,6 +1,6 @@
-# FFC Grants Expressions of Interest
+# FFC Grants Frontend
 
-For prototyping and technical spikes.
+Frontend microservice.
 
 ## Licence
 
