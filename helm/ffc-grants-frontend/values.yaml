@@ -1,17 +1,13 @@
 environment: development
-name: ffc-grants-eoi
+name: ffc-grants-frontend
 namespace: ffc-grants
 workstream: ffc-grants
-image: ffc-grants-eoi
+image: ffc-grants-frontend
 
 labels: {}
 
-azureIdentity:
-  clientID: not-a-real-clientID
-  resourceID: not-a-real-resourceID
-
 containerConfigMap:
-  name: ffc-grants-eoi-config-map
+  name: ffc-grants-frontend-config-map
 
 deployment:
   restartPolicy: Always
@@ -31,9 +27,6 @@ container:
   readOnlyRootFilesystem: true
   allowPrivilegeEscalation: false
   port: 3000
-  messageQueueHost: dummy
-  eoiQueueAddress: eoi
-  eligibilityUrl: ffc-grants-eligibility.ffc-grants
 
 livenessProbe:
   path: /healthz
@@ -54,5 +47,5 @@ service:
 
 ingress:
   class: nginx
-  endpoint: ffc-grants-eoi
+  endpoint: ffc-grants-frontend
   server: example.com
