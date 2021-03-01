@@ -1,5 +1,5 @@
-{{- include "ffc-helm-library.container-config-map" (list . "ffc-grants-eoi.config-map") -}}
-{{- define "ffc-grants-eoi.config-map" -}}
+{{- include "ffc-helm-library.container-config-map" (list . "ffc-grants-frontend.config-map") -}}
+{{- define "ffc-grants-frontend.config-map" -}}
 data:
   NODE_ENV: {{ quote .Values.environment }}
   PORT: {{ quote .Values.container.port }}
