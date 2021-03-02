@@ -22,9 +22,9 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-l">You cannot apply for a grant from this scheme</h1>
-    {% for s in sentences %}
-      <p class="govuk-body">{{ s }}</p>
-    {% endfor %}
+    <p class="govuk-body">
+    {{ messageContent | safe}}
+    </p>
   </div>
 </div>
 {% endblock %}

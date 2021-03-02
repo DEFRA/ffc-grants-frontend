@@ -5,8 +5,8 @@ function createModel (errorMessage) {
     backLink: '/farming-type',
     radios: {
       classes: '',
-      idPrefix: 'isArable',
-      name: 'isArable',
+      idPrefix: 'legalStatus',
+      name: 'legalStatus',
       fieldset: {
         legend: {
           text: 'What is the legal status of the farm business?',
@@ -16,16 +16,40 @@ function createModel (errorMessage) {
       },
       items: [
         {
+          value: 'Limited Company',
+          text: 'Limited Company'
+        },
+        {
+          value: 'Partnership',
+          text: 'Partnership'
+        },
+        {
+          value: 'Sole trader',
+          text: 'Sole trader'
+        },
+        {
+          value: 'Limited Liability Company',
+          text: 'Limited Liability Company'
+        },
+        {
+          value: 'Trust',
+          text: 'Trust'
+        },
+        {
           value: 'Charity',
           text: 'Charity'
         },
         {
-          value: 'Community interest organisation',
-          text: 'Community interest organisation'
+          value: 'Community Interest Company',
+          text: 'Community Interest Company'
         },
         {
-          value: '...',
-          text: '...'
+          value: 'Public Organisation',
+          text: 'Public Organisation'
+        },
+        {
+          value: 'Other',
+          text: 'Other'
         }
       ],
       ...(errorMessage ? { errorMessage: { text: errorMessage } } : {})
@@ -36,9 +60,8 @@ function createModel (errorMessage) {
 function createModelNotEligible () {
   return {
     backLink: '/legal-status',
-    sentences: [
-      'This is only for projects for an arable or horticultural farming businesses.'
-    ]
+    messageContent:
+      'This is only open to a business with a legal status of: <ul class="govuk-list govuk-list--bullet"><li>Charity</li><li>Community interest organisation</li><li>Limited company</li><li>Limited liability partnership</li><li>Partnership</li><li>Public organisation</li><li>Sole Trader</li><li>Trust</li></ul><p class="govuk-body">Other types of business may be supported in future schemes.</p>'
   }
 }
 
@@ -54,17 +77,17 @@ module.exports = [
     options: {
       validate: {
         payload: Joi.object({
-          isArable: Joi.string().required()
+          legalStatus: Joi.string().required()
         }),
-        failAction: (request, h) => h.view('legal-status', createModel('Select yes if the planned project is for an arable or horticultural farming businesses')).takeover()
+        failAction: (request, h) =>
+          h.view('legal-status', createModel('Select one option')).takeover()
       },
       handler: (request, h) => {
-        if (request.payload.isArable === 'yes') {
-          request.yar.set('isArable', request.payload.isArable)
-          return h.redirect('./country')
+        if (request.payload.legalStatus === 'Other') {
+          return h.view('./not-eligible', createModelNotEligible())
         }
-
-        return h.view('./not-eligible', createModelNotEligible())
+        request.yar.set('legalStatus', request.payload.legalStatus)
+        return h.redirect('./project')
       }
     }
   }
