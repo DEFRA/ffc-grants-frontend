@@ -1,6 +1,6 @@
 apiVersion: v2
-description: description-of-project-goes-here
-name: ffc-template-node
+description: FFC Grants file sender microservice
+name: ffc-grants-file-sender
 # this version is automatically updated in the build pipline
 version: 1.0.0
 dependencies:

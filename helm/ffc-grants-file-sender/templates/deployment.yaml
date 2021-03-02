@@ -1,0 +1,8 @@
+{{- include "ffc-helm-library.deployment" (list . "ffc-grants-file-sender.deployment") -}}
+{{- define "ffc-grants-file-sender.deployment" -}}
+spec:
+  template:
+    spec:
+      containers:
+      - {{ include "ffc-helm-library.container" (list . "ffc-grants-file-sender.container") }}
+{{- end -}}

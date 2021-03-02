@@ -3,7 +3,7 @@
 set -e
 projectRoot="$(a="/$0"; a=${a%/*}; a=${a:-.}; a=${a#/}/; cd "$a/.." || return; pwd)"
 
-service="ffc-template-node"
+service="ffc-grants-file-sender"
 
 show_help() {
   echo "

@@ -1,10 +1,10 @@
 version: '3.8'
 
 services:
-  ffc-template-node:
+  ffc-grants-file-sender:
     build:
       context: .
       target: production
-    image: ffc-template-node
-    container_name: ffc-template-node
+    image: ffc-grants-file-sender
+    container_name: ffc-grants-file-sender
     environment: {}

@@ -4,11 +4,11 @@ version: '3.8'
 # that test output is saved to the host
 
 services:
-  ffc-template-node:
+  ffc-grants-file-sender:
     build:
       target: development
-    image: ffc-template-node-development
-    container_name: ffc-template-node-test
+    image: ffc-grants-file-sender-development
+    container_name: ffc-grants-file-sender-test
     command: npm run test
     volumes:
       - ./app/:/home/node/app/

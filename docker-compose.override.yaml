@@ -4,11 +4,11 @@ version: '3.8'
 # to provide dependencies and expose ports for local testing
 
 services:
-  ffc-template-node:
+  ffc-grants-file-sender:
     build:
       target: development
-    image: ffc-template-node-development
-    container_name: ffc-template-node-development
+    image: ffc-grants-file-sender-development
+    container_name: ffc-grants-file-sender-development
     ports:
       - "3000:3000"
       - "9229:9229"

@@ -1,8 +1,8 @@
 {
-  "name": "ffc-template-node",
-  "version": "0.1.0",
-  "description": "description-of-project-goes-here",
-  "homepage": "https://github.com/DEFRA/ffc-template-node",
+  "name": "ffc-grants-file-sender",
+  "version": "1.0.0",
+  "description": "FFC Grants file sender microservice",
+  "homepage": "https://github.com/DEFRA/ffc-grants-file-sender",
   "main": "app/index.js",
   "scripts": {
     "test": "jest --runInBand",
