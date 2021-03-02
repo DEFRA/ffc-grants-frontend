@@ -40,9 +40,8 @@ function createModel (errorMessage,data) {
 function createModelNotEligible () {
   return {
     backLink: '/farming-type',
-    sentences: [
+    messageContent:
       'This is only available to arable and horticultural farming businesses that supply the food industry, nurseries growing flowers or forestry nurseries.'
-    ]
   }
 }
 
