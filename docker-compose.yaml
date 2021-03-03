@@ -9,3 +9,12 @@ services:
     environment:
       NODE_ENV: production
       SITE_URL: localhost:3000
+      MESSAGE_QUEUE_ADDRESS_IN: ffc-grants-frontend-dev
+      MESSAGE_QUEUE_HOST_IN: ${MESSAGE_QUEUE_HOST:-notset}
+      MESSAGE_QUEUE_USER_IN: ${MESSAGE_QUEUE_USER:-notset}
+      MESSAGE_QUEUE_PASSWORD_IN: ${MESSAGE_QUEUE_PASSWORD:-notset}
+      MESSAGE_QUEUE_ADDRESS_OUT: ffc-grants-frontend-oo
+      MESSAGE_QUEUE_HOST_OUT: ${MESSAGE_QUEUE_HOST:-notset}
+      MESSAGE_QUEUE_USER_OUT: ${MESSAGE_QUEUE_USER:-notset}
+      MESSAGE_QUEUE_PASSWORD_OUT: ${MESSAGE_QUEUE_PASSWORD:-notset}
+      ELIGIBILITY_URL: ffc-grants-eligibility:3000

@@ -1,3 +1,4 @@
 module.exports = {
-  messaging: require('./messaging')
+  sendConfig: require('./send-messaging'),
+  receiveConfig: require('./receive-messaging')
 }

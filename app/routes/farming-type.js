@@ -65,12 +65,32 @@ module.exports = [
         }),
         failAction: (request, h) => h.view('farming-type', createModel('Please select an option')).takeover()
       },
-      handler: (request, h) => {
+      handler: async (request, h) => {
         if (
           request.payload.farmingType === 'Crops for the food industry' ||
           request.payload.farmingType === 'Horticulture'
         ) {
           request.yar.set('farmingType', request.payload.farmingType)
+
+          const messageService = await require('../services/message-sync-service')
+          try {
+            console.log('-- /farming-type: about to send ASB message');
+            await messageService.syncBackEnd(
+              JSON.stringify({
+                stuff: "I succeeded!"
+              })
+            )
+            console.log('-- /farming-type: OK: just sent ASB message');
+          } catch (err) {
+            console.log('-- /farming-type: ERROR sending ASB message');
+            return h.view('confirmation', {
+              output: {
+                titleText: 'ASB message not sent',
+                html: 'Error sending ASB message'
+              }
+            })
+          }
+
           return h.redirect('./legal-status')
         }
 
