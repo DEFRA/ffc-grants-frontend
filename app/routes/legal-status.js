@@ -87,7 +87,7 @@ module.exports = [
           return h.view('./not-eligible', createModelNotEligible())
         }
         request.yar.set('legalStatus', request.payload.legalStatus)
-        return h.redirect('./project')
+        return h.redirect('./project-details')
       }
     }
   }
