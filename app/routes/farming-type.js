@@ -2,7 +2,7 @@ const Joi = require('joi')
 
 function createModel (errorMessage,data) {
   return {
-    backLink: '/',
+    backLink: '/start',
     radios: {
       classes: '',
       idPrefix: 'farmingType',

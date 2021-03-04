@@ -1,4 +1,4 @@
-describe('Home test', () => {
+describe('Start Page', () => {
   let server
   const createServer = require('../../../../app/server')
 
@@ -7,10 +7,10 @@ describe('Home test', () => {
     await server.start()
   })
 
-  test('GET / route returns 200', async () => {
+  it('should load start page successfully', async () => {
     const options = {
       method: 'GET',
-      url: '/'
+      url: '/start'
     }
 
     const response = await server.inject(options)
