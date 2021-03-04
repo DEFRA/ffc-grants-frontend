@@ -10,7 +10,7 @@ describe('Project details page', () => {
     it('should load page successfully', async () => {
         const options = {
             method: 'GET',
-            url: '/project'
+            url: '/project-details'
         }
 
         const response = await server.inject(options)
@@ -20,7 +20,7 @@ describe('Project details page', () => {
     it('should returns error message if no option is selected', async () => {
         const postOptions = {
             method: 'POST',
-            url: '/project',
+            url: '/project-details',
             payload: {}
         }
 
@@ -32,7 +32,7 @@ describe('Project details page', () => {
     it('should store user response and redirects to irrigated crops page', async () => {
         const postOptions = {
             method: 'POST',
-            url: '/project',
+            url: '/project-details',
             payload: { project: 'Improve irrigation efficiency' }
         }
 
@@ -44,7 +44,7 @@ describe('Project details page', () => {
     it('should display the error summary if more than two options are selected', async () => {
         const postOptions = {
             method: 'POST',
-            url: '/project',
+            url: '/project-details',
             payload: { project: ['some option-1', 'some option-2', 'some option-3'] }
         }
 

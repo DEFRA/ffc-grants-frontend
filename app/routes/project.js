@@ -44,7 +44,7 @@ function createModel(errorMessage, errorSummary, data) {
 module.exports = [
     {
         method: 'GET',
-        path: '/project',
+        path: '/project-details',
         handler: (request, h) => {
             const project = request.yar.get('project');
             const data = !!project ?
@@ -55,7 +55,7 @@ module.exports = [
     },
     {
         method: 'POST',
-        path: '/project',
+        path: '/project-details',
         options: {
             validate: {
                 payload: Joi.object({
