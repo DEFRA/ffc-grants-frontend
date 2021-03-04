@@ -2,6 +2,20 @@ const { test: testSender } = require('../messaging/senders')
 const { v4: uuid } = require('uuid')
 const Wreck = require('@hapi/wreck')
 
+async function getResult (key) {
+  const url = `http://host.docker.internal:3001/test1?key=${key}`
+
+  while (true) {
+    await new Promise(resolve => setTimeout(resolve, 200))
+    const response = await Wreck.get(url, { json: true })
+
+    if (response.res.statusCode !== 202) {
+      console.log(response.payload.value)
+      return response.payload.value
+    }
+  }
+}
+
 module.exports = [
   {
     method: 'GET',
@@ -19,15 +33,7 @@ module.exports = [
       const msg = { body: { key } }
       await testSender(msg)
 
-      let value, statusCode
-
-      do {
-        const url = `http://host.docker.internal:3001/test1?key=${key}`
-        const response = await Wreck.get(url, { json: true })
-        value = response.payload.value
-        statusCode = response.res.statusCode
-      } while (statusCode === 202)
-
+      const value = await getResult(key)
       request.yar.set('serverMsg1', value)
 
       return h.redirect('msg-test2')

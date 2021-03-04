@@ -1,6 +1,14 @@
 {% extends '.layout.njk' %}
 
 {% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+    text: "Back",
+    href: './msg-test1'
+  }) }}
+{% endblock %}
 
 {% block content %}
 <div class="govuk-grid-row">
