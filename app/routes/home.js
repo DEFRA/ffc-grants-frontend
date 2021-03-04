@@ -9,7 +9,7 @@ function createModel () {
 
 module.exports = {
   method: 'GET',
-  path: '/',
+  path: '/start',
   handler: (request, h) => {
     request.yar.reset()
     return h.view('home', createModel())
