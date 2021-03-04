@@ -10,8 +10,8 @@ services:
     image: ffc-grants-file-sender-development
     container_name: ffc-grants-file-sender-development
     ports:
-      - "3000:3000"
-      - "9229:9229"
+      - "3005:3000"
+      - "9234:9229"
     volumes:
       - ./app/:/home/node/app/
       - ./package.json:/home/node/package.json
