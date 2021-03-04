@@ -1,6 +1,19 @@
+const sharedConfig = {
+  appInsights: require('applicationinsights'),
+  host: process.env.SERVICE_BUS_HOST,
+  password: process.env.SERVICE_BUS_PASSWORD,
+  username: process.env.SERVICE_BUS_USER,
+  type: 'queue',
+  useCredentialChain: process.env.NODE_ENV === 'production'
+}
+
+const msgTypePrefix = 'uk.gov.ffc.grants'
+
 module.exports = {
-  address: process.env.EOI_QUEUE_ADDRESS,
-  host: process.env.MESSAGE_QUEUE_HOST,
-  password: process.env.MESSAGE_QUEUE_PASSWORD,
-  username: process.env.MESSAGE_QUEUE_USER
+  testQueue: {
+    address: process.env.TEST_QUEUE_ADDRESS,
+    ...sharedConfig
+  },
+  testMsgType: `${msgTypePrefix}.test.test`,
+  msgSrc: 'ffc-grants-frontend'
 }

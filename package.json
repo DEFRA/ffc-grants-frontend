@@ -1,5 +1,4 @@
 {
-
   "name": "ffc-grants-frontend",
   "version": "1.14.0",
   "description": "Frontend Grants microservice.",
@@ -32,9 +31,12 @@
     "@hapi/vision": "^6.0.1",
     "@hapi/wreck": "^17.0.0",
     "@hapi/yar": "^10.1.0",
+    "applicationinsights": "^1.8.10",
+    "ffc-messaging": "^2.1.1",
     "govuk-frontend": "^3.8.1",
     "joi": "^17.2.1",
-    "nunjucks": "^3.2.3"
+    "nunjucks": "^3.2.3",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "clean-webpack-plugin": "^3.0.0",
