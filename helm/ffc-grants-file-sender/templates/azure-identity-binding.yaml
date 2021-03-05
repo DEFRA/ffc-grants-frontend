@@ -1,0 +1,3 @@
+{{- include "ffc-helm-library.azure-identity-binding" (list . "ffc-grants-file-sender.azure-identity-binding") -}}
+{{- define "ffc-grants-file-sender.azure-identity-binding" -}}
+{{- end -}}
