@@ -1,6 +1,6 @@
 const Joi = require('joi')
 
-function createModel (errorMessage,data) {
+function createModel(errorMessage, data) {
   return {
     backLink: '/start',
     radios: {
@@ -15,7 +15,7 @@ function createModel (errorMessage,data) {
         }
       },
       items: [
-        
+
         {
           value: 'Crops for the food industry',
           text: 'Crops for the food industry',
@@ -37,7 +37,7 @@ function createModel (errorMessage,data) {
   }
 }
 
-function createModelNotEligible () {
+function createModelNotEligible() {
   return {
     backLink: '/farming-type',
     messageContent:
@@ -52,7 +52,7 @@ module.exports = [
     handler: (request, h) => {
       const farmingType = request.yar.get('farmingType');
       const data = !!farmingType ? farmingType : null
-      return h.view('farming-type', createModel(null,data))
+      return h.view('farming-type', createModel(null, data))
     }
   },
   {
@@ -66,15 +66,8 @@ module.exports = [
         failAction: (request, h) => h.view('farming-type', createModel('Please select an option')).takeover()
       },
       handler: (request, h) => {
-        if (
-          request.payload.farmingType === 'Crops for the food industry' ||
-          request.payload.farmingType === 'Horticulture'
-        ) {
-          request.yar.set('farmingType', request.payload.farmingType)
-          return h.redirect('./legal-status')
-        }
-
-        return h.view('./not-eligible', createModelNotEligible())
+        request.yar.set('farmingType', request.payload.farmingType)
+        return request.payload.farmingType !== 'Something else' ? h.redirect('./legal-status') : h.view('./not-eligible', createModelNotEligible())
       }
     }
   }

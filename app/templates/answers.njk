@@ -1,0 +1,54 @@
+{% extends '.layout.njk' %}
+
+{% from "govuk/components/panel/macro.njk" import govukPanel %}
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+
+
+{% block beforeContent %}
+  {{ govukBreadcrumbs({
+    items: [
+      {
+        text: "Home",
+        href: "/irrigated-land"
+      },
+      {
+        text: "Check if you can apply for a water resource management grant",
+        href: "/"
+      }
+    ]
+  }) }}
+  {{ govukBackLink({
+    text: "Back",
+    href: "/"
+  }) }}
+{% endblock %}
+
+{% block content %}
+  {{ govukPanel(output) }}
+  <div class="govuk-body">
+    <p>Based on your answers, your project is a medium fit with the funding priorities.</p>
+    <p>The grant is highly competitive and you are competing against other projects.</p>
+
+    <h3 class="govuk-heading-m">What happens next</h3>
+
+    <p>Depending on how well your project fits the funding priorities, you may decide to submit a full application.</p>
+
+    <p>If you submit a full application, we will:</p>
+    </div>
+    <ul class="govuk-list govuk-list--bullet">
+    <li>assess the application against the others</li>
+    <li>consider how well it fits the priorities for funding </li>
+    <li>identify projects that provide the best value for taxpayers' money</li>
+    </ul>
+
+    <p class="govuk-body">If your application is successful, you’ll be sent a funding agreement and can begin work on the project.</p>
+    <div class="govuk-warning-text">
+      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+      <strong class="govuk-warning-text__text">
+        <span class="govuk-warning-text__assistive">You must not start the project</span>
+        You must not start the project<br><br>
+        You will need to make a full application and complete a grant funding agreement before you can start the project.
+      </strong>
+    </div>
+{% endblock %}

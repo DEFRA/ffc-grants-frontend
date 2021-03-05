@@ -1,6 +1,6 @@
 const Joi = require('joi')
 
-function createModel (errorMessage) {
+function createModel (errorMessage,data) {
   return {
     backLink: '/farming-type',
     radios: {
@@ -17,44 +17,56 @@ function createModel (errorMessage) {
       items: [
         {
           value: 'Limited Company',
-          text: 'Limited Company'
+          text: 'Limited Company',
+          checked: isChecked(data,'Limited Company')
         },
         {
           value: 'Partnership',
-          text: 'Partnership'
+          text: 'Partnership',
+          checked: isChecked(data,'Partnership')
         },
         {
           value: 'Sole trader',
-          text: 'Sole trader'
+          text: 'Sole trader',
+          checked: isChecked(data,'Sole trader')
         },
         {
           value: 'Limited Liability Company',
-          text: 'Limited Liability Company'
+          text: 'Limited Liability Company',
+          checked: isChecked(data,'Limited Liability Company')
         },
         {
           value: 'Trust',
-          text: 'Trust'
+          text: 'Trust',
+          checked: isChecked(data,'Trust')
         },
         {
           value: 'Charity',
-          text: 'Charity'
+          text: 'Charity',
+          checked: isChecked(data,'Charity')
         },
         {
           value: 'Community Interest Company',
-          text: 'Community Interest Company'
+          text: 'Community Interest Company',
+          checked: isChecked(data,'Community Interest Company')
         },
         {
           value: 'Public Organisation',
-          text: 'Public Organisation'
+          text: 'Public Organisation',
+          checked: isChecked(data,'Public Organisation')
         },
         {
           value: 'Other',
-          text: 'Other'
+          text: 'Other',
+          checked: isChecked(data,'Other')
         }
       ],
       ...(errorMessage ? { errorMessage: { text: errorMessage } } : {})
     }
   }
+}
+function isChecked(data,option) {
+  return !!data && (data.includes(option))
 }
 
 function createModelNotEligible () {
@@ -69,7 +81,11 @@ module.exports = [
   {
     method: 'GET',
     path: '/legal-status',
-    handler: (request, h) => h.view('legal-status', createModel(null))
+    handler: (request, h) => {
+      const legalStatus = request.yar.get('legalStatus');
+      const data = !!legalStatus ? legalStatus : null
+      return h.view('legal-status', createModel(null,data))
+    }
   },
   {
     method: 'POST',
@@ -83,11 +99,8 @@ module.exports = [
           h.view('legal-status', createModel('Select one option')).takeover()
       },
       handler: (request, h) => {
-        if (request.payload.legalStatus === 'Other') {
-          return h.view('./not-eligible', createModelNotEligible())
-        }
         request.yar.set('legalStatus', request.payload.legalStatus)
-        return h.redirect('./project-details')
+        return (request.payload.legalStatus === 'Other') ? h.view('./not-eligible', createModelNotEligible()): h.redirect('./project-details')
       }
     }
   }
