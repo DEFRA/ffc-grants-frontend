@@ -27,6 +27,9 @@ container:
   readOnlyRootFilesystem: true
   allowPrivilegeEscalation: false
   port: 3000
+  messageQueueHost: dummy
+  fileCreatedTopicAddress: file-created
+  fileCreatedSubscriptionAddress: file-sender
 
 livenessProbe:
   path: /healthz

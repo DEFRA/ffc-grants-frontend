@@ -1,6 +1,6 @@
 {
   "name": "ffc-grants-file-sender",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "FFC Grants file sender microservice",
   "homepage": "https://github.com/DEFRA/ffc-grants-file-sender",
   "main": "app/index.js",
@@ -13,13 +13,15 @@
   "contributors": [],
   "license": "OGL-UK-3.0",
   "dependencies": {
-    "@hapi/hapi": "^20.0.0"
+    "@hapi/hapi": "^20.0.3",
+    "applicationinsights": "^1.8.10",
+    "ffc-messaging": "^2.1.1"
   },
   "devDependencies": {
-    "jest": "^26.4.0",
-    "jest-junit": "^11.1.0",
-    "nodemon": "^2.0.4",
-    "standard": "^14.3.4"
+    "jest": "^26.6.3",
+    "jest-junit": "^12.0.0",
+    "nodemon": "^2.0.7",
+    "standard": "^16.0.3"
   },
   "standard": {
     "globals": [
