@@ -1,6 +1,6 @@
 const Joi = require('joi')
 
-function createModel (errorMessage) {
+function createModel (errorMessage,data) {
   return {
     backLink: '/farming-type',
     radios: {
@@ -17,39 +17,48 @@ function createModel (errorMessage) {
       items: [
         {
           value: 'Limited Company',
-          text: 'Limited Company'
+          text: 'Limited Company',
+          checked: !!data && (data.includes('Limited Company'))
         },
         {
           value: 'Partnership',
-          text: 'Partnership'
+          text: 'Partnership',
+          checked: !!data && (data.includes('Partnership'))
         },
         {
           value: 'Sole trader',
-          text: 'Sole trader'
+          text: 'Sole trader',
+          checked: !!data && (data.includes('Sole trader'))
         },
         {
           value: 'Limited Liability Company',
-          text: 'Limited Liability Company'
+          text: 'Limited Liability Company',
+          checked: !!data && (data.includes('Limited Liability Company'))
         },
         {
           value: 'Trust',
-          text: 'Trust'
+          text: 'Trust',
+          checked: !!data && (data.includes('Trust'))
         },
         {
           value: 'Charity',
-          text: 'Charity'
+          text: 'Charity',
+          checked: !!data && (data.includes('Charity'))
         },
         {
           value: 'Community Interest Company',
-          text: 'Community Interest Company'
+          text: 'Community Interest Company',
+          checked: !!data && (data.includes('Community Interest Company'))
         },
         {
           value: 'Public Organisation',
-          text: 'Public Organisation'
+          text: 'Public Organisation',
+          checked: !!data && (data.includes('Public Organisation'))
         },
         {
           value: 'Other',
-          text: 'Other'
+          text: 'Other',
+          checked: !!data && (data.includes('Other'))
         }
       ],
       ...(errorMessage ? { errorMessage: { text: errorMessage } } : {})
@@ -69,7 +78,11 @@ module.exports = [
   {
     method: 'GET',
     path: '/legal-status',
-    handler: (request, h) => h.view('legal-status', createModel(null))
+    handler: (request, h) => {
+      const legalStatus = request.yar.get('legalStatus');
+      const data = !!legalStatus ? legalStatus : null
+      return h.view('legal-status', createModel(null,data))
+    }
   },
   {
     method: 'POST',
@@ -83,11 +96,8 @@ module.exports = [
           h.view('legal-status', createModel('Select one option')).takeover()
       },
       handler: (request, h) => {
-        if (request.payload.legalStatus === 'Other') {
-          return h.view('./not-eligible', createModelNotEligible())
-        }
         request.yar.set('legalStatus', request.payload.legalStatus)
-        return h.redirect('./project-details')
+        return (request.payload.legalStatus === 'Other') ? h.view('./not-eligible', createModelNotEligible()): h.redirect('./project-details')
       }
     }
   }
