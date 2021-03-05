@@ -66,15 +66,8 @@ module.exports = [
         failAction: (request, h) => h.view('farming-type', createModel('Please select an option')).takeover()
       },
       handler: (request, h) => {
-        if (
-          request.payload.farmingType === 'Crops for the food industry' ||
-          request.payload.farmingType === 'Horticulture'
-        ) {
-          request.yar.set('farmingType', request.payload.farmingType)
-          return h.redirect('./legal-status')
-        }
-
-        return h.view('./not-eligible', createModelNotEligible())
+        request.yar.set('farmingType', request.payload.farmingType)
+       return request.payload.farmingType !== 'Something else' ? h.redirect('./legal-status'): h.view('./not-eligible', createModelNotEligible())
       }
     }
   }

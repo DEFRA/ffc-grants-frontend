@@ -66,7 +66,7 @@ module.exports = [
             handler: (request, h) => {
                 request.yar.set('irrigatedLandCurrent', request.payload.irrigatedLandCurrent)
                 request.yar.set('irrigatedLandTarget', request.payload.irrigatedLandTarget)
-                return h.redirect('./contact-details')
+                return h.redirect('./answers')
             }
         }
     }
