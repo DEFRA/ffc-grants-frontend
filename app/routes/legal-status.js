@@ -18,52 +18,55 @@ function createModel (errorMessage,data) {
         {
           value: 'Limited Company',
           text: 'Limited Company',
-          checked: !!data && (data.includes('Limited Company'))
+          checked: isChecked(data,'Limited Company')
         },
         {
           value: 'Partnership',
           text: 'Partnership',
-          checked: !!data && (data.includes('Partnership'))
+          checked: isChecked(data,'Partnership')
         },
         {
           value: 'Sole trader',
           text: 'Sole trader',
-          checked: !!data && (data.includes('Sole trader'))
+          checked: isChecked(data,'Sole trader')
         },
         {
           value: 'Limited Liability Company',
           text: 'Limited Liability Company',
-          checked: !!data && (data.includes('Limited Liability Company'))
+          checked: isChecked(data,'Limited Liability Company')
         },
         {
           value: 'Trust',
           text: 'Trust',
-          checked: !!data && (data.includes('Trust'))
+          checked: isChecked(data,'Trust')
         },
         {
           value: 'Charity',
           text: 'Charity',
-          checked: !!data && (data.includes('Charity'))
+          checked: isChecked(data,'Charity')
         },
         {
           value: 'Community Interest Company',
           text: 'Community Interest Company',
-          checked: !!data && (data.includes('Community Interest Company'))
+          checked: isChecked(data,'Community Interest Company')
         },
         {
           value: 'Public Organisation',
           text: 'Public Organisation',
-          checked: !!data && (data.includes('Public Organisation'))
+          checked: isChecked(data,'Public Organisation')
         },
         {
           value: 'Other',
           text: 'Other',
-          checked: !!data && (data.includes('Other'))
+          checked: isChecked(data,'Other')
         }
       ],
       ...(errorMessage ? { errorMessage: { text: errorMessage } } : {})
     }
   }
+}
+function isChecked(data,option) {
+  return !!data && (data.includes(option))
 }
 
 function createModelNotEligible () {
