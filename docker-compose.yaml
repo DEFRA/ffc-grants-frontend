@@ -9,3 +9,6 @@ services:
     environment:
       NODE_ENV: production
       SITE_URL: localhost:3000
+      SERVICE_BUS_HOST: ${SERVICE_BUS_HOST:-notset}
+      SERVICE_BUS_PASSWORD: ${SERVICE_BUS_PASSWORD:-notset}
+      SERVICE_BUS_USER: ${SERVICE_BUS_USER:-notset}

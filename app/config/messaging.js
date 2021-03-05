@@ -1,6 +1,20 @@
-module.exports = {
-  address: process.env.EOI_QUEUE_ADDRESS,
-  host: process.env.MESSAGE_QUEUE_HOST,
-  password: process.env.MESSAGE_QUEUE_PASSWORD,
-  username: process.env.MESSAGE_QUEUE_USER
+const sharedConfig = {
+  appInsights: require('applicationinsights'),
+  host: process.env.SERVICE_BUS_HOST,
+  password: process.env.SERVICE_BUS_PASSWORD,
+  username: process.env.SERVICE_BUS_USER,
+  useCredentialChain: process.env.NODE_ENV === 'production'
 }
+
+const msgTypePrefix = 'uk.gov.ffc.grants'
+
+module.exports = {
+  fixmeQueue: {
+    address: process.env.FIXME_QUEUE_ADDRESS,
+    type: FIXME,
+    ...sharedConfig
+  },
+  fixmeMsgType: `${msgTypePrefix}.fixme.fixme`,
+  msgSrc: 'ffc-grants-frontend'
+}
+
