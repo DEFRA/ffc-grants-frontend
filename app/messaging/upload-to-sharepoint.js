@@ -5,8 +5,8 @@ module.exports = async function (msg, fileCreatedReceiver) {
     console.log(body)
     await fileCreatedReceiver.completeMessage(msg)
   } catch (err) {
-    console.err('Unable to process message')
-    console.err(err)
+    console.error('Unable to process message')
+    console.error(err)
     await fileCreatedReceiver.abandonMessage(msg)
   }
 }
