@@ -13,6 +13,5 @@ module.exports = {
     type: 'subscription',
     ...sharedConfig
   },
-  notificationMsgType: 'uk.gov.ffc.grants.file.created',
   msgSrc: 'ffc-grants-file-sender'
 }

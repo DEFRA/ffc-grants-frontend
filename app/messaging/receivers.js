@@ -18,7 +18,7 @@ process.on('SIGINT', async () => {
 })
 
 module.exports = {
-  startFileCreatedReceived: async function (fileCreatedReceived) {
+  startFileCreatedReceiver: async function (fileCreatedReceived) {
     const updateAction = msg => fileCreatedReceived(msg, fileCreatedReceiver)
     fileCreatedReceiver = new MessageReceiver(msgCfg.fileCreatedSubscription, updateAction)
     await fileCreatedReceiver.subscribe()

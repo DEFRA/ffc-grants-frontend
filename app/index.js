@@ -1,8 +1,8 @@
 const server = require('./server')
 
 const init = async () => {
-  const fileCreatedReceivedAction = require('./messaging/upload-to-sharepoint')
-  require('./messaging/receivers').startFileCreatedReceived(fileCreatedReceivedAction)
+  const uploadToSharepointAction = require('./messaging/upload-to-sharepoint')
+  require('./messaging/receivers').startFileCreatedReceiver(uploadToSharepointAction)
 
   await server.start()
   console.log('Server running on %s', server.info.uri)
