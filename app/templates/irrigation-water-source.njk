@@ -25,7 +25,7 @@
   "errorList": [
     {
       "text": errorText,
-      "href": "#project"
+      "href": "#waterSourceCurrent"
     }
   ]
 }) }}
@@ -35,9 +35,9 @@
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
-    <h1 class="govuk-heading-l">Project details</h1>
-      <form method="POST" action="/project-details" novalidate>
-        {{ govukCheckboxes(checkboxes) }}
+      <form method="POST" action="/irrigation-water-source" novalidate>
+        {{ govukCheckboxes(waterSourceCurrent) }}
+        {{ govukCheckboxes(waterSourcePlanned) }}
         {{ govukButton({
           text: "Continue"
         }) }}

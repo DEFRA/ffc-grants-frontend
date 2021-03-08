@@ -53,7 +53,7 @@ describe('Irrigated Land page', () => {
         expect(postResponse.payload).toContain('Enter land irrigated')
     })
 
-    it('should store user response and redirects to answers page', async () => {
+    it('should store user response and redirects to water source page', async () => {
         const postOptions = {
             method: 'POST',
             url: '/irrigated-land',
@@ -62,7 +62,7 @@ describe('Irrigated Land page', () => {
 
         const postResponse = await server.inject(postOptions)
         expect(postResponse.statusCode).toBe(302)
-        expect(postResponse.headers.location).toBe('./answers')
+        expect(postResponse.headers.location).toBe('./irrigation-water-source')
     })
 
     afterEach(async () => {
