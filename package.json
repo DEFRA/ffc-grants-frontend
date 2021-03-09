@@ -1,5 +1,4 @@
 {
-
   "name": "ffc-grants-frontend",
   "version": "1.18.0",
   "description": "Frontend Grants microservice.",
@@ -27,11 +26,13 @@
   "dependencies": {
     "@azure/ms-rest-nodeauth": "^3.0.6",
     "@azure/service-bus": "^1.1.10",
-    "@hapi/hapi": "^20.0.0",
+    "@hapi/hapi": "^20.0.3",
     "@hapi/inert": "^6.0.2",
     "@hapi/vision": "^6.0.1",
     "@hapi/wreck": "^17.0.0",
     "@hapi/yar": "^10.1.0",
+    "applicationinsights": "^1.8.10",
+    "ffc-messaging": "^2.1.1",
     "govuk-frontend": "^3.8.1",
     "joi": "^17.2.1",
     "nunjucks": "^3.2.3"
@@ -41,15 +42,15 @@
     "css-loader": "^4.2.2",
     "file-loader": "^6.1.0",
     "html-webpack-plugin": "^4.4.1",
-    "jest": "^26.4.0",
-    "jest-junit": "^11.1.0",
+    "jest": "^26.6.3",
+    "jest-junit": "^12.0.0",
     "mini-css-extract-plugin": "^0.11.0",
-    "nodemon": "^2.0.4",
+    "nodemon": "^2.0.7",
     "npm-run-all": "^4.1.5",
     "resolve-url-loader": "^3.1.2",
     "sass": "^1.26.10",
     "sass-loader": "^10.0.2",
-    "standard": "^14.3.4",
+    "standard": "^16.0.3",
     "style-loader": "^1.2.1",
     "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12"

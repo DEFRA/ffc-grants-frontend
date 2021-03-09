@@ -8,4 +8,8 @@ data:
   {{- else }}
   SITE_URL: "{{ .Values.ingress.endpoint }}.{{ .Values.ingress.server }}"
   {{- end }}
+  SERVICE_BUS_HOST: {{ quote .Values.container.messageQueueHost }}
+  ELIGIBILITY_ANSWERS_QUEUE_ADDRESS: {{ quote .Values.container.eligibilityAnswersQueueAddress }}
+  PROJECT_DETAILS_QUEUE_ADDRESS: {{ quote .Values.container.projectDetailsQueueAddress }}
+  CONTACT_DETAILS_QUEUE_ADDRESS: {{ quote .Values.container.contactDetailsQueueAddress }}
 {{- end -}}
