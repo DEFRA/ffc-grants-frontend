@@ -1,0 +1,5 @@
+resources:
+  queues:
+    - name: eligibilityAnswers
+    - name: projectDetails
+    - name: contactDetails

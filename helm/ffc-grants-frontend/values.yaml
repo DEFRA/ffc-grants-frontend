@@ -6,6 +6,10 @@ image: ffc-grants-frontend
 
 labels: {}
 
+azureIdentity:
+  clientID: not-a-real-clientID
+  resourceID: not-a-real-resourceID
+
 containerConfigMap:
   name: ffc-grants-frontend-config-map
 
@@ -27,6 +31,10 @@ container:
   readOnlyRootFilesystem: true
   allowPrivilegeEscalation: false
   port: 3000
+  messageQueueHost: dummy
+  eligibilityAnswersQueueAddress: eligibility-answers
+  projectDetailsQueueAddress: project-details
+  contactDetailsQueueAddress: contact-details
 
 livenessProbe:
   path: /healthz
