@@ -3,7 +3,7 @@ function isChecked(data, option) {
 }
 
 function setLabelData(data,Labeldata) {
-    return label = {
+    return  {
         value: Labeldata,
         text: Labeldata,
         checked: isChecked(data,Labeldata)
