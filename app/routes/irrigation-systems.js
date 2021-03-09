@@ -20,32 +20,32 @@ function createModel(errorMessage, errorSummary, currentData, plannedData) {
                 {
                     value: "Trickle",
                     text: "Trickle",
-                    checked: !!currentData && (currentData.includes('Trickle'))
+                    checked: isChecked(currentData,'Trickle')
                 },
                 {
                     value: "Boom irrigator",
                     text: "Boom irrigator",
-                    checked: !!currentData && (currentData.includes('Boom irrigator'))
+                    checked: isChecked(currentData,'Boom irrigator')
                 },
                 {
                     value: "Ebb and flood or capillary bed",
                     text: "Ebb and flood or capillary bed",
-                    checked: !!currentData && (currentData.includes('Ebb and flood or capillary bed'))
+                    checked: isChecked(currentData,'Ebb and flood or capillary bed')
                 },
                 {
                     value: "Sprinklers or mist",
                     text: "Sprinklers or mist",
-                    checked: !!currentData && (currentData.includes('Sprinklers or mist'))
+                    checked: isChecked(currentData,'Sprinklers or mist')
                 },
                 {
                     value: "Rain gun",
                     text: "Rain gun",
-                    checked: !!currentData && (currentData.includes('Rain gun'))
+                    checked: isChecked(currentData,'Rain gun')
                 },
                 {
                     value: "Not currently irrigating",
                     text: "Not currently irrigating",
-                    checked: !!currentData && (currentData.includes('Not currently irrigating'))
+                    checked: isChecked(currentData,'Not currently irrigating')
                 }
             ],
             ...(errorMessage && !currentData ? { errorMessage: { text: errorMessage } } : {})
@@ -65,32 +65,36 @@ function createModel(errorMessage, errorSummary, currentData, plannedData) {
                 {
                     value: "Trickle",
                     text: "Trickle",
-                    checked: !!plannedData && (plannedData.includes('Trickle'))
+                    checked: isChecked(plannedData,'Trickle')
                 },
                 {
                     value: "Boom irrigator",
                     text: "Boom irrigator",
-                    checked: !!plannedData && (plannedData.includes('Boom irrigator'))
+                    checked: isChecked(plannedData,'Boom irrigator')
                 },
                 {
                     value: "Ebb and flood or capillary bed",
                     text: "Ebb and flood or capillary bed",
-                    checked: !!plannedData && (plannedData.includes('Ebb and flood or capillary bed'))
+                    checked: isChecked(plannedData,'Ebb and flood or capillary bed')
                 },
                 {
                     value: "Sprinklers or mist",
                     text: "Sprinklers or mist",
-                    checked: !!plannedData && (plannedData.includes('Sprinklers or mist'))
+                    checked: isChecked(plannedData,'Sprinklers or mist')
                 },
                 {
                     value: "Rain gun",
                     text: "Rain gun",
-                    checked: !!plannedData && (plannedData.includes('Rain gun'))
+                    checked: isChecked(plannedData,'Rain gun')
                 }
             ],
             ...(errorMessage && !plannedData ? { errorMessage: { text: errorMessage } } : {})
         }
     }
+}
+
+function isChecked(data, option) {
+    return !!data && (data.includes(option))
 }
 
 module.exports = [
