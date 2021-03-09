@@ -1,5 +1,5 @@
 const Joi = require('joi')
-isChecked = require('../helpers/helper-functions')
+let isChecked = require('../helpers/helper-functions')
 
 function createModel(errorMessage, errorSummary, data) {
     return {
