@@ -22,27 +22,27 @@ function createModel(errorMessage, errorSummary, data) {
                 {
                     value: "Introduce or expand high value crops",
                     text: "Introduce or expand high value crops",
-                    checked: isChecked(data,'Introduce or expand high value crops')
+                    checked: isChecked(data, 'Introduce or expand high value crops')
                 },
                 {
                     value: "Introduce or expand protected crops",
                     text: "Introduce or expand protected crops",
-                    checked: isChecked(data,'Introduce or expand protected crops')
+                    checked: isChecked(data, 'Introduce or expand protected crops')
                 },
                 {
                     value: "Increased yield per hectare",
                     text: "Increased yield per hectare",
-                    checked: isChecked(data,'Increased yield per hectare')
+                    checked: isChecked(data, 'Increased yield per hectare')
                 },
                 {
                     value: "Improved quality",
                     text: "Improved quality",
-                    checked: isChecked(data,'Improved quality')
+                    checked: isChecked(data, 'Improved quality')
                 },
                 {
                     value: "Maintain productivity",
                     text: "Maintain productivity",
-                    checked: isChecked(data,'Maintain productivity')
+                    checked: isChecked(data, 'Maintain productivity')
                 }
             ],
             ...(errorMessage ? { errorMessage: { text: errorMessage } } : {})
