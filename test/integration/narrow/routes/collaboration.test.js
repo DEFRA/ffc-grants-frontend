@@ -33,7 +33,7 @@ describe('Collaboration page', () => {
         const postOptions = {
             method: 'POST',
             url: '/collaboration',
-            payload: { irrigatedCrops: 'some crop' }
+            payload: { collaboration: 'some fake data' }
         }
 
         const postResponse = await server.inject(postOptions)
