@@ -1,7 +1,5 @@
-const { any } = require('joi');
 const Joi = require('joi')
 let { setLabelData } = require('../helpers/helper-functions')
-
 
 function createModel(errorMessage, errorSummary, currentData, plannedData) {
     return {
@@ -38,11 +36,11 @@ function createModel(errorMessage, errorSummary, currentData, plannedData) {
                 }
             },
             items: [
-                    setLabelData (plannedData, 'Peak flow surface water'),
-                    setLabelData (plannedData, 'Bore hole / aquifer'),
-                    setLabelData (plannedData, 'Rain water harvesting'),
-                    setLabelData (plannedData, 'Summer water surface abstraction'),
-                    setLabelData (plannedData, 'Mains')
+                setLabelData(plannedData, 'Peak flow surface water'),
+                setLabelData(plannedData, 'Bore hole / aquifer'),
+                setLabelData(plannedData, 'Rain water harvesting'),
+                setLabelData(plannedData, 'Summer water surface abstraction'),
+                setLabelData(plannedData, 'Mains')
             ],
             ...(errorMessage && (!plannedData || plannedData.length > 2) ? { errorMessage: { text: errorMessage } } : {})
         }

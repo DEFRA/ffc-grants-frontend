@@ -1,6 +1,7 @@
 const Joi = require('joi')
+let { setLabelData } = require('../helpers/helper-functions')
 
-function createModel (errorMessage,data) {
+function createModel(errorMessage, data) {
   return {
     backLink: '/farming-type',
     radios: {
@@ -15,61 +16,22 @@ function createModel (errorMessage,data) {
         }
       },
       items: [
-        {
-          value: 'Limited Company',
-          text: 'Limited Company',
-          checked: isChecked(data,'Limited Company')
-        },
-        {
-          value: 'Partnership',
-          text: 'Partnership',
-          checked: isChecked(data,'Partnership')
-        },
-        {
-          value: 'Sole trader',
-          text: 'Sole trader',
-          checked: isChecked(data,'Sole trader')
-        },
-        {
-          value: 'Limited Liability Company',
-          text: 'Limited Liability Company',
-          checked: isChecked(data,'Limited Liability Company')
-        },
-        {
-          value: 'Trust',
-          text: 'Trust',
-          checked: isChecked(data,'Trust')
-        },
-        {
-          value: 'Charity',
-          text: 'Charity',
-          checked: isChecked(data,'Charity')
-        },
-        {
-          value: 'Community Interest Company',
-          text: 'Community Interest Company',
-          checked: isChecked(data,'Community Interest Company')
-        },
-        {
-          value: 'Public Organisation',
-          text: 'Public Organisation',
-          checked: isChecked(data,'Public Organisation')
-        },
-        {
-          value: 'Other',
-          text: 'Other',
-          checked: isChecked(data,'Other')
-        }
+        setLabelData(data, 'Limited Company'),
+        setLabelData(data, 'Partnership'),
+        setLabelData(data, 'Sole trader'),
+        setLabelData(data, 'Limited Liability Company'),
+        setLabelData(data, 'Trust'),
+        setLabelData(data, 'Charity'),
+        setLabelData(data, 'Community Interest Company'),
+        setLabelData(data, 'Public Organisation'),
+        setLabelData(data, 'Other')
       ],
       ...(errorMessage ? { errorMessage: { text: errorMessage } } : {})
     }
   }
 }
-function isChecked(data,option) {
-  return !!data && (data.includes(option))
-}
 
-function createModelNotEligible () {
+function createModelNotEligible() {
   return {
     backLink: '/legal-status',
     messageContent:
@@ -84,7 +46,7 @@ module.exports = [
     handler: (request, h) => {
       const legalStatus = request.yar.get('legalStatus');
       const data = !!legalStatus ? legalStatus : null
-      return h.view('legal-status', createModel(null,data))
+      return h.view('legal-status', createModel(null, data))
     }
   },
   {
@@ -100,7 +62,7 @@ module.exports = [
       },
       handler: (request, h) => {
         request.yar.set('legalStatus', request.payload.legalStatus)
-        return (request.payload.legalStatus === 'Other') ? h.view('./not-eligible', createModelNotEligible()): h.redirect('./project-details')
+        return (request.payload.legalStatus === 'Other') ? h.view('./not-eligible', createModelNotEligible()) : h.redirect('./project-details')
       }
     }
   }
