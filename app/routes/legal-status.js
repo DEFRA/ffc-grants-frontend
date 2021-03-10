@@ -15,17 +15,8 @@ function createModel(errorMessage, data) {
           classes: 'govuk-fieldset__legend--l'
         }
       },
-      items: [
-        setLabelData(data, 'Limited Company'),
-        setLabelData(data, 'Partnership'),
-        setLabelData(data, 'Sole trader'),
-        setLabelData(data, 'Limited Liability Company'),
-        setLabelData(data, 'Trust'),
-        setLabelData(data, 'Charity'),
-        setLabelData(data, 'Community Interest Company'),
-        setLabelData(data, 'Public Organisation'),
-        setLabelData(data, 'Other')
-      ],
+      items: 
+        setLabelData(data, ['Limited Company','Partnership', 'Sole trader', 'Limited Liability Company','Trust', 'Charity','Community Interest Company','Public Organisation','Other']),
       ...(errorMessage ? { errorMessage: { text: errorMessage } } : {})
     }
   }
