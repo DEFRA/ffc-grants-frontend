@@ -1,5 +1,5 @@
 const Joi = require('joi')
-let { isChecked } = require('../helpers/helper-functions')
+let { setLabelData } = require('../helpers/helper-functions')
 
 function createModel(errorMessage, errorSummary, data) {
     return {
@@ -18,33 +18,7 @@ function createModel(errorMessage, errorSummary, data) {
             hint: {
                 text: "Productivity is about how much is produced relative to inputs (eg increased yield for the same inputs or the same yield with lower inputs)."
             },
-            items: [
-                {
-                    value: "Introduce or expand high value crops",
-                    text: "Introduce or expand high value crops",
-                    checked: isChecked(data, 'Introduce or expand high value crops')
-                },
-                {
-                    value: "Introduce or expand protected crops",
-                    text: "Introduce or expand protected crops",
-                    checked: isChecked(data, 'Introduce or expand protected crops')
-                },
-                {
-                    value: "Increased yield per hectare",
-                    text: "Increased yield per hectare",
-                    checked: isChecked(data, 'Increased yield per hectare')
-                },
-                {
-                    value: "Improved quality",
-                    text: "Improved quality",
-                    checked: isChecked(data, 'Improved quality')
-                },
-                {
-                    value: "Maintain productivity",
-                    text: "Maintain productivity",
-                    checked: isChecked(data, 'Maintain productivity')
-                }
-            ],
+            items: setLabelData(data, ['Introduce or expand high value crops', 'Introduce or expand protected crops', 'Increased yield per hectare', 'Improved quality', 'Maintain productivity']),
             ...(errorMessage ? { errorMessage: { text: errorMessage } } : {})
         }
     }
@@ -86,7 +60,6 @@ module.exports = [
                             ))
                         .takeover()
                 }
-
                 request.yar.set('productivity', request.payload.productivity)
                 return h.redirect('./collaboration')
 

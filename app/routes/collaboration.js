@@ -16,12 +16,10 @@ function createModel(errorMessage, data) {
                 }
             },
             hint: {
-                text: "If you intend to supply water via a water sharing agreement as a result of this project."
+                text:
+                    'If you intend to supply water via a water sharing agreement as a result of this project.'
             },
-            items: [
-                setLabelData(data, 'Yes'),
-                setLabelData(data,'No') ,
-            ],
+            items: setLabelData(data, ['Yes', 'No']),
             ...(errorMessage ? { errorMessage: { text: errorMessage } } : {})
         }
     }
@@ -32,7 +30,7 @@ module.exports = [
         method: 'GET',
         path: '/collaboration',
         handler: (request, h) => {
-            const collaboration = request.yar.get('collaboration');
+            const collaboration = request.yar.get('collaboration')
             const data = !!collaboration ? collaboration : null
             return h.view('collaboration', createModel(null, data))
         }
@@ -45,7 +43,10 @@ module.exports = [
                 payload: Joi.object({
                     collaboration: Joi.string().required()
                 }),
-                failAction: (request, h) => h.view('collaboration', createModel('Please select an option')).takeover()
+                failAction: (request, h) =>
+                    h
+                        .view('collaboration', createModel('Please select an option'))
+                        .takeover()
             },
             handler: (request, h) => {
                 request.yar.set('collaboration', request.payload.collaboration)
