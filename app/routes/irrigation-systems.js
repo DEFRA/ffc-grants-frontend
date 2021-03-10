@@ -1,5 +1,7 @@
 const { any } = require('joi');
 const Joi = require('joi')
+let { setLabelData } = require('../helpers/helper-functions')
+
 
 function createModel(errorMessage, errorSummary, currentData, plannedData) {
     return {
@@ -16,37 +18,12 @@ function createModel(errorMessage, errorSummary, currentData, plannedData) {
                 }
             },
             items: [
-
-                {
-                    value: "Trickle",
-                    text: "Trickle",
-                    checked: isChecked(currentData,'Trickle')
-                },
-                {
-                    value: "Boom irrigator",
-                    text: "Boom irrigator",
-                    checked: isChecked(currentData,'Boom irrigator')
-                },
-                {
-                    value: "Ebb and flood or capillary bed",
-                    text: "Ebb and flood or capillary bed",
-                    checked: isChecked(currentData,'Ebb and flood or capillary bed')
-                },
-                {
-                    value: "Sprinklers or mist",
-                    text: "Sprinklers or mist",
-                    checked: isChecked(currentData,'Sprinklers or mist')
-                },
-                {
-                    value: "Rain gun",
-                    text: "Rain gun",
-                    checked: isChecked(currentData,'Rain gun')
-                },
-                {
-                    value: "Not currently irrigating",
-                    text: "Not currently irrigating",
-                    checked: isChecked(currentData,'Not currently irrigating')
-                }
+                setLabelData(currentData, 'Trickle'),
+                setLabelData(currentData, 'Boom irrigator'),
+                setLabelData(currentData, 'Ebb and flood or capillary bed'),
+                setLabelData(currentData, 'Sprinklers or mist'),
+                setLabelData(currentData, 'Rain gun'),
+                setLabelData(currentData, 'Not currently irrigating')
             ],
             ...(errorMessage && !currentData ? { errorMessage: { text: errorMessage } } : {})
         },
@@ -61,41 +38,17 @@ function createModel(errorMessage, errorSummary, currentData, plannedData) {
                 }
             },
             items: [
-
-                {
-                    value: "Trickle",
-                    text: "Trickle",
-                    checked: isChecked(plannedData,'Trickle')
-                },
-                {
-                    value: "Boom irrigator",
-                    text: "Boom irrigator",
-                    checked: isChecked(plannedData,'Boom irrigator')
-                },
-                {
-                    value: "Ebb and flood or capillary bed",
-                    text: "Ebb and flood or capillary bed",
-                    checked: isChecked(plannedData,'Ebb and flood or capillary bed')
-                },
-                {
-                    value: "Sprinklers or mist",
-                    text: "Sprinklers or mist",
-                    checked: isChecked(plannedData,'Sprinklers or mist')
-                },
-                {
-                    value: "Rain gun",
-                    text: "Rain gun",
-                    checked: isChecked(plannedData,'Rain gun')
-                }
+                setLabelData(plannedData, 'Trickle'),
+                setLabelData(plannedData, 'Boom irrigator'),
+                setLabelData(plannedData, 'Ebb and flood or capillary bed'),
+                setLabelData(plannedData, 'Sprinklers or mist'),
+                setLabelData(plannedData, 'Rain gun'),
             ],
             ...(errorMessage && !plannedData ? { errorMessage: { text: errorMessage } } : {})
         }
     }
 }
 
-function isChecked(data, option) {
-    return !!data && (data.includes(option))
-}
 
 module.exports = [
     {
@@ -141,7 +94,7 @@ module.exports = [
                 }
 
                 request.yar.set('irrigationCurrent', request.payload.irrigationCurrent)
-                request.yar.set('irrigationPlanned', request.payload.irrigationCurrent)
+                request.yar.set('irrigationPlanned', request.payload.irrigationPlanned)
                 return h.redirect('./productivity')
 
             }

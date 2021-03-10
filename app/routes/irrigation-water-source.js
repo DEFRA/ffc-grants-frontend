@@ -1,5 +1,7 @@
 const { any } = require('joi');
 const Joi = require('joi')
+let { setLabelData } = require('../helpers/helper-functions')
+
 
 function createModel(errorMessage, errorSummary, currentData, plannedData) {
     return {
@@ -16,36 +18,12 @@ function createModel(errorMessage, errorSummary, currentData, plannedData) {
                 }
             },
             items: [
-                {
-                    value: "Peak flow surface water",
-                    text: "Peak flow surface water",
-                    checked: !!currentData && (currentData.includes('Peak flow surface water'))
-                },
-                {
-                    value: "Bore hole / aquifer",
-                    text: "Bore hole / aquifer",
-                    checked: !!currentData && (currentData.includes('Bore hole / aquifer'))
-                },
-                {
-                    value: "Rain water harvesting",
-                    text: "Rain water harvesting",
-                    checked: !!currentData && (currentData.includes('Rain water harvesting'))
-                },
-                {
-                    value: "Summer water surface abstraction",
-                    text: "Summer water surface abstraction",
-                    checked: !!currentData && (currentData.includes('Summer water surface abstraction'))
-                },
-                {
-                    value: "Mains",
-                    text: "Mains",
-                    checked: !!currentData && (currentData.includes('Mains'))
-                },
-                {
-                    value: "Not currently irrigating",
-                    text: "Not currently irrigating",
-                    checked: !!currentData && (currentData.includes('Not currently irrigating'))
-                }
+                setLabelData(currentData, 'Peak flow surface water'),
+                setLabelData(currentData, 'Bore hole / aquifer'),
+                setLabelData(currentData, 'Rain water harvesting'),
+                setLabelData(currentData, 'Summer water surface abstraction'),
+                setLabelData(currentData, 'Mains'),
+                setLabelData(currentData, 'Not currently irrigating')
             ],
             ...(errorMessage && (!currentData || currentData.length > 2) ? { errorMessage: { text: errorMessage } } : {})
         },
@@ -60,31 +38,11 @@ function createModel(errorMessage, errorSummary, currentData, plannedData) {
                 }
             },
             items: [
-                {
-                    value: "Peak flow surface water",
-                    text: "Peak flow surface water",
-                    checked: !!plannedData && (plannedData.includes('Peak flow surface water'))
-                },
-                {
-                    value: "Bore hole / aquifer",
-                    text: "Bore hole / aquifer",
-                    checked: !!plannedData && (plannedData.includes('Bore hole / aquifer'))
-                },
-                {
-                    value: "Rain water harvesting",
-                    text: "Rain water harvesting",
-                    checked: !!plannedData && (plannedData.includes('Rain water harvesting'))
-                },
-                {
-                    value: "Summer water surface abstraction",
-                    text: "Summer water surface abstraction",
-                    checked: !!plannedData && (plannedData.includes('Summer water surface abstraction'))
-                },
-                {
-                    value: "Mains",
-                    text: "Mains",
-                    checked: !!plannedData && (plannedData.includes('Mains'))
-                }
+                    setLabelData (plannedData, 'Peak flow surface water'),
+                    setLabelData (plannedData, 'Bore hole / aquifer'),
+                    setLabelData (plannedData, 'Rain water harvesting'),
+                    setLabelData (plannedData, 'Summer water surface abstraction'),
+                    setLabelData (plannedData, 'Mains')
             ],
             ...(errorMessage && (!plannedData || plannedData.length > 2) ? { errorMessage: { text: errorMessage } } : {})
         }
@@ -123,19 +81,19 @@ module.exports = [
 
                 if (typeof request.payload.waterSourceCurrent === 'string') {
                     waterSourceCurrent.push(request.payload.waterSourceCurrent)
-                } else waterSourceCurrent  = request.payload.waterSourceCurrent
-                
+                } else waterSourceCurrent = request.payload.waterSourceCurrent
+
                 if (typeof request.payload.waterSourcePlanned === 'string') {
                     waterSourcePlanned.push(request.payload.waterSourcePlanned)
-                } else   waterSourcePlanned  = request.payload.waterSourcePlanned
-                
+                } else waterSourcePlanned = request.payload.waterSourcePlanned
+
                 if (waterSourceCurrent.length > 2 || waterSourcePlanned.length > 2) {
                     return h.view('irrigation-water-source', createModel('Only one or two selections are allowed', 'Only one or two selections are allowed', waterSourceCurrent, waterSourcePlanned))
                         .takeover()
                 }
 
                 request.yar.set('waterSourceCurrent', request.payload.waterSourceCurrent)
-                request.yar.set('waterSourcePlanned', request.payload.waterSourceCurrent)
+                request.yar.set('waterSourcePlanned', request.payload.waterSourcePlanned)
                 return h.redirect('./irrigation-systems')
 
             }
