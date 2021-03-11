@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+
+set -e
+projectRoot="$(a="/$0"; a=${a%/*}; a=${a:-.}; a=${a#/}/; cd "$a/.." || return; pwd)"
+
+cd "${projectRoot}"
+# Guarantee clean environment
+docker-compose -f docker-compose.yaml -f docker-compose.pa11y.yaml -p ffc-grants-frontend-pa11y-test down -v
+# Run Pa11y test
+docker-compose -f docker-compose.yaml -f docker-compose.pa11y.yaml run --rm pa11y
