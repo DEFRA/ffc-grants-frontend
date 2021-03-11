@@ -1,4 +1,5 @@
 const Joi = require('joi')
+let { setLabelData } = require('../helpers/helper-functions')
 
 function createModel(errorMessage, errorSummary, data) {
     return {
@@ -14,28 +15,7 @@ function createModel(errorMessage, errorSummary, data) {
                     classes: "govuk-fieldset__legend--m"
                 }
             },
-            items: [
-                {
-                    value: "Introduce irrigation",
-                    text: "Introduce irrigation",
-                    checked: !!data && (data.includes('Introduce irrigation'))
-                },
-                {
-                    value: "Increase irrigation",
-                    text: "Increase irrigation",
-                    checked: !!data && (data.includes('Increase irrigation'))
-                },
-                {
-                    value: "Improve irrigation efficiency",
-                    text: "Improve irrigation efficiency",
-                    checked: !!data && (data.includes('Improve irrigation efficiency'))
-                },
-                {
-                    value: "Change water source",
-                    text: "Change water source",
-                    checked: !!data && (data.includes('Change water source'))
-                }
-            ],
+            items: setLabelData(data, ["Change water source", "Improve irrigation efficiency", "Increase irrigation", "Introduce irrigation"]),
             ...(errorMessage ? { errorMessage: { text: errorMessage } } : {})
         }
     }
@@ -49,8 +29,8 @@ module.exports = [
             const project = request.yar.get('project');
             const data = !!project ?
                 project : null
-            
-                return h.view('project', createModel(null, null, data))
+
+            return h.view('project', createModel(null, null, data))
         }
     },
     {
@@ -63,13 +43,12 @@ module.exports = [
                 }),
                 failAction: (request, h) =>
                     h
-                            .view('project', createModel('Please select an option', null, null))
-                            .takeover()
+                        .view('project', createModel('Please select an option', null, null))
+                        .takeover()
             },
             handler: (request, h) => {
 
-                if (Array.isArray(request.payload.project) && request.payload.project.length > 2)
-                {
+                if (Array.isArray(request.payload.project) && request.payload.project.length > 2) {
                     return h
                         .view(
                             'project',
