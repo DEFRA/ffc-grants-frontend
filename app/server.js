@@ -3,10 +3,19 @@ const nunjucks = require('nunjucks')
 const vision = require('@hapi/vision')
 const path = require('path')
 const inert = require('@hapi/inert')
+const catbox = require('@hapi/catbox-redis')
+const cacheConfig = require('./config/cache')
 
 async function createServer () {
   const server = hapi.server({
-    port: process.env.PORT
+    port: process.env.PORT,
+    cache: [{
+      name: 'session',
+      provider: {
+        constructor: catbox,
+        options: cacheConfig.catboxOptions
+      }
+    }]
   })
 
   await server.register(inert)
@@ -17,7 +26,11 @@ async function createServer () {
     {
       plugin: require('@hapi/yar'),
       options: {
+        maxCookieSize: 0,
         storeBlank: true,
+        cache: {
+          cache: 'session'
+        },
         cookieOptions: {
           password: 'this is just a test, this is just a test, this is just a test',
           isSecure: false // doesn't work locally if set to true
