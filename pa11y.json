@@ -1,8 +1,8 @@
 {
     "defaults": {
       "standard": "WCAG2AA",
-      "timeout": 10000,
-      "wait": 5000,
+      "timeout": 20000,
+      "wait": 10000,
       "chromeLaunchConfig": {
         "args": [
           "--no-sandbox",
@@ -23,10 +23,9 @@
       "http://ffc-grants-frontend:3000/irrigated-crops",
       "http://ffc-grants-frontend:3000/irrigated-land",
       "http://ffc-grants-frontend:3000/irrigation-water-source",
-      "http://ffc-grants-frontend:3000/irrigation-systems",     
+      "http://ffc-grants-frontend:3000/irrigation-systems",
       "http://ffc-grants-frontend:3000/productivity",
       "http://ffc-grants-frontend:3000/collaboration"
-      
+
     ]
   }
-  
