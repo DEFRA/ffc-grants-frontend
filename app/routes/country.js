@@ -64,16 +64,19 @@ module.exports = [
       validate: {
         payload: Joi.object({
           inEngland: Joi.string().required(),
-          project_postcode: Joi.string()
+          project_postcode: Joi.string().allow('')
         }),
         failAction: (request, h) => {
           console.log(request.payload, 'AAAAAAAA')
           console.log(typeof request.payload.inEngland, 'BBB')
-          return h.view('country', createModel('Select yes if the planned project is in England')).takeover()
+          return h.view('country', createModel('You must select an option')).takeover()
         }
       },
       handler: (request, h) => {
         if (request.payload.inEngland === 'Yes') {
+          if (request.payload.project_postcode.trim() === '') {
+            return h.view('country', createModel('If yes, please type in postcode')).takeover()
+          }
           request.yar.set('inEngland', request.payload.inEngland)
           return h.redirect('./project-details')
         }
