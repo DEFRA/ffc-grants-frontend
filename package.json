@@ -1,6 +1,6 @@
 {
   "name": "ffc-grants-frontend",
-  "version": "1.20.1",
+  "version": "1.21.1",
   "description": "Frontend Grants microservice.",
   "main": "app/index.js",
   "scripts": {
@@ -35,7 +35,8 @@
     "ffc-messaging": "^2.1.1",
     "govuk-frontend": "^3.8.1",
     "joi": "^17.2.1",
-    "nunjucks": "^3.2.3"
+    "nunjucks": "^3.2.3",
+    "pa11y": "^5.3.0"
   },
   "devDependencies": {
     "clean-webpack-plugin": "^3.0.0",
