@@ -4,6 +4,9 @@
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/header/macro.njk" import govukHeader %}
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+
+
 
 {% block header %}
   {{ govukHeader({
@@ -20,7 +23,21 @@
   }) }}
 {% endblock %}
 
+
+
 {% block content %}
+
+{% set postCodeHtml %}
+{{ govukInput({
+  id: "postCode",
+  name: "postCode",
+  classes: "govuk-!-width-one-third",
+  label: {
+    text: "In which postcode will the project take place?"
+  }
+}) }}
+{% endset %}
+
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <form method="POST" action="/country" novalidate>

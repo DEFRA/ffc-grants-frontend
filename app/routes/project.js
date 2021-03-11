@@ -2,7 +2,7 @@ const Joi = require('joi')
 
 function createModel(errorMessage, errorSummary, data) {
     return {
-        backLink: '/legal-status',
+        backLink: '/country',
         ...(errorSummary ? { errorText: errorSummary } : {}),
         checkboxes: {
             idPrefix: "project",

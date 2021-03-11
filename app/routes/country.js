@@ -1,27 +1,35 @@
 const Joi = require('joi')
+let { isChecked } = require('../helpers/helper-functions')
 
-function createModel (errorMessage) {
+const postCode = `<label class="govuk-label" for="project_postcode">
+Enter Postcode</label><input class="govuk-input govuk-!-width-one-third" id="project_postcode" name="project_postcode">`
+
+function createModel(errorMessage, data) {
   return {
-    backLink: '/arable',
+    backLink: 'legal-status',
     radios: {
-      classes: 'govuk-radios--inline',
       idPrefix: 'inEngland',
       name: 'inEngland',
       fieldset: {
         legend: {
           text: 'Is the planned project in England?',
           isPageHeading: true,
-          classes: 'govuk-fieldset__legend--l'
+          classes: 'govuk-fieldset__legend--l',
         }
       },
       items: [
         {
-          value: 'yes',
-          text: 'Yes'
+          value: 'Yes',
+          text: 'Yes',
+          conditional: {
+            html: postCode
+          },
+          checked: isChecked(data, 'Yes')
         },
         {
-          value: 'no',
-          text: 'No'
+          value: 'No',
+          text: 'No',
+          checked: isChecked(data, 'No')
         }
       ],
       ...(errorMessage ? { errorMessage: { text: errorMessage } } : {})
@@ -29,7 +37,7 @@ function createModel (errorMessage) {
   }
 }
 
-function createModelNotEligible () {
+function createModelNotEligible() {
   return {
     backLink: '/country',
     sentences: [
@@ -43,7 +51,11 @@ module.exports = [
   {
     method: 'GET',
     path: '/country',
-    handler: (request, h) => h.view('country', createModel(null))
+    handler: (request, h) => {
+      const inEngland = request.yar.get('inEngland')
+      const data = !!inEngland ? inEngland : null
+      return h.view('country', createModel(null, data))
+    }
   },
   {
     method: 'POST',
@@ -51,14 +63,19 @@ module.exports = [
     options: {
       validate: {
         payload: Joi.object({
-          inEngland: Joi.string().required()
+          inEngland: Joi.string().required(),
+          project_postcode: Joi.string()
         }),
-        failAction: (request, h) => h.view('country', createModel('Select yes if the planned project is in England')).takeover()
+        failAction: (request, h) => {
+          console.log(request.payload, 'AAAAAAAA')
+          console.log(typeof request.payload.inEngland, 'BBB')
+          return h.view('country', createModel('Select yes if the planned project is in England')).takeover()
+        }
       },
       handler: (request, h) => {
-        if (request.payload.inEngland === 'yes') {
+        if (request.payload.inEngland === 'Yes') {
           request.yar.set('inEngland', request.payload.inEngland)
-          return h.redirect('./business')
+          return h.redirect('./project-details')
         }
 
         return h.view('not-eligible', createModelNotEligible())
