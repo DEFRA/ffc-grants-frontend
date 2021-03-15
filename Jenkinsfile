@@ -55,10 +55,6 @@
         test.changeOwnershipOfWorkspace(nodeDevelopmentImage, containerSrcFolder)
       }
 
-      stage('Clean up resources') {
-        provision.deleteBuildResources(repoName, pr)
-      }
-
       if (config.containsKey('finallyClosure')) {
         config['finallyClosure']()
       }

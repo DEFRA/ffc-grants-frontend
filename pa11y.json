@@ -21,6 +21,10 @@
         "timeout": 10000
       },
       {
+        "url": "http://ffc-grants-frontend:3000/farming-type",
+        "timeout": 10000
+      },
+      {
         "url": "http://ffc-grants-frontend:3000/collaboration",
         "timeout": 10000
       }
