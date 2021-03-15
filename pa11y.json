@@ -2,15 +2,13 @@
     "defaults": {
       "standard": "WCAG2AA",
       "timeout": 10000,
-      "concurrency": 2,
       "wait": 5000,
       "chromeLaunchConfig": {
         "args": [
           "--no-sandbox",
           "--disable-dev-shm-usage"
         ],
-        "executablePath": "/usr/bin/chromium-browser",
-        "ignoreHTTPSErrors": true
+        "executablePath": "/usr/bin/chromium-browser"
       },
       "hideElements": [
         ".govuk-header__logotype-crown",
