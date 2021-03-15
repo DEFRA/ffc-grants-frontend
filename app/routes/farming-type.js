@@ -41,7 +41,7 @@ function createModelNotEligible() {
   return {
     backLink: '/farming-type',
     messageContent:
-      'This is only available to arable and horticultural farming businesses that supply the food industry, nurseries growing flowers or forestry nurseries.'
+      'This is only available to farming and horticultural businesses that grow crops for the food industry or nurseries growing ornamentals.'
   }
 }
 
