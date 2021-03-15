@@ -42,6 +42,18 @@
         "timeout": 10000
       },
       {
+        "url": "http://ffc-grants-frontend:3000/irrigation-water-source",
+        "timeout": 10000
+      },
+      {
+        "url": "http://ffc-grants-frontend:3000/irrigation-systems",
+        "timeout": 10000
+      },
+      {
+        "url": "http://ffc-grants-frontend:3000/productivity",
+        "timeout": 10000
+      },
+      {
         "url": "http://ffc-grants-frontend:3000/collaboration",
         "timeout": 10000
       }
