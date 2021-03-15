@@ -9,7 +9,8 @@
           "--disable-dev-shm-usage"
         ],
         "executablePath": "/usr/bin/chromium-browser",
-        "timeout": 0
+        "timeout": 0,
+        "pipe": true
       },
       "hideElements": [
         ".govuk-header__logotype-crown",
