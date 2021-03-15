@@ -1,8 +1,8 @@
 {
     "defaults": {
       "standard": "WCAG2AA",
-      "timeout": 40000,
-      "wait": 5000,
+      "timeout": 50000,
+      "wait": 6000,
       "chromeLaunchConfig": {
         "args": [
           "--no-sandbox",
@@ -16,7 +16,17 @@
       ]
     },
     "urls": [
-      
-      "http://ffc-grants-frontend:3000/legal-status"
+      "http://ffc-grants-frontend:3000/start",
+      "http://ffc-grants-frontend:3000/farming-type",
+      "http://ffc-grants-frontend:3000/legal-status",
+      "http://ffc-grants-frontend:3000/country",
+      "http://ffc-grants-frontend:3000/project-details",
+      "http://ffc-grants-frontend:3000/irrigated-crops",
+      "http://ffc-grants-frontend:3000/irrigated-land",
+      "http://ffc-grants-frontend:3000/irrigation-water-source",
+      "http://ffc-grants-frontend:3000/irrigation-systems",
+      "http://ffc-grants-frontend:3000/productivity",
+      "http://ffc-grants-frontend:3000/collaboration"
+
     ]
   }
