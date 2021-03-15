@@ -1,10 +1,7 @@
 const Joi = require('joi')
 let { isChecked } = require('../helpers/helper-functions')
 
-const postCode = `<label class="govuk-label" for="project_postcode">
-Enter Postcode</label><input class="govuk-input govuk-!-width-one-third" id="project_postcode" name="project_postcode">`
-
-function createModel(errorMessage, data) {
+function createModel(errorMessage, data, postcodeData) {
   return {
     backLink: 'legal-status',
     radios: {
@@ -22,7 +19,7 @@ function createModel(errorMessage, data) {
           value: 'Yes',
           text: 'Yes',
           conditional: {
-            html: postCode
+            html: getPostCodeInput(postcodeData)
           },
           checked: isChecked(data, 'Yes')
         },
@@ -47,14 +44,22 @@ function createModelNotEligible() {
   }
 }
 
+function getPostCodeInput(postcodeData) {
+  let postcode = postcodeData && postcodeData !== null ? postcodeData : ' ' 
+  return `<label class="govuk-label" for="project_postcode">
+  Enter Postcode</label><input class="govuk-input govuk-!-width-one-third" id="project_postcode" name="project_postcode" value=${postcode}>`
+  
+}
+
 module.exports = [
   {
     method: 'GET',
     path: '/country',
     handler: (request, h) => {
-      const inEngland = request.yar.get('inEngland')
-      const data = !!inEngland ? inEngland : null
-      return h.view('country', createModel(null, data))
+      const inEngland = request.yar.get('inEngland') || null
+      const postcodeData = inEngland !== null ? request.yar.get('project_postcode') : null
+
+      return h.view('country', createModel(null, inEngland, postcodeData))
     }
   },
   {
@@ -66,22 +71,18 @@ module.exports = [
           inEngland: Joi.string().required(),
           project_postcode: Joi.string().allow('')
         }),
-        failAction: (request, h) => {
-          console.log(request.payload, 'AAAAAAAA')
-          console.log(typeof request.payload.inEngland, 'BBB')
-          return h.view('country', createModel('You must select an option')).takeover()
-        }
+        failAction: (request, h) => h.view('country', createModel('You must select an option')).takeover()
       },
       handler: (request, h) => {
-        if (request.payload.inEngland === 'Yes') {
-          if (request.payload.project_postcode.trim() === '') {
-            return h.view('country', createModel('If yes, please type in postcode')).takeover()
-          }
-          request.yar.set('inEngland', request.payload.inEngland)
-          return h.redirect('./project-details')
+        const { inEngland, project_postcode } = request.payload
+        if (inEngland === 'Yes' && project_postcode.trim() === '') {
+          return h.view('country', createModel('If yes, please type in postcode', inEngland, project_postcode)).takeover()
         }
 
-        return h.view('not-eligible', createModelNotEligible())
+        request.yar.set('inEngland', inEngland)
+        request.yar.set('project_postcode', project_postcode)
+        return inEngland === 'Yes' ? h.redirect('./project-details') : h.view('not-eligible', createModelNotEligible())
+
       }
     }
   }
