@@ -2,7 +2,8 @@
     "defaults": {
       "standard": "WCAG2AA",
       "timeout": 1000000000,
-      "wait": 500,
+      "concurrency": 1,
+      "wait": 5000000,
       "chromeLaunchConfig": {
         "args": [
           "--no-sandbox",
@@ -17,15 +18,45 @@
       ]
     },
     "urls": [
-      "http://ffc-grants-frontend:3000/start",
-      "http://ffc-grants-frontend:3000/farming-type",
-      "http://ffc-grants-frontend:3000/legal-status",
-      "http://ffc-grants-frontend:3000/project-details",
-      "http://ffc-grants-frontend:3000/irrigated-crops",
-      "http://ffc-grants-frontend:3000/irrigated-land",
-      "http://ffc-grants-frontend:3000/irrigation-water-source",
-      "http://ffc-grants-frontend:3000/irrigation-systems",
-      "http://ffc-grants-frontend:3000/productivity",
-      "http://ffc-grants-frontend:3000/collaboration"
+      {
+        "url": "http://ffc-grants-frontend:3000/start",
+        "timeout": 50000
+      },
+      {
+        "url": "http://ffc-grants-frontend:3000/farming-type",
+        "timeout": 50000
+      },
+      {
+        "url": "http://ffc-grants-frontend:3000/legal-status",
+        "timeout": 50000
+      },
+      {
+        "url": "http://ffc-grants-frontend:3000/project-details",
+        "timeout": 50000
+      },
+      {
+        "url": "http://ffc-grants-frontend:3000/irrigated-crops",
+        "timeout": 50000
+      },
+      {
+        "url": "http://ffc-grants-frontend:3000/irrigated-land",
+        "timeout": 50000
+      },
+      {
+        "url": "http://ffc-grants-frontend:3000/irrigation-water-source",
+        "timeout": 50000
+      },
+      {
+        "url": "http://ffc-grants-frontend:3000/irrigation-systems",
+        "timeout": 50000
+      },
+      {
+        "url": "http://ffc-grants-frontend:3000/productivity",
+        "timeout": 50000
+      },
+      {
+        "url": "http://ffc-grants-frontend:3000/collaboration",
+        "timeout": 50000
+      }
     ]
   }
