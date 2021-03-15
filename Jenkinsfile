@@ -18,12 +18,12 @@
       }
 
       stage('Set default branch') {
-        defaultBranch = build.getDefaultBranch(defaultBranch, config.defaultBranch)
+        defaultBranch = build.getDefaultBranch(defaultBranch, 'master')
       }
 
-      stage('Set environment') {
-        environment = config.environment != null ? config.environment : environment
-      }
+      // stage('Set environment') {
+      //   environment = config.environment != null ? config.environment : environment
+      // }
 
       stage('Checkout source code') {
         build.checkoutSourceCode(defaultBranch)
