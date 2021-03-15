@@ -5,7 +5,6 @@
       "wait": 5000,
       "chromeLaunchConfig": {
         "args": [
-          "--no-sandbox",
           "--disable-dev-shm-usage"
         ],
         "executablePath": "/usr/bin/chromium-browser",
@@ -27,6 +26,5 @@
       "http://ffc-grants-frontend:3000/irrigation-systems",
       "http://ffc-grants-frontend:3000/productivity",
       "http://ffc-grants-frontend:3000/collaboration"
-
     ]
   }
