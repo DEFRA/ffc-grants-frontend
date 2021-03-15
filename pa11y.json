@@ -1,7 +1,7 @@
 {
     "defaults": {
       "standard": "WCAG2AA",
-      "timeout": 1000,
+      "timeout": 10000000,
       "concurrency": 1,
       "wait": 500,
       "chromeLaunchConfig": {
@@ -10,8 +10,7 @@
           "--disable-dev-shm-usage"
         ],
         "executablePath": "/usr/bin/chromium-browser",
-        "timeout": 0,
-        "pipe": true
+        "timeout": 0
       },
       "hideElements": [
         ".govuk-header__logotype-crown",
@@ -19,55 +18,15 @@
       ]
     },
     "urls": [
-      {
-        "url": "http://ffc-grants-frontend:3000/start",
-        "timeout": 10000,
-        "concurrency": 1
-      },
-      {
-        "url": "http://ffc-grants-frontend:3000/farming-type",
-        "timeout": 10000,
-        "concurrency": 1
-      },
-      {
-        "url": "http://ffc-grants-frontend:3000/legal-status",
-        "timeout": 10000,
-        "concurrency": 1
-      },
-      {
-        "url": "http://ffc-grants-frontend:3000/project-details",
-        "timeout": 10000,
-        "concurrency": 1
-      },
-      {
-        "url": "http://ffc-grants-frontend:3000/irrigated-crops",
-        "timeout": 10000,
-        "concurrency": 1
-      },
-      {
-        "url": "http://ffc-grants-frontend:3000/irrigated-land",
-        "timeout": 10000,
-        "concurrency": 1
-      },
-      {
-        "url": "http://ffc-grants-frontend:3000/irrigation-water-source",
-        "timeout": 10000,
-        "concurrency": 1
-      },
-      {
-        "url": "http://ffc-grants-frontend:3000/irrigation-systems",
-        "timeout": 10000,
-        "concurrency": 1
-      },
-      {
-        "url": "http://ffc-grants-frontend:3000/productivity",
-        "timeout": 10000,
-        "concurrency": 1
-      },
-      {
-        "url": "http://ffc-grants-frontend:3000/collaboration",
-        "timeout": 10000,
-        "concurrency": 1
-      }
+      "http://ffc-grants-frontend:3000/start",
+      "http://ffc-grants-frontend:3000/farming-type",
+      "http://ffc-grants-frontend:3000/legal-status",
+      "http://ffc-grants-frontend:3000/project-details",
+      "http://ffc-grants-frontend:3000/irrigated-crops",
+      "http://ffc-grants-frontend:3000/irrigated-land",
+      "http://ffc-grants-frontend:3000/irrigation-water-source",
+      "http://ffc-grants-frontend:3000/irrigation-systems",
+      "http://ffc-grants-frontend:3000/productivity",
+      "http://ffc-grants-frontend:3000/collaboration"
     ]
   }
