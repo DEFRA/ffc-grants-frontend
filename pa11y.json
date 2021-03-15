@@ -16,6 +16,7 @@
       ]
     },
     "urls": [
-      "http://ffc-grants-frontend:3000/start"
+      
+      "http://ffc-grants-frontend:3000/legal-status"
     ]
   }
