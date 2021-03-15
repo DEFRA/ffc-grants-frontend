@@ -1,9 +1,9 @@
 {
     "defaults": {
       "standard": "WCAG2AA",
-      "timeout": 1000000000,
-      "concurrency": 1,
-      "wait": 5000000,
+      "timeout": 10000,
+      "concurrency": 2,
+      "wait": 5000,
       "chromeLaunchConfig": {
         "args": [
           "--no-sandbox",
@@ -20,43 +20,43 @@
     "urls": [
       {
         "url": "http://ffc-grants-frontend:3000/start",
-        "timeout": 50000
+        "timeout": 10000
       },
       {
         "url": "http://ffc-grants-frontend:3000/farming-type",
-        "timeout": 50000
+        "timeout": 10000
       },
       {
         "url": "http://ffc-grants-frontend:3000/legal-status",
-        "timeout": 50000
+        "timeout": 10000
       },
       {
         "url": "http://ffc-grants-frontend:3000/project-details",
-        "timeout": 50000
+        "timeout": 10000
       },
       {
         "url": "http://ffc-grants-frontend:3000/irrigated-crops",
-        "timeout": 50000
+        "timeout": 10000
       },
       {
         "url": "http://ffc-grants-frontend:3000/irrigated-land",
-        "timeout": 50000
+        "timeout": 10000
       },
       {
         "url": "http://ffc-grants-frontend:3000/irrigation-water-source",
-        "timeout": 50000
+        "timeout": 10000
       },
       {
         "url": "http://ffc-grants-frontend:3000/irrigation-systems",
-        "timeout": 50000
+        "timeout": 10000
       },
       {
         "url": "http://ffc-grants-frontend:3000/productivity",
-        "timeout": 50000
+        "timeout": 10000
       },
       {
         "url": "http://ffc-grants-frontend:3000/collaboration",
-        "timeout": 50000
+        "timeout": 10000
       }
     ]
   }
