@@ -1,6 +1,6 @@
 {
   "name": "ffc-grants-frontend",
-  "version": "1.20.1",
+  "version": "1.21.0",
   "description": "Frontend Grants microservice.",
   "main": "app/index.js",
   "scripts": {
@@ -47,6 +47,7 @@
     "mini-css-extract-plugin": "^0.11.0",
     "nodemon": "^2.0.7",
     "npm-run-all": "^4.1.5",
+    "pa11y": "^5.3.0",
     "resolve-url-loader": "^3.1.2",
     "sass": "^1.26.10",
     "sass-loader": "^10.0.2",
