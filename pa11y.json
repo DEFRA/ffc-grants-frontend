@@ -21,43 +21,53 @@
     "urls": [
       {
         "url": "http://ffc-grants-frontend:3000/start",
-        "timeout": 10000
+        "timeout": 10000,
+        "concurrency": 1
       },
       {
         "url": "http://ffc-grants-frontend:3000/farming-type",
-        "timeout": 10000
+        "timeout": 10000,
+        "concurrency": 1
       },
       {
         "url": "http://ffc-grants-frontend:3000/legal-status",
-        "timeout": 10000
+        "timeout": 10000,
+        "concurrency": 1
       },
       {
         "url": "http://ffc-grants-frontend:3000/project-details",
-        "timeout": 10000
+        "timeout": 10000,
+        "concurrency": 1
       },
       {
         "url": "http://ffc-grants-frontend:3000/irrigated-crops",
-        "timeout": 10000
+        "timeout": 10000,
+        "concurrency": 1
       },
       {
         "url": "http://ffc-grants-frontend:3000/irrigated-land",
-        "timeout": 10000
+        "timeout": 10000,
+        "concurrency": 1
       },
       {
         "url": "http://ffc-grants-frontend:3000/irrigation-water-source",
-        "timeout": 10000
+        "timeout": 10000,
+        "concurrency": 1
       },
       {
         "url": "http://ffc-grants-frontend:3000/irrigation-systems",
-        "timeout": 10000
+        "timeout": 10000,
+        "concurrency": 1
       },
       {
         "url": "http://ffc-grants-frontend:3000/productivity",
-        "timeout": 10000
+        "timeout": 10000,
+        "concurrency": 1
       },
       {
         "url": "http://ffc-grants-frontend:3000/collaboration",
-        "timeout": 10000
+        "timeout": 10000,
+        "concurrency": 1
       }
     ]
   }
