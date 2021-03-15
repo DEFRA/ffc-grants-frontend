@@ -34,6 +34,10 @@
         (repoName, pr, tag, mergedPrNo) = build.getVariables(version, defaultBranch)
       }
 
+      stage('Build test image') {
+        build.buildTestImage(DOCKER_REGISTRY_CREDENTIALS_ID, DOCKER_REGISTRY, repoName, BUILD_NUMBER, tag)
+      }
+
       stage('Run Accessibility tests') {
         test.runPa11y(repoName, BUILD_NUMBER, tag)
       }
