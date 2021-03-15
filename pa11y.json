@@ -29,6 +29,10 @@
         "timeout": 10000
       },
       {
+        "url": "http://ffc-grants-frontend:3000/project-details",
+        "timeout": 10000
+      },
+      {
         "url": "http://ffc-grants-frontend:3000/collaboration",
         "timeout": 10000
       }
