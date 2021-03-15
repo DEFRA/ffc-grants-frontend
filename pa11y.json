@@ -18,6 +18,13 @@
     },
     "urls": [
       "http://ffc-grants-frontend:3000/farming-type",
-      "http://ffc-grants-frontend:3000/legal-status"
+      "http://ffc-grants-frontend:3000/legal-status",
+      "http://ffc-grants-frontend:3000/project-details",
+      "http://ffc-grants-frontend:3000/irrigated-crops",
+      "http://ffc-grants-frontend:3000/irrigated-land",
+      "http://ffc-grants-frontend:3000/irrigation-water-source",
+      "http://ffc-grants-frontend:3000/irrigation-systems",
+      "http://ffc-grants-frontend:3000/productivity",
+      "http://ffc-grants-frontend:3000/collaboration"
     ]
   }
