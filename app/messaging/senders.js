@@ -1,14 +1,12 @@
 const { MessageSender } = require('ffc-messaging')
 const msgCfg = require('../config/messaging')
 
-const eligibilityAnswersSender = new MessageSender(msgCfg.eligibilityAnswersQueue)
 const projectDetailsSender = new MessageSender(msgCfg.projectDetailsQueue)
 const contactDetailsSender = new MessageSender(msgCfg.contactDetailsQueue)
 
-async function stop () {
-  await eligibilityAnswersSender.closeConnection()
-  await projectDetailsSender.closeConnection()
-  await contactDetailsSender.closeConnection()
+function stop () {
+  projectDetailsSender.closeConnection()
+  contactDetailsSender.closeConnection()
 }
 
 process.on('SIGTERM', async () => {
@@ -21,11 +19,12 @@ process.on('SIGINT', async () => {
   process.exit(0)
 })
 
-async function sendMsg (sender, msgData, msgType) {
+async function sendMsg (sender, msgData, correlationId, msgType) {
   const msg = {
     body: msgData,
     type: msgType,
-    source: msgCfg.msgSrc
+    source: msgCfg.msgSrc,
+    correlationId
   }
 
   console.log('sending message', msg)
@@ -34,13 +33,10 @@ async function sendMsg (sender, msgData, msgType) {
 }
 
 module.exports = {
-  sendEligibilityAnswers: async function (eligibilityAnswersData) {
-    await sendMsg(eligibilityAnswersSender, eligibilityAnswersData, msgCfg.eligibilityAnswersMsgType)
+  sendProjectDetails: function (projectDetailsData, correlationId) {
+    sendMsg(projectDetailsSender, projectDetailsData, correlationId, msgCfg.projectDetailsMsgType)
   },
-  sendProjectDetails: async function (projectDetailsData) {
-    await sendMsg(projectDetailsSender, projectDetailsData, msgCfg.projectDetailsMsgType)
-  },
-  sendContactDetails: async function (contactDetailsData) {
-    await sendMsg(contactDetailsSender, contactDetailsData, msgCfg.contactDetailsMsgType)
+  sendContactDetails: function (contactDetailsData, correlationId) {
+    sendMsg(contactDetailsSender, contactDetailsData, correlationId, msgCfg.contactDetailsMsgType)
   }
 }

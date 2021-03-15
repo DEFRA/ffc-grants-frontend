@@ -1,3 +1,5 @@
+const senders = require('../messaging/senders')
+
 function createModel () {
   return {
     button: {
@@ -10,8 +12,12 @@ function createModel () {
 module.exports = {
   method: 'GET',
   path: '/start',
-  handler: (request, h) => {
+  handler: async (request, h) => {
     request.yar.reset()
+
+    console.log(request.yar.id)
+    await senders.sendProjectDetails({ test: 'test message' }, request.yar.id)
+
     return h.view('home', createModel())
   }
 }
