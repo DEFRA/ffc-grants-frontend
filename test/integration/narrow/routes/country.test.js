@@ -33,7 +33,7 @@ describe('Country Page', () => {
     const postOptions = {
       method: 'POST',
       url: '/country',
-      payload: { inEngland: 'Yes', project_postcode: '' }
+      payload: { inEngland: 'Yes', projectPostcode: '' }
     }
 
     const postResponse = await server.inject(postOptions)
@@ -45,7 +45,7 @@ describe('Country Page', () => {
     const postOptions = {
       method: 'POST',
       url: '/country',
-      payload: { inEngland: 'Yes', project_postcode: 'XX1 5XX' }
+      payload: { inEngland: 'Yes', projectPostcode: 'XX1 5XX' }
     }
 
     const postResponse = await server.inject(postOptions)
