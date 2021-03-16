@@ -12,6 +12,11 @@ module.exports = {
   path: '/start',
   handler: (request, h) => {
     request.yar.reset()
+
+    console.log('*** CLIENT IP: ***')
+    console.log(request.info.remoteAddress)
+    console.log('*** **** ***')
+
     return h.view('home', createModel())
   }
 }
