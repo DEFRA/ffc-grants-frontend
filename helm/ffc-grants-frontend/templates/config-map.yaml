@@ -12,4 +12,7 @@ data:
   ELIGIBILITY_ANSWERS_QUEUE_ADDRESS: {{ quote .Values.container.eligibilityAnswersQueueAddress }}
   PROJECT_DETAILS_QUEUE_ADDRESS: {{ quote .Values.container.projectDetailsQueueAddress }}
   CONTACT_DETAILS_QUEUE_ADDRESS: {{ quote .Values.container.contactDetailsQueueAddress }}
+  REDIS_HOSTNAME: {{ quote .Values.container.redisHostname }}
+  REDIS_PORT: {{ quote .Values.container.redisPort }}
+  REDIS_PARTITION: {{ quote .Values.container.redisPartition }}
 {{- end -}}

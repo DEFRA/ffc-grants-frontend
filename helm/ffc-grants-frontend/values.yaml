@@ -13,6 +13,10 @@ azureIdentity:
 containerConfigMap:
   name: ffc-grants-frontend-config-map
 
+containerSecret:
+  name: ffc-demo-frontend-container-secret
+  type: Opaque
+
 deployment:
   restartPolicy: Always
   priorityClassName: low
@@ -35,6 +39,10 @@ container:
   eligibilityAnswersQueueAddress: eligibility-answers
   projectDetailsQueueAddress: project-details
   contactDetailsQueueAddress: contact-details
+  redisHostname: redis
+  redisPassword: redis
+  redisPort: 6379
+  redisPartition: ffc-grants-eligibility
 
 livenessProbe:
   path: /healthz
