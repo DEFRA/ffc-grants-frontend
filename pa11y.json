@@ -1,8 +1,8 @@
 {
     "defaults": {
       "standard": "WCAG2AA",
-      "timeout": 50000,
-      "wait": 6000,
+      "timeout": 150000,
+      "wait": 8000,
       "chromeLaunchConfig": {
         "args": [
           "--no-sandbox",

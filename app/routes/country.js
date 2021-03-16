@@ -72,7 +72,7 @@ module.exports = [
           inEngland: Joi.string().required(),
           project_postcode: Joi.string().allow('')
         }),
-        failAction: (request, h) => h.view('country', createModel('You must select an option')).takeover()
+        failAction: (request, h) => h.view('country', createModel('You must select an option',null, getPostCodeHtml(''))).takeover()
       },
       handler: (request, h) => {
         const { inEngland, project_postcode } = request.payload
