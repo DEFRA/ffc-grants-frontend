@@ -3,8 +3,8 @@ const nunjucks = require('nunjucks')
 const vision = require('@hapi/vision')
 const path = require('path')
 const inert = require('@hapi/inert')
-const catbox = require('@hapi/catbox-redis')
 const cacheConfig = require('./config/cache')
+const catbox = cacheConfig.useRedis ? require('@hapi/catbox-redis') : require('@hapi/catbox-memory')
 
 async function createServer () {
   const server = hapi.server({
