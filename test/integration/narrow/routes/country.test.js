@@ -52,6 +52,20 @@ it('should store user response and redirects to project details page', async () 
   expect(postResponse.statusCode).toBe(302)
   expect(postResponse.headers.location).toBe('./project-details')
 })
+  
+it(`should display ineligible page when user response is 'No'`, async () => {
+  const postOptions = {
+      method: 'POST',
+      url: '/country',
+      payload: { inEngland: 'No' }
+  }
+
+  const postResponse = await server.inject(postOptions)
+  expect(postResponse.payload).toContain(
+      'You cannot apply for a grant from this scheme'
+  )
+})
+  
   afterEach(async () => {
     await server.stop()
   })
