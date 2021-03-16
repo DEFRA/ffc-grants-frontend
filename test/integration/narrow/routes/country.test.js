@@ -7,7 +7,7 @@ describe('Country Page', () => {
     await server.start()
   })
 
-  it('should load country page sucessfully', async () => {
+  test('should load country page sucessfully', async () => {
     const options = {
       method: 'GET',
       url: '/country'
@@ -17,7 +17,7 @@ describe('Country Page', () => {
     expect(response.statusCode).toBe(200)
   })
 
-  it('should returns error message if no option is selected', async () => {
+  test('should returns error message if no option is selected', async () => {
     const postOptions = {
       method: 'POST',
       url: '/country',
@@ -29,7 +29,7 @@ describe('Country Page', () => {
     expect(postResponse.payload).toContain('You must select an option')
   })
 
-  it('should returns error message if postcode is not entered for selected yes option ', async () => {
+  test('should returns error message if postcode is not entered for selected yes option ', async () => {
     const postOptions = {
       method: 'POST',
       url: '/country',
@@ -41,7 +41,7 @@ describe('Country Page', () => {
     expect(postResponse.payload).toContain('If yes, please type in postcode')
   })
 
-  it('should store user response and redirects to project details page', async () => {
+  test('should store user response and redirects to project details page', async () => {
     const postOptions = {
       method: 'POST',
       url: '/country',
@@ -53,7 +53,7 @@ describe('Country Page', () => {
     expect(postResponse.headers.location).toBe('./project-details')
   })
 
-  it('should display ineligible page when user response is \'No\'', async () => {
+  test('should display ineligible page when user response is \'No\'', async () => {
     const postOptions = {
       method: 'POST',
       url: '/country',
