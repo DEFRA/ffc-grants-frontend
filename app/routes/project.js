@@ -41,25 +41,19 @@ module.exports = [
           project: Joi.any().required()
         }),
         failAction: (request, h) =>
-          h
-            .view('project', createModel('Please select an option', null, null))
-            .takeover()
+          h.view('project', createModel('Please select an option', null, null)).takeover()
       },
       handler: (request, h) => {
-        if (Array.isArray(request.payload.project) && request.payload.project.length > 2) {
-          return h
-            .view(
-              'project',
-              createModel(
-                'Only one or two selections are allowed',
-                'Only one or two selections are allowed',
-                null
-              ))
-            .takeover()
+        let { project } = request.payload
+        project = [project].flat()
+        
+        if (project.length > 2) {
+          return h.view('project',createModel('Only one or two selections are allowed','Only one or two selections are allowed',null)).takeover()
         }
 
-        request.yar.set('project', request.payload.project)
+        request.yar.set('project', project)
         return h.redirect('./irrigated-crops')
+
       }
     }
   }
