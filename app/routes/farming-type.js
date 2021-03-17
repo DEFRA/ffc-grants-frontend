@@ -1,6 +1,6 @@
 const Joi = require('joi')
 
-function createModel(errorMessage, data) {
+function createModel (errorMessage, data) {
   return {
     backLink: '/start',
     radios: {
@@ -37,7 +37,7 @@ function createModel(errorMessage, data) {
   }
 }
 
-function createModelNotEligible() {
+function createModelNotEligible () {
   return {
     backLink: '/farming-type',
     messageContent:
@@ -50,8 +50,8 @@ module.exports = [
     method: 'GET',
     path: '/farming-type',
     handler: (request, h) => {
-      const farmingType = request.yar.get('farmingType');
-      const data = !!farmingType ? farmingType : null
+      const farmingType = request.yar.get('farmingType')
+      const data = farmingType || null
       return h.view('farming-type', createModel(null, data))
     }
   },

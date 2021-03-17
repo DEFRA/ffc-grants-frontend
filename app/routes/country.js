@@ -1,7 +1,7 @@
 const Joi = require('joi')
-let { isChecked } = require('../helpers/helper-functions')
+const { isChecked } = require('../helpers/helper-functions')
 
-function createModel(errorMessage, data, postcodeHtml) {
+function createModel (errorMessage, data, postcodeHtml) {
   return {
     backLink: 'legal-status',
     radios: {
@@ -11,7 +11,7 @@ function createModel(errorMessage, data, postcodeHtml) {
         legend: {
           text: 'Is the planned project in England?',
           isPageHeading: true,
-          classes: 'govuk-fieldset__legend--l',
+          classes: 'govuk-fieldset__legend--l'
         }
       },
       items: [
@@ -34,18 +34,17 @@ function createModel(errorMessage, data, postcodeHtml) {
   }
 }
 
-function createModelNotEligible() {
+function createModelNotEligible () {
   return {
     backLink: '/country',
-    messageContent: `This is only for projects in England.<br/> Scotland, Wales and Northern Ireland have similar grants available.`
+    messageContent: 'This is only for projects in England.<br/> Scotland, Wales and Northern Ireland have similar grants available.'
   }
 }
 
-function getPostCodeHtml(postcodeData) {
-  let postcode = postcodeData && postcodeData !== null ? postcodeData : ' ' 
-  return `<label class="govuk-label" for="project_postcode">
-  Enter Postcode</label><input class="govuk-input govuk-!-width-one-third" id="project_postcode" name="project_postcode" value=${postcode}>`
-  
+function getPostCodeHtml (postcodeData) {
+  const postcode = postcodeData && postcodeData !== null ? postcodeData : ' '
+  return `<label class="govuk-label" for="projectPostcode">
+  Enter Postcode</label><input class="govuk-input govuk-!-width-one-third" id="projectPostcode" name="projectPostcode" value=${postcode}>`
 }
 
 module.exports = [
@@ -54,7 +53,7 @@ module.exports = [
     path: '/country',
     handler: (request, h) => {
       const inEngland = request.yar.get('inEngland') || null
-      const postcodeData = inEngland !== null ? request.yar.get('project_postcode') : null
+      const postcodeData = inEngland !== null ? request.yar.get('projectPostcode') : null
       const postcodeHtml = getPostCodeHtml(postcodeData)
 
       return h.view('country', createModel(null, inEngland, postcodeHtml))
@@ -67,20 +66,19 @@ module.exports = [
       validate: {
         payload: Joi.object({
           inEngland: Joi.string().required(),
-          project_postcode: Joi.string().allow('')
+          projectPostcode: Joi.string().allow('')
         }),
-        failAction: (request, h) => h.view('country', createModel('You must select an option',null, getPostCodeHtml(''))).takeover()
+        failAction: (request, h) => h.view('country', createModel('You must select an option', null, getPostCodeHtml(''))).takeover()
       },
       handler: (request, h) => {
-        const { inEngland, project_postcode } = request.payload
-        if (inEngland === 'Yes' && project_postcode.trim() === '') {
-          return h.view('country', createModel('If yes, please type in postcode', inEngland, getPostCodeHtml(project_postcode))).takeover()
+        const { inEngland, projectPostcode } = request.payload
+        if (inEngland === 'Yes' && projectPostcode.trim() === '') {
+          return h.view('country', createModel('If yes, please type in postcode', inEngland, getPostCodeHtml(projectPostcode))).takeover()
         }
 
         request.yar.set('inEngland', inEngland)
-        request.yar.set('project_postcode', project_postcode)
+        request.yar.set('projectPostcode', projectPostcode)
         return inEngland === 'Yes' ? h.redirect('./project-details') : h.view('not-eligible', createModelNotEligible())
-
       }
     }
   }

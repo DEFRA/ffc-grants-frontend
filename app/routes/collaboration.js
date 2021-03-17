@@ -1,7 +1,7 @@
 const Joi = require('joi')
-let { setLabelData } = require('../helpers/helper-functions')
+const { setLabelData } = require('../helpers/helper-functions')
 
-function createModel(errorMessage, data) {
+function createModel (errorMessage, data) {
   return {
     backLink: '/productivity',
     radios: {
@@ -31,7 +31,7 @@ module.exports = [
     path: '/collaboration',
     handler: (request, h) => {
       const collaboration = request.yar.get('collaboration')
-      const data = !!collaboration ? collaboration : null
+      const data = collaboration || null
       return h.view('collaboration', createModel(null, data))
     }
   },

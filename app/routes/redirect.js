@@ -1,5 +1,5 @@
 module.exports = {
-    method: 'GET',
-    path: '/',
-    handler: (request, h) =>  h.redirect('./start')
-  }
+  method: 'GET',
+  path: '/',
+  handler: (request, h) => h.redirect('./start')
+}

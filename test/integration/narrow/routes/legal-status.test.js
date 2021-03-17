@@ -7,7 +7,7 @@ describe('Legal status page', () => {
     await server.start()
   })
 
-  it('should load page successfully', async () => {
+  test('should load page successfully', async () => {
     const options = {
       method: 'GET',
       url: '/legal-status'
@@ -17,7 +17,7 @@ describe('Legal status page', () => {
     expect(response.statusCode).toBe(200)
   })
 
-  it('should returns error message in body if no option is selected', async () => {
+  test('should returns error message in body if no option is selected', async () => {
     const postOptions = {
       method: 'POST',
       url: '/legal-status',
@@ -29,7 +29,7 @@ describe('Legal status page', () => {
     expect(postResponse.payload).toContain('Select one option')
   })
 
-  it('should store user response and redirects to project details page', async () => {
+  test('should store user response and redirects to project details page', async () => {
     const postOptions = {
       method: 'POST',
       url: '/legal-status',
@@ -41,7 +41,7 @@ describe('Legal status page', () => {
     expect(postResponse.headers.location).toBe('./country')
   })
 
-  it('should redirect to ineligible page when lagal staus is others', async () => {
+  test('should redirect to ineligible page when lagal staus is others', async () => {
     const postOptions = {
       method: 'POST',
       url: '/legal-status',

@@ -1,7 +1,7 @@
 const Joi = require('joi')
-let { setLabelData } = require('../helpers/helper-functions')
+const { setLabelData } = require('../helpers/helper-functions')
 
-function createModel(errorMessage, data) {
+function createModel (errorMessage, data) {
   return {
     backLink: '/farming-type',
     radios: {
@@ -15,14 +15,14 @@ function createModel(errorMessage, data) {
           classes: 'govuk-fieldset__legend--l'
         }
       },
-      items: 
-        setLabelData(data, ['Limited Company','Partnership', 'Sole trader', 'Limited Liability Company','Trust', 'Charity','Community Interest Company','Public Organisation','Other']),
+      items:
+        setLabelData(data, ['Limited Company', 'Partnership', 'Sole trader', 'Limited Liability Company', 'Trust', 'Charity', 'Community Interest Company', 'Public Organisation', 'Other']),
       ...(errorMessage ? { errorMessage: { text: errorMessage } } : {})
     }
   }
 }
 
-function createModelNotEligible() {
+function createModelNotEligible () {
   return {
     backLink: '/legal-status',
     messageContent:
@@ -35,8 +35,8 @@ module.exports = [
     method: 'GET',
     path: '/legal-status',
     handler: (request, h) => {
-      const legalStatus = request.yar.get('legalStatus');
-      const data = !!legalStatus ? legalStatus : null
+      const legalStatus = request.yar.get('legalStatus')
+      const data = legalStatus || null
       return h.view('legal-status', createModel(null, data))
     }
   },
