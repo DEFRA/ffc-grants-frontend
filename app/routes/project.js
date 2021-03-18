@@ -53,7 +53,6 @@ module.exports = [
 
         request.yar.set('project', project)
         return h.redirect('./irrigated-crops')
-
       }
     }
   }

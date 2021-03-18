@@ -1,7 +1,7 @@
 const Joi = require('joi')
 const { setLabelData } = require('../helpers/helper-functions')
 
-function createModel (errorMessage, errorSummary, data) {
+function createModel(errorMessage, errorSummary, data) {
   return {
     backLink: '/irrigation-systems',
     ...(errorSummary ? { errorText: errorSummary } : {}),
@@ -25,43 +25,36 @@ function createModel (errorMessage, errorSummary, data) {
 }
 
 module.exports = [
-    {
-        method: 'GET',
-        path: '/productivity',
-        handler: (request, h) => {
-            const productivity = request.yar.get('productivity');
-            const data = !!productivity ? productivity : null
-            return h.view('productivity', createModel(null, null, data))
+  {
+    method: 'GET',
+    path: '/productivity',
+    handler: (request, h) => {
+      const productivity = request.yar.get('productivity');
+      const data = !!productivity ? productivity : null
+      return h.view('productivity', createModel(null, null, data))
+    }
+  },
+  {
+    method: 'POST',
+    path: '/productivity',
+    options: {
+      validate: {
+        payload: Joi.object({
+          productivity: Joi.any().required()
+        }),
+        failAction: (request, h) =>
+          h.view('productivity', createModel('Please select an option', null, null)).takeover()
+      },
+      handler: (request, h) => {
+        let { productivity } = request.payload
+        productivity = [productivity].flat()
+        if (productivity.length > 2) {
+          return h.view('productivity', createModel('Only one or two selections are allowed', 'Only one or two selections are allowed', null)).takeover()
         }
-    },
-    {
-        method: 'POST',
-        path: '/productivity',
-        options: {
-            validate: {
-                payload: Joi.object({
-                    productivity: Joi.any().required()
-                }),
-                failAction: (request, h) =>
-                    h.view('productivity', createModel('Please select an option', null, null)).takeover()
-            },
-            handler: (request, h) => {
+        request.yar.set('productivity', productivity)
+        return h.redirect('./collaboration')
 
-                if (Array.isArray(request.payload.productivity) && request.payload.productivity.length > 2) {
-                    return h
-                        .view(
-                            'productivity',
-                            createModel(
-                                'Only one or two selections are allowed',
-                                'Only one or two selections are allowed',
-                                null
-                            ))
-                        .takeover()
-                }
-                request.yar.set('productivity', request.payload.productivity)
-                return h.redirect('./collaboration')
-
-            }
-        }
       }
+    }
+  }
 ]
