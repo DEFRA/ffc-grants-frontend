@@ -6,26 +6,26 @@ function createModel (errorMessage, errorSummary, currentData, plannedData) {
     backLink: '/irrigation-water-source',
     ...(errorSummary ? { errorText: errorSummary } : {}),
     irrigationCurrent: {
-      idPrefix: "irrigationCurrent",
-      name: "irrigationCurrent",
+      idPrefix: 'irrigationCurrent',
+      name: 'irrigationCurrent',
       fieldset: {
         legend: {
-          text: "What systems are currently used to irrigate?",
+          text: 'What systems are currently used to irrigate?',
           isPageHeading: true,
-          classes: "govuk-fieldset__legend--l"
+          classes: 'govuk-fieldset__legend--l'
         }
       },
       items: setLabelData(currentData, ['Trickle', 'Boom irrigator', 'Ebb and flood or capillary bed', 'Sprinklers or mist', 'Rain gun', 'Not currently irrigating']),
       ...(errorMessage && (!currentData || currentData.length > 2) ? { errorMessage: { text: errorMessage } } : {})
     },
     irrigationPlanned: {
-      idPrefix: "irrigationPlanned",
-      name: "irrigationPlanned",
+      idPrefix: 'irrigationPlanned',
+      name: 'irrigationPlanned',
       fieldset: {
         legend: {
-          text: "What systems will be used to irrigate?",
+          text: 'What systems will be used to irrigate?',
           isPageHeading: true,
-          classes: "govuk-fieldset__legend--l"
+          classes: 'govuk-fieldset__legend--l'
         }
       },
       items: setLabelData(plannedData, ['Trickle', 'Boom irrigator', 'Ebb and flood or capillary bed', 'Sprinklers or mist', 'Rain gun']),
@@ -75,7 +75,6 @@ module.exports = [
         request.yar.set('irrigationCurrent', irrigationCurrent)
         request.yar.set('irrigationPlanned', irrigationPlanned)
         return h.redirect('./productivity')
-
       }
     }
   }

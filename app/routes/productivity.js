@@ -1,7 +1,7 @@
 const Joi = require('joi')
 const { setLabelData } = require('../helpers/helper-functions')
 
-function createModel(errorMessage, errorSummary, data) {
+function createModel (errorMessage, errorSummary, data) {
   return {
     backLink: '/irrigation-systems',
     ...(errorSummary ? { errorText: errorSummary } : {}),
@@ -29,8 +29,8 @@ module.exports = [
     method: 'GET',
     path: '/productivity',
     handler: (request, h) => {
-      const productivity = request.yar.get('productivity');
-      const data = !!productivity ? productivity : null
+      const productivity = request.yar.get('productivity')
+      const data = productivity || null
       return h.view('productivity', createModel(null, null, data))
     }
   },
@@ -53,7 +53,6 @@ module.exports = [
         }
         request.yar.set('productivity', productivity)
         return h.redirect('./collaboration')
-
       }
     }
   }

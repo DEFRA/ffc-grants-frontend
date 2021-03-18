@@ -6,13 +6,13 @@ function createModel (errorMessage, errorSummary, currentData, plannedData) {
     backLink: '/irrigated-land',
     ...(errorSummary ? { errorText: errorSummary } : {}),
     waterSourceCurrent: {
-      idPrefix: "waterSourceCurrent",
-      name: "waterSourceCurrent",
+      idPrefix: 'waterSourceCurrent',
+      name: 'waterSourceCurrent',
       fieldset: {
         legend: {
-          text: "Where does your current irrigation water come from?",
+          text: 'Where does your current irrigation water come from?',
           isPageHeading: true,
-          classes: "govuk-fieldset__legend--l"
+          classes: 'govuk-fieldset__legend--l'
         }
       },
       items: setLabelData(currentData, ['Peak flow surface water', 'Bore hole / aquifer', 'Rain water harvesting', 'Summer water surface abstraction', 'Mains', 'Not currently irrigating']),
@@ -75,7 +75,6 @@ module.exports = [
         request.yar.set('waterSourceCurrent', waterSourceCurrent)
         request.yar.set('waterSourcePlanned', waterSourcePlanned)
         return h.redirect('./irrigation-systems')
-
       }
     }
   }
