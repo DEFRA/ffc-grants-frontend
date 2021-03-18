@@ -68,6 +68,8 @@ exports.config = {
   // Hooks
   // =====
   onPrepare: function (config, capabilities) {
+    console.log(`Running tests against: ${envRoot}\n`)
+
     const reportAggregator = new ReportAggregator({
       outputDir: './html-reports/',
       filename: 'acceptance-test-suite-report.html',
