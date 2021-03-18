@@ -5,3 +5,4 @@ helm/**/*.lock
 *.tgz
 .vscode
 .env
+html-reports
