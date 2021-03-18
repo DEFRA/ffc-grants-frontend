@@ -1,0 +1,11 @@
+node_modules
+npm-debug.log
+test-output
+docker-compose*
+README.md
+LICENCE
+Dockerfile
+.secrets.baseline
+.snyk
+.pre-commit-config.yaml
+.dockerignore
