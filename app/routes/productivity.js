@@ -43,23 +43,15 @@ module.exports = [
           productivity: Joi.any().required()
         }),
         failAction: (request, h) =>
-          h
-            .view('productivity', createModel('Please select an option', null, null))
-            .takeover()
+          h.view('productivity', createModel('Please select an option', null, null)).takeover()
       },
       handler: (request, h) => {
-        if (Array.isArray(request.payload.productivity) && request.payload.productivity.length > 2) {
-          return h
-            .view(
-              'productivity',
-              createModel(
-                'Only one or two selections are allowed',
-                'Only one or two selections are allowed',
-                null
-              ))
-            .takeover()
+        let { productivity } = request.payload
+        productivity = [productivity].flat()
+        if (productivity.length > 2) {
+          return h.view('productivity', createModel('Only one or two selections are allowed', 'Only one or two selections are allowed', null)).takeover()
         }
-        request.yar.set('productivity', request.payload.productivity)
+        request.yar.set('productivity', productivity)
         return h.redirect('./collaboration')
       }
     }

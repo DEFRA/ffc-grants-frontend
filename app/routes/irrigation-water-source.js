@@ -56,29 +56,24 @@ module.exports = [
           waterSourcePlanned: Joi.any().required()
         }),
         failAction: (request, h) => {
-          const { waterSourceCurrent, waterSourcePlanned } = request.payload
+          let { waterSourceCurrent, waterSourcePlanned } = request.payload
+          waterSourceCurrent = waterSourceCurrent ? [waterSourceCurrent].flat() : waterSourceCurrent
+          waterSourcePlanned = waterSourcePlanned ? [waterSourcePlanned].flat() : waterSourcePlanned
           return h.view('irrigation-water-source', createModel('Please select an option', null, waterSourceCurrent, waterSourcePlanned)).takeover()
         }
       },
       handler: (request, h) => {
-        let waterSourceCurrent = []
-        let waterSourcePlanned = []
-
-        if (typeof request.payload.waterSourceCurrent === 'string') {
-          waterSourceCurrent.push(request.payload.waterSourceCurrent)
-        } else waterSourceCurrent = request.payload.waterSourceCurrent
-
-        if (typeof request.payload.waterSourcePlanned === 'string') {
-          waterSourcePlanned.push(request.payload.waterSourcePlanned)
-        } else waterSourcePlanned = request.payload.waterSourcePlanned
+        let { waterSourceCurrent, waterSourcePlanned } = request.payload
+        waterSourceCurrent = [waterSourceCurrent].flat()
+        waterSourcePlanned = [waterSourcePlanned].flat()
 
         if (waterSourceCurrent.length > 2 || waterSourcePlanned.length > 2) {
           return h.view('irrigation-water-source', createModel('Only one or two selections are allowed', 'Only one or two selections are allowed', waterSourceCurrent, waterSourcePlanned))
             .takeover()
         }
 
-        request.yar.set('waterSourceCurrent', request.payload.waterSourceCurrent)
-        request.yar.set('waterSourcePlanned', request.payload.waterSourcePlanned)
+        request.yar.set('waterSourceCurrent', waterSourceCurrent)
+        request.yar.set('waterSourcePlanned', waterSourcePlanned)
         return h.redirect('./irrigation-systems')
       }
     }
