@@ -12,14 +12,6 @@ module.exports = {
   path: '/start',
   handler: (request, h) => {
     request.yar.reset()
-
-    console.log('*** CLIENT IP: ***')
-    const xFF = request.headers['x-forwarded-for']
-    const ip = xFF ? xFF.split(',')[0].split(':')[0] : request.info.remoteAddress
-    console.log(xFF)
-    console.log(ip)
-    console.log('*** **** ***')
-
     return h.view('home', createModel())
   }
 }

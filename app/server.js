@@ -61,6 +61,13 @@ async function createServer () {
     path: './templates'
   })
 
+  server.ext('onPreHandler', function (request, h) {
+    const xForwardedFor = request.headers['x-forwarded-for']
+    const ip = xForwardedFor ? xForwardedFor.split(',')[0] : request.info.remoteAddress
+    request.yar.set('ip', ip)
+    return h.continue
+  })
+
   return server
 }
 
