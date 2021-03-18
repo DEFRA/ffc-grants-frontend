@@ -1,5 +1,5 @@
 const Joi = require('joi')
-const { isChecked } = require('../helpers/helper-functions')
+const { isChecked, getPostCodeHtml } = require('../helpers/helper-functions')
 
 function createModel (errorMessage, data, postcodeHtml) {
   return {
@@ -41,12 +41,6 @@ function createModelNotEligible () {
   }
 }
 
-function getPostCodeHtml (postcodeData) {
-  const postcode = postcodeData && postcodeData !== null ? postcodeData : ' '
-  return `<label class="govuk-label" for="projectPostcode">
-  Enter Postcode</label><input class="govuk-input govuk-!-width-one-third" id="projectPostcode" name="projectPostcode" value=${postcode}>`
-}
-
 module.exports = [
   {
     method: 'GET',
@@ -66,14 +60,14 @@ module.exports = [
       validate: {
         payload: Joi.object({
           inEngland: Joi.string().required(),
-          projectPostcode: Joi.string().allow('')
+          projectPostcode: Joi.any().allow('')
         }),
         failAction: (request, h) => h.view('country', createModel('You must select an option', null, getPostCodeHtml(''))).takeover()
       },
       handler: (request, h) => {
         const { inEngland, projectPostcode } = request.payload
         if (inEngland === 'Yes' && projectPostcode.trim() === '') {
-          return h.view('country', createModel('If yes, please type in postcode', inEngland, getPostCodeHtml(projectPostcode))).takeover()
+          return h.view('country', createModel(null, inEngland, getPostCodeHtml(projectPostcode,'Enter a postcode, like AA1 1AA'))).takeover()
         }
 
         request.yar.set('inEngland', inEngland)
