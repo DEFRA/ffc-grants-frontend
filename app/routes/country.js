@@ -1,7 +1,7 @@
 const Joi = require('joi')
 const { isChecked, getPostCodeHtml, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
 
-function createModel(errorMessage, data, postcodeHtml) {
+function createModel (errorMessage, data, postcodeHtml) {
   return {
     backLink: 'legal-status',
     radios: {
@@ -34,13 +34,12 @@ function createModel(errorMessage, data, postcodeHtml) {
   }
 }
 
-function createModelNotEligible() {
+function createModelNotEligible () {
   return {
     backLink: '/country',
     messageContent: 'This is only for projects in England.<br/> Scotland, Wales and Northern Ireland have similar grants available.'
   }
 }
-
 
 module.exports = [
   {
