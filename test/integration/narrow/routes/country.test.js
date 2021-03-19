@@ -7,7 +7,7 @@ describe('Country Page', () => {
     await server.start()
   })
 
-  test('should load country page sucessfully', async () => {
+  it('should load country page sucessfully', async () => {
     const options = {
       method: 'GET',
       url: '/country'
@@ -17,19 +17,19 @@ describe('Country Page', () => {
     expect(response.statusCode).toBe(200)
   })
 
-  test('should returns error message if no option is selected', async () => {
+  it('should returns error message if no option is selected', async () => {
     const postOptions = {
       method: 'POST',
       url: '/country',
-      payload: { inEngland: null }
+      payload: {projectPostcode: ''}
     }
 
     const postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('You must select an option')
+    expect(postResponse.payload).toContain('Select yes if the project is in England')
   })
 
-  test('should returns error message if postcode is not entered for selected yes option ', async () => {
+  it('should returns error message if postcode is not entered for selected yes option ', async () => {
     const postOptions = {
       method: 'POST',
       url: '/country',
@@ -38,10 +38,22 @@ describe('Country Page', () => {
 
     const postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('If yes, please type in postcode')
+    expect(postResponse.payload).toContain('Enter a postcode, like AA1 1AA')
   })
 
-  test('should store user response and redirects to project details page', async () => {
+  it('should returns error message if postcode is not in the correct format ', async () => {
+    const postOptions = {
+      method: 'POST',
+      url: '/country',
+      payload: { inEngland: 'Yes', projectPostcode: 'AB123 4CD' }
+    }
+
+    const postResponse = await server.inject(postOptions)
+    expect(postResponse.statusCode).toBe(200)
+    expect(postResponse.payload).toContain('Enter a postcode, like AA1 1AA')
+  })
+
+  it('should store user response and redirects to project details page', async () => {
     const postOptions = {
       method: 'POST',
       url: '/country',
@@ -53,11 +65,11 @@ describe('Country Page', () => {
     expect(postResponse.headers.location).toBe('./project-details')
   })
 
-  test('should display ineligible page when user response is \'No\'', async () => {
+  it('should display ineligible page when user response is \'No\'', async () => {
     const postOptions = {
       method: 'POST',
       url: '/country',
-      payload: { inEngland: 'No' }
+      payload: {projectPostcode: '', inEngland: 'No' }
     }
 
     const postResponse = await server.inject(postOptions)
