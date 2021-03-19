@@ -19,7 +19,7 @@ services:
 
   selenium:
     ports:
-      - "9001:5900"
+      - "5900:5900"
 
   hub:
     ports:
