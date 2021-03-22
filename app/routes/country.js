@@ -66,13 +66,26 @@ module.exports = [
           const { inEngland, projectPostcode } = request.payload
           const errorObject = errorExtractor(err)
           const errorMessage = getErrorMessage(errorObject)
-          return h.view('country', createModel(!inEngland ? errorMessage : null, inEngland, getPostCodeHtml(projectPostcode.toUpperCase(), inEngland ? errorMessage : null))).takeover()
+          const postcodeHtml = getPostCodeHtml(projectPostcode.toUpperCase(), inEngland ? errorMessage : null)
+
+          return h.view(
+            'country',
+            createModel(
+              !inEngland ? errorMessage : null,
+              inEngland,
+              postcodeHtml
+            )
+          ).takeover()
         }
       },
       handler: (request, h) => {
         const { inEngland, projectPostcode } = request.payload
         if (inEngland === 'Yes' && projectPostcode.trim() === '') {
-          return h.view('country', createModel(null, inEngland, getPostCodeHtml(projectPostcode.toUpperCase(), 'Enter a postcode, like AA1 1AA'))).takeover()
+          const postcodeHtml = getPostCodeHtml(projectPostcode.toUpperCase(), 'Enter a postcode, like AA1 1AA')
+          return h.view(
+            'country',
+            createModel(null, inEngland, postcodeHtml)
+          ).takeover()
         }
 
         request.yar.set('inEngland', inEngland)
