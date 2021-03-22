@@ -15,7 +15,8 @@ function setLabelData (data, labelData) {
 }
 
 function getPostCodeHtml (postcodeData, error) {
-  const postcode = postcodeData && postcodeData !== null ? postcodeData : ''
+  const postcode = postcodeData || ''
+
   return !error
     ? `<div>
         <label class="govuk-label" for="projectPostcode">
