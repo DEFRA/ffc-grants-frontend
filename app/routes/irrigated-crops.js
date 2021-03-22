@@ -1,4 +1,6 @@
 const Joi = require('joi')
+const { errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
+
 
 const createModel = (errorMessage, data) => ({
 
@@ -55,7 +57,11 @@ module.exports = [
         payload: Joi.object({
           irrigatedCrops: Joi.string().required()
         }),
-        failAction: (request, h) => h.view('irrigated-crops', createModel('Please select an option')).takeover()
+        failAction: (request, h, err) => {
+          const errorObject = errorExtractor(err)
+          const errorMessage = getErrorMessage(errorObject)
+          return h.view('irrigated-crops', createModel(errorMessage)).takeover()
+        }
       },
       handler: (request, h) => {
         request.yar.set('irrigatedCrops', request.payload.irrigatedCrops)
