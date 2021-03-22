@@ -90,7 +90,7 @@ module.exports = [
 
         request.yar.set('inEngland', inEngland)
         request.yar.set('projectPostcode', projectPostcode.toUpperCase())
-        return inEngland === 'Yes' ? h.redirect('./project-details') : h.view('not-eligible', createModelNotEligible())
+        return inEngland === 'Yes' ? h.redirect('./project-start') : h.view('not-eligible', createModelNotEligible())
       }
     }
   }
