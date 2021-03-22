@@ -21,12 +21,12 @@ describe('Irrigated crops page', () => {
     const postOptions = {
       method: 'POST',
       url: '/irrigated-crops',
-      payload: { irrigatedCrops: null }
+      payload: {}
     }
 
     const postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Please select an option')
+    expect(postResponse.payload).toContain('Select the main crop you will be irrigating')
   })
 
   test('should store user response and redirects to irrigated land page', async () => {
