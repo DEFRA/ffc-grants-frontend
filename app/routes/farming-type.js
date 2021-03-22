@@ -50,7 +50,6 @@ module.exports = [
         }),
         failAction: (request, h, err) => {
           const errorObject = errorExtractor(err)
-          console.log(errorObject)
           const errorMessage = getErrorMessage(errorObject)
           return h.view('farming-type', createModel(errorMessage)).takeover()
         }
