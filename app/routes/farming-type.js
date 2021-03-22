@@ -1,4 +1,6 @@
 const Joi = require('joi')
+const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
+
 
 function createModel (errorMessage, data) {
   return {
@@ -14,24 +16,7 @@ function createModel (errorMessage, data) {
           classes: 'govuk-fieldset__legend--l'
         }
       },
-      items: [
-
-        {
-          value: 'Crops for the food industry',
-          text: 'Crops for the food industry',
-          checked: !!data && (data.includes('Crops for the food industry'))
-        },
-        {
-          value: 'Horticulture',
-          text: 'Horticulture (including ornamentals)',
-          checked: !!data && (data.includes('Horticulture'))
-        },
-        {
-          value: 'Something else',
-          text: 'Something else',
-          checked: !!data && (data.includes('Something else'))
-        }
-      ],
+      items: setLabelData(data, ['Crops for the food industry', 'Horticulture (including ornamentals)', 'Something else']),
       ...(errorMessage ? { errorMessage: { text: errorMessage } } : {})
     }
   }
@@ -63,7 +48,12 @@ module.exports = [
         payload: Joi.object({
           farmingType: Joi.string().required()
         }),
-        failAction: (request, h) => h.view('farming-type', createModel('Please select an option')).takeover()
+        failAction: (request, h, err) => {
+          const errorObject = errorExtractor(err)
+          console.log(errorObject)
+          const errorMessage = getErrorMessage(errorObject)
+          return h.view('farming-type', createModel(errorMessage)).takeover()
+        }
       },
       handler: (request, h) => {
         request.yar.set('farmingType', request.payload.farmingType)

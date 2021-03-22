@@ -21,12 +21,12 @@ describe('Farming type page', () => {
     const postOptions = {
       method: 'POST',
       url: '/farming-type',
-      payload: { farmingType: null }
+      payload: { }
     }
 
     const postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Please select an option')
+    expect(postResponse.payload).toContain('Select the crops you are growing')
   })
 
   test('should store user response and redirects to legal status page', async () => {
