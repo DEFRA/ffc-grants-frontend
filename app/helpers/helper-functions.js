@@ -7,7 +7,7 @@ function isChecked (data, option) {
 function setLabelData (data, labelData) {
   return labelData.map((label) => {
     return {
-      value: label,
+      value: label.split('(')[0],
       text: label,
       checked: isChecked(data, label)
     }
