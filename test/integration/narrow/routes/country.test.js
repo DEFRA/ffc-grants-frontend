@@ -53,7 +53,7 @@ describe('Country Page', () => {
     expect(postResponse.payload).toContain('Enter a postcode, like AA1 1AA')
   })
 
-  it('should store user response and redirects to project details page', async () => {
+  it('should store user response and redirects to project start page', async () => {
     const postOptions = {
       method: 'POST',
       url: '/country',
@@ -62,7 +62,7 @@ describe('Country Page', () => {
 
     const postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe('./project-details')
+    expect(postResponse.headers.location).toBe('./project-start')
   })
 
   it('should display ineligible page when user response is \'No\'', async () => {

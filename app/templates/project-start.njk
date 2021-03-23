@@ -1,0 +1,48 @@
+{% extends '.layout.njk' %}
+
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/header/macro.njk" import govukHeader %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
+
+{% block header %}
+  {{ govukHeader({
+    homepageUrl: "/",
+    serviceName: "Check if you can apply for a water resource management grant",
+    serviceUrl: "/"
+  }) }}
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+    text: "Back",
+    href: backLink
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <form method="POST" action="/project-start" novalidate>
+        {{ govukRadios(radios) }}
+
+        {{ govukDetails({
+            summaryText: "Help",
+            html:
+            '<p>Starting the project or committing to any costs (such as placing orders) before you receive a funding agreement will invalidate your application.</p>
+            <p>Before you start the project, you can:</p>
+            <ul class="govuk-list govuk-list--bullet">
+                <li>get quotes from suppliers</li>
+                <li>apply for planning permission or an abstraction licence</li>
+            </ul>'
+           })
+        }}
+
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+      </form>
+    </div>
+  </div>
+{% endblock %}
