@@ -67,7 +67,6 @@ describe('Irrigation water source page', () => {
     expect(postResponse.payload).toContain('There is a problem')
     expect(postResponse.payload).toContain('Select where your current irrigation water comes from')
     expect(postResponse.payload).toContain('Select where your current irrigation water comes from')
-
   })
   afterEach(async () => {
     await server.stop()

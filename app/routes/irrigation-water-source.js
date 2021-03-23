@@ -1,7 +1,7 @@
 const Joi = require('joi')
 const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
 
-function createModel(errorMessage, errorSummary, currentData, plannedData) {
+function createModel (errorMessage, errorSummary, currentData, plannedData) {
   return {
     backLink: '/irrigated-land',
     ...errorSummary ? {
@@ -67,19 +67,18 @@ module.exports = [
         }
       },
       handler: (request, h) => {
-        let errorList = []
+        const errorList = []
         let { waterSourceCurrent, waterSourcePlanned } = request.payload
 
         waterSourceCurrent = [waterSourceCurrent].flat()
         waterSourcePlanned = [waterSourcePlanned].flat()
 
-
         if (waterSourceCurrent.length > 2 || waterSourcePlanned.length > 2) {
           if (waterSourceCurrent.length > 2) {
-            errorList.push({ 'text': 'Select where your current irrigation water comes from', 'href': '#waterSourceCurrent' })
+            errorList.push({ text: 'Select where your current irrigation water comes from', href: '#waterSourceCurrent' })
           }
           if (waterSourcePlanned.length > 2) {
-            errorList.push({ 'text': 'Select where your irrigation water will come from', 'href': '#waterSourcePlanned' })
+            errorList.push({ text: 'Select where your irrigation water will come from', href: '#waterSourcePlanned' })
           }
           return h.view('irrigation-water-source', createModel('Select one or two options', errorList, waterSourceCurrent, waterSourcePlanned))
             .takeover()
