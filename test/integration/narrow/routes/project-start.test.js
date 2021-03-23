@@ -21,7 +21,7 @@ describe('Project start page', () => {
     const postOptions = {
       method: 'POST',
       url: '/project-start',
-      payload: { projectStarted: null }
+      payload: {}
     }
 
     const postResponse = await server.inject(postOptions)

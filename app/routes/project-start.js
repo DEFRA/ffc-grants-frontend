@@ -1,5 +1,5 @@
 const Joi = require('joi')
-const { setLabelData } = require('../helpers/helper-functions')
+const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
 
 function createModel (errorMessage, data) {
   return {
@@ -47,9 +47,11 @@ module.exports = [
         payload: Joi.object({
           projectStarted: Joi.string().required()
         }),
-        failAction: (request, h) => (
-          h.view('project-start', createModel('Select yes if you have already started work on the project')).takeover()
-        )
+        failAction: (request, h, err) => {
+          const errorObject = errorExtractor(err)
+          const errorMessage = getErrorMessage(errorObject)
+          return h.view('project-start', createModel(errorMessage)).takeover()
+        }
       },
       handler: (request, h) => {
         request.yar.set('projectStarted', request.payload.projectStarted)
