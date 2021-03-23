@@ -35,18 +35,12 @@ function createModel(errorMessage, errorSummary, currentData, plannedData) {
     }
   }
 }
-getErrorSummary = (object) => {
-  let errorList = []
-
-}
 
 module.exports = [
   {
     method: 'GET',
     path: '/irrigation-water-source',
     handler: (request, h) => {
-      // const waterSourceCurrent = request.yar.get('waterSourceCurrent')
-      // const waterSourcePlanned = request.yar.get('waterSourcePlanned')
       const currentData = request.yar.get('waterSourceCurrent') || null
       const plannedData = request.yar.get('waterSourcePlanned') || null
       return h.view('irrigation-water-source', createModel(null, null, currentData, plannedData))

@@ -53,18 +53,19 @@ describe('Irrigation water source page', () => {
     expect(postResponse.headers.location).toBe('./irrigation-systems')
   })
 
-  test('should display the error summary if more than two options are selected', async () => {
+  test('should display the error summary if more than two options are selected for each question', async () => {
     const postOptions = {
       method: 'POST',
       url: '/irrigation-water-source',
       payload: {
         waterSourceCurrent: ['some option-1', 'some option-2', 'some option-3'],
-        waterSourcePlanned: ['another-option-1', 'another-option-2']
+        waterSourcePlanned: ['another-option-1', 'another-option-2', 'another-option-3']
       }
     }
 
     const postResponse = await server.inject(postOptions)
     expect(postResponse.payload).toContain('There is a problem')
+    expect(postResponse.payload).toContain('Select where your current irrigation water comes from')
     expect(postResponse.payload).toContain('Select where your current irrigation water comes from')
 
   })
