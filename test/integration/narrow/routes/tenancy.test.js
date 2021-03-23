@@ -33,7 +33,7 @@ describe('Water tenancy page', () => {
     const postOptions = {
       method: 'POST',
       url: '/tenancy',
-      payload: { projectStarted: 'No' }
+      payload: { landOwnership: 'No' }
     }
 
     const postResponse = await server.inject(postOptions)
@@ -45,7 +45,7 @@ describe('Water tenancy page', () => {
     const postOptions = {
       method: 'POST',
       url: '/tenancy',
-      payload: { projectStarted: 'Yes' }
+      payload: { landOwnership: 'Yes' }
     }
 
     const postResponse = await server.inject(postOptions)
