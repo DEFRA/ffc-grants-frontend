@@ -26,9 +26,9 @@ module.exports = [
     method: 'GET',
     path: '/tenancy-length',
     handler: (request, h) => {
-      const landOwnership = request.yar.get('landOwnership')
-      const data = landOwnership || null
-      return h.view('tenancy', createModel(null, data))
+      const PLEASE_CHANGE = request.yar.get('PLEASE_CHANGE')
+      const data = PLEASE_CHANGE || null
+      return h.view('/tenancy-length', createModel(null, data))
     }
   },
   {
@@ -42,14 +42,14 @@ module.exports = [
         failAction: (request, h, err) => {
           const errorObject = errorExtractor(err)
           const errorMessage = getErrorMessage(errorObject)
-          return h.view('tenancy', createModel(errorMessage)).takeover()
+          return h.view('/tenancy-length', createModel(errorMessage)).takeover()
         }
       },
       handler: (request, h) => {
-        request.yar.set('landOwnership', request.payload.landOwnership)
+        request.yar.set('PLEASE_CHANGE', request.payload.PLEASE_CHANGE)
         return request.payload.landOwnership === 'Yes'
-          ? h.redirect('./project-details')
-          : h.redirect('./tenancy-length')
+          ? h.redirect('./PLEASE_CHANGE_A')
+          : h.redirect('./PLEASE_CHANGE_B')
       }
     }
   }
