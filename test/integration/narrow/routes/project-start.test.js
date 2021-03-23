@@ -38,7 +38,7 @@ describe('Project start page', () => {
 
     const postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe('./project-details')
+    expect(postResponse.headers.location).toBe('./tenancy')
   })
 
   test('should redirect to ineligible page when user selects "Yes"', async () => {

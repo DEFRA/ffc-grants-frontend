@@ -56,7 +56,7 @@ module.exports = [
       handler: (request, h) => {
         request.yar.set('projectStarted', request.payload.projectStarted)
         return request.payload.projectStarted === 'No'
-          ? h.redirect('./project-details')
+          ? h.redirect('./tenancy')
           : h.view('./not-eligible', createModelNotEligible())
       }
     }
