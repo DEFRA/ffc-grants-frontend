@@ -1,10 +1,12 @@
 const Joi = require('joi')
-const { setLabelData } = require('../helpers/helper-functions')
+const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
 
-function createModel (errorMessage, errorSummary, currentData, plannedData) {
+function createModel(errorMessage, errorSummary, currentData, plannedData) {
   return {
     backLink: '/irrigated-land',
-    ...(errorSummary ? { errorText: errorSummary } : {}),
+    ...errorSummary ? {
+      errorList: errorSummary
+    } : {},
     waterSourceCurrent: {
       idPrefix: 'waterSourceCurrent',
       name: 'waterSourceCurrent',
@@ -33,16 +35,20 @@ function createModel (errorMessage, errorSummary, currentData, plannedData) {
     }
   }
 }
+getErrorSummary = (object) => {
+  let errorList = []
+
+}
 
 module.exports = [
   {
     method: 'GET',
     path: '/irrigation-water-source',
     handler: (request, h) => {
-      const waterSourceCurrent = request.yar.get('waterSourceCurrent')
-      const waterSourcePlanned = request.yar.get('waterSourcePlanned')
-      const currentData = waterSourceCurrent || null
-      const plannedData = waterSourcePlanned || null
+      // const waterSourceCurrent = request.yar.get('waterSourceCurrent')
+      // const waterSourcePlanned = request.yar.get('waterSourcePlanned')
+      const currentData = request.yar.get('waterSourceCurrent') || null
+      const plannedData = request.yar.get('waterSourcePlanned') || null
       return h.view('irrigation-water-source', createModel(null, null, currentData, plannedData))
     }
   },
@@ -52,23 +58,36 @@ module.exports = [
     options: {
       validate: {
         payload: Joi.object({
-          waterSourceCurrent: Joi.any().required(),
+          waterSourceCurrent: [Joi.any().required()],
           waterSourcePlanned: Joi.any().required()
         }),
-        failAction: (request, h) => {
+        failAction: (request, h, err) => {
+          console.log(waterSourceCurrent,'PPPPPP')
+          const errorObject = errorExtractor(err)
+          const errorMessage = getErrorMessage(errorObject)
           let { waterSourceCurrent, waterSourcePlanned } = request.payload
-          waterSourceCurrent = waterSourceCurrent ? [waterSourceCurrent].flat() : waterSourceCurrent
-          waterSourcePlanned = waterSourcePlanned ? [waterSourcePlanned].flat() : waterSourcePlanned
-          return h.view('irrigation-water-source', createModel('Please select an option', null, waterSourceCurrent, waterSourcePlanned)).takeover()
+          console.log(waterSourceCurrent,'PPPPPP')
+
+          //waterSourceCurrent = waterSourceCurrent ? [waterSourceCurrent].flat() : waterSourceCurrent
+          //waterSourcePlanned = waterSourcePlanned ? [waterSourcePlanned].flat() : waterSourcePlanned
+          return h.view('irrigation-water-source', createModel(errorMessage, null, waterSourceCurrent, waterSourcePlanned)).takeover()
         }
       },
       handler: (request, h) => {
+        let errorList = []
         let { waterSourceCurrent, waterSourcePlanned } = request.payload
         waterSourceCurrent = [waterSourceCurrent].flat()
         waterSourcePlanned = [waterSourcePlanned].flat()
 
+
         if (waterSourceCurrent.length > 2 || waterSourcePlanned.length > 2) {
-          return h.view('irrigation-water-source', createModel('Only one or two selections are allowed', 'Only one or two selections are allowed', waterSourceCurrent, waterSourcePlanned))
+          if (waterSourceCurrent.length > 2) {
+            errorList.push({ 'text': 'Select where your current irrigation water comes from', 'href': '#waterSourceCurrent' })
+          }
+          if (waterSourcePlanned.length > 2) {
+            errorList.push({ 'text': 'Select where your irrigation water will come from', 'href': '#waterSourcePlanned' })
+          }
+          return h.view('irrigation-water-source', createModel('Select one or two options', errorList, waterSourceCurrent, waterSourcePlanned))
             .takeover()
         }
 
