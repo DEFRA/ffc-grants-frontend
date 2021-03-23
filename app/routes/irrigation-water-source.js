@@ -58,24 +58,24 @@ module.exports = [
     options: {
       validate: {
         payload: Joi.object({
-          waterSourceCurrent: [Joi.any().required()],
+          waterSourceCurrent: Joi.any().required(),
           waterSourcePlanned: Joi.any().required()
         }),
         failAction: (request, h, err) => {
-          console.log(waterSourceCurrent,'PPPPPP')
+          let { waterSourceCurrent, waterSourcePlanned } = request.payload
+
           const errorObject = errorExtractor(err)
           const errorMessage = getErrorMessage(errorObject)
-          let { waterSourceCurrent, waterSourcePlanned } = request.payload
-          console.log(waterSourceCurrent,'PPPPPP')
 
-          //waterSourceCurrent = waterSourceCurrent ? [waterSourceCurrent].flat() : waterSourceCurrent
-          //waterSourcePlanned = waterSourcePlanned ? [waterSourcePlanned].flat() : waterSourcePlanned
+          waterSourceCurrent = waterSourceCurrent ? [waterSourceCurrent].flat() : waterSourceCurrent
+          waterSourcePlanned = waterSourcePlanned ? [waterSourcePlanned].flat() : waterSourcePlanned
           return h.view('irrigation-water-source', createModel(errorMessage, null, waterSourceCurrent, waterSourcePlanned)).takeover()
         }
       },
       handler: (request, h) => {
         let errorList = []
         let { waterSourceCurrent, waterSourcePlanned } = request.payload
+
         waterSourceCurrent = [waterSourceCurrent].flat()
         waterSourcePlanned = [waterSourcePlanned].flat()
 
