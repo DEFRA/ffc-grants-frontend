@@ -7,7 +7,7 @@ describe('Irrigation water source page', () => {
     await server.start()
   })
 
-  test('should load page successfully', async () => {
+  it('should load page successfully', async () => {
     const options = {
       method: 'GET',
       url: '/irrigation-water-source'
@@ -17,7 +17,7 @@ describe('Irrigation water source page', () => {
     expect(response.statusCode).toBe(200)
   })
 
-  test('should returns error message if no current water source option is selected', async () => {
+  it('should returns error message if no current water source option is selected', async () => {
     const postOptions = {
       method: 'POST',
       url: '/irrigation-water-source',
@@ -29,7 +29,7 @@ describe('Irrigation water source page', () => {
     expect(postResponse.payload).toContain('Please select an option')
   })
 
-  test('should returns error message if no planned water source option is selected', async () => {
+  it('should returns error message if no planned water source option is selected', async () => {
     const postOptions = {
       method: 'POST',
       url: '/irrigation-water-source',
@@ -41,7 +41,7 @@ describe('Irrigation water source page', () => {
     expect(postResponse.payload).toContain('Please select an option')
   })
 
-  test('should store user response and redirects to irrigated crops page', async () => {
+  it('should store user response and redirects to irrigated crops page', async () => {
     const postOptions = {
       method: 'POST',
       url: '/irrigation-water-source',
@@ -53,7 +53,7 @@ describe('Irrigation water source page', () => {
     expect(postResponse.headers.location).toBe('./irrigation-systems')
   })
 
-  test('should display the error summary if more than two options are selected', async () => {
+  it('should display the error summary if more than two options are selected', async () => {
     const postOptions = {
       method: 'POST',
       url: '/irrigation-water-source',

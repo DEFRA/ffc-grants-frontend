@@ -7,7 +7,7 @@ describe('Farming type page', () => {
     await server.start()
   })
 
-  test('should load page successfully', async () => {
+  it('should load page successfully', async () => {
     const options = {
       method: 'GET',
       url: '/farming-type'
@@ -17,11 +17,11 @@ describe('Farming type page', () => {
     expect(response.statusCode).toBe(200)
   })
 
-  test('should returns error message if no option is selected', async () => {
+  it('should returns error message if no option is selected', async () => {
     const postOptions = {
       method: 'POST',
       url: '/farming-type',
-      payload: { }
+      payload: {}
     }
 
     const postResponse = await server.inject(postOptions)
@@ -29,7 +29,7 @@ describe('Farming type page', () => {
     expect(postResponse.payload).toContain('Select the crops you are growing')
   })
 
-  test('should store user response and redirects to legal status page', async () => {
+  it('should store user response and redirects to legal status page', async () => {
     const postOptions = {
       method: 'POST',
       url: '/farming-type',
@@ -41,7 +41,7 @@ describe('Farming type page', () => {
     expect(postResponse.headers.location).toBe('./legal-status')
   })
 
-  test('should redirect to ineligible page when farming type is \'Something else\'', async () => {
+  it('should redirect to ineligible page when farming type is \'Something else\'', async () => {
     const postOptions = {
       method: 'POST',
       url: '/farming-type',

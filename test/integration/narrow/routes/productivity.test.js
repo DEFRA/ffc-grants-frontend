@@ -7,7 +7,7 @@ describe('Project details page', () => {
     await server.start()
   })
 
-  test('should load page successfully', async () => {
+  it('should load page successfully', async () => {
     const options = {
       method: 'GET',
       url: '/productivity'
@@ -17,7 +17,7 @@ describe('Project details page', () => {
     expect(response.statusCode).toBe(200)
   })
 
-  test('should returns error message if no option is selected', async () => {
+  it('should returns error message if no option is selected', async () => {
     const postOptions = {
       method: 'POST',
       url: '/productivity',
@@ -29,7 +29,7 @@ describe('Project details page', () => {
     expect(postResponse.payload).toContain('Please select an option')
   })
 
-  test('should store user response and redirects to collaboration page', async () => {
+  it('should store user response and redirects to collaboration page', async () => {
     const postOptions = {
       method: 'POST',
       url: '/productivity',
@@ -41,7 +41,7 @@ describe('Project details page', () => {
     expect(postResponse.headers.location).toBe('./collaboration')
   })
 
-  test('should display the error summary if more than two options are selected', async () => {
+  it('should display the error summary if more than two options are selected', async () => {
     const postOptions = {
       method: 'POST',
       url: '/productivity',
