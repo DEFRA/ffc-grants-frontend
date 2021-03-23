@@ -4,7 +4,10 @@ const errors = {
   'error.projectPostcode.string.empty': 'Enter a postcode, like AA1 1AA',
   'error.irrigatedCrops.any.required': 'Select the main crop you will be irrigating',
   'error.farmingType.any.required': 'Select the crops you are growing',
-  'error.waterSourceCurrent.any.required': 'Select one or two options for each question'
+  'error.waterSourceCurrent.any.required': 'Select one or two options for each question',
+  'error.waterSourcePlanned.any.required': 'Select one or two options for each question',
+  'error.projectStarted.any.required': 'Select yes if you have already started work on the project'
+
 }
 const lookupErrorText = (key) => {
   return errors[key] || key
