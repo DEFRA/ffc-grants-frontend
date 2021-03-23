@@ -49,7 +49,7 @@ module.exports = [
         request.yar.set('landOwnership', request.payload.landOwnership)
         return request.payload.landOwnership === 'Yes'
           ? h.redirect('./project-details')
-          : h.redirect('./tenancy-length')
+          : h.redirect('./answers')
       }
     }
   }
