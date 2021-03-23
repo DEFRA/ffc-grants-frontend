@@ -4,7 +4,8 @@ const errors = {
   'error.projectPostcode.string.empty': 'Enter a postcode, like AA1 1AA',
   'error.irrigatedCrops.any.required': 'Select the main crop you will be irrigating',
   'error.farmingType.any.required': 'Select the crops you are growing',
-  'error.projectStarted.any.required': 'Select yes if you have already started work on the project'
+  'error.projectStarted.any.required': 'Select yes if you have already started work on the project',
+  'error.landOwnership.any.required': 'Select yes if the planned project is on land the farm business owns'
 
 }
 const lookupErrorText = (key) => {
