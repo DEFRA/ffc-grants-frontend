@@ -19,15 +19,10 @@
     text: "Back",
     href: backLink
   }) }}
-  {% if errorText %}
+  {% if errorList %}
   {{govukErrorSummary ({
   "titleText": "There is a problem",
-  "errorList": [
-    {
-      "text": errorText,
-      "href": "#irrigationCurrent"
-    }
-  ]
+  "errorList": errorList
 }) }}
 {% endif %}
 {% endblock %}

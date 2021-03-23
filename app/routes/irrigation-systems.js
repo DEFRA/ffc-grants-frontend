@@ -1,10 +1,10 @@
 const Joi = require('joi')
-const { setLabelData } = require('../helpers/helper-functions')
+const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
 
-function createModel (errorMessage, errorSummary, currentData, plannedData) {
+function createModel(errorMessage, errorSummary, currentData, plannedData) {
   return {
     backLink: '/irrigation-water-source',
-    ...(errorSummary ? { errorText: errorSummary } : {}),
+    ...errorSummary ? { errorList: errorSummary } : {},
     irrigationCurrent: {
       idPrefix: 'irrigationCurrent',
       name: 'irrigationCurrent',
@@ -39,10 +39,8 @@ module.exports = [
     method: 'GET',
     path: '/irrigation-systems',
     handler: (request, h) => {
-      const irrigationCurrent = request.yar.get('irrigationCurrent')
-      const irrigationPlanned = request.yar.get('irrigationPlanned')
-      const currentData = irrigationCurrent || null
-      const plannedData = irrigationPlanned || null
+      const currentData = request.yar.get('irrigationCurrent') || null
+      const plannedData = request.yar.get('irrigationPlanned') || null
       return h.view('irrigation-systems', createModel(null, null, currentData, plannedData))
     }
   },
@@ -55,20 +53,31 @@ module.exports = [
           irrigationCurrent: Joi.any().required(),
           irrigationPlanned: Joi.any().required()
         }),
-        failAction: (request, h) => {
+        failAction: (request, h, err) => {
           let { irrigationCurrent, irrigationPlanned } = request.payload
+          const errorObject = errorExtractor(err)
+          const errorMessage = getErrorMessage(errorObject)
+
           irrigationCurrent = irrigationCurrent ? [irrigationCurrent].flat() : irrigationCurrent
           irrigationPlanned = irrigationPlanned ? [irrigationPlanned].flat() : irrigationPlanned
-          return h.view('irrigation-systems', createModel('Please select an option', null, irrigationCurrent, irrigationPlanned)).takeover()
+          return h.view('irrigation-systems', createModel(errorMessage, null, irrigationCurrent, irrigationPlanned)).takeover()
         }
       },
       handler: (request, h) => {
         let { irrigationCurrent, irrigationPlanned } = request.payload
+        const errorList = []
         irrigationCurrent = [irrigationCurrent].flat()
         irrigationPlanned = [irrigationPlanned].flat()
 
         if (irrigationCurrent.length > 2 || irrigationPlanned.length > 2) {
-          return h.view('irrigation-systems', createModel('Only one or two selections are allowed', 'Only one or two selections are allowed', irrigationCurrent, irrigationPlanned))
+          if (irrigationCurrent.length > 2) {
+            errorList.push({ text: 'Select the systems currently used to irrigate', href: '#irrigationCurrent' })
+          }
+          if (irrigationPlanned.length > 2) {
+            errorList.push({ text: 'Select the systems that will be used to irrigate', href: '#irrigationPlanned' })
+
+          }
+          return h.view('irrigation-systems', createModel('Select one or two options', errorList, irrigationCurrent, irrigationPlanned))
             .takeover()
         }
 
