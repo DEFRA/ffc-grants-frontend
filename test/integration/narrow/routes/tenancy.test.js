@@ -1,4 +1,4 @@
-describe('Project start page', () => {
+describe('Water tenancy page', () => {
   let server
   const createServer = require('../../../../app/server')
 
@@ -10,7 +10,7 @@ describe('Project start page', () => {
   test('should load page successfully', async () => {
     const options = {
       method: 'GET',
-      url: '/project-start'
+      url: '/tenancy'
     }
 
     const response = await server.inject(options)
@@ -20,39 +20,39 @@ describe('Project start page', () => {
   test('should returns error message in body if no option is selected', async () => {
     const postOptions = {
       method: 'POST',
-      url: '/project-start',
+      url: '/tenancy',
       payload: {}
     }
 
     const postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Select yes if you have already started work on the project')
+    expect(postResponse.payload).toContain('Select yes if the planned project is on land the farm business owns')
   })
 
-  test('should redirect to details pagewhen user selects "No"', async () => {
+  test('should redirect to tenancy length page when user selects "No"', async () => {
     const postOptions = {
       method: 'POST',
-      url: '/project-start',
-      payload: { projectStarted: 'No' }
+      url: '/tenancy',
+      payload: { landOwnership: 'No' }
     }
 
     const postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe('./tenancy')
+    expect(postResponse.headers.location).toBe('./answers')
   })
 
-  test('should redirect to ineligible page when user selects "Yes"', async () => {
+  test('should redirect to project details page when user selects "Yes"', async () => {
     const postOptions = {
       method: 'POST',
-      url: '/project-start',
-      payload: { projectStarted: 'Yes' }
+      url: '/tenancy',
+      payload: { landOwnership: 'Yes' }
     }
 
     const postResponse = await server.inject(postOptions)
-    expect(postResponse.payload).toContain(
-      'You cannot apply for a grant from this scheme'
-    )
+    expect(postResponse.statusCode).toBe(302)
+    expect(postResponse.headers.location).toBe('./project-details')
   })
+
   afterEach(async () => {
     await server.stop()
   })
