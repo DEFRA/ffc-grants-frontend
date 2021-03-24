@@ -3,7 +3,7 @@ const { setLabelData } = require('../helpers/helper-functions')
 
 function createModel (errorMessage, errorSummary, data) {
   return {
-    backLink: '/tenancy',
+    backLink: '/project-items',
     ...(errorSummary ? { errorText: errorSummary } : {}),
     checkboxes: {
       idPrefix: 'project',
