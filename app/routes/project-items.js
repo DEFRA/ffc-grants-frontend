@@ -111,25 +111,32 @@ module.exports = [
         }
       },
       handler: (request, h) => {
+        const landOwnership = request.yar.get('landOwnership') || null
+        const backUrl = landOwnership === 'No' ? '/answers' : '/tenancy'
+
         let {
           projectInfrastucture,
           projectEquipment,
           projectTechnology
         } = request.payload
+
+        if (!projectInfrastucture && !projectEquipment && !projectTechnology) {
+          return h.view(
+            'project-items',
+            createModel(
+              'Select all the items your project needs',
+              'Select all the items your project needs',
+              backUrl,
+              projectInfrastucture,
+              projectEquipment,
+              projectTechnology
+            )
+          ).takeover()
+        }
+
         projectInfrastucture = [projectInfrastucture].flat()
         projectEquipment = [projectEquipment].flat()
         projectTechnology = [projectTechnology].flat()
-
-        // const backUrl = request.payload.landOwnership === 'Yes' ? '/tenancy' : '/answers'
-
-        /*
-        if (project.length > 2) {
-          return h.view(
-            'project-items',
-            createModel('Only one or two selections are allowed', 'Only one or two selections are allowed', project, backUrl)
-          ).takeover()
-        }
-        */
 
         request.yar.set('projectInfrastucture', projectInfrastucture)
         request.yar.set('projectEquipment', projectEquipment)
