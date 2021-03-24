@@ -125,7 +125,7 @@ module.exports = [
             'project-items',
             createModel(
               'Select all the items your project needs',
-              'Select all the items your project needs',
+              null,
               backUrl,
               projectInfrastucture,
               projectEquipment,
