@@ -22,8 +22,8 @@
 
 {% block content %}
   <div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
-      <form method="POST" action="/collaboration" novalidate>
+    <div class="govuk-grid-column-two-thirds">
+      <form method="POST" action="/collaboration" novalidate="novalidate">
         {{ govukRadios(radios) }}
         {{ govukButton({
           text: "Continue"
