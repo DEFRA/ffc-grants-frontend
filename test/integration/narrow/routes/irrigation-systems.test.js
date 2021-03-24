@@ -7,7 +7,7 @@ describe('Irrigation syatems page', () => {
     await server.start()
   })
 
-  test('should load page successfully', async () => {
+  it('should load page successfully', async () => {
     const options = {
       method: 'GET',
       url: '/irrigation-systems'
@@ -17,7 +17,7 @@ describe('Irrigation syatems page', () => {
     expect(response.statusCode).toBe(200)
   })
 
-  test('should returns error message if no current water system option is selected', async () => {
+  it('should returns error message if no current water system option is selected', async () => {
     const postOptions = {
       method: 'POST',
       url: '/irrigation-systems',
@@ -29,7 +29,7 @@ describe('Irrigation syatems page', () => {
     expect(postResponse.payload).toContain('Select one or two options for each question')
   })
 
-  test('should returns error message if no planned water system option is selected', async () => {
+  it('should returns error message if no planned water system option is selected', async () => {
     const postOptions = {
       method: 'POST',
       url: '/irrigation-systems',
@@ -41,7 +41,7 @@ describe('Irrigation syatems page', () => {
     expect(postResponse.payload).toContain('Select one or two options for each question')
   })
 
-  test('should store user response and redirects to productivity page', async () => {
+  it('should store user response and redirects to productivity page', async () => {
     const postOptions = {
       method: 'POST',
       url: '/irrigation-systems',
@@ -53,7 +53,7 @@ describe('Irrigation syatems page', () => {
     expect(postResponse.headers.location).toBe('./productivity')
   })
 
-  test('should display the error summary if more than two options are selected', async () => {
+  it('should display the error summary if more than two options are selected', async () => {
     const postOptions = {
       method: 'POST',
       url: '/irrigation-systems',
@@ -67,7 +67,6 @@ describe('Irrigation syatems page', () => {
     expect(postResponse.payload).toContain('There is a problem')
     expect(postResponse.payload).toContain('Select the systems currently used to irrigate')
     expect(postResponse.payload).toContain('Select the systems that will be used to irrigate')
-
   })
   afterEach(async () => {
     await server.stop()

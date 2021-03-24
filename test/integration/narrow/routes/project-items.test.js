@@ -7,7 +7,7 @@ describe('Irrigation water source page', () => {
     await server.start()
   })
 
-  test('should load page successfully', async () => {
+  it('should load page successfully', async () => {
     const options = {
       method: 'GET',
       url: '/project-items'
@@ -17,7 +17,7 @@ describe('Irrigation water source page', () => {
     expect(response.statusCode).toBe(200)
   })
 
-  test('should return error message if no option is selected', async () => {
+  it('should return error message if no option is selected', async () => {
     const postOptions = {
       method: 'POST',
       url: '/project-items',
@@ -29,7 +29,7 @@ describe('Irrigation water source page', () => {
     expect(postResponse.payload).toContain('Select all the items your project needs')
   })
 
-  test('should store user response from column: "projectInfrastucture" and redirect to project details page', async () => {
+  it('should store user response from column: "projectInfrastucture" and redirect to project details page', async () => {
     const postOptions = {
       method: 'POST',
       url: '/project-items',
@@ -41,7 +41,7 @@ describe('Irrigation water source page', () => {
     expect(postResponse.headers.location).toBe('./project-details')
   })
 
-  test('should store user response from column: "projectEquipment" and redirect to project details page', async () => {
+  it('should store user response from column: "projectEquipment" and redirect to project details page', async () => {
     const postOptions = {
       method: 'POST',
       url: '/project-items',
@@ -53,7 +53,7 @@ describe('Irrigation water source page', () => {
     expect(postResponse.headers.location).toBe('./project-details')
   })
 
-  test('should store user response from column: "projectTechnology" and redirect to project details page', async () => {
+  it('should store user response from column: "projectTechnology" and redirect to project details page', async () => {
     const postOptions = {
       method: 'POST',
       url: '/project-items',
@@ -65,7 +65,7 @@ describe('Irrigation water source page', () => {
     expect(postResponse.headers.location).toBe('./project-details')
   })
 
-  test('should store user response from all columns and redirect to project details page', async () => {
+  it('should store user response from all columns and redirect to project details page', async () => {
     const postOptions = {
       method: 'POST',
       url: '/project-items',

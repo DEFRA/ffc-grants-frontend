@@ -7,7 +7,7 @@ describe('Collaboration page', () => {
     await server.start()
   })
 
-  test('should load page successfully', async () => {
+  it('should load page successfully', async () => {
     const options = {
       method: 'GET',
       url: '/collaboration'
@@ -17,7 +17,7 @@ describe('Collaboration page', () => {
     expect(response.statusCode).toBe(200)
   })
 
-  test('should returns error message if no option is selected', async () => {
+  it('should returns error message if no option is selected', async () => {
     const postOptions = {
       method: 'POST',
       url: '/collaboration',
@@ -29,7 +29,7 @@ describe('Collaboration page', () => {
     expect(postResponse.payload).toContain('Please select an option')
   })
 
-  test('should store user response and redirects to answers page', async () => {
+  it('should store user response and redirects to answers page', async () => {
     const postOptions = {
       method: 'POST',
       url: '/collaboration',

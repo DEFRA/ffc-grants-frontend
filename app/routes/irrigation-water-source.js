@@ -1,12 +1,10 @@
 const Joi = require('joi')
 const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
 
-function createModel(errorMessage, errorSummary, currentData, plannedData) {
+function createModel (errorMessage, errorSummary, currentData, plannedData) {
   return {
     backLink: '/irrigated-land',
-    ...errorSummary ? {
-      errorList: errorSummary
-    } : {},
+    ...errorSummary ? { errorList: errorSummary } : {},
     waterSourceCurrent: {
       idPrefix: 'waterSourceCurrent',
       name: 'waterSourceCurrent',
