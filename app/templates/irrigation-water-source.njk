@@ -24,13 +24,13 @@
   "titleText": "There is a problem",
   "errorList": errorList
 }) }}
-{% endif %}
+  {% endif %}
 {% endblock %}
 
 {% block content %}
   <div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
-      <form method="POST" action="/irrigation-water-source" novalidate>
+    <div class="govuk-grid-column-two-thirds">
+      <form method="POST" action="/irrigation-water-source" novalidate="novalidate">
         {{ govukCheckboxes(waterSourceCurrent) }}
         {{ govukCheckboxes(waterSourcePlanned) }}
         {{ govukButton({

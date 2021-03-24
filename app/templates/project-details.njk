@@ -20,7 +20,7 @@
     href: backLink
   }) }}
   {% if errorText %}
-  {{govukErrorSummary ({
+    {{govukErrorSummary ({
   "titleText": "There is a problem",
   "errorList": [
     {
@@ -29,14 +29,14 @@
     }
   ]
 }) }}
-{% endif %}
+  {% endif %}
 {% endblock %}
 
 {% block content %}
   <div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
-    <h1 class="govuk-heading-l">Project details</h1>
-      <form method="POST" action="/project-details" novalidate>
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-l">Project details</h1>
+      <form method="POST" action="/project-details" novalidate="novalidate">
         {{ govukCheckboxes(checkboxes) }}
         {{ govukButton({
           text: "Continue"
