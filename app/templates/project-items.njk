@@ -1,0 +1,41 @@
+{% extends '.layout.njk' %}
+
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/header/macro.njk" import govukHeader %}
+{% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+
+{% block header %}
+  {{ govukHeader({
+    homepageUrl: "/",
+    serviceName: "Check if you can apply for a water resource management grant",
+    serviceUrl: "/"
+  }) }}
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+    text: "Back",
+    href: backLink
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+    <h1 class="govuk-heading-l">Which eligible items does your project need?</h1>
+    <span id="project-items-hint" class="govuk-hint">
+      Grants can cover up to 40% of the eligible costs of a project. The minimum grant you can claim is £35,000 (40% of £87,500). The maximum grant is £1 million.
+    </span>
+      <form method="POST" action="/project-items" novalidate>
+        {{ govukCheckboxes(checkboxesInfrastucture) }}
+        {{ govukCheckboxes(checkboxesEquipment) }}
+        {{ govukCheckboxes(checkboxesTechnology) }}
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+      </form>
+    </div>
+  </div>
+{% endblock %}
