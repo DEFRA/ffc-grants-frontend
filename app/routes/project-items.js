@@ -84,10 +84,14 @@ module.exports = [
       const landOwnership = request.yar.get('landOwnership') || null
       const backUrl = landOwnership === 'No' ? '/answers' : '/tenancy'
 
-      const projectItems = request.yar.get('projectItems')
-      const data = projectItems || null
+      const projectInfrastucture = request.yar.get('projectInfrastucture') || null
+      const projectEquipment = request.yar.get('projectEquipment') || null
+      const projectTechnology = request.yar.get('projectTechnology') || null
 
-      return h.view('project-items', createModel(null, null, backUrl, data))
+      return h.view(
+        'project-items',
+        createModel(null, null, backUrl, projectInfrastucture, projectEquipment, projectTechnology)
+      )
     }
   },
   {
