@@ -1,4 +1,4 @@
-describe('Irrigation water source page', () => {
+describe('Irrigation syatems page', () => {
   let server
   const createServer = require('../../../../app/server')
 
@@ -26,7 +26,7 @@ describe('Irrigation water source page', () => {
 
     const postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Please select an option')
+    expect(postResponse.payload).toContain('Select one or two options for each question')
   })
 
   test('should returns error message if no planned water system option is selected', async () => {
@@ -38,7 +38,7 @@ describe('Irrigation water source page', () => {
 
     const postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Please select an option')
+    expect(postResponse.payload).toContain('Select one or two options for each question')
   })
 
   test('should store user response and redirects to productivity page', async () => {
@@ -59,12 +59,15 @@ describe('Irrigation water source page', () => {
       url: '/irrigation-systems',
       payload: {
         irrigationCurrent: ['some option-1', 'some option-2', 'some option-3'],
-        irrigationPlanned: ['another-option-1', 'another-option-2']
+        irrigationPlanned: ['another-option-1', 'another-option-2', 'another-option-3']
       }
     }
 
     const postResponse = await server.inject(postOptions)
     expect(postResponse.payload).toContain('There is a problem')
+    expect(postResponse.payload).toContain('Select the systems currently used to irrigate')
+    expect(postResponse.payload).toContain('Select the systems that will be used to irrigate')
+
   })
   afterEach(async () => {
     await server.stop()
