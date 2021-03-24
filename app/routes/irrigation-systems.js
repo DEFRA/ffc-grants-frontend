@@ -1,7 +1,7 @@
 const Joi = require('joi')
 const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
 
-function createModel(errorMessage, errorSummary, currentData, plannedData) {
+function createModel (errorMessage, errorSummary, currentData, plannedData) {
   return {
     backLink: '/irrigation-water-source',
     ...errorSummary ? { errorList: errorSummary } : {},
@@ -75,7 +75,6 @@ module.exports = [
           }
           if (irrigationPlanned.length > 2) {
             errorList.push({ text: 'Select the systems that will be used to irrigate', href: '#irrigationPlanned' })
-
           }
           return h.view('irrigation-systems', createModel('Select one or two options', errorList, irrigationCurrent, irrigationPlanned))
             .takeover()

@@ -53,7 +53,7 @@ describe('Irrigation water source page', () => {
     expect(postResponse.headers.location).toBe('./irrigation-systems')
   })
 
-  test('should display the error summary if more than two options are selected for each question', async () => {
+  it('should display the error summary if more than two options are selected for each question', async () => {
     const postOptions = {
       method: 'POST',
       url: '/irrigation-water-source',

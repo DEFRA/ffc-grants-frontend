@@ -67,7 +67,6 @@ describe('Irrigation syatems page', () => {
     expect(postResponse.payload).toContain('There is a problem')
     expect(postResponse.payload).toContain('Select the systems currently used to irrigate')
     expect(postResponse.payload).toContain('Select the systems that will be used to irrigate')
-
   })
   afterEach(async () => {
     await server.stop()
