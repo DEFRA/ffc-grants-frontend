@@ -1,10 +1,9 @@
 const Joi = require('joi')
 const { setLabelData } = require('../helpers/helper-functions')
 
-function createModel (errorMessage, errorSummary, backLink, projectInfrastucture, projectEquipment, projectTechnology) {
+function createModel (errorMessage, backLink, projectInfrastucture, projectEquipment, projectTechnology) {
   return {
     backLink,
-    ...(errorSummary ? { errorText: errorSummary } : {}),
     checkboxesInfrastucture: {
       idPrefix: 'projectInfrastucture',
       name: 'projectInfrastucture',
@@ -90,7 +89,7 @@ module.exports = [
 
       return h.view(
         'project-items',
-        createModel(null, null, backUrl, projectInfrastucture, projectEquipment, projectTechnology)
+        createModel(null, backUrl, projectInfrastucture, projectEquipment, projectTechnology)
       )
     }
   },
@@ -107,7 +106,7 @@ module.exports = [
         failAction: (request, h) => {
           const landOwnership = request.yar.get('landOwnership') || null
           const backUrl = landOwnership === 'No' ? '/answers' : '/tenancy'
-          return h.view('project-items', createModel('Please select an option', null, backUrl, null)).takeover()
+          return h.view('project-items', createModel('Please select an option', backUrl, null)).takeover()
         }
       },
       handler: (request, h) => {
@@ -125,7 +124,6 @@ module.exports = [
             'project-items',
             createModel(
               'Select all the items your project needs',
-              null,
               backUrl,
               projectInfrastucture,
               projectEquipment,
