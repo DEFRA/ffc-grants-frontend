@@ -48,7 +48,7 @@ module.exports = [
       handler: (request, h) => {
         request.yar.set('landOwnership', request.payload.landOwnership)
         return request.payload.landOwnership === 'Yes'
-          ? h.redirect('./project-details')
+          ? h.redirect('./project-items')
           : h.redirect('./tenancy-length')
       }
     }

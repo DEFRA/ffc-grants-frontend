@@ -1,4 +1,4 @@
-describe('Water tenancy page', () => {
+describe('Water tenancy length page', () => {
   let server
   const createServer = require('../../../../app/server')
 
@@ -10,7 +10,7 @@ describe('Water tenancy page', () => {
   it('should load page successfully', async () => {
     const options = {
       method: 'GET',
-      url: '/tenancy'
+      url: '/tenancy-length'
     }
 
     const response = await server.inject(options)
@@ -20,32 +20,33 @@ describe('Water tenancy page', () => {
   it('should returns error message in body if no option is selected', async () => {
     const postOptions = {
       method: 'POST',
-      url: '/tenancy',
+      url: '/tenancy-length',
       payload: {}
     }
 
     const postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Select yes if the planned project is on land the farm business owns')
+    expect(postResponse.payload).toContain('Select yes if the land has a tenancy agreement in place until 2026 or after')
   })
 
-  it('should redirect to tenancy length page when user selects "No"', async () => {
+  it('should display info message when user selects "No"', async () => {
     const postOptions = {
       method: 'POST',
-      url: '/tenancy',
-      payload: { landOwnership: 'No' }
+      url: '/tenancy-length',
+      payload: { tenancyLength: 'No' }
     }
 
     const postResponse = await server.inject(postOptions)
-    expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe('./tenancy-length')
+    expect(postResponse.statusCode).toBe(200)
+    expect(postResponse.payload).toContain('You may be able to apply for a grant from this scheme')
+
   })
 
   it('should redirect to project items page when user selects "Yes"', async () => {
     const postOptions = {
       method: 'POST',
-      url: '/tenancy',
-      payload: { landOwnership: 'Yes' }
+      url: '/tenancy-length',
+      payload: { tenancyLength: 'Yes' }
     }
 
     const postResponse = await server.inject(postOptions)
