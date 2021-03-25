@@ -1,5 +1,6 @@
 const Joi = require('joi')
 const { errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
+const { MIN_GRANT, MAX_GRANT } = require('../helpers/storedValues')
 
 function createModel (errorMessage, projectCost, projectItems) {
   return {
@@ -23,6 +24,15 @@ function createModel (errorMessage, projectCost, projectItems) {
       ...(errorMessage ? { errorMessage: { text: errorMessage } } : {})
     },
     projectItems
+  }
+}
+
+function createModelNotEligible () {
+  return {
+    backLink: '/project-cost',
+    messageContent:
+    `You can only apply for a grant of up to 40% of the estimated costs.<br/><br/>
+    The minimum grant you can apply for is £35,000 (40% of £87,500). The maximum grant is £1 million.`
   }
 }
 
@@ -73,7 +83,16 @@ module.exports = [
       },
       handler: (request, h) => {
         const { projectCost } = request.payload
+        const calculatedGrant = 0.4 * Number(projectCost)
+        const remainingCost = 0.6 * Number(projectCost) // OR projectCost - calculatedGrant
+
         request.yar.set('projectCost', projectCost)
+        request.yar.set('calculatedGrant', calculatedGrant)
+        request.yar.set('remainingCost', remainingCost)
+
+        if ((calculatedGrant < MIN_GRANT) || (calculatedGrant > MAX_GRANT)) {
+          return h.view('./not-eligible', createModelNotEligible())
+        }
         return h.redirect('./project-details')
       }
     }
