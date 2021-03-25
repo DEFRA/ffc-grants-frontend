@@ -1,7 +1,6 @@
 const Joi = require('joi')
 const { errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
 
-
 const createModel = (errorMessage, data) => ({
 
   backLink: '/project-details',

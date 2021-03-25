@@ -7,7 +7,7 @@ describe('Project start page', () => {
     await server.start()
   })
 
-  test('should load page successfully', async () => {
+  it('should load page successfully', async () => {
     const options = {
       method: 'GET',
       url: '/project-start'
@@ -17,7 +17,7 @@ describe('Project start page', () => {
     expect(response.statusCode).toBe(200)
   })
 
-  test('should returns error message in body if no option is selected', async () => {
+  it('should returns error message in body if no option is selected', async () => {
     const postOptions = {
       method: 'POST',
       url: '/project-start',
@@ -29,7 +29,7 @@ describe('Project start page', () => {
     expect(postResponse.payload).toContain('Select yes if you have already started work on the project')
   })
 
-  test('should redirect to details pagewhen user selects "No"', async () => {
+  it('should redirect to details pagewhen user selects "No"', async () => {
     const postOptions = {
       method: 'POST',
       url: '/project-start',
@@ -41,7 +41,7 @@ describe('Project start page', () => {
     expect(postResponse.headers.location).toBe('./tenancy')
   })
 
-  test('should redirect to ineligible page when user selects "Yes"', async () => {
+  it('should redirect to ineligible page when user selects "Yes"', async () => {
     const postOptions = {
       method: 'POST',
       url: '/project-start',

@@ -19,23 +19,18 @@
     text: "Back",
     href: backLink
   }) }}
-  {% if errorText %}
+  {% if errorList %}
   {{govukErrorSummary ({
   "titleText": "There is a problem",
-  "errorList": [
-    {
-      "text": errorText,
-      "href": "#irrigationCurrent"
-    }
-  ]
+  "errorList": errorList
 }) }}
-{% endif %}
+  {% endif %}
 {% endblock %}
 
 {% block content %}
   <div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
-      <form method="POST" action="/irrigation-systems" novalidate>
+    <div class="govuk-grid-column-two-thirds">
+      <form method="POST" action="/irrigation-systems" novalidate="novalidate">
         {{ govukCheckboxes(irrigationCurrent) }}
         {{ govukCheckboxes(irrigationPlanned) }}
         {{ govukButton({

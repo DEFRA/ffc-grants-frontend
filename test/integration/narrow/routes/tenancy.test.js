@@ -7,7 +7,7 @@ describe('Water tenancy page', () => {
     await server.start()
   })
 
-  test('should load page successfully', async () => {
+  it('should load page successfully', async () => {
     const options = {
       method: 'GET',
       url: '/tenancy'
@@ -17,7 +17,7 @@ describe('Water tenancy page', () => {
     expect(response.statusCode).toBe(200)
   })
 
-  test('should returns error message in body if no option is selected', async () => {
+  it('should returns error message in body if no option is selected', async () => {
     const postOptions = {
       method: 'POST',
       url: '/tenancy',
@@ -29,7 +29,7 @@ describe('Water tenancy page', () => {
     expect(postResponse.payload).toContain('Select yes if the planned project is on land the farm business owns')
   })
 
-  test('should redirect to tenancy length page when user selects "No"', async () => {
+  it('should redirect to tenancy length page when user selects "No"', async () => {
     const postOptions = {
       method: 'POST',
       url: '/tenancy',
@@ -41,7 +41,7 @@ describe('Water tenancy page', () => {
     expect(postResponse.headers.location).toBe('./answers')
   })
 
-  test('should redirect to project details page when user selects "Yes"', async () => {
+  it('should redirect to project details page when user selects "Yes"', async () => {
     const postOptions = {
       method: 'POST',
       url: '/tenancy',
@@ -50,7 +50,7 @@ describe('Water tenancy page', () => {
 
     const postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe('./project-details')
+    expect(postResponse.headers.location).toBe('./project-items')
   })
 
   afterEach(async () => {

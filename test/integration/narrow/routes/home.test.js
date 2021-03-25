@@ -7,7 +7,7 @@ describe('Start Page', () => {
     await server.start()
   })
 
-  test('should load start page successfully', async () => {
+  it('should load start page successfully', async () => {
     const options = {
       method: 'GET',
       url: '/start'

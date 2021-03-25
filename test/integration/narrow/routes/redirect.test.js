@@ -7,7 +7,7 @@ describe('redirect Page', () => {
     await server.start()
   })
 
-  test('should redirect to /start ', async () => {
+  it('should redirect to /start ', async () => {
     const options = {
       method: 'GET',
       url: '/'

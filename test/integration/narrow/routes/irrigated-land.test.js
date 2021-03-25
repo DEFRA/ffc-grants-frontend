@@ -7,7 +7,7 @@ describe('Irrigated Land page', () => {
     await server.start()
   })
 
-  test('should load page successfully', async () => {
+  it('should load page successfully', async () => {
     const options = {
       method: 'GET',
       url: '/irrigated-land'
@@ -17,11 +17,11 @@ describe('Irrigated Land page', () => {
     expect(response.statusCode).toBe(200)
   })
 
-  test('should returns error message if no data is entered', async () => {
+  it('should returns error message if no data is entered', async () => {
     const postOptions = {
       method: 'POST',
       url: '/irrigated-land',
-      payload: { }
+      payload: {}
     }
 
     const postResponse = await server.inject(postOptions)
@@ -29,7 +29,7 @@ describe('Irrigated Land page', () => {
     expect(postResponse.payload).toContain('Enter land irrigated')
   })
 
-  test('should returns error message if there is no data entered for \'currently irrigated land\' ', async () => {
+  it('should returns error message if there is no data entered for \'currently irrigated land\' ', async () => {
     const postOptions = {
       method: 'POST',
       url: '/irrigated-land',
@@ -41,7 +41,7 @@ describe('Irrigated Land page', () => {
     expect(postResponse.payload).toContain('Enter land irrigated')
   })
 
-  test('should returns error message if there is no data entered for \'total irrigated land target\' ', async () => {
+  it('should returns error message if there is no data entered for \'total irrigated land target\' ', async () => {
     const postOptions = {
       method: 'POST',
       url: '/irrigated-land',
@@ -53,7 +53,7 @@ describe('Irrigated Land page', () => {
     expect(postResponse.payload).toContain('Enter land irrigated')
   })
 
-  test('should store user response and redirects to water source page', async () => {
+  it('should store user response and redirects to water source page', async () => {
     const postOptions = {
       method: 'POST',
       url: '/irrigated-land',
