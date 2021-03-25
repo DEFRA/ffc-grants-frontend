@@ -139,7 +139,7 @@ module.exports = [
         request.yar.set('projectInfrastucture', projectInfrastucture)
         request.yar.set('projectEquipment', projectEquipment)
         request.yar.set('projectTechnology', projectTechnology)
-        return h.redirect('./project-items')
+        return h.redirect('./project-cost')
       }
     }
   }
