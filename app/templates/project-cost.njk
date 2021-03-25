@@ -1,0 +1,46 @@
+{% extends '.layout.njk' %}
+
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/header/macro.njk" import govukHeader %}
+{% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+
+{% block header %}
+  {{ govukHeader({
+    homepageUrl: "/",
+    serviceName: "Check if you can apply for a water resource management grant",
+    serviceUrl: "/"
+  }) }}
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+    text: "Back",
+    href: backLink
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <form method="POST" action="/project-cost" novalidate>
+        {{ govukInput(inputProjectCost) }}
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+      </form>
+    </div>
+
+    <div class="govuk-grid-column-one-third">
+      <h4 class="govuk-heading-m">Items selected</h4>
+      <ul class="govuk-list govuk-list--bullet">
+        {% for item in projectItems %}
+          <li>{{ item }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+{% endblock %}
