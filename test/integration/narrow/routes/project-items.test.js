@@ -29,7 +29,7 @@ describe('Irrigation water source page', () => {
     expect(postResponse.payload).toContain('Select all the items your project needs')
   })
 
-  it('should store user response from column: "projectInfrastucture" and redirect to project details page', async () => {
+  it('should store user response from column: "projectInfrastucture" and redirect to project cost page', async () => {
     const postOptions = {
       method: 'POST',
       url: '/project-items',
@@ -38,10 +38,10 @@ describe('Irrigation water source page', () => {
 
     const postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe('./project-details')
+    expect(postResponse.headers.location).toBe('./project-cost')
   })
 
-  it('should store user response from column: "projectEquipment" and redirect to project details page', async () => {
+  it('should store user response from column: "projectEquipment" and redirect to project cost page', async () => {
     const postOptions = {
       method: 'POST',
       url: '/project-items',
@@ -50,10 +50,10 @@ describe('Irrigation water source page', () => {
 
     const postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe('./project-details')
+    expect(postResponse.headers.location).toBe('./project-cost')
   })
 
-  it('should store user response from column: "projectTechnology" and redirect to project details page', async () => {
+  it('should store user response from column: "projectTechnology" and redirect to project cost page', async () => {
     const postOptions = {
       method: 'POST',
       url: '/project-items',
@@ -62,10 +62,10 @@ describe('Irrigation water source page', () => {
 
     const postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe('./project-details')
+    expect(postResponse.headers.location).toBe('./project-cost')
   })
 
-  it('should store user response from all columns and redirect to project details page', async () => {
+  it('should store user response from all columns and redirect to project cost page', async () => {
     const postOptions = {
       method: 'POST',
       url: '/project-items',
@@ -78,7 +78,7 @@ describe('Irrigation water source page', () => {
 
     const postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe('./project-details')
+    expect(postResponse.headers.location).toBe('./project-cost')
   })
 
   afterEach(async () => {
