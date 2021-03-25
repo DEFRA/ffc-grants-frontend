@@ -9,7 +9,9 @@ const errors = {
   'error.projectStarted.any.required': 'Select yes if you have already started work on the project',
   'error.landOwnership.any.required': 'Select yes if the planned project is on land the farm business owns',
   'error.irrigationPlanned.any.required': 'Select one or two options for each question',
-  'error.irrigationCurrent.any.required': 'Select one or two options for each question'
+  'error.irrigationCurrent.any.required': 'Select one or two options for each question',
+  'error.projectCost.number.base': 'Enter a whole number with a maximum of 7 digits',
+  'error.projectCost.number.max': 'Enter a whole number with a maximum of 7 digits'
 }
 const lookupErrorText = (key) => {
   return errors[key] || key
