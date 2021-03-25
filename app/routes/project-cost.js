@@ -41,9 +41,9 @@ module.exports = [
     method: 'GET',
     path: '/project-cost',
     handler: (request, h) => {
-      const projectInfrastucture = request.yar.get('projectInfrastucture') || []
-      const projectEquipment = request.yar.get('projectEquipment') || []
-      const projectTechnology = request.yar.get('projectTechnology') || []
+      const projectInfrastucture = (request.yar.get('projectInfrastucture') || []).filter((x) => !!x)
+      const projectEquipment = (request.yar.get('projectEquipment') || []).filter((x) => !!x)
+      const projectTechnology = (request.yar.get('projectTechnology') || []).filter((x) => !!x)
 
       const projectItems = [...projectInfrastucture, ...projectEquipment, ...projectTechnology]
       const projectCost = request.yar.get('projectCost') || null
