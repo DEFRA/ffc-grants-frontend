@@ -61,13 +61,6 @@ module.exports = [
         failAction: (request, h, err) => {
           const projectItemsList = request.yar.get('projectItemsList') || null
 
-          if (err._original.projectCost === '') {
-            return h.view(
-              'project-cost',
-              createModel('Enter the estimated cost for the items', null, projectItemsList)
-            ).takeover()
-          }
-
           const errorObject = errorExtractor(err)
           const errorMessage = getErrorMessage(errorObject)
           return h.view('project-cost', createModel(errorMessage, null, projectItemsList)).takeover()
