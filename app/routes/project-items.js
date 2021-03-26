@@ -139,6 +139,15 @@ module.exports = [
         request.yar.set('projectInfrastucture', projectInfrastucture)
         request.yar.set('projectEquipment', projectEquipment)
         request.yar.set('projectTechnology', projectTechnology)
+
+        const projectInfrastuctureList = projectInfrastucture.filter((x) => !!x)
+        const projectEquipmentList = projectEquipment.filter((x) => !!x)
+        const projectTechnologyList = projectTechnology.filter((x) => !!x)
+
+        const projectItemsList = [...projectInfrastuctureList, ...projectEquipmentList, ...projectTechnologyList]
+
+        request.yar.set('projectItemsList', projectItemsList)
+
         return h.redirect('./project-cost')
       }
     }

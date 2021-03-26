@@ -2,7 +2,7 @@ const Joi = require('joi')
 const { errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
 const { MIN_GRANT, MAX_GRANT } = require('../helpers/storedValues')
 
-function createModel (errorMessage, projectCost, projectItems) {
+function createModel (errorMessage, projectCost, projectItemsList) {
   return {
     backLink: '/project-items',
     inputProjectCost: {
@@ -23,7 +23,7 @@ function createModel (errorMessage, projectCost, projectItems) {
       value: projectCost,
       ...(errorMessage ? { errorMessage: { text: errorMessage } } : {})
     },
-    projectItems
+    projectItemsList
   }
 }
 
@@ -41,16 +41,12 @@ module.exports = [
     method: 'GET',
     path: '/project-cost',
     handler: (request, h) => {
-      const projectInfrastucture = (request.yar.get('projectInfrastucture') || []).filter((x) => !!x)
-      const projectEquipment = (request.yar.get('projectEquipment') || []).filter((x) => !!x)
-      const projectTechnology = (request.yar.get('projectTechnology') || []).filter((x) => !!x)
-
-      const projectItems = [...projectInfrastucture, ...projectEquipment, ...projectTechnology]
       const projectCost = request.yar.get('projectCost') || null
+      const projectItemsList = request.yar.get('projectItemsList')
 
       return h.view(
         'project-cost',
-        createModel(null, projectCost, projectItems)
+        createModel(null, projectCost, projectItemsList)
       )
     }
   },
@@ -63,22 +59,18 @@ module.exports = [
           projectCost: Joi.number().integer().max(9999999).required()
         }),
         failAction: (request, h, err) => {
-          const projectInfrastucture = request.yar.get('projectInfrastucture') || {}
-          const projectEquipment = request.yar.get('projectEquipment') || {}
-          const projectTechnology = request.yar.get('projectTechnology') || {}
-
-          const projectItems = [...projectInfrastucture, ...projectEquipment, ...projectTechnology]
+          const projectItemsList = request.yar.get('projectItemsList') || null
 
           if (err._original.projectCost === '') {
             return h.view(
               'project-cost',
-              createModel('Enter the estimated cost for the items', null, projectItems)
+              createModel('Enter the estimated cost for the items', null, projectItemsList)
             ).takeover()
           }
 
           const errorObject = errorExtractor(err)
           const errorMessage = getErrorMessage(errorObject)
-          return h.view('project-cost', createModel(errorMessage, null, projectItems)).takeover()
+          return h.view('project-cost', createModel(errorMessage, null, projectItemsList)).takeover()
         }
       },
       handler: (request, h) => {
