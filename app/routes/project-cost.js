@@ -31,7 +31,7 @@ function createModelNotEligible () {
   return {
     backLink: '/project-cost',
     messageContent:
-    `You can only apply for a grant of up to 40% of the estimated costs.<br/><br/>
+    `You can only apply for a grant of up to <span class="govuk-!-font-weight-bold">40%</span> of the estimated costs.<br/><br/>
     The minimum grant you can apply for is £35,000 (40% of £87,500). The maximum grant is £1 million.`
   }
 }
