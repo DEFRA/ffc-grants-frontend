@@ -85,7 +85,7 @@ module.exports = [
         if ((calculatedGrant < MIN_GRANT) || (calculatedGrant > MAX_GRANT)) {
           return h.view('./not-eligible', createModelNotEligible())
         }
-        return h.redirect('./project-details')
+        return h.redirect('./grant')
       }
     }
   }
