@@ -4,6 +4,9 @@
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/header/macro.njk" import govukHeader %}
 {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
+
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 
 {% block header %}
@@ -23,15 +26,18 @@
 
 {% block content %}
   <div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
-    <h1 class="govuk-heading-l">Which eligible items does your project need?</h1>
-    <span id="project-items-hint" class="govuk-hint">
-      The minimum grant you can apply for is £35,000 (40% of £87,500).<br/>The maximum grant is £1 million.
-    </span>
-      <form method="POST" action="/project-items" novalidate>
-        {{ govukCheckboxes(checkboxesInfrastucture) }}
-        {{ govukCheckboxes(checkboxesEquipment) }}
-        {{ govukCheckboxes(checkboxesTechnology) }}
+    <div class="govuk-grid-column-two-thirds">
+      <form method="POST" action="/grant" novalidate>
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+          <h1 class="govuk-fieldset__heading">Potential grant funding</h1>
+        </legend>
+        <label class="govuk-label">
+          You may be able to apply for a grant of up to <span class="govuk-!-font-weight-bold">£{{calculatedGrant}},</span> based on the estimated cost of £{{projectCost}}.
+        </label>
+        {{ govukInsetText({
+            text: "The project is not guaranteed to receive a grant."
+           })
+        }}
         {{ govukButton({
           text: "Continue"
         }) }}

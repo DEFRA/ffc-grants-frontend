@@ -4,6 +4,8 @@
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/header/macro.njk" import govukHeader %}
 {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 
 {% block header %}
@@ -23,19 +25,22 @@
 
 {% block content %}
   <div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
-    <h1 class="govuk-heading-l">Which eligible items does your project need?</h1>
-    <span id="project-items-hint" class="govuk-hint">
-      The minimum grant you can apply for is £35,000 (40% of £87,500).<br/>The maximum grant is £1 million.
-    </span>
-      <form method="POST" action="/project-items" novalidate>
-        {{ govukCheckboxes(checkboxesInfrastucture) }}
-        {{ govukCheckboxes(checkboxesEquipment) }}
-        {{ govukCheckboxes(checkboxesTechnology) }}
+    <div class="govuk-grid-column-two-thirds">
+      <form method="POST" action="/project-cost" novalidate>
+        {{ govukInput(inputProjectCost) }}
         {{ govukButton({
           text: "Continue"
         }) }}
       </form>
+    </div>
+
+    <div class="govuk-grid-column-one-third">
+      <h4 class="govuk-heading-m">Items selected</h4>
+      <ul class="govuk-list govuk-list--bullet">
+        {% for item in projectItemsList %}
+          <li>{{ item }}</li>
+        {% endfor %}
+      </ul>
     </div>
   </div>
 {% endblock %}
