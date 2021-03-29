@@ -10,7 +10,8 @@ const errors = {
   'error.landOwnership.any.required': 'Select yes if the planned project is on land the farm business owns',
   'error.irrigationPlanned.any.required': 'Select one or two options for each question',
   'error.irrigationCurrent.any.required': 'Select one or two options for each question',
-  'error.tenancyLength.any.required':'Select yes if the land has a tenancy agreement in place until 2026 or after'
+  'error.tenancyLength.any.required': 'Select yes if the land has a tenancy agreement in place until 2026 or after',
+  'error.planningPermission.any.required': 'Select when the project will have planning permission'
 }
 const lookupErrorText = (key) => {
   return errors[key] || key
