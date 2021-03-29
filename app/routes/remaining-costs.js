@@ -61,7 +61,7 @@ module.exports = [
       handler: (request, h) => {
         request.yar.set('remainingCosts', request.payload.remainingCosts)
         return request.payload.remainingCosts === 'Yes'
-          ? h.redirect('./project-details')// /planning-permission
+          ? h.redirect('./planning-permission')
           : h.view('./not-eligible', createModelNotEligible())
       }
     }
