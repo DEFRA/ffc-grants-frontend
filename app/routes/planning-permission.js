@@ -46,7 +46,7 @@ module.exports = [
       },
       handler: (request, h) => {
         request.yar.set('planningPermission', request.payload.planningPermission)
-        h.redirect('./tenancy')
+        return h.redirect('./project-details')
       }
     }
   }
