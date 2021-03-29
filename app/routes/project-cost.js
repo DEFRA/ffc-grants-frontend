@@ -1,6 +1,6 @@
 const Joi = require('joi')
 const { errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
-const { MIN_GRANT, MAX_GRANT } = require('../helpers/storedValues')
+const { MIN_GRANT, MAX_GRANT, GRANT_PERCENTAGE } = require('../helpers/grant-details')
 
 function createModel (errorMessage, projectCost, projectItemsList) {
   return {
@@ -68,8 +68,8 @@ module.exports = [
       },
       handler: (request, h) => {
         const { projectCost } = request.payload
-        const calculatedGrant = 0.4 * Number(projectCost)
-        const remainingCost = 0.6 * Number(projectCost) // OR projectCost - calculatedGrant
+        const calculatedGrant = GRANT_PERCENTAGE * Number(projectCost) / 100
+        const remainingCost = projectCost - calculatedGrant // OR 0.6 * Number(projectCost)
 
         request.yar.set('projectCost', projectCost)
         request.yar.set('calculatedGrant', calculatedGrant)
