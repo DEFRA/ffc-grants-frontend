@@ -1,4 +1,5 @@
 const lookupErrorText = require('./lookupErrorText')
+const { GRANT_PERCENTAGE } = require('../helpers/grant-details')
 
 function isChecked (data, option) {
   return !!data && data.includes(option)
@@ -58,4 +59,11 @@ function getErrorMessage (object) {
   return lookupErrorText(object[Object.keys(object)[0]])
 }
 
-module.exports = { isChecked, setLabelData, getPostCodeHtml, errorExtractor, getErrorMessage }
+function getGrantValues (projectCost) {
+  const calculatedGrant = Number(Number(GRANT_PERCENTAGE * Number(projectCost) / 100).toFixed(2))
+  const remainingCost = projectCost - calculatedGrant
+
+  return { calculatedGrant, remainingCost }
+}
+
+module.exports = { isChecked, setLabelData, getPostCodeHtml, errorExtractor, getErrorMessage, getGrantValues }
