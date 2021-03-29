@@ -1,7 +1,7 @@
 const Joi = require('joi')
 const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
 
-function createModel(errorMessage, data) {
+function createModel(errorMessage, data, remainingCost) {
   return {
     backLink: '/project-cost',
     radios: {
@@ -10,7 +10,7 @@ function createModel(errorMessage, data) {
       name: 'remainingCosts',
       fieldset: {
         legend: {
-          text: 'Can you pay the remaining costs of £(value)?',
+          text: `Can you pay the remaining costs of £${remainingCost} ?`,
           isPageHeading: true,
           classes: 'govuk-fieldset__legend--l'
         }
@@ -38,7 +38,8 @@ module.exports = [
     path: '/remaining-costs',
     handler: (request, h) => {
       const remainingCosts = request.yar.get('remainingCosts') || null
-      return h.view('remaining-costs', createModel(null, remainingCosts))
+      const remainingCost = request.yar.get('remainingCost')
+      return h.view('remaining-costs', createModel(null, remainingCosts, remainingCost))
     }
   },
   {
@@ -52,7 +53,9 @@ module.exports = [
         failAction: (request, h, err) => {
           const errorObject = errorExtractor(err)
           const errorMessage = getErrorMessage(errorObject)
-          return h.view('remaining-costs', createModel(errorMessage)).takeover()
+          const remainingCost = request.yar.get('remainingCost')
+
+          return h.view('remaining-costs', createModel(errorMessage,null,remainingCost)).takeover()
         }
       },
       handler: (request, h) => {
