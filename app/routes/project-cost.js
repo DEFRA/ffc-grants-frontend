@@ -18,7 +18,11 @@ function createModel (errorMessage, projectCost, projectItemsList) {
         isPageHeading: true
       },
       hint: {
-        text: 'Do not include VAT.'
+        html: `
+          You can only apply for a grant of up to 40% of the estimated costs.
+          <br/>Do not include VAT.
+          <br/><br/>Pounds
+          <br/>For example 95000`
       },
       value: projectCost,
       ...(errorMessage ? { errorMessage: { text: errorMessage } } : {})
