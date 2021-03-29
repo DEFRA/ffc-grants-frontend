@@ -24,7 +24,7 @@ module.exports = [
     method: 'POST',
     path: '/grant',
     handler: (request, h) => {
-      return h.redirect('./project-details')
+      return h.redirect('./remaining-costs')
     }
   }
 ]
