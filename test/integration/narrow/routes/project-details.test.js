@@ -26,7 +26,7 @@ describe('Project details page', () => {
 
     const postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Please select an option')
+    expect(postResponse.payload).toContain('Select one or two options')
   })
 
   it('should store user response and redirects to irrigated crops page', async () => {
@@ -50,6 +50,8 @@ describe('Project details page', () => {
 
     const postResponse = await server.inject(postOptions)
     expect(postResponse.payload).toContain('There is a problem')
+    expect(postResponse.payload).toContain('Select one or two options of what the project will achieve')
+
   })
   afterEach(async () => {
     await server.stop()

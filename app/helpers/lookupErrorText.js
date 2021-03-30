@@ -15,7 +15,8 @@ const errors = {
   'error.remainingCosts.any.required':'Select yes if you can pay the remaining costs without using any other grant money',
   'error.projectCost.number.base': 'Enter the estimated cost for the items as a whole number with a maximum of 7 digits',
   'error.projectCost.number.max': 'Enter the estimated cost for the items as a whole number with a maximum of 7 digits',
-  'error.projectCost.number.integer': 'Enter the estimated cost for the items as a whole number with a maximum of 7 digits'
+  'error.projectCost.number.integer': 'Enter the estimated cost for the items as a whole number with a maximum of 7 digits',
+  'error.project.any.required': 'Select one or two options'
 }
 const lookupErrorText = (key) => {
   return errors[key] || key
