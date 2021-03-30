@@ -9,7 +9,7 @@ metadata:
     kubernetes.io/ingress.class: {{ .Values.ingress.class | quote }}
 spec:
   rules:
-  - host: {{ .Values.ingress.endpoint }}-{{ .Values.pr }}.{{ .Values.ingress.server }}
+  - host: farming-transformation-fund.{{ .Values.ingress.server }}
     http:
       paths:
       - path: /water
