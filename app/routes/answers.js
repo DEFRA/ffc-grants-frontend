@@ -1,6 +1,3 @@
-const senders = require('../messaging/senders')
-const createMsg = require('../messaging/create-msg')
-
 module.exports = {
   method: 'GET',
   path: '/answers',
