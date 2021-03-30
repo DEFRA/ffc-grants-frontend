@@ -1,6 +1,6 @@
 module.exports = {
   method: 'GET',
-  path: '/water/assets/{path*}',
+  path: '/slurry/assets/{path*}',
   options: {
     handler: {
       directory: {

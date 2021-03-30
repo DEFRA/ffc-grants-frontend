@@ -3,7 +3,7 @@ const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/he
 
 function createModel (errorMessage, data) {
   return {
-    backLink: '/water/farming-type',
+    backLink: '/slurry/farming-type',
     radios: {
       classes: '',
       idPrefix: 'legalStatus',
@@ -24,7 +24,7 @@ function createModel (errorMessage, data) {
 
 function createModelNotEligible () {
   return {
-    backLink: '/water/legal-status',
+    backLink: '/slurry/legal-status',
     messageContent:
       'This is only open to a business with a legal status of: <ul class="govuk-list govuk-list--bullet"><li>Charity</li><li>Community interest organisation</li><li>Limited company</li><li>Limited liability partnership</li><li>Partnership</li><li>Public organisation</li><li>Sole Trader</li><li>Trust</li></ul><p class="govuk-body">Other types of business may be supported in future schemes.</p>'
   }
@@ -33,7 +33,7 @@ function createModelNotEligible () {
 module.exports = [
   {
     method: 'GET',
-    path: '/water/legal-status',
+    path: '/slurry/legal-status',
     handler: (request, h) => {
       const legalStatus = request.yar.get('legalStatus')
       const data = legalStatus || null
@@ -42,7 +42,7 @@ module.exports = [
   },
   {
     method: 'POST',
-    path: '/water/legal-status',
+    path: '/slurry/legal-status',
     options: {
       validate: {
         payload: Joi.object({
@@ -56,7 +56,7 @@ module.exports = [
       },
       handler: (request, h) => {
         request.yar.set('legalStatus', request.payload.legalStatus)
-        return (request.payload.legalStatus === 'Other') ? h.view('not-eligible', createModelNotEligible()) : h.redirect('/water/country')
+        return (request.payload.legalStatus === 'Other') ? h.view('not-eligible', createModelNotEligible()) : h.redirect('/slurry/country')
       }
     }
   }

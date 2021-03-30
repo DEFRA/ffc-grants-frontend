@@ -1,5 +1,5 @@
 module.exports = {
   method: 'GET',
-  path: '/water',
-  handler: (request, h) => h.redirect('/water/start')
+  path: '/slurry',
+  handler: (request, h) => h.redirect('/slurry/start')
 }

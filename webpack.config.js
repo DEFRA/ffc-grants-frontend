@@ -58,7 +58,7 @@ module.exports = {
   output: {
     filename: 'js/bundle.[hash].js',
     path: path.resolve(__dirname, 'app/assets/dist'),
-    publicPath: '/water/assets/'
+    publicPath: '/slurry/assets/'
   },
   plugins: [
     new CleanWebpackPlugin(),
