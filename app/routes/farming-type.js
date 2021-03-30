@@ -3,7 +3,7 @@ const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/he
 
 function createModel (errorMessage, data) {
   return {
-    backLink: '/start',
+    backLink: '/water/start',
     radios: {
       classes: '',
       idPrefix: 'farmingType',
@@ -23,7 +23,7 @@ function createModel (errorMessage, data) {
 
 function createModelNotEligible () {
   return {
-    backLink: '/farming-type',
+    backLink: '/water/farming-type',
     messageContent:
       'This is only available to farming and horticultural businesses that grow crops for the food industry or nurseries growing ornamentals.'
   }
@@ -32,7 +32,7 @@ function createModelNotEligible () {
 module.exports = [
   {
     method: 'GET',
-    path: '/farming-type',
+    path: '/water/farming-type',
     handler: (request, h) => {
       const farmingType = request.yar.get('farmingType')
       const data = farmingType || null
@@ -41,7 +41,7 @@ module.exports = [
   },
   {
     method: 'POST',
-    path: '/farming-type',
+    path: '/water/farming-type',
     options: {
       validate: {
         payload: Joi.object({
@@ -55,7 +55,7 @@ module.exports = [
       },
       handler: (request, h) => {
         request.yar.set('farmingType', request.payload.farmingType)
-        return request.payload.farmingType !== 'Something else' ? h.redirect('./legal-status') : h.view('./not-eligible', createModelNotEligible())
+        return request.payload.farmingType !== 'Something else' ? h.redirect('/water/legal-status') : h.view('not-eligible', createModelNotEligible())
       }
     }
   }
