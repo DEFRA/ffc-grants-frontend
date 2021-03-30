@@ -26,8 +26,6 @@
   },
   "homepage": "https://github.com/DEFRA/ffc-grants-frontend#readme",
   "dependencies": {
-    "@azure/ms-rest-nodeauth": "^3.0.6",
-    "@azure/service-bus": "^1.1.10",
     "@hapi/hapi": "^20.0.3",
     "@hapi/inert": "^6.0.2",
     "@hapi/vision": "^6.0.1",
