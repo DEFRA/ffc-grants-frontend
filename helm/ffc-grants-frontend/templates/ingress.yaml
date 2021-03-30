@@ -19,5 +19,5 @@ spec:
           servicePort: {{ .Values.service.port }}
       - path: /sfi
         backend:
-          serviceName: ffc-sfi-frontend.ffc-sfi.svc.cluster.local
+          serviceName: ffc-sfi-frontend
           servicePort: {{ .Values.service.port }}
