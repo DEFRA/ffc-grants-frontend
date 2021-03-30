@@ -34,9 +34,6 @@ async function sendMsg (sender, msgData, msgType) {
 }
 
 module.exports = {
-  sendEligibilityAnswers: async function (eligibilityAnswersData) {
-    await sendMsg(eligibilityAnswersSender, eligibilityAnswersData, msgCfg.eligibilityAnswersMsgType)
-  },
   sendProjectDetails: async function (projectDetailsData) {
     await sendMsg(projectDetailsSender, projectDetailsData, msgCfg.projectDetailsMsgType)
   },
