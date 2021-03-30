@@ -1,7 +1,7 @@
 const Joi = require('joi')
-const { setLabelData } = require('../helpers/helper-functions')
+const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
 
-function createModel (errorMessage, data) {
+function createModel(errorMessage, data) {
   return {
     backLink: '/farming-type',
     radios: {
@@ -22,7 +22,7 @@ function createModel (errorMessage, data) {
   }
 }
 
-function createModelNotEligible () {
+function createModelNotEligible() {
   return {
     backLink: '/legal-status',
     messageContent:
@@ -48,8 +48,11 @@ module.exports = [
         payload: Joi.object({
           legalStatus: Joi.string().required()
         }),
-        failAction: (request, h) =>
-          h.view('legal-status', createModel('Select one option')).takeover()
+        failAction: (request, h, err) => {
+          const errorObject = errorExtractor(err)
+          const errorMessage = getErrorMessage(errorObject)
+          return h.view('legal-status', createModel(errorMessage)).takeover()
+        }
       },
       handler: (request, h) => {
         request.yar.set('legalStatus', request.payload.legalStatus)

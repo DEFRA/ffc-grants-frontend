@@ -21,15 +21,15 @@ describe('Legal status page', () => {
     const postOptions = {
       method: 'POST',
       url: '/legal-status',
-      payload: { legalStatus: null }
+      payload: {}
     }
 
     const postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Select one option')
+    expect(postResponse.payload).toContain('Select the legal status of the farm business')
   })
 
-  it('should store user response and redirects to project details page', async () => {
+  it('should store user response and redirects to country page', async () => {
     const postOptions = {
       method: 'POST',
       url: '/legal-status',
