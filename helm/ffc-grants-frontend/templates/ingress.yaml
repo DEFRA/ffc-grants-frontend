@@ -7,6 +7,7 @@ metadata:
     {{- include "ffc-helm-library.labels" . | nindent 4 }}
   annotations:
     kubernetes.io/ingress.class: {{ .Values.ingress.class | quote }}
+    nginx.org/mergeable-ingress-type: "minion"
 spec:
   rules:
   - host: farming-transformation-fund.{{ .Values.ingress.server }}
