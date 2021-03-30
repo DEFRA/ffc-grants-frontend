@@ -1,3 +1,23 @@
-{{- include "ffc-helm-library.azure-ingress" (list . "ffc-grants-frontend.ingress") -}}
-{{- define "ffc-grants-frontend.ingress" -}}
-{{- end -}}
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ .Values.name | quote }}
+  namespace: {{ .Values.namespace | quote }}
+  labels:
+    {{- include "ffc-helm-library.labels" . | nindent 4 }}
+  annotations:
+    kubernetes.io/ingress.class: {{ .Values.ingress.class | quote }}
+spec:
+  rules:
+  - host: {{ .Values.ingress.endpoint }}-{{ .Values.pr }}.{{ .Values.ingress.server }}
+    http:
+  - http:
+      paths:
+      - path: /grants
+        backend:
+          serviceName: {{ .Values.name | quote }}
+          servicePort: {{ .Values.service.port }}
+      - path: /sfi
+        backend:
+          serviceName: ffc-sfi-frontend.ffc-sfi.svc.cluster.local
+          servicePort: {{ .Values.service.port }}
