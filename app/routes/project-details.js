@@ -1,10 +1,10 @@
 const Joi = require('joi')
-const { setLabelData } = require('../helpers/helper-functions')
+const { setLabelData, errorExtractor, getErrorMessage  } = require('../helpers/helper-functions')
 
 function createModel (errorMessage, errorSummary, data) {
   return {
     backLink: '/planning-permission',
-    ...(errorSummary ? { errorText: errorSummary } : {}),
+    ...errorSummary ? { errorList: errorSummary } : {},
     checkboxes: {
       idPrefix: 'project',
       name: 'project',
@@ -40,15 +40,20 @@ module.exports = [
         payload: Joi.object({
           project: Joi.any().required()
         }),
-        failAction: (request, h) =>
-          h.view('project-details', createModel('Please select an option', null, null)).takeover()
+        failAction: (request, h, err) => {
+          const errorObject = errorExtractor(err)
+          const errorMessage = getErrorMessage(errorObject)
+          return h.view('project-details', createModel(errorMessage, null, null)).takeover()
+        }
       },
       handler: (request, h) => {
         let { project } = request.payload
+        const errorList = []
         project = [project].flat()
 
         if (project.length > 2) {
-          return h.view('project-details', createModel('Only one or two selections are allowed', 'Only one or two selections are allowed', project)).takeover()
+          errorList.push({ text: 'Select one or two options of what the project will achieve', href: '#project' })
+          return h.view('project-details', createModel('Select one or two options', errorList, project)).takeover()
         }
 
         request.yar.set('project', project)
