@@ -12,7 +12,7 @@ spec:
   - host: {{ .Values.ingress.endpoint }}-{{ .Values.pr }}.{{ .Values.ingress.server }}
     http:
       paths:
-      - path: /
+      - path: /start
         backend:
           serviceName: {{ .Values.name | quote }}
           servicePort: {{ .Values.service.port }}
