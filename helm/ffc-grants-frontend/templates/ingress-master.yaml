@@ -1,7 +1,7 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: ffc-grants-frontend
+  name: farming-transformation-fund
   namespace: ffc-grants
   labels:
     {{- include "ffc-helm-library.labels" . | nindent 4 }}
