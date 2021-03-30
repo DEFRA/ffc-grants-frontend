@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  ffc-grants-frontend:
+    command: npm run start:watch
+    build:
+      target: development
+    image: ffc-grants-frontend-development
+    environment:
+      NODE_ENV: test
+    volumes:
+      - ./test-output/:/home/node/test-output/
+
+  zap-baseline-scan:
+    image: owasp/zap2docker-stable:2.9.0
+    command: zap-baseline.py -t http://ffc-grants-frontend:${PORT:-3000} -c config/zap.conf -r test-output/zap-report.html -a -d -I
+    depends_on:
+      - ffc-grants-frontend
+    volumes:
+      - ./test-output/:/zap/wrk/test-output/
+      - ./zap/:/zap/wrk/config/
