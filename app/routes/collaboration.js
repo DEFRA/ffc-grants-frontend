@@ -1,7 +1,5 @@
 const Joi = require('joi')
 const { setLabelData } = require('../helpers/helper-functions')
-const senders = require('../messaging/senders')
-const createMsg = require('../messaging/create-msg')
 
 function createModel (errorMessage, data) {
   return {
@@ -50,11 +48,8 @@ module.exports = [
             .view('collaboration', createModel('Please select an option'))
             .takeover()
       },
-      handler: async (request, h) => {
+      handler: (request, h) => {
         request.yar.set('collaboration', request.payload.collaboration)
-
-        await senders.sendProjectDetails(createMsg.getDesirabilityAnswers(request))
-
         return h.redirect('./answers')
       }
     }

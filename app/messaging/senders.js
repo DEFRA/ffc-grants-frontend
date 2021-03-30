@@ -21,11 +21,12 @@ process.on('SIGINT', async () => {
   process.exit(0)
 })
 
-async function sendMsg (sender, msgData, msgType) {
+async function sendMsg (sender, msgData, msgType, correlationId) {
   const msg = {
     body: msgData,
     type: msgType,
-    source: msgCfg.msgSrc
+    source: msgCfg.msgSrc,
+    correlationId
   }
 
   console.log('sending message', msg)
@@ -34,10 +35,10 @@ async function sendMsg (sender, msgData, msgType) {
 }
 
 module.exports = {
-  sendProjectDetails: async function (projectDetailsData) {
-    await sendMsg(projectDetailsSender, projectDetailsData, msgCfg.projectDetailsMsgType)
+  sendProjectDetails: async function (projectDetailsData, correlationId) {
+    await sendMsg(projectDetailsSender, projectDetailsData, msgCfg.projectDetailsMsgType, correlationId)
   },
-  sendContactDetails: async function (contactDetailsData) {
-    await sendMsg(contactDetailsSender, contactDetailsData, msgCfg.contactDetailsMsgType)
+  sendContactDetails: async function (contactDetailsData, correlationId) {
+    await sendMsg(contactDetailsSender, contactDetailsData, msgCfg.contactDetailsMsgType, correlationId)
   }
 }
