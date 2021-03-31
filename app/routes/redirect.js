@@ -1,5 +1,5 @@
 module.exports = {
   method: 'GET',
-  path: '/water',
-  handler: (request, h) => h.redirect('/water/start')
+  path: '/',
+  handler: (request, h) => h.response('hello from test-ingress').code(200)
 }
