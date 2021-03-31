@@ -13,7 +13,7 @@ spec:
   - host: farming-transformation-fund.{{ .Values.ingress.server }}
     http:
       paths:
-      - path: /
+      - path: /water
         backend:
           serviceName: {{ .Values.name | quote }}
           servicePort: {{ .Values.service.port }}
