@@ -1,7 +1,7 @@
 const Joi = require('joi')
-const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
+const { setLabelData, errorExtractor, getErrorMessage, formatUKCurrency } = require('../helpers/helper-functions')
 
-function createModel(errorMessage, data, remainingCost) {
+function createModel (errorMessage, data, formattedRemainingCost) {
   return {
     backLink: '/project-cost',
     radios: {
@@ -10,13 +10,13 @@ function createModel(errorMessage, data, remainingCost) {
       name: 'remainingCosts',
       fieldset: {
         legend: {
-          text: `Can you pay the remaining costs of £${remainingCost && remainingCost.toLocaleString('en-GB')}?`,
+          text: `Can you pay the remaining costs of £${formattedRemainingCost}?`,
           isPageHeading: true,
           classes: 'govuk-fieldset__legend--l'
         }
       },
       hint: {
-        text:'You cannot use any grant funding from government or local authorities. You can use money from the Basic Payment Scheme or agri-environment schemes such as Countryside Stewardship Scheme.'
+        text: 'You cannot use any grant funding from government or local authorities. You can use money from the Basic Payment Scheme or agri-environment schemes such as Countryside Stewardship Scheme.'
       },
       items: setLabelData(data, ['Yes', 'No']),
       ...(errorMessage ? { errorMessage: { text: errorMessage } } : {})
@@ -43,7 +43,9 @@ module.exports = [
       if (!remainingCost) {
         return h.redirect('./project-cost')
       }
-      return h.view('remaining-costs', createModel(null, remainingCosts, remainingCost))
+
+      const formattedRemainingCost = formatUKCurrency(remainingCost)
+      return h.view('remaining-costs', createModel(null, remainingCosts, formattedRemainingCost))
     }
   },
   {
@@ -59,7 +61,8 @@ module.exports = [
           const errorMessage = getErrorMessage(errorObject)
           const remainingCost = request.yar.get('remainingCost') || null
 
-          return h.view('remaining-costs', createModel(errorMessage,null,remainingCost)).takeover()
+          const formattedRemainingCost = formatUKCurrency(remainingCost)
+          return h.view('remaining-costs', createModel(errorMessage, null, formattedRemainingCost)).takeover()
         }
       },
       handler: (request, h) => {

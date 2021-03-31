@@ -1,3 +1,5 @@
+const { formatUKCurrency } = require('../helpers/helper-functions')
+
 function createModel (calculatedGrant, projectCost) {
   return {
     backLink: '/project-cost',
@@ -18,9 +20,12 @@ module.exports = [
         return h.redirect('./project-cost')
       }
 
+      const formattedGrant = formatUKCurrency(calculatedGrant)
+      const formattedProjectCost = formatUKCurrency(projectCost)
+
       return h.view(
         'grant',
-        createModel(calculatedGrant, projectCost)
+        createModel(formattedGrant, formattedProjectCost)
       )
     }
   },
