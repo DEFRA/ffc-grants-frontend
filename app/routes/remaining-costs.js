@@ -10,7 +10,7 @@ function createModel(errorMessage, data, remainingCost) {
       name: 'remainingCosts',
       fieldset: {
         legend: {
-          text: `Can you pay the remaining costs of £${remainingCost} ?`,
+          text: `Can you pay the remaining costs of £${remainingCost.toLocaleString('en-GB')} ?`,
           isPageHeading: true,
           classes: 'govuk-fieldset__legend--l'
         }
