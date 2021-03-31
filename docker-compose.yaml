@@ -9,6 +9,7 @@ services:
     environment:
       NODE_ENV: production
       SITE_URL: localhost:3000
+      COOKIE_PASSWORD: 1234567890123456789012345678901234567890
       SERVICE_BUS_HOST: ${SERVICE_BUS_HOST:-notset}
       SERVICE_BUS_PASSWORD: ${SERVICE_BUS_PASSWORD:-notset}
       SERVICE_BUS_USER: ${SERVICE_BUS_USER:-notset}

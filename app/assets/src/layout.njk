@@ -1,9 +1,21 @@
 {% extends "govuk/template.njk" %}
 
 {% block pageTitle %}GOV.UK - Defra grants{% endblock %}
-
 {% block head %}
   <%= htmlWebpackPlugin.tags.headTags %>
+  {% if cookiesPolicy.analytics %}
+    {% include "tag-manager/head-content.njk" %}
+  {% endif %}
+{% endblock %}
+
+{% block bodyStart %}
+  {% if not cookiesPolicy.confirmed %}
+    {% include "cookies/cookie-banner.njk"  %}
+  {% endif %}
+
+  {% if cookiesPolicy.analytics %}
+    {% include "tag-manager/body-content.njk" %}
+  {% endif %}
 {% endblock %}
 
 {% block bodyEnd %}

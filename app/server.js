@@ -3,6 +3,7 @@ const nunjucks = require('nunjucks')
 const vision = require('@hapi/vision')
 const path = require('path')
 const inert = require('@hapi/inert')
+const config = require('./config')
 
 async function createServer () {
   const server = hapi.server({
@@ -11,7 +12,8 @@ async function createServer () {
 
   await server.register(inert)
   await server.register(vision)
-
+  await server.register(require('./plugins/cookies'))
+  await server.register(require('./plugins/error-pages'))
   // Session cache with yar
   await server.register(
     {
@@ -19,8 +21,8 @@ async function createServer () {
       options: {
         storeBlank: true,
         cookieOptions: {
-          password: 'this is just a test, this is just a test, this is just a test',
-          isSecure: false // doesn't work locally if set to true
+          password: config.cookiePassword,
+          isSecure: config.cookieOptions.isSecure
         }
       }
     }
