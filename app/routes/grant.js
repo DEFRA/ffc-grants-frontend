@@ -14,6 +14,10 @@ module.exports = [
       const calculatedGrant = request.yar.get('calculatedGrant') || null
       const projectCost = request.yar.get('projectCost') || null
 
+      if (!calculatedGrant || !projectCost) {
+        return h.redirect('./project-cost')
+      }
+
       return h.view(
         'grant',
         createModel(calculatedGrant, projectCost)

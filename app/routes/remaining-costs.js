@@ -38,7 +38,11 @@ module.exports = [
     path: '/remaining-costs',
     handler: (request, h) => {
       const remainingCosts = request.yar.get('remainingCosts') || null
-      const remainingCost = request.yar.get('remainingCost')
+      const remainingCost = request.yar.get('remainingCost') || null
+
+      if (!remainingCost) {
+        return h.redirect('./project-cost')
+      }
       return h.view('remaining-costs', createModel(null, remainingCosts, remainingCost))
     }
   },
