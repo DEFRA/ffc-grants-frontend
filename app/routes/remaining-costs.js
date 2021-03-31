@@ -10,7 +10,7 @@ function createModel(errorMessage, data, remainingCost) {
       name: 'remainingCosts',
       fieldset: {
         legend: {
-          text: `Can you pay the remaining costs of £${remainingCost.toLocaleString('en-GB')} ?`,
+          text: `Can you pay the remaining costs of £${remainingCost && remainingCost.toLocaleString('en-GB')}?`,
           isPageHeading: true,
           classes: 'govuk-fieldset__legend--l'
         }
@@ -57,7 +57,7 @@ module.exports = [
         failAction: (request, h, err) => {
           const errorObject = errorExtractor(err)
           const errorMessage = getErrorMessage(errorObject)
-          const remainingCost = request.yar.get('remainingCost')
+          const remainingCost = request.yar.get('remainingCost') || null
 
           return h.view('remaining-costs', createModel(errorMessage,null,remainingCost)).takeover()
         }
