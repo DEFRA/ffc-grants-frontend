@@ -7,14 +7,15 @@ describe('Grant page', () => {
     await server.start()
   })
 
-  it('should load page successfully', async () => {
+  it('redirects to project-cost if user project-cost has not been saved', async () => {
     const options = {
       method: 'GET',
       url: '/grant'
     }
 
     const response = await server.inject(options)
-    expect(response.statusCode).toBe(200)
+    expect(response.statusCode).toBe(302)
+    expect(response.headers.location).toBe('./project-cost')
   })
 
   it('redirects to project details page', async () => {
