@@ -6,8 +6,8 @@ function createModel (errorMessage, data, formattedRemainingCost) {
     backLink: '/project-cost',
     radios: {
       classes: 'govuk-radios--inline',
-      idPrefix: 'remainingCosts',
-      name: 'remainingCosts',
+      idPrefix: 'payRemainingCosts',
+      name: 'payRemainingCosts',
       fieldset: {
         legend: {
           text: `Can you pay the remaining costs of £${formattedRemainingCost}?`,
@@ -37,7 +37,7 @@ module.exports = [
     method: 'GET',
     path: '/remaining-costs',
     handler: (request, h) => {
-      const remainingCosts = request.yar.get('remainingCosts') || null
+      const payRemainingCosts = request.yar.get('payRemainingCosts') || null
       const remainingCost = request.yar.get('remainingCost') || null
 
       if (!remainingCost) {
@@ -45,7 +45,7 @@ module.exports = [
       }
 
       const formattedRemainingCost = formatUKCurrency(remainingCost)
-      return h.view('remaining-costs', createModel(null, remainingCosts, formattedRemainingCost))
+      return h.view('remaining-costs', createModel(null, payRemainingCosts, formattedRemainingCost))
     }
   },
   {
@@ -54,7 +54,7 @@ module.exports = [
     options: {
       validate: {
         payload: Joi.object({
-          remainingCosts: Joi.string().required()
+          payRemainingCosts: Joi.string().required()
         }),
         failAction: (request, h, err) => {
           const errorObject = errorExtractor(err)
@@ -66,8 +66,8 @@ module.exports = [
         }
       },
       handler: (request, h) => {
-        request.yar.set('remainingCosts', request.payload.remainingCosts)
-        return request.payload.remainingCosts === 'Yes'
+        request.yar.set('payRemainingCosts', request.payload.payRemainingCosts)
+        return request.payload.payRemainingCosts === 'Yes'
           ? h.redirect('./planning-permission')
           : h.view('./not-eligible', createModelNotEligible())
       }
