@@ -28,6 +28,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <form method="POST" action="/grant" novalidate>
+        <input type="hidden" name="crumb" value={{crumb}} />
         <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
           <h1 class="govuk-fieldset__heading">Potential grant funding</h1>
         </legend>

@@ -1,4 +1,7 @@
+const { getCookieHeader, getCrumbCookie } = require('./test-helper')
 describe('Legal status page', () => {
+  process.env.COOKIE_PASSWORD = '1234567890123456789012345678901234567890'
+  let crumCookie
   let server
   const createServer = require('../../../../app/server')
 
@@ -15,13 +18,31 @@ describe('Legal status page', () => {
 
     const response = await server.inject(options)
     expect(response.statusCode).toBe(200)
+    const header = getCookieHeader(response)
+    expect(header.length).toBe(3)
+    crumCookie = getCrumbCookie(response)
+    expect(response.result).toContain(crumCookie[1])
   })
 
   it('should returns error message in body if no option is selected', async () => {
+    const options = {
+      method: 'GET',
+      url: '/legal-status'
+    }
+
+    const response = await server.inject(options)
+    expect(response.statusCode).toBe(200)
+    const header = getCookieHeader(response)
+    expect(header.length).toBe(3)
+    crumCookie = getCrumbCookie(response)
+    expect(response.result).toContain(crumCookie[1])
     const postOptions = {
       method: 'POST',
       url: '/legal-status',
-      payload: {}
+      payload: { legalStatus: null, crumb: crumCookie[1] },
+      headers: {
+        cookie: 'crumb=' + crumCookie[1]
+      }
     }
 
     const postResponse = await server.inject(postOptions)
@@ -29,11 +50,25 @@ describe('Legal status page', () => {
     expect(postResponse.payload).toContain('Select the legal status of the farm business')
   })
 
-  it('should store user response and redirects to country page', async () => {
+  it('should store user response and redirects to project details page', async () => {
+    const options = {
+      method: 'GET',
+      url: '/legal-status'
+    }
+
+    const response = await server.inject(options)
+    expect(response.statusCode).toBe(200)
+    const header = getCookieHeader(response)
+    expect(header.length).toBe(3)
+    crumCookie = getCrumbCookie(response)
+    expect(response.result).toContain(crumCookie[1])
     const postOptions = {
       method: 'POST',
       url: '/legal-status',
-      payload: { legalStatus: 'some status' }
+      payload: { legalStatus: 'some status', crumb: crumCookie[1] },
+      headers: {
+        cookie: 'crumb=' + crumCookie[1]
+      }
     }
 
     const postResponse = await server.inject(postOptions)
@@ -42,10 +77,24 @@ describe('Legal status page', () => {
   })
 
   it('should redirect to ineligible page when lagal staus is others', async () => {
+    const options = {
+      method: 'GET',
+      url: '/legal-status'
+    }
+
+    const response = await server.inject(options)
+    expect(response.statusCode).toBe(200)
+    const header = getCookieHeader(response)
+    expect(header.length).toBe(3)
+    crumCookie = getCrumbCookie(response)
+    expect(response.result).toContain(crumCookie[1])
     const postOptions = {
       method: 'POST',
       url: '/legal-status',
-      payload: { legalStatus: 'Other' }
+      payload: { legalStatus: 'Other', crumb: crumCookie[1] },
+      headers: {
+        cookie: 'crumb=' + crumCookie[1]
+      }
     }
 
     const postResponse = await server.inject(postOptions)

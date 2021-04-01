@@ -1,4 +1,7 @@
+const { getCookieHeader, getCrumbCookie } = require('./test-helper')
 describe('Project cost page', () => {
+  process.env.COOKIE_PASSWORD = '1234567890123456789012345678901234567890'
+  let crumCookie
   let server
   const createServer = require('../../../../app/server')
 
@@ -15,13 +18,31 @@ describe('Project cost page', () => {
 
     const response = await server.inject(options)
     expect(response.statusCode).toBe(200)
+    const header = getCookieHeader(response)
+    expect(header.length).toBe(3)
+    crumCookie = getCrumbCookie(response)
+    expect(response.result).toContain(crumCookie[1])
   })
 
   it('should return an error message if no option is selected', async () => {
+    const options = {
+      method: 'GET',
+      url: '/project-cost'
+    }
+
+    const response = await server.inject(options)
+    expect(response.statusCode).toBe(200)
+    const header = getCookieHeader(response)
+    expect(header.length).toBe(3)
+    crumCookie = getCrumbCookie(response)
+    expect(response.result).toContain(crumCookie[1])
     const postOptions = {
       method: 'POST',
       url: '/project-cost',
-      payload: { projectCost: '' }
+      payload: { projectCost: '', crumb: crumCookie[1] },
+      headers: {
+        cookie: 'crumb=' + crumCookie[1]
+      }
     }
 
     const postResponse = await server.inject(postOptions)
@@ -33,7 +54,10 @@ describe('Project cost page', () => {
     const postOptions = {
       method: 'POST',
       url: '/project-cost',
-      payload: { projectCost: '1234s6' }
+      payload: { projectCost: '1234s6', crumb: crumCookie[1] },
+      headers: {
+        cookie: 'crumb=' + crumCookie[1]
+      }
     }
 
     const postResponse = await server.inject(postOptions)
@@ -42,10 +66,24 @@ describe('Project cost page', () => {
   })
 
   it('should return an error message if number contains a space', async () => {
+    const options = {
+      method: 'GET',
+      url: '/project-cost'
+    }
+
+    const response = await server.inject(options)
+    expect(response.statusCode).toBe(200)
+    const header = getCookieHeader(response)
+    expect(header.length).toBe(3)
+    crumCookie = getCrumbCookie(response)
+    expect(response.result).toContain(crumCookie[1])
     const postOptions = {
       method: 'POST',
       url: '/project-cost',
-      payload: { projectCost: '1234 6' }
+      payload: { projectCost: '1234 6', crumb: crumCookie[1] },
+      headers: {
+        cookie: 'crumb=' + crumCookie[1]
+      }
     }
 
     const postResponse = await server.inject(postOptions)
@@ -54,10 +92,24 @@ describe('Project cost page', () => {
   })
 
   it('should return an error message if number contains a comma "," ', async () => {
+    const options = {
+      method: 'GET',
+      url: '/project-cost'
+    }
+
+    const response = await server.inject(options)
+    expect(response.statusCode).toBe(200)
+    const header = getCookieHeader(response)
+    expect(header.length).toBe(3)
+    crumCookie = getCrumbCookie(response)
+    expect(response.result).toContain(crumCookie[1])
     const postOptions = {
       method: 'POST',
       url: '/project-cost',
-      payload: { projectCost: '123,456' }
+      payload: { projectCost: '123,456', crumb: crumCookie[1] },
+      headers: {
+        cookie: 'crumb=' + crumCookie[1]
+      }
     }
 
     const postResponse = await server.inject(postOptions)
@@ -66,10 +118,24 @@ describe('Project cost page', () => {
   })
 
   it('should return an error message if a fraction is typed in - it contains a dot "." ', async () => {
+    const options = {
+      method: 'GET',
+      url: '/project-cost'
+    }
+
+    const response = await server.inject(options)
+    expect(response.statusCode).toBe(200)
+    const header = getCookieHeader(response)
+    expect(header.length).toBe(3)
+    crumCookie = getCrumbCookie(response)
+    expect(response.result).toContain(crumCookie[1])
     const postOptions = {
       method: 'POST',
       url: '/project-cost',
-      payload: { projectCost: 123.456 }
+      payload: { projectCost: 123.456, crumb: crumCookie[1] },
+      headers: {
+        cookie: 'crumb=' + crumCookie[1]
+      }
     }
 
     const postResponse = await server.inject(postOptions)
@@ -78,10 +144,24 @@ describe('Project cost page', () => {
   })
 
   it('should return an error message if the number of digits typed exceed 7', async () => {
+    const options = {
+      method: 'GET',
+      url: '/project-cost'
+    }
+
+    const response = await server.inject(options)
+    expect(response.statusCode).toBe(200)
+    const header = getCookieHeader(response)
+    expect(header.length).toBe(3)
+    crumCookie = getCrumbCookie(response)
+    expect(response.result).toContain(crumCookie[1])
     const postOptions = {
       method: 'POST',
       url: '/project-cost',
-      payload: { projectCost: 12345678 }
+      payload: { projectCost: 12345678, crumb: crumCookie[1] },
+      headers: {
+        cookie: 'crumb=' + crumCookie[1]
+      }
     }
 
     const postResponse = await server.inject(postOptions)
@@ -90,10 +170,24 @@ describe('Project cost page', () => {
   })
 
   it('should eliminate user if the cost entered is too low', async () => {
+    const options = {
+      method: 'GET',
+      url: '/project-cost'
+    }
+
+    const response = await server.inject(options)
+    expect(response.statusCode).toBe(200)
+    const header = getCookieHeader(response)
+    expect(header.length).toBe(3)
+    crumCookie = getCrumbCookie(response)
+    expect(response.result).toContain(crumCookie[1])
     const postOptions = {
       method: 'POST',
       url: '/project-cost',
-      payload: { projectCost: 12 }
+      payload: { projectCost: 12, crumb: crumCookie[1] },
+      headers: {
+        cookie: 'crumb=' + crumCookie[1]
+      }
     }
 
     const postResponse = await server.inject(postOptions)
@@ -102,10 +196,24 @@ describe('Project cost page', () => {
   })
 
   it('should eliminate user if the cost entered is too high', async () => {
+    const options = {
+      method: 'GET',
+      url: '/project-cost'
+    }
+
+    const response = await server.inject(options)
+    expect(response.statusCode).toBe(200)
+    const header = getCookieHeader(response)
+    expect(header.length).toBe(3)
+    crumCookie = getCrumbCookie(response)
+    expect(response.result).toContain(crumCookie[1])
     const postOptions = {
       method: 'POST',
       url: '/project-cost',
-      payload: { projectCost: 9999999 }
+      payload: { projectCost: 9999999, crumb: crumCookie[1] },
+      headers: {
+        cookie: 'crumb=' + crumCookie[1]
+      }
     }
 
     const postResponse = await server.inject(postOptions)
@@ -114,10 +222,24 @@ describe('Project cost page', () => {
   })
 
   it('should store valid user input and redirect to project grant page', async () => {
+    const options = {
+      method: 'GET',
+      url: '/project-cost'
+    }
+
+    const response = await server.inject(options)
+    expect(response.statusCode).toBe(200)
+    const header = getCookieHeader(response)
+    expect(header.length).toBe(3)
+    crumCookie = getCrumbCookie(response)
+    expect(response.result).toContain(crumCookie[1])
     const postOptions = {
       method: 'POST',
       url: '/project-cost',
-      payload: { projectCost: 1234567 }
+      payload: { projectCost: 1234567, crumb: crumCookie[1] },
+      headers: {
+        cookie: 'crumb=' + crumCookie[1]
+      }
     }
 
     const postResponse = await server.inject(postOptions)

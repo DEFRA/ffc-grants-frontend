@@ -4,6 +4,7 @@ const vision = require('@hapi/vision')
 const path = require('path')
 const inert = require('@hapi/inert')
 const config = require('./config')
+const crumb = require('@hapi/crumb')
 
 async function createServer () {
   const server = hapi.server({
@@ -15,7 +16,7 @@ async function createServer () {
   await server.register(require('./plugins/cookies'))
   await server.register(require('./plugins/error-pages'))
   // Session cache with yar
-  await server.register(
+  await server.register([
     {
       plugin: require('@hapi/yar'),
       options: {
@@ -25,7 +26,15 @@ async function createServer () {
           isSecure: config.cookieOptions.isSecure
         }
       }
-    }
+    },
+    {
+      plugin: crumb,
+      options: {
+        cookieOptions: {
+          isSecure: config.cookieOptions.isSecure
+        }
+      }
+    }]
   )
 
   server.route(require('./routes'))

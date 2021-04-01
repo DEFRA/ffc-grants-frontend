@@ -10,7 +10,6 @@ function getCurrentPolicy (request, h) {
 
 function createDefaultPolicy (h) {
   const cookiesPolicy = { confirmed: false, essential: true, analytics: false }
-  console.log(config)
   h.state('cookies_policy', cookiesPolicy, config)
   return cookiesPolicy
 }

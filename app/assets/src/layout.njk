@@ -18,6 +18,18 @@
   {% endif %}
 {% endblock %}
 
+{% block footer %}
+  {{ govukFooter({
+    meta: {
+      items: [
+        {
+          href: "/site-cookies",
+          text: "Cookies"
+        }
+      ]
+    }
+  }) }}
+{% endblock %}
 {% block bodyEnd %}
   <%= htmlWebpackPlugin.tags.bodyTags %>
 {% endblock %}

@@ -24,6 +24,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <form method="POST" action="/irrigated-crops" novalidate>
+        <input type="hidden" name="crumb" value={{crumb}} />
         {{ govukRadios(radios) }}
         {{ govukButton({
           text: "Continue"
