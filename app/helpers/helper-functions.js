@@ -60,10 +60,24 @@ function getErrorMessage (object) {
 }
 
 function getGrantValues (projectCost) {
-  const calculatedGrant = Number(Number(GRANT_PERCENTAGE * Number(projectCost) / 100).toFixed(2))
-  const remainingCost = projectCost - calculatedGrant
+  const calculatedGrant = Number(GRANT_PERCENTAGE * projectCost / 100).toFixed(2)
+  const remainingCost = Number(projectCost - calculatedGrant).toFixed(2)
 
   return { calculatedGrant, remainingCost }
 }
 
-module.exports = { isChecked, setLabelData, getPostCodeHtml, errorExtractor, getErrorMessage, getGrantValues }
+function isInteger (number) {
+  // NOT using Number.isInteger() because
+  //  - not working on Internet Explorer
+  //  - Number.isInteger(40000.00) === false ( instead of true )
+
+  return (number - Math.floor(number)) === 0
+}
+
+function formatUKCurrency (costPounds) {
+  return (isInteger(costPounds))
+    ? Number(costPounds).toLocaleString('en-GB')
+    : Number(costPounds).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+}
+
+module.exports = { isChecked, setLabelData, getPostCodeHtml, errorExtractor, getErrorMessage, getGrantValues, formatUKCurrency }

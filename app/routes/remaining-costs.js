@@ -1,22 +1,22 @@
 const Joi = require('joi')
-const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
+const { setLabelData, errorExtractor, getErrorMessage, formatUKCurrency } = require('../helpers/helper-functions')
 
-function createModel(errorMessage, data, remainingCost) {
+function createModel (errorMessage, data, formattedRemainingCost) {
   return {
     backLink: '/project-cost',
     radios: {
       classes: 'govuk-radios--inline',
-      idPrefix: 'remainingCosts',
-      name: 'remainingCosts',
+      idPrefix: 'payRemainingCosts',
+      name: 'payRemainingCosts',
       fieldset: {
         legend: {
-          text: `Can you pay the remaining costs of £${remainingCost} ?`,
+          text: `Can you pay the remaining costs of £${formattedRemainingCost}?`,
           isPageHeading: true,
           classes: 'govuk-fieldset__legend--l'
         }
       },
       hint: {
-        text:'You cannot use any grant funding from government or local authorities. You can use money from the Basic Payment Scheme or agri-environment schemes such as Countryside Stewardship Scheme.'
+        text: 'You cannot use any grant funding from government or local authorities. You can use money from the Basic Payment Scheme or agri-environment schemes such as Countryside Stewardship Scheme.'
       },
       items: setLabelData(data, ['Yes', 'No']),
       ...(errorMessage ? { errorMessage: { text: errorMessage } } : {})
@@ -37,9 +37,15 @@ module.exports = [
     method: 'GET',
     path: '/remaining-costs',
     handler: (request, h) => {
-      const remainingCosts = request.yar.get('remainingCosts') || null
-      const remainingCost = request.yar.get('remainingCost')
-      return h.view('remaining-costs', createModel(null, remainingCosts, remainingCost))
+      const payRemainingCosts = request.yar.get('payRemainingCosts') || null
+      const remainingCost = request.yar.get('remainingCost') || null
+
+      if (!remainingCost) {
+        return h.redirect('./project-cost')
+      }
+
+      const formattedRemainingCost = formatUKCurrency(remainingCost)
+      return h.view('remaining-costs', createModel(null, payRemainingCosts, formattedRemainingCost))
     }
   },
   {
@@ -48,19 +54,20 @@ module.exports = [
     options: {
       validate: {
         payload: Joi.object({
-          remainingCosts: Joi.string().required()
+          payRemainingCosts: Joi.string().required()
         }),
         failAction: (request, h, err) => {
           const errorObject = errorExtractor(err)
           const errorMessage = getErrorMessage(errorObject)
-          const remainingCost = request.yar.get('remainingCost')
+          const remainingCost = request.yar.get('remainingCost') || null
 
-          return h.view('remaining-costs', createModel(errorMessage,null,remainingCost)).takeover()
+          const formattedRemainingCost = formatUKCurrency(remainingCost)
+          return h.view('remaining-costs', createModel(errorMessage, null, formattedRemainingCost)).takeover()
         }
       },
       handler: (request, h) => {
-        request.yar.set('remainingCosts', request.payload.remainingCosts)
-        return request.payload.remainingCosts === 'Yes'
+        request.yar.set('payRemainingCosts', request.payload.payRemainingCosts)
+        return request.payload.payRemainingCosts === 'Yes'
           ? h.redirect('./planning-permission')
           : h.view('./not-eligible', createModelNotEligible())
       }
