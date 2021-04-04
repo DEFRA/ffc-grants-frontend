@@ -1,6 +1,7 @@
 const { getCookieHeader, getCrumbCookie } = require('./test-helper')
 describe('Project details page', () => {
   process.env.COOKIE_PASSWORD = '1234567890123456789012345678901234567890'
+  const crumToken = 'ZRGdpjoumKg1TQqbTgTkuVrNjdwzzdn1qKt0lR0rYXl'
   let crumCookie
   let server
   const createServer = require('../../../../app/server')
@@ -25,23 +26,12 @@ describe('Project details page', () => {
   })
 
   it('should returns error message if no option is selected', async () => {
-    const options = {
-      method: 'GET',
-      url: '/project-details'
-    }
-
-    const response = await server.inject(options)
-    expect(response.statusCode).toBe(200)
-    const header = getCookieHeader(response)
-    expect(header.length).toBe(3)
-    crumCookie = getCrumbCookie(response)
-    expect(response.result).toContain(crumCookie[1])
     const postOptions = {
       method: 'POST',
       url: '/project-details',
-      payload: { crumb: crumCookie[1] },
+      payload: { crumb: crumToken },
       headers: {
-        cookie: 'crumb=' + crumCookie[1]
+        cookie: 'crumb=' + crumToken
       }
     }
 
@@ -51,23 +41,12 @@ describe('Project details page', () => {
   })
 
   it('should store user response and redirects to irrigated crops page', async () => {
-    const options = {
-      method: 'GET',
-      url: '/project-details'
-    }
-
-    const response = await server.inject(options)
-    expect(response.statusCode).toBe(200)
-    const header = getCookieHeader(response)
-    expect(header.length).toBe(3)
-    crumCookie = getCrumbCookie(response)
-    expect(response.result).toContain(crumCookie[1])
     const postOptions = {
       method: 'POST',
       url: '/project-details',
-      payload: { project: 'Improve irrigation efficiency', crumb: crumCookie[1] },
+      payload: { project: 'Improve irrigation efficiency', crumb: crumToken },
       headers: {
-        cookie: 'crumb=' + crumCookie[1]
+        cookie: 'crumb=' + crumToken
       }
     }
 
@@ -77,23 +56,12 @@ describe('Project details page', () => {
   })
 
   it('should display the error summary if more than two options are selected', async () => {
-    const options = {
-      method: 'GET',
-      url: '/project-details'
-    }
-
-    const response = await server.inject(options)
-    expect(response.statusCode).toBe(200)
-    const header = getCookieHeader(response)
-    expect(header.length).toBe(3)
-    crumCookie = getCrumbCookie(response)
-    expect(response.result).toContain(crumCookie[1])
     const postOptions = {
       method: 'POST',
       url: '/project-details',
-      payload: { project: ['some option-1', 'some option-2', 'some option-3'], crumb: crumCookie[1] },
+      payload: { project: ['some option-1', 'some option-2', 'some option-3'], crumb: crumToken },
       headers: {
-        cookie: 'crumb=' + crumCookie[1]
+        cookie: 'crumb=' + crumToken
       }
     }
 

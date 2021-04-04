@@ -1,6 +1,7 @@
 const { getCookieHeader, getCrumbCookie } = require('./test-helper')
 describe('Irrigation water source page', () => {
   process.env.COOKIE_PASSWORD = '1234567890123456789012345678901234567890'
+  const crumToken = 'ZRGdpjoumKg1TQqbTgTkuVrNjdwzzdn1qKt0lR0rYXl'
   let crumCookie
   let server
   const createServer = require('../../../../app/server')
@@ -25,23 +26,12 @@ describe('Irrigation water source page', () => {
   })
 
   it('should return error message if no option is selected', async () => {
-    const options = {
-      method: 'GET',
-      url: '/project-items'
-    }
-
-    const response = await server.inject(options)
-    expect(response.statusCode).toBe(200)
-    const header = getCookieHeader(response)
-    expect(header.length).toBe(3)
-    crumCookie = getCrumbCookie(response)
-    expect(response.result).toContain(crumCookie[1])
     const postOptions = {
       method: 'POST',
       url: '/project-items',
-      payload: { crumb: crumCookie[1] },
+      payload: { crumb: crumToken },
       headers: {
-        cookie: 'crumb=' + crumCookie[1]
+        cookie: 'crumb=' + crumToken
       }
     }
 
@@ -51,23 +41,12 @@ describe('Irrigation water source page', () => {
   })
 
   it('should store user response from column: "projectInfrastucture" and redirect to project cost page', async () => {
-    const options = {
-      method: 'GET',
-      url: '/project-items'
-    }
-
-    const response = await server.inject(options)
-    expect(response.statusCode).toBe(200)
-    const header = getCookieHeader(response)
-    expect(header.length).toBe(3)
-    crumCookie = getCrumbCookie(response)
-    expect(response.result).toContain(crumCookie[1])
     const postOptions = {
       method: 'POST',
       url: '/project-items',
-      payload: { projectInfrastucture: 'Synthetic liner', crumb: crumCookie[1] },
+      payload: { projectInfrastucture: 'Synthetic liner', crumb: crumToken },
       headers: {
-        cookie: 'crumb=' + crumCookie[1]
+        cookie: 'crumb=' + crumToken
       }
     }
 
@@ -77,23 +56,12 @@ describe('Irrigation water source page', () => {
   })
 
   it('should store user response from column: "projectEquipment" and redirect to project cost page', async () => {
-    const options = {
-      method: 'GET',
-      url: '/project-items'
-    }
-
-    const response = await server.inject(options)
-    expect(response.statusCode).toBe(200)
-    const header = getCookieHeader(response)
-    expect(header.length).toBe(3)
-    crumCookie = getCrumbCookie(response)
-    expect(response.result).toContain(crumCookie[1])
     const postOptions = {
       method: 'POST',
       url: '/project-items',
-      payload: { projectEquipment: ['Boom', 'Trickle'], crumb: crumCookie[1] },
+      payload: { projectEquipment: ['Boom', 'Trickle'], crumb: crumToken },
       headers: {
-        cookie: 'crumb=' + crumCookie[1]
+        cookie: 'crumb=' + crumToken
       }
     }
 
@@ -103,23 +71,12 @@ describe('Irrigation water source page', () => {
   })
 
   it('should store user response from column: "projectTechnology" and redirect to project cost page', async () => {
-    const options = {
-      method: 'GET',
-      url: '/project-items'
-    }
-
-    const response = await server.inject(options)
-    expect(response.statusCode).toBe(200)
-    const header = getCookieHeader(response)
-    expect(header.length).toBe(3)
-    crumCookie = getCrumbCookie(response)
-    expect(response.result).toContain(crumCookie[1])
     const postOptions = {
       method: 'POST',
       url: '/project-items',
-      payload: { projectTechnology: 'Software to monitor soil moisture levels and schedule irrigation', crumb: crumCookie[1] },
+      payload: { projectTechnology: 'Software to monitor soil moisture levels and schedule irrigation', crumb: crumToken },
       headers: {
-        cookie: 'crumb=' + crumCookie[1]
+        cookie: 'crumb=' + crumToken
       }
     }
 
@@ -129,17 +86,6 @@ describe('Irrigation water source page', () => {
   })
 
   it('should store user response from all columns and redirect to project cost page', async () => {
-    const options = {
-      method: 'GET',
-      url: '/project-items'
-    }
-
-    const response = await server.inject(options)
-    expect(response.statusCode).toBe(200)
-    const header = getCookieHeader(response)
-    expect(header.length).toBe(3)
-    crumCookie = getCrumbCookie(response)
-    expect(response.result).toContain(crumCookie[1])
     const postOptions = {
       method: 'POST',
       url: '/project-items',
@@ -147,10 +93,10 @@ describe('Irrigation water source page', () => {
         projectInfrastucture: 'Overflow/spillway',
         projectEquipment: ['Ebb and flood or capillary bed', 'Sprinklers and mist'],
         projectTechnology: 'Software and sensors to optimise water application',
-        crumb: crumCookie[1]
+        crumb: crumToken
       },
       headers: {
-        cookie: 'crumb=' + crumCookie[1]
+        cookie: 'crumb=' + crumToken
       }
     }
 

@@ -1,6 +1,7 @@
 const { getCookieHeader, getCrumbCookie } = require('./test-helper')
 describe('cookies route', () => {
   process.env.COOKIE_PASSWORD = '1234567890123456789012345678901234567890'
+  const crumToken = 'ZRGdpjoumKg1TQqbTgTkuVrNjdwzzdn1qKt0lR0rYXl'
   let createServer
   let server
   let crumCookie
@@ -32,9 +33,9 @@ describe('cookies route', () => {
     const options = {
       method: 'POST',
       url: '/site-cookies',
-      payload: { crumb: crumCookie[1], analytics: true },
+      payload: { crumb: crumToken, analytics: true },
       headers: {
-        cookie: 'crumb=' + crumCookie[1]
+        cookie: 'crumb=' + crumToken
       }
     }
 
@@ -61,9 +62,9 @@ describe('cookies route', () => {
     const options = {
       method: 'POST',
       url: '/site-cookies',
-      payload: { crumb: crumCookie[1], analytics: true, async: true },
+      payload: { crumb: crumToken, analytics: true, async: true },
       headers: {
-        cookie: 'crumb=' + crumCookie[1]
+        cookie: 'crumb=' + crumToken
       }
     }
 
@@ -75,9 +76,9 @@ describe('cookies route', () => {
     const options = {
       method: 'POST',
       url: '/site-cookies',
-      payload: { crumb: crumCookie[1], invalid: 'aaaaaa' },
+      payload: { crumb: crumToken, invalid: 'aaaaaa' },
       headers: {
-        cookie: 'crumb=' + crumCookie[1]
+        cookie: 'crumb=' + crumToken
       }
     }
 
@@ -103,9 +104,9 @@ describe('cookies route', () => {
     const options = {
       method: 'POST',
       url: '/site-cookies',
-      payload: { crumb: crumCookie[1], analytics: true },
+      payload: { crumb: crumToken, analytics: true },
       headers: {
-        cookie: 'crumb=' + crumCookie[1]
+        cookie: 'crumb=' + crumToken
       }
     }
 

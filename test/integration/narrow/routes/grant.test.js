@@ -1,7 +1,6 @@
-const { getCookieHeader, getCrumbCookie } = require('./test-helper')
 describe('Grant page', () => {
   process.env.COOKIE_PASSWORD = '1234567890123456789012345678901234567890'
-  let crumCookie
+  const crumToken = 'ZRGdpjoumKg1TQqbTgTkuVrNjdwzzdn1qKt0lR0rYXl'
   let server
   const createServer = require('../../../../app/server')
 
@@ -19,31 +18,15 @@ describe('Grant page', () => {
     const response = await server.inject(options)
     expect(response.statusCode).toBe(302)
     expect(response.headers.location).toBe('./project-cost')
-    const header = getCookieHeader(response)
-    expect(header.length).toBe(3)
-    crumCookie = getCrumbCookie(response)
-    expect(response.result).toContain(crumCookie[1])
   })
 
   it('redirects to project details page', async () => {
-    const options = {
-      method: 'GET',
-      url: '/grant'
-    }
-
-    const response = await server.inject(options)
-    expect(response.statusCode).toBe(200)
-    const header = getCookieHeader(response)
-    expect(header.length).toBe(3)
-    crumCookie = getCrumbCookie(response)
-    expect(response.result).toContain(crumCookie[1])
-    
     const postOptions = {
       method: 'POST',
       url: '/grant',
-      payload: { crumb: crumCookie[1] },
+      payload: { crumb: crumToken, analytics: true },
       headers: {
-        cookie: 'crumb=' + crumCookie[1]
+        cookie: 'crumb=' + crumToken
       }
     }
 

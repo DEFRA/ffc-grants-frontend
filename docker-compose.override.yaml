@@ -10,7 +10,8 @@ services:
       target: development
     image: ffc-grants-frontend-development
     environment:
-      NODE_ENV: development
+      NODE_ENV: development     
+      GOOGLE_TAG_MANAGER_KEY: 'GTM-M43KPG8'
     ports:
       - "3000:3000"
       - "9229:9229"
