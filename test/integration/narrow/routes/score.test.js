@@ -17,7 +17,6 @@ describe('Score page', () => {
     expect(response.statusCode).toBe(200)
   })
 
-  /*
   it('redirects to project business details page', async () => {
     const postOptions = {
       method: 'POST',
@@ -29,7 +28,6 @@ describe('Score page', () => {
     expect(postResponse.statusCode).toBe(302)
     expect(postResponse.headers.location).toBe('./business-details')
   })
-  */
 
   afterEach(async () => {
     await server.stop()
