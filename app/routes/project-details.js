@@ -1,7 +1,7 @@
 const Joi = require('joi')
 const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
 
-function createModel(errorMessage, errorSummary, data) {
+function createModel (errorMessage, errorSummary, data) {
   return {
     backLink: '/planning-permission',
     ...errorSummary ? { errorList: errorSummary } : {},
