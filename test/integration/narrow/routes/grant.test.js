@@ -1,5 +1,4 @@
 describe('Grant page', () => {
-  process.env.COOKIE_PASSWORD = '1234567890123456789012345678901234567890'
   const crumToken = 'ZRGdpjoumKg1TQqbTgTkuVrNjdwzzdn1qKt0lR0rYXl'
   let server
   const createServer = require('../../../../app/server')

@@ -69,7 +69,8 @@
       "afterAll",
       "browser",
       "assert",
-      "$"
+      "$",
+      "XMLHttpRequest"
     ]
   },
   "nodemonConfig": {

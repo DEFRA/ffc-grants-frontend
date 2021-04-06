@@ -42,24 +42,14 @@ if (cookieContainer && cookieContainer.style) {
 
   function submitPreference (accepted) {
     const crumbToken = window.document.getElementById('crumbBanner')
-    window.fetch('/site-cookies', {
-      method: 'POST',
-      mode: 'same-origin',
-      cache: 'no-cache',
-      credentials: 'same-origin',
-      headers: {
-        'Content-Type': 'application/json',
-        crumb: crumbToken.value
-      },
-      redirect: 'follow',
-      referrerPolicy: 'no-referrer',
-      body: JSON.stringify({
-        analytics: accepted,
-        async: true,
-        crumb: crumbToken.value
-      })
-    }).then(res => {
-      console.log('Request complete! response:', res)
-    })
+    const xhr = new XMLHttpRequest()
+    xhr.open('POST', '/site-cookies', true)
+    xhr.setRequestHeader('Content-Type', 'application/json')
+    xhr.setRequestHeader('crumb', crumbToken.value)
+    xhr.send(JSON.stringify({
+      analytics: accepted,
+      async: true,
+      crumb: crumbToken.value
+    }))
   }
 }

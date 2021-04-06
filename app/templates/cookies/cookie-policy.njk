@@ -10,8 +10,8 @@
   {{ govukBreadcrumbs({
     items: [
       {
-        text: "Home",
-        href: "/"
+        text: "Back",
+        href: "javascript:history.go(-1)"
       }]
   }) }}
 {% endblock %}
@@ -21,7 +21,7 @@
   {% if updated %}
     {% set html %}
       <p class="govuk-notification-banner__heading">
-        You’ve set your cookie preferences. <a class="govuk-notification-banner__link" href="/">Go back to the page you were looking at</a>.
+        You’ve set your cookie preferences. <a class="govuk-notification-banner__link" href="javascript:history.go(-2)">Go back to the page you were looking at</a>.
       </p>
     {% endset %}
 
@@ -66,6 +66,28 @@
         {
           text: "1 year"
         }
+      ],
+      [
+      {
+        text: "Crumb"
+      },
+      {
+        text: "Saves your scross site scripting cookie"
+      },
+      {
+        text: "1 year"
+      }
+      ],
+      [
+      {
+        text: "Session"
+      },
+      {
+        text: "Saves your session"
+      },
+      {
+        text: "1 year"
+      }
       ]
     ]
   }) }}
@@ -128,7 +150,7 @@
     <div class="govuk-grid-column-two-thirds">
       <h2 class="govuk-heading-l">Change your cookie settings</h2>
       <form action="/site-cookies" method="post" novalidate>
-        <input type="hidden" name="crumb" value={{crumb}} />
+        <input type="hidden" name="crumb" value="{{crumb}}" />
         {{ govukRadios(analytics) }}
         {{ govukButton({
           text: "Save cookie settings"

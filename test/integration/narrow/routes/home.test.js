@@ -1,5 +1,4 @@
 describe('Start Page', () => {
-  process.env.COOKIE_PASSWORD = '1234567890123456789012345678901234567890'
   let server
   const createServer = require('../../../../app/server')
 
@@ -15,6 +14,7 @@ describe('Start Page', () => {
     }
 
     const response = await server.inject(options)
+    expect(response.headers['x-robots-tag']).toContain('noindex, nofollow')
     expect(response.statusCode).toBe(200)
   })
 

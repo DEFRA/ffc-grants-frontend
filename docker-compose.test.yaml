@@ -10,7 +10,6 @@ services:
     image: ffc-grants-frontend-development
     environment:
       NODE_ENV: test
-      COOKIE_PASSWORD: 1234567890123456789012345678901234567890
     command: npm run test
     volumes:
       - ./test-output/:/home/node/test-output/
