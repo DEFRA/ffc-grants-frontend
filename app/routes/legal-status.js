@@ -1,7 +1,7 @@
 const Joi = require('joi')
 const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
 
-function createModel(errorMessage, data) {
+function createModel (errorMessage, data) {
   return {
     backLink: '/farming-type',
     radios: {
@@ -22,7 +22,7 @@ function createModel(errorMessage, data) {
   }
 }
 
-function createModelNotEligible() {
+function createModelNotEligible () {
   return {
     backLink: '/legal-status',
     messageContent:

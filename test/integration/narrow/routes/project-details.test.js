@@ -51,7 +51,6 @@ describe('Project details page', () => {
     const postResponse = await server.inject(postOptions)
     expect(postResponse.payload).toContain('There is a problem')
     expect(postResponse.payload).toContain('Select one or two options of what the project will achieve')
-
   })
   afterEach(async () => {
     await server.stop()

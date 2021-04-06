@@ -39,7 +39,6 @@ describe('Water tenancy length page', () => {
     const postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
     expect(postResponse.payload).toContain('You may be able to apply for a grant from this scheme')
-
   })
 
   it('should redirect to project items page when user selects "Yes"', async () => {

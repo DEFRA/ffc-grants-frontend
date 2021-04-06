@@ -1,7 +1,7 @@
 const Joi = require('joi')
 const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
 
-function createModel(errorMessage, data) {
+function createModel (errorMessage, data) {
   return {
     backLink: '/tenancy',
     radios: {
@@ -21,10 +21,10 @@ function createModel(errorMessage, data) {
   }
 }
 
-function createModelTenancyCondition() {
+function createModelTenancyCondition () {
   return {
     backLink: '/tenancy-length',
-    messageContent:'You will need to extend your tenancy agreement before you can complete a full application.'
+    messageContent: 'You will need to extend your tenancy agreement before you can complete a full application.'
   }
 }
 
