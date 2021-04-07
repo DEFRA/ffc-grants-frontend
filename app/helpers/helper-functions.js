@@ -102,6 +102,23 @@ function fetchListObjectItems (object, itemsList) {
   )))
 }
 
+function findErrorList ({ details }, inputFields) {
+  const errorCodes = inputFields.map(input => {
+    const foundErrorList = details.filter(({ context: { label } }) => (label === input))
+
+    if (foundErrorList.length === 0) { return null }
+
+    const { type, context: { label } } = foundErrorList[0]
+    return (`error.${label}.${type}`)
+  })
+
+  return errorCodes.map(err => (
+    err === null
+      ? null
+      : lookupErrorText(err)
+  ))
+}
+
 module.exports = {
   isChecked,
   setLabelData,
@@ -112,5 +129,6 @@ module.exports = {
   formatUKCurrency,
   itemInObject,
   fetchObjectItem,
-  fetchListObjectItems
+  fetchListObjectItems,
+  findErrorList
 }
