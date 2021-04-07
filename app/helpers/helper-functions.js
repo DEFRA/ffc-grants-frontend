@@ -80,4 +80,30 @@ function formatUKCurrency (costPounds) {
     : Number(costPounds).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
 }
 
-module.exports = { isChecked, setLabelData, getPostCodeHtml, errorExtractor, getErrorMessage, getGrantValues, formatUKCurrency }
+function fetchObjectItem (object, item) {
+  return (
+    !!object && Object.keys(object).includes(item) && object[item]
+  ) || null
+}
+
+function fetchListObjectItems (object, itemsList) {
+  if (!object) {
+    return itemsList.map(item => null)
+  }
+
+  return (itemsList.map(item => (
+    (Object.keys(object).includes(item) && object[item]) || null
+  )))
+}
+
+module.exports = {
+  isChecked,
+  setLabelData,
+  getPostCodeHtml,
+  errorExtractor,
+  getErrorMessage,
+  getGrantValues,
+  formatUKCurrency,
+  fetchObjectItem,
+  fetchListObjectItems
+}
