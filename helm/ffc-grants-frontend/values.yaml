@@ -34,6 +34,7 @@ container:
   messageQueueHost: dummy
   projectDetailsQueueAddress: project-details
   contactDetailsQueueAddress: contact-details
+  cookiePassword: thisisnotarealpasswordthisisnotarealpassword
 
 livenessProbe:
   path: /healthz

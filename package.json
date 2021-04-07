@@ -1,6 +1,6 @@
 {
   "name": "ffc-grants-frontend",
-  "version": "1.42.2",
+  "version": "1.43.0",
   "description": "Frontend Grants microservice.",
   "main": "app/index.js",
   "scripts": {
@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/DEFRA/ffc-grants-frontend#readme",
   "dependencies": {
+    "@hapi/crumb": "^8.0.1",
     "@hapi/hapi": "^20.0.3",
     "@hapi/inert": "^6.0.2",
     "@hapi/vision": "^6.0.1",
@@ -33,7 +34,7 @@
     "@hapi/yar": "^10.1.0",
     "applicationinsights": "^1.8.10",
     "ffc-messaging": "^2.1.1",
-    "govuk-frontend": "^3.8.1",
+    "govuk-frontend": "^3.11.0",
     "joi": "^17.2.1",
     "nunjucks": "^3.2.3"
   },
@@ -68,7 +69,8 @@
       "afterAll",
       "browser",
       "assert",
-      "$"
+      "$",
+      "XMLHttpRequest"
     ]
   },
   "nodemonConfig": {

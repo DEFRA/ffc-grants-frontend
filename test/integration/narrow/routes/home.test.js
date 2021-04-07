@@ -14,6 +14,7 @@ describe('Start Page', () => {
     }
 
     const response = await server.inject(options)
+    expect(response.headers['x-robots-tag']).toContain('noindex, nofollow')
     expect(response.statusCode).toBe(200)
   })
 

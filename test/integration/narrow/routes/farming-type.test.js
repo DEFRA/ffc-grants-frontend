@@ -1,4 +1,7 @@
+const { getCookieHeader, getCrumbCookie } = require('./test-helper')
 describe('Farming type page', () => {
+  const crumToken = 'ZRGdpjoumKg1TQqbTgTkuVrNjdwzzdn1qKt0lR0rYXl'
+  let crumCookie
   let server
   const createServer = require('../../../../app/server')
 
@@ -15,13 +18,20 @@ describe('Farming type page', () => {
 
     const response = await server.inject(options)
     expect(response.statusCode).toBe(200)
+    const header = getCookieHeader(response)
+    expect(header.length).toBe(3)
+    crumCookie = getCrumbCookie(response)
+    expect(response.result).toContain(crumCookie[1])
   })
 
   it('should returns error message if no option is selected', async () => {
     const postOptions = {
       method: 'POST',
       url: '/farming-type',
-      payload: {}
+      payload: { crumb: crumToken },
+      headers: {
+        cookie: 'crumb=' + crumToken
+      }
     }
 
     const postResponse = await server.inject(postOptions)
@@ -33,7 +43,10 @@ describe('Farming type page', () => {
     const postOptions = {
       method: 'POST',
       url: '/farming-type',
-      payload: { farmingType: 'Horticulture' }
+      payload: { farmingType: 'Horticulture', crumb: crumToken },
+      headers: {
+        cookie: 'crumb=' + crumToken
+      }
     }
 
     const postResponse = await server.inject(postOptions)
@@ -45,7 +58,10 @@ describe('Farming type page', () => {
     const postOptions = {
       method: 'POST',
       url: '/farming-type',
-      payload: { farmingType: 'Something else' }
+      payload: { farmingType: 'Something else', crumb: crumToken },
+      headers: {
+        cookie: 'crumb=' + crumToken
+      }
     }
 
     const postResponse = await server.inject(postOptions)

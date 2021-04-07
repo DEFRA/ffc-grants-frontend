@@ -17,7 +17,8 @@ const errors = {
   'error.projectCost.number.max': 'Enter the estimated cost for the items as a whole number with a maximum of 7 digits',
   'error.projectCost.number.integer': 'Enter the estimated cost for the items as a whole number with a maximum of 7 digits',
   'error.project.any.required': 'Select one or two options',
-  'error.legalStatus.any.required': 'Select the legal status of the farm business'
+  'error.legalStatus.any.required': 'Select the legal status of the farm business',
+  'error.legalStatus.string.base': 'Select the legal status of the farm business'
 }
 const lookupErrorText = (key) => {
   return errors[key] || key

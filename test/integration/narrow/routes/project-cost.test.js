@@ -1,4 +1,7 @@
+const { getCookieHeader, getCrumbCookie } = require('./test-helper')
 describe('Project cost page', () => {
+  const crumToken = 'ZRGdpjoumKg1TQqbTgTkuVrNjdwzzdn1qKt0lR0rYXl'
+  let crumCookie
   let server
   const createServer = require('../../../../app/server')
 
@@ -15,13 +18,20 @@ describe('Project cost page', () => {
 
     const response = await server.inject(options)
     expect(response.statusCode).toBe(200)
+    const header = getCookieHeader(response)
+    expect(header.length).toBe(3)
+    crumCookie = getCrumbCookie(response)
+    expect(response.result).toContain(crumCookie[1])
   })
 
   it('should return an error message if no option is selected', async () => {
     const postOptions = {
       method: 'POST',
       url: '/project-cost',
-      payload: { projectCost: '' }
+      payload: { projectCost: '', crumb: crumToken },
+      headers: {
+        cookie: 'crumb=' + crumToken
+      }
     }
 
     const postResponse = await server.inject(postOptions)
@@ -33,7 +43,10 @@ describe('Project cost page', () => {
     const postOptions = {
       method: 'POST',
       url: '/project-cost',
-      payload: { projectCost: '1234s6' }
+      payload: { projectCost: '1234s6', crumb: crumToken },
+      headers: {
+        cookie: 'crumb=' + crumToken
+      }
     }
 
     const postResponse = await server.inject(postOptions)
@@ -45,7 +58,10 @@ describe('Project cost page', () => {
     const postOptions = {
       method: 'POST',
       url: '/project-cost',
-      payload: { projectCost: '1234 6' }
+      payload: { projectCost: '1234 6', crumb: crumToken },
+      headers: {
+        cookie: 'crumb=' + crumToken
+      }
     }
 
     const postResponse = await server.inject(postOptions)
@@ -57,7 +73,10 @@ describe('Project cost page', () => {
     const postOptions = {
       method: 'POST',
       url: '/project-cost',
-      payload: { projectCost: '123,456' }
+      payload: { projectCost: '123,456', crumb: crumToken },
+      headers: {
+        cookie: 'crumb=' + crumToken
+      }
     }
 
     const postResponse = await server.inject(postOptions)
@@ -69,7 +88,10 @@ describe('Project cost page', () => {
     const postOptions = {
       method: 'POST',
       url: '/project-cost',
-      payload: { projectCost: 123.456 }
+      payload: { projectCost: 123.456, crumb: crumToken },
+      headers: {
+        cookie: 'crumb=' + crumToken
+      }
     }
 
     const postResponse = await server.inject(postOptions)
@@ -81,7 +103,10 @@ describe('Project cost page', () => {
     const postOptions = {
       method: 'POST',
       url: '/project-cost',
-      payload: { projectCost: 12345678 }
+      payload: { projectCost: 12345678, crumb: crumToken },
+      headers: {
+        cookie: 'crumb=' + crumToken
+      }
     }
 
     const postResponse = await server.inject(postOptions)
@@ -93,7 +118,10 @@ describe('Project cost page', () => {
     const postOptions = {
       method: 'POST',
       url: '/project-cost',
-      payload: { projectCost: 12 }
+      payload: { projectCost: 12, crumb: crumToken },
+      headers: {
+        cookie: 'crumb=' + crumToken
+      }
     }
 
     const postResponse = await server.inject(postOptions)
@@ -105,7 +133,10 @@ describe('Project cost page', () => {
     const postOptions = {
       method: 'POST',
       url: '/project-cost',
-      payload: { projectCost: 9999999 }
+      payload: { projectCost: 9999999, crumb: crumToken },
+      headers: {
+        cookie: 'crumb=' + crumToken
+      }
     }
 
     const postResponse = await server.inject(postOptions)
@@ -117,7 +148,10 @@ describe('Project cost page', () => {
     const postOptions = {
       method: 'POST',
       url: '/project-cost',
-      payload: { projectCost: 1234567 }
+      payload: { projectCost: 1234567, crumb: crumToken },
+      headers: {
+        cookie: 'crumb=' + crumToken
+      }
     }
 
     const postResponse = await server.inject(postOptions)

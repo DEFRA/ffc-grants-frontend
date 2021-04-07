@@ -1,0 +1,12 @@
+#!/usr/bin/env sh
+
+set -e
+projectRoot="$(a="/$0"; a=${a%/*}; a=${a:-.}; a=${a#/}/; cd "$a/.." || return; pwd)"
+
+cd "${projectRoot}"
+# start web application
+docker-compose up -d
+
+# run acceptance
+cd test/acceptance
+docker-compose run --rm wdio-cucumber

@@ -3,6 +3,9 @@ const nunjucks = require('nunjucks')
 const vision = require('@hapi/vision')
 const path = require('path')
 const inert = require('@hapi/inert')
+const config = require('./config')
+const crumb = require('@hapi/crumb')
+const { version } = require('../package.json')
 
 async function createServer () {
   const server = hapi.server({
@@ -11,19 +14,42 @@ async function createServer () {
 
   await server.register(inert)
   await server.register(vision)
-
+  await server.register(require('./plugins/cookies'))
+  await server.register(require('./plugins/error-pages'))
+  await server.register({
+    plugin: require('./plugins/header'),
+    options: {
+      keys: [
+        { key: 'X-Frame-Options', value: 'deny' },
+        { key: 'X-Content-Type-Options', value: 'nosniff' },
+        // { key: 'Content-Security-Policy', value: 'default-src \'self\'' },
+        // { key: 'Feature-Policy', value: 'none' },
+        { key: 'Cross-Origin-Opener-Policy', value: 'same-origin' },
+        { key: 'Cross-Origin-Embedder-Policy', value: 'require-corp' },
+        { key: 'X-Robots-Tag', value: 'noindex, nofollow' }
+      ]
+    }
+  })
   // Session cache with yar
-  await server.register(
+  await server.register([
     {
       plugin: require('@hapi/yar'),
       options: {
         storeBlank: true,
         cookieOptions: {
-          password: 'this is just a test, this is just a test, this is just a test',
-          isSecure: false // doesn't work locally if set to true
+          password: config.cookiePassword,
+          isSecure: config.cookieOptions.isSecure
         }
       }
-    }
+    },
+    {
+      plugin: crumb,
+      options: {
+        cookieOptions: {
+          isSecure: config.cookieOptions.isSecure
+        }
+      }
+    }]
   )
 
   server.route(require('./routes'))
@@ -45,7 +71,15 @@ async function createServer () {
         'node_modules/govuk-frontend/'
       ])
     },
-    path: './templates'
+    path: './templates',
+    context: {
+      appVersion: version,
+      assetPath: '/static',
+      govukAssetPath: '/assets',
+      serviceName: 'FFC Grants Service',
+      pageTitle: 'FFC Grants Service - GOV.UK',
+      googleTagManagerKey: config.googleTagManagerKey
+    }
   })
 
   return server

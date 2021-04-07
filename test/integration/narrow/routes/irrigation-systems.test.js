@@ -1,4 +1,7 @@
+const { getCookieHeader, getCrumbCookie } = require('./test-helper')
 describe('Irrigation syatems page', () => {
+  const crumToken = 'ZRGdpjoumKg1TQqbTgTkuVrNjdwzzdn1qKt0lR0rYXl'
+  let crumCookie
   let server
   const createServer = require('../../../../app/server')
 
@@ -15,13 +18,20 @@ describe('Irrigation syatems page', () => {
 
     const response = await server.inject(options)
     expect(response.statusCode).toBe(200)
+    const header = getCookieHeader(response)
+    expect(header.length).toBe(3)
+    crumCookie = getCrumbCookie(response)
+    expect(response.result).toContain(crumCookie[1])
   })
 
   it('should returns error message if no current water system option is selected', async () => {
     const postOptions = {
       method: 'POST',
       url: '/irrigation-systems',
-      payload: { irrigationPlanned: 'some souce 2' }
+      payload: { irrigationPlanned: 'some souce 2', crumb: crumToken },
+      headers: {
+        cookie: 'crumb=' + crumToken
+      }
     }
 
     const postResponse = await server.inject(postOptions)
@@ -33,7 +43,10 @@ describe('Irrigation syatems page', () => {
     const postOptions = {
       method: 'POST',
       url: '/irrigation-systems',
-      payload: { irrigationCurrent: 'some souce 2' }
+      payload: { irrigationCurrent: 'some souce 2', crumb: crumToken },
+      headers: {
+        cookie: 'crumb=' + crumToken
+      }
     }
 
     const postResponse = await server.inject(postOptions)
@@ -45,7 +58,10 @@ describe('Irrigation syatems page', () => {
     const postOptions = {
       method: 'POST',
       url: '/irrigation-systems',
-      payload: { irrigationCurrent: 'some source 1', irrigationPlanned: 'some souce 2' }
+      payload: { irrigationCurrent: 'some source 1', irrigationPlanned: 'some souce 2', crumb: crumToken },
+      headers: {
+        cookie: 'crumb=' + crumToken
+      }
     }
 
     const postResponse = await server.inject(postOptions)
@@ -59,7 +75,11 @@ describe('Irrigation syatems page', () => {
       url: '/irrigation-systems',
       payload: {
         irrigationCurrent: ['some option-1', 'some option-2', 'some option-3'],
-        irrigationPlanned: ['another-option-1', 'another-option-2', 'another-option-3']
+        irrigationPlanned: ['another-option-1', 'another-option-2', 'another-option-3'],
+        crumb: crumToken
+      },
+      headers: {
+        cookie: 'crumb=' + crumToken
       }
     }
 

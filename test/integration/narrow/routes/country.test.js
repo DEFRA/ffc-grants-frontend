@@ -1,4 +1,7 @@
+const { getCookieHeader, getCrumbCookie } = require('./test-helper')
 describe('Country Page', () => {
+  const crumToken = 'ZRGdpjoumKg1TQqbTgTkuVrNjdwzzdn1qKt0lR0rYXl'
+  let crumCookie
   let server
   const createServer = require('../../../../app/server')
 
@@ -15,13 +18,20 @@ describe('Country Page', () => {
 
     const response = await server.inject(options)
     expect(response.statusCode).toBe(200)
+    const header = getCookieHeader(response)
+    expect(header.length).toBe(3)
+    crumCookie = getCrumbCookie(response)
+    expect(response.result).toContain(crumCookie[1])
   })
 
   it('should returns error message if no option is selected', async () => {
     const postOptions = {
       method: 'POST',
       url: '/country',
-      payload: { projectPostcode: '' }
+      payload: { projectPostcode: '', crumb: crumToken },
+      headers: {
+        cookie: 'crumb=' + crumToken
+      }
     }
 
     const postResponse = await server.inject(postOptions)
@@ -33,7 +43,10 @@ describe('Country Page', () => {
     const postOptions = {
       method: 'POST',
       url: '/country',
-      payload: { inEngland: 'Yes', projectPostcode: '' }
+      payload: { inEngland: 'Yes', projectPostcode: '', crumb: crumToken },
+      headers: {
+        cookie: 'crumb=' + crumToken
+      }
     }
 
     const postResponse = await server.inject(postOptions)
@@ -45,7 +58,10 @@ describe('Country Page', () => {
     const postOptions = {
       method: 'POST',
       url: '/country',
-      payload: { inEngland: 'Yes', projectPostcode: 'AB123 4CD' }
+      payload: { inEngland: 'Yes', projectPostcode: 'AB123 4CD', crumb: crumToken },
+      headers: {
+        cookie: 'crumb=' + crumToken
+      }
     }
 
     const postResponse = await server.inject(postOptions)
@@ -57,7 +73,10 @@ describe('Country Page', () => {
     const postOptions = {
       method: 'POST',
       url: '/country',
-      payload: { inEngland: 'Yes', projectPostcode: 'XX1 5XX' }
+      payload: { inEngland: 'Yes', projectPostcode: 'XX1 5XX', crumb: crumToken },
+      headers: {
+        cookie: 'crumb=' + crumToken
+      }
     }
 
     const postResponse = await server.inject(postOptions)
@@ -69,7 +88,10 @@ describe('Country Page', () => {
     const postOptions = {
       method: 'POST',
       url: '/country',
-      payload: { projectPostcode: '', inEngland: 'No' }
+      payload: { projectPostcode: '', inEngland: 'No', crumb: crumToken },
+      headers: {
+        cookie: 'crumb=' + crumToken
+      }
     }
 
     const postResponse = await server.inject(postOptions)
