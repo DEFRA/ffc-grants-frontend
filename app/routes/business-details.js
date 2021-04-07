@@ -133,9 +133,9 @@ module.exports = [
         payload: Joi.object({
           projectName: Joi.string().required(),
           businessName: Joi.string().max(100).required(),
-          numberEmployees: Joi.string().regex(/\d/).max(7).required(),
-          businessTurnover: Joi.string().regex(/\d/).max(9).required(),
-          sbi: Joi.string().regex(/\d/).max(9).allow('')
+          numberEmployees: Joi.string().regex(/^\d+$/).required(),
+          businessTurnover: Joi.string().regex(/^\d+$/).max(9).required(),
+          sbi: Joi.string().regex(/^[0-9]+$/).max(9).allow('')
         }),
         failAction: (request, h, err) => {
           const [
