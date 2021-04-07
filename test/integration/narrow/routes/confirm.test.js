@@ -1,4 +1,6 @@
+const { getCookieHeader, getCrumbCookie } = require('./test-helper')
 describe('Confirm page', () => {
+  let crumCookie
   let server
   const createServer = require('../../../../app/server')
 
@@ -15,6 +17,10 @@ describe('Confirm page', () => {
 
     const response = await server.inject(options)
     expect(response.statusCode).toBe(200)
+    const header = getCookieHeader(response)
+    expect(header.length).toBe(3)
+    crumCookie = getCrumbCookie(response)
+    expect(response.result).toContain(crumCookie[1])
   })
 
   afterEach(async () => {
