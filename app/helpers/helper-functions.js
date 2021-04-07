@@ -80,6 +80,12 @@ function formatUKCurrency (costPounds) {
     : Number(costPounds).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
 }
 
+function itemInObject (object, item) {
+  return (
+    !!object && Object.keys(object).includes(item)
+  )
+}
+
 function fetchObjectItem (object, item) {
   return (
     !!object && Object.keys(object).includes(item) && object[item]
@@ -104,6 +110,7 @@ module.exports = {
   getErrorMessage,
   getGrantValues,
   formatUKCurrency,
+  itemInObject,
   fetchObjectItem,
   fetchListObjectItems
 }
