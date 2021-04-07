@@ -1,7 +1,7 @@
 const Joi = require('joi')
-const { errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
+const { fetchListObjectItems, findErrorList } = require('../helpers/helper-functions')
 
-function createModel (errorMessage, businessDetails) {
+function createModel (errorMessageList, businessDetails) {
   const {
     projectName,
     businessName,
@@ -9,6 +9,17 @@ function createModel (errorMessage, businessDetails) {
     businessTurnover,
     sbi
   } = businessDetails
+
+  const [
+    projectNameError,
+    businessNameError,
+    numberEmployeesError,
+    businessTurnoverError,
+    sbiError
+  ] = fetchListObjectItems(
+    errorMessageList,
+    ['projectNameError', 'businessNameError', 'numberEmployeesError', 'businessTurnoverError', 'sbiError']
+  )
 
   return {
     backLink: '/score',
@@ -24,8 +35,8 @@ function createModel (errorMessage, businessDetails) {
       hint: {
         html: 'For example, Brown Hill Farm reservoir'
       },
-      value: projectName,
-      ...(errorMessage ? { errorMessage: { text: errorMessage } } : {})
+      ...(projectName ? { value: projectName } : {}),
+      ...(projectNameError ? { errorMessage: { text: projectNameError } } : {})
     },
     inputBusinessName: {
       id: 'businessName',
@@ -39,8 +50,8 @@ function createModel (errorMessage, businessDetails) {
       hint: {
         html: 'Enter business name as held by the Rural Payments Agency'
       },
-      value: businessName,
-      ...(errorMessage ? { errorMessage: { text: errorMessage } } : {})
+      ...(businessName ? { value: businessName } : {}),
+      ...(businessNameError ? { errorMessage: { text: businessNameError } } : {})
     },
     inputNumberEmployees: {
       id: 'numberEmployees',
@@ -54,8 +65,8 @@ function createModel (errorMessage, businessDetails) {
       hint: {
         html: 'Full-time employees, including the owner'
       },
-      value: numberEmployees,
-      ...(errorMessage ? { errorMessage: { text: errorMessage } } : {})
+      ...(numberEmployees ? { value: numberEmployees } : {}),
+      ...(numberEmployeesError ? { errorMessage: { text: numberEmployeesError } } : {})
     },
     inputBusinessTurnover: {
       id: 'businessTurnover',
@@ -69,8 +80,8 @@ function createModel (errorMessage, businessDetails) {
         classes: 'govuk-label--m',
         isPageHeading: true
       },
-      value: businessTurnover,
-      ...(errorMessage ? { errorMessage: { text: errorMessage } } : {})
+      ...(businessTurnover ? { value: businessTurnover } : {}),
+      ...(businessTurnoverError ? { errorMessage: { text: businessTurnoverError } } : {})
     },
     inputSbi: {
       id: 'sbi',
@@ -84,22 +95,11 @@ function createModel (errorMessage, businessDetails) {
       hint: {
         html: 'If you do not have an SBI, leave it blank'
       },
-      value: sbi,
-      ...(errorMessage ? { errorMessage: { text: errorMessage } } : {})
+      ...(sbi ? { value: sbi } : {}),
+      ...(sbiError ? { errorMessage: { text: sbiError } } : {})
     }
   }
 }
-
-/*
-function createModelNotEligible () {
-  return {
-    backLink: '/business-details',
-    messageContent:
-    `You can only apply for a grant of up to <span class="govuk-!-font-weight-bold">40%</span> of the estimated costs.<br/><br/>
-    The minimum grant you can apply for is £35,000 (40% of £87,500). The maximum grant is £1 million.`
-  }
-}
-*/
 
 module.exports = [
   {
@@ -129,30 +129,51 @@ module.exports = [
     path: '/business-details',
     options: {
       validate: {
+        options: { abortEarly: false },
         payload: Joi.object({
-          // projectCost: Joi.number().integer().max(9999999).required()
+          projectName: Joi.string().max(10).required(),
+          businessName: Joi.string().max(10).required(),
+          numberEmployees: Joi.string().max(10).required(),
+          businessTurnover: Joi.string().max(10).required(),
+          sbi: Joi.string().allow('')
         }),
         failAction: (request, h, err) => {
-          const projectItemsList = request.yar.get('projectItemsList') || null
+          const [
+            projectNameError,
+            businessNameError,
+            numberEmployeesError,
+            businessTurnoverError,
+            sbiError
+          ] = findErrorList(err, ['projectName', 'businessName', 'numberEmployees', 'businessTurnover', 'sbi'])
 
-          const errorObject = errorExtractor(err)
-          const errorMessage = getErrorMessage(errorObject)
-          return h.view('business-details', createModel(errorMessage, null, projectItemsList)).takeover()
+          const errorMessageList = {
+            projectNameError,
+            businessNameError,
+            numberEmployeesError,
+            businessTurnoverError,
+            sbiError
+          }
+
+          return h.view('business-details', createModel(errorMessageList, {})).takeover()
         }
       },
       handler: (request, h) => {
-        /*
-        const { projectCost } = request.payload
-        const { calculatedGrant, remainingCost } = getGrantValues(projectCost)
+        const {
+          projectName,
+          businessName,
+          numberEmployees,
+          businessTurnover,
+          sbi
+        } = request.payload
 
-        request.yar.set('projectCost', projectCost)
-        request.yar.set('calculatedGrant', calculatedGrant)
-        request.yar.set('remainingCost', remainingCost)
+        request.yar.set('businessDetails', {
+          projectName,
+          businessName,
+          numberEmployees,
+          businessTurnover,
+          sbi
+        })
 
-        if ((calculatedGrant < MIN_GRANT) || (calculatedGrant > MAX_GRANT)) {
-          return h.view('./not-eligible', createModelNotEligible())
-        }
-        */
         return h.redirect('./confirm')
       }
     }
