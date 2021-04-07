@@ -1,5 +1,8 @@
 describe('Score page', () => {
+  const crumToken = 'ZRGdpjoumKg1TQqbTgTkuVrNjdwzzdn1qKt0lR0rYXl'
+  let crumCookie
   let server
+  const { getCookieHeader, getCrumbCookie } = require('./test-helper')
   const createServer = require('../../../../app/server')
 
   beforeEach(async () => {
@@ -15,13 +18,20 @@ describe('Score page', () => {
 
     const response = await server.inject(options)
     expect(response.statusCode).toBe(200)
+    const header = getCookieHeader(response)
+    expect(header.length).toBe(3)
+    crumCookie = getCrumbCookie(response)
+    expect(response.result).toContain(crumCookie[1])
   })
 
   it('redirects to project business details page', async () => {
     const postOptions = {
       method: 'POST',
       url: '/score',
-      payload: {}
+      payload: { crumb: crumToken },
+      headers: {
+        cookie: 'crumb=' + crumToken
+      }
     }
 
     const postResponse = await server.inject(postOptions)
