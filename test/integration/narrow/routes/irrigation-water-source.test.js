@@ -1,6 +1,5 @@
 const { getCookieHeader, getCrumbCookie } = require('./test-helper')
 describe('Irrigation water source page', () => {
-  const crumToken = 'ZRGdpjoumKg1TQqbTgTkuVrNjdwzzdn1qKt0lR0rYXl'
   let crumCookie
   let server
   const createServer = require('../../../../app/server')
