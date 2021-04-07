@@ -17,7 +17,15 @@ const errors = {
   'error.projectCost.number.max': 'Enter the estimated cost for the items as a whole number with a maximum of 7 digits',
   'error.projectCost.number.integer': 'Enter the estimated cost for the items as a whole number with a maximum of 7 digits',
   'error.project.any.required': 'Select one or two options',
-  'error.legalStatus.any.required': 'Select the legal status of the farm business'
+  'error.legalStatus.any.required': 'Select the legal status of the farm business',
+  'error.projectName.string.empty': 'Enter a project name',
+  'error.businessName.string.empty': 'Enter a business name',
+  'error.businessName.string.max': 'Name must be 100 characters or fewer',
+  'error.numberEmployees.string.empty': 'Enter the number of employees',
+  'error.numberEmployees.number.base': 'Number of employees must be a whole number, like 305',
+  'error.businessTurnover.string.empty': 'Enter the business turnover',
+  'error.businessTurnover.number.base': 'Business turnover must be a whole number, like 100000',
+  'error.sbi.number.base': 'SBI number must have 9 characters, like 011115678'
 }
 const lookupErrorText = (key) => {
   return errors[key] || key

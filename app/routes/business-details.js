@@ -131,47 +131,34 @@ module.exports = [
       validate: {
         options: { abortEarly: false },
         payload: Joi.object({
-          projectName: Joi.string().max(10).required(),
-          businessName: Joi.string().max(10).required(),
-          numberEmployees: Joi.string().max(10).required(),
-          businessTurnover: Joi.string().max(10).required(),
-          sbi: Joi.string().allow('')
+          projectName: Joi.string().required(),
+          businessName: Joi.string().max(100).required(),
+          numberEmployees: Joi.number().max(9999999).required(),
+          businessTurnover: Joi.number().max(9999999).required(),
+          sbi: Joi.number().max(9999999).allow('')
         }),
         failAction: (request, h, err) => {
           const [
-            projectNameError,
-            businessNameError,
-            numberEmployeesError,
-            businessTurnoverError,
-            sbiError
+            projectNameError, businessNameError, numberEmployeesError, businessTurnoverError, sbiError
           ] = findErrorList(err, ['projectName', 'businessName', 'numberEmployees', 'businessTurnover', 'sbi'])
 
           const errorMessageList = {
-            projectNameError,
-            businessNameError,
-            numberEmployeesError,
-            businessTurnoverError,
-            sbiError
+            projectNameError, businessNameError, numberEmployeesError, businessTurnoverError, sbiError
           }
 
-          return h.view('business-details', createModel(errorMessageList, {})).takeover()
+          const { projectName, businessName, numberEmployees, businessTurnover, sbi } = request.payload
+          const businessDetails = { projectName, businessName, numberEmployees, businessTurnover, sbi }
+
+          return h.view('business-details', createModel(errorMessageList, businessDetails)).takeover()
         }
       },
       handler: (request, h) => {
         const {
-          projectName,
-          businessName,
-          numberEmployees,
-          businessTurnover,
-          sbi
+          projectName, businessName, numberEmployees, businessTurnover, sbi
         } = request.payload
 
         request.yar.set('businessDetails', {
-          projectName,
-          businessName,
-          numberEmployees,
-          businessTurnover,
-          sbi
+          projectName, businessName, numberEmployees, businessTurnover, sbi
         })
 
         return h.redirect('./confirm')
