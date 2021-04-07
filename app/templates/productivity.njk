@@ -36,6 +36,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <form method="POST" action="/productivity" novalidate="novalidate">
+        <input type="hidden" name="crumb" value="{{crumb}}" />
         {{ govukCheckboxes(checkboxes) }}
         {{ govukButton({
           text: "Continue"

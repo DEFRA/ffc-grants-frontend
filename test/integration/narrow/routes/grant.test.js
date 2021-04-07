@@ -1,4 +1,5 @@
 describe('Grant page', () => {
+  const crumToken = 'ZRGdpjoumKg1TQqbTgTkuVrNjdwzzdn1qKt0lR0rYXl'
   let server
   const createServer = require('../../../../app/server')
 
@@ -22,7 +23,10 @@ describe('Grant page', () => {
     const postOptions = {
       method: 'POST',
       url: '/grant',
-      payload: {}
+      payload: { crumb: crumToken, analytics: true },
+      headers: {
+        cookie: 'crumb=' + crumToken
+      }
     }
 
     const postResponse = await server.inject(postOptions)

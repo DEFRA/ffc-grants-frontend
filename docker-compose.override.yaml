@@ -10,7 +10,7 @@ services:
       target: development
     image: ffc-grants-frontend-development
     environment:
-      NODE_ENV: development
+      NODE_ENV: development   
     ports:
       - "3000:3000"
       - "9229:9229"

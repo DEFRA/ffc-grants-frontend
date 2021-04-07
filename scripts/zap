@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+
+set -e
+projectRoot="$(a="/$0"; a=${a%/*}; a=${a:-.}; a=${a#/}/; cd "$a/.." || return; pwd)"
+
+cd "${projectRoot}"
+# Guarantee clean environment
+docker-compose -f docker-compose.yaml -f docker-compose.zap.yaml -p ffc-demo-web-zap-scan down -v
+# Run ZAP scan
+docker-compose -f docker-compose.yaml -f docker-compose.zap.yaml run --rm zap-baseline-scan
