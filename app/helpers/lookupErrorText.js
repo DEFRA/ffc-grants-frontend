@@ -34,7 +34,13 @@ const errors = {
   'error.businessTurnover.string.max': 'Business turnover must be a whole number, like 100000',
   'error.sbi.string.pattern.base': 'SBI number must have 9 characters, like 011115678',
   'error.sbi.string.min': 'SBI number must have 9 characters, like 011115678',
-  'error.sbi.string.max': 'SBI number must have 9 characters, like 011115678'
+  'error.sbi.string.max': 'SBI number must have 9 characters, like 011115678',
+  'error.firstName.string.empty': 'Enter your first name',
+  'error.firstName.any.required': 'Enter your first name',
+  'error.firstName.string.pattern.base': 'Name must only include letters, hyphens and apostrophes',
+  'error.lastName.string.empty': 'Enter your last name',
+  'error.lastName.any.required': 'Enter your last name',
+  'error.lastName.string.pattern.base': 'Name must only include letters, hyphens and apostrophes'
 }
 const lookupErrorText = (key) => {
   return errors[key] || key
