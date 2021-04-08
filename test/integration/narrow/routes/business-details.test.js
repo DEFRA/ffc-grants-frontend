@@ -222,7 +222,7 @@ describe('Project and business details page', () => {
     expect(postResponse.payload).toContain('SBI number must have 9 characters, like 011115678')
   })
 
-  it('should store user response and redirects to confirmation page, sbi is optional', async () => {
+  it('should store user response and redirects to applicant page, sbi is optional', async () => {
     const postOptions = {
       method: 'POST',
       url: '/business-details',
@@ -240,10 +240,10 @@ describe('Project and business details page', () => {
 
     const postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe('./confirm')
+    expect(postResponse.headers.location).toBe('./applying')
   })
 
-  it('should store user response and redirects to confirmation page', async () => {
+  it('should store user response and redirects to applicant page', async () => {
     const postOptions = {
       method: 'POST',
       url: '/business-details',
@@ -262,59 +262,8 @@ describe('Project and business details page', () => {
 
     const postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe('./confirm')
+    expect(postResponse.headers.location).toBe('./applying')
   })
-
-  /*
-  it('should returns error message if there is no data entered for \'currently irrigated land\' ', async () => {
-    const postOptions = {
-      method: 'POST',
-      url: '/business-details',
-      payload: { irrigatedLandTarget: '5678', crumb: crumToken },
-      headers: {
-        cookie: 'crumb=' + crumToken
-      }
-    }
-
-    const postResponse = await server.inject(postOptions)
-    expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Enter land irrigated')
-  })
-
-  it('should returns error message if there is no data entered for \'total irrigated land target\' ', async () => {
-    const postOptions = {
-      method: 'POST',
-      url: '/business-details',
-      payload: { irrigatedLandCurrent: '1234', crumb: crumToken },
-      headers: {
-        cookie: 'crumb=' + crumToken
-      }
-    }
-
-    const postResponse = await server.inject(postOptions)
-    expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Enter land irrigated')
-  })
-  */
-
-  /*
-
-  it('should store user response and redirects to water source page', async () => {
-    const postOptions = {
-      method: 'POST',
-      url: '/business-details',
-      payload: { irrigatedLandCurrent: '1234', irrigatedLandTarget: '5678', crumb: crumToken },
-      headers: {
-        cookie: 'crumb=' + crumToken
-      }
-    }
-
-    const postResponse = await server.inject(postOptions)
-    expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe('./irrigation-water-source')
-  })
-
-  */
 
   afterEach(async () => {
     await server.stop()

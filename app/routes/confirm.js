@@ -1,6 +1,6 @@
 function createModel (errorMessage, data) {
   return {
-    backLink: '/business-details',
+    backLink: '/applying',
     inputConfirm: {
       id: 'confirm',
       name: 'confirm',
