@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/DEFRA/ffc-grants-frontend#readme",
   "dependencies": {
+    "@hapi/cookie": "^11.0.2",
     "@hapi/crumb": "^8.0.1",
     "@hapi/hapi": "^20.0.3",
     "@hapi/inert": "^6.0.2",

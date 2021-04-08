@@ -20,14 +20,3 @@
     </div>
   </div>
 {% endblock %}
-{% if googleTagManagerKey %}
-<script>
-window.dataLayer.push(
-    {
-        pageTitle: document.title,
-        pageCategory: 'Landing',
-        pagePath:  document.location.href,
-        event: 'Start'
-        });
-</script>
-{% endif %}

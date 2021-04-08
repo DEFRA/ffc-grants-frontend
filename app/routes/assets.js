@@ -9,6 +9,7 @@ module.exports = {
     },
     cache: {
       privacy: 'private'
-    }
+    },
+    auth: false
   }
 }
