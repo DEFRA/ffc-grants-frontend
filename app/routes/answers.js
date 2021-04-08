@@ -25,7 +25,7 @@ module.exports = {
         html: htmlRef,
         data: msgData,
         questions: questions,
-        nextlink: 'confirmation'
+        nextlink: 'business-details'
       }
     })
   }
