@@ -39,7 +39,22 @@ describe('Applicant page', () => {
     expect(postResponse.payload).toContain('Select who is applying for this grant')
   })
 
-  it('should store user response and redirects to confirmation page', async () => {
+  it('if applicant: AGENT, should store user response and redirect to agent details page', async () => {
+    const postOptions = {
+      method: 'POST',
+      url: '/applying',
+      payload: { crumb: crumCookie[1], applying: 'Agent' },
+      headers: {
+        cookie: 'crumb=' + crumCookie[1]
+      }
+    }
+
+    const postResponse = await server.inject(postOptions)
+    expect(postResponse.statusCode).toBe(302)
+    expect(postResponse.headers.location).toBe('./agent-details')
+  })
+
+  it('if applicant: FARMER, should store user response and redirect to confirmation page', async () => {
     const postOptions = {
       method: 'POST',
       url: '/applying',

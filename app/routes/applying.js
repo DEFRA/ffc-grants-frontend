@@ -45,7 +45,12 @@ module.exports = [
             .takeover()
       },
       handler: (request, h) => {
-        request.yar.set('applying', request.payload.applying)
+        const { applying } = request.payload
+        request.yar.set('applying', applying)
+
+        if (applying === 'Agent') {
+          return h.redirect('./agent-details')
+        }
         return h.redirect('./confirm')
       }
     }
