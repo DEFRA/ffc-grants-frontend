@@ -161,7 +161,7 @@ module.exports = [
           projectName, businessName, numberEmployees, businessTurnover, sbi
         })
 
-        return h.redirect('./confirm')
+        return h.redirect('./applying')
       }
     }
   }
