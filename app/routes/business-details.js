@@ -48,7 +48,7 @@ function createModel (errorMessageList, businessDetails) {
         isPageHeading: true
       },
       hint: {
-        html: 'Enter business name as held by the Rural Payments Agency'
+        html: 'If you’re registered on the Rural Payments system, enter business name as registered'
       },
       ...(businessName ? { value: businessName } : {}),
       ...(businessNameError ? { errorMessage: { text: businessNameError } } : {})
@@ -133,9 +133,9 @@ module.exports = [
         payload: Joi.object({
           projectName: Joi.string().required(),
           businessName: Joi.string().max(100).required(),
-          numberEmployees: Joi.string().regex(/^\d+$/).required(),
+          numberEmployees: Joi.string().regex(/^\d+$/).max(7).required(),
           businessTurnover: Joi.string().regex(/^\d+$/).max(9).required(),
-          sbi: Joi.string().regex(/^[0-9]+$/).max(9).allow('')
+          sbi: Joi.string().regex(/^[0-9]+$/).min(9).max(9).allow('')
         }),
         failAction: (request, h, err) => {
           const [
