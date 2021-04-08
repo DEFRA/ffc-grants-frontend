@@ -80,4 +80,55 @@ function formatUKCurrency (costPounds) {
     : Number(costPounds).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
 }
 
-module.exports = { isChecked, setLabelData, getPostCodeHtml, errorExtractor, getErrorMessage, getGrantValues, formatUKCurrency }
+function itemInObject (object, item) {
+  return (
+    !!object && Object.keys(object).includes(item)
+  )
+}
+
+function fetchObjectItem (object, item) {
+  return (
+    !!object && Object.keys(object).includes(item) && object[item]
+  ) || null
+}
+
+function fetchListObjectItems (object, itemsList) {
+  if (!object) {
+    return itemsList.map(item => null)
+  }
+
+  return (itemsList.map(item => (
+    (Object.keys(object).includes(item) && object[item]) || null
+  )))
+}
+
+function findErrorList ({ details }, inputFields) {
+  const errorCodes = inputFields.map(input => {
+    const foundErrorList = details.filter(({ context: { label: valLabel } }) => (valLabel === input))
+
+    if (foundErrorList.length === 0) { return null }
+
+    const { type, context: { label } } = foundErrorList[0]
+    return (`error.${label}.${type}`)
+  })
+
+  return errorCodes.map(err => (
+    err === null
+      ? null
+      : lookupErrorText(err)
+  ))
+}
+
+module.exports = {
+  isChecked,
+  setLabelData,
+  getPostCodeHtml,
+  errorExtractor,
+  getErrorMessage,
+  getGrantValues,
+  formatUKCurrency,
+  itemInObject,
+  fetchObjectItem,
+  fetchListObjectItems,
+  findErrorList
+}
