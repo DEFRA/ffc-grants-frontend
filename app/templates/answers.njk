@@ -27,8 +27,86 @@
 {% block content %}
   {{ govukPanel(output) }}
   <div class="govuk-body">
-    <p>Based on your answers, your project is a medium fit with the funding priorities.</p>
-    <p>The grant is highly competitive and you are competing against other projects.</p>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+        <h1 class="govuk-heading-xl">Your project’s score</h1>
+        <div class="govuk-inset-text">
+          <p>Based on your answers, your project’s score is:</p>
+          <h2 class="govuk-heading-m">{{output.data.desirability.overallRating.band}}</h2>
+          <p>This means your project has a {{output.data.desirability.overallRating.band.toLowerCase()}} chance of getting funding.</p>
+        </div>
+        <h1 class="govuk-heading-m">Scoring</h1>
+        <p class="govuk-body"><span class="govuk-!-font-weight-bold">Strong:</span>
+          Your project seems like it’s a strong fit with the funding priorities. Based on your answers, a grant application seems likely to be successful.</p>
+        <p class="govuk-body"><span class="govuk-!-font-weight-bold">Average:</span>
+          Your project seems like it’s an average fit with the funding priorities. Based on your answers, a grant application seems like it might be successful.</p>
+        <p class="govuk-body"><span class="govuk-!-font-weight-bold">Weak:</span>
+          Your project seems like it’s a weak fit with the funding priorities. Based on your answers, a grant application seems unlikely to be successful.</p>
+      </div>
+    </div>
+    <div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <br>
+    <h1 class="govuk-heading-l">Your answers</h1>
+    <p>You can go through the checker as many times as you like. Once you’re happy that your answers accurately reflect your project, add your contact details.</p>
+  <table class="govuk-table">
+    <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header app-custom-class">Sections</th>
+        <th scope="col" class="govuk-table__header app-custom-class">Your score</th>
+        <th scope="col" class="govuk-table__header app-custom-class govuk-!-padding-left-9">Funding priorities</th>
+        <th scope="col" class="govuk-table__header app-custom-class">Change answers</th>
+      </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+    
+    {% for question in output.data.desirability.questions %}      
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header"><span>{{question.title}}</span>
+        <br><br>
+        <p>{{question.desc}}</p>
+          <ul class="govuk-list govuk-list--bullet">
+            {% for answer in question.answers %}
+            {% for selectedAns in answer.input %}
+              <li>{{selectedAns.value}}</li>
+            {% endfor %}
+            {% endfor %}
+            
+          </ul>
+        </th>
+      <td class="govuk-table__cell govuk-!-padding-left-2">
+       <br><br><br>
+        {{ question.rating.band }}
+      </td>
+      <td class="govuk-table__cell">
+        <div class="govuk-!-margin-9">
+        <p>Improving productivity<br>
+        Reducing environmental impact<br>
+        Security of water supply</p>
+        </div>
+      </td>
+      <td class="govuk-table__cell">
+          <br><br>
+          <a class="govuk-link" href="{{question.url}}">
+            Change<span class="govuk-visually-hidden"> project summary</span>
+          </a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+  
+  <div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <form class="form" action="next-steps" method="post">
+      <button class="govuk-button govuk-!-margin-right-1 govuk-!-padding-left-4 govuk-!-padding-right-4" data-module="govuk-button">
+        Next
+      </button>
+    </form>
+
+  </div>
+</div>
 
     <h3 class="govuk-heading-m">What happens next</h3>
 
