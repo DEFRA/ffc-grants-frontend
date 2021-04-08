@@ -104,7 +104,7 @@ function fetchListObjectItems (object, itemsList) {
 
 function findErrorList ({ details }, inputFields) {
   const errorCodes = inputFields.map(input => {
-    const foundErrorList = details.filter(({ context: { label } }) => (label === input))
+    const foundErrorList = details.filter(({ context: { label: valLabel } }) => (valLabel === input))
 
     if (foundErrorList.length === 0) { return null }
 
