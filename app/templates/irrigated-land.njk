@@ -4,6 +4,7 @@
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/header/macro.njk" import govukHeader %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "./components/macro.njk" import crumbToken %}
 
 {% block header %}
   {{ govukHeader({
@@ -24,7 +25,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <form method="POST" action="/irrigated-land" novalidate="novalidate">
-        <input type="hidden" name="crumb" value="{{crumb}}" />
+        {{ crumbToken(crumb)}}
         {{ govukInput(currentInput) }}
         {{ govukInput(targetInput) }}
         {{ govukButton({

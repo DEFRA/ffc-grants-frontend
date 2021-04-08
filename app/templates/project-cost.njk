@@ -5,6 +5,7 @@
 {% from "govuk/components/header/macro.njk" import govukHeader %}
 {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "./components/macro.njk" import crumbToken %}
 
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 
@@ -27,7 +28,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <form method="POST" action="/project-cost" novalidate>
-        <input type="hidden" name="crumb" value="{{crumb}}" />
+        {{ crumbToken(crumb)}}
         {{ govukInput(inputProjectCost) }}
         {{ govukButton({
           text: "Continue"

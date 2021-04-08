@@ -6,8 +6,11 @@ module.exports = {
   questions: [
     {
       key: 'Q14',
-      title: 'Project Details',
-      desc: 'The project will:',
+      title: 'The project will:',
+      pageTitle: 'Project Details',
+      fundingPriorities: `Improving productivity
+      Reducing environmental impact
+      Security of water supply`,
       type: 'multiple-answer',
       url: 'project-details',
       answerCount: 2,
@@ -37,6 +40,8 @@ module.exports = {
     {
       key: 'Q15',
       title: 'What main crops will be irrigated?',
+      pageTitle: 'Crops',
+      fundingPriorities: 'Improving productivity',
       type: 'single-answer',
       url: 'irrigated-crops',
       answer: [
@@ -57,7 +62,9 @@ module.exports = {
     {
       key: 'Q16',
       title: 'How much land is currently irrigated per year?',
+      pageTitle: 'Irrigated land',
       desc: 'Enter figure in hectares',
+      fundingPriorities: 'Improving productivity',
       group: 'Q16',
       type: 'number',
       url: 'irrigated-land'
@@ -65,7 +72,9 @@ module.exports = {
     {
       key: 'Q16a',
       title: 'How much land will be irrigated in total per year under the grant?',
+      pageTitle: 'Irrigated land',
       desc: 'Enter figure in hectares',
+      fundingPriorities: 'Improving productivity',
       group: 'Q16',
       type: 'number',
       url: 'irrigated-land'
@@ -73,7 +82,9 @@ module.exports = {
     {
       key: 'Q17',
       title: 'Where does your current irrigation water come from?',
+      pageTitle: 'Irrigation source',
       url: 'irrigation-water-source',
+      fundingPriorities: 'Reducing environmental imapct <br/> Security of water supply',
       type: 'multiple-answer',
       answerCount: 2,
       group: 'Q17',
@@ -107,7 +118,9 @@ module.exports = {
     {
       key: 'Q17b',
       title: 'Where will the water used for irrigation come from?',
+      pageTitle: 'Irrigation source',
       url: 'irrigation-water-source',
+      fundingPriorities: 'Reducing environmental imapct <br/> Security of water supply',
       type: 'multiple-answer',
       answerCount: 2,
       group: 'Q17',
@@ -137,6 +150,8 @@ module.exports = {
     {
       key: 'Q18',
       title: 'What systems are currently used to irrigate?',
+      pageTitle: 'Irrigation system',
+      fundingPriorities: 'Reducing environmental imapct <br/> Security of water supply',
       group: 'Q18',
       url: 'irrigation-systems',
       type: 'multiple-answer',
@@ -182,9 +197,11 @@ module.exports = {
     {
       key: 'Q18b',
       title: 'What systems will be used to irrigate?',
+      pageTitle: 'Irrigation system',
       group: 'Q18',
       url: 'irrigation-systems',
       type: 'multiple-answer',
+      fundingPriorities: 'Reducing environmental imapct <br/> Security of water supply',
       answerCount: 2,
       answer: [
         {
@@ -227,6 +244,9 @@ module.exports = {
     {
       key: 'Q19',
       title: 'How will the project improve productivity',
+      pageTitle: 'Productivity',
+      fundingPriorities: 'Improving productivity',
+      help: '',
       desc: 'Productivity is about how much is produced relative to inputs (eg increased yield for the same inputs or the same yield with lower inputs).',
       url: 'productivity',
       type: 'multiple-answer',
@@ -262,6 +282,7 @@ module.exports = {
     {
       key: 'Q20',
       title: 'Will water be supplied to other farm [businesses]?',
+      pageTitle: 'Other forms',
       desc: 'If you intend to supply water via a water sharing agreement as a result of this project.',
       url: 'collaboration',
       type: 'single-answer',

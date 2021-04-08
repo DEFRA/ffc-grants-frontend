@@ -5,6 +5,7 @@
 {% from "govuk/components/header/macro.njk" import govukHeader %}
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "./components/macro.njk" import crumbToken %}
 
 
 
@@ -31,7 +32,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <form method="POST" action="/country" novalidate>
-        <input type="hidden" name="crumb" value="{{crumb}}" />
+        {{ crumbToken(crumb)}}
         {{ govukRadios(radios) }}
         {{ govukButton({
           text: "Continue"

@@ -1,8 +1,10 @@
+const { formatApplicationCode } = require('../helpers/helper-functions')
+
 module.exports = {
   method: 'GET',
   path: '/confirmation',
   handler: async (request, h) => {
-    const confirmationId = Math.floor(Math.random() * 100000000)
+    const confirmationId = formatApplicationCode(request.yar.id)
 
     console.log('New application:')
     console.log(`In England: ${request.yar.get('inEngland')}`)

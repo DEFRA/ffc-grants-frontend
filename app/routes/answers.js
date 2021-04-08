@@ -1,9 +1,7 @@
 const senders = require('../messaging/senders')
 const createMsg = require('../messaging/create-msg')
 const questionBank = require('../config/question-bank')
-function formatApplicationCode (guid) {
-  return `WM-${guid.substr(0, 3)}-${guid.substr(3, 3)}`.toUpperCase()
-}
+const { formatApplicationCode } = require('../helpers/helper-functions')
 
 module.exports = {
   method: 'GET',
@@ -17,6 +15,8 @@ module.exports = {
       q.title = questionBankQ.title
       q.desc = questionBankQ.desc ?? ''
       q.url = questionBankQ.url
+      q.pageTitle = questionBankQ.pageTitle
+      q.fundingPriorities = questionBankQ.fundingPriorities
       return q
     })
     return h.view('answers', {
@@ -24,7 +24,8 @@ module.exports = {
         titleText: msgData.desirability.overallRating.band,
         html: htmlRef,
         data: msgData,
-        questions: questions
+        questions: questions,
+        nextlink: 'confirmation'
       }
     })
   }

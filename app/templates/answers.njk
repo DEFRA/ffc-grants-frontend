@@ -3,6 +3,7 @@
 {% from "govuk/components/panel/macro.njk" import govukPanel %}
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
 
 
 {% block beforeContent %}
@@ -25,7 +26,7 @@
 {% endblock %}
 
 {% block content %}
-  {{ govukPanel(output) }}
+  
   <div class="govuk-body">
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-full">
@@ -62,17 +63,18 @@
     
     {% for question in output.data.desirability.questions %}      
       <tr class="govuk-table__row">
-        <th scope="row" class="govuk-table__header"><span>{{question.title}}</span>
+        <th scope="row" class="govuk-table__header">
+        {{question.pageTitle}}
         <br><br>
-        <p>{{question.desc}}</p>
-          <ul class="govuk-list govuk-list--bullet">
             {% for answer in question.answers %}
+            <p>{{answer.title}}</p>
+          <ul class="govuk-list govuk-list--bullet">
             {% for selectedAns in answer.input %}
               <li>{{selectedAns.value}}</li>
             {% endfor %}
-            {% endfor %}
             
           </ul>
+            {% endfor %}
         </th>
       <td class="govuk-table__cell govuk-!-padding-left-2">
        <br><br><br>
@@ -80,9 +82,7 @@
       </td>
       <td class="govuk-table__cell">
         <div class="govuk-!-margin-9">
-        <p>Improving productivity<br>
-        Reducing environmental impact<br>
-        Security of water supply</p>
+        <p>{{question.fundingPriorities}}</p>
         </div>
       </td>
       <td class="govuk-table__cell">
@@ -98,35 +98,11 @@
   
   <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-
-    <form class="form" action="next-steps" method="post">
-      <button class="govuk-button govuk-!-margin-right-1 govuk-!-padding-left-4 govuk-!-padding-right-4" data-module="govuk-button">
-        Next
-      </button>
-    </form>
-
+        {{ govukButton({
+          text: "Continue",
+          href: output.nextlink
+        }) }}
   </div>
 </div>
 
-    <h3 class="govuk-heading-m">What happens next</h3>
-
-    <p>Depending on how well your project fits the funding priorities, you may decide to submit a full application.</p>
-
-    <p>If you submit a full application, we will:</p>
-    </div>
-    <ul class="govuk-list govuk-list--bullet">
-    <li>assess the application against the others</li>
-    <li>consider how well it fits the priorities for funding </li>
-    <li>identify projects that provide the best value for taxpayers' money</li>
-    </ul>
-
-    <p class="govuk-body">If your application is successful, you’ll be sent a funding agreement and can begin work on the project.</p>
-    <div class="govuk-warning-text">
-      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-      <strong class="govuk-warning-text__text">
-        <span class="govuk-warning-text__assistive">You must not start the project</span>
-        You must not start the project<br><br>
-        You will need to make a full application and complete a grant funding agreement before you can start the project.
-      </strong>
-    </div>
 {% endblock %}

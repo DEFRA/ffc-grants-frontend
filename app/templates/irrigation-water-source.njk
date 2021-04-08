@@ -5,6 +5,7 @@
 {% from "govuk/components/header/macro.njk" import govukHeader %}
 {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+{% from "./components/macro.njk" import crumbToken %}
 
 {% block header %}
   {{ govukHeader({
@@ -31,7 +32,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <form method="POST" action="/irrigation-water-source" novalidate="novalidate">
-        <input type="hidden" name="crumb" value="{{crumb}}" />
+        {{ crumbToken(crumb)}}
         {{ govukCheckboxes(waterSourceCurrent) }}
         {{ govukCheckboxes(waterSourcePlanned) }}
         {{ govukButton({

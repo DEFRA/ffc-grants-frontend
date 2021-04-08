@@ -80,4 +80,8 @@ function formatUKCurrency (costPounds) {
     : Number(costPounds).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
 }
 
-module.exports = { isChecked, setLabelData, getPostCodeHtml, errorExtractor, getErrorMessage, getGrantValues, formatUKCurrency }
+function formatApplicationCode (guid) {
+  return `WM-${guid.substr(0, 3)}-${guid.substr(3, 3)}`.toUpperCase()
+}
+
+module.exports = { isChecked, setLabelData, getPostCodeHtml, errorExtractor, getErrorMessage, getGrantValues, formatUKCurrency, formatApplicationCode }

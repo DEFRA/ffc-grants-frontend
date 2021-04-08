@@ -4,6 +4,7 @@
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/header/macro.njk" import govukHeader %}
+{% from "./components/macro.njk" import crumbToken %}
 
 {% block header %}
   {{ govukHeader({
@@ -25,6 +26,7 @@
     <div class="govuk-grid-column-two-thirds">
       <h1 class="govuk-heading-l">{{ heading }}</h1>
       <form method="POST" action="/contact-details" novalidate>
+        {{ crumbToken(crumb)}}
         {{ govukInput(emailInput) }}
         {{ govukButton({
           text: "Save and continue"
