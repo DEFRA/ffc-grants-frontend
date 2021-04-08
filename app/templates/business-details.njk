@@ -26,6 +26,7 @@
     <div class="govuk-grid-column-full">
     <h1 class="govuk-heading-l">Project and business details</h1>
       <form method="POST" action="/business-details" novalidate>
+        <input type="hidden" name="crumb" value="{{crumb}}" />
         {{ govukInput(inputProjectName) }}
         {{ govukInput(inputBusinessName) }}
         {{ govukInput(inputNumberEmployees) }}
