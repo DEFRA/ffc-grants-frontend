@@ -10,18 +10,12 @@ module.exports = {
       server.auth.strategy('session-auth', 'cookie', {
         cookie: authConfig.cookie,
         redirectTo: '/login',
-        validateFunc: async (request, session) => {
-          if (session.authenticated) {
-            return { valid: true, credentials: authConfig.credentials }
-          }
-
-          return { valid: false }
-        }
+        validateFunc: (request, session) => session.authenticated
+          ? { valid: true, credentials: authConfig.credentials }
+          : { valid: false }
       })
 
-      if (authConfig.enabled) {
-        server.auth.default('session-auth')
-      }
+      server.auth.default('session-auth')
     }
   }
 }

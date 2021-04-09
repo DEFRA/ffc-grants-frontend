@@ -6,13 +6,17 @@ const inert = require('@hapi/inert')
 const config = require('./config')
 const crumb = require('@hapi/crumb')
 const { version } = require('../package.json')
+const authConfig = require('./config/auth')
 
 async function createServer () {
   const server = hapi.server({
     port: process.env.PORT
   })
 
-  await server.register(require('./plugins/auth'))
+  if (authConfig.enabled) {
+    console.log('Login required, enabling authorisation plugin')
+    await server.register(require('./plugins/auth'))
+  }
 
   await server.register(inert)
   await server.register(vision)

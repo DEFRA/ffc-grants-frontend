@@ -8,11 +8,12 @@ services:
     image: ffc-grants-frontend
     environment:
       NODE_ENV: production
-      SITE_URL: localhost:3000    
+      SITE_URL: localhost:3000
+      LOGIN_REQUIRED: ${LOGIN_REQUIRED:-false}
       GOOGLE_TAG_MANAGER_KEY: 'GTM-M43KPG8'
       COOKIE_PASSWORD: thisistestcookiepasswordthisistestcookiepasswordthisistestcookiepassword
       SERVICE_BUS_HOST: ${SERVICE_BUS_HOST:-notset}
       SERVICE_BUS_PASSWORD: ${SERVICE_BUS_PASSWORD:-notset}
       SERVICE_BUS_USER: ${SERVICE_BUS_USER:-notset}
       PROJECT_DETAILS_QUEUE_ADDRESS: ${PROJECT_DETAILS_QUEUE_ADDRESS:-notset}
-      CONTACT_DETAILS_QUEUE_ADDRESS: ${CONTACT_DETAILS_QUEUE_ADDRESS:-notset} 
+      CONTACT_DETAILS_QUEUE_ADDRESS: ${CONTACT_DETAILS_QUEUE_ADDRESS:-notset}
