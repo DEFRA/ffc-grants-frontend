@@ -1,5 +1,3 @@
-const hapi = require('@hapi/hapi')
-const errorPages = require('../../../../app/plugins/error-pages')
 describe('Error Page', () => {
   let server
   const createServer = require('../../../../app/server')
