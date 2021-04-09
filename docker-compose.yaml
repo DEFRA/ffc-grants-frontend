@@ -8,11 +8,14 @@ services:
     image: ffc-grants-frontend
     environment:
       NODE_ENV: production
-      SITE_URL: localhost:3000    
+      SITE_URL: localhost:3000
       GOOGLE_TAG_MANAGER_KEY: 'GTM-M43KPG8'
       COOKIE_PASSWORD: thisistestcookiepasswordthisistestcookiepasswordthisistestcookiepassword
       SERVICE_BUS_HOST: ${SERVICE_BUS_HOST:-notset}
       SERVICE_BUS_PASSWORD: ${SERVICE_BUS_PASSWORD:-notset}
       SERVICE_BUS_USER: ${SERVICE_BUS_USER:-notset}
       PROJECT_DETAILS_QUEUE_ADDRESS: ${PROJECT_DETAILS_QUEUE_ADDRESS:-notset}
-      CONTACT_DETAILS_QUEUE_ADDRESS: ${CONTACT_DETAILS_QUEUE_ADDRESS:-notset} 
+      CONTACT_DETAILS_QUEUE_ADDRESS: ${CONTACT_DETAILS_QUEUE_ADDRESS:-notset}
+      BACKEND_POLLING_HOST: http://host.docker.internal:3001
+      POLLING_INTERVAL: 200
+      POLLING_RETRIES: 20
