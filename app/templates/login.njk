@@ -1,18 +1,26 @@
 {% extends '.layout.njk' %}
 
 {% from "govuk/components/button/macro.njk" import govukButton %}
-{% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+{% from "govuk/components/error-message/macro.njk" import govukErrorMessage %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
-{% from "govuk/components/fieldset/macro.njk" import govukFieldset %}
 
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds govuk-body">
       <h1 class="govuk-heading-l">Check if you can apply for a water resource management grant</h1>
+
+      {% if errorMessage %}
+        {{ govukErrorMessage({
+          text: errorMessage
+        }) }}
+      {% endif %}
+
       <form method="POST" action="/login" novalidate>
         <input type="hidden" name="crumb" value="{{crumb}}" />
-        {{ govukInput(usernameInput) }}
-        {{ govukInput(passwordInput) }}
+        <div class="govuk-form-group {{ "govuk-form-group--error" if errorMessage }}">
+          {{ govukInput(usernameInput) }}
+          {{ govukInput(passwordInput) }}
+        </div>
         {{ govukButton({
           text: 'Login'
         }) }}

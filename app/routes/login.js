@@ -1,7 +1,8 @@
 const Joi = require('joi')
 const authConfig = require('../config/auth')
+const errorText = 'Enter the username and password you\'ve been given'
 
-function createModel () {
+function createModel (errorMessage) {
   return {
     usernameInput: {
       label: {
@@ -19,7 +20,8 @@ function createModel () {
       id: 'password',
       name: 'password',
       type: 'password'
-    }
+    },
+    errorMessage
   }
 }
 
@@ -32,7 +34,7 @@ module.exports = [
     },
     handler: (request, h) => {
       request.yar.reset()
-      return h.view('login', createModel())
+      return h.view('login', createModel(null))
     }
   },
   {
@@ -47,9 +49,8 @@ module.exports = [
         }),
         failAction: (request, h, err) => {
           // FIXME: use bcrypt on password
-          // FIXME: inject error message
           console.log('Authentication failed')
-          return h.view('login', createModel()).takeover()
+          return h.view('login', createModel(errorText)).takeover()
         }
       },
       handler: (request, h) => {
