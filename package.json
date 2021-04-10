@@ -34,6 +34,7 @@
     "@hapi/wreck": "^17.0.0",
     "@hapi/yar": "^10.1.0",
     "applicationinsights": "^1.8.10",
+    "bcrypt": "^5.0.1",
     "ffc-messaging": "^2.1.1",
     "govuk-frontend": "^3.11.0",
     "joi": "^17.2.1",

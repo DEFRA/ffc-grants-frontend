@@ -41,7 +41,7 @@ container:
   cookiePassword: thisisnotarealpasswordthisisnotarealpassword
   loginRequired: false
   authUsername: grants
-  authPassword: grants
+  authPasswordHash: dummy
 
 livenessProbe:
   path: /healthz

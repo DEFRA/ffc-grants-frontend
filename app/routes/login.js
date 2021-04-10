@@ -1,5 +1,7 @@
 const Joi = require('joi')
 const authConfig = require('../config/auth')
+const bcrypt = require('bcrypt')
+
 const errorText = 'Enter the username and password you\'ve been given'
 
 function createModel (errorMessage) {
@@ -45,10 +47,15 @@ module.exports = [
       validate: {
         payload: Joi.object({
           username: Joi.string().valid(authConfig.credentials.username),
-          password: Joi.string().valid(authConfig.credentials.password)
+          password: Joi.string().custom((value, helpers) => {
+            if (bcrypt.compareSync(value, authConfig.credentials.passwordHash)) {
+              return value
+            }
+
+            throw new Error('Incorrect password')
+          })
         }),
         failAction: (request, h, err) => {
-          // FIXME: use bcrypt on password
           console.log('Authentication failed')
           return h.view('login', createModel(errorText)).takeover()
         }
