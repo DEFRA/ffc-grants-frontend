@@ -1,5 +1,5 @@
 const Joi = require('joi')
-const { fetchListObjectItems, findErrorList } = require('../helpers/helper-functions')
+const { setLabelData, fetchListObjectItems, findErrorList } = require('../helpers/helper-functions')
 
 function createModel (errorMessageList, agentDetails) {
   const { title, firstName, lastName } = agentDetails
@@ -13,7 +13,7 @@ function createModel (errorMessageList, agentDetails) {
     backLink: '/applying',
     pageHeader: 'Agent\'s details',
     formActionPage: '/agent-details',
-    inputTitle: {
+    selectTitle: {
       id: 'title',
       name: 'title',
       classes: 'govuk-input--width-10',
@@ -22,7 +22,7 @@ function createModel (errorMessageList, agentDetails) {
         classes: 'govuk-label--m',
         isPageHeading: true
       },
-      ...(title ? { value: title } : {}),
+      items: setLabelData(title, ['Mr', 'Mrs', 'Ms', 'Miss', 'Dr', 'Other']),
       ...(titleError ? { errorMessage: { text: titleError } } : {})
     },
     inputFirstName: {
@@ -61,7 +61,7 @@ module.exports = [
 
       if (!agentDetails) {
         agentDetails = {
-          title: null,
+          title: 'Other',
           firstName: null,
           lastName: null
         }

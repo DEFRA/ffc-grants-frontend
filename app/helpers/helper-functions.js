@@ -10,7 +10,8 @@ function setLabelData (data, labelData) {
     return {
       value: label,
       text: label,
-      checked: isChecked(data, label)
+      checked: isChecked(data, label),
+      selected: data === label
     }
   })
 }
