@@ -1,7 +1,7 @@
 module.exports = {
   credentials: {
-    username: 'grants',
-    password: 'grants'
+    username: process.env.AUTH_USERNAME,
+    password: process.env.AUTH_PASSWORD
   },
   cookie: {
     name: 'session-auth',

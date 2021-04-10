@@ -13,6 +13,10 @@ azureIdentity:
 containerConfigMap:
   name: ffc-grants-frontend-config-map
 
+containerSecret:
+  name: ffc-grants-frontend-container-secret
+  type: Opaque
+
 deployment:
   restartPolicy: Always
   priorityClassName: low
@@ -35,6 +39,9 @@ container:
   projectDetailsQueueAddress: project-details
   contactDetailsQueueAddress: contact-details
   cookiePassword: thisisnotarealpasswordthisisnotarealpassword
+  loginRequired: false
+  authUsername: grants
+  authPassword: grants
 
 livenessProbe:
   path: /healthz

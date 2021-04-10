@@ -3,7 +3,7 @@
 data:
   NODE_ENV: {{ .Values.environment | quote }}
   PORT: {{ .Values.container.port | quote }}
-  COOKIE_PASSWORD: {{ .Values.container.cookiePassword | quote }}
+  LOGIN_REQUIRED: {{ .Values.container.loginRequired | quote }}
   {{- if .Values.pr }}
   SITE_URL: "{{ .Values.ingress.endpoint }}-{{ .Values.pr }}.{{ .Values.ingress.server }}"
   {{- else }}
