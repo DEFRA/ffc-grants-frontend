@@ -2,8 +2,8 @@ const Joi = require('joi')
 const { setLabelData, fetchListObjectItems, findErrorList } = require('../helpers/helper-functions')
 const { LIST_COUNTIES } = require('../helpers/all-counties')
 
-function createModel (errorMessageList, agentAddressDetails) {
-  const { address1, address2, town, county, postcode } = agentAddressDetails
+function createModel (errorMessageList, farmerAddressDetails) {
+  const { address1, address2, town, county, postcode } = farmerAddressDetails
 
   const [address1Error, address2Error, townError, countyError, postcodeError] = fetchListObjectItems(
     errorMessageList,
@@ -11,9 +11,9 @@ function createModel (errorMessageList, agentAddressDetails) {
   )
 
   return {
-    backLink: '/agent-contact-details',
-    pageHeader: 'Agent\'s address details',
-    formActionPage: '/agent-address-details',
+    backLink: '/farmer-contact-details',
+    pageHeader: 'Farmer\'s address details',
+    formActionPage: '/farmer-address-details',
     inputAddress1: {
       id: 'address1',
       name: 'address1',
@@ -83,11 +83,11 @@ function createModel (errorMessageList, agentAddressDetails) {
 module.exports = [
   {
     method: 'GET',
-    path: '/agent-address-details',
+    path: '/farmer-address-details',
     handler: (request, h) => {
-      let agentAddressDetails = request.yar.get('agentAddressDetails') || null
-      if (!agentAddressDetails) {
-        agentAddressDetails = {
+      let farmerAddressDetails = request.yar.get('farmerAddressDetails') || null
+      if (!farmerAddressDetails) {
+        farmerAddressDetails = {
           address1: null,
           address2: null,
           town: null,
@@ -98,13 +98,13 @@ module.exports = [
 
       return h.view(
         'model-farmer-agent-address-details',
-        createModel(null, agentAddressDetails)
+        createModel(null, farmerAddressDetails)
       )
     }
   },
   {
     method: 'POST',
-    path: '/agent-address-details',
+    path: '/farmer-address-details',
     options: {
       validate: {
         options: { abortEarly: false },
@@ -125,9 +125,9 @@ module.exports = [
           }
 
           const { address1, address2, town, county, postcode } = request.payload
-          const agentAddressDetails = { address1, address2, town, county, postcode: postcode.toUpperCase() }
+          const farmerAddressDetails = { address1, address2, town, county, postcode: postcode.toUpperCase() }
 
-          return h.view('model-farmer-agent-address-details', createModel(errorMessageList, agentAddressDetails)).takeover()
+          return h.view('model-farmer-agent-address-details', createModel(errorMessageList, farmerAddressDetails)).takeover()
         }
       },
       handler: (request, h) => {
@@ -135,11 +135,11 @@ module.exports = [
           address1, address2, town, county, postcode
         } = request.payload
 
-        request.yar.set('agentAddressDetails', {
+        request.yar.set('farmerAddressDetails', {
           address1, address2, town, county, postcode: postcode.toUpperCase()
         })
 
-        return h.redirect('./farmer-details')
+        return h.redirect('./confirm')
       }
     }
   }

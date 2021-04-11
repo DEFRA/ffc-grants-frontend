@@ -51,7 +51,7 @@ module.exports = [
         if (applying === 'Agent') {
           return h.redirect('./agent-details')
         }
-        return h.redirect('./confirm')
+        return h.redirect('./farmer-details')
       }
     }
   }
