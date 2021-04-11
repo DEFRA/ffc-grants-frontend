@@ -60,7 +60,7 @@ function createModel (errorMessageList, agentAddressDetails) {
         isPageHeading: true
       },
       items: setLabelData(county, [
-        { text: '-- Select your county --', value: null },
+        { text: 'Select an option', value: null },
         ...LIST_COUNTIES
       ]),
       ...(countyError ? { errorMessage: { text: countyError } } : {})

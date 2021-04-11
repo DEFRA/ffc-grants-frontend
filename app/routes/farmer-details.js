@@ -22,7 +22,7 @@ function createModel (errorMessageList, farmerDetails, backLink) {
         classes: 'govuk-label--m',
         isPageHeading: true
       },
-      items: setLabelData(title, ['Mr', 'Mrs', 'Ms', 'Miss', 'Dr', 'Other']),
+      items: setLabelData(title, [{ value: 'Other', text: 'Select an option' }, 'Mr', 'Mrs', 'Ms', 'Miss', 'Dr']),
       ...(titleError ? { errorMessage: { text: titleError } } : {})
     },
     inputFirstName: {
