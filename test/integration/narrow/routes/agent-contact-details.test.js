@@ -13,7 +13,7 @@ describe('Project and business details page', () => {
   it('should load page successfully', async () => {
     const options = {
       method: 'GET',
-      url: '/agent-details'
+      url: '/agent-contact-details'
     }
 
     const response = await server.inject(options)
@@ -27,23 +27,23 @@ describe('Project and business details page', () => {
   it('should return various error messages if no data is entered', async () => {
     const postOptions = {
       method: 'POST',
-      url: '/agent-details',
+      url: '/agent-contact-details',
       payload: { crumb: crumToken },
       headers: { cookie: 'crumb=' + crumToken }
     }
 
     const postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Enter your first name')
-    expect(postResponse.payload).toContain('Enter your last name')
+    expect(postResponse.payload).toContain('Enter your email address')
+    expect(postResponse.payload).toContain('Enter your mobile number')
   })
 
-  it('should validate first name - no digits', async () => {
+  it('should validate email', async () => {
     const postOptions = {
       method: 'POST',
-      url: '/agent-details',
+      url: '/agent-contact-details',
       payload: {
-        firstName: '123',
+        email: 'my@@name.com',
         crumb: crumToken
       },
       headers: { cookie: 'crumb=' + crumToken }
@@ -51,15 +51,15 @@ describe('Project and business details page', () => {
 
     const postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Name must only include letters, hyphens and apostrophes')
+    expect(postResponse.payload).toContain('Enter an email address in the correct format, like name@example.com')
   })
 
-  it('should validate last name - no digits', async () => {
+  it('should validate landline (optional) - if typed in', async () => {
     const postOptions = {
       method: 'POST',
-      url: '/agent-details',
+      url: '/agent-contact-details',
       payload: {
-        lastName: '123',
+        landline: '1234567a90',
         crumb: crumToken
       },
       headers: { cookie: 'crumb=' + crumToken }
@@ -67,16 +67,32 @@ describe('Project and business details page', () => {
 
     const postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Name must only include letters, hyphens and apostrophes')
+    expect(postResponse.payload).toContain('Enter a telephone number, like 01632 960 001, 07700 900 982 or +44 0808 157 0192')
+  })
+
+  it('should validate mobile', async () => {
+    const postOptions = {
+      method: 'POST',
+      url: '/agent-contact-details',
+      payload: {
+        landline: '(123):456789010',
+        crumb: crumToken
+      },
+      headers: { cookie: 'crumb=' + crumToken }
+    }
+
+    const postResponse = await server.inject(postOptions)
+    expect(postResponse.statusCode).toBe(200)
+    expect(postResponse.payload).toContain('Enter a telephone number, like 01632 960 001, 07700 900 982 or +44 0808 157 0192')
   })
 
   it('should store user response and redirects to confirm page, title is optional', async () => {
     const postOptions = {
       method: 'POST',
-      url: '/agent-details',
+      url: '/agent-contact-details',
       payload: {
-        firstName: 'First Name',
-        lastName: 'Last Name',
+        email: 'my@name.com',
+        mobile: '07700 900 982',
         crumb: crumToken
       },
       headers: { cookie: 'crumb=' + crumToken }
@@ -84,17 +100,17 @@ describe('Project and business details page', () => {
 
     const postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe('./agent-contact-details')
+    expect(postResponse.headers.location).toBe('./confirm')
   })
 
   it('should store user response and redirects to confirm page', async () => {
     const postOptions = {
       method: 'POST',
-      url: '/agent-details',
+      url: '/agent-contact-details',
       payload: {
-        title: 'Title',
-        firstName: 'First Name',
-        lastName: 'Last Name',
+        email: 'my@name.com',
+        landline: '+44 0808 157 0192',
+        mobile: '07700 900 982',
         crumb: crumToken
       },
       headers: { cookie: 'crumb=' + crumToken }
@@ -102,7 +118,7 @@ describe('Project and business details page', () => {
 
     const postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe('./agent-contact-details')
+    expect(postResponse.headers.location).toBe('./confirm')
   })
 
   afterEach(async () => {

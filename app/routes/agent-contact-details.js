@@ -84,9 +84,9 @@ module.exports = [
       validate: {
         options: { abortEarly: false },
         payload: Joi.object({
-          email: Joi.any(),
-          landline: Joi.string().regex(/^[^0-9]+$/).required(),
-          mobile: Joi.string().regex(/^[^0-9]+$/).required()
+          email: Joi.string().email().required(),
+          landline: Joi.string().regex(/^[0-9\t-+()]+$/).allow(''),
+          mobile: Joi.string().regex(/^[0-9\t-+()]+$/).required()
         }),
         failAction: (request, h, err) => {
           const [
