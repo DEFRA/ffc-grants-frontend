@@ -4,12 +4,13 @@ data:
   NODE_ENV: {{ .Values.environment | quote }}
   PORT: {{ .Values.container.port | quote }}
   LOGIN_REQUIRED: {{ .Values.container.loginRequired | quote }}
+  AUTH_PASSWORD_HASH: {{ .Values.container.authPasswordHash | quote }}
   {{- if .Values.pr }}
   SITE_URL: "{{ .Values.ingress.endpoint }}-{{ .Values.pr }}.{{ .Values.ingress.server }}"
   {{- else }}
   SITE_URL: "{{ .Values.ingress.endpoint }}.{{ .Values.ingress.server }}"
   {{- end }}
-  SERVICE_BUS_HOST: {{ quote .Values.container.messageQueueHost }}
-  PROJECT_DETAILS_QUEUE_ADDRESS: {{ quote .Values.container.projectDetailsQueueAddress }}
-  CONTACT_DETAILS_QUEUE_ADDRESS: {{ quote .Values.container.contactDetailsQueueAddress }}
+  SERVICE_BUS_HOST: {{ .Values.container.messageQueueHost | quote }}
+  PROJECT_DETAILS_QUEUE_ADDRESS: {{ .Values.container.projectDetailsQueueAddress | quote }}
+  CONTACT_DETAILS_QUEUE_ADDRESS: {{ .Values.container.contactDetailsQueueAddress | quote }}
 {{- end -}}
