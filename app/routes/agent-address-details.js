@@ -1,5 +1,6 @@
 const Joi = require('joi')
 const { setLabelData, fetchListObjectItems, findErrorList } = require('../helpers/helper-functions')
+const { LIST_COUNTIES } = require('../helpers/all-counties')
 
 function createModel (errorMessageList, agentAddressDetails) {
   const { address1, address2, town, county, postcode } = agentAddressDetails
@@ -58,7 +59,7 @@ function createModel (errorMessageList, agentAddressDetails) {
         classes: 'govuk-label--m',
         isPageHeading: true
       },
-      items: setLabelData(county, ['-- Select your county --', 'Mr', 'Mrs', 'Ms', 'Miss', 'Dr', 'Other']),
+      items: setLabelData(county, ['-- Select your county --', ...LIST_COUNTIES]),
       ...(countyError ? { errorMessage: { text: countyError } } : {})
     },
     inputPostcode: {
