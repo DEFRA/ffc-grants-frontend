@@ -45,6 +45,10 @@
         build.buildAndPushContainerImage(DOCKER_REGISTRY_CREDENTIALS_ID, DOCKER_REGISTRY, repoName, tag)
       }
 
+      stage('Helm lint') {
+        test.lintHelm(repoName)
+      }
+
       if (pr != '') {
         stage('Helm install') {
           helm.deployChart(environment, DOCKER_REGISTRY, repoName, tag, pr)
