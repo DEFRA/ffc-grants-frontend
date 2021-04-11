@@ -42,7 +42,6 @@ container:
   loginRequired: false
   authUsername: grants
   authPasswordHash: dummy
-  test123: blah
 
 livenessProbe:
   path: /healthz

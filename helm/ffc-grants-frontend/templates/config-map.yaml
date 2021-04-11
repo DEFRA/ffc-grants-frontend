@@ -4,8 +4,6 @@ data:
   NODE_ENV: {{ .Values.environment | quote }}
   PORT: {{ .Values.container.port | quote }}
   LOGIN_REQUIRED: {{ .Values.container.loginRequired | quote }}
-  AUTH_PASSWORD_HASH: {{ .Values.container.authPasswordHash | quote }}
-  TEST_123: {{ .Values.container.test123 | quote }}
   {{- if .Values.pr }}
   SITE_URL: "{{ .Values.ingress.endpoint }}-{{ .Values.pr }}.{{ .Values.ingress.server }}"
   {{- else }}
