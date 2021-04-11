@@ -1,7 +1,5 @@
 @Library('defra-library@fix/dollar-in-app-config') _
 
-buildNodeJs defaultBranch: 'master'
-
   String defaultBranch = 'master'
   String environment = 'snd'
   String containerSrcFolder = '\\/home\\/node'
