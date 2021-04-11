@@ -110,7 +110,7 @@ module.exports = [
           email, landline, mobile
         })
 
-        return h.redirect('./confirm')
+        return h.redirect('./agent-address-details')
       }
     }
   }
