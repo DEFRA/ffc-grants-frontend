@@ -8,6 +8,7 @@ services:
     image: ffc-grants-frontend
     environment:
       NODE_ENV: production
+      TEST_123: notset
       SITE_URL: localhost:3000
       LOGIN_REQUIRED: ${LOGIN_REQUIRED:-false}
       AUTH_USERNAME: ${AUTH_USERNAME:-grants}

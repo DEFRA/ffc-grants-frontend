@@ -10,6 +10,7 @@ const initialise = async () => {
   const server = await createServer()
   await server.start()
   console.log(`# Hapi server started successfully on ${server.info.uri}`)
+  console.log(process.env.TEST_123)
 }
 
 initialise()
