@@ -108,7 +108,7 @@ module.exports = [
           title, firstName, lastName
         })
 
-        return h.redirect('./confirm')
+        return h.redirect('./agent-contact-details')
       }
     }
   }

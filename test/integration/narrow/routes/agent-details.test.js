@@ -102,7 +102,7 @@ describe('Project and business details page', () => {
 
     const postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe('./confirm')
+    expect(postResponse.headers.location).toBe('./agent-contact-details')
   })
 
   afterEach(async () => {
