@@ -59,7 +59,10 @@ function createModel (errorMessageList, agentAddressDetails) {
         classes: 'govuk-label--m',
         isPageHeading: true
       },
-      items: setLabelData(county, ['-- Select your county --', ...LIST_COUNTIES]),
+      items: setLabelData(county, [
+        { text: '-- Select your county --', value: null },
+        ...LIST_COUNTIES
+      ]),
       ...(countyError ? { errorMessage: { text: countyError } } : {})
     },
     inputPostcode: {
@@ -83,13 +86,12 @@ module.exports = [
     path: '/agent-address-details',
     handler: (request, h) => {
       let agentAddressDetails = request.yar.get('agentAddressDetails') || null
-
       if (!agentAddressDetails) {
         agentAddressDetails = {
           address1: null,
           address2: null,
           town: null,
-          county: '-- Select your county --',
+          county: null,
           postcode: null
         }
       }
@@ -107,11 +109,11 @@ module.exports = [
       validate: {
         options: { abortEarly: false },
         payload: Joi.object({
-          address1: Joi.any(),
-          address2: Joi.string().regex(/^[^0-9]+$/).required(),
-          town: Joi.string().regex(/^[^0-9]+$/).required(),
-          county: Joi.string().regex(/^[^0-9]+$/).required(),
-          postcode: Joi.string().regex(/^[^0-9]+$/).required()
+          address1: Joi.string().required(),
+          address2: Joi.string().required(),
+          town: Joi.string().required(),
+          county: Joi.string().required(),
+          postcode: Joi.string().regex(/^[a-z]{1,2}\d[a-z\d]?\s\d[a-z]{2}$/i).trim().required()
         }),
         failAction: (request, h, err) => {
           const [
@@ -123,7 +125,7 @@ module.exports = [
           }
 
           const { address1, address2, town, county, postcode } = request.payload
-          const agentAddressDetails = { address1, address2, town, county, postcode }
+          const agentAddressDetails = { address1, address2, town, county, postcode: postcode.toUpperCase() }
 
           return h.view('model-farmer-agent-address-details', createModel(errorMessageList, agentAddressDetails)).takeover()
         }
@@ -134,7 +136,7 @@ module.exports = [
         } = request.payload
 
         request.yar.set('agentAddressDetails', {
-          address1, address2, town, county, postcode
+          address1, address2, town, county, postcode: postcode.toUpperCase()
         })
 
         return h.redirect('./confirm')
