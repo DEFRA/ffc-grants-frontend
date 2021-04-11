@@ -1,5 +1,5 @@
 const { getCookieHeader, getCrumbCookie } = require('./test-helper')
-describe('Project and business details page', () => {
+describe('Agent contact details page', () => {
   const crumToken = 'ZRGdpjoumKg1TQqbTgTkuVrNjdwzzdn1qKt0lR0rYXl'
   let crumCookie
   let server
@@ -86,7 +86,7 @@ describe('Project and business details page', () => {
     expect(postResponse.payload).toContain('Enter a telephone number, like 01632 960 001, 07700 900 982 or +44 0808 157 0192')
   })
 
-  it('should store user response and redirects to confirm page, title is optional', async () => {
+  it('should store user response and redirects to agent address page, title is optional', async () => {
     const postOptions = {
       method: 'POST',
       url: '/agent-contact-details',
@@ -103,7 +103,7 @@ describe('Project and business details page', () => {
     expect(postResponse.headers.location).toBe('./agent-address-details')
   })
 
-  it('should store user response and redirects to confirm page', async () => {
+  it('should store user response and redirects to agent address page', async () => {
     const postOptions = {
       method: 'POST',
       url: '/agent-contact-details',

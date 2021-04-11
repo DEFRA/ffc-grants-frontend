@@ -1,5 +1,5 @@
 const { getCookieHeader, getCrumbCookie } = require('./test-helper')
-describe('Project and business details page', () => {
+describe('Agent details page', () => {
   const crumToken = 'ZRGdpjoumKg1TQqbTgTkuVrNjdwzzdn1qKt0lR0rYXl'
   let crumCookie
   let server
@@ -70,7 +70,7 @@ describe('Project and business details page', () => {
     expect(postResponse.payload).toContain('Name must only include letters, hyphens and apostrophes')
   })
 
-  it('should store user response and redirects to confirm page, title is optional', async () => {
+  it('should store user response and redirects to agent contact page, title is optional', async () => {
     const postOptions = {
       method: 'POST',
       url: '/agent-details',
@@ -87,7 +87,7 @@ describe('Project and business details page', () => {
     expect(postResponse.headers.location).toBe('./agent-contact-details')
   })
 
-  it('should store user response and redirects to confirm page', async () => {
+  it('should store user response and redirects to agent contact page', async () => {
     const postOptions = {
       method: 'POST',
       url: '/agent-details',

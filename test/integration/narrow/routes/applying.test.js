@@ -43,7 +43,7 @@ describe('Applicant page', () => {
     const postOptions = {
       method: 'POST',
       url: '/applying',
-      payload: { crumb: crumCookie[1], applying: 'Agent' },
+      payload: { applying: 'Agent', crumb: crumCookie[1] },
       headers: {
         cookie: 'crumb=' + crumCookie[1]
       }
@@ -54,11 +54,11 @@ describe('Applicant page', () => {
     expect(postResponse.headers.location).toBe('./agent-details')
   })
 
-  it('if applicant: FARMER, should store user response and redirect to confirmation page', async () => {
+  it('if applicant: FARMER, should store user response and redirect to farmer details page', async () => {
     const postOptions = {
       method: 'POST',
       url: '/applying',
-      payload: { crumb: crumCookie[1], applying: 'Farmer' },
+      payload: { applying: 'Farmer', crumb: crumCookie[1] },
       headers: {
         cookie: 'crumb=' + crumCookie[1]
       }
@@ -66,7 +66,7 @@ describe('Applicant page', () => {
 
     const postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe('./confirm')
+    expect(postResponse.headers.location).toBe('./farmer-details')
   })
 
   afterEach(async () => {

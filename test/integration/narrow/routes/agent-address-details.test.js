@@ -24,7 +24,7 @@ describe('Agent address details page', () => {
     expect(response.result).toContain(crumCookie[1])
   })
 
-  it('should validate postcode', async () => {
+  it('should validate postcode - raise error when postcode is invalid', async () => {
     const postOptions = {
       method: 'POST',
       url: '/agent-address-details',
@@ -40,7 +40,7 @@ describe('Agent address details page', () => {
     expect(postResponse.payload).toContain('Enter a postcode, like AA1 1AA')
   })
 
-  it('should store user response and redirect to confirm page', async () => {
+  it('should store user response and redirect to farmer details page', async () => {
     const postOptions = {
       method: 'POST',
       url: '/agent-address-details',
@@ -57,7 +57,7 @@ describe('Agent address details page', () => {
 
     const postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe('./confirm')
+    expect(postResponse.headers.location).toBe('./farmer-details')
   })
 
   afterEach(async () => {
