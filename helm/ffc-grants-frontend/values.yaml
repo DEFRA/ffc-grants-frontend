@@ -35,6 +35,9 @@ container:
   projectDetailsQueueAddress: project-details
   contactDetailsQueueAddress: contact-details
   cookiePassword: thisisnotarealpasswordthisisnotarealpassword
+  backendPollingHost: http://ffc-grants-eligibility
+  pollingInterval: 200
+  pollingRetries: 20
 
 livenessProbe:
   path: /healthz
