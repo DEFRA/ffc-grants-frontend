@@ -1,5 +1,6 @@
 const Joi = require('joi')
 const { fetchListObjectItems, findErrorList } = require('../helpers/helper-functions')
+const { NUMBER_REGEX } = require('../helpers/regex-validation')
 
 function createModel (errorMessageList, businessDetails) {
   const {
@@ -133,9 +134,9 @@ module.exports = [
         payload: Joi.object({
           projectName: Joi.string().required(),
           businessName: Joi.string().max(100).required(),
-          numberEmployees: Joi.string().regex(/^\d+$/).max(7).required(),
-          businessTurnover: Joi.string().regex(/^\d+$/).max(9).required(),
-          sbi: Joi.string().regex(/^[0-9]+$/).min(9).max(9).allow('')
+          numberEmployees: Joi.string().regex(NUMBER_REGEX).max(7).required(),
+          businessTurnover: Joi.string().regex(NUMBER_REGEX).max(9).required(),
+          sbi: Joi.string().regex(NUMBER_REGEX).min(9).max(9).allow('')
         }),
         failAction: (request, h, err) => {
           const [
