@@ -1,5 +1,6 @@
 const Joi = require('joi')
 const { setLabelData, fetchListObjectItems, findErrorList } = require('../helpers/helper-functions')
+const { POSTCODE_REGEX } = require('../helpers/regex-validation')
 const { LIST_COUNTIES } = require('../helpers/all-counties')
 
 function createModel (errorMessageList, farmerAddressDetails) {
@@ -113,7 +114,7 @@ module.exports = [
           address2: Joi.string().required(),
           town: Joi.string().required(),
           county: Joi.string().required(),
-          postcode: Joi.string().regex(/^[a-z]{1,2}\d[a-z\d]?\s\d[a-z]{2}$/i).trim().required()
+          postcode: Joi.string().regex(POSTCODE_REGEX).trim().required()
         }),
         failAction: (request, h, err) => {
           const [
