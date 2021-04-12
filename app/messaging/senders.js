@@ -1,12 +1,10 @@
 const { MessageSender } = require('ffc-messaging')
 const msgCfg = require('../config/messaging')
 
-const eligibilityAnswersSender = new MessageSender(msgCfg.eligibilityAnswersQueue)
 const projectDetailsSender = new MessageSender(msgCfg.projectDetailsQueue)
 const contactDetailsSender = new MessageSender(msgCfg.contactDetailsQueue)
 
 async function stop () {
-  await eligibilityAnswersSender.closeConnection()
   await projectDetailsSender.closeConnection()
   await contactDetailsSender.closeConnection()
 }

@@ -1,17 +1,28 @@
 const Joi = require('joi')
 
-// Define config schema
-const schema = Joi.object({
-  credentials: Joi.object({
-    username: Joi.string().default('dummyusername'),
-    passwordHash: Joi.string().default('dummypwdhash')
-  }),
-  cookie: Joi.object({
-    name: Joi.string().required(),
-    password: Joi.string().default('dummycookiepassworddummycookiepassword'),
-    isSecure: Joi.bool().default(true)
-  }),
-  enabled: Joi.bool().default(false)
+const sharedConfigSchema = {
+  appInsights: Joi.object(),
+  host: Joi.string().default('localhost'),
+  password: Joi.string(),
+  username: Joi.string(),
+  useCredentialChain: Joi.bool().default(false)
+}
+
+const messageConfigSchema = Joi.object({
+  projectDetailsQueue: {
+    address: Joi.string().default('projectDetails'),
+    type: Joi.string(),
+    ...sharedConfigSchema
+  },
+  contactDetailsQueue: {
+    address: Joi.string().default('contactDetails'),
+    type: Joi.string(),
+    ...sharedConfigSchema
+  },
+  eligibilityAnswersMsgType: Joi.string(),
+  projectDetailsMsgType: Joi.string(),
+  contactDetailsMsgType: Joi.string(),
+  msgSrc: Joi.string()
 })
 
 const sharedConfig = {
@@ -25,11 +36,6 @@ const sharedConfig = {
 const msgTypePrefix = 'uk.gov.ffc.grants'
 
 const config = {
-  eligibilityAnswersQueue: {
-    address: process.env.ELIGIBILITY_ANSWERS_QUEUE_ADDRESS,
-    type: 'queue',
-    ...sharedConfig
-  },
   projectDetailsQueue: {
     address: process.env.PROJECT_DETAILS_QUEUE_ADDRESS,
     type: 'queue',
@@ -47,15 +53,15 @@ const config = {
 }
 
 // Validate config
-// const result = schema.validate(config, {
-//   abortEarly: false
-// })
+const result = messageConfigSchema.validate(config, {
+  abortEarly: false
+})
 
 // // Throw if config is invalid
-// if (result.error) {
-//   throw new Error(`The message config is invalid. ${result.error.message}`)
-// }
+if (result.error) {
+  throw new Error(`The message config is invalid. ${result.error.message}`)
+}
 
-// module.exports = result.value
+module.exports = result.value
 
 module.exports = config
