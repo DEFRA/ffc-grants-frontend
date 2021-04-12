@@ -1,5 +1,5 @@
 const Joi = require('joi')
-const mqConfig = require('./messaging')
+
 // Define config schema
 const schema = Joi.object({
   cookiePassword: Joi.string().required(),
@@ -38,9 +38,4 @@ if (result.error) {
   throw new Error(`The server config is invalid. ${result.error.message}`)
 }
 
-// Use the Joi validated value
-const value = result.value
-
-value.QueueConfig = mqConfig
-
-module.exports = value
+module.exports = result.value
