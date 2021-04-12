@@ -35,7 +35,6 @@ describe('Score page', () => {
     expect(header.length).toBe(3)
     crumCookie = getCrumbCookie(response)
     expect(response.result).toContain(crumCookie[1])
-    // expect(response.payload).toContain('Sorry couldn\'t calculate score at this time. Please try later.')
   })
 
   it('should load page with error unhandled response from scoring service', async () => {
