@@ -13,10 +13,14 @@ azureIdentity:
 containerConfigMap:
   name: ffc-grants-frontend-config-map
 
+containerSecret:
+  name: ffc-grants-frontend-container-secret
+  type: Opaque
+
 deployment:
   restartPolicy: Always
   priorityClassName: low
-  replicas: 1
+  replicas: 2
   minReadySeconds: 5
   redeployOnChange: update this field to force a change
   runAsNonRoot: true
@@ -24,8 +28,8 @@ deployment:
 
 container:
   imagePullPolicy: IfNotPresent
-  requestMemory: 60Mi
-  requestCpu: 60m
+  requestMemory: 120Mi
+  requestCpu: 120m
   limitMemory: 120Mi
   limitCpu: 120m
   readOnlyRootFilesystem: true
@@ -35,6 +39,9 @@ container:
   projectDetailsQueueAddress: project-details
   contactDetailsQueueAddress: contact-details
   cookiePassword: thisisnotarealpasswordthisisnotarealpassword
+  loginRequired: false
+  authUsername: grants
+  authPasswordHash: dummy
   backendPollingHost: http://ffc-grants-eligibility
   pollingInterval: 200
   pollingRetries: 20

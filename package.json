@@ -1,6 +1,6 @@
 {
   "name": "ffc-grants-frontend",
-  "version": "1.44.1",
+  "version": "1.45.1",
   "description": "Frontend Grants microservice.",
   "main": "app/index.js",
   "scripts": {
@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/DEFRA/ffc-grants-frontend#readme",
   "dependencies": {
+    "@hapi/cookie": "^11.0.2",
     "@hapi/crumb": "^8.0.1",
     "@hapi/hapi": "^20.0.3",
     "@hapi/inert": "^6.0.2",
@@ -33,6 +34,7 @@
     "@hapi/wreck": "^17.1.0",
     "@hapi/yar": "^10.1.0",
     "applicationinsights": "^1.8.10",
+    "bcrypt": "^5.0.1",
     "ffc-messaging": "^2.1.1",
     "govuk-frontend": "^3.11.0",
     "joi": "^17.2.1",
