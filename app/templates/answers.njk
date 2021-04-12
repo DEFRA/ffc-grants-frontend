@@ -25,7 +25,7 @@
     text: "Back",
     href: "/collabration"
   }) }}
-  
+
   {% if errorList %}
     {{govukErrorSummary ({
   "titleText": "There is a problem",
@@ -35,7 +35,7 @@
 {% endblock %}
 
 {% block content %}
-{% if scoreData %} 
+{% if scoreData %}
   <div class="govuk-body">
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-full">
@@ -69,8 +69,8 @@
       </tr>
     </thead>
     <tbody class="govuk-table__body">
-    
-    {% for question in scoreData.desirability.questions %}      
+
+    {% for question in scoreData.desirability.questions %}
       <tr class="govuk-table__row">
         <th scope="row" class="govuk-table__header">
         {{question.pageTitle}}
@@ -81,7 +81,7 @@
             {% for selectedAns in answer.input %}
               <li>{{selectedAns.value}}</li>
             {% endfor %}
-            
+
           </ul>
             {% endfor %}
         </th>
@@ -104,15 +104,14 @@
     {% endfor %}
   </tbody>
 </table>
-  
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-   <form method="POST" action="/business-details" novalidate>
-        {{ crumbToken(crumb)}}
-        {{ govukButton({
-          text: "Continue",
-          href: output.nextlink
-        }) }}
+    <form method="POST" action="/answers" novalidate>
+      {{ crumbToken(crumb)}}
+      {{ govukButton({
+        text: "Continue"
+      }) }}
     </form>
   </div>
 </div>
