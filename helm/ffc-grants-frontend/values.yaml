@@ -20,7 +20,7 @@ containerSecret:
 deployment:
   restartPolicy: Always
   priorityClassName: low
-  replicas: 2
+  replicas: 1
   minReadySeconds: 5
   redeployOnChange: update this field to force a change
   runAsNonRoot: true
