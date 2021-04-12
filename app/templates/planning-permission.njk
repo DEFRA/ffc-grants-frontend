@@ -4,6 +4,7 @@
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
 {% from "govuk/components/details/macro.njk" import govukDetails %}
+{% from "./components/macro.njk" import crumbToken %}
 
 
 {% block beforeContent %}
@@ -17,7 +18,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <form method="POST" action="/planning-permission" novalidate="novalidate">
-        <input type="hidden" name="crumb" value="{{crumb}}" />
+        {{ crumbToken(crumb)}}
         {{ govukRadios(radios) }}
 
         {{ govukDetails({

@@ -1,6 +1,6 @@
 {
   "name": "ffc-grants-frontend",
-  "version": "1.45.0",
+  "version": "1.45.1",
   "description": "Frontend Grants microservice.",
   "main": "app/index.js",
   "scripts": {
@@ -31,7 +31,7 @@
     "@hapi/hapi": "^20.0.3",
     "@hapi/inert": "^6.0.2",
     "@hapi/vision": "^6.0.1",
-    "@hapi/wreck": "^17.0.0",
+    "@hapi/wreck": "^17.1.0",
     "@hapi/yar": "^10.1.0",
     "applicationinsights": "^1.8.10",
     "bcrypt": "^5.0.1",
@@ -80,5 +80,11 @@
     "ignore": [
       "**/test-output/**"
     ]
-  }
+  },
+  "eslintConfig ":{
+    "rules": {
+      "no-control-regex": 0
+    }
+  },
+  "eslintIgnore": ["test-helper.js"]
 }

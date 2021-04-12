@@ -12,4 +12,7 @@ data:
   SERVICE_BUS_HOST: {{ .Values.container.messageQueueHost | quote }}
   PROJECT_DETAILS_QUEUE_ADDRESS: {{ .Values.container.projectDetailsQueueAddress | quote }}
   CONTACT_DETAILS_QUEUE_ADDRESS: {{ .Values.container.contactDetailsQueueAddress | quote }}
+  BACKEND_POLLING_HOST: {{ .Values.container.backendPollingHost | quote }}
+  POLLING_INTERVAL: {{ .Values.container.pollingInterval | quote }}
+  POLLING_RETRIES: {{ .Values.container.pollingRetries | quote }}
 {{- end -}}

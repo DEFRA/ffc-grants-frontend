@@ -4,6 +4,7 @@
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+{% from "./components/macro.njk" import crumbToken %}
 
 {% block beforeContent %}
   {{ govukBackLink({
@@ -23,7 +24,7 @@
     <div class="govuk-grid-column-two-thirds">
       <h1 class="govuk-heading-l">Project details</h1>
       <form method="POST" action="/project-details" novalidate="novalidate">
-        <input type="hidden" name="crumb" value="{{crumb}}" />
+        {{ crumbToken(crumb)}}
         {{ govukCheckboxes(checkboxes) }}
         {{ govukButton({
           text: "Continue"

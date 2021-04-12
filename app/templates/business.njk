@@ -3,6 +3,7 @@
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "./components/macro.njk" import crumbToken %}
 
 {% block beforeContent %}
   {{ govukBackLink({
@@ -16,6 +17,7 @@
     <div class="govuk-grid-column-two-thirds">
       <h1 class="govuk-heading-l">{{ heading }}</h1>
       <form method="POST" action="/business" novalidate>
+        {{ crumbToken(crumb)}}
         {{ govukInput(nameInput) }}
         {{ govukButton({
           text: "Save and continue"

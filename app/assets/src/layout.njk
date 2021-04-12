@@ -4,7 +4,7 @@
 
 {% block pageTitle %}GOV.UK - Defra grants{% endblock %}
 {% block head %}
-  <meta name="robots" content="noindex">
+  <meta name="robots" content="noindex, nofollow">
   <%= htmlWebpackPlugin.tags.headTags %>
   {% if cookiesPolicy.analytics %}
     {% include "tag-manager/head-content.njk" %}
