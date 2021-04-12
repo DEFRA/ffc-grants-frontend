@@ -1,15 +1,6 @@
 {% extends '.layout.njk' %}
 
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
-{% from "govuk/components/header/macro.njk" import govukHeader %}
-
-{% block header %}
-  {{ govukHeader({
-    homepageUrl: "/",
-    serviceName: "Check if you can apply for a water resource management grant",
-    serviceUrl: "/"
-  }) }}
-{% endblock %}
 
 {% block beforeContent %}
   {{ govukBackLink({

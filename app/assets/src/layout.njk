@@ -1,4 +1,6 @@
 {% extends "govuk/template.njk" %}
+{% from "govuk/components/header/macro.njk" import govukHeader %}
+{% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
 
 {% block pageTitle %}GOV.UK - Defra grants{% endblock %}
 {% block head %}
@@ -7,6 +9,22 @@
   {% if cookiesPolicy.analytics %}
     {% include "tag-manager/head-content.njk" %}
   {% endif %}
+{% endblock %}
+
+{% block header %}
+  {{ govukHeader({
+    homepageUrl: "/",
+    serviceName: "Check if you can apply for a water resource management grant",
+    serviceUrl: "/"
+  }) }}
+    <div class="govuk-grid-row govuk-width-container " ">
+      {{ govukPhaseBanner({
+      tag: {
+      text: "beta"
+    },
+      html: 'This is a new service – your <a class="govuk-link" href="#">feedback</a> will help us to improve it.'
+  }) }}
+    </div>
 {% endblock %}
 
 {% block bodyStart %}
