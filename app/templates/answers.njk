@@ -4,6 +4,8 @@
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+{% from "./components/macro.njk" import crumbToken %}
 
 
 {% block beforeContent %}
@@ -11,7 +13,7 @@
     items: [
       {
         text: "Home",
-        href: "/irrigated-land"
+        href: "/"
       },
       {
         text: "Check if you can apply for a water resource management grant",
@@ -21,20 +23,27 @@
   }) }}
   {{ govukBackLink({
     text: "Back",
-    href: "/"
+    href: "/collabration"
   }) }}
+  
+  {% if errorList %}
+    {{govukErrorSummary ({
+  "titleText": "There is a problem",
+  "errorList": errorList
+}) }}
+  {% endif %}
 {% endblock %}
 
 {% block content %}
-  
+{% if scoreData %} 
   <div class="govuk-body">
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-full">
         <h1 class="govuk-heading-xl">Your project’s score</h1>
         <div class="govuk-inset-text">
           <p>Based on your answers, your project’s score is:</p>
-          <h2 class="govuk-heading-m">{{output.data.desirability.overallRating.band}}</h2>
-          <p>This means your project has a {{output.data.desirability.overallRating.band.toLowerCase()}} chance of getting funding.</p>
+          <h2 class="govuk-heading-m">{{scoreData.desirability.overallRating.band}}</h2>
+          <p>This means your project has a {{scoreData.desirability.overallRating.band.toLowerCase()}} chance of getting funding.</p>
         </div>
         <h1 class="govuk-heading-m">Scoring</h1>
         <p class="govuk-body"><span class="govuk-!-font-weight-bold">Strong:</span>
@@ -61,7 +70,7 @@
     </thead>
     <tbody class="govuk-table__body">
     
-    {% for question in output.data.desirability.questions %}      
+    {% for question in scoreData.desirability.questions %}      
       <tr class="govuk-table__row">
         <th scope="row" class="govuk-table__header">
         {{question.pageTitle}}
@@ -96,13 +105,16 @@
   </tbody>
 </table>
   
-  <div class="govuk-grid-row">
+<div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
+   <form method="POST" action="/business-details" novalidate>
+        {{ crumbToken(crumb)}}
         {{ govukButton({
           text: "Continue",
           href: output.nextlink
         }) }}
+    </form>
   </div>
 </div>
-
+{% endif %}
 {% endblock %}

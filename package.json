@@ -78,5 +78,11 @@
     "ignore": [
       "**/test-output/**"
     ]
-  }
+  },
+  "eslintConfig ":{
+    "rules": {
+      "no-control-regex": 0
+    }
+  },
+  "eslintIgnore": ["test-helper.js"]
 }

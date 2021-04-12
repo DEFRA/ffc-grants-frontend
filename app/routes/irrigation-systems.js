@@ -15,7 +15,8 @@ function createModel (errorMessage, errorSummary, currentData, plannedData) {
           classes: 'govuk-fieldset__legend--l'
         }
       },
-      items: setLabelData(currentData, ['Trickle', 'Boom irrigator', 'Ebb and flood or capillary bed', 'Sprinklers or mist', 'Rain gun', 'Not currently irrigating']),
+      items: setLabelData(currentData,
+        ['Boom', 'Capillary bed', 'Ebb and flow', 'Mist', 'Rain gun', 'Sprinklers', 'Trickle', 'Not currently irrigating']),
       ...(errorMessage && (!currentData || currentData.length > 2) ? { errorMessage: { text: errorMessage } } : {})
     },
     irrigationPlanned: {
@@ -28,7 +29,7 @@ function createModel (errorMessage, errorSummary, currentData, plannedData) {
           classes: 'govuk-fieldset__legend--l'
         }
       },
-      items: setLabelData(plannedData, ['Trickle', 'Boom irrigator', 'Ebb and flood or capillary bed', 'Sprinklers or mist', 'Rain gun']),
+      items: setLabelData(plannedData, ['Boom', 'Capillary bed', 'Ebb and flow', 'Mist', 'Rain gun', 'Sprinklers', 'Trickle']),
       ...(errorMessage && (!plannedData || plannedData.length > 2) ? { errorMessage: { text: errorMessage } } : {})
     }
   }
