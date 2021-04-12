@@ -62,7 +62,7 @@ module.exports = [
       },
       handler: (request, h) => {
         request.cookieAuth.set({ authenticated: true })
-        return h.redirect('./farming-type')
+        return h.redirect('./start')
       }
     }
   }
