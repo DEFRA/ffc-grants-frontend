@@ -1,0 +1,40 @@
+{% extends '.layout.njk' %}
+
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/header/macro.njk" import govukHeader %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/select/macro.njk" import govukSelect %}
+
+{% block header %}
+  {{ govukHeader({
+    homepageUrl: "/",
+    serviceName: "Check if you can apply for a water resource management grant",
+    serviceUrl: "/"
+  }) }}
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+    text: "Back",
+    href: backLink
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+    <h1 class="govuk-heading-l">{{pageHeader}}</h1>
+      <form method="POST" action="{{formActionPage}}" novalidate>
+        <input type="hidden" name="crumb" value="{{crumb}}" />
+        {{ govukSelect(selectTitle) }}
+        {{ govukInput(inputFirstName) }}
+        {{ govukInput(inputLastName) }}
+        {{ govukButton({
+          text: "Continue"
+        }) }}
+      </form>
+    </div>
+  </div>
+{% endblock %}

@@ -7,10 +7,21 @@ function isChecked (data, option) {
 
 function setLabelData (data, labelData) {
   return labelData.map((label) => {
+    if (typeof (label) === 'string') {
+      return {
+        value: label,
+        text: label,
+        checked: isChecked(data, label),
+        selected: data === label
+      }
+    }
+
+    const { text, value } = label
     return {
-      value: label,
-      text: label,
-      checked: isChecked(data, label)
+      value,
+      text,
+      checked: isChecked(data, value),
+      selected: data === value
     }
   })
 }

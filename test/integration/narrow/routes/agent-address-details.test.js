@@ -1,9 +1,9 @@
 const { getCookieHeader, getCrumbCookie } = require('./test-helper')
-describe('Applicant page', () => {
+describe('Agent address details page', () => {
   const crumToken = 'ZRGdpjoumKg1TQqbTgTkuVrNjdwzzdn1qKt0lR0rYXl'
+  let crumCookie
   let server
   const createServer = require('../../../../app/server')
-  let crumCookie
 
   beforeEach(async () => {
     server = await createServer()
@@ -13,7 +13,7 @@ describe('Applicant page', () => {
   it('should load page successfully', async () => {
     const options = {
       method: 'GET',
-      url: '/applying'
+      url: '/agent-address-details'
     }
 
     const response = await server.inject(options)
@@ -24,44 +24,35 @@ describe('Applicant page', () => {
     expect(response.result).toContain(crumCookie[1])
   })
 
-  it('should return error message if no option is selected', async () => {
+  it('should validate postcode - raise error when postcode is invalid', async () => {
     const postOptions = {
       method: 'POST',
-      url: '/applying',
-      payload: { crumb: crumToken },
-      headers: {
-        cookie: 'crumb=' + crumToken
-      }
+      url: '/agent-address-details',
+      payload: {
+        postcode: 'aa1aa',
+        crumb: crumToken
+      },
+      headers: { cookie: 'crumb=' + crumToken }
     }
 
     const postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Select who is applying for this grant')
+    expect(postResponse.payload).toContain('Enter a postcode, like AA1 1AA')
   })
 
-  it('if applicant: AGENT, should store user response and redirect to agent details page', async () => {
+  it('should store user response and redirect to farmer details page', async () => {
     const postOptions = {
       method: 'POST',
-      url: '/applying',
-      payload: { applying: 'Agent', crumb: crumCookie[1] },
-      headers: {
-        cookie: 'crumb=' + crumCookie[1]
-      }
-    }
-
-    const postResponse = await server.inject(postOptions)
-    expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe('./agent-details')
-  })
-
-  it('if applicant: FARMER, should store user response and redirect to farmer details page', async () => {
-    const postOptions = {
-      method: 'POST',
-      url: '/applying',
-      payload: { applying: 'Farmer', crumb: crumCookie[1] },
-      headers: {
-        cookie: 'crumb=' + crumCookie[1]
-      }
+      url: '/agent-address-details',
+      payload: {
+        address1: 'Address 1',
+        address2: 'Address 2',
+        town: 'MyTown',
+        county: 'DEVON',
+        postcode: 'AA1 1AA',
+        crumb: crumToken
+      },
+      headers: { cookie: 'crumb=' + crumToken }
     }
 
     const postResponse = await server.inject(postOptions)
