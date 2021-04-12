@@ -1,3 +1,3 @@
-@Library('defra-library@fix/dollar-in-app-config') _
+@Library('defra-library@fix/v-9') _
 
 buildNodeJs defaultBranch: 'master'
