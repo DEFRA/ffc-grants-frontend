@@ -58,7 +58,8 @@ const errors = {
   'error.county.any.required': 'Select your county',
   'error.postcode.string.empty': 'Enter your postcode, like AA1 1AA',
   'error.postcode.any.required': 'Enter your postcode, like AA1 1AA',
-  'error.postcode.string.pattern.base': 'Enter a postcode, like AA1 1AA'
+  'error.postcode.string.pattern.base': 'Enter a postcode, like AA1 1AA',
+  'error.abstractionLicence.any.required': 'Select when the project will have an abstraction licence or variation'
 }
 const lookupErrorText = (key) => {
   return errors[key] || key
