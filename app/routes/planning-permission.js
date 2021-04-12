@@ -45,7 +45,7 @@ module.exports = [
       },
       handler: (request, h) => {
         request.yar.set('planningPermission', request.payload.planningPermission)
-        return h.redirect('./project-details')
+        return h.redirect('./abstraction-licence')
       }
     }
   }

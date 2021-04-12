@@ -39,7 +39,7 @@ describe('Planning permission page', () => {
     expect(postResponse.payload).toContain('Select when the project will have planning permission')
   })
 
-  it('should store valid user input and redirect to project details page', async () => {
+  it('should store valid user input and redirect to abstraction licence page', async () => {
     const postOptions = {
       method: 'POST',
       url: '/planning-permission',
@@ -51,7 +51,7 @@ describe('Planning permission page', () => {
 
     const postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe('./project-details')
+    expect(postResponse.headers.location).toBe('./abstraction-licence')
   })
 
   afterEach(async () => {
