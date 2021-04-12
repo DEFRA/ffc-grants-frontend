@@ -1,5 +1,6 @@
 const Joi = require('joi')
 const { fetchListObjectItems, findErrorList } = require('../helpers/helper-functions')
+const { PHONE_REGEX } = require('../helpers/regex-validation')
 
 function createModel (errorMessageList, farmerContactDetails) {
   const { email, landline, mobile } = farmerContactDetails
@@ -85,8 +86,8 @@ module.exports = [
         options: { abortEarly: false },
         payload: Joi.object({
           email: Joi.string().email().required(),
-          landline: Joi.string().regex(/^[0-9\t-+()]+$/).allow(''),
-          mobile: Joi.string().regex(/^[0-9\t-+()]+$/).required()
+          landline: Joi.string().regex(PHONE_REGEX).allow(''),
+          mobile: Joi.string().regex(PHONE_REGEX).required()
         }),
         failAction: (request, h, err) => {
           const [

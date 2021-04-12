@@ -1,5 +1,6 @@
 const Joi = require('joi')
 const { setLabelData, fetchListObjectItems, findErrorList } = require('../helpers/helper-functions')
+const { NAME_REGEX } = require('../helpers/regex-validation')
 
 function createModel (errorMessageList, agentDetails) {
   const { title, firstName, lastName } = agentDetails
@@ -81,8 +82,8 @@ module.exports = [
         options: { abortEarly: false },
         payload: Joi.object({
           title: Joi.any(),
-          firstName: Joi.string().regex(/^[^0-9]+$/).required(),
-          lastName: Joi.string().regex(/^[^0-9]+$/).required()
+          firstName: Joi.string().regex(NAME_REGEX).required(),
+          lastName: Joi.string().regex(NAME_REGEX).required()
         }),
         failAction: (request, h, err) => {
           const [
