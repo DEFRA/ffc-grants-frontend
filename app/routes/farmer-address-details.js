@@ -140,7 +140,7 @@ module.exports = [
           address1, address2, town, county, postcode: postcode.toUpperCase()
         })
 
-        return h.redirect('./confirmation')
+        return h.redirect('./confirm')
       }
     }
   }

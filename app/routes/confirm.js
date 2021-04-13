@@ -1,22 +1,18 @@
-function createModel (errorMessage, data) {
+const Joi = require('joi')
+const { setLabelData } = require('../helpers/helper-functions')
+function createModel (errorMessage) {
   return {
     backLink: '/farmer-address-details',
-    inputConfirm: {
-      id: 'confirm',
-      name: 'confirm',
-      classes: 'govuk-input--width-10',
-      label: {
-        text: '[Placeholder] - /confirm',
-        classes: 'govuk-label--l',
-        isPageHeading: true
-      },
-      hint: {
-        html: `
-            Page yet to be built.
-            <br/>
-            Remember to adjust the links: < form action, back, redirect >
-          `
-      }
+    checkboxConfirm: {
+      idPrefix: 'iConfirm',
+      name: 'iConfirm',
+      items: setLabelData(
+        '',
+        [
+          'I confirm'
+        ]
+      ),
+      ...(errorMessage ? { errorMessage: { text: errorMessage } } : {})
     }
   }
 }
@@ -31,9 +27,24 @@ module.exports = [
   },
   {
     method: 'POST',
-    path: '/confirm',
+    path: '/confirm', 
+    options: {
+      validate: {
+        payload: Joi.object({
+          iConfirm: Joi.boolean().required()
+        }),
+        failAction: (request, h) => {
+          return h.view('confirm', createModel('Please confirm concent.')).takeover()
+        }
+      }
+    },
     handler: (request, h) => {
-      return h.redirect('./confirm')
+      if(request.payload.iConfirm ===true){
+        return h.redirect('./confirmation')
+      }
+      else{
+        return h.view('confirm', createModel('Please confirm concent.')).takeover()
+      }
     }
   }
 ]
