@@ -81,10 +81,12 @@
       "**/test-output/**"
     ]
   },
-  "eslintConfig ":{
+  "eslintConfig ": {
     "rules": {
       "no-control-regex": 0
     }
   },
-  "eslintIgnore": ["test-helper.js"]
+  "eslintIgnore": [
+    "test-helper.js"
+  ]
 }

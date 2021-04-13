@@ -47,33 +47,38 @@ module.exports = [{
   method: 'GET',
   path: '/answers',
   handler: async (request, h) => {
-    // Always re-calculate our score before rendering this page
-    await senders.sendProjectDetails(createMsg.getDesirabilityAnswers(request), request.yar.id)
+    try
+    {
+      // Always re-calculate our score before rendering this page
+      await senders.sendProjectDetails(createMsg.getDesirabilityAnswers(request), request.yar.id)
 
-    // Poll for backend for results from scoring algorithm
-    // If msgData is null then 500 page will be triggered when trying to access object below
-    const msgData = await getResult(request.yar.id)
-    if (msgData) {
-      const questions = msgData.desirability.questions.map(q => {
-        const questionBankQ = questionBank.questions.filter(x => x.key === q.key)[0]
-        q.title = questionBankQ.title
-        q.desc = questionBankQ.desc ?? ''
-        q.url = questionBankQ.url
-        q.unit = questionBank?.unit
-        q.pageTitle = questionBankQ.pageTitle
-        q.fundingPriorities = questionBankQ.fundingPriorities
-        return q
-      })
-      return h.view('answers', createModel(null, null, {
-        titleText: msgData.desirability.overallRating.band,
-        scoreData: msgData,
-        questions: questions
-      }))
-    } else {
-      const errorList = []
-      errorList.push({ text: 'Sorry couldn\'t calculate score at this time. Please try later.', href: '/collaboration' })
-      return h.view('answers', createModel('Seomething went wrong..', errorList, null))
-    }
+      // Poll for backend for results from scoring algorithm
+      // If msgData is null then 500 page will be triggered when trying to access object below
+      const msgData = await getResult(request.yar.id)
+      if (msgData) {
+        const questions = msgData.desirability.questions.map(q => {
+          const questionBankQ = questionBank.questions.filter(x => x.key === q.key)[0]
+          q.title = questionBankQ.title
+          q.desc = questionBankQ.desc ?? ''
+          q.url = questionBankQ.url
+          q.unit = questionBank?.unit
+          q.pageTitle = questionBankQ.pageTitle
+          q.fundingPriorities = questionBankQ.fundingPriorities
+          return q
+        })
+        return h.view('answers', createModel(null, null, {
+          titleText: msgData.desirability.overallRating.band,
+          scoreData: msgData,
+          questions: questions
+        }))
+      } 
+      else {
+        return h.view('500')
+      }
+  }
+  catch{
+    return h.view('500')
+  }
   }
 },
 {
