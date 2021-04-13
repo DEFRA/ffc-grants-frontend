@@ -91,6 +91,9 @@ function formatUKCurrency (costPounds) {
     : Number(costPounds).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
 }
 
+function formatApplicationCode (guid) {
+  return `WM-${guid.substr(0, 3)}-${guid.substr(3, 3)}`.toUpperCase()
+}
 function itemInObject (object, item) {
   return (
     !!object && Object.keys(object).includes(item)
@@ -141,5 +144,6 @@ module.exports = {
   itemInObject,
   fetchObjectItem,
   fetchListObjectItems,
-  findErrorList
+  findErrorList,
+  formatApplicationCode
 }

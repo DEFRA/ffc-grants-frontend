@@ -5,6 +5,7 @@
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+{% from "components/macro.njk" import crumbToken %}
 
 {% block beforeContent %}
   {{ govukBreadcrumbs({
@@ -116,7 +117,7 @@
     <div class="govuk-grid-column-two-thirds">
       <h2 class="govuk-heading-l">Change your cookie settings</h2>
       <form action="/site-cookies" method="post" novalidate>
-        <input type="hidden" name="crumb" value="{{crumb}}" />
+        {{ crumbToken(crumb)}}
         {{ govukRadios(analytics) }}
         {{ govukButton({
           text: "Save cookie settings"

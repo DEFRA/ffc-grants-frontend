@@ -4,6 +4,7 @@
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+{% from "./components/macro.njk" import crumbToken %}
 
 {% block beforeContent %}
   {{ govukBackLink({
@@ -22,7 +23,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <form method="POST" action="/irrigation-systems" novalidate="novalidate">
-        <input type="hidden" name="crumb" value="{{crumb}}" />
+        {{ crumbToken(crumb)}}
         {{ govukCheckboxes(irrigationCurrent) }}
         {{ govukCheckboxes(irrigationPlanned) }}
         {{ govukButton({

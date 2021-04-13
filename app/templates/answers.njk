@@ -3,6 +3,9 @@
 {% from "govuk/components/panel/macro.njk" import govukPanel %}
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+{% from "./components/macro.njk" import crumbToken %}
 
 
 {% block beforeContent %}
@@ -10,7 +13,7 @@
     items: [
       {
         text: "Home",
-        href: "/irrigated-land"
+        href: "/"
       },
       {
         text: "Check if you can apply for a water resource management grant",
@@ -20,35 +23,97 @@
   }) }}
   {{ govukBackLink({
     text: "Back",
-    href: "/"
+    href: "/collabration"
   }) }}
+
+  {% if errorList %}
+    {{govukErrorSummary ({
+  "titleText": "There is a problem",
+  "errorList": errorList
+}) }}
+  {% endif %}
 {% endblock %}
 
 {% block content %}
-  {{ govukPanel(output) }}
+{% if scoreData %}
   <div class="govuk-body">
-    <p>Based on your answers, your project is a medium fit with the funding priorities.</p>
-    <p>The grant is highly competitive and you are competing against other projects.</p>
-
-    <h3 class="govuk-heading-m">What happens next</h3>
-
-    <p>Depending on how well your project fits the funding priorities, you may decide to submit a full application.</p>
-
-    <p>If you submit a full application, we will:</p>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+        <h1 class="govuk-heading-xl">Your project’s score</h1>
+        <div class="govuk-inset-text">
+          <p>Based on your answers, your project’s score is:</p>
+          <h2 class="govuk-heading-m">{{scoreData.desirability.overallRating.band}}</h2>
+          <p>This means your project has a {{scoreData.desirability.overallRating.band.toLowerCase()}} chance of getting funding.</p>
+        </div>
+        <h1 class="govuk-heading-m">Scoring</h1>
+        <p class="govuk-body"><span class="govuk-!-font-weight-bold">Strong:</span>
+          Your project seems like it’s a strong fit with the funding priorities. Based on your answers, a grant application seems likely to be successful.</p>
+        <p class="govuk-body"><span class="govuk-!-font-weight-bold">Average:</span>
+          Your project seems like it’s an average fit with the funding priorities. Based on your answers, a grant application seems like it might be successful.</p>
+        <p class="govuk-body"><span class="govuk-!-font-weight-bold">Weak:</span>
+          Your project seems like it’s a weak fit with the funding priorities. Based on your answers, a grant application seems unlikely to be successful.</p>
+      </div>
     </div>
-    <ul class="govuk-list govuk-list--bullet">
-    <li>assess the application against the others</li>
-    <li>consider how well it fits the priorities for funding </li>
-    <li>identify projects that provide the best value for taxpayers' money</li>
-    </ul>
+    <div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <br>
+    <h1 class="govuk-heading-l">Your answers</h1>
+    <p>You can go through the checker as many times as you like. Once you’re happy that your answers accurately reflect your project, add your contact details.</p>
+  <table class="govuk-table">
+    <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header app-custom-class">Sections</th>
+        <th scope="col" class="govuk-table__header app-custom-class">Your score</th>
+        <th scope="col" class="govuk-table__header app-custom-class govuk-!-padding-left-9">Funding priorities</th>
+        <th scope="col" class="govuk-table__header app-custom-class">Change answers</th>
+      </tr>
+    </thead>
+    <tbody class="govuk-table__body">
 
-    <p class="govuk-body">If your application is successful, you’ll be sent a funding agreement and can begin work on the project.</p>
-    <div class="govuk-warning-text">
-      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-      <strong class="govuk-warning-text__text">
-        <span class="govuk-warning-text__assistive">You must not start the project</span>
-        You must not start the project<br><br>
-        You will need to make a full application and complete a grant funding agreement before you can start the project.
-      </strong>
-    </div>
+    {% for question in scoreData.desirability.questions %}
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">
+        {{question.pageTitle}}
+        <br><br>
+            {% for answer in question.answers %}
+            <p>{{answer.title}}</p>
+          <ul class="govuk-list govuk-list--bullet">
+            {% for selectedAns in answer.input %}
+              <li>{{selectedAns.value}}</li>
+            {% endfor %}
+
+          </ul>
+            {% endfor %}
+        </th>
+      <td class="govuk-table__cell govuk-!-padding-left-2">
+       <br><br><br>
+        {{ question.rating.band }}
+      </td>
+      <td class="govuk-table__cell">
+        <div class="govuk-!-margin-9">
+        <p>{{question.fundingPriorities | safe}}</p>
+        </div>
+      </td>
+      <td class="govuk-table__cell">
+          <br><br>
+          <a class="govuk-link" href="{{question.url}}">
+            Change<span class="govuk-visually-hidden"> project summary</span>
+          </a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <form method="POST" action="/answers" novalidate>
+      {{ crumbToken(crumb)}}
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+    </form>
+  </div>
+</div>
+{% endif %}
 {% endblock %}

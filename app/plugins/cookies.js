@@ -1,4 +1,4 @@
-const config = require('../config').cookieOptions
+const config = require('../config/server').cookieOptions
 const { getCurrentPolicy } = require('../cookies')
 
 module.exports = {

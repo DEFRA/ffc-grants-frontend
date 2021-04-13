@@ -20,7 +20,7 @@ containerSecret:
 deployment:
   restartPolicy: Always
   priorityClassName: low
-  replicas: 2
+  replicas: 1
   minReadySeconds: 5
   redeployOnChange: update this field to force a change
   runAsNonRoot: true
@@ -42,6 +42,9 @@ container:
   loginRequired: false
   authUsername: grants
   authPasswordHash: dummy
+  backendPollingHost: http://ffc-grants-eligibility
+  pollingInterval: 200
+  pollingRetries: 20
 
 livenessProbe:
   path: /healthz

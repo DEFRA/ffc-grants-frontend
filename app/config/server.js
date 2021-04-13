@@ -2,7 +2,7 @@ const Joi = require('joi')
 
 // Define config schema
 const schema = Joi.object({
-  cookiePassword: Joi.string().required(),
+  cookiePassword: Joi.string().default('dummycookiepassworddummycookiepassword'),
   googleTagManagerKey: Joi.string().default(''),
   cookieOptions: Joi.object({
     ttl: Joi.number().default(1000 * 60 * 60 * 24 * 365),
