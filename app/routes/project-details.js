@@ -3,7 +3,7 @@ const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/he
 
 function createModel (errorMessage, errorSummary, data) {
   return {
-    backLink: '/planning-permission',
+    backLink: '/abstraction-licence',
     ...errorSummary ? { errorList: errorSummary } : {},
     checkboxes: {
       idPrefix: 'project',
