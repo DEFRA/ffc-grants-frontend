@@ -59,6 +59,7 @@ module.exports = [{
         q.title = questionBankQ.title
         q.desc = questionBankQ.desc ?? ''
         q.url = questionBankQ.url
+        q.unit = questionBank?.unit
         q.pageTitle = questionBankQ.pageTitle
         q.fundingPriorities = questionBankQ.fundingPriorities
         return q

@@ -67,6 +67,7 @@ module.exports = {
       fundingPriorities: 'Improving productivity',
       group: 'Q16',
       type: 'number',
+      unit: 'hectares',
       url: 'irrigated-land'
     },
     {
@@ -77,6 +78,7 @@ module.exports = {
       fundingPriorities: 'Improving productivity',
       group: 'Q16',
       type: 'number',
+      unit: 'hectares',
       url: 'irrigated-land'
     },
     {

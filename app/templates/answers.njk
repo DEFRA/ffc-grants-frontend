@@ -79,7 +79,7 @@
             <p>{{answer.title}}</p>
           <ul class="govuk-list govuk-list--bullet">
             {% for selectedAns in answer.input %}
-              <li>{{selectedAns.value}}</li>
+              <li>{{selectedAns.value}} {{question.unit}}</li>
             {% endfor %}
             
           </ul>
