@@ -3,7 +3,7 @@ const Joi = require('joi')
 const schema = Joi.object({
   interval: Joi.number().default(60),
   retries: Joi.number().default(10),
-  host: Joi.string() // .required()
+  host: Joi.string().default('http://host.docker.internal:3001')
 
 })
 
@@ -21,10 +21,7 @@ const result = schema.validate(config, {
 
 // Throw if config is invalid
 if (result.error) {
-  throw new Error(`The server config is invalid. ${result.error.message}`)
+  throw new Error(`The polling config is invalid. ${result.error.message}`)
 }
 
-// Use the Joi validated value
-const value = result.value
-
-module.exports = value
+module.exports = result.value
