@@ -13,7 +13,7 @@ function createModel (irrigatedLandCurrent, irrigatedLandTarget, errorMessage) {
       id: 'irrigatedLandCurrent',
       name: 'irrigatedLandCurrent',
       suffix: {
-        text: 'Ha'
+        text: 'ha'
       },
       hint: {
         text: 'Enter figure in hectares'
@@ -34,7 +34,7 @@ function createModel (irrigatedLandCurrent, irrigatedLandTarget, errorMessage) {
         text: 'Enter figure in hectares'
       },
       suffix: {
-        text: 'Ha'
+        text: 'ha'
       },
       ...(irrigatedLandTarget ? { value: irrigatedLandTarget } : {}),
       ...(errorMessage && !irrigatedLandTarget ? { errorMessage: { text: errorMessage } } : {})
