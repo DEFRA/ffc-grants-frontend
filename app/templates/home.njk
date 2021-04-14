@@ -13,7 +13,7 @@
         href: "/"
       },
       {
-        text: "Check if you can apply for a water resource management grant",
+        text: "Check if you can apply for a Farming Transformation Fund water grant",
         href: "/"
       }
     ]
@@ -23,33 +23,35 @@
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds govuk-body">
-      <h1 class="govuk-heading-l">Check if you can apply for a water resource management grant</h1>
+      <h1 class="govuk-heading-l">Check if you can apply for a Farming Transformation Fund water grant</h1>
       <p>Use this service to:</p>
       <ul class="govuk-list govuk-list--bullet">
         <li>check if you can apply for a grant for your project (takes about 5 minutes)</li>
         <li>check how well your project fits the funding priorities (takes about 15 minutes if you have all the project details)</li>
       </ul>
-
-      <p>Depending on how well your project scores, you may want to submit your details to RPA to get the full application.</p>
-      <p>You will not automatically get a grant. The grant is highly competitive and you are competing against other projects.</p>
-
+      <p>If your project is eligible, you can submit your answers to the Rural Payments Agency (RPA) to request the full application form.</p>
+      
       {{ govukButton({
       classes: "govuk-!-margin-top-2 govuk-!-margin-bottom-8",
       href: button.nextLink,
       isStartButton: true,
       text: button.text
     }) }}
-
-      <h2 class="govuk-heading-m">Before you start</h2>
+     <h2 class="govuk-heading-m">Before you start</h2>
 
       <p>You need:</p>
       <ul class="govuk-list govuk-list--bullet">
-        <li>information about your business (number of employees, turnover etc)</li>
-        <li>information about the project (irrigated land in hectares etc)</li>
-        <li>to know what items you'd like to buy for the project</li>
-        <li>an estimate of the total cost of the items</li>
-        <li>to either have or be confident you will have any planning permission and abstraction licences before 21 October 2021</li>
+        <li>information about your business (for example, number of employees and turnover)</li>
+        <li>information about the project (for example, irrigated land in hectares)</li>
+        <li>estimate total cost of the items you need</li> 
       </ul>
+      <h2 class="govuk-heading-s">Problems with the service</h2>  
+      <p>If you have any problems with the service, contact the RPA.</p> 
+      <p>Telephone: <b>03000 200 301</b></p> 
+      <p>Monday to Friday, 9am to 5pm (except public holidays)</p> 
+      <p><a target="_blank" href="https://www.gov.uk/call-charges">Find out about call charges</a></p> 
+      <p>Email: <a href="mailto:FTF@rpa.gov.uk">FTF@rpa.gov.uk</a></p>
+     
     </div>
   </div>
 {% endblock %}

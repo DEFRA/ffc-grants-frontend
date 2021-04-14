@@ -1,5 +1,5 @@
 describe('Remaining costs page', () => {
-  const crumToken = 'ZRGdpjoumKg1TQqbTgTkuVrNjdwzzdn1qKt0lR0rYXl'
+  const { crumbToken } = require('./test-helper')
   let server
   const createServer = require('../../../../app/server')
 
@@ -12,8 +12,8 @@ describe('Remaining costs page', () => {
     const postOptions = {
       method: 'POST',
       url: '/remaining-costs',
-      payload: { crumb: crumToken },
-      headers: { cookie: 'crumb=' + crumToken }
+      payload: { crumb: crumbToken },
+      headers: { cookie: 'crumb=' + crumbToken }
     }
 
     const postResponse = await server.inject(postOptions)
@@ -25,8 +25,8 @@ describe('Remaining costs page', () => {
     const options = {
       method: 'GET',
       url: '/remaining-costs',
-      payload: { crumb: crumToken },
-      headers: { cookie: 'crumb=' + crumToken }
+      payload: { crumb: crumbToken },
+      headers: { cookie: 'crumb=' + crumbToken }
     }
 
     const response = await server.inject(options)
@@ -38,8 +38,8 @@ describe('Remaining costs page', () => {
     const postOptions = {
       method: 'POST',
       url: '/remaining-costs',
-      payload: { crumb: crumToken },
-      headers: { cookie: 'crumb=' + crumToken }
+      payload: { crumb: crumbToken },
+      headers: { cookie: 'crumb=' + crumbToken }
     }
 
     const postResponse = await server.inject(postOptions)
@@ -51,8 +51,8 @@ describe('Remaining costs page', () => {
     const postOptions = {
       method: 'POST',
       url: '/remaining-costs',
-      payload: { payRemainingCosts: 'No', crumb: crumToken },
-      headers: { cookie: 'crumb=' + crumToken }
+      payload: { payRemainingCosts: 'No', crumb: crumbToken },
+      headers: { cookie: 'crumb=' + crumbToken }
     }
 
     const postResponse = await server.inject(postOptions)
@@ -64,8 +64,8 @@ describe('Remaining costs page', () => {
     const postOptions = {
       method: 'POST',
       url: '/remaining-costs',
-      payload: { payRemainingCosts: 'Yes', crumb: crumToken },
-      headers: { cookie: 'crumb=' + crumToken }
+      payload: { payRemainingCosts: 'Yes', crumb: crumbToken },
+      headers: { cookie: 'crumb=' + crumbToken }
     }
 
     const postResponse = await server.inject(postOptions)

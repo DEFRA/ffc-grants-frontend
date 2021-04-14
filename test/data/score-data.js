@@ -22,7 +22,7 @@ const msgData = {
         ],
         rating: {
           score: 1,
-          band: 'Low'
+          band: 'Weak'
         }
       },
       {
@@ -51,7 +51,7 @@ const msgData = {
         ],
         rating: {
           score: 6,
-          band: 'Medium'
+          band: 'Average'
         }
       },
       {
@@ -80,7 +80,7 @@ const msgData = {
         ],
         rating: {
           score: 40,
-          band: 'High'
+          band: 'Strong'
         }
       },
       {
@@ -109,7 +109,7 @@ const msgData = {
         ],
         rating: {
           score: 25,
-          band: 'High'
+          band: 'Strong'
         }
       },
       {
@@ -132,7 +132,7 @@ const msgData = {
         ],
         rating: {
           score: 0.5,
-          band: 'Low'
+          band: 'Weak'
         }
       },
       {
@@ -151,13 +151,13 @@ const msgData = {
         ],
         rating: {
           score: 4,
-          band: 'High'
+          band: 'Strong'
         }
       }
     ],
     overallRating: {
       score: 76.5,
-      band: 'High'
+      band: 'Strong'
     }
   },
   questionMapping: {

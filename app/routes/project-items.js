@@ -48,8 +48,10 @@ function createModel (errorMessage, backLink, projectInfrastucture, projectEquip
         projectEquipment,
         ['Boom',
           'Trickle',
-          'Ebb and flood or capillary bed',
-          'Sprinklers and mist'
+          'Ebb and flow',
+          'Capillary bed',
+          'Sprinklers',
+          'Mist'
         ]
       ),
       ...(errorMessage ? { errorMessage: { text: errorMessage } } : {})

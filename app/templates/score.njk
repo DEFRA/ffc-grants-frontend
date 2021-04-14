@@ -1,26 +1,119 @@
 {% extends '.layout.njk' %}
 
-{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/panel/macro.njk" import govukPanel %}
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
-{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+{% from "./components/macro.njk" import crumbToken %}
+
 
 {% block beforeContent %}
+  {{ govukBreadcrumbs({
+    items: [
+      {
+        text: "Home",
+        href: "/"
+      },
+      {
+        text: "Check if you can apply for a Farming Transformation Fund water grant",
+        href: "/"
+      }
+    ]
+  }) }}
   {{ govukBackLink({
     text: "Back",
-    href: backLink
+    href: "/collabration"
   }) }}
+
+  {% if errorList %}
+    {{govukErrorSummary ({
+  "titleText": "There is a problem",
+  "errorList": errorList
+}) }}
+  {% endif %}
 {% endblock %}
 
 {% block content %}
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-      <form method="POST" action="/score" novalidate="novalidate">
-        <input type="hidden" name="crumb" value="{{crumb}}" />
-        {{ govukInput(inputScore) }}
-        {{ govukButton({
-          text: "Continue"
-        }) }}
-      </form>
+{% if scoreData %}
+  <div class="govuk-body">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+        <h1 class="govuk-heading-xl">Your project’s score</h1>
+        <div class="govuk-inset-text">
+          <p>Based on your answers, your project’s score is:</p>
+          <h2 class="govuk-heading-m">{{scoreData.desirability.overallRating.band}}</h2>
+          <p>This means your project has a {{scoreChance}} chance of getting funding.</p>
+        </div>
+        <h1 class="govuk-heading-m">Scoring</h1>
+        <p class="govuk-body"><span class="govuk-!-font-weight-bold">Strong:</span>
+          Your project seems like it’s a strong fit with the funding priorities. Based on your answers, a grant application seems likely to be successful.</p>
+        <p class="govuk-body"><span class="govuk-!-font-weight-bold">Average:</span>
+          Your project seems like it’s an average fit with the funding priorities. Based on your answers, a grant application seems like it might be successful.</p>
+        <p class="govuk-body"><span class="govuk-!-font-weight-bold">Weak:</span>
+          Your project seems like it’s a weak fit with the funding priorities. Based on your answers, a grant application seems unlikely to be successful.</p>
+      </div>
     </div>
+    <div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <br>
+    <h1 class="govuk-heading-l">Your answers</h1>
+    <p>You can go through the checker as many times as you like. Once you’re happy that your answers accurately reflect your project, add your contact details.</p>
+  <table class="govuk-table">
+    <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header app-custom-class">Sections</th>
+        <th scope="col" class="govuk-table__header app-custom-class">Your score</th>
+        <th scope="col" class="govuk-table__header app-custom-class govuk-!-padding-left-9">Funding priorities</th>
+        <th scope="col" class="govuk-table__header app-custom-class">Change answers</th>
+      </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+
+    {% for question in scoreData.desirability.questions %}
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header">
+        {{question.pageTitle}}
+        <br><br>
+            {% for answer in question.answers %}
+            <p class=" govuk-body">{{answer.title}}</p>
+          <ul class="govuk-list govuk-list--bullet">
+            {% for selectedAns in answer.input %}
+              <li>{{selectedAns.value}} {{question.unit}}</li>
+            {% endfor %}
+
+          </ul>
+            {% endfor %}
+        </th>
+      <td class="govuk-table__cell govuk-!-padding-left-2">
+       <br><br><br>
+        {{ question.rating.band }}
+      </td>
+      <td class="govuk-table__cell">
+        <div class="govuk-!-margin-9">
+        <p>{{question.fundingPriorities | safe}}</p>
+        </div>
+      </td>
+      <td class="govuk-table__cell">
+          <br><br>
+          <a class="govuk-link" href="{{question.url}}">
+            Change<span class="govuk-visually-hidden"> project summary</span>
+          </a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <form method="POST" action="/score" novalidate>
+      {{ crumbToken(crumb)}}
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+    </form>
   </div>
+</div>
+{% endif %}
 {% endblock %}

@@ -21,6 +21,9 @@ function createModel (irrigatedLandCurrent, irrigatedLandTarget, errorMessageLis
       classes: 'govuk-input--width-4',
       id: 'irrigatedLandCurrent',
       name: 'irrigatedLandCurrent',
+      suffix: {
+        text: 'ha'
+      },
       hint: {
         text: 'Enter figure in hectares'
       },
@@ -38,6 +41,9 @@ function createModel (irrigatedLandCurrent, irrigatedLandTarget, errorMessageLis
       name: 'irrigatedLandTarget',
       hint: {
         text: 'Enter figure in hectares'
+      },
+      suffix: {
+        text: 'ha'
       },
       ...(irrigatedLandTarget ? { value: irrigatedLandTarget } : {}),
       ...(irrigatedLandTargetError ? { errorMessage: { text: irrigatedLandTargetError } } : {})

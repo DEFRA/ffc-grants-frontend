@@ -11,6 +11,7 @@ services:
     image: ffc-grants-frontend-development
     environment:
       NODE_ENV: development   
+      GOOGLE_TAG_MANAGER_KEY: 'GTM-WJ5C78H'
     ports:
       - "3000:3000"
       - "9229:9229"

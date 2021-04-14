@@ -1,6 +1,5 @@
-const { getCookieHeader, getCrumbCookie } = require('./test-helper')
+const { getCookieHeader, getCrumbCookie, crumbToken } = require('./test-helper')
 describe('Farming type page', () => {
-  const crumToken = 'ZRGdpjoumKg1TQqbTgTkuVrNjdwzzdn1qKt0lR0rYXl'
   let crumCookie
   let server
   const createServer = require('../../../../app/server')
@@ -28,9 +27,9 @@ describe('Farming type page', () => {
     const postOptions = {
       method: 'POST',
       url: '/farming-type',
-      payload: { crumb: crumToken },
+      payload: { crumb: crumbToken },
       headers: {
-        cookie: 'crumb=' + crumToken
+        cookie: 'crumb=' + crumbToken
       }
     }
 
@@ -43,9 +42,9 @@ describe('Farming type page', () => {
     const postOptions = {
       method: 'POST',
       url: '/farming-type',
-      payload: { farmingType: 'Horticulture', crumb: crumToken },
+      payload: { farmingType: 'Horticulture', crumb: crumbToken },
       headers: {
-        cookie: 'crumb=' + crumToken
+        cookie: 'crumb=' + crumbToken
       }
     }
 
@@ -58,9 +57,9 @@ describe('Farming type page', () => {
     const postOptions = {
       method: 'POST',
       url: '/farming-type',
-      payload: { farmingType: 'Something else', crumb: crumToken },
+      payload: { farmingType: 'Something else', crumb: crumbToken },
       headers: {
-        cookie: 'crumb=' + crumToken
+        cookie: 'crumb=' + crumbToken
       }
     }
 

@@ -15,6 +15,9 @@ function createModel (errorMessage, errorSummary, currentData, plannedData) {
           classes: 'govuk-fieldset__legend--l'
         }
       },
+      hint: {
+        text: 'Select one or two options'
+      },
       items: setLabelData(currentData, ['Peak flow surface water', 'Bore hole / aquifer', 'Rain water harvesting', 'Summer water surface abstraction', 'Mains', 'Not currently irrigating']),
       ...(errorMessage && (!currentData || currentData.length > 2) ? { errorMessage: { text: errorMessage } } : {})
     },
@@ -27,6 +30,9 @@ function createModel (errorMessage, errorSummary, currentData, plannedData) {
           isPageHeading: true,
           classes: 'govuk-fieldset__legend--l'
         }
+      },
+      hint: {
+        text: 'Select one or two options'
       },
       items: setLabelData(plannedData, ['Peak flow surface water', 'Bore hole / aquifer', 'Rain water harvesting', 'Summer water surface abstraction', 'Mains']),
       ...(errorMessage && (!plannedData || plannedData.length > 2) ? { errorMessage: { text: errorMessage } } : {})

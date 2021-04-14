@@ -1,6 +1,5 @@
-const { getCookieHeader, getCrumbCookie } = require('./test-helper')
+const { getCookieHeader, getCrumbCookie, crumbToken } = require('./test-helper')
 describe('Irrigated crops page', () => {
-  const crumToken = 'ZRGdpjoumKg1TQqbTgTkuVrNjdwzzdn1qKt0lR0rYXl'
   let crumCookie
   let server
   const createServer = require('../../../../app/server')
@@ -28,9 +27,9 @@ describe('Irrigated crops page', () => {
     const postOptions = {
       method: 'POST',
       url: '/irrigated-crops',
-      payload: { crumb: crumToken },
+      payload: { crumb: crumbToken },
       headers: {
-        cookie: 'crumb=' + crumToken
+        cookie: 'crumb=' + crumbToken
       }
     }
 
@@ -43,9 +42,9 @@ describe('Irrigated crops page', () => {
     const postOptions = {
       method: 'POST',
       url: '/irrigated-crops',
-      payload: { irrigatedCrops: 'some crop', crumb: crumToken },
+      payload: { irrigatedCrops: 'some crop', crumb: crumbToken },
       headers: {
-        cookie: 'crumb=' + crumToken
+        cookie: 'crumb=' + crumbToken
       }
     }
 

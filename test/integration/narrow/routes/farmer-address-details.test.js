@@ -1,6 +1,5 @@
-const { getCookieHeader, getCrumbCookie } = require('./test-helper')
+const { getCookieHeader, getCrumbCookie, crumbToken } = require('./test-helper')
 describe('Farmer address details page', () => {
-  const crumToken = 'ZRGdpjoumKg1TQqbTgTkuVrNjdwzzdn1qKt0lR0rYXl'
   let crumCookie
   let server
   const createServer = require('../../../../app/server')
@@ -30,9 +29,9 @@ describe('Farmer address details page', () => {
       url: '/farmer-address-details',
       payload: {
         postcode: 'aa1aa',
-        crumb: crumToken
+        crumb: crumbToken
       },
-      headers: { cookie: 'crumb=' + crumToken }
+      headers: { cookie: 'crumb=' + crumbToken }
     }
 
     const postResponse = await server.inject(postOptions)
@@ -50,9 +49,9 @@ describe('Farmer address details page', () => {
         town: 'MyTown',
         county: 'DEVON',
         postcode: 'AA1 1AA',
-        crumb: crumToken
+        crumb: crumbToken
       },
-      headers: { cookie: 'crumb=' + crumToken }
+      headers: { cookie: 'crumb=' + crumbToken }
     }
 
     const postResponse = await server.inject(postOptions)

@@ -3,22 +3,40 @@
 {% from "govuk/components/panel/macro.njk" import govukPanel %}
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
 
-{% block beforeContent %}
-  {{ govukBreadcrumbs({
-    items: [
-      {
-        text: "Home",
-        href: "/"
-      },
-      {
-        text: "Check if you can apply for a water resource management grant",
-        href: "/"
-      }
-    ]
-  }) }}
-{% endblock %}
-
 {% block content %}
   {{ govukPanel(output) }}
-  <p class="govuk-body"><a href={{ output.link }}>Check details link</a></p>
+<div class="govuk-width-container">
+    <div class="govuk-main-wrapper--auto-spacing">
+     <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds  govuk-body">
+          <p>You will get an email with a record of your answers.</p> 
+          <p>If you do not get an email within 72 hours, please call the RPA helpline:</p> 
+          <p>Telephone: <b>03000 200 301</b></p> 
+          <p>Monday to Friday, 9am to 5pm (except public holidays)</p> 
+          <p><a target="_blank" href="https://www.gov.uk/call-charges">Find out about call charges</a></p> 
+        </div>
+      </div>
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds  govuk-body">
+          <h2 class="govuk-heading-m">Problems with the service</h2>
+          <p>If you have any problems with the service, contact the RPA.</p> 
+          <p>Telephone: <b>03000 200 301</b></p> 
+          <p>Monday to Friday, 9am to 5pm (except public holidays)</p> 
+          <p><a target="_blank" href="https://www.gov.uk/call-charges">Find out about call charges</a></p> 
+          <p>Email: <a href="mailto:FTF@rpa.gov.uk">FTF@rpa.gov.uk</a></p>
+        </div>
+      </div>
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds  govuk-body">
+        <h2 class="govuk-heading-s">You must not start the project</h2> 
+        <p>Starting the project or committing to any costs (such as placing orders) before you receive a funding agreement will invalidate your application.</p> 
+        <p>Before you start the project, you can:</p>
+        <ul>
+          <li>get quotes from suppliers</li>
+          <li>apply for planning permission or an abstraction licence</li>
+        </ul>
+        <p><b>You will not automatically get a grant.</b> The grant is expected to be highly competitive and you are competing against other projects.</p>
+    </div>
+  </div>
+  <p class="govuk-body"><a href={{ output.surveyLink }}>What did you think of this service?</a></p>
 {% endblock %}

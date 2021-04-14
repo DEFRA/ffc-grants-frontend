@@ -1,6 +1,5 @@
-const { getCookieHeader, getCrumbCookie } = require('./test-helper')
+const { getCookieHeader, getCrumbCookie, crumbToken } = require('./test-helper')
 describe('Water tenancy page', () => {
-  const crumToken = 'ZRGdpjoumKg1TQqbTgTkuVrNjdwzzdn1qKt0lR0rYXl'
   let crumCookie
   let server
   const createServer = require('../../../../app/server')
@@ -28,9 +27,9 @@ describe('Water tenancy page', () => {
     const postOptions = {
       method: 'POST',
       url: '/tenancy',
-      payload: { crumb: crumToken },
+      payload: { crumb: crumbToken },
       headers: {
-        cookie: 'crumb=' + crumToken
+        cookie: 'crumb=' + crumbToken
       }
     }
 
@@ -43,9 +42,9 @@ describe('Water tenancy page', () => {
     const postOptions = {
       method: 'POST',
       url: '/tenancy',
-      payload: { landOwnership: 'No', crumb: crumToken },
+      payload: { landOwnership: 'No', crumb: crumbToken },
       headers: {
-        cookie: 'crumb=' + crumToken
+        cookie: 'crumb=' + crumbToken
       }
     }
 
@@ -58,9 +57,9 @@ describe('Water tenancy page', () => {
     const postOptions = {
       method: 'POST',
       url: '/tenancy',
-      payload: { landOwnership: 'Yes', crumb: crumToken },
+      payload: { landOwnership: 'Yes', crumb: crumbToken },
       headers: {
-        cookie: 'crumb=' + crumToken
+        cookie: 'crumb=' + crumbToken
       }
     }
 

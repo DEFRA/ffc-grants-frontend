@@ -1,6 +1,5 @@
-const { getCookieHeader, getCrumbCookie } = require('./test-helper')
+const { getCookieHeader, getCrumbCookie, crumbToken } = require('./test-helper')
 describe('Project start page', () => {
-  const crumToken = 'ZRGdpjoumKg1TQqbTgTkuVrNjdwzzdn1qKt0lR0rYXl'
   let crumCookie
   let server
   const createServer = require('../../../../app/server')
@@ -28,9 +27,9 @@ describe('Project start page', () => {
     const postOptions = {
       method: 'POST',
       url: '/project-start',
-      payload: { crumb: crumToken },
+      payload: { crumb: crumbToken },
       headers: {
-        cookie: 'crumb=' + crumToken
+        cookie: 'crumb=' + crumbToken
       }
     }
 
@@ -43,9 +42,9 @@ describe('Project start page', () => {
     const postOptions = {
       method: 'POST',
       url: '/project-start',
-      payload: { projectStarted: 'No', crumb: crumToken },
+      payload: { projectStarted: 'No', crumb: crumbToken },
       headers: {
-        cookie: 'crumb=' + crumToken
+        cookie: 'crumb=' + crumbToken
       }
     }
 
@@ -58,9 +57,9 @@ describe('Project start page', () => {
     const postOptions = {
       method: 'POST',
       url: '/project-start',
-      payload: { projectStarted: 'Yes', crumb: crumToken },
+      payload: { projectStarted: 'Yes', crumb: crumbToken },
       headers: {
-        cookie: 'crumb=' + crumToken
+        cookie: 'crumb=' + crumbToken
       }
     }
 

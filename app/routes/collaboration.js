@@ -51,7 +51,7 @@ module.exports = [
       },
       handler: (request, h) => {
         request.yar.set('collaboration', request.payload.collaboration)
-        return h.redirect('./answers')
+        return h.redirect('./score')
       }
     }
   }

@@ -1,6 +1,5 @@
-const { getCookieHeader, getCrumbCookie } = require('./test-helper')
+const { getCookieHeader, getCrumbCookie, crumbToken } = require('./test-helper')
 describe('Irrigated Land page', () => {
-  const crumToken = 'ZRGdpjoumKg1TQqbTgTkuVrNjdwzzdn1qKt0lR0rYXl'
   let crumCookie
   let server
   const createServer = require('../../../../app/server')
@@ -28,8 +27,8 @@ describe('Irrigated Land page', () => {
     const postOptions = {
       method: 'POST',
       url: '/irrigated-land',
-      payload: { crumb: crumToken },
-      headers: { cookie: 'crumb=' + crumToken }
+      payload: { crumb: crumbToken },
+      headers: { cookie: 'crumb=' + crumbToken }
     }
 
     const postResponse = await server.inject(postOptions)
@@ -42,8 +41,8 @@ describe('Irrigated Land page', () => {
     const postOptions = {
       method: 'POST',
       url: '/irrigated-land',
-      payload: { irrigatedLandTarget: '456.7', crumb: crumToken },
-      headers: { cookie: 'crumb=' + crumToken }
+      payload: { irrigatedLandTarget: '456.7', crumb: crumbToken },
+      headers: { cookie: 'crumb=' + crumbToken }
     }
 
     const postResponse = await server.inject(postOptions)
@@ -55,8 +54,8 @@ describe('Irrigated Land page', () => {
     const postOptions = {
       method: 'POST',
       url: '/irrigated-land',
-      payload: { irrigatedLandCurrent: '123', crumb: crumToken },
-      headers: { cookie: 'crumb=' + crumToken }
+      payload: { irrigatedLandCurrent: '123', crumb: crumbToken },
+      headers: { cookie: 'crumb=' + crumbToken }
     }
 
     const postResponse = await server.inject(postOptions)
@@ -68,8 +67,8 @@ describe('Irrigated Land page', () => {
     const postOptions = {
       method: 'POST',
       url: '/irrigated-land',
-      payload: { irrigatedLandCurrent: 'e', crumb: crumToken },
-      headers: { cookie: 'crumb=' + crumToken }
+      payload: { irrigatedLandCurrent: 'e', crumb: crumbToken },
+      headers: { cookie: 'crumb=' + crumbToken }
     }
 
     const postResponse = await server.inject(postOptions)
@@ -81,8 +80,8 @@ describe('Irrigated Land page', () => {
     const postOptions = {
       method: 'POST',
       url: '/irrigated-land',
-      payload: { irrigatedLandCurrent: '1234', crumb: crumToken },
-      headers: { cookie: 'crumb=' + crumToken }
+      payload: { irrigatedLandCurrent: '1234', crumb: crumbToken },
+      headers: { cookie: 'crumb=' + crumbToken }
     }
 
     const postResponse = await server.inject(postOptions)
@@ -94,8 +93,8 @@ describe('Irrigated Land page', () => {
     const postOptions = {
       method: 'POST',
       url: '/irrigated-land',
-      payload: { irrigatedLandCurrent: '123.45', crumb: crumToken },
-      headers: { cookie: 'crumb=' + crumToken }
+      payload: { irrigatedLandCurrent: '123.45', crumb: crumbToken },
+      headers: { cookie: 'crumb=' + crumbToken }
     }
 
     const postResponse = await server.inject(postOptions)
@@ -107,8 +106,8 @@ describe('Irrigated Land page', () => {
     const postOptions = {
       method: 'POST',
       url: '/irrigated-land',
-      payload: { irrigatedLandTarget: 'e', crumb: crumToken },
-      headers: { cookie: 'crumb=' + crumToken }
+      payload: { irrigatedLandTarget: 'e', crumb: crumbToken },
+      headers: { cookie: 'crumb=' + crumbToken }
     }
 
     const postResponse = await server.inject(postOptions)
@@ -120,8 +119,8 @@ describe('Irrigated Land page', () => {
     const postOptions = {
       method: 'POST',
       url: '/irrigated-land',
-      payload: { irrigatedLandTarget: '1234', crumb: crumToken },
-      headers: { cookie: 'crumb=' + crumToken }
+      payload: { irrigatedLandTarget: '1234', crumb: crumbToken },
+      headers: { cookie: 'crumb=' + crumbToken }
     }
 
     const postResponse = await server.inject(postOptions)
@@ -133,8 +132,8 @@ describe('Irrigated Land page', () => {
     const postOptions = {
       method: 'POST',
       url: '/irrigated-land',
-      payload: { irrigatedLandTarget: '123.45', crumb: crumToken },
-      headers: { cookie: 'crumb=' + crumToken }
+      payload: { irrigatedLandTarget: '123.45', crumb: crumbToken },
+      headers: { cookie: 'crumb=' + crumbToken }
     }
 
     const postResponse = await server.inject(postOptions)
@@ -146,8 +145,8 @@ describe('Irrigated Land page', () => {
     const postOptions = {
       method: 'POST',
       url: '/irrigated-land',
-      payload: { irrigatedLandCurrent: '123.4', irrigatedLandTarget: '567.8', crumb: crumToken },
-      headers: { cookie: 'crumb=' + crumToken }
+      payload: { irrigatedLandCurrent: '123.4', irrigatedLandTarget: '567.8', crumb: crumbToken },
+      headers: { cookie: 'crumb=' + crumbToken }
     }
 
     const postResponse = await server.inject(postOptions)

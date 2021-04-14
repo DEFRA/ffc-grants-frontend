@@ -1,6 +1,5 @@
-const { getCookieHeader, getCrumbCookie } = require('./test-helper')
+const { getCookieHeader, getCrumbCookie, crumbToken } = require('./test-helper')
 describe('Irrigation water source page', () => {
-  const crumToken = 'ZRGdpjoumKg1TQqbTgTkuVrNjdwzzdn1qKt0lR0rYXl'
   let crumCookie
   let server
   const createServer = require('../../../../app/server')
@@ -28,9 +27,9 @@ describe('Irrigation water source page', () => {
     const postOptions = {
       method: 'POST',
       url: '/project-items',
-      payload: { crumb: crumToken },
+      payload: { crumb: crumbToken },
       headers: {
-        cookie: 'crumb=' + crumToken
+        cookie: 'crumb=' + crumbToken
       }
     }
 
@@ -43,9 +42,9 @@ describe('Irrigation water source page', () => {
     const postOptions = {
       method: 'POST',
       url: '/project-items',
-      payload: { projectInfrastucture: 'Synthetic liner', crumb: crumToken },
+      payload: { projectInfrastucture: 'Synthetic liner', crumb: crumbToken },
       headers: {
-        cookie: 'crumb=' + crumToken
+        cookie: 'crumb=' + crumbToken
       }
     }
 
@@ -58,9 +57,9 @@ describe('Irrigation water source page', () => {
     const postOptions = {
       method: 'POST',
       url: '/project-items',
-      payload: { projectEquipment: ['Boom', 'Trickle'], crumb: crumToken },
+      payload: { projectEquipment: ['Boom', 'Trickle'], crumb: crumbToken },
       headers: {
-        cookie: 'crumb=' + crumToken
+        cookie: 'crumb=' + crumbToken
       }
     }
 
@@ -73,9 +72,9 @@ describe('Irrigation water source page', () => {
     const postOptions = {
       method: 'POST',
       url: '/project-items',
-      payload: { projectTechnology: 'Software to monitor soil moisture levels and schedule irrigation', crumb: crumToken },
+      payload: { projectTechnology: 'Software to monitor soil moisture levels and schedule irrigation', crumb: crumbToken },
       headers: {
-        cookie: 'crumb=' + crumToken
+        cookie: 'crumb=' + crumbToken
       }
     }
 
@@ -92,10 +91,10 @@ describe('Irrigation water source page', () => {
         projectInfrastucture: 'Overflow/spillway',
         projectEquipment: ['Ebb and flood or capillary bed', 'Sprinklers and mist'],
         projectTechnology: 'Software and sensors to optimise water application',
-        crumb: crumToken
+        crumb: crumbToken
       },
       headers: {
-        cookie: 'crumb=' + crumToken
+        cookie: 'crumb=' + crumbToken
       }
     }
 
