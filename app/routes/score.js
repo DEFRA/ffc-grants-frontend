@@ -68,7 +68,7 @@ module.exports = [{
           }
           return question
         })
-        let scoreChance = 'low'
+        let scoreChance
         switch (msgData.desirability.overallRating.band.toLowerCase()) {
           case 'strong':
             scoreChance = 'high'
