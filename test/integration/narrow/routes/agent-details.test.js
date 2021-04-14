@@ -1,6 +1,5 @@
-const { getCookieHeader, getCrumbCookie } = require('./test-helper')
+const { getCookieHeader, getCrumbCookie, crumbToken } = require('./test-helper')
 describe('Agent details page', () => {
-  const crumToken = 'ZRGdpjoumKg1TQqbTgTkuVrNjdwzzdn1qKt0lR0rYXl'
   let crumCookie
   let server
   const createServer = require('../../../../app/server')
@@ -28,8 +27,8 @@ describe('Agent details page', () => {
     const postOptions = {
       method: 'POST',
       url: '/agent-details',
-      payload: { crumb: crumToken },
-      headers: { cookie: 'crumb=' + crumToken }
+      payload: { crumb: crumbToken },
+      headers: { cookie: 'crumb=' + crumbToken }
     }
 
     const postResponse = await server.inject(postOptions)
@@ -44,9 +43,9 @@ describe('Agent details page', () => {
       url: '/agent-details',
       payload: {
         firstName: '123',
-        crumb: crumToken
+        crumb: crumbToken
       },
-      headers: { cookie: 'crumb=' + crumToken }
+      headers: { cookie: 'crumb=' + crumbToken }
     }
 
     const postResponse = await server.inject(postOptions)
@@ -60,9 +59,9 @@ describe('Agent details page', () => {
       url: '/agent-details',
       payload: {
         lastName: '123',
-        crumb: crumToken
+        crumb: crumbToken
       },
-      headers: { cookie: 'crumb=' + crumToken }
+      headers: { cookie: 'crumb=' + crumbToken }
     }
 
     const postResponse = await server.inject(postOptions)
@@ -77,9 +76,9 @@ describe('Agent details page', () => {
       payload: {
         firstName: 'First Name',
         lastName: 'Last Name',
-        crumb: crumToken
+        crumb: crumbToken
       },
-      headers: { cookie: 'crumb=' + crumToken }
+      headers: { cookie: 'crumb=' + crumbToken }
     }
 
     const postResponse = await server.inject(postOptions)
@@ -95,9 +94,9 @@ describe('Agent details page', () => {
         title: 'Title',
         firstName: 'First Name',
         lastName: 'Last Name',
-        crumb: crumToken
+        crumb: crumbToken
       },
-      headers: { cookie: 'crumb=' + crumToken }
+      headers: { cookie: 'crumb=' + crumbToken }
     }
 
     const postResponse = await server.inject(postOptions)

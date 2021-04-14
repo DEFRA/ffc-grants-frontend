@@ -1,10 +1,9 @@
 const scoreData = require('../../../data/score-data')
 
 describe('Score page', () => {
-  const crumToken = 'ZRGdpjoumKg1TQqbTgTkuVrNjdwzzdn1qKt0lR0rYXl'
   let crumCookie
   let server
-  const { getCookieHeader, getCrumbCookie } = require('./test-helper')
+  const { getCookieHeader, getCrumbCookie, crumbToken } = require('./test-helper')
   const createServer = require('../../../../app/server')
   const Wreck = require('@hapi/wreck')
 
@@ -87,9 +86,9 @@ describe('Score page', () => {
     const postOptions = {
       method: 'POST',
       url: '/score',
-      payload: { crumb: crumToken },
+      payload: { crumb: crumbToken },
       headers: {
-        cookie: 'crumb=' + crumToken
+        cookie: 'crumb=' + crumbToken
       }
     }
 
