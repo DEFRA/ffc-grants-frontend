@@ -1,6 +1,15 @@
 const Joi = require('joi')
+const { fetchListObjectItems, findErrorList } = require('../helpers/helper-functions')
+const { IRRIGATED_LAND_REGEX } = require('../helpers/regex-validation')
 
-function createModel (irrigatedLandCurrent, irrigatedLandTarget, errorMessage) {
+function createModel (irrigatedLandCurrent, irrigatedLandTarget, errorMessageList) {
+  const [
+    irrigatedLandCurrentError,
+    irrigatedLandTargetError
+  ] = fetchListObjectItems(
+    errorMessageList,
+    ['irrigatedLandCurrentError', 'irrigatedLandTargetError']
+  )
   return {
     backLink: '/irrigated-crops',
     currentInput: {
@@ -16,7 +25,7 @@ function createModel (irrigatedLandCurrent, irrigatedLandTarget, errorMessage) {
         text: 'Enter figure in hectares'
       },
       ...(irrigatedLandCurrent ? { value: irrigatedLandCurrent } : {}),
-      ...(errorMessage && !irrigatedLandCurrent ? { errorMessage: { text: errorMessage } } : {})
+      ...(irrigatedLandCurrentError ? { errorMessage: { text: irrigatedLandCurrentError } } : {})
     },
     targetInput: {
       label: {
@@ -31,7 +40,7 @@ function createModel (irrigatedLandCurrent, irrigatedLandTarget, errorMessage) {
         text: 'Enter figure in hectares'
       },
       ...(irrigatedLandTarget ? { value: irrigatedLandTarget } : {}),
-      ...(errorMessage && !irrigatedLandTarget ? { errorMessage: { text: errorMessage } } : {})
+      ...(irrigatedLandTargetError ? { errorMessage: { text: irrigatedLandTargetError } } : {})
     }
   }
 }
@@ -54,13 +63,22 @@ module.exports = [
     path: '/irrigated-land',
     options: {
       validate: {
+        options: { abortEarly: false },
         payload: Joi.object({
-          irrigatedLandCurrent: Joi.string().required(),
-          irrigatedLandTarget: Joi.string().required()
+          irrigatedLandCurrent: Joi.string().regex(IRRIGATED_LAND_REGEX).required(),
+          irrigatedLandTarget: Joi.string().regex(IRRIGATED_LAND_REGEX).required()
         }),
-        failAction: (request, h) => {
+        failAction: (request, h, err) => {
+          const [
+            irrigatedLandCurrentError, irrigatedLandTargetError
+          ] = findErrorList(err, ['irrigatedLandCurrent', 'irrigatedLandTarget'])
+
+          const errorMessageList = {
+            irrigatedLandCurrentError, irrigatedLandTargetError
+          }
+
           const { irrigatedLandCurrent, irrigatedLandTarget } = request.payload
-          return h.view('irrigated-land', createModel(irrigatedLandCurrent, irrigatedLandTarget, 'Enter land irrigated')).takeover()
+          return h.view('irrigated-land', createModel(irrigatedLandCurrent, irrigatedLandTarget, errorMessageList)).takeover()
         }
       },
       handler: (request, h) => {
