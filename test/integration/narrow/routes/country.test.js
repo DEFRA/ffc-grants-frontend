@@ -1,6 +1,5 @@
-const { getCookieHeader, getCrumbCookie } = require('./test-helper')
+const { getCookieHeader, getCrumbCookie, crumbToken } = require('./test-helper')
 describe('Country Page', () => {
-  const crumToken = 'ZRGdpjoumKg1TQqbTgTkuVrNjdwzzdn1qKt0lR0rYXl'
   let crumCookie
   let server
   const createServer = require('../../../../app/server')
@@ -28,9 +27,9 @@ describe('Country Page', () => {
     const postOptions = {
       method: 'POST',
       url: '/country',
-      payload: { projectPostcode: '', crumb: crumToken },
+      payload: { projectPostcode: '', crumb: crumbToken },
       headers: {
-        cookie: 'crumb=' + crumToken
+        cookie: 'crumb=' + crumbToken
       }
     }
 
@@ -43,9 +42,9 @@ describe('Country Page', () => {
     const postOptions = {
       method: 'POST',
       url: '/country',
-      payload: { inEngland: 'Yes', projectPostcode: '', crumb: crumToken },
+      payload: { inEngland: 'Yes', projectPostcode: '', crumb: crumbToken },
       headers: {
-        cookie: 'crumb=' + crumToken
+        cookie: 'crumb=' + crumbToken
       }
     }
 
@@ -58,9 +57,9 @@ describe('Country Page', () => {
     const postOptions = {
       method: 'POST',
       url: '/country',
-      payload: { inEngland: 'Yes', projectPostcode: 'AB123 4CD', crumb: crumToken },
+      payload: { inEngland: 'Yes', projectPostcode: 'AB123 4CD', crumb: crumbToken },
       headers: {
-        cookie: 'crumb=' + crumToken
+        cookie: 'crumb=' + crumbToken
       }
     }
 
@@ -73,9 +72,9 @@ describe('Country Page', () => {
     const postOptions = {
       method: 'POST',
       url: '/country',
-      payload: { inEngland: 'Yes', projectPostcode: 'XX1 5XX', crumb: crumToken },
+      payload: { inEngland: 'Yes', projectPostcode: 'XX1 5XX', crumb: crumbToken },
       headers: {
-        cookie: 'crumb=' + crumToken
+        cookie: 'crumb=' + crumbToken
       }
     }
 
@@ -88,9 +87,9 @@ describe('Country Page', () => {
     const postOptions = {
       method: 'POST',
       url: '/country',
-      payload: { projectPostcode: '', inEngland: 'No', crumb: crumToken },
+      payload: { projectPostcode: '', inEngland: 'No', crumb: crumbToken },
       headers: {
-        cookie: 'crumb=' + crumToken
+        cookie: 'crumb=' + crumbToken
       }
     }
 

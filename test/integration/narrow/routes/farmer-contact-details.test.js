@@ -1,6 +1,5 @@
-const { getCookieHeader, getCrumbCookie } = require('./test-helper')
+const { getCookieHeader, getCrumbCookie, crumbToken } = require('./test-helper')
 describe('Farmer contact details page', () => {
-  const crumToken = 'ZRGdpjoumKg1TQqbTgTkuVrNjdwzzdn1qKt0lR0rYXl'
   let crumCookie
   let server
   const createServer = require('../../../../app/server')
@@ -28,8 +27,8 @@ describe('Farmer contact details page', () => {
     const postOptions = {
       method: 'POST',
       url: '/farmer-contact-details',
-      payload: { crumb: crumToken },
-      headers: { cookie: 'crumb=' + crumToken }
+      payload: { crumb: crumbToken },
+      headers: { cookie: 'crumb=' + crumbToken }
     }
 
     const postResponse = await server.inject(postOptions)
@@ -44,9 +43,9 @@ describe('Farmer contact details page', () => {
       url: '/farmer-contact-details',
       payload: {
         email: 'my@@name.com',
-        crumb: crumToken
+        crumb: crumbToken
       },
-      headers: { cookie: 'crumb=' + crumToken }
+      headers: { cookie: 'crumb=' + crumbToken }
     }
 
     const postResponse = await server.inject(postOptions)
@@ -60,9 +59,9 @@ describe('Farmer contact details page', () => {
       url: '/farmer-contact-details',
       payload: {
         landline: '1234567a90',
-        crumb: crumToken
+        crumb: crumbToken
       },
-      headers: { cookie: 'crumb=' + crumToken }
+      headers: { cookie: 'crumb=' + crumbToken }
     }
 
     const postResponse = await server.inject(postOptions)
@@ -76,9 +75,9 @@ describe('Farmer contact details page', () => {
       url: '/farmer-contact-details',
       payload: {
         landline: '(123):456789010',
-        crumb: crumToken
+        crumb: crumbToken
       },
-      headers: { cookie: 'crumb=' + crumToken }
+      headers: { cookie: 'crumb=' + crumbToken }
     }
 
     const postResponse = await server.inject(postOptions)
@@ -93,9 +92,9 @@ describe('Farmer contact details page', () => {
       payload: {
         email: 'my@name.com',
         mobile: '07700 900 982',
-        crumb: crumToken
+        crumb: crumbToken
       },
-      headers: { cookie: 'crumb=' + crumToken }
+      headers: { cookie: 'crumb=' + crumbToken }
     }
 
     const postResponse = await server.inject(postOptions)
@@ -111,9 +110,9 @@ describe('Farmer contact details page', () => {
         email: 'my@name.com',
         landline: '+44 0808 157 0192',
         mobile: '07700 900 982',
-        crumb: crumToken
+        crumb: crumbToken
       },
-      headers: { cookie: 'crumb=' + crumToken }
+      headers: { cookie: 'crumb=' + crumbToken }
     }
 
     const postResponse = await server.inject(postOptions)

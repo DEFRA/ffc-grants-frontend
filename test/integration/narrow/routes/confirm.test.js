@@ -1,4 +1,4 @@
-const { getCookieHeader, getCrumbCookie } = require('./test-helper')
+const { getCookieHeader, getCrumbCookie, crumbToken } = require('./test-helper')
 describe('Confirm page', () => {
   let crumCookie
   let server
@@ -21,6 +21,48 @@ describe('Confirm page', () => {
     expect(header.length).toBe(3)
     crumCookie = getCrumbCookie(response)
     expect(response.result).toContain(crumCookie[1])
+  })
+  it('should returns error message if not confirmed', async () => {
+    const postOptions = {
+      method: 'POST',
+      url: '/confirm',
+      payload: { iConfirm: false, crumb: crumbToken },
+      headers: {
+        cookie: 'crumb=' + crumbToken
+      }
+    }
+
+    const postResponse = await server.inject(postOptions)
+    expect(postResponse.statusCode).toBe(200)
+    expect(postResponse.payload).toContain('Please confirm consent.')
+  })
+  it('should returns error message if null', async () => {
+    const postOptions = {
+      method: 'POST',
+      url: '/confirm',
+      payload: { iConfirm: null, crumb: crumbToken },
+      headers: {
+        cookie: 'crumb=' + crumbToken
+      }
+    }
+
+    const postResponse = await server.inject(postOptions)
+    expect(postResponse.statusCode).toBe(200)
+    expect(postResponse.payload).toContain('Please confirm consent.')
+  })
+  it('should store user response and redirects to confirmation page', async () => {
+    const postOptions = {
+      method: 'POST',
+      url: '/confirm',
+      payload: { crumb: crumbToken, iConfirm: 'I confirm' },
+      headers: {
+        cookie: 'crumb=' + crumbToken
+      }
+    }
+
+    const postResponse = await server.inject(postOptions)
+    expect(postResponse.statusCode).toBe(302)
+    expect(postResponse.headers.location).toBe('./confirmation')
   })
 
   afterEach(async () => {

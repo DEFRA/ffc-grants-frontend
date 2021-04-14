@@ -67,6 +67,7 @@ module.exports = {
       fundingPriorities: 'Improving productivity',
       group: 'Q16',
       type: 'number',
+      unit: 'hectares',
       url: 'irrigated-land'
     },
     {
@@ -77,6 +78,7 @@ module.exports = {
       fundingPriorities: 'Improving productivity',
       group: 'Q16',
       type: 'number',
+      unit: 'hectares',
       url: 'irrigated-land'
     },
     {
@@ -282,7 +284,7 @@ module.exports = {
     {
       key: 'Q20',
       title: 'Will water be supplied to other farm [businesses]?',
-      pageTitle: 'Other forms',
+      pageTitle: 'Other farms',
       desc: 'If you intend to supply water via a water sharing agreement as a result of this project.',
       url: 'collaboration',
       type: 'single-answer',

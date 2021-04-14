@@ -1,5 +1,5 @@
 describe('Grant page', () => {
-  const crumToken = 'ZRGdpjoumKg1TQqbTgTkuVrNjdwzzdn1qKt0lR0rYXl'
+  const { crumbToken } = require('./test-helper')
   let server
   const createServer = require('../../../../app/server')
 
@@ -23,9 +23,9 @@ describe('Grant page', () => {
     const postOptions = {
       method: 'POST',
       url: '/grant',
-      payload: { crumb: crumToken, analytics: true },
+      payload: { crumb: crumbToken, analytics: true },
       headers: {
-        cookie: 'crumb=' + crumToken
+        cookie: 'crumb=' + crumbToken
       }
     }
 

@@ -1,6 +1,5 @@
-const { getCookieHeader, getCrumbCookie } = require('./test-helper')
+const { getCookieHeader, getCrumbCookie, crumbToken } = require('./test-helper')
 describe('Collaboration page', () => {
-  const crumToken = 'ZRGdpjoumKg1TQqbTgTkuVrNjdwzzdn1qKt0lR0rYXl'
   let server
   const createServer = require('../../../../app/server')
   let crumCookie
@@ -28,9 +27,9 @@ describe('Collaboration page', () => {
     const postOptions = {
       method: 'POST',
       url: '/collaboration',
-      payload: { collaboration: null, crumb: crumToken },
+      payload: { collaboration: null, crumb: crumbToken },
       headers: {
-        cookie: 'crumb=' + crumToken
+        cookie: 'crumb=' + crumbToken
       }
     }
 
@@ -51,7 +50,7 @@ describe('Collaboration page', () => {
 
     const postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe('./answers')
+    expect(postResponse.headers.location).toBe('./score')
   })
 
   afterEach(async () => {

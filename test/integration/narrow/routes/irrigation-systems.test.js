@@ -1,6 +1,5 @@
-const { getCookieHeader, getCrumbCookie } = require('./test-helper')
+const { getCookieHeader, getCrumbCookie, crumbToken } = require('./test-helper')
 describe('Irrigation syatems page', () => {
-  const crumToken = 'ZRGdpjoumKg1TQqbTgTkuVrNjdwzzdn1qKt0lR0rYXl'
   let crumCookie
   let server
   const createServer = require('../../../../app/server')
@@ -28,9 +27,9 @@ describe('Irrigation syatems page', () => {
     const postOptions = {
       method: 'POST',
       url: '/irrigation-systems',
-      payload: { irrigationPlanned: 'some souce 2', crumb: crumToken },
+      payload: { irrigationPlanned: 'some souce 2', crumb: crumbToken },
       headers: {
-        cookie: 'crumb=' + crumToken
+        cookie: 'crumb=' + crumbToken
       }
     }
 
@@ -43,9 +42,9 @@ describe('Irrigation syatems page', () => {
     const postOptions = {
       method: 'POST',
       url: '/irrigation-systems',
-      payload: { irrigationCurrent: 'some souce 2', crumb: crumToken },
+      payload: { irrigationCurrent: 'some souce 2', crumb: crumbToken },
       headers: {
-        cookie: 'crumb=' + crumToken
+        cookie: 'crumb=' + crumbToken
       }
     }
 
@@ -58,9 +57,9 @@ describe('Irrigation syatems page', () => {
     const postOptions = {
       method: 'POST',
       url: '/irrigation-systems',
-      payload: { irrigationCurrent: 'some source 1', irrigationPlanned: 'some souce 2', crumb: crumToken },
+      payload: { irrigationCurrent: 'some source 1', irrigationPlanned: 'some souce 2', crumb: crumbToken },
       headers: {
-        cookie: 'crumb=' + crumToken
+        cookie: 'crumb=' + crumbToken
       }
     }
 
@@ -76,10 +75,10 @@ describe('Irrigation syatems page', () => {
       payload: {
         irrigationCurrent: ['some option-1', 'some option-2', 'some option-3'],
         irrigationPlanned: ['another-option-1', 'another-option-2', 'another-option-3'],
-        crumb: crumToken
+        crumb: crumbToken
       },
       headers: {
-        cookie: 'crumb=' + crumToken
+        cookie: 'crumb=' + crumbToken
       }
     }
 

@@ -1,6 +1,5 @@
-const { getCookieHeader, getCrumbCookie } = require('./test-helper')
+const { getCookieHeader, getCrumbCookie, crumbToken } = require('./test-helper')
 describe('Legal status page', () => {
-  const crumToken = 'ZRGdpjoumKg1TQqbTgTkuVrNjdwzzdn1qKt0lR0rYXl'
   let crumCookie
   let server
   const createServer = require('../../../../app/server')
@@ -28,9 +27,9 @@ describe('Legal status page', () => {
     const postOptions = {
       method: 'POST',
       url: '/legal-status',
-      payload: { legalStatus: null, crumb: crumToken },
+      payload: { legalStatus: null, crumb: crumbToken },
       headers: {
-        cookie: 'crumb=' + crumToken
+        cookie: 'crumb=' + crumbToken
       }
     }
 
@@ -43,9 +42,9 @@ describe('Legal status page', () => {
     const postOptions = {
       method: 'POST',
       url: '/legal-status',
-      payload: { legalStatus: 'some status', crumb: crumToken },
+      payload: { legalStatus: 'some status', crumb: crumbToken },
       headers: {
-        cookie: 'crumb=' + crumToken
+        cookie: 'crumb=' + crumbToken
       }
     }
 
@@ -58,9 +57,9 @@ describe('Legal status page', () => {
     const postOptions = {
       method: 'POST',
       url: '/legal-status',
-      payload: { legalStatus: 'Other', crumb: crumToken },
+      payload: { legalStatus: 'Other', crumb: crumbToken },
       headers: {
-        cookie: 'crumb=' + crumToken
+        cookie: 'crumb=' + crumbToken
       }
     }
 

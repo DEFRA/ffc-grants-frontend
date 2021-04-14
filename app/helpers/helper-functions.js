@@ -46,7 +46,7 @@ function getPostCodeHtml (postcodeData, error) {
           </span> 
           ${error} 
         </span>
-        <input class="govuk-input govuk-!-width-one-third govuk-input--error" id="projectPostcode" name="projectPostcode" value="${postcode}">
+        <input class="govuk-input govuk-!-width-one-third govuk-input--error" autocomplete="off" id="projectPostcode" name="projectPostcode" value="${postcode}">
       </div>`
 }
 

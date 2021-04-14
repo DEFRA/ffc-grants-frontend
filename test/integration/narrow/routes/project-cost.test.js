@@ -1,6 +1,5 @@
-const { getCookieHeader, getCrumbCookie } = require('./test-helper')
+const { getCookieHeader, getCrumbCookie, crumbToken } = require('./test-helper')
 describe('Project cost page', () => {
-  const crumToken = 'ZRGdpjoumKg1TQqbTgTkuVrNjdwzzdn1qKt0lR0rYXl'
   let crumCookie
   let server
   const createServer = require('../../../../app/server')
@@ -28,9 +27,9 @@ describe('Project cost page', () => {
     const postOptions = {
       method: 'POST',
       url: '/project-cost',
-      payload: { projectCost: '', crumb: crumToken },
+      payload: { projectCost: '', crumb: crumbToken },
       headers: {
-        cookie: 'crumb=' + crumToken
+        cookie: 'crumb=' + crumbToken
       }
     }
 
@@ -43,9 +42,9 @@ describe('Project cost page', () => {
     const postOptions = {
       method: 'POST',
       url: '/project-cost',
-      payload: { projectCost: '1234s6', crumb: crumToken },
+      payload: { projectCost: '1234s6', crumb: crumbToken },
       headers: {
-        cookie: 'crumb=' + crumToken
+        cookie: 'crumb=' + crumbToken
       }
     }
 
@@ -58,9 +57,9 @@ describe('Project cost page', () => {
     const postOptions = {
       method: 'POST',
       url: '/project-cost',
-      payload: { projectCost: '1234 6', crumb: crumToken },
+      payload: { projectCost: '1234 6', crumb: crumbToken },
       headers: {
-        cookie: 'crumb=' + crumToken
+        cookie: 'crumb=' + crumbToken
       }
     }
 
@@ -73,9 +72,9 @@ describe('Project cost page', () => {
     const postOptions = {
       method: 'POST',
       url: '/project-cost',
-      payload: { projectCost: '123,456', crumb: crumToken },
+      payload: { projectCost: '123,456', crumb: crumbToken },
       headers: {
-        cookie: 'crumb=' + crumToken
+        cookie: 'crumb=' + crumbToken
       }
     }
 
@@ -88,9 +87,9 @@ describe('Project cost page', () => {
     const postOptions = {
       method: 'POST',
       url: '/project-cost',
-      payload: { projectCost: 123.456, crumb: crumToken },
+      payload: { projectCost: 123.456, crumb: crumbToken },
       headers: {
-        cookie: 'crumb=' + crumToken
+        cookie: 'crumb=' + crumbToken
       }
     }
 
@@ -103,9 +102,9 @@ describe('Project cost page', () => {
     const postOptions = {
       method: 'POST',
       url: '/project-cost',
-      payload: { projectCost: 12345678, crumb: crumToken },
+      payload: { projectCost: 12345678, crumb: crumbToken },
       headers: {
-        cookie: 'crumb=' + crumToken
+        cookie: 'crumb=' + crumbToken
       }
     }
 
@@ -118,9 +117,9 @@ describe('Project cost page', () => {
     const postOptions = {
       method: 'POST',
       url: '/project-cost',
-      payload: { projectCost: 12, crumb: crumToken },
+      payload: { projectCost: 12, crumb: crumbToken },
       headers: {
-        cookie: 'crumb=' + crumToken
+        cookie: 'crumb=' + crumbToken
       }
     }
 
@@ -133,9 +132,9 @@ describe('Project cost page', () => {
     const postOptions = {
       method: 'POST',
       url: '/project-cost',
-      payload: { projectCost: 9999999, crumb: crumToken },
+      payload: { projectCost: 9999999, crumb: crumbToken },
       headers: {
-        cookie: 'crumb=' + crumToken
+        cookie: 'crumb=' + crumbToken
       }
     }
 
@@ -148,9 +147,9 @@ describe('Project cost page', () => {
     const postOptions = {
       method: 'POST',
       url: '/project-cost',
-      payload: { projectCost: 1234567, crumb: crumToken },
+      payload: { projectCost: 1234567, crumb: crumbToken },
       headers: {
-        cookie: 'crumb=' + crumToken
+        cookie: 'crumb=' + crumbToken
       }
     }
 

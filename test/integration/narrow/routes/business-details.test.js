@@ -1,6 +1,5 @@
-const { getCookieHeader, getCrumbCookie } = require('./test-helper')
+const { getCookieHeader, getCrumbCookie, crumbToken } = require('./test-helper')
 describe('Project and business details page', () => {
-  const crumToken = 'ZRGdpjoumKg1TQqbTgTkuVrNjdwzzdn1qKt0lR0rYXl'
   let crumCookie
   let server
   const createServer = require('../../../../app/server')
@@ -28,9 +27,9 @@ describe('Project and business details page', () => {
     const postOptions = {
       method: 'POST',
       url: '/business-details',
-      payload: { crumb: crumToken },
+      payload: { crumb: crumbToken },
       headers: {
-        cookie: 'crumb=' + crumToken
+        cookie: 'crumb=' + crumbToken
       }
     }
 
@@ -48,10 +47,10 @@ describe('Project and business details page', () => {
       url: '/business-details',
       payload: {
         numberEmployees: '123e',
-        crumb: crumToken
+        crumb: crumbToken
       },
       headers: {
-        cookie: 'crumb=' + crumToken
+        cookie: 'crumb=' + crumbToken
       }
     }
 
@@ -66,10 +65,10 @@ describe('Project and business details page', () => {
       url: '/business-details',
       payload: {
         numberEmployees: '123 45',
-        crumb: crumToken
+        crumb: crumbToken
       },
       headers: {
-        cookie: 'crumb=' + crumToken
+        cookie: 'crumb=' + crumbToken
       }
     }
 
@@ -84,10 +83,10 @@ describe('Project and business details page', () => {
       url: '/business-details',
       payload: {
         numberEmployees: '12345678',
-        crumb: crumToken
+        crumb: crumbToken
       },
       headers: {
-        cookie: 'crumb=' + crumToken
+        cookie: 'crumb=' + crumbToken
       }
     }
 
@@ -102,10 +101,10 @@ describe('Project and business details page', () => {
       url: '/business-details',
       payload: {
         businessTurnover: '123e',
-        crumb: crumToken
+        crumb: crumbToken
       },
       headers: {
-        cookie: 'crumb=' + crumToken
+        cookie: 'crumb=' + crumbToken
       }
     }
 
@@ -120,10 +119,10 @@ describe('Project and business details page', () => {
       url: '/business-details',
       payload: {
         businessTurnover: '123 45',
-        crumb: crumToken
+        crumb: crumbToken
       },
       headers: {
-        cookie: 'crumb=' + crumToken
+        cookie: 'crumb=' + crumbToken
       }
     }
 
@@ -138,10 +137,10 @@ describe('Project and business details page', () => {
       url: '/business-details',
       payload: {
         businessTurnover: '1234567890',
-        crumb: crumToken
+        crumb: crumbToken
       },
       headers: {
-        cookie: 'crumb=' + crumToken
+        cookie: 'crumb=' + crumbToken
       }
     }
 
@@ -156,10 +155,10 @@ describe('Project and business details page', () => {
       url: '/business-details',
       payload: {
         sbi: '123e',
-        crumb: crumToken
+        crumb: crumbToken
       },
       headers: {
-        cookie: 'crumb=' + crumToken
+        cookie: 'crumb=' + crumbToken
       }
     }
 
@@ -174,10 +173,10 @@ describe('Project and business details page', () => {
       url: '/business-details',
       payload: {
         sbi: '123 45',
-        crumb: crumToken
+        crumb: crumbToken
       },
       headers: {
-        cookie: 'crumb=' + crumToken
+        cookie: 'crumb=' + crumbToken
       }
     }
 
@@ -192,10 +191,10 @@ describe('Project and business details page', () => {
       url: '/business-details',
       payload: {
         sbi: '12345678',
-        crumb: crumToken
+        crumb: crumbToken
       },
       headers: {
-        cookie: 'crumb=' + crumToken
+        cookie: 'crumb=' + crumbToken
       }
     }
 
@@ -210,10 +209,10 @@ describe('Project and business details page', () => {
       url: '/business-details',
       payload: {
         sbi: '1234567890',
-        crumb: crumToken
+        crumb: crumbToken
       },
       headers: {
-        cookie: 'crumb=' + crumToken
+        cookie: 'crumb=' + crumbToken
       }
     }
 
@@ -231,10 +230,10 @@ describe('Project and business details page', () => {
         businessName: 'Business Name',
         numberEmployees: '1234',
         businessTurnover: '5678',
-        crumb: crumToken
+        crumb: crumbToken
       },
       headers: {
-        cookie: 'crumb=' + crumToken
+        cookie: 'crumb=' + crumbToken
       }
     }
 
@@ -253,10 +252,10 @@ describe('Project and business details page', () => {
         numberEmployees: '1234',
         businessTurnover: '5678',
         sbi: '012345678',
-        crumb: crumToken
+        crumb: crumbToken
       },
       headers: {
-        cookie: 'crumb=' + crumToken
+        cookie: 'crumb=' + crumbToken
       }
     }
 

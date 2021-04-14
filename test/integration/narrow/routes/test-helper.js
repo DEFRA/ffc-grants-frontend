@@ -1,5 +1,5 @@
 
-const crumToken = 'ZRGdpjoumKg1TQqbTgTkuVrNjdwzzdn1qKt0lR0rYXl'
+const crumbToken = 'ZRGdpjoumKg1TQqbTgTkuVrNjdwzzdn1qKt0lR0rYXl'
 function crumbCookieRegEx () {
   return /crumb=([^\x00-\x20\"\,\;\\\x7F]*)/
 }
@@ -14,9 +14,9 @@ async function setSessionVariables (server, keyValuPairs) {
   const options = {
     method: 'POST',
     url: '/set-my-session-variable',
-    payload: { keys: keyValuPairs, crumb: crumToken },
+    payload: { keys: keyValuPairs, crumb: crumbToken },
     headers: {
-      cookie: 'crumb=' + crumToken
+      cookie: 'crumb=' + crumbToken
     }
   }
 
@@ -27,5 +27,6 @@ module.exports = {
   crumbCookieRegEx,
   getCookieHeader,
   getCrumbCookie,
-  setSessionVariables
+  setSessionVariables,
+  crumbToken
 }

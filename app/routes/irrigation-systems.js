@@ -15,6 +15,9 @@ function createModel (errorMessage, errorSummary, currentData, plannedData) {
           classes: 'govuk-fieldset__legend--l'
         }
       },
+      hint: {
+        text: 'Select one or two options'
+      },
       items: setLabelData(currentData,
         ['Boom', 'Capillary bed', 'Ebb and flow', 'Mist', 'Rain gun', 'Sprinklers', 'Trickle', 'Not currently irrigating']),
       ...(errorMessage && (!currentData || currentData.length > 2) ? { errorMessage: { text: errorMessage } } : {})
@@ -28,6 +31,9 @@ function createModel (errorMessage, errorSummary, currentData, plannedData) {
           isPageHeading: true,
           classes: 'govuk-fieldset__legend--l'
         }
+      },
+      hint: {
+        text: 'Select one or two options'
       },
       items: setLabelData(plannedData, ['Boom', 'Capillary bed', 'Ebb and flow', 'Mist', 'Rain gun', 'Sprinklers', 'Trickle']),
       ...(errorMessage && (!plannedData || plannedData.length > 2) ? { errorMessage: { text: errorMessage } } : {})
