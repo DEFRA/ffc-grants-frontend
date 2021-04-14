@@ -31,7 +31,7 @@ module.exports = [
     options: {
       validate: {
         payload: Joi.object({
-          iConfirm: Joi.boolean().invalid(false)
+          iConfirm: Joi.string().valid('I confirm').required()
         }),
         failAction: (request, h) => {
           return h.view('confirm', createModel('Please confirm consent.')).takeover()

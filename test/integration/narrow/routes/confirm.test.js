@@ -54,7 +54,7 @@ describe('Confirm page', () => {
     const postOptions = {
       method: 'POST',
       url: '/confirm',
-      payload: { crumb: crumbToken, iConfirm: true },
+      payload: { crumb: crumbToken, iConfirm: 'I confirm' },
       headers: {
         cookie: 'crumb=' + crumbToken
       }
