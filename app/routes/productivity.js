@@ -52,7 +52,7 @@ module.exports = [
         let { productivity } = request.payload
         productivity = [productivity].flat()
         if (productivity.length > 2) {
-          return h.view('productivity', createModel('Select one or two options', 'Select how the project will improve productivity', null)).takeover()
+          return h.view('productivity', createModel('Select one or two options', 'Select how the project will improve productivity', productivity)).takeover()
         }
         request.yar.set('productivity', productivity)
         return h.redirect('./collaboration')
