@@ -36,7 +36,7 @@ describe('Collaboration page', () => {
 
     const postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Please select an option')
+    expect(postResponse.payload).toContain('Select yes if water will be supplied to other farms')
   })
 
   it('should store user response and redirects to answers page', async () => {
