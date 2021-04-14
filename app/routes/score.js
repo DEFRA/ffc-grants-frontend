@@ -57,13 +57,13 @@ module.exports = [{
       const msgData = await getResult(request.yar.id)
       if (msgData) {
         const questions = msgData.desirability.questions.map(question => {
-          const questionBankQ = questionBank.questions.filter(x => x.key === question.key)[0]
-          question.title = questionBankQ.title
-          question.desc = questionBankQ.desc ?? ''
-          question.url = questionBankQ.url
+          const bankQuestion = questionBank.questions.filter(x => x.key === question.key)[0]
+          question.title = bankQuestion.title
+          question.desc = bankQuestion.desc ?? ''
+          question.url = bankQuestion.url
           question.unit = questionBank?.unit
-          question.pageTitle = questionBankQ.pageTitle
-          question.fundingPriorities = questionBankQ.fundingPriorities
+          question.pageTitle = bankQuestion.pageTitle
+          question.fundingPriorities = bankQuestion.fundingPriorities
           if(question.key ==='Q20')
           {
             question.rating.band = ''
