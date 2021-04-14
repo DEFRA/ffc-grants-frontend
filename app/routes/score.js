@@ -60,7 +60,7 @@ module.exports = [{
           question.title = bankQuestion.title
           question.desc = bankQuestion.desc ?? ''
           question.url = bankQuestion.url
-          question.unit = questionBank?.unit
+          question.unit = bankQuestion?.unit
           question.pageTitle = bankQuestion.pageTitle
           question.fundingPriorities = bankQuestion.fundingPriorities
           if (question.key === 'Q20') {

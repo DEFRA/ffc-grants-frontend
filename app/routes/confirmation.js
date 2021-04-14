@@ -7,11 +7,8 @@ module.exports = {
   path: '/confirmation',
   handler: async (request, h) => {
     const confirmationId = formatApplicationCode(request.yar.id)
-    const httpPrefix = process.env.NODE_ENV === 'production' ? 'https' : 'http'
-    const magicLink = `${httpPrefix}://${process.env.SITE_URL}/check-details?confirmationId=${confirmationId}`
-
     try {
-      await senders.sendContactDetails(createMsg.getContactDetails(request,confirmationId,magicLink), request.yar.id)
+      await senders.sendContactDetails(createMsg.getContactDetails(request, confirmationId), request.yar.id)
     } catch (err) {
       return h.view('500')
     }
@@ -20,7 +17,6 @@ module.exports = {
       output: {
         titleText: 'Details submitted',
         html: `Your reference number<br><strong>${confirmationId}</strong>`,
-        link: magicLink,
         surveyLink: '#'
       }
     })

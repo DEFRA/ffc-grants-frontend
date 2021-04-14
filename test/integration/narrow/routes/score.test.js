@@ -79,7 +79,7 @@ describe('Score page', () => {
     expect(header.length).toBe(3)
     crumCookie = getCrumbCookie(response)
     expect(response.result).toContain(crumCookie[1])
-    const responseScoreMessage = `This means your project has a high chance of getting funding.`
+    const responseScoreMessage = 'This means your project has a high chance of getting funding.'
     expect(response.payload).toContain(responseScoreMessage)
   })
   it('redirects to project business details page', async () => {

@@ -1,4 +1,4 @@
-const { getCookieHeader, getCrumbCookie,crumbToken } = require('./test-helper')
+const { getCookieHeader, getCrumbCookie, crumbToken } = require('./test-helper')
 describe('Agent contact details page', () => {
   let crumCookie
   let server

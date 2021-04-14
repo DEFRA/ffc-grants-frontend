@@ -27,24 +27,20 @@ module.exports = [
   },
   {
     method: 'POST',
-    path: '/confirm', 
+    path: '/confirm',
     options: {
       validate: {
         payload: Joi.object({
-          iConfirm: Joi.boolean().required()
+          iConfirm: Joi.boolean().invalid(false)
         }),
         failAction: (request, h) => {
-          return h.view('confirm', createModel('Please confirm concent.')).takeover()
+          return h.view('confirm', createModel('Please confirm consent.')).takeover()
         }
       }
     },
     handler: (request, h) => {
-      if(request.payload.iConfirm ===true){
-        return h.redirect('./confirmation')
-      }
-      else{
-        return h.view('confirm', createModel('Please confirm concent.')).takeover()
-      }
+      request.yar.set('consentGiven', true)
+      return h.redirect('./confirmation')
     }
   }
 ]

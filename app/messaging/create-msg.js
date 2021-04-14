@@ -12,16 +12,15 @@ function getDesirabilityAnswers (request) {
     collaboration: request.yar.get('collaboration')
   }
 }
-function getContactDetails (request, confirmationId,magicLink )
-{
-    console.log('New application:')
-    console.log(`In England: ${request.yar.get('inEngland')}`)
-    console.log(`Business Name: ${request.yar.get('businessName')}`)
-    console.log(`Email Address: ${request.yar.get('emailAddress')}`)
-    console.log(`Farmer Contact Details: ${request.yar.get('farmerContactDetails')}`)
-    console.log(`Farmer Address Details: ${request.yar.get('farmerAddressDetails')}`)
-    console.log(`Agent Contact Details: ${request.yar.get('agentContactDetails')}`)
-    console.log(`Agent Address Details: ${request.yar.get('agentAddressDetails')}`)
+function getContactDetails (request, confirmationId) {
+  console.log('New application:')
+  console.log(`In England: ${request.yar.get('inEngland')}`)
+  console.log(`Business Name: ${request.yar.get('businessName')}`)
+  console.log(`Email Address: ${request.yar.get('emailAddress')}`)
+  console.log(`Farmer Contact Details: ${request.yar.get('farmerContactDetails')}`)
+  console.log(`Farmer Address Details: ${request.yar.get('farmerAddressDetails')}`)
+  console.log(`Agent Contact Details: ${request.yar.get('agentContactDetails')}`)
+  console.log(`Agent Address Details: ${request.yar.get('agentAddressDetails')}`)
   return {
     confirmationId: confirmationId.toString(),
     inEngland: request.yar.get('inEngland') === 'yes',
@@ -30,8 +29,7 @@ function getContactDetails (request, confirmationId,magicLink )
     farmerContactDetails: request.yar.get('farmerContactDetails'),
     farmerAddressDetails: request.yar.get('farmerAddressDetails'),
     agentContactDetails: request.yar.get('agentContactDetails'),
-    agentAddressDetails: request.yar.get('agentAddressDetails'),
-    magicLink: magicLink
+    agentAddressDetails: request.yar.get('agentAddressDetails')
   }
 }
 module.exports = {

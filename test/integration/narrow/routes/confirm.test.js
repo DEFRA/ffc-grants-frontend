@@ -34,9 +34,22 @@ describe('Confirm page', () => {
 
     const postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Please confirm concent.')
+    expect(postResponse.payload).toContain('Please confirm consent.')
   })
+  it('should returns error message if null', async () => {
+    const postOptions = {
+      method: 'POST',
+      url: '/confirm',
+      payload: { iConfirm: null, crumb: crumbToken },
+      headers: {
+        cookie: 'crumb=' + crumbToken
+      }
+    }
 
+    const postResponse = await server.inject(postOptions)
+    expect(postResponse.statusCode).toBe(200)
+    expect(postResponse.payload).toContain('Please confirm consent.')
+  })
   it('should store user response and redirects to confirmation page', async () => {
     const postOptions = {
       method: 'POST',

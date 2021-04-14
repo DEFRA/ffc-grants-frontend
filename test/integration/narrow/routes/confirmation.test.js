@@ -2,7 +2,7 @@
 describe('Confirmation page', () => {
   let crumCookie
   let server
-  const { getCookieHeader, getCrumbCookie, crumbToken } = require('./test-helper')
+  const { getCookieHeader, getCrumbCookie } = require('./test-helper')
   const createServer = require('../../../../app/server')
 
   beforeEach(async () => {
@@ -14,13 +14,13 @@ describe('Confirmation page', () => {
   it('should load page with error score', async () => {
     const senders = require('../../../../app/messaging/senders')
     senders.sendContactDetails = jest.fn(async function (model, yarId) {
-      throw 'Some error'
+      throw new Error('Some error')
     })
     const options = {
-        method: 'GET',
-        url: '/confirmation'
-      }
-    
+      method: 'GET',
+      url: '/confirmation'
+    }
+
     const response = await server.inject(options)
     expect(response.statusCode).toBe(200)
     const header = getCookieHeader(response)
