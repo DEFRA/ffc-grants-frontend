@@ -10,6 +10,7 @@ services:
     image: ffc-grants-frontend-development
     environment:
       NODE_ENV: test
+      GOOGLE_TAG_MANAGER_KEY: 'GTM-WJ5C78H'
     command: npm run test
     volumes:
       - ./test-output/:/home/node/test-output/
