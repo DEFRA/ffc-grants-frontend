@@ -56,19 +56,19 @@ module.exports = [{
       // If msgData is null then 500 page will be triggered when trying to access object below
       const msgData = await getResult(request.yar.id)
       if (msgData) {
-        const questions = msgData.desirability.questions.map(q => {
-          const questionBankQ = questionBank.questions.filter(x => x.key === q.key)[0]
-          q.title = questionBankQ.title
-          q.desc = questionBankQ.desc ?? ''
-          q.url = questionBankQ.url
-          q.unit = questionBank?.unit
-          q.pageTitle = questionBankQ.pageTitle
-          q.fundingPriorities = questionBankQ.fundingPriorities
-          if(q.key ==='Q20')
+        const questions = msgData.desirability.questions.map(question => {
+          const questionBankQ = questionBank.questions.filter(x => x.key === question.key)[0]
+          question.title = questionBankQ.title
+          question.desc = questionBankQ.desc ?? ''
+          question.url = questionBankQ.url
+          question.unit = questionBank?.unit
+          question.pageTitle = questionBankQ.pageTitle
+          question.fundingPriorities = questionBankQ.fundingPriorities
+          if(question.key ==='Q20')
           {
-            q.rating.band = ''
+            question.rating.band = ''
           }
-          return q
+          return question
         })
         let scoreChance = 'low'
         switch(msgData.desirability.overallRating.band.toLowerCase()){
