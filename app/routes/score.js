@@ -47,8 +47,7 @@ module.exports = [{
   method: 'GET',
   path: '/score',
   handler: async (request, h) => {
-    try
-    {
+    try {
       // Always re-calculate our score before rendering this page
       await senders.sendProjectDetails(createMsg.getDesirabilityAnswers(request), request.yar.id)
 
@@ -64,23 +63,22 @@ module.exports = [{
           question.unit = questionBank?.unit
           question.pageTitle = bankQuestion.pageTitle
           question.fundingPriorities = bankQuestion.fundingPriorities
-          if(question.key ==='Q20')
-          {
+          if (question.key === 'Q20') {
             question.rating.band = ''
           }
           return question
         })
         let scoreChance = 'low'
-        switch(msgData.desirability.overallRating.band.toLowerCase()){
+        switch (msgData.desirability.overallRating.band.toLowerCase()) {
           case 'strong':
-            scoreChance='high'
-            break;
+            scoreChance = 'high'
+            break
           case 'average':
-            scoreChance='medium'
-            break;  
+            scoreChance = 'medium'
+            break
           default:
             scoreChance = 'low'
-            break;
+            break
         }
         return h.view('score', createModel(null, null, {
           titleText: msgData.desirability.overallRating.band,
@@ -88,14 +86,12 @@ module.exports = [{
           questions: questions,
           scoreChance: scoreChance
         }))
-      } 
-      else {
+      } else {
         return h.view('500')
       }
-  }
-  catch{
-    return h.view('500')
-  }
+    } catch {
+      return h.view('500')
+    }
   }
 },
 {
