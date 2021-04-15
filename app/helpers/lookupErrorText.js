@@ -59,7 +59,16 @@ const errors = {
   'error.postcode.string.empty': 'Enter your postcode, like AA1 1AA',
   'error.postcode.any.required': 'Enter your postcode, like AA1 1AA',
   'error.postcode.string.pattern.base': 'Enter a postcode, like AA1 1AA',
-  'error.abstractionLicence.any.required': 'Select when the project will have an abstraction licence or variation'
+  'error.abstractionLicence.any.required': 'Select when the project will have an abstraction licence or variation',
+  'error.productivity.any.required': 'Select one or two options',
+  'error.collaboration.any.required': 'Select yes if water will be supplied to other farms',
+  'error.collaboration.string.base': 'Select yes if water will be supplied to other farms',
+  'error.irrigatedLandCurrent.string.empty': 'Enter how many hectares are irrigated currently',
+  'error.irrigatedLandCurrent.any.required': 'Enter how many hectares are irrigated currently',
+  'error.irrigatedLandCurrent.string.pattern.base': 'Hectare figure can have one decimal place',
+  'error.irrigatedLandTarget.string.empty': 'Enter how many hectares will be irrigated after the project',
+  'error.irrigatedLandTarget.any.required': 'Enter how many hectares will be irrigated after the project',
+  'error.irrigatedLandTarget.string.pattern.base': 'Hectare figure can have one decimal place'
 }
 const lookupErrorText = (key) => {
   return errors[key] || key

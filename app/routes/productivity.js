@@ -1,5 +1,5 @@
 const Joi = require('joi')
-const { setLabelData } = require('../helpers/helper-functions')
+const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
 
 function createModel (errorMessage, errorSummary, data) {
   return {
@@ -42,14 +42,17 @@ module.exports = [
         payload: Joi.object({
           productivity: Joi.any().required()
         }),
-        failAction: (request, h) =>
-          h.view('productivity', createModel('Please select an option', null, null)).takeover()
+        failAction: (request, h, err) => {
+          const errorObject = errorExtractor(err)
+          const errorMessage = getErrorMessage(errorObject)
+          return h.view('productivity', createModel(errorMessage, null, null)).takeover()
+        }
       },
       handler: (request, h) => {
         let { productivity } = request.payload
         productivity = [productivity].flat()
         if (productivity.length > 2) {
-          return h.view('productivity', createModel('Only one or two selections are allowed', 'Only one or two selections are allowed', null)).takeover()
+          return h.view('productivity', createModel('Select one or two options', 'Select how the project will improve productivity', productivity)).takeover()
         }
         request.yar.set('productivity', productivity)
         return h.redirect('./collaboration')
