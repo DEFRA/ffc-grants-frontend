@@ -1,11 +1,11 @@
 const lookupErrorText = require('./lookupErrorText')
 const { GRANT_PERCENTAGE } = require('../helpers/grant-details')
 
-function isChecked (data, option) {
+function isChecked(data, option) {
   return !!data && data.includes(option)
 }
 
-function setLabelData (data, labelData) {
+function setLabelData(data, labelData) {
   return labelData.map((label) => {
     if (typeof (label) === 'string') {
       return {
@@ -26,19 +26,19 @@ function setLabelData (data, labelData) {
   })
 }
 
-function getPostCodeHtml (postcodeData, error) {
+function getPostCodeHtml(postcodeData, error) {
   const postcode = postcodeData || ''
 
   return !error
     ? `<div>
         <label class="govuk-label" for="projectPostcode">
-          Enter Postcode
+          In which postcode will the project take place?<br/><br/> Postcode
         </label>
         <input class="govuk-input govuk-!-width-one-third" id="projectPostcode" name="projectPostcode" value="${postcode}">
       </div>`
     : `<div class="govuk-form-group--error">
         <label class="govuk-label" for="projectPostcode">
-          Enter Postcode
+          In which postcode will the project take place?<br/><br/> Postcode
         </label>
         <span id="post-code-error" class="govuk-error-message">
           <span class="govuk-visually-hidden">
@@ -50,7 +50,7 @@ function getPostCodeHtml (postcodeData, error) {
       </div>`
 }
 
-function errorExtractor (data) {
+function errorExtractor(data) {
   const { details } = data
   const errorObject = {}
 
@@ -66,18 +66,18 @@ function errorExtractor (data) {
   return errorObject
 }
 
-function getErrorMessage (object) {
+function getErrorMessage(object) {
   return lookupErrorText(object[Object.keys(object)[0]])
 }
 
-function getGrantValues (projectCost) {
+function getGrantValues(projectCost) {
   const calculatedGrant = Number(GRANT_PERCENTAGE * projectCost / 100).toFixed(2)
   const remainingCost = Number(projectCost - calculatedGrant).toFixed(2)
 
   return { calculatedGrant, remainingCost }
 }
 
-function isInteger (number) {
+function isInteger(number) {
   // NOT using Number.isInteger() because
   //  - not working on Internet Explorer
   //  - Number.isInteger(40000.00) === false ( instead of true )
@@ -85,28 +85,28 @@ function isInteger (number) {
   return (number - Math.floor(number)) === 0
 }
 
-function formatUKCurrency (costPounds) {
+function formatUKCurrency(costPounds) {
   return (isInteger(costPounds))
     ? Number(costPounds).toLocaleString('en-GB')
     : Number(costPounds).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
 }
 
-function formatApplicationCode (guid) {
+function formatApplicationCode(guid) {
   return `WM-${guid.substr(0, 3)}-${guid.substr(3, 3)}`.toUpperCase()
 }
-function itemInObject (object, item) {
+function itemInObject(object, item) {
   return (
     !!object && Object.keys(object).includes(item)
   )
 }
 
-function fetchObjectItem (object, item) {
+function fetchObjectItem(object, item) {
   return (
     !!object && Object.keys(object).includes(item) && object[item]
   ) || null
 }
 
-function fetchListObjectItems (object, itemsList) {
+function fetchListObjectItems(object, itemsList) {
   if (!object) {
     return itemsList.map(item => null)
   }
@@ -116,7 +116,7 @@ function fetchListObjectItems (object, itemsList) {
   )))
 }
 
-function findErrorList ({ details }, inputFields) {
+function findErrorList({ details }, inputFields) {
   const errorCodes = inputFields.map(input => {
     const foundErrorList = details.filter(({ context: { label: valLabel } }) => (valLabel === input))
 
