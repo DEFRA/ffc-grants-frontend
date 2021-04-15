@@ -11,12 +11,12 @@ function createModel (errorMessage, errorSummary, data) {
       fieldset: {
         legend: {
           text: 'The project will:',
-          hint: {
-            text: 'Please select only one or two details'
-          },
           isPageHeading: false,
           classes: 'govuk-fieldset__legend--m'
         }
+      },
+      hint: {
+        text: 'Please select only one or two details'
       },
       items: setLabelData(data, ['Change water source', 'Improve irrigation efficiency', 'Increase irrigation', 'Introduce irrigation']),
       ...(errorMessage ? { errorMessage: { text: errorMessage } } : {})
