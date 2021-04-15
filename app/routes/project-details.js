@@ -11,6 +11,9 @@ function createModel (errorMessage, errorSummary, data) {
       fieldset: {
         legend: {
           text: 'The project will:',
+          hint: {
+            text: 'Please select only one or two details'
+          },
           isPageHeading: false,
           classes: 'govuk-fieldset__legend--m'
         }
