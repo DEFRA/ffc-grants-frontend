@@ -6,7 +6,6 @@ function isChecked (data, option) {
 }
 
 function setLabelData (data, labelData) {
-  console.log(labelData)
   return labelData.map((label) => {
     if (typeof (label) === 'string') {
       return {
