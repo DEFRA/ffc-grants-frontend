@@ -1,5 +1,5 @@
 const Joi = require('joi')
-const { errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
+const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
 
 const createModel = (errorMessage, data) => ({
 
@@ -15,24 +15,12 @@ const createModel = (errorMessage, data) => ({
         classes: 'govuk-fieldset__legend--l'
       }
     },
-    items: [
+    items: setLabelData(data, [
+      { text: 'Field-scale crops (eg potatoes, onions, carrots)', value: 'Field-scale crops' },
+      { text: 'Protected cropping (eg glass house or polly tunnel)', value: 'Protected cropping' },
+      { text: 'Fruit (eg top fruit, bush fruit)', value: 'Fruit' }
+    ]),
 
-      {
-        value: 'Field-scale crops',
-        text: 'Field-scale crops (e.g potatoes, onions, carrots)',
-        checked: !!(data && (data.includes('Field-scale crops')))
-      },
-      {
-        value: 'Protected cropping',
-        text: 'Protected cropping (e.g glass house or polly tunnel)',
-        checked: !!(data && (data.includes('Protected cropping')))
-      },
-      {
-        value: 'Fruit',
-        text: 'Fruit (e.g top fruit, bush fruit)',
-        checked: !!(data && (data.includes('Fruit')))
-      }
-    ],
     ...(errorMessage ? { errorMessage: { text: errorMessage } } : {})
   }
 
