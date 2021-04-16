@@ -25,7 +25,7 @@ function createModel(irrigatedLandCurrent, irrigatedLandTarget, errorMessageList
         text: 'ha'
       },
       hint: {
-        html: '<font color="black"> Hectares </font><br/> Enter figure in hectares, for example 543.5'
+        html: '<span class="govuk-label"> Hectares </span>Enter figure in hectares, for example 543.5'
       },
       ...(irrigatedLandCurrent ? { value: irrigatedLandCurrent } : {}),
       ...(irrigatedLandCurrentError ? { errorMessage: { text: irrigatedLandCurrentError } } : {})
@@ -40,7 +40,7 @@ function createModel(irrigatedLandCurrent, irrigatedLandTarget, errorMessageList
       id: 'irrigatedLandTarget',
       name: 'irrigatedLandTarget',
       hint: {
-        html: '<font color="black"> Hectares </font><br/> Enter figure in hectares, for example 543.5'
+        html: '<span class="govuk-label"> Hectares </span>Enter figure in hectares, for example 543.5'
       },
       suffix: {
         text: 'ha'
