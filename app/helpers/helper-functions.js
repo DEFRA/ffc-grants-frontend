@@ -74,7 +74,7 @@ function getGrantValues (projectCost) {
   const calculatedGrant = Number(GRANT_PERCENTAGE * projectCost / 100).toFixed(2)
   const remainingCost = Number(projectCost - calculatedGrant).toFixed(2)
 
-  return { calculatedGrant, remainingCost}
+  return { calculatedGrant, remainingCost }
 }
 
 function isInteger (number) {
@@ -103,7 +103,7 @@ function itemInObject (object, item) {
 function fetchObjectItem (object, item) {
   return (
     !!object && Object.keys(object).includes(item) && object[item]
-    ) || null
+  ) || null
 }
 
 function fetchListObjectItems (object, itemsList) {
@@ -127,9 +127,9 @@ function findErrorList ({ details }, inputFields) {
   })
 
   return errorCodes.map(err => (
-  err === null
-    ? null
-    : lookupErrorText(err)
+    err === null
+      ? null
+      : lookupErrorText(err)
   ))
 }
 
@@ -145,4 +145,5 @@ module.exports = {
   fetchObjectItem,
   fetchListObjectItems,
   findErrorList,
-formatApplicationCode}
+  formatApplicationCode
+}
