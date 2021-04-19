@@ -1,5 +1,5 @@
 const { getCookieHeader, getCrumbCookie } = require('./test-helper')
-describe('Abstraction licence page', () => {
+describe('SSSI page', () => {
   const crumToken = 'ZRGdpjoumKg1TQqbTgTkuVrNjdwzzdn1qKt0lR0rYXl'
   let crumCookie
   let server
@@ -13,7 +13,7 @@ describe('Abstraction licence page', () => {
   it('should load page successfully', async () => {
     const options = {
       method: 'GET',
-      url: '/abstraction-licence'
+      url: '/SSSI'
     }
 
     const response = await server.inject(options)
@@ -27,30 +27,30 @@ describe('Abstraction licence page', () => {
   it('should return an error message if no option is selected', async () => {
     const postOptions = {
       method: 'POST',
-      url: '/abstraction-licence',
+      url: '/SSSI',
       payload: { crumb: crumToken },
       headers: { cookie: 'crumb=' + crumToken }
     }
 
     const postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Select when the project will have an abstraction licence or variation')
+    expect(postResponse.payload).toContain('Select yes if the project directly impacts a Site of Special Scientific Interest')
   })
 
   it('should store valid user input and redirect to project details page', async () => {
     const postOptions = {
       method: 'POST',
-      url: '/abstraction-licence',
-      payload: { abstractionLicence: 'some fake licence', crumb: crumToken },
+      url: '/SSSI',
+      payload: { sSSI: 'Yes', crumb: crumToken },
       headers: { cookie: 'crumb=' + crumToken }
     }
 
     const postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe('./SSSI')
+    expect(postResponse.headers.location).toBe('./project-details')
   })
 
   afterEach(async () => {
     await server.stop()
-  })
+})
 })

@@ -50,7 +50,7 @@ module.exports = [
       },
       handler: (request, h) => {
         request.yar.set('abstractionLicence', request.payload.abstractionLicence)
-        return h.redirect('./project-details')
+        return h.redirect('./SSSI')
       }
     }
   }

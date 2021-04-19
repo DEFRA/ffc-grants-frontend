@@ -68,7 +68,8 @@ const errors = {
   'error.irrigatedLandCurrent.string.pattern.base': 'Hectare figure can have one decimal place',
   'error.irrigatedLandTarget.string.empty': 'Enter how many hectares will be irrigated after the project',
   'error.irrigatedLandTarget.any.required': 'Enter how many hectares will be irrigated after the project',
-  'error.irrigatedLandTarget.string.pattern.base': 'Hectare figure can have one decimal place'
+  'error.irrigatedLandTarget.string.pattern.base': 'Hectare figure can have one decimal place',
+  'error.sSSI.any.required': 'Select yes if the project directly impacts a Site of Special Scientific Interest'
 }
 const lookupErrorText = (key) => {
   return errors[key] || key
