@@ -40,33 +40,33 @@ async function createServer () {
     }
   })
   // GTM Server side
-  // await server.register({
-  //   plugin: HapiGapi,
-  //   options: {
-  //     propertySettings: [
-  //       {
-  //         id: config.googleTagManagerKey,
-  //         hitTypes: ['pageview', 'event']
-  //       }
-  //     ],
-  //     sessionIdProducer: async request => {
-  //       // Would normally use the request object to retrieve the proper session identifier
-  //       return 'test-session'
-  //     },
-  //     attributionProducer: async request => {
-  //       // Would normally use the request object to return any attribution associated with the user's session
-  //       return {
-  //         campaign: 'attribution_campaign',
-  //         source: 'attribution_source',
-  //         medium: 'attribution_medium',
-  //         content: 'attribution_content',
-  //         term: 'attribution_term'
-  //       }
-  //     },
-  //     batchSize: 20,
-  //     batchInterval: 15000
-  //   }
-  // })
+  await server.register({
+    plugin: HapiGapi,
+    options: {
+      propertySettings: [
+        {
+          id: config.googleTagManagerKey,
+          hitTypes: ['pageview', 'event']
+        }
+      ],
+      sessionIdProducer: async request => {
+        // Would normally use the request object to retrieve the proper session identifier
+        return 'test-session'
+      },
+      attributionProducer: async request => {
+        // Would normally use the request object to return any attribution associated with the user's session
+        return {
+          campaign: 'attribution_campaign',
+          source: 'attribution_source',
+          medium: 'attribution_medium',
+          content: 'attribution_content',
+          term: 'attribution_term'
+        }
+      },
+      batchSize: 20,
+      batchInterval: 15000
+    }
+  })
   // Session cache with yar
   await server.register([
     {
