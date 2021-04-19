@@ -16,7 +16,7 @@ function createModel (errorMessage, data, formattedRemainingCost) {
         }
       },
       hint: {
-        text: 'You cannot use any grant funding from government or local authorities. You can use money from the Basic Payment Scheme or agri-environment schemes such as Countryside Stewardship Scheme.'
+        html: 'You cannot use any grant funding from government or local authorities. You can use money from the Basic Payment Scheme or agri-environment schemes such as Countryside Stewardship Scheme.</br><br/>'
       },
       items: setLabelData(data, ['Yes', 'No']),
       ...(errorMessage ? { errorMessage: { text: errorMessage } } : {})
