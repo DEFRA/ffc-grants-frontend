@@ -19,9 +19,7 @@ function createModel (errorMessageList, agentContactDetails) {
       name: 'email',
       classes: 'govuk-input--width-20',
       label: {
-        text: 'Email address',
-        classes: 'govuk-label--m',
-        isPageHeading: true
+        text: 'Email address'
       },
       hint: {
         text:
@@ -35,9 +33,7 @@ function createModel (errorMessageList, agentContactDetails) {
       name: 'landline',
       classes: 'govuk-input--width-20',
       label: {
-        text: 'Landline number (optional)',
-        classes: 'govuk-label--m',
-        isPageHeading: true
+        text: 'Landline number (optional)'
       },
       ...(landline ? { value: landline } : {}),
       ...(landlineError ? { errorMessage: { text: landlineError } } : {})
@@ -47,9 +43,7 @@ function createModel (errorMessageList, agentContactDetails) {
       name: 'mobile',
       classes: 'govuk-input--width-20',
       label: {
-        text: 'Mobile number',
-        classes: 'govuk-label--m',
-        isPageHeading: true
+        text: 'Mobile number'
       },
       ...(mobile ? { value: mobile } : {}),
       ...(mobileError ? { errorMessage: { text: mobileError } } : {})

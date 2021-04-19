@@ -19,9 +19,7 @@ function createModel (errorMessageList, agentDetails) {
       name: 'title',
       classes: 'govuk-input--width-10',
       label: {
-        text: 'Title (optional)',
-        classes: 'govuk-label--m',
-        isPageHeading: true
+        text: 'Title (optional)'
       },
       items: setLabelData(title, [{ value: 'Other', text: 'Select an option' }, 'Mr', 'Mrs', 'Ms', 'Miss', 'Dr']),
       ...(titleError ? { errorMessage: { text: titleError } } : {})
@@ -31,9 +29,7 @@ function createModel (errorMessageList, agentDetails) {
       name: 'firstName',
       classes: 'govuk-input--width-20',
       label: {
-        text: 'First name',
-        classes: 'govuk-label--m',
-        isPageHeading: true
+        text: 'First name'
       },
       ...(firstName ? { value: firstName } : {}),
       ...(firstNameError ? { errorMessage: { text: firstNameError } } : {})
@@ -43,9 +39,7 @@ function createModel (errorMessageList, agentDetails) {
       name: 'lastName',
       classes: 'govuk-input--width-20',
       label: {
-        text: 'Last name',
-        classes: 'govuk-label--m',
-        isPageHeading: true
+        text: 'Last name'
       },
       ...(lastName ? { value: lastName } : {}),
       ...(lastNameError ? { errorMessage: { text: lastNameError } } : {})

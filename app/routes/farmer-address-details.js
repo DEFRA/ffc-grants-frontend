@@ -20,9 +20,7 @@ function createModel (errorMessageList, farmerAddressDetails) {
       name: 'address1',
       classes: 'govuk-input--width-20',
       label: {
-        text: 'Address 1',
-        classes: 'govuk-label--m',
-        isPageHeading: true
+        text: 'Address 1'
       },
       ...(address1 ? { value: address1 } : {}),
       ...(address1Error ? { errorMessage: { text: address1Error } } : {})
@@ -32,9 +30,7 @@ function createModel (errorMessageList, farmerAddressDetails) {
       name: 'address2',
       classes: 'govuk-input--width-20',
       label: {
-        text: 'Address 2',
-        classes: 'govuk-label--m',
-        isPageHeading: true
+        text: 'Address 2'
       },
       ...(address2 ? { value: address2 } : {}),
       ...(address2Error ? { errorMessage: { text: address2Error } } : {})
@@ -44,9 +40,7 @@ function createModel (errorMessageList, farmerAddressDetails) {
       name: 'town',
       classes: 'govuk-input--width-10',
       label: {
-        text: 'Town',
-        classes: 'govuk-label--m',
-        isPageHeading: true
+        text: 'Town'
       },
       ...(town ? { value: town } : {}),
       ...(townError ? { errorMessage: { text: townError } } : {})
@@ -56,9 +50,7 @@ function createModel (errorMessageList, farmerAddressDetails) {
       name: 'county',
       classes: 'govuk-input--width-10',
       label: {
-        text: 'County',
-        classes: 'govuk-label--m',
-        isPageHeading: true
+        text: 'County'
       },
       items: setLabelData(county, [
         { text: 'Select an option', value: null },
@@ -71,9 +63,7 @@ function createModel (errorMessageList, farmerAddressDetails) {
       name: 'postcode',
       classes: 'govuk-input--width-5',
       label: {
-        text: 'Postcode',
-        classes: 'govuk-label--m',
-        isPageHeading: true
+        text: 'Postcode'
       },
       ...(postcode ? { value: postcode } : {}),
       ...(postcodeError ? { errorMessage: { text: postcodeError } } : {})
