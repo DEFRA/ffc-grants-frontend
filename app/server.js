@@ -1,4 +1,5 @@
 const hapi = require('@hapi/hapi')
+const HapiGapi = require('@defra/hapi-gapi')
 const nunjucks = require('nunjucks')
 const vision = require('@hapi/vision')
 const path = require('path')
@@ -32,8 +33,38 @@ async function createServer () {
         // { key: 'Feature-Policy', value: 'none' },
         { key: 'Cross-Origin-Opener-Policy', value: 'same-origin' },
         { key: 'Cross-Origin-Embedder-Policy', value: 'require-corp' },
-        { key: 'X-Robots-Tag', value: 'noindex, nofollow' }
+        { key: 'X-Robots-Tag', value: 'noindex, nofollow' },
+        { key: 'X-XSS-Protection', value: '1; mode=block' },
+        { key: 'Cache-Control', value: 'no-cache' }
       ]
+    }
+  })
+  // GTM Server side
+  await server.register({
+    plugin: HapiGapi,
+    options: {
+      propertySettings: [
+        {
+          id: config.googleTagManagerKey,
+          hitTypes: ['pageview', 'event']
+        }
+      ],
+      sessionIdProducer: async request => {
+        // Would normally use the request object to retrieve the proper session identifier
+        return 'test-session'
+      },
+      attributionProducer: async request => {
+        // Would normally use the request object to return any attribution associated with the user's session
+        return {
+          campaign: 'attribution_campaign',
+          source: 'attribution_source',
+          medium: 'attribution_medium',
+          content: 'attribution_content',
+          term: 'attribution_term'
+        }
+      },
+      batchSize: 20,
+      batchInterval: 15000
     }
   })
   // Session cache with yar

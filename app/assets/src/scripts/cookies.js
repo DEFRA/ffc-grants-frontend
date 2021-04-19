@@ -41,7 +41,7 @@ if (cookieContainer && cookieContainer.style) {
   })
 
   function submitPreference (accepted) {
-    const crumbToken = window.document.getElementById('crumbBanner')
+    const crumbToken = window.document.getElementById('crumb')
     const xhr = new XMLHttpRequest()
     xhr.open('POST', '/site-cookies', true)
     xhr.setRequestHeader('Content-Type', 'application/json')
