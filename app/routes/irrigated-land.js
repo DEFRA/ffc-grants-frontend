@@ -2,7 +2,7 @@ const Joi = require('joi')
 const { fetchListObjectItems, findErrorList } = require('../helpers/helper-functions')
 const { IRRIGATED_LAND_REGEX } = require('../helpers/regex-validation')
 
-function createModel (irrigatedLandCurrent, irrigatedLandTarget, errorMessageList) {
+function createModel(irrigatedLandCurrent, irrigatedLandTarget, errorMessageList) {
   const [
     irrigatedLandCurrentError,
     irrigatedLandTargetError
@@ -25,7 +25,7 @@ function createModel (irrigatedLandCurrent, irrigatedLandTarget, errorMessageLis
         text: 'ha'
       },
       hint: {
-        text: 'Enter figure in hectares'
+        html: '<span class="govuk-label"> Hectares </span>Enter figure in hectares, for example 543.5'
       },
       ...(irrigatedLandCurrent ? { value: irrigatedLandCurrent } : {}),
       ...(irrigatedLandCurrentError ? { errorMessage: { text: irrigatedLandCurrentError } } : {})
@@ -40,7 +40,7 @@ function createModel (irrigatedLandCurrent, irrigatedLandTarget, errorMessageLis
       id: 'irrigatedLandTarget',
       name: 'irrigatedLandTarget',
       hint: {
-        text: 'Enter figure in hectares'
+        html: '<span class="govuk-label"> Hectares </span>Enter figure in hectares, for example 543.5'
       },
       suffix: {
         text: 'ha'
