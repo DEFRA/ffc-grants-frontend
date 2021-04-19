@@ -16,7 +16,18 @@ function createModel (errorMessage, data) {
         }
       },
       items:
-        setLabelData(data, ['Limited Company', 'Partnership', 'Sole trader', 'Limited Liability Company', 'Trust', 'Charity', 'Community Interest Company', 'Public Organisation', 'Other']),
+        setLabelData(data, [
+          { text: 'Sole trader', value: 'Sole Trader' },
+          'Partnership',
+          { text: 'Ltd company', value: 'Ltd Company' },
+          'Charity',
+          { text: 'Public organisation', value: 'Public Organisation' },
+          'Trust',
+          { text: 'Limited liability partnership', value: 'Limited Liability Partnership' },
+          { text: 'Community interest company', value: 'Community Interest Company' },
+          { text: 'Local authority', value: 'Local Authority' },
+          'None of the above'
+        ]),
       ...(errorMessage ? { errorMessage: { text: errorMessage } } : {})
     }
   }
