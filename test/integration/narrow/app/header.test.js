@@ -2,8 +2,14 @@
 const hapi = require('@hapi/hapi')
 const header = require('../../../../app/plugins/header')
 describe('Server header test', () => {
+  let server
+
+  afterEach(async () => {
+    await server.stop()
+  })
+
   it('create Server setup header return request with header', async () => {
-    const server = hapi.server({
+    server = hapi.server({
       port: process.env.PORT
     })
 
@@ -32,7 +38,7 @@ describe('Server header test', () => {
     expect(response.headers['x-robots-tag']).toContain('noindex, nofollow')
   })
   it('create Server setup header with no option return request with NO header', async () => {
-    const server = hapi.server({
+    server = hapi.server({
       port: process.env.PORT
     })
     await server.register({
@@ -57,7 +63,7 @@ describe('Server header test', () => {
   })
 
   it('create Server setup No Header return request without header', async () => {
-    const server = hapi.server({
+    server = hapi.server({
       port: process.env.PORT
     })
     server.route({
