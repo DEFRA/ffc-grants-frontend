@@ -52,5 +52,5 @@ describe('SSSI page', () => {
 
   afterEach(async () => {
     await server.stop()
-})
+  })
 })
