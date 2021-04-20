@@ -10,9 +10,17 @@ module.exports = {
     try {
       await senders.sendContactDetails(createMsg.getContactDetails(request, confirmationId), request.yar.id)
     } catch (err) {
+      await request.ga.event({
+        category: 'Confirmation',
+        action: 'Error'
+      })
       return h.view('500')
     }
 
+    await request.ga.event({
+      category: 'Confirmation',
+      action: 'Success'
+    })
     return h.view('confirmation', {
       output: {
         titleText: 'Details submitted',

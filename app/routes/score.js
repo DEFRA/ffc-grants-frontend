@@ -87,9 +87,17 @@ module.exports = [{
           scoreChance: scoreChance
         }))
       } else {
+        await request.ga.event({
+          category: 'Score',
+          action: 'Error'
+        })
         return h.view('500')
       }
     } catch {
+      await request.ga.event({
+        category: 'Score',
+        action: 'Error'
+      })
       return h.view('500')
     }
   }
