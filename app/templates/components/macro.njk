@@ -1,4 +1,4 @@
 {% macro crumbToken(crumb) %}
   <input type="hidden" name="crumb" id="crumb"
-         value="{{ crumb }}" />
+         value="{{ crumb }}"  autocomplete="off" />
 {% endmacro %}
