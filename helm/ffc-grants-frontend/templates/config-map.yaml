@@ -14,5 +14,6 @@ data:
   CONTACT_DETAILS_QUEUE_ADDRESS: {{ .Values.container.contactDetailsQueueAddress | quote }}
   BACKEND_POLLING_HOST: {{ .Values.container.backendPollingHost | quote }}
   POLLING_INTERVAL: {{ .Values.container.pollingInterval | quote }}
-  POLLING_RETRIES: {{ .Values.container.pollingRetries | quote }}
+  POLLING_RETRIES: {{ .Values.container.pollingRetries | quote }} 
+  APPINSIGHTS_CLOUDROLE: {{ .Values.name }}
 {{- end -}}
