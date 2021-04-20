@@ -14,7 +14,7 @@ module.exports = {
     request.yar.reset()
     await request.ga.event({
       category: 'Session',
-      action: 'Start Clicked'
+      action: 'Start'
     })
     return h.view('home', createModel())
   }
