@@ -5,7 +5,7 @@ function createModel (errorMessage, data) {
   return {
     backLink: '/business-details',
     radios: {
-      classes: '',
+      classes: 'govuk-radios--inline',
       idPrefix: 'applying',
       name: 'applying',
       fieldset: {
