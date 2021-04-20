@@ -4,7 +4,7 @@ const Joi = require('joi')
 const schema = Joi.object({
   cookiePassword: Joi.string().default('dummycookiepassworddummycookiepassword'),
   googleTagManagerKey: Joi.string().default('GTM-WJ5C78H'),
-  googleTagManagerServerKey: Joi.string().default('GTM-WJ5C78H'),
+  googleTagManagerServerKey: Joi.string().default('UA-179628664-4'),
   cookieOptions: Joi.object({
     ttl: Joi.number().default(1000 * 60 * 60 * 24 * 365),
     encoding: Joi.string().valid('base64json').default('base64json'),
