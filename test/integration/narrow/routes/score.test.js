@@ -58,7 +58,62 @@ describe('Score page', () => {
     crumCookie = getCrumbCookie(response)
     expect(response.result).toContain(crumCookie[1])
   })
-  it('should load page with sucess', async () => {
+
+  it('should load page with error when wrong response from scoring service', async () => {
+    jest.mock('@hapi/wreck')
+    const options = {
+      method: 'GET',
+      url: '/score'
+    }
+    const wreckResponse = {
+      payload: { desirability: null },
+      res: {
+        statusCode: 500
+      }
+    }
+    Wreck.get = jest.fn(async function (url, type) {
+      return wreckResponse
+    })
+    const response = await server.inject(options)
+    expect(response.statusCode).toBe(200)
+    const header = getCookieHeader(response)
+    expect(header.length).toBe(2)
+    crumCookie = getCrumbCookie(response)
+    expect(response.result).toContain(crumCookie[1])
+  })
+  it('should load page with error when can\'t connect scoring service', async () => {
+    jest.mock('@hapi/wreck')
+    const options = {
+      method: 'GET',
+      url: '/score'
+    }
+    Wreck.get = jest.fn(async function (url, type) {
+      throw new Error('can\'t reach')
+    })
+    const response = await server.inject(options)
+    expect(response.statusCode).toBe(200)
+    const header = getCookieHeader(response)
+    expect(header.length).toBe(2)
+    crumCookie = getCrumbCookie(response)
+    expect(response.result).toContain(crumCookie[1])
+  })
+  it('should load page with error getScore return null', async () => {
+    jest.mock('@hapi/wreck')
+    const options = {
+      method: 'GET',
+      url: '/score'
+    }
+    Wreck.get = jest.fn(async function (url, type) {
+      return null
+    })
+    const response = await server.inject(options)
+    expect(response.statusCode).toBe(200)
+    const header = getCookieHeader(response)
+    expect(header.length).toBe(2)
+    crumCookie = getCrumbCookie(response)
+    expect(response.result).toContain(crumCookie[1])
+  })
+  it('should load page with sucess High', async () => {
     jest.mock('@hapi/wreck')
     const options = {
       method: 'GET',
@@ -80,6 +135,56 @@ describe('Score page', () => {
     crumCookie = getCrumbCookie(response)
     expect(response.result).toContain(crumCookie[1])
     const responseScoreMessage = 'This means your project has a high chance of getting funding.'
+    expect(response.payload).toContain(responseScoreMessage)
+  })
+  it('should load page with sucess Medium', async () => {
+    jest.mock('@hapi/wreck')
+    const options = {
+      method: 'GET',
+      url: '/score'
+    }
+    scoreData.desirability.overallRating.band = 'Average'
+    const wreckResponse = {
+      payload: scoreData,
+      res: {
+        statusCode: 200
+      }
+    }
+    Wreck.get = jest.fn(async function (url, type) {
+      return wreckResponse
+    })
+    const response = await server.inject(options)
+    expect(response.statusCode).toBe(200)
+    const header = getCookieHeader(response)
+    expect(header.length).toBe(3)
+    crumCookie = getCrumbCookie(response)
+    expect(response.result).toContain(crumCookie[1])
+    const responseScoreMessage = 'This means your project has a medium chance of getting funding.'
+    expect(response.payload).toContain(responseScoreMessage)
+  })
+  it('should load page with sucess Low', async () => {
+    jest.mock('@hapi/wreck')
+    const options = {
+      method: 'GET',
+      url: '/score'
+    }
+    scoreData.desirability.overallRating.band = 'Low'
+    const wreckResponse = {
+      payload: scoreData,
+      res: {
+        statusCode: 200
+      }
+    }
+    Wreck.get = jest.fn(async function (url, type) {
+      return wreckResponse
+    })
+    const response = await server.inject(options)
+    expect(response.statusCode).toBe(200)
+    const header = getCookieHeader(response)
+    expect(header.length).toBe(3)
+    crumCookie = getCrumbCookie(response)
+    expect(response.result).toContain(crumCookie[1])
+    const responseScoreMessage = 'This means your project has a low chance of getting funding.'
     expect(response.payload).toContain(responseScoreMessage)
   })
   it('redirects to project business details page', async () => {

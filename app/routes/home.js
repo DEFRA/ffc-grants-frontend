@@ -10,8 +10,12 @@ function createModel () {
 module.exports = {
   method: 'GET',
   path: '/start',
-  handler: (request, h) => {
+  handler: async (request, h) => {
     request.yar.reset()
+    await request.ga.event({
+      category: 'Session',
+      action: 'Start'
+    })
     return h.view('home', createModel())
   }
 }

@@ -71,8 +71,12 @@ module.exports = [{
         async: Joi.boolean().default(false)
       })
     },
-    handler: (request, h) => {
+    handler: async (request, h) => {
       updatePolicy(request, h, request.payload.analytics)
+      await request.ga.event({
+        category: 'Analytics',
+        action: request.payload.analytics ? 'Accepted' : 'Rejected'
+      })
       if (request.payload.async) {
         return h.response('ok')
       }
