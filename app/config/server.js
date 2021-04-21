@@ -18,7 +18,6 @@ const schema = Joi.object({
     role: Joi.string().default('ffc-grants-frontend')
   }
 })
-
 // Build config
 const config = {
   cookiePassword: process.env.COOKIE_PASSWORD,
