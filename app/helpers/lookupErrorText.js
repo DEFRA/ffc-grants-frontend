@@ -50,8 +50,6 @@ const errors = {
   'error.mobile.string.pattern.base': 'Enter a telephone number, like 01632 960 001, 07700 900 982 or +44 0808 157 0192',
   'error.address1.string.empty': 'Enter line 1 of your address',
   'error.address1.any.required': 'Enter line 1 of your address',
-  'error.address2.string.empty': 'Enter line 2 of your address',
-  'error.address2.any.required': 'Enter line 2 of your address',
   'error.town.string.empty': 'Enter your town',
   'error.town.any.required': 'Enter your town',
   'error.county.string.empty': 'Select your county',
