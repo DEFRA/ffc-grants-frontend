@@ -1,0 +1,53 @@
+{% extends '.layout.njk' %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+{% from "./components/macro.njk" import crumbToken %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+    text: "Back",
+    href: backLink
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      {{ crumbToken(crumb) }}
+      <h1 class="govuk-heading-xl">Next Steps</h1>
+      <h2 class="govuk-heading-m">
+        <span>1.
+        </span>
+        Submit your details
+      </h2>
+      <p class="govuk-body">
+        Submit your details to the RPA (you should only do this once). You’ll get an email with your score and answers, and a reference number.
+      </p>
+      <h2 class="govuk-heading-m">
+        <span>2.
+        </span>
+        RPA will email you when applications open
+      </h2>
+      <p class="govuk-body">
+        RPA will be in touch when the full application period opens. They’ll give you the application form and any guidance you need to submit a full application.
+      </p><br/><br/>
+      {{ govukWarningText({
+        html: "<h2 class='govuk-heading-m'>You must not start the project.</h2>",
+        iconFallbackText: "Warning"
+      }) }}
+      <div class="govuk-body">
+        Starting the project or committing to any costs (such as placing orders) before you receive a funding agreement will invalidate your application.
+        <p class="govuk-body">Before you start the project, you can:</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li>get quotes from suppliers</li>
+          <li>apply for planning permission or an abstraction licence</li>
+        </ul>
+        You will not automatically get a grant. The grant is expected to be highly competitive and you are competing against other projects.</div>
+        {{ govukButton({
+          text: "Continue",
+          href: "/business-details"
+        }) }}
+    </div>
+  </div>
+{% endblock %}
