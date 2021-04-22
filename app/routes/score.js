@@ -63,7 +63,7 @@ module.exports = [{
           question.unit = bankQuestion?.unit
           question.pageTitle = bankQuestion.pageTitle
           question.fundingPriorities = bankQuestion.fundingPriorities
-          if (question.key === 'Q20') {
+          if (question.key === 'Q20' || question.key === 'Q15') {
             question.rating.band = ''
           }
           return question
