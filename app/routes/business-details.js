@@ -23,7 +23,7 @@ function createModel (errorMessageList, businessDetails) {
   )
 
   return {
-    backLink: '/score',
+    backLink: '/next-steps',
     inputProjectName: {
       id: 'projectName',
       name: 'projectName',
