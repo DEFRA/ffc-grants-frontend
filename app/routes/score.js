@@ -107,6 +107,6 @@ module.exports = [{
   path: '/score',
   handler: (request, h) => {
     request.yar.set('score-calculated', true)
-    return h.redirect('./business-details')
+    return h.redirect('./next-steps')
   }
 }]
