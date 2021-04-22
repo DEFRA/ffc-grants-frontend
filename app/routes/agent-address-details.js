@@ -6,9 +6,9 @@ const { LIST_COUNTIES } = require('../helpers/all-counties')
 function createModel (errorMessageList, agentAddressDetails) {
   const { address1, address2, town, county, postcode } = agentAddressDetails
 
-  const [address1Error, address2Error, townError, countyError, postcodeError] = fetchListObjectItems(
+  const [address1Error, townError, countyError, postcodeError] = fetchListObjectItems(
     errorMessageList,
-    ['address1Error', 'address2Error', 'townError', 'countyError', 'postcodeError']
+    ['address1Error', 'townError', 'countyError', 'postcodeError']
   )
 
   return {
@@ -30,10 +30,9 @@ function createModel (errorMessageList, agentAddressDetails) {
       name: 'address2',
       classes: 'govuk-input--width-20',
       label: {
-        text: 'Address 2'
+        text: 'Address 2 (optional)'
       },
-      ...(address2 ? { value: address2 } : {}),
-      ...(address2Error ? { errorMessage: { text: address2Error } } : {})
+      ...(address2 ? { value: address2 } : {})
     },
     inputTown: {
       id: 'town',
@@ -101,18 +100,18 @@ module.exports = [
         options: { abortEarly: false },
         payload: Joi.object({
           address1: Joi.string().required(),
-          address2: Joi.string().required(),
+          address2: Joi.string().allow(''),
           town: Joi.string().required(),
           county: Joi.string().required(),
           postcode: Joi.string().regex(POSTCODE_REGEX).trim().required()
         }),
         failAction: (request, h, err) => {
           const [
-            address1Error, address2Error, townError, countyError, postcodeError
-          ] = findErrorList(err, ['address1', 'address2', 'town', 'county', 'postcode'])
+            address1Error, townError, countyError, postcodeError
+          ] = findErrorList(err, ['address1', 'town', 'county', 'postcode'])
 
           const errorMessageList = {
-            address1Error, address2Error, townError, countyError, postcodeError
+            address1Error, townError, countyError, postcodeError
           }
 
           const { address1, address2, town, county, postcode } = request.payload
