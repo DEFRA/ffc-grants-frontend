@@ -50,7 +50,7 @@ describe('Legal status page', () => {
     const postOptions = {
       method: 'POST',
       url: '/legal-status',
-      payload: { legalStatus: 'Other', crumb: crumbToken },
+      payload: { legalStatus: 'None of the above', crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
       }

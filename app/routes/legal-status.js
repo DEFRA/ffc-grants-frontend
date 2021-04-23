@@ -67,7 +67,7 @@ module.exports = [
       },
       handler: (request, h) => {
         request.yar.set('legalStatus', request.payload.legalStatus)
-        return (request.payload.legalStatus === 'Other') ? h.view('./not-eligible', createModelNotEligible()) : h.redirect('./country')
+        return (request.payload.legalStatus === 'None of the above') ? h.view('./not-eligible', createModelNotEligible()) : h.redirect('./country')
       }
     }
   }

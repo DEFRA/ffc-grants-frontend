@@ -39,7 +39,7 @@ describe('Agent address details page', () => {
         address1: 'Address 1',
         address2: 'Address 2',
         town: 'MyTown',
-        county: 'DEVON',
+        county: 'Devon',
         postcode: 'AA1 1AA',
         crumb: crumbToken
       },
