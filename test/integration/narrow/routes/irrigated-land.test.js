@@ -1,21 +1,13 @@
 const { getCookieHeader, getCrumbCookie, crumbToken } = require('./test-helper')
 describe('Irrigated Land page', () => {
   let crumCookie
-  let server
-  const createServer = require('../../../../app/server')
-
-  beforeEach(async () => {
-    server = await createServer()
-    await server.start()
-  })
-
   it('should load page successfully', async () => {
     const options = {
       method: 'GET',
       url: '/irrigated-land'
     }
 
-    const response = await server.inject(options)
+    const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
     const header = getCookieHeader(response)
     expect(header.length).toBe(3)
@@ -31,7 +23,7 @@ describe('Irrigated Land page', () => {
       headers: { cookie: 'crumb=' + crumbToken }
     }
 
-    const postResponse = await server.inject(postOptions)
+    const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
     expect(postResponse.payload).toContain('Enter how many hectares are irrigated currently')
     expect(postResponse.payload).toContain('Enter how many hectares will be irrigated after the project')
@@ -45,7 +37,7 @@ describe('Irrigated Land page', () => {
       headers: { cookie: 'crumb=' + crumbToken }
     }
 
-    const postResponse = await server.inject(postOptions)
+    const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
     expect(postResponse.payload).toContain('Enter how many hectares are irrigated currently')
   })
@@ -58,7 +50,7 @@ describe('Irrigated Land page', () => {
       headers: { cookie: 'crumb=' + crumbToken }
     }
 
-    const postResponse = await server.inject(postOptions)
+    const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
     expect(postResponse.payload).toContain('Enter how many hectares will be irrigated after the project')
   })
@@ -71,7 +63,7 @@ describe('Irrigated Land page', () => {
       headers: { cookie: 'crumb=' + crumbToken }
     }
 
-    const postResponse = await server.inject(postOptions)
+    const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
     expect(postResponse.payload).toContain('Hectare figure can have one decimal place')
   })
@@ -84,7 +76,7 @@ describe('Irrigated Land page', () => {
       headers: { cookie: 'crumb=' + crumbToken }
     }
 
-    const postResponse = await server.inject(postOptions)
+    const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
     expect(postResponse.payload).toContain('Hectare figure can have one decimal place')
   })
@@ -97,7 +89,7 @@ describe('Irrigated Land page', () => {
       headers: { cookie: 'crumb=' + crumbToken }
     }
 
-    const postResponse = await server.inject(postOptions)
+    const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
     expect(postResponse.payload).toContain('Hectare figure can have one decimal place')
   })
@@ -110,7 +102,7 @@ describe('Irrigated Land page', () => {
       headers: { cookie: 'crumb=' + crumbToken }
     }
 
-    const postResponse = await server.inject(postOptions)
+    const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
     expect(postResponse.payload).toContain('Hectare figure can have one decimal place')
   })
@@ -123,7 +115,7 @@ describe('Irrigated Land page', () => {
       headers: { cookie: 'crumb=' + crumbToken }
     }
 
-    const postResponse = await server.inject(postOptions)
+    const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
     expect(postResponse.payload).toContain('Hectare figure can have one decimal place')
   })
@@ -136,7 +128,7 @@ describe('Irrigated Land page', () => {
       headers: { cookie: 'crumb=' + crumbToken }
     }
 
-    const postResponse = await server.inject(postOptions)
+    const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
     expect(postResponse.payload).toContain('Hectare figure can have one decimal place')
   })
@@ -149,12 +141,8 @@ describe('Irrigated Land page', () => {
       headers: { cookie: 'crumb=' + crumbToken }
     }
 
-    const postResponse = await server.inject(postOptions)
+    const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
     expect(postResponse.headers.location).toBe('./irrigation-water-source')
-  })
-
-  afterEach(async () => {
-    await server.stop()
   })
 })

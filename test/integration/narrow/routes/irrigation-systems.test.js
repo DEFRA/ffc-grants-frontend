@@ -1,21 +1,13 @@
 const { getCookieHeader, getCrumbCookie, crumbToken } = require('./test-helper')
 describe('Irrigation syatems page', () => {
   let crumCookie
-  let server
-  const createServer = require('../../../../app/server')
-
-  beforeEach(async () => {
-    server = await createServer()
-    await server.start()
-  })
-
   it('should load page successfully', async () => {
     const options = {
       method: 'GET',
       url: '/irrigation-systems'
     }
 
-    const response = await server.inject(options)
+    const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
     const header = getCookieHeader(response)
     expect(header.length).toBe(3)
@@ -33,7 +25,7 @@ describe('Irrigation syatems page', () => {
       }
     }
 
-    const postResponse = await server.inject(postOptions)
+    const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
     expect(postResponse.payload).toContain('Select one or two options for each question')
   })
@@ -48,7 +40,7 @@ describe('Irrigation syatems page', () => {
       }
     }
 
-    const postResponse = await server.inject(postOptions)
+    const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
     expect(postResponse.payload).toContain('Select one or two options for each question')
   })
@@ -63,7 +55,7 @@ describe('Irrigation syatems page', () => {
       }
     }
 
-    const postResponse = await server.inject(postOptions)
+    const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
     expect(postResponse.headers.location).toBe('./productivity')
   })
@@ -82,12 +74,9 @@ describe('Irrigation syatems page', () => {
       }
     }
 
-    const postResponse = await server.inject(postOptions)
+    const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.payload).toContain('There is a problem')
     expect(postResponse.payload).toContain('Select the systems currently used to irrigate')
     expect(postResponse.payload).toContain('Select the systems that will be used to irrigate')
-  })
-  afterEach(async () => {
-    await server.stop()
   })
 })

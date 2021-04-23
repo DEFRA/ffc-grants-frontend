@@ -1,12 +1,5 @@
 describe('Grant page', () => {
   const { crumbToken } = require('./test-helper')
-  let server
-  const createServer = require('../../../../app/server')
-
-  beforeEach(async () => {
-    server = await createServer()
-    await server.start()
-  })
 
   it('redirects to project-cost if user project-cost has not been saved', async () => {
     const options = {
@@ -14,7 +7,7 @@ describe('Grant page', () => {
       url: '/grant'
     }
 
-    const response = await server.inject(options)
+    const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(302)
     expect(response.headers.location).toBe('./project-cost')
   })
@@ -29,12 +22,8 @@ describe('Grant page', () => {
       }
     }
 
-    const postResponse = await server.inject(postOptions)
+    const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
     expect(postResponse.headers.location).toBe('./remaining-costs')
-  })
-
-  afterEach(async () => {
-    await server.stop()
   })
 })

@@ -6,10 +6,14 @@ describe('Score page', () => {
   const { getCookieHeader, getCrumbCookie, crumbToken } = require('./test-helper')
   const createServer = require('../../../../app/server')
   const Wreck = require('@hapi/wreck')
-
+  const senders = require('../../../../app/messaging/senders')
   beforeEach(async () => {
+    global.__SERVER__.stop()
     jest.mock('../../../../app/messaging')
+    jest.mock('../../../../app/messaging/senders')
     jest.mock('ffc-messaging')
+    senders.sendProjectDetails = jest.fn(async function (message, id) {
+    })
     server = await createServer()
     await server.start()
   })

@@ -1,13 +1,6 @@
 const { getCookieHeader, getCrumbCookie, crumbToken } = require('./test-helper')
 describe('Project and business details page', () => {
   let crumCookie
-  let server
-  const createServer = require('../../../../app/server')
-
-  beforeEach(async () => {
-    server = await createServer()
-    await server.start()
-  })
 
   it('should load page successfully', async () => {
     const options = {
@@ -15,7 +8,7 @@ describe('Project and business details page', () => {
       url: '/business-details'
     }
 
-    const response = await server.inject(options)
+    const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
     const header = getCookieHeader(response)
     expect(header.length).toBe(3)
@@ -33,7 +26,7 @@ describe('Project and business details page', () => {
       }
     }
 
-    const postResponse = await server.inject(postOptions)
+    const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
     expect(postResponse.payload).toContain('Enter a project name')
     expect(postResponse.payload).toContain('Enter a business name')
@@ -54,7 +47,7 @@ describe('Project and business details page', () => {
       }
     }
 
-    const postResponse = await server.inject(postOptions)
+    const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
     expect(postResponse.payload).toContain('Number of employees must be a whole number, like 305')
   })
@@ -72,7 +65,7 @@ describe('Project and business details page', () => {
       }
     }
 
-    const postResponse = await server.inject(postOptions)
+    const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
     expect(postResponse.payload).toContain('Number of employees must be a whole number, like 305')
   })
@@ -90,7 +83,7 @@ describe('Project and business details page', () => {
       }
     }
 
-    const postResponse = await server.inject(postOptions)
+    const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
     expect(postResponse.payload).toContain('Number of employees must be a whole number, like 305')
   })
@@ -108,7 +101,7 @@ describe('Project and business details page', () => {
       }
     }
 
-    const postResponse = await server.inject(postOptions)
+    const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
     expect(postResponse.payload).toContain('Business turnover must be a whole number, like 100000')
   })
@@ -126,7 +119,7 @@ describe('Project and business details page', () => {
       }
     }
 
-    const postResponse = await server.inject(postOptions)
+    const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
     expect(postResponse.payload).toContain('Business turnover must be a whole number, like 100000')
   })
@@ -144,7 +137,7 @@ describe('Project and business details page', () => {
       }
     }
 
-    const postResponse = await server.inject(postOptions)
+    const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
     expect(postResponse.payload).toContain('Business turnover must be a whole number, like 100000')
   })
@@ -162,7 +155,7 @@ describe('Project and business details page', () => {
       }
     }
 
-    const postResponse = await server.inject(postOptions)
+    const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
     expect(postResponse.payload).toContain('SBI number must have 9 characters, like 011115678')
   })
@@ -180,7 +173,7 @@ describe('Project and business details page', () => {
       }
     }
 
-    const postResponse = await server.inject(postOptions)
+    const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
     expect(postResponse.payload).toContain('SBI number must have 9 characters, like 011115678')
   })
@@ -198,7 +191,7 @@ describe('Project and business details page', () => {
       }
     }
 
-    const postResponse = await server.inject(postOptions)
+    const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
     expect(postResponse.payload).toContain('SBI number must have 9 characters, like 011115678')
   })
@@ -216,7 +209,7 @@ describe('Project and business details page', () => {
       }
     }
 
-    const postResponse = await server.inject(postOptions)
+    const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
     expect(postResponse.payload).toContain('SBI number must have 9 characters, like 011115678')
   })
@@ -237,7 +230,7 @@ describe('Project and business details page', () => {
       }
     }
 
-    const postResponse = await server.inject(postOptions)
+    const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
     expect(postResponse.headers.location).toBe('./applying')
   })
@@ -259,12 +252,8 @@ describe('Project and business details page', () => {
       }
     }
 
-    const postResponse = await server.inject(postOptions)
+    const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
     expect(postResponse.headers.location).toBe('./applying')
-  })
-
-  afterEach(async () => {
-    await server.stop()
   })
 })
