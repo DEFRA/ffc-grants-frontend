@@ -3,6 +3,7 @@
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/error-message/macro.njk" import govukErrorMessage %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "./components/macro.njk" import crumbToken %}
 
 {% block content %}
   <div class="govuk-grid-row">
@@ -15,8 +16,8 @@
         }) }}
       {% endif %}
 
-      <form method="POST" action="/login" novalidate>
-        <input type="hidden" name="crumb" value="{{crumb}}" />
+      <form method="POST" action="/login" autocomplete="off" novalidate>
+        {{ crumbToken(crumb)}}
         <div class="govuk-form-group {{ "govuk-form-group--error" if errorMessage }}">
           {{ govukInput(usernameInput) }}
           {{ govukInput(passwordInput) }}
