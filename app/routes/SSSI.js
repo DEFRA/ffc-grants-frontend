@@ -1,7 +1,7 @@
 const Joi = require('joi')
 const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
 
-function createModel(errorMessage, data) {
+function createModel (errorMessage, data) {
   return {
     backLink: '/abstraction-licence',
     radios: {

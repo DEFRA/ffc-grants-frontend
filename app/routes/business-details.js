@@ -27,10 +27,10 @@ function createModel (errorMessageList, businessDetails) {
     inputProjectName: {
       id: 'projectName',
       name: 'projectName',
-      classes: 'govuk-input--width-20',
+      classes: '',
       label: {
         text: 'Project name',
-        classes: 'govuk-label--m',
+        classes: 'govuk-label',
         isPageHeading: true
       },
       hint: {
@@ -42,10 +42,10 @@ function createModel (errorMessageList, businessDetails) {
     inputBusinessName: {
       id: 'businessName',
       name: 'businessName',
-      classes: 'govuk-input--width-20',
+      classes: '',
       label: {
         text: 'Business name',
-        classes: 'govuk-label--m',
+        classes: 'govuk-label',
         isPageHeading: true
       },
       hint: {
@@ -60,7 +60,7 @@ function createModel (errorMessageList, businessDetails) {
       classes: 'govuk-input--width-10',
       label: {
         text: 'Number of employees',
-        classes: 'govuk-label--m',
+        classes: 'govuk-label',
         isPageHeading: true
       },
       hint: {
@@ -78,7 +78,7 @@ function createModel (errorMessageList, businessDetails) {
       },
       label: {
         text: 'Business turnover (£)',
-        classes: 'govuk-label--m',
+        classes: 'govuk-label',
         isPageHeading: true
       },
       ...(businessTurnover ? { value: businessTurnover } : {}),
@@ -90,7 +90,7 @@ function createModel (errorMessageList, businessDetails) {
       classes: 'govuk-input--width-10',
       label: {
         text: 'Single Business Identifier (SBI)',
-        classes: 'govuk-label--m',
+        classes: 'govuk-label',
         isPageHeading: true
       },
       hint: {

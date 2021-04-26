@@ -16,13 +16,13 @@
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
-    <h1 class="govuk-heading-l">Project and business details</h1>
+    <h1 class="govuk-heading-l">Business details</h1>
       <form method="POST" action="/business-details" autocomplete="off" novalidate>
-        {{ crumbToken(crumb)}}
-        {{ govukInput(inputProjectName) }}
-        {{ govukInput(inputBusinessName) }}
-        {{ govukInput(inputNumberEmployees) }}
-        {{ govukInput(inputBusinessTurnover) }}
+        {{ crumbToken(crumb)}}<br/>
+        {{ govukInput(inputProjectName) }}<br/>
+        {{ govukInput(inputBusinessName) }}<br/>
+        {{ govukInput(inputNumberEmployees) }}<br/>
+        {{ govukInput(inputBusinessTurnover) }}<br/>
         {{ govukInput(inputSbi) }}
         {{ govukButton({
           text: "Continue"

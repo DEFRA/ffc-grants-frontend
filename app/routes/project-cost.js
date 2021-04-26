@@ -21,8 +21,8 @@ function createModel (errorMessage, projectCost, projectItemsList) {
         html: `
           You can only apply for a grant of up to 40% of the estimated costs.
           <br/>Do not include VAT.
-          <br/><br/>Pounds
-          <br/>For example 95000`
+          <br/><br/><span class="govuk-label">Pounds</span>
+          For example 95000`
       },
       value: projectCost,
       ...(errorMessage ? { errorMessage: { text: errorMessage } } : {})
