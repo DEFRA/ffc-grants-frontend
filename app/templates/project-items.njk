@@ -20,7 +20,7 @@
     <span id="project-items-hint" class="govuk-hint">
       The minimum grant you can apply for is £35,000 (40% of £87,500).<br/>The maximum grant is £1 million.
     </span>
-      <form method="POST" action="/project-items" novalidate>
+      <form method="POST" action="/project-items" autocomplete="off" novalidate>
         {{ crumbToken(crumb)}}
         {{ govukCheckboxes(checkboxesInfrastucture) }}
         {{ govukCheckboxes(checkboxesEquipment) }}

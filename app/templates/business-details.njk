@@ -17,7 +17,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
     <h1 class="govuk-heading-l">Business details</h1>
-      <form method="POST" action="/business-details" novalidate>
+      <form method="POST" action="/business-details" autocomplete="off" novalidate>
         {{ crumbToken(crumb)}}<br/>
         {{ govukInput(inputProjectName) }}<br/>
         {{ govukInput(inputBusinessName) }}<br/>

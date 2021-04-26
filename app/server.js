@@ -121,5 +121,5 @@ async function createServer () {
 
   return server
 }
-
+require('./services/app-insights').setup()
 module.exports = createServer

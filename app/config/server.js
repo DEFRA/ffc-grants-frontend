@@ -12,9 +12,12 @@ const schema = Joi.object({
     isHttpOnly: Joi.bool().default(true),
     clearInvalid: Joi.bool().default(false),
     strictHeader: Joi.bool().default(true)
-  })
+  }),
+  appInsights: {
+    key: Joi.string(),
+    role: Joi.string().default('ffc-grants-frontend')
+  }
 })
-
 // Build config
 const config = {
   cookiePassword: process.env.COOKIE_PASSWORD,
@@ -27,6 +30,10 @@ const config = {
     isHttpOnly: true,
     clearInvalid: false,
     strictHeader: true
+  },
+  appInsights: {
+    key: process.env.APPINSIGHTS_INSTRUMENTATIONKEY,
+    role: process.env.APPINSIGHTS_CLOUDROLE
   }
 }
 
