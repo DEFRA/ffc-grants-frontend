@@ -25,7 +25,7 @@ module.exports = {
       output: {
         titleText: 'Details submitted',
         html: `Your reference number<br><strong>${confirmationId}</strong>`,
-        surveyLink: '#'
+        surveyLink: 'https://defragroup.eu.qualtrics.com/jfe/form/SV_e9fFpJ6tySfdHYa'
       }
     })
   }
