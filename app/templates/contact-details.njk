@@ -16,7 +16,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <h1 class="govuk-heading-l">{{ heading }}</h1>
-      <form method="POST" action="/contact-details" novalidate>
+      <form method="POST" action="/contact-details" autocomplete="off" novalidate>
         {{ crumbToken(crumb)}}
         {{ govukInput(emailInput) }}
         {{ govukButton({

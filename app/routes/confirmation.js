@@ -8,7 +8,7 @@ module.exports = {
   handler: async (request, h) => {
     const confirmationId = formatApplicationCode(request.yar.id)
     try {
-      await senders.sendContactDetails(createMsg.getContactDetails(request, confirmationId), request.yar.id)
+      await senders.sendContactDetails(createMsg.getAllDetails(request, confirmationId), request.yar.id)
     } catch (err) {
       await request.ga.event({
         category: 'Confirmation',

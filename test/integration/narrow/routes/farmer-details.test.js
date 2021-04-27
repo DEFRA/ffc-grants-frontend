@@ -1,21 +1,13 @@
 const { getCookieHeader, getCrumbCookie, crumbToken } = require('./test-helper')
 describe('Farmer details page', () => {
   let crumCookie
-  let server
-  const createServer = require('../../../../app/server')
-
-  beforeEach(async () => {
-    server = await createServer()
-    await server.start()
-  })
-
   it('should load page successfully', async () => {
     const options = {
       method: 'GET',
       url: '/farmer-details'
     }
 
-    const response = await server.inject(options)
+    const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
     const header = getCookieHeader(response)
     expect(header.length).toBe(3)
@@ -31,7 +23,7 @@ describe('Farmer details page', () => {
       headers: { cookie: 'crumb=' + crumbToken }
     }
 
-    const postResponse = await server.inject(postOptions)
+    const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
     expect(postResponse.payload).toContain('Enter your first name')
     expect(postResponse.payload).toContain('Enter your last name')
@@ -48,7 +40,7 @@ describe('Farmer details page', () => {
       headers: { cookie: 'crumb=' + crumbToken }
     }
 
-    const postResponse = await server.inject(postOptions)
+    const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
     expect(postResponse.payload).toContain('Name must only include letters, hyphens and apostrophes')
   })
@@ -64,7 +56,7 @@ describe('Farmer details page', () => {
       headers: { cookie: 'crumb=' + crumbToken }
     }
 
-    const postResponse = await server.inject(postOptions)
+    const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
     expect(postResponse.payload).toContain('Name must only include letters, hyphens and apostrophes')
   })
@@ -81,7 +73,7 @@ describe('Farmer details page', () => {
       headers: { cookie: 'crumb=' + crumbToken }
     }
 
-    const postResponse = await server.inject(postOptions)
+    const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
     expect(postResponse.headers.location).toBe('./farmer-contact-details')
   })
@@ -99,12 +91,8 @@ describe('Farmer details page', () => {
       headers: { cookie: 'crumb=' + crumbToken }
     }
 
-    const postResponse = await server.inject(postOptions)
+    const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
     expect(postResponse.headers.location).toBe('./farmer-contact-details')
-  })
-
-  afterEach(async () => {
-    await server.stop()
   })
 })

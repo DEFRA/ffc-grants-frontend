@@ -17,7 +17,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
     <h1 class="govuk-heading-l">{{pageHeader}}</h1>
-      <form method="POST" action="{{formActionPage}}" novalidate>
+      <form method="POST" action="{{formActionPage}}" autocomplete="off" novalidate>
         <input type="hidden" name="crumb" value="{{crumb}}" />
         {{ govukInput(inputAddress1) }}
         {{ govukInput(inputAddress2) }}

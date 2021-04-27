@@ -16,7 +16,7 @@
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <form method="POST" action="/project-start" novalidate>
+      <form method="POST" action="/project-start" autocomplete="off" novalidate>
         {{ crumbToken(crumb)}}
         {{ govukRadios(radios) }}
 

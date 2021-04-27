@@ -16,7 +16,7 @@ function createModel (errorMessage, errorSummary, data) {
         }
       },
       hint: {
-        text: 'Please select only one or two details'
+        text: 'Select one or two options'
       },
       items: setLabelData(data, ['Change water source', 'Improve irrigation efficiency', 'Increase irrigation', 'Introduce irrigation']),
       ...(errorMessage ? { errorMessage: { text: errorMessage } } : {})

@@ -2,7 +2,7 @@ const Joi = require('joi')
 const { fetchListObjectItems, findErrorList } = require('../helpers/helper-functions')
 const { IRRIGATED_LAND_REGEX } = require('../helpers/regex-validation')
 
-function createModel(irrigatedLandCurrent, irrigatedLandTarget, errorMessageList) {
+function createModel (irrigatedLandCurrent, irrigatedLandTarget, errorMessageList) {
   const [
     irrigatedLandCurrentError,
     irrigatedLandTargetError
