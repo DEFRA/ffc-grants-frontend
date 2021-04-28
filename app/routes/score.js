@@ -3,12 +3,10 @@ const createMsg = require('../messaging/create-msg')
 const Wreck = require('@hapi/wreck')
 const questionBank = require('../config/question-bank')
 const pollingConfig = require('../config/polling')
-function createModel (errorMessage, errorSummary, data) {
+function createModel (data) {
   return {
     backLink: '/collaboration',
-    ...errorSummary ? { errorList: errorSummary } : {},
     ...data,
-    ...(errorMessage ? { errorMessage: { text: errorMessage } } : {}),
     nextlink: '/business-details'
   }
 }
@@ -46,7 +44,7 @@ async function getResult (correlationId) {
 module.exports = [{
   method: 'GET',
   path: '/score',
-  handler: async (request, h) => {
+  handler: async (request, h, err) => {
     try {
       // Always re-calculate our score before rendering this page
       await senders.sendProjectDetails(createMsg.getDesirabilityAnswers(request), request.yar.id)
@@ -80,7 +78,8 @@ module.exports = [{
             scoreChance = 'low'
             break
         }
-        return h.view('score', createModel(null, null, {
+
+        return h.view('score', createModel({
           titleText: msgData.desirability.overallRating.band,
           scoreData: msgData,
           questions: questions,
@@ -93,11 +92,12 @@ module.exports = [{
         })
         return h.view('500')
       }
-    } catch {
+    } catch (err) {
       await request.ga.event({
         category: 'Score',
         action: 'Error'
       })
+      console.error(err)
       return h.view('500')
     }
   }

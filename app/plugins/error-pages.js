@@ -20,7 +20,7 @@ module.exports = {
             return h.view('404').code(statusCode)
           }
 
-          request.log('error', {
+          console.error('error', {
             statusCode: statusCode,
             data: response.data,
             message: response.message
