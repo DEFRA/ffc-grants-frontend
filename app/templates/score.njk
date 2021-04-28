@@ -23,7 +23,7 @@
   }) }}
   {{ govukBackLink({
     text: "Back",
-    href: "/collabration"
+    href: backLink
   }) }}
 
   {% if errorList %}
@@ -38,7 +38,7 @@
 {% if scoreData %}
   <div class="govuk-body">
     <div class="govuk-grid-row">
-      <div class="govuk-grid-column-full">
+      <div class="govuk-grid-column-two-thirds">
         <h1 class="govuk-heading-xl">Your project’s score</h1>
         <div class="govuk-inset-text">
           <p>Based on your answers, your project’s score is:</p>
@@ -62,10 +62,10 @@
   <table class="govuk-table">
     <thead class="govuk-table__head">
         <tr class="govuk-table__row">
-        <th scope="col" class="govuk-table__header app-custom-class">Sections</th>
-        <th scope="col" class="govuk-table__header app-custom-class">Your score</th>
-        <th scope="col" class="govuk-table__header app-custom-class govuk-!-padding-left-9">Funding priorities</th>
-        <th scope="col" class="govuk-table__header app-custom-class">Change answers</th>
+        <th scope="col" class="govuk-table__header govuk-!-width-one-third">Sections</th>
+        <th scope="col" class="govuk-table__header govuk-!-padding-left-3">Your score</th>
+        <th scope="col" class="govuk-table__header  govuk-!-padding-left-8">Funding priorities</th>
+        <th scope="col" class="govuk-table__header">Change answers</th>
       </tr>
     </thead>
     <tbody class="govuk-table__body">
@@ -85,12 +85,12 @@
           </ul>
             {% endfor %}
         </th>
-      <td class="govuk-table__cell govuk-!-padding-left-2">
-       <br><br><br>
+      <td class="govuk-table__cell govuk-!-padding-left-3">
+      <br><br>
         {{ question.rating.band }}
       </td>
       <td class="govuk-table__cell">
-        <div class="govuk-!-margin-9">
+        <div class="govuk-!-padding-left-8">
         <p>{{question.fundingPriorities | safe}}</p>
         </div>
       </td>
