@@ -8,9 +8,7 @@ module.exports = {
       key: 'Q14',
       title: 'The project will:',
       pageTitle: 'Project Details',
-      fundingPriorities: `Improving productivity
-      Reducing environmental impact
-      Security of water supply`,
+      fundingPriorities: ' Improving productivity <br/> Reducing environmental impact <br/> Security of water supply',
       type: 'multiple-answer',
       url: 'project-details',
       answerCount: 2,
