@@ -9,29 +9,11 @@
 
 
 {% block beforeContent %}
-  {{ govukBreadcrumbs({
-    items: [
-      {
-        text: "Home",
-        href: "/"
-      },
-      {
-        text: "Check if you can apply for a Farming Transformation Fund water grant",
-        href: "/"
-      }
-    ]
-  }) }}
   {{ govukBackLink({
     text: "Back",
     href: backLink
   }) }}
 
-  {% if errorList %}
-    {{govukErrorSummary ({
-  "titleText": "There is a problem",
-  "errorList": errorList
-}) }}
-  {% endif %}
 {% endblock %}
 
 {% block content %}
