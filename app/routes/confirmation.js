@@ -8,7 +8,7 @@ module.exports = {
   handler: async (request, h) => {
     const confirmationId = formatApplicationCode(request.yar.id)
     try {
-      await senders.sendContactDetails(createMsg.getContactDetails(request, confirmationId), request.yar.id)
+      await senders.sendContactDetails(createMsg.getAllDetails(request, confirmationId), request.yar.id)
     } catch (err) {
       await request.ga.event({
         category: 'Confirmation',
@@ -25,7 +25,7 @@ module.exports = {
       output: {
         titleText: 'Details submitted',
         html: `Your reference number<br><strong>${confirmationId}</strong>`,
-        surveyLink: '#'
+        surveyLink: 'https://defragroup.eu.qualtrics.com/jfe/form/SV_e9fFpJ6tySfdHYa'
       }
     })
   }

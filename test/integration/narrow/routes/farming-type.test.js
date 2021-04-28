@@ -1,13 +1,6 @@
 const { getCookieHeader, getCrumbCookie, crumbToken } = require('./test-helper')
 describe('Farming type page', () => {
   let crumCookie
-  let server
-  const createServer = require('../../../../app/server')
-
-  beforeEach(async () => {
-    server = await createServer()
-    await server.start()
-  })
 
   it('should load page successfully', async () => {
     const options = {
@@ -15,7 +8,7 @@ describe('Farming type page', () => {
       url: '/farming-type'
     }
 
-    const response = await server.inject(options)
+    const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
     const header = getCookieHeader(response)
     expect(header.length).toBe(3)
@@ -33,7 +26,7 @@ describe('Farming type page', () => {
       }
     }
 
-    const postResponse = await server.inject(postOptions)
+    const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
     expect(postResponse.payload).toContain('Select the crops you are growing')
   })
@@ -48,7 +41,7 @@ describe('Farming type page', () => {
       }
     }
 
-    const postResponse = await server.inject(postOptions)
+    const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
     expect(postResponse.headers.location).toBe('./legal-status')
   })
@@ -63,12 +56,9 @@ describe('Farming type page', () => {
       }
     }
 
-    const postResponse = await server.inject(postOptions)
+    const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.payload).toContain(
       'You cannot apply for a grant from this scheme'
     )
-  })
-  afterEach(async () => {
-    await server.stop()
   })
 })

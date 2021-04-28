@@ -1,21 +1,13 @@
 const { getCookieHeader, getCrumbCookie, crumbToken } = require('./test-helper')
 describe('Irrigated crops page', () => {
   let crumCookie
-  let server
-  const createServer = require('../../../../app/server')
-
-  beforeEach(async () => {
-    server = await createServer()
-    await server.start()
-  })
-
   it('should load page successfully', async () => {
     const options = {
       method: 'GET',
       url: '/irrigated-crops'
     }
 
-    const response = await server.inject(options)
+    const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
     const header = getCookieHeader(response)
     expect(header.length).toBe(3)
@@ -33,7 +25,7 @@ describe('Irrigated crops page', () => {
       }
     }
 
-    const postResponse = await server.inject(postOptions)
+    const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
     expect(postResponse.payload).toContain('Select the main crop you will be irrigating')
   })
@@ -48,12 +40,8 @@ describe('Irrigated crops page', () => {
       }
     }
 
-    const postResponse = await server.inject(postOptions)
+    const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
     expect(postResponse.headers.location).toBe('./irrigated-land')
-  })
-
-  afterEach(async () => {
-    await server.stop()
   })
 })

@@ -1,11 +1,11 @@
 const pageName = 'progress-reference'
-
+const { formatApplicationCode } = require('../helpers/helper-functions')
 module.exports = [
   {
     method: 'GET',
     path: `/${pageName}`,
     handler: async (request, h) => {
-      const confirmationId = `${Math.floor(Math.random() * 100000000)}`
+      const confirmationId = formatApplicationCode(request.yar.id)
       const messageService = await require('../services/message-service')
 
       const inEngland = request.yar.get('inEngland')
