@@ -4,12 +4,10 @@ const protectiveMonitoringServiceSendEvent = require('../services/protective-mon
 const Wreck = require('@hapi/wreck')
 const questionBank = require('../config/question-bank')
 const pollingConfig = require('../config/polling')
-function createModel (errorMessage, errorSummary, data) {
+function createModel (data) {
   return {
     backLink: '/collaboration',
-    ...errorSummary ? { errorList: errorSummary } : {},
     ...data,
-    ...(errorMessage ? { errorMessage: { text: errorMessage } } : {}),
     nextlink: '/business-details'
   }
 }
@@ -52,7 +50,7 @@ module.exports = [{
       collect: true
     }
   },
-  handler: async (request, h) => {
+  handler: async (request, h, err) => {
     try {
       const msgDataToSend = createMsg.getDesirabilityAnswers(request)
 
@@ -89,7 +87,8 @@ module.exports = [{
             scoreChance = 'low'
             break
         }
-        return h.view('score', createModel(null, null, {
+
+        return h.view('score', createModel({
           titleText: msgData.desirability.overallRating.band,
           scoreData: msgData,
           questions: questions,
