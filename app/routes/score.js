@@ -97,13 +97,14 @@ module.exports = [{
       } else {
         throw new Error('Score not received.')
       }
-    } catch (err) {
-      request.log(err)
+    } catch (error) {
+      request.log(error)
       await request.ga.event({
         category: 'Score',
         action: 'Error'
       })
     }
+    request.log(err)
     return h.view('500')
   }
 },
