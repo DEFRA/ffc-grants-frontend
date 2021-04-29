@@ -1,16 +1,5 @@
-const appInsights = require('applicationinsights')
-const client = appInsights.defaultClient
-function logException (request, event) {
-  client.trackException({
-    exception: event.error ?? new Error('unknownn'),
-    properties: {
-      statusCode: request ? request.statusCode : '',
-      sessionId: request ? request.yar.id : '',
-      payload: request ? request.payload : '',
-      request: event.request ?? 'Server Error'
-    }
-  })
-}
+const { logException } = require('../services/app-insights')
+
 module.exports = {
   plugin: {
     name: 'events',
