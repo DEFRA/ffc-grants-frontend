@@ -7,12 +7,16 @@ describe('Score page', () => {
   const createServer = require('../../../../app/server')
   const Wreck = require('@hapi/wreck')
   const senders = require('../../../../app/messaging/senders')
+  const createMsg = require('../../../../app/messaging/create-msg')
   beforeEach(async () => {
     global.__SERVER__.stop()
     jest.mock('../../../../app/messaging')
     jest.mock('../../../../app/messaging/senders')
     jest.mock('ffc-messaging')
     senders.sendProjectDetails = jest.fn(async function (message, id) {
+    })
+    createMsg.getDesirabilityAnswers = jest.fn((request) => {
+      return ''
     })
     server = await createServer()
     await server.start()

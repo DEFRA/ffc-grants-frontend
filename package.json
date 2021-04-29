@@ -37,6 +37,7 @@
     "applicationinsights": "^1.8.10",
     "bcrypt": "^5.0.1",
     "ffc-messaging": "^2.1.1",
+    "ffc-protective-monitoring": "^1.0.0",
     "govuk-frontend": "^3.11.0",
     "joi": "^17.2.1",
     "nunjucks": "^3.2.3"

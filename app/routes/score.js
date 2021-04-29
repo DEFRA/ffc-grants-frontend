@@ -1,5 +1,6 @@
 const senders = require('../messaging/senders')
 const createMsg = require('../messaging/create-msg')
+const protectiveMonitoringServiceSendEvent = require('../services/protective-monitoring-service')
 const Wreck = require('@hapi/wreck')
 const questionBank = require('../config/question-bank')
 const pollingConfig = require('../config/polling')
@@ -46,10 +47,18 @@ async function getResult (correlationId) {
 module.exports = [{
   method: 'GET',
   path: '/score',
+  options: {
+    log: {
+      collect: true
+    }
+  },
   handler: async (request, h) => {
     try {
+      const msgDataToSend = createMsg.getDesirabilityAnswers(request)
+
+      protectiveMonitoringServiceSendEvent(request, request.yar.id, 'FTF-DATA-SCORE-REQUESTED')
       // Always re-calculate our score before rendering this page
-      await senders.sendProjectDetails(createMsg.getDesirabilityAnswers(request), request.yar.id)
+      await senders.sendProjectDetails(msgDataToSend, request.yar.id)
 
       // Poll for backend for results from scoring algorithm
       // If msgData is null then 500 page will be triggered when trying to access object below
@@ -87,19 +96,16 @@ module.exports = [{
           scoreChance: scoreChance
         }))
       } else {
-        await request.ga.event({
-          category: 'Score',
-          action: 'Error'
-        })
-        return h.view('500')
+        throw new Error('Score not received.')
       }
-    } catch {
+    } catch (err) {
+      request.log(err)
       await request.ga.event({
         category: 'Score',
         action: 'Error'
       })
-      return h.view('500')
     }
+    return h.view('500')
   }
 },
 {

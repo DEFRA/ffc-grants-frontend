@@ -90,7 +90,8 @@ async function createServer () {
   )
 
   server.route(require('./routes'))
-
+  server.register(require('./plugins/session'))
+  server.register(require('./plugins/events'))
   server.views({
     engines: {
       njk: {
