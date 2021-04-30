@@ -6,4 +6,9 @@ data:
   FILE_CREATED_TOPIC_ADDRESS: {{ quote .Values.container.fileCreatedTopicAddress }}
   FILE_CREATED_SUBSCRIPTION_ADDRESS: {{ quote .Values.container.fileCreatedSubscriptionAddress }}
   SERVICE_BUS_HOST: {{ quote .Values.container.messageQueueHost }}
+  APPINSIGHTS_CLOUDROLE: {{ quote .Values.name }}
+  BLOB_STORAGE_CONTAINER_NAME: {{ .Values.container.blobStorageContainerName | quote }}
+  SHAREPOINT_SITE_ID: {{ .Values.container.sharePointSiteId | quote }}
+  SHAREPOINT_TENANT_ID: {{ .Values.container.sharePointTenantId | quote }}
+  SHAREPOINT_DOCUMENT_LIBRARY_ID: {{ .Values.container.sharePointDocumentLibraryId | quote }}
 {{- end -}}
