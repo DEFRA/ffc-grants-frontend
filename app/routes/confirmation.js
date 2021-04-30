@@ -16,10 +16,10 @@ module.exports = {
       })
       return h.view('500')
     }
-    protectiveMonitoringServiceSendEvent(request, request.yar.id, 'FTF-JOURNEY-COMPLETED')
+    await protectiveMonitoringServiceSendEvent(request, request.yar.id, 'FTF-JOURNEY-COMPLETED', '0706')
     await request.ga.event({
       category: 'Confirmation',
-      action: 'Success'
+      action: `Success-${confirmationId}`
     })
     return h.view('confirmation', {
       output: {

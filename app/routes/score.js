@@ -1,6 +1,5 @@
 const senders = require('../messaging/senders')
 const createMsg = require('../messaging/create-msg')
-const protectiveMonitoringServiceSendEvent = require('../services/protective-monitoring-service')
 const Wreck = require('@hapi/wreck')
 const questionBank = require('../config/question-bank')
 const pollingConfig = require('../config/polling')
@@ -53,8 +52,6 @@ module.exports = [{
   handler: async (request, h, err) => {
     try {
       const msgDataToSend = createMsg.getDesirabilityAnswers(request)
-
-      protectiveMonitoringServiceSendEvent(request, request.yar.id, 'FTF-DATA-SCORE-REQUESTED')
       // Always re-calculate our score before rendering this page
       await senders.sendProjectDetails(msgDataToSend, request.yar.id)
 
