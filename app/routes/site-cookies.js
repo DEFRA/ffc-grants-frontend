@@ -13,7 +13,7 @@ function createModel (cookiesPolicy = {}, updated = false) {
       ],
       [
         { text: 'crumb' },
-        { text: 'Saves your scross site scripting cookie' },
+        { text: 'Saves your cross site scripting cookie' },
         { text: '1 year' }
       ],
       [
