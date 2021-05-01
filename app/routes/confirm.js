@@ -2,7 +2,7 @@ const Joi = require('joi')
 const { setLabelData } = require('../helpers/helper-functions')
 function createModel (errorMessage) {
   return {
-    backLink: '/farmer-address-details',
+    backLink: './farmer-address-details',
     checkboxConfirm: {
       idPrefix: 'iConfirm',
       name: 'iConfirm',

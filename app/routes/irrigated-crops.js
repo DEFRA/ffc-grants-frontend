@@ -3,7 +3,7 @@ const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/he
 
 const createModel = (errorMessage, data) => ({
 
-  backLink: '/project-details',
+  backLink: './project-details',
   radios: {
     classes: '',
     idPrefix: 'irrigatedCrops',

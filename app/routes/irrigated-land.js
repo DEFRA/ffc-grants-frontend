@@ -11,7 +11,7 @@ function createModel (irrigatedLandCurrent, irrigatedLandTarget, errorMessageLis
     ['irrigatedLandCurrentError', 'irrigatedLandTargetError']
   )
   return {
-    backLink: '/irrigated-crops',
+    backLink: './irrigated-crops',
     currentInput: {
       label: {
         text: 'How much land is currently irrigated per year?',

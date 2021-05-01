@@ -39,7 +39,8 @@
     "ffc-messaging": "^2.1.1",
     "govuk-frontend": "^3.11.0",
     "joi": "^17.2.1",
-    "nunjucks": "^3.2.3"
+    "nunjucks": "^3.2.3",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "clean-webpack-plugin": "^3.0.0",

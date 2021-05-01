@@ -22,7 +22,7 @@
 </div>
   <div class="govuk-grid-row govuk-body">
     <div class="govuk-grid-column-two-thirds">
-      <form method="POST" action="/confirm" autocomplete="off" novalidate="novalidate">
+      <form method="POST" action="./confirm" autocomplete="off" novalidate="novalidate">
         {{ crumbToken(crumb)}}
         {{ govukCheckboxes(checkboxConfirm) }}
         {{ govukButton({

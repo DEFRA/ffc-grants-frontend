@@ -3,7 +3,7 @@ const { setLabelData } = require('../helpers/helper-functions')
 
 function createModel (errorMessage, data) {
   return {
-    backLink: '/business-details',
+    backLink: './business-details',
     radios: {
       classes: 'govuk-radios--inline',
       idPrefix: 'applying',

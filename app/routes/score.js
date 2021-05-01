@@ -5,7 +5,7 @@ const questionBank = require('../config/question-bank')
 const pollingConfig = require('../config/polling')
 function createModel (data) {
   return {
-    backLink: '/collaboration',
+    backLink: './collaboration',
     ...data,
     nextlink: '/business-details'
   }

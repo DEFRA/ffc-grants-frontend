@@ -3,7 +3,7 @@ const Joi = require('joi')
 function createModel (emailAddress, errorMessage) {
   return {
     hideReturn: true,
-    backLink: '/save-progress',
+    backLink: './save-progress',
     heading: 'Your email address',
     emailInput: {
       label: {
