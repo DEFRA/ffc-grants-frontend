@@ -18,7 +18,10 @@ async function createServer () {
     console.log('Login required, enabling authorisation plugin')
     await server.register(require('./plugins/auth'))
   }
-
+  const siteUrl = (process.env.SITE_VERSION ?? '') === '' ? '' : `/${process.env.SITE_VERSION}`
+  if (siteUrl.length > 0) {
+    server.realm.modifiers.route.prefix = siteUrl
+  }
   await server.register(inert)
   await server.register(vision)
   await server.register(require('./plugins/cookies'))
