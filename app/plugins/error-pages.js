@@ -1,7 +1,7 @@
 /*
 * Add an `onPreResponse` listener to return error pages
 */
-
+const appInsights = require('applicationinsights')
 module.exports = {
   plugin: {
     name: 'error-pages',
@@ -19,13 +19,17 @@ module.exports = {
           if (statusCode === 404) {
             return h.view('404').code(statusCode)
           }
-
-          console.error('error', {
+          const err = {
             statusCode: statusCode,
             data: response.data,
             message: response.message
-          })
+          }
+          console.error('error', err)
+          appInsights.trackException(new Error(JSON.parse(err)))
 
+          if (statusCode === 400) {
+            return h.view('400').code(statusCode)
+          }
           // The return the `500` view
           return h.view('500').code(statusCode)
         }

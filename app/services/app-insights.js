@@ -10,4 +10,16 @@ function setup () {
   }
 }
 
-module.exports = { setup }
+function logException (request, event) {
+  const client = appInsights.defaultClient
+  client?.trackException({
+    exception: event.error ?? new Error('unknownn'),
+    properties: {
+      statusCode: request ? request.statusCode : '',
+      sessionId: request ? request.yar.id : '',
+      payload: request ? request.payload : '',
+      request: event.request ?? 'Server Error'
+    }
+  })
+}
+module.exports = { setup, logException }
