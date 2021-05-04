@@ -12,6 +12,7 @@ module.exports = {
   path: '/start',
   handler: async (request, h) => {
     request.yar.reset()
+    console.log(`GOT REQUEST ${request.yar.id}`)
     await request.ga.event({
       category: 'Session',
       action: 'Start'
