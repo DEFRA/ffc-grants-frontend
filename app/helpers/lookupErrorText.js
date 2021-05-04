@@ -67,7 +67,9 @@ const errors = {
   'error.irrigatedLandTarget.string.empty': 'Enter how many hectares will be irrigated after the project',
   'error.irrigatedLandTarget.any.required': 'Enter how many hectares will be irrigated after the project',
   'error.irrigatedLandTarget.string.pattern.base': 'Hectare figure can have one decimal place',
-  'error.sSSI.any.required': 'Select yes if the project directly impacts a Site of Special Scientific Interest'
+  'error.sSSI.any.required': 'Select yes if the project directly impacts a Site of Special Scientific Interest',
+  'error.consentMain.string.empty': 'Please confirm you are happy to be contacted about your application.',
+  'error.consentMain.any.required': 'Please confirm you are happy to be contacted about your application.'
 }
 const lookupErrorText = (key) => {
   return errors[key] || key

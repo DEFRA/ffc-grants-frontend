@@ -12,30 +12,60 @@
   }) }}
 {% endblock %}
 
+{% set checkboxConfirmSub = {
+    idPrefix: consentOptionalData.idPrefix,
+    name: consentOptionalData.name,
+    items: consentOptionalData.items,
+    checked: consentOptionalData.items[0].checked,
+    selected: consentOptionalData.items[0].selected
+  }
+%}
+
+{% set checkboxConfirmMain = {
+    idPrefix: consentMainData.idPrefix,
+    name: consentMainData.name,
+    items: [{
+      value: consentMainData.items[0].value,
+      text: consentMainData.items[0].text,
+      checked: consentMainData.items[0].checked,
+      selected: consentMainData.items[0].selected,
+      conditional: {
+        html: govukCheckboxes(checkboxConfirmSub)
+      }
+    }],
+    errorMessage: consentMainData.errorMessage if (consentMainData.errorMessage) else null
+  }
+%}
+
 {% block content %}
+
+  <div class="govuk-grid-row govuk-body">
     <div class="govuk-grid-column-two-thirds govuk-body">
       <h1 class="govuk-heading-l">Confirm and send</h1>
-<p>I confirm that, to the best of my knowledge, the details I have provided are correct.</p>
-<p>I understand the score was based on the answers I provided.</p>
-<p>I am aware the information I submit will be checked.</p>
-<p>So that we can continue to improve our services and schemes, we may wish to contact you in the future. Please confirm if you are happy for us, or a third party working for us, to contact you.</p>
-</div>
-  <div class="govuk-grid-row govuk-body">
+      <p>I confirm that, to the best of my knowledge, the details I have provided are correct.</p>
+      <p>I understand the score was based on the answers I provided.</p>
+      <p>I am aware the information I submit will be checked.</p>
+      <p>So that we can continue to improve our services and schemes, we may wish to contact you in the future. Please confirm if you are happy for us, or a third party working for us, to contact you.</p>
+    </div>
+
     <div class="govuk-grid-column-two-thirds">
       <form method="POST" action="/confirm" autocomplete="off" novalidate="novalidate">
         {{ crumbToken(crumb)}}
-        {{ govukCheckboxes(checkboxConfirm) }}
+        {{ govukCheckboxes(checkboxConfirmMain) }}
         {{ govukButton({
           text: "Confirm and send"
         }) }}
       </form>
     </div>
   </div>
-    <div class="govuk-grid-row govuk-body">
+
+  <div class="govuk-grid-row govuk-body">
     <div class="govuk-grid-column-two-thirds">
-  <p>The Department for Environment, Food and Rural Affairs (Defra) is the data controller for personal data you give to RPA. For information on how we handle personal data go to GOV.UK and search</p>
-<p>
-<a href="https://www.gov.uk/government/organisations/rural-payments-agency/about/personal-information-charter" target="_blank" rel="noopener noreferrer">Rural Payments Agency personal information charter.</a></p>
-</div>
-</div>
+      <p>
+        The Department for Environment, Food and Rural Affairs (Defra) is the data controller for personal data you give to RPA. For information on how we handle personal data go to GOV.UK and search 
+        <a href="https://www.gov.uk/government/organisations/rural-payments-agency/about/personal-information-charter" target="_blank" rel="noopener noreferrer">Rural Payments Agency personal information charter.</a>
+      </p>
+    </div>
+  </div>
+
 {% endblock %}
