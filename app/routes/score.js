@@ -52,12 +52,32 @@ module.exports = [{
       // Poll for backend for results from scoring algorithm
       // If msgData is null then 500 page will be triggered when trying to access object below
       const msgData = await getResult(request.yar.id)
+      const crop = questionBank.questions.find(question => question.key === 'Q15')
+      const questionObject = {
+        key: crop.key,
+        answers: [
+          {
+            key: crop.key,
+            title: crop.title,
+            input: [{ value: request.yar.get('irrigatedCrops') }]
+          }],
+        title: crop.title,
+        desc: crop.desc ?? '',
+        url: crop.url,
+        order: 15,
+        unit: crop?.unit,
+        pageTitle: crop.pageTitle,
+        fundingPriorities: crop.fundingPriorities
+      }
       if (msgData) {
+        msgData.desirability.questions.push(questionObject)
+
         const questions = msgData.desirability.questions.map(question => {
           const bankQuestion = questionBank.questions.filter(x => x.key === question.key)[0]
           question.title = bankQuestion.title
           question.desc = bankQuestion.desc ?? ''
           question.url = bankQuestion.url
+          question.order = bankQuestion.order
           question.unit = bankQuestion?.unit
           question.pageTitle = bankQuestion.pageTitle
           question.fundingPriorities = bankQuestion.fundingPriorities
@@ -78,11 +98,11 @@ module.exports = [{
             scoreChance = 'low'
             break
         }
-
+        console.log(questions.sort((a, b) => a.order - b.order), 'LLLLLLL')
         return h.view('score', createModel({
           titleText: msgData.desirability.overallRating.band,
           scoreData: msgData,
-          questions: questions,
+          questions: questions.sort((a, b) => a.order - b.order),
           scoreChance: scoreChance
         }))
       } else {
