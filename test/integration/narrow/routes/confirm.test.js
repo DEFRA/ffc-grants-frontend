@@ -15,42 +15,39 @@ describe('Confirm page', () => {
     crumCookie = getCrumbCookie(response)
     expect(response.result).toContain(crumCookie[1])
   })
-  it('should returns error message if not confirmed', async () => {
+
+  it('should return error message if main confirm checkbox (the first) is not selected', async () => {
     const postOptions = {
       method: 'POST',
       url: '/confirm',
-      payload: { iConfirm: false, crumb: crumbToken },
-      headers: {
-        cookie: 'crumb=' + crumbToken
-      }
+      payload: { crumb: crumbToken },
+      headers: { cookie: 'crumb=' + crumbToken }
     }
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Please confirm consent.')
+    expect(postResponse.payload).toContain('Please confirm you are happy to be contacted about your application.')
   })
-  it('should returns error message if null', async () => {
+
+  it('should return error message if null', async () => {
     const postOptions = {
       method: 'POST',
       url: '/confirm',
-      payload: { iConfirm: null, crumb: crumbToken },
-      headers: {
-        cookie: 'crumb=' + crumbToken
-      }
+      payload: { crumb: crumbToken },
+      headers: { cookie: 'crumb=' + crumbToken }
     }
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Please confirm consent.')
+    expect(postResponse.payload).toContain('Please confirm you are happy to be contacted about your application.')
   })
+
   it('should store user response and redirects to confirmation page', async () => {
     const postOptions = {
       method: 'POST',
       url: '/confirm',
-      payload: { crumb: crumbToken, iConfirm: 'I confirm' },
-      headers: {
-        cookie: 'crumb=' + crumbToken
-      }
+      payload: { consentMain: 'CONSENT_MAIN', crumb: crumbToken },
+      headers: { cookie: 'crumb=' + crumbToken }
     }
 
     const postResponse = await global.__SERVER__.inject(postOptions)

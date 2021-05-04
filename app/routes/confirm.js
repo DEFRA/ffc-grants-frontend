@@ -1,5 +1,5 @@
 const Joi = require('joi')
-const { setLabelData } = require('../helpers/helper-functions')
+const { setLabelData, findErrorList } = require('../helpers/helper-functions')
 
 const CONSENT_MAIN = 'CONSENT_MAIN'
 const CONSENT_OPTIONAL = 'CONSENT_OPTIONAL'
@@ -53,14 +53,16 @@ module.exports = [
           consentMain: Joi.string().required(),
           consentOptional: Joi.string().allow('')
         }),
-        failAction: (request, h) => {
+        failAction: (request, h, err) => {
+          const [consentMainError] = findErrorList(err, ['consentMain'])
+
           let { consentMain, consentOptional } = request.payload
           consentMain = (consentMain && CONSENT_MAIN) || ''
           consentOptional = (consentMain && CONSENT_OPTIONAL) || ''
 
           return h.view(
             'confirm',
-            createModel(consentMain, consentOptional, "Please confirm you're happy to be contacted about your application.")
+            createModel(consentMain, consentOptional, consentMainError)
           ).takeover()
         }
       }
