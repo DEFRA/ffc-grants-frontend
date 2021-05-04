@@ -14,7 +14,7 @@ function createModel (errorMessage, data) {
           classes: 'govuk-fieldset__legend--l'
         }
       },
-      items: setLabelData(data, ['Not needed', 'Secured', 'Expected to have by 31 December 2021', 'Won\'t have by 31 December 2021']),
+      items: setLabelData(data, ['Not needed', 'Secured', 'Expected to have by 31 December 2021', 'Will not have by 31 December 2021']),
       ...(errorMessage ? { errorMessage: { text: errorMessage } } : {})
     }
   }
