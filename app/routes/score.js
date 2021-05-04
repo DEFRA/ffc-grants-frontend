@@ -98,11 +98,11 @@ module.exports = [{
             scoreChance = 'low'
             break
         }
-
+        console.log(questions.sort((a, b) => a.order - b.order), 'LLLLLLL')
         return h.view('score', createModel({
           titleText: msgData.desirability.overallRating.band,
           scoreData: msgData,
-          questions: questions.sort(),
+          questions: questions.sort((a, b) => a.order - b.order),
           scoreChance: scoreChance
         }))
       } else {
