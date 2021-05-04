@@ -29,19 +29,6 @@ describe('Confirm page', () => {
     expect(postResponse.payload).toContain('Please confirm you are happy to be contacted about your application.')
   })
 
-  it('should return error message if null', async () => {
-    const postOptions = {
-      method: 'POST',
-      url: '/confirm',
-      payload: { crumb: crumbToken },
-      headers: { cookie: 'crumb=' + crumbToken }
-    }
-
-    const postResponse = await global.__SERVER__.inject(postOptions)
-    expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Please confirm you are happy to be contacted about your application.')
-  })
-
   it('should store user response and redirects to confirmation page', async () => {
     const postOptions = {
       method: 'POST',
