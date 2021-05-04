@@ -13,7 +13,7 @@ function createModel (errorMessageList, farmerContactDetails) {
   return {
     backLink: './farmer-details',
     pageHeader: 'Farmer\'s contact details',
-    formActionPage: '/farmer-contact-details',
+    formActionPage: './farmer-contact-details',
     inputEmail: {
       id: 'email',
       name: 'email',

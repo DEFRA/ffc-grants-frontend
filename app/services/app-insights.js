@@ -22,4 +22,8 @@ function logException (request, event) {
     }
   })
 }
-module.exports = { setup, logException }
+module.exports = {
+  defaultClient: appInsights.defaultClient,
+  setup,
+  logException
+}

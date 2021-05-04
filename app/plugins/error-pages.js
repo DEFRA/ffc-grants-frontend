@@ -1,7 +1,8 @@
 /*
 * Add an `onPreResponse` listener to return error pages
 */
-const appInsights = require('applicationinsights')
+const appInsights = require('../services/app-insights')
+
 module.exports = {
   plugin: {
     name: 'error-pages',
@@ -25,7 +26,7 @@ module.exports = {
             message: response.message
           }
           console.error('error', err)
-          appInsights.trackException(new Error(JSON.parse(err)))
+          appInsights.defaultClient?.trackException(new Error(JSON.stringify(err)))
 
           if (statusCode === 400) {
             return h.view('400').code(statusCode)

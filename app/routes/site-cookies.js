@@ -80,7 +80,7 @@ module.exports = [{
       if (request.payload.async) {
         return h.response('ok')
       }
-      return h.redirect('/site-cookies?updated=true')
+      return h.redirect('./site-cookies?updated=true')
     }
   }
 }]
