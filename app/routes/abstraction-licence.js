@@ -3,7 +3,7 @@ const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/he
 
 function createModel (errorMessage, data) {
   return {
-    backLink: '/planning-permission',
+    backLink: './planning-permission',
     radios: {
       classes: '',
       idPrefix: 'abstractionLicence',

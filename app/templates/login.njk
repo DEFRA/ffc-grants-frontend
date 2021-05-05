@@ -16,7 +16,7 @@
         }) }}
       {% endif %}
 
-      <form method="POST" action="/login" autocomplete="off" novalidate>
+      <form method="POST" action="./login" autocomplete="off" novalidate>
         {{ crumbToken(crumb)}}
         <div class="govuk-form-group {{ "govuk-form-group--error" if errorMessage }}">
           {{ govukInput(usernameInput) }}

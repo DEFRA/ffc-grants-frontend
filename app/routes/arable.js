@@ -2,7 +2,7 @@ const Joi = require('joi')
 
 function createModel (errorMessage) {
   return {
-    backLink: '/',
+    backLink: './',
     radios: {
       classes: 'govuk-radios--inline',
       idPrefix: 'isArable',
@@ -31,7 +31,7 @@ function createModel (errorMessage) {
 
 function createModelNotEligible () {
   return {
-    backLink: '/arable',
+    backLink: './arable',
     sentences: [
       'This is only for projects for an arable or horticultural farming businesses.'
     ]

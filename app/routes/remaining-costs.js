@@ -3,7 +3,7 @@ const { setLabelData, errorExtractor, getErrorMessage, formatUKCurrency } = requ
 
 function createModel (errorMessage, data, formattedRemainingCost) {
   return {
-    backLink: '/project-cost',
+    backLink: './project-cost',
     radios: {
       classes: 'govuk-radios--inline',
       idPrefix: 'payRemainingCosts',
@@ -26,7 +26,7 @@ function createModel (errorMessage, data, formattedRemainingCost) {
 
 function createModelNotEligible () {
   return {
-    backLink: '/remaining-costs',
+    backLink: './remaining-costs',
     messageContent:
       'It is not possible to use public money towards the project costs when applying for a grant.'
   }

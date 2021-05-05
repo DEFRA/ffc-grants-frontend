@@ -13,7 +13,7 @@ function createModel (errorMessageList, farmerDetails, backLink) {
   return {
     backLink,
     pageHeader: 'Farmer\'s details',
-    formActionPage: '/farmer-details',
+    formActionPage: './farmer-details',
     selectTitle: {
       id: 'title',
       name: 'title',
@@ -63,7 +63,7 @@ module.exports = [
       }
 
       const applying = request.yar.get('applying')
-      const backLink = applying === 'Agent' ? '/agent-address-details' : '/applying'
+      const backLink = applying === 'Agent' ? './agent-address-details' : './applying'
 
       return h.view(
         'model-farmer-agent-details',
@@ -95,7 +95,7 @@ module.exports = [
           const farmerDetails = { title, firstName, lastName }
 
           const applying = request.yar.get('applying')
-          const backLink = applying === 'Agent' ? '/agent-address-details' : '/applying'
+          const backLink = applying === 'Agent' ? './agent-address-details' : './applying'
 
           return h.view('model-farmer-agent-details', createModel(errorMessageList, farmerDetails, backLink)).takeover()
         }
