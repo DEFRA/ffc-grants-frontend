@@ -1,6 +1,6 @@
 const POSTCODE_REGEX = /^[a-z]{1,2}\d[a-z\d]?\s\d[a-z]{2}$/i
 const PHONE_REGEX = /^[0-9\t-+()]+$/
-const NAME_REGEX = /^[^0-9]+$/
+const NAME_REGEX = /^[a-zA-Z' -]+$/
 const NUMBER_REGEX = /^\d+$/
 const IRRIGATED_LAND_REGEX = /^\d{1,3}([.]\d?)?$/
 
