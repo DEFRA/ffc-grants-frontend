@@ -22,11 +22,11 @@
         <div class="govuk-inset-text">
           <p>Based on your answers, your project’s score is:</p>
           <h2 class="govuk-heading-m">{{scoreData.desirability.overallRating.band}}</h2>
-          <p>This means your project has a {{scoreChance}} chance of getting funding.</p>
+          <p>This means your project {{scoreChance}} be successful.</p>
         </div>
         <h1 class="govuk-heading-m">Scoring</h1>
         <p class="govuk-body"><span class="govuk-!-font-weight-bold">Strong:</span>
-          Your project seems like it’s a strong fit with the funding priorities. Based on your answers, a grant application seems likely to be successful.</p>
+          Your project seems like it’s a strong fit with the funding priorities. Based on your answers, a grant application seems likely to be successful. </p>
         <p class="govuk-body"><span class="govuk-!-font-weight-bold">Average:</span>
           Your project seems like it’s an average fit with the funding priorities. Based on your answers, a grant application seems like it might be successful.</p>
         <p class="govuk-body"><span class="govuk-!-font-weight-bold">Weak:</span>
@@ -49,7 +49,7 @@
     </thead>
     <tbody class="govuk-table__body">
 
-    {% for question in scoreData.desirability.questions %}
+    {% for question in questions %}
       <tr class="govuk-table__row">
         <th scope="row" class="govuk-table__header">
         {{question.pageTitle}}

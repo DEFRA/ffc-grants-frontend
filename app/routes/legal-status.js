@@ -37,7 +37,7 @@ function createModelNotEligible () {
   return {
     backLink: './legal-status',
     messageContent:
-      'This is only open to a business with a legal status of: <ul class="govuk-list govuk-list--bullet"><li>Charity</li><li>Community interest organisation</li><li>Limited company</li><li>Limited liability partnership</li><li>Partnership</li><li>Public organisation</li><li>Sole Trader</li><li>Trust</li></ul><p class="govuk-body">Other types of business may be supported in future schemes.</p>'
+      'This is only open to a business with a legal status of: <ul class="govuk-list govuk-list--bullet"><li>Sole trader</li><li>Partnership</li><li>Ltd company</li><li>Charity</li><li>Public organisation</li><li>Trust</li><li>Limited liability partnership</li><li>Community interest company</li><li>Local authority</li></ul> <p class="govuk-body">Other types of business may be supported in future schemes.</p>'
   }
 }
 
