@@ -20,14 +20,12 @@ describe('Project cost page', () => {
       method: 'POST',
       url: '/project-cost',
       payload: { projectCost: '', crumb: crumbToken },
-      headers: {
-        cookie: 'crumb=' + crumbToken
-      }
+      headers: { cookie: 'crumb=' + crumbToken }
     }
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Enter the estimated cost for the items as a whole number with a maximum of 7 digits')
+    expect(postResponse.payload).toContain('Enter the estimated cost for the items')
   })
 
   it('should return an error message if a string is typed in', async () => {
@@ -35,14 +33,12 @@ describe('Project cost page', () => {
       method: 'POST',
       url: '/project-cost',
       payload: { projectCost: '1234s6', crumb: crumbToken },
-      headers: {
-        cookie: 'crumb=' + crumbToken
-      }
+      headers: { cookie: 'crumb=' + crumbToken }
     }
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Enter the estimated cost for the items as a whole number with a maximum of 7 digits')
+    expect(postResponse.payload).toContain('Enter a whole number with a maximum of 7 digits')
   })
 
   it('should return an error message if number contains a space', async () => {
@@ -50,14 +46,12 @@ describe('Project cost page', () => {
       method: 'POST',
       url: '/project-cost',
       payload: { projectCost: '1234 6', crumb: crumbToken },
-      headers: {
-        cookie: 'crumb=' + crumbToken
-      }
+      headers: { cookie: 'crumb=' + crumbToken }
     }
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Enter the estimated cost for the items as a whole number with a maximum of 7 digits')
+    expect(postResponse.payload).toContain('Enter a whole number with a maximum of 7 digits')
   })
 
   it('should return an error message if number contains a comma "," ', async () => {
@@ -65,54 +59,46 @@ describe('Project cost page', () => {
       method: 'POST',
       url: '/project-cost',
       payload: { projectCost: '123,456', crumb: crumbToken },
-      headers: {
-        cookie: 'crumb=' + crumbToken
-      }
+      headers: { cookie: 'crumb=' + crumbToken }
     }
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Enter the estimated cost for the items as a whole number with a maximum of 7 digits')
+    expect(postResponse.payload).toContain('Enter a whole number with a maximum of 7 digits')
   })
 
   it('should return an error message if a fraction is typed in - it contains a dot "." ', async () => {
     const postOptions = {
       method: 'POST',
       url: '/project-cost',
-      payload: { projectCost: 123.456, crumb: crumbToken },
-      headers: {
-        cookie: 'crumb=' + crumbToken
-      }
+      payload: { projectCost: '123.456', crumb: crumbToken },
+      headers: { cookie: 'crumb=' + crumbToken }
     }
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Enter the estimated cost for the items as a whole number with a maximum of 7 digits')
+    expect(postResponse.payload).toContain('Enter a whole number with a maximum of 7 digits')
   })
 
   it('should return an error message if the number of digits typed exceed 7', async () => {
     const postOptions = {
       method: 'POST',
       url: '/project-cost',
-      payload: { projectCost: 12345678, crumb: crumbToken },
-      headers: {
-        cookie: 'crumb=' + crumbToken
-      }
+      payload: { projectCost: '12345678', crumb: crumbToken },
+      headers: { cookie: 'crumb=' + crumbToken }
     }
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Enter the estimated cost for the items as a whole number with a maximum of 7 digits')
+    expect(postResponse.payload).toContain('Enter a whole number with a maximum of 7 digits')
   })
 
   it('should eliminate user if the cost entered is too low', async () => {
     const postOptions = {
       method: 'POST',
       url: '/project-cost',
-      payload: { projectCost: 12, crumb: crumbToken },
-      headers: {
-        cookie: 'crumb=' + crumbToken
-      }
+      payload: { projectCost: '12', crumb: crumbToken },
+      headers: { cookie: 'crumb=' + crumbToken }
     }
 
     const postResponse = await global.__SERVER__.inject(postOptions)
@@ -124,10 +110,8 @@ describe('Project cost page', () => {
     const postOptions = {
       method: 'POST',
       url: '/project-cost',
-      payload: { projectCost: 9999999, crumb: crumbToken },
-      headers: {
-        cookie: 'crumb=' + crumbToken
-      }
+      payload: { projectCost: '9999999', crumb: crumbToken },
+      headers: { cookie: 'crumb=' + crumbToken }
     }
 
     const postResponse = await global.__SERVER__.inject(postOptions)
@@ -139,10 +123,8 @@ describe('Project cost page', () => {
     const postOptions = {
       method: 'POST',
       url: '/project-cost',
-      payload: { projectCost: 1234567, crumb: crumbToken },
-      headers: {
-        cookie: 'crumb=' + crumbToken
-      }
+      payload: { projectCost: '1234567', crumb: crumbToken },
+      headers: { cookie: 'crumb=' + crumbToken }
     }
 
     const postResponse = await global.__SERVER__.inject(postOptions)
