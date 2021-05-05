@@ -5,9 +5,8 @@ const questionBank = require('../config/question-bank')
 const pollingConfig = require('../config/polling')
 function createModel (data) {
   return {
-    backLink: '/collaboration',
-    ...data,
-    nextlink: '/business-details'
+    backLink: './collaboration',
+    ...data
   }
 }
 
@@ -58,37 +57,53 @@ module.exports = [{
       // Poll for backend for results from scoring algorithm
       // If msgData is null then 500 page will be triggered when trying to access object below
       const msgData = await getResult(request.yar.id)
+      const crop = questionBank.questions.find(question => question.key === 'Q15')
+      const questionObject = {
+        key: crop.key,
+        answers: [
+          {
+            key: crop.key,
+            title: crop.title,
+            input: [{ value: request.yar.get('irrigatedCrops') }]
+          }],
+        title: crop.title,
+        desc: crop.desc ?? '',
+        url: crop.url,
+        order: 15,
+        unit: crop?.unit,
+        pageTitle: crop.pageTitle,
+        fundingPriorities: crop.fundingPriorities
+      }
       if (msgData) {
+        msgData.desirability.questions.push(questionObject)
+
         const questions = msgData.desirability.questions.map(question => {
           const bankQuestion = questionBank.questions.filter(x => x.key === question.key)[0]
           question.title = bankQuestion.title
           question.desc = bankQuestion.desc ?? ''
           question.url = bankQuestion.url
+          question.order = bankQuestion.order
           question.unit = bankQuestion?.unit
           question.pageTitle = bankQuestion.pageTitle
           question.fundingPriorities = bankQuestion.fundingPriorities
-          if (question.key === 'Q20') {
-            question.rating.band = ''
-          }
           return question
         })
         let scoreChance
         switch (msgData.desirability.overallRating.band.toLowerCase()) {
           case 'strong':
-            scoreChance = 'high'
+            scoreChance = 'seems likely to'
             break
           case 'average':
-            scoreChance = 'medium'
+            scoreChance = 'might'
             break
           default:
-            scoreChance = 'low'
+            scoreChance = 'seems unlikely to'
             break
         }
-
         return h.view('score', createModel({
           titleText: msgData.desirability.overallRating.band,
           scoreData: msgData,
-          questions: questions,
+          questions: questions.sort((a, b) => a.order - b.order),
           scoreChance: scoreChance
         }))
       } else {

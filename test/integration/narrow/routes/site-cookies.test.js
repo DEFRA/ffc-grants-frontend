@@ -98,6 +98,6 @@ describe('cookies route', () => {
 
     const result = await global.__SERVER__.inject(options)
     expect(result.statusCode).toBe(302)
-    expect(result.headers.location).toBe('/site-cookies?updated=true')
+    expect(result.headers.location).toBe('./site-cookies?updated=true')
   })
 })

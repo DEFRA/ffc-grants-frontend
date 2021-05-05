@@ -83,7 +83,7 @@ module.exports = [
     path: '/project-items',
     handler: (request, h) => {
       const landOwnership = request.yar.get('landOwnership') || null
-      const backUrl = landOwnership === 'No' ? '/tenancy-length' : '/tenancy'
+      const backUrl = landOwnership === 'No' ? './tenancy-length' : './tenancy'
 
       const projectInfrastucture = request.yar.get('projectInfrastucture') || null
       const projectEquipment = request.yar.get('projectEquipment') || null
@@ -107,13 +107,13 @@ module.exports = [
         }),
         failAction: (request, h) => {
           const landOwnership = request.yar.get('landOwnership') || null
-          const backUrl = landOwnership === 'No' ? '/answers' : '/tenancy'
+          const backUrl = landOwnership === 'No' ? './answers' : './tenancy'
           return h.view('project-items', createModel('Please select an option', backUrl, null)).takeover()
         }
       },
       handler: (request, h) => {
         const landOwnership = request.yar.get('landOwnership') || null
-        const backUrl = landOwnership === 'No' ? '/tenancy-length' : '/tenancy'
+        const backUrl = landOwnership === 'No' ? './tenancy-length' : './tenancy'
 
         let {
           projectInfrastucture,

@@ -41,13 +41,13 @@ module.exports = [
           emailAddress,
           magicLink,
           emailLink,
-          backLink: '/',
+          backLink: './',
           progressReference: confirmationId
         })
       } else {
         return h.view('progress-reference', {
           magicLink,
-          backLink: '/',
+          backLink: './',
           progressReference: confirmationId
         })
       }

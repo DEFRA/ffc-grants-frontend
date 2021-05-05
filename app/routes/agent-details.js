@@ -11,9 +11,9 @@ function createModel (errorMessageList, agentDetails) {
   )
 
   return {
-    backLink: '/applying',
+    backLink: './applying',
     pageHeader: 'Agent\'s details',
-    formActionPage: '/agent-details',
+    formActionPage: './agent-details',
     selectTitle: {
       id: 'title',
       name: 'title',

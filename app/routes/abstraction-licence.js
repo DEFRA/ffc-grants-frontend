@@ -3,7 +3,7 @@ const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/he
 
 function createModel (errorMessage, data) {
   return {
-    backLink: '/planning-permission',
+    backLink: './planning-permission',
     radios: {
       classes: '',
       idPrefix: 'abstractionLicence',
@@ -17,7 +17,7 @@ function createModel (errorMessage, data) {
       },
       items: setLabelData(
         data,
-        ['Not needed', 'Secured', 'Expected to have by 31 December 2021', 'Won\'t have by 31 December 2021']
+        ['Not needed', 'Secured', 'Expected to have by 31 December 2021', 'Will not have by 31 December 2021']
       ),
       ...(errorMessage ? { errorMessage: { text: errorMessage } } : {})
     }

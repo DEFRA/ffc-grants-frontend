@@ -7,9 +7,11 @@ module.exports = {
     register: async (server, options) => {
       await server.register(cookie)
 
+      const urlPrefix = server.realm.modifiers.route.prefix ?? ''
+
       server.auth.strategy('session-auth', 'cookie', {
         cookie: authConfig.cookie,
-        redirectTo: '/login',
+        redirectTo: `${urlPrefix}/login`,
         validateFunc: (request, session) => session.authenticated
           ? { valid: true, credentials: authConfig.credentials }
           : { valid: false }

@@ -14,6 +14,11 @@ async function createServer () {
   const server = hapi.server({
     port: process.env.PORT
   })
+  const siteUrl = (process.env.SITE_VERSION ?? '') === '' ? '' : `/${process.env.SITE_VERSION}`
+  if (siteUrl.length > 0) {
+    server.realm.modifiers.route.prefix = siteUrl
+  }
+
   if (authConfig.enabled) {
     console.log('Login required, enabling authorisation plugin')
     await server.register(require('./plugins/auth'))

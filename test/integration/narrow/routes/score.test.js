@@ -121,7 +121,7 @@ describe('Score page', () => {
     crumCookie = getCrumbCookie(response)
     expect(response.result).toContain(crumCookie[1])
   })
-  it('should load page with sucess High', async () => {
+  it('should load page with success Strong', async () => {
     jest.mock('@hapi/wreck')
     const options = {
       method: 'GET',
@@ -142,10 +142,10 @@ describe('Score page', () => {
     expect(header.length).toBe(3)
     crumCookie = getCrumbCookie(response)
     expect(response.result).toContain(crumCookie[1])
-    const responseScoreMessage = 'This means your project has a high chance of getting funding.'
+    const responseScoreMessage = 'This means your project seems likely to be successful.'
     expect(response.payload).toContain(responseScoreMessage)
   })
-  it('should load page with sucess Medium', async () => {
+  it('should load page with success Average', async () => {
     jest.mock('@hapi/wreck')
     const options = {
       method: 'GET',
@@ -167,16 +167,16 @@ describe('Score page', () => {
     expect(header.length).toBe(3)
     crumCookie = getCrumbCookie(response)
     expect(response.result).toContain(crumCookie[1])
-    const responseScoreMessage = 'This means your project has a medium chance of getting funding.'
+    const responseScoreMessage = 'This means your project might be successful.'
     expect(response.payload).toContain(responseScoreMessage)
   })
-  it('should load page with sucess Low', async () => {
+  it('should load page with sucess Weak', async () => {
     jest.mock('@hapi/wreck')
     const options = {
       method: 'GET',
       url: '/score'
     }
-    scoreData.desirability.overallRating.band = 'Low'
+    scoreData.desirability.overallRating.band = 'Weak'
     const wreckResponse = {
       payload: scoreData,
       res: {
@@ -192,10 +192,10 @@ describe('Score page', () => {
     expect(header.length).toBe(3)
     crumCookie = getCrumbCookie(response)
     expect(response.result).toContain(crumCookie[1])
-    const responseScoreMessage = 'This means your project has a low chance of getting funding.'
+    const responseScoreMessage = 'This means your project seems unlikely to be successful.'
     expect(response.payload).toContain(responseScoreMessage)
   })
-  it('redirects to project business details page', async () => {
+  it('redirects to project next steps page', async () => {
     const postOptions = {
       method: 'POST',
       url: '/score',

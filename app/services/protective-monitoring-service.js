@@ -9,7 +9,7 @@ async function sendEvent (request, sessionId, event, pmcCode) {
     version: '1.1',
     application: 'FFC-GRANTS',
     component: 'Eligibility and Desirability Web UI',
-    ip: getIpAddress(request),
+    ip: request ? getIpAddress(request) : '',
     pmccode: pmcCode,
     priority: '0',
     details: {

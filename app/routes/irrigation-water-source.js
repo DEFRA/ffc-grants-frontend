@@ -3,7 +3,7 @@ const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/he
 
 function createModel (errorMessage, errorSummary, currentData, plannedData) {
   return {
-    backLink: '/irrigated-land',
+    backLink: './irrigated-land',
     ...errorSummary ? { errorList: errorSummary } : {},
     waterSourceCurrent: {
       idPrefix: 'waterSourceCurrent',

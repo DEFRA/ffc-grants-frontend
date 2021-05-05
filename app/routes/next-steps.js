@@ -1,7 +1,7 @@
 
 function createModel () {
   return {
-    backLink: '/score'
+    backLink: './score'
   }
 }
 

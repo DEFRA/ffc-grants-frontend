@@ -12,9 +12,9 @@ function createModel (errorMessageList, agentAddressDetails) {
   )
 
   return {
-    backLink: '/agent-contact-details',
+    backLink: './agent-contact-details',
     pageHeader: 'Agent\'s address details',
-    formActionPage: '/agent-address-details',
+    formActionPage: './agent-address-details',
     inputAddress1: {
       id: 'address1',
       name: 'address1',
