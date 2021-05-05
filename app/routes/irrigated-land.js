@@ -11,7 +11,7 @@ function createModel (irrigatedLandCurrent, irrigatedLandTarget, errorMessageLis
     ['irrigatedLandCurrentError', 'irrigatedLandTargetError']
   )
   return {
-    backLink: '/irrigated-crops',
+    backLink: './irrigated-crops',
     currentInput: {
       label: {
         text: 'How much land is currently irrigated per year?',
@@ -32,7 +32,7 @@ function createModel (irrigatedLandCurrent, irrigatedLandTarget, errorMessageLis
     },
     targetInput: {
       label: {
-        text: 'How much land will be irrigated in total per year under the grant?',
+        text: 'How much land will be irrigated after the project?',
         isPageHeading: true,
         classes: 'govuk-label--l'
       },

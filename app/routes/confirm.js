@@ -6,7 +6,7 @@ const CONSENT_OPTIONAL = 'CONSENT_OPTIONAL'
 
 function createModel (consentMain, consentOptional, errorMessage) {
   return {
-    backLink: '/farmer-address-details',
+    backLink: './farmer-address-details',
     consentMainData: {
       idPrefix: 'consentMain',
       name: 'consentMain',

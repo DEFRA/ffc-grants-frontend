@@ -3,7 +3,7 @@ const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/he
 
 function createModel (errorMessage, data) {
   return {
-    backLink: '/project-start',
+    backLink: './project-start',
     radios: {
       classes: 'govuk-radios--inline',
       idPrefix: 'landOwnership',

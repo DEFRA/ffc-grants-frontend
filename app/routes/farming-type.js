@@ -3,7 +3,7 @@ const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/he
 
 function createModel (errorMessage, data) {
   return {
-    backLink: '/start',
+    backLink: './start',
     radios: {
       classes: '',
       idPrefix: 'farmingType',
@@ -23,7 +23,7 @@ function createModel (errorMessage, data) {
 
 function createModelNotEligible () {
   return {
-    backLink: '/farming-type',
+    backLink: './farming-type',
     messageContent:
       'This is only available to farming and horticultural businesses that grow crops for the food industry or nurseries growing ornamentals.'
   }

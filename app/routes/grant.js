@@ -2,7 +2,7 @@ const { formatUKCurrency } = require('../helpers/helper-functions')
 
 function createModel (calculatedGrant, projectCost) {
   return {
-    backLink: '/project-cost',
+    backLink: './project-cost',
     calculatedGrant,
     projectCost
   }

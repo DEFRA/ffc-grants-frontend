@@ -3,7 +3,7 @@ const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/he
 
 function createModel (errorMessage, data) {
   return {
-    backLink: '/country',
+    backLink: './country',
     radios: {
       classes: 'govuk-radios--inline',
       idPrefix: 'projectStarted',
@@ -23,7 +23,7 @@ function createModel (errorMessage, data) {
 
 function createModelNotEligible () {
   return {
-    backLink: '/project-start',
+    backLink: './project-start',
     messageContent:
       'Only projects that have not yet started can apply for a grant.'
   }

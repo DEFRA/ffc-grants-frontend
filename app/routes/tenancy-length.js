@@ -3,7 +3,7 @@ const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/he
 
 function createModel (errorMessage, data) {
   return {
-    backLink: '/tenancy',
+    backLink: './tenancy',
     radios: {
       classes: 'govuk-radios--inline',
       idPrefix: 'tenancyLength',
@@ -23,7 +23,7 @@ function createModel (errorMessage, data) {
 
 function createModelTenancyCondition () {
   return {
-    backLink: '/tenancy-length',
+    backLink: './tenancy-length',
     messageContent: 'You will need to extend your tenancy agreement before you can complete a full application.'
   }
 }
