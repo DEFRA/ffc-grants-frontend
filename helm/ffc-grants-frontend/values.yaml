@@ -23,7 +23,7 @@ containerSecret:
 deployment:
   restartPolicy: Always
   priorityClassName: low
-  replicas: 1
+  replicas: 2
   minReadySeconds: 5
   redeployOnChange: update this field to force a change
   runAsNonRoot: true
@@ -48,6 +48,11 @@ container:
   backendPollingHost: http://ffc-grants-eligibility
   pollingInterval: 200
   pollingRetries: 20
+  redisHostname: redis
+  redisPassword: redis
+  redisPort: 6379
+  redisPartition: ffc-grants-eligibility
+  sessionCacheTTL: 3600000
 
 livenessProbe:
   path: /healthz

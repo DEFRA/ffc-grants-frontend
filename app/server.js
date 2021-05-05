@@ -8,10 +8,19 @@ const config = require('./config/server')
 const crumb = require('@hapi/crumb')
 const { version } = require('../package.json')
 const authConfig = require('./config/auth')
+const cacheConfig = require('./config/cache')
+const catbox = cacheConfig.useRedis ? require('@hapi/catbox-redis') : require('@hapi/catbox-memory')
 
 async function createServer () {
   const server = hapi.server({
-    port: process.env.PORT
+    port: process.env.PORT,
+    cache: [{
+      name: 'session',
+      provider: {
+        constructor: catbox,
+        options: cacheConfig.catboxOptions
+      }
+    }]
   })
 
   const siteUrl = (process.env.SITE_VERSION ?? '') === '' ? '' : `/${process.env.SITE_VERSION}`
@@ -77,7 +86,12 @@ async function createServer () {
     {
       plugin: require('@hapi/yar'),
       options: {
+        maxCookieSize: cacheConfig.useRedis ? 0 : 1024,
         storeBlank: true,
+        cache: {
+          cache: 'session',
+          expiresIn: cacheConfig.expiresIn
+        },
         cookieOptions: {
           password: config.cookiePassword,
           isSecure: config.cookieOptions.isSecure
