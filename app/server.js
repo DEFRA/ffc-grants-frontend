@@ -138,6 +138,16 @@ async function createServer () {
     }
   })
 
+  // FIXME: debugging
+  server.ext('onPreHandler', function (request, h) {
+    console.log('\n=========')
+    console.log(`Got request with ID ${request.yar.id}`)
+    const yarKeys = require('./helpers/yar-keys')
+    yarKeys.forEach(k => console.log(`${k} = ${request.yar.get(k)}`))
+    console.log('=========')
+    return h.continue
+  })
+
   return server
 }
 require('./services/app-insights').setup()
