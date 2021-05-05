@@ -2,7 +2,7 @@ const Joi = require('joi')
 const { fetchListObjectItems, findErrorList } = require('../helpers/helper-functions')
 const { IRRIGATED_LAND_REGEX } = require('../helpers/regex-validation')
 
-function createModel (irrigatedLandCurrent, irrigatedLandTarget, errorMessageList) {
+function createModel(irrigatedLandCurrent, irrigatedLandTarget, errorMessageList) {
   const [
     irrigatedLandCurrentError,
     irrigatedLandTargetError
@@ -32,7 +32,7 @@ function createModel (irrigatedLandCurrent, irrigatedLandTarget, errorMessageLis
     },
     targetInput: {
       label: {
-        text: 'How much land will be irrigated in total per year under the grant?',
+        text: 'How much land will be irrigated after the project?',
         isPageHeading: true,
         classes: 'govuk-label--l'
       },
