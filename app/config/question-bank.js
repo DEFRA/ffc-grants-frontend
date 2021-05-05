@@ -290,7 +290,7 @@ module.exports = {
     {
       key: 'Q20',
       order: 20,
-      title: 'Will water be supplied to other farm [businesses]?',
+      title: 'Will water be supplied to other farms?',
       pageTitle: 'Other farms',
       desc: 'If you intend to supply water via a water sharing agreement as a result of this project.',
       url: 'collaboration',
