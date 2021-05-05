@@ -74,7 +74,7 @@ module.exports = {
     {
       key: 'Q16a',
       order: 16.1,
-      title: 'How much land will be irrigated in total per year under the grant?',
+      title: 'How much land will be irrigated after the project?',
       pageTitle: 'Irrigated land',
       desc: 'Enter figure in hectares',
       fundingPriorities: 'Improving productivity',
