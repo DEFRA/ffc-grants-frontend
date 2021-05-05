@@ -6,8 +6,7 @@ const pollingConfig = require('../config/polling')
 function createModel (data) {
   return {
     backLink: '/collaboration',
-    ...data,
-    nextlink: '/business-details'
+    ...data
   }
 }
 
@@ -81,24 +80,20 @@ module.exports = [{
           question.unit = bankQuestion?.unit
           question.pageTitle = bankQuestion.pageTitle
           question.fundingPriorities = bankQuestion.fundingPriorities
-          if (question.key === 'Q20') {
-            question.rating.band = ''
-          }
           return question
         })
         let scoreChance
         switch (msgData.desirability.overallRating.band.toLowerCase()) {
           case 'strong':
-            scoreChance = 'high'
+            scoreChance = 'seems likely to'
             break
           case 'average':
-            scoreChance = 'medium'
+            scoreChance = 'might'
             break
           default:
-            scoreChance = 'low'
+            scoreChance = 'seems unlikely to'
             break
         }
-        console.log(questions.sort((a, b) => a.order - b.order), 'LLLLLLL')
         return h.view('score', createModel({
           titleText: msgData.desirability.overallRating.band,
           scoreData: msgData,
