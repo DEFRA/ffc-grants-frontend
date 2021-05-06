@@ -22,12 +22,16 @@ containerSecret:
 
 deployment:
   restartPolicy: Always
-  priorityClassName: low
-  replicas: 1
-  minReadySeconds: 5
+  priorityClassName: high
+  replicas: 2
+  minReplicas: 2
+  maxReplicas: 4
+  minReadySeconds: 2
   redeployOnChange: update this field to force a change
   runAsNonRoot: true
   runAsUser: 1000
+  cpuThreshold: 80
+  memoryThreshold: 80
 
 container:
   imagePullPolicy: IfNotPresent
@@ -48,20 +52,27 @@ container:
   backendPollingHost: http://ffc-grants-eligibility
   pollingInterval: 200
   pollingRetries: 20
+  redisHostname: redis
+  redisPassword: redis
+  redisPort: 6379
+  redisPartition: ffc-grants-eligibility
+  sessionCacheTTL: 3600000
 
 livenessProbe:
   path: /healthz
   port: 3000
-  initialDelaySeconds: 10
-  periodSeconds: 10
-  failureThreshold: 3
+  initialDelaySeconds: 30
+  periodSeconds: 30
+  timeoutSeconds: 5
+  failureThreshold: 5
 
 readinessProbe:
   path: /healthy
   port: 3000
-  initialDelaySeconds: 10
-  periodSeconds: 10
-  failureThreshold: 3
+  initialDelaySeconds: 20
+  periodSeconds: 30
+  timeoutSeconds: 5
+  failureThreshold: 5
 
 service:
   port: 80
