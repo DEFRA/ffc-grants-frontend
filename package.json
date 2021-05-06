@@ -28,6 +28,7 @@
   "homepage": "https://github.com/DEFRA/ffc-grants-frontend#readme",
   "dependencies": {
     "@defra/hapi-gapi": "^1.0.2",
+    "@hapi/catbox-redis": "^6.0.2",
     "@hapi/cookie": "^11.0.2",
     "@hapi/crumb": "^8.0.1",
     "@hapi/hapi": "^20.0.3",
@@ -45,6 +46,7 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
+    "@hapi/catbox-memory": "^5.0.1",
     "clean-webpack-plugin": "^3.0.0",
     "css-loader": "^4.2.2",
     "file-loader": "^6.1.0",

@@ -10,9 +10,19 @@ const { version } = require('../package.json')
 const authConfig = require('./config/auth')
 const Uuid = require('uuid')
 const protectiveMonitoringServiceSendEvent = require('./services/protective-monitoring-service')
+const cacheConfig = require('./config/cache')
+const catbox = cacheConfig.useRedis ? require('@hapi/catbox-redis') : require('@hapi/catbox-memory')
+
 async function createServer () {
   const server = hapi.server({
-    port: process.env.PORT
+    port: process.env.PORT,
+    cache: [{
+      name: 'session',
+      provider: {
+        constructor: catbox,
+        options: cacheConfig.catboxOptions
+      }
+    }]
   })
   const siteUrl = (process.env.SITE_VERSION ?? '') === '' ? '' : `/${process.env.SITE_VERSION}`
   if (siteUrl.length > 0) {
@@ -74,7 +84,12 @@ async function createServer () {
     {
       plugin: require('@hapi/yar'),
       options: {
+        maxCookieSize: cacheConfig.useRedis ? 0 : 1024,
         storeBlank: true,
+        cache: {
+          cache: 'session',
+          expiresIn: cacheConfig.expiresIn
+        },
         cookieOptions: {
           password: config.cookiePassword,
           isSecure: config.cookieOptions.isSecure

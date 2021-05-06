@@ -1,6 +1,7 @@
 const Joi = require('joi')
 const { errorExtractor, getErrorMessage, getGrantValues } = require('../helpers/helper-functions')
 const { MIN_GRANT, MAX_GRANT } = require('../helpers/grant-details')
+const { PROJECT_COST_REGEX } = require('../helpers/regex-validation')
 
 function createModel (errorMessage, projectCost, projectItemsList) {
   return {
@@ -60,7 +61,7 @@ module.exports = [
     options: {
       validate: {
         payload: Joi.object({
-          projectCost: Joi.number().integer().max(9999999).required()
+          projectCost: Joi.string().regex(PROJECT_COST_REGEX).max(7).required()
         }),
         failAction: (request, h, err) => {
           const projectItemsList = request.yar.get('projectItemsList') || null
