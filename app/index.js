@@ -3,7 +3,7 @@ const server = require('./server')
 const init = async () => {
   const uploadToSharepointAction = require('./messaging/upload-to-sharepoint')
   require('./messaging/receivers').startFileCreatedReceiver(uploadToSharepointAction)
-
+  require('./services/app-insights').setup()
   await server.start()
   console.log('Server running on %s', server.info.uri)
 }

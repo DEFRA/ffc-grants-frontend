@@ -41,6 +41,7 @@ container:
   messageQueueHost: dummy
   fileCreatedTopicAddress: file-created
   fileCreatedSubscriptionAddress: file-sender
+  protectiveMonitoringUrl:
   blobStorageConnectionString: blobby-blob
   blobStorageContainerName: not-a-real-container
   sharePointSiteId: not-a-real-value
