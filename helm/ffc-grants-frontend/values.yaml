@@ -30,8 +30,8 @@ deployment:
   redeployOnChange: update this field to force a change
   runAsNonRoot: true
   runAsUser: 1000
-  cpuThreshold: 60
-  memoryThreshold: 60
+  cpuThreshold: 80
+  memoryThreshold: 80
 
 container:
   imagePullPolicy: IfNotPresent
