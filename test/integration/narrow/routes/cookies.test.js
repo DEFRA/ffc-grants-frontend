@@ -1,10 +1,10 @@
 const { getCookieHeader, getCrumbCookie, crumbToken } = require('./test-helper')
 describe('cookies route', () => {
   let crumCookie
-  test('GET /site-cookies context includes Header', async () => {
+  test('GET /cookies context includes Header', async () => {
     const options = {
       method: 'GET',
-      url: '/site-cookies'
+      url: '/cookies'
     }
 
     const result = await global.__SERVER__.inject(options)
@@ -15,10 +15,10 @@ describe('cookies route', () => {
     expect(result.result).toContain(crumCookie[1])
   })
 
-  test('POST /site-cookies returns 302 if not async', async () => {
+  test('POST /cookies returns 302 if not async', async () => {
     const options = {
       method: 'POST',
-      url: '/site-cookies',
+      url: '/cookies',
       payload: { crumb: crumbToken, analytics: true },
       headers: {
         cookie: 'crumb=' + crumbToken
@@ -29,10 +29,10 @@ describe('cookies route', () => {
     expect(result.statusCode).toBe(302)
   })
 
-  test('GET /site-cookies returns cookie policy', async () => {
+  test('GET /cookies returns cookie policy', async () => {
     const options = {
       method: 'GET',
-      url: '/site-cookies'
+      url: '/cookies'
     }
 
     const result = await global.__SERVER__.inject(options)
@@ -44,10 +44,10 @@ describe('cookies route', () => {
     expect(result.result).toContain(crumCookie[1])
   })
 
-  test('POST /site-cookies returns 200 if async', async () => {
+  test('POST /cookies returns 200 if async', async () => {
     const options = {
       method: 'POST',
-      url: '/site-cookies',
+      url: '/cookies',
       payload: { crumb: crumbToken, analytics: true, async: true },
       headers: {
         cookie: 'crumb=' + crumbToken
@@ -58,10 +58,10 @@ describe('cookies route', () => {
     expect(result.statusCode).toBe(200)
   })
 
-  test('POST /site-cookies invalid returns 400', async () => {
+  test('POST /cookies invalid returns 400', async () => {
     const options = {
       method: 'POST',
-      url: '/site-cookies',
+      url: '/cookies',
       payload: { crumb: crumbToken, invalid: 'aaaaaa' },
       headers: {
         cookie: 'crumb=' + crumbToken
@@ -72,10 +72,10 @@ describe('cookies route', () => {
     expect(result.statusCode).toBe(400)
   })
 
-  test('GET /site-cookies returns 200', async () => {
+  test('GET /cookies returns 200', async () => {
     const options = {
       method: 'GET',
-      url: '/site-cookies'
+      url: '/cookies'
     }
 
     const result = await global.__SERVER__.inject(options)
@@ -86,10 +86,10 @@ describe('cookies route', () => {
     crumCookie = getCrumbCookie(result)
     expect(result.result).toContain(crumCookie[1])
   })
-  test('POST /site-cookies redirects to GET with querystring', async () => {
+  test('POST /cookies redirects to GET with querystring', async () => {
     const options = {
       method: 'POST',
-      url: '/site-cookies',
+      url: '/cookies',
       payload: { crumb: crumbToken, analytics: true },
       headers: {
         cookie: 'crumb=' + crumbToken
@@ -98,6 +98,6 @@ describe('cookies route', () => {
 
     const result = await global.__SERVER__.inject(options)
     expect(result.statusCode).toBe(302)
-    expect(result.headers.location).toBe('./site-cookies?updated=true')
+    expect(result.headers.location).toBe('./cookies?updated=true')
   })
 })

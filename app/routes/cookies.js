@@ -57,13 +57,13 @@ function createModel (cookiesPolicy = {}, updated = false) {
 
 module.exports = [{
   method: 'GET',
-  path: '/site-cookies',
+  path: '/cookies',
   handler: (request, h) => {
     return h.view('cookies/cookie-policy', createModel(request.state.cookies_policy, request.query.updated))
   }
 }, {
   method: 'POST',
-  path: '/site-cookies',
+  path: '/cookies',
   options: {
     validate: {
       payload: Joi.object({
@@ -80,7 +80,7 @@ module.exports = [{
       if (request.payload.async) {
         return h.response('ok')
       }
-      return h.redirect('./site-cookies?updated=true')
+      return h.redirect('./cookies?updated=true')
     }
   }
 }]
