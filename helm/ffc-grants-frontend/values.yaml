@@ -56,7 +56,7 @@ container:
   redisHostname: redis
   redisPassword: redis
   redisPort: 6379
-  redisPartition: ffc-grants-eligibility
+  redisPartition: ffc-grants-frontend
   sessionCacheTTL: 3600000
 
 livenessProbe:
