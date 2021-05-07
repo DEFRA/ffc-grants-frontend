@@ -132,7 +132,7 @@ async function createServer () {
     path: './templates',
     context: {
       appVersion: version,
-      assetpath: '/static',
+      assetpath: '/assets',
       govukAssetpath: '/assets',
       serviceName: 'FFC Grants Service',
       pageTitle: 'FFC Grants Service - GOV.UK',
