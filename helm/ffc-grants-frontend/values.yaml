@@ -52,6 +52,7 @@ container:
   backendPollingHost: http://ffc-grants-eligibility
   pollingInterval: 200
   pollingRetries: 20
+  protectiveMonitoringUrl:
   redisHostname: redis
   redisPassword: redis
   redisPort: 6379

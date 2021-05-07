@@ -5,6 +5,7 @@ const schema = Joi.object({
   cookiePassword: Joi.string().default('dummycookiepassworddummycookiepassword'),
   googleTagManagerKey: Joi.string().default('GTM-WJ5C78H'),
   googleTagManagerServerKey: Joi.string().default('UA-179628664-4'),
+  protectiveMonitoringUrl: Joi.string().allow(''),
   cookieOptions: Joi.object({
     ttl: Joi.number().default(1000 * 60 * 60 * 24 * 365),
     encoding: Joi.string().valid('base64json').default('base64json'),
@@ -23,6 +24,7 @@ const config = {
   cookiePassword: process.env.COOKIE_PASSWORD,
   googleTagManagerKey: process.env.GOOGLE_TAG_MANAGER_KEY,
   googleTagManagerServerKey: process.env.GOOGLE_TAG_MANAGER_SERVER_KEY,
+  protectiveMonitoringUrl: process.env.PROTECTIVE_MONITORING_URL,
   cookieOptions: {
     ttl: process.env.COOKIE_TTL_IN_MILLIS,
     encoding: 'base64json',

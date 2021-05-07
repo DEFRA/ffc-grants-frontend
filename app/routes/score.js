@@ -43,10 +43,16 @@ async function getResult (correlationId) {
 module.exports = [{
   method: 'GET',
   path: '/score',
+  options: {
+    log: {
+      collect: true
+    }
+  },
   handler: async (request, h, err) => {
     try {
+      const msgDataToSend = createMsg.getDesirabilityAnswers(request)
       // Always re-calculate our score before rendering this page
-      await senders.sendProjectDetails(createMsg.getDesirabilityAnswers(request), request.yar.id)
+      await senders.sendProjectDetails(msgDataToSend, request.yar.id)
 
       // Poll for backend for results from scoring algorithm
       // If msgData is null then 500 page will be triggered when trying to access object below
@@ -101,20 +107,17 @@ module.exports = [{
           scoreChance: scoreChance
         }))
       } else {
-        await request.ga.event({
-          category: 'Score',
-          action: 'Error'
-        })
-        return h.view('500')
+        throw new Error('Score not received.')
       }
-    } catch (err) {
+    } catch (error) {
+      request.log(error)
       await request.ga.event({
         category: 'Score',
         action: 'Error'
       })
-      console.error(err)
-      return h.view('500')
     }
+    request.log(err)
+    return h.view('500')
   }
 },
 {

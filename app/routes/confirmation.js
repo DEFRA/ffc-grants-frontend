@@ -1,7 +1,7 @@
 const { formatApplicationCode } = require('../helpers/helper-functions')
 const senders = require('../messaging/senders')
 const createMsg = require('../messaging/create-msg')
-
+const protectiveMonitoringServiceSendEvent = require('../services/protective-monitoring-service')
 module.exports = {
   method: 'GET',
   path: '/confirmation',
@@ -16,10 +16,10 @@ module.exports = {
       })
       return h.view('500')
     }
-
+    await protectiveMonitoringServiceSendEvent(request, request.yar.id, 'FTF-JOURNEY-COMPLETED', '0706')
     await request.ga.event({
       category: 'Confirmation',
-      action: 'Success'
+      action: `Success-${confirmationId}`
     })
     return h.view('confirmation', {
       output: {

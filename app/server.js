@@ -8,6 +8,8 @@ const config = require('./config/server')
 const crumb = require('@hapi/crumb')
 const { version } = require('../package.json')
 const authConfig = require('./config/auth')
+const Uuid = require('uuid')
+const protectiveMonitoringServiceSendEvent = require('./services/protective-monitoring-service')
 const cacheConfig = require('./config/cache')
 const catbox = cacheConfig.useRedis ? require('@hapi/catbox-redis') : require('@hapi/catbox-memory')
 
@@ -22,7 +24,6 @@ async function createServer () {
       }
     }]
   })
-
   const siteUrl = (process.env.SITE_VERSION ?? '') === '' ? '' : `/${process.env.SITE_VERSION}`
   if (siteUrl.length > 0) {
     server.realm.modifiers.route.prefix = siteUrl
@@ -32,7 +33,6 @@ async function createServer () {
     console.log('Login required, enabling authorisation plugin')
     await server.register(require('./plugins/auth'))
   }
-
   await server.register(inert)
   await server.register(vision)
   await server.register(require('./plugins/cookies'))
@@ -64,11 +64,9 @@ async function createServer () {
         }
       ],
       sessionIdProducer: async request => {
-        // Would normally use the request object to retrieve the proper session identifier
-        return 'test-session'
+        return Uuid.v4()
       },
       attributionProducer: async request => {
-        // Would normally use the request object to return any attribution associated with the user's session
         return {
           campaign: 'attribution_campaign',
           source: 'attribution_source',
@@ -95,6 +93,11 @@ async function createServer () {
         cookieOptions: {
           password: config.cookiePassword,
           isSecure: config.cookieOptions.isSecure
+        },
+        customSessionIDGenerator: function (request) {
+          const sessionID = Uuid.v4()
+          protectiveMonitoringServiceSendEvent(request, sessionID, 'FTF-SESSION-CREATED', '0701')
+          return sessionID
         }
       }
     },
@@ -107,9 +110,8 @@ async function createServer () {
       }
     }]
   )
-
   server.route(require('./routes'))
-
+  server.register(require('./plugins/events'))
   server.views({
     engines: {
       njk: {
@@ -130,8 +132,8 @@ async function createServer () {
     path: './templates',
     context: {
       appVersion: version,
-      assetPath: '/static',
-      govukAssetPath: '/assets',
+      assetpath: '/assets',
+      govukAssetpath: '/assets',
       serviceName: 'FFC Grants Service',
       pageTitle: 'FFC Grants Service - GOV.UK',
       googleTagManagerKey: config.googleTagManagerKey
