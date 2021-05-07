@@ -10,6 +10,8 @@ module.exports = {
       server.ext('onPreResponse', (request, h) => {
         const response = request.response
 
+        console.log(JSON.stringify(request.headers, null, 2))
+
         if (response.isBoom) {
           // An error was raised during
           // processing the request
