@@ -54,7 +54,6 @@ module.exports = [
         }
       },
       handler: (request, h) => {
-        console.log(JSON.stringify(request.headers, null, 2))
         request.yar.set('farmingType', request.payload.farmingType)
         return request.payload.farmingType !== 'Something else' ? h.redirect('./legal-status') : h.view('./not-eligible', createModelNotEligible())
       }
