@@ -1,7 +1,7 @@
 module.exports = [
   {
     method: 'GET',
-    path: '/test-redirect',
+    path: '/test-redirect2',
     handler: (request, h) => {
       return h.response('You were redirected here from test-post2').code(200)
     }
