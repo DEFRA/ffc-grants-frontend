@@ -1,13 +1,6 @@
 {% extends ".layout.njk" %}
-{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% block pageTitle %}
   Accessibility statement - GOV.UK
-{% endblock %}
-{% block beforeContent %}
-  {{ govukBackLink({
-    text: "Back",
-    href: "javascript:history.go(-1)"
-  }) }}
 {% endblock %}
 {% block content %}
   <div class="govuk-grid-row">
