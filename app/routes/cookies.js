@@ -32,21 +32,15 @@ function createModel (cookiesPolicy = {}, updated = false) {
     analytics: {
       idPrefix: 'analytics',
       name: 'analytics',
-      fieldset: {
-        legend: {
-          text: 'Do you want to accept analytics cookies?',
-          classes: 'govuk-fieldset__legend--s'
-        }
-      },
       items: [
         {
           value: true,
-          text: 'Yes',
+          text: 'Use cookies that measure my website use',
           checked: cookiesPolicy.analytics
         },
         {
           value: false,
-          text: 'No',
+          text: 'Do not use cookies that measure my website use',
           checked: !cookiesPolicy.analytics
         }
       ]
