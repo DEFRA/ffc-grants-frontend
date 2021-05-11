@@ -36,6 +36,7 @@ async function createServer () {
   await server.register(inert)
   await server.register(vision)
   await server.register(require('./plugins/cookies'))
+  await server.register(require('./plugins/questionBank'))
   await server.register(require('./plugins/error-pages'))
   await server.register({
     plugin: require('./plugins/header'),
@@ -79,7 +80,7 @@ async function createServer () {
       batchInterval: 15000
     }
   })
-  // Session cache with yar
+  // Session cache redis with yar
   await server.register([
     {
       plugin: require('@hapi/yar'),
