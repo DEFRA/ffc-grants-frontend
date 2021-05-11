@@ -1,6 +1,6 @@
 const Joi = require('joi')
 const { isChecked, getPostCodeHtml, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
-const { POSTCODE_REGEX } = require('../helpers/regex-validation')
+const { POSTCODE_REGEX, DELETE_POSTCODE_CHARS_REGEX } = require('../helpers/regex-validation')
 
 function createModel (errorMessage, data, postcodeHtml) {
   return {
@@ -61,7 +61,7 @@ module.exports = [
       validate: {
         payload: Joi.object({
           inEngland: Joi.string().required(),
-          projectPostcode: Joi.string().regex(POSTCODE_REGEX).trim().allow('')
+          projectPostcode: Joi.string().replace(DELETE_POSTCODE_CHARS_REGEX, '').regex(POSTCODE_REGEX).trim().allow('')
         }),
         failAction: (request, h, err) => {
           const { inEngland, projectPostcode } = request.payload
