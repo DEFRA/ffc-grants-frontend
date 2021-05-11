@@ -65,20 +65,20 @@ describe('Irrigated Land page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Hectare figure can have one decimal place')
+    expect(postResponse.payload).toContain('Hectare value must be a number, with only one decimal place')
   })
 
-  it('should validate current irrigated land - max 3 whole digits', async () => {
+  it('should validate current irrigated land - no decimal point without a whole number or a fraction', async () => {
     const postOptions = {
       method: 'POST',
       url: '/irrigated-land',
-      payload: { irrigatedLandCurrent: '1234', crumb: crumbToken },
+      payload: { irrigatedLandCurrent: '.', crumb: crumbToken },
       headers: { cookie: 'crumb=' + crumbToken }
     }
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Hectare figure can have one decimal place')
+    expect(postResponse.payload).toContain('Hectare value must be a number, with only one decimal place')
   })
 
   it('should validate current irrigated land - max 1 fraction digit', async () => {
@@ -91,7 +91,7 @@ describe('Irrigated Land page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Hectare figure can have one decimal place')
+    expect(postResponse.payload).toContain('Hectare value must be a number, with only one decimal place')
   })
 
   it('should validate target irrigated land - only digits', async () => {
@@ -104,20 +104,20 @@ describe('Irrigated Land page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Hectare figure can have one decimal place')
+    expect(postResponse.payload).toContain('Hectare value must be a number, with only one decimal place')
   })
 
-  it('should validate target irrigated land - max 3 whole digits', async () => {
+  it('should validate target irrigated land - no decimal point without a whole number or a fraction', async () => {
     const postOptions = {
       method: 'POST',
       url: '/irrigated-land',
-      payload: { irrigatedLandTarget: '1234', crumb: crumbToken },
+      payload: { irrigatedLandTarget: '.', crumb: crumbToken },
       headers: { cookie: 'crumb=' + crumbToken }
     }
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Hectare figure can have one decimal place')
+    expect(postResponse.payload).toContain('Hectare value must be a number, with only one decimal place')
   })
 
   it('should validate target irrigated land - max 1 fraction digit', async () => {
@@ -130,7 +130,7 @@ describe('Irrigated Land page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Hectare figure can have one decimal place')
+    expect(postResponse.payload).toContain('Hectare value must be a number, with only one decimal place')
   })
 
   it('should store user response and redirects to water source page', async () => {

@@ -4,7 +4,7 @@ const PHONE_REGEX = /^[0-9\t-+()]+$/
 const NAME_REGEX = /^[a-zA-Z' -]+$/
 const NUMBER_REGEX = /^\d+$/
 const PROJECT_COST_REGEX = /^[1-9][0-9]*$/
-const IRRIGATED_LAND_REGEX = /^\d{1,3}([.]\d?)?$/
+const IRRIGATED_LAND_REGEX = /^(\d+([.]\d?)?|[.]\d)$/
 
 module.exports = {
   POSTCODE_REGEX,
