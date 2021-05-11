@@ -38,6 +38,12 @@ module.exports = [
     method: 'GET',
     path: '/confirm',
     handler: (request, h) => {
+      const refererURL = request?.headers?.referer?.split('/').pop()
+
+      if (!request.yar.get('farmerAddressDetails') || refererURL !== 'farmer-address-details') {
+        console.log(refererURL)
+        return h.redirect('./start')
+      }
       const consentMain = (request.yar.get('consentMain') && CONSENT_MAIN) || ''
       const consentOptional = (request.yar.get('consentOptional') && CONSENT_OPTIONAL) || ''
 
