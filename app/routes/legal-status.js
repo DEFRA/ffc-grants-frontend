@@ -19,7 +19,7 @@ function createModel (errorMessage, data) {
         setLabelData(data, [
           { text: 'Sole trader', value: 'Sole Trader' },
           'Partnership',
-          { text: 'Ltd company', value: 'Ltd Company' },
+          { text: 'Limited company', value: 'Ltd Company' },
           'Charity',
           { text: 'Public organisation', value: 'Public Organisation' },
           'Trust',

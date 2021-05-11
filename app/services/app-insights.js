@@ -9,7 +9,6 @@ function setup () {
     appInsights.defaultClient.context.tags[cloudRoleTag] = appName
   }
 }
-
 function logException (request, event) {
   const client = appInsights.defaultClient
   client?.trackException({
@@ -22,8 +21,4 @@ function logException (request, event) {
     }
   })
 }
-module.exports = {
-  defaultClient: appInsights.defaultClient,
-  setup,
-  logException
-}
+module.exports = { setup, logException }

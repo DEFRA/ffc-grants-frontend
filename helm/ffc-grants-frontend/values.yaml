@@ -23,8 +23,8 @@ containerSecret:
 deployment:
   restartPolicy: Always
   priorityClassName: high
-  replicas: 2
-  minReplicas: 2
+  replicas: 1
+  minReplicas: 1
   maxReplicas: 4
   minReadySeconds: 2
   redeployOnChange: update this field to force a change
@@ -52,6 +52,7 @@ container:
   backendPollingHost: http://ffc-grants-eligibility
   pollingInterval: 200
   pollingRetries: 20
+  protectiveMonitoringUrl:
   redisHostname: redis
   redisPassword: redis
   redisPort: 6379
