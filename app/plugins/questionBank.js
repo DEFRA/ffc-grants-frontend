@@ -8,21 +8,21 @@ module.exports = {
     name: 'page-guard',
     register: (server, options) => {
       server.ext('onPreResponse', (request, h) => {
-        const currentUrl = request?.headers?.referer?.split('/').pop()
+        const currentUrl = request.url.pathname.toLowerCase().split('/').pop()
         let result = false
-        if (request.response.variety === 'view') {
-          questionBank.questions.forEach((question, index) => {
-            let previousIndex = index - 1 > 0 ? index - 1 : 0
-            const previousUrl = questionBank.questions[previousIndex].url
-            const prevQuestionYarKey = questionBank.questions[previousIndex].yarKey
-            if (index > 0 && question.url === currentUrl) {
-              if (previousUrl === currentUrl) previousIndex--
-              if (!request.yar.get(prevQuestionYarKey)) result = true
-            }
-          })
+        if (request.response.variety === 'view' && questionBank.questions.filter(q => q.url === currentUrl).length > 0) {
+          const currentQuestionOrder = questionBank.questions.filter(q => q.url === currentUrl)[0].order
+          const validQuestions = questionBank.questions.filter(q => q.order < currentQuestionOrder)
+            .sort((a, b) => b.order ?? 0 - a.order ?? 0)
+          if (validQuestions.length > 0) {
+            validQuestions.some((question) => {
+              const prevQuestionYarKey = question.yarKey
+              result = !request.yar.get(prevQuestionYarKey)
+              return result
+            })
+          }
         }
-        console.log(result, 'RRRRRRR')
-        if (result) return h.view('500')
+        if (result) return h.redirect('/start')
         return h.continue
       })
     }
