@@ -9,13 +9,17 @@ module.exports = {
     register: (server, options) => {
       server.ext('onPreResponse', (request, h) => {
         const currentUrl = request.url.pathname.toLowerCase().split('/').pop()
-        let result = false
-        if (request.response.variety === 'view' && questionBank.questions.filter(q => q.url === currentUrl).length > 0) {
-          const currentQuestionOrder = questionBank.questions.filter(q => q.url === currentUrl)[0].order
-          const validQuestions = questionBank.questions.filter(q => q.order < currentQuestionOrder)
-            .sort((a, b) => b.order ?? 0 - a.order ?? 0)
-          if (validQuestions.length > 0) {
-            validQuestions.some((question) => {
+        let result
+
+        if (request.response.variety === 'view' && questionBank.questions.filter(question => question.url === currentUrl).length > 0) {
+          const currentQuestionNumber = questionBank.questions.filter(question => question.url === currentUrl)[0].order
+          console.log(currentQuestionNumber, 'QUESTION NUMBER')
+
+          const previousQuestions = questionBank.questions.filter(question => question.order < currentQuestionNumber).sort((a, b) => b.order ?? 0 - a.order ?? 0)
+          console.log(previousQuestions, 'VALID QUESTIONS')
+
+          if (previousQuestions.length > 0) {
+            previousQuestions.some((question) => {
               const prevQuestionYarKey = question.yarKey
               result = !request.yar.get(prevQuestionYarKey)
               return result
