@@ -7,7 +7,7 @@ async function sendEvent (request, sessionId, event, pmcCode) {
     sessionid: sessionId,
     datetime: createEventDate(),
     version: '1.1',
-    application: 'FFC-GRANTS',
+    application: 'DEP00085',
     component: 'Eligibility and Desirability Web UI',
     ip: request ? getIpAddress(request) : '',
     pmccode: pmcCode,
