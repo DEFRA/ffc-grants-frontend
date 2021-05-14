@@ -22,7 +22,12 @@ async function createServer () {
         constructor: catbox,
         options: cacheConfig.catboxOptions
       }
-    }]
+    }],
+    routes: {
+      timeout: {
+        server: config.serverTimeout ?? 3600000 // ms= 60 min
+      }
+    }
   })
   const siteUrl = (process.env.SITE_VERSION ?? '') === '' ? '' : `/${process.env.SITE_VERSION}`
   if (siteUrl.length > 0) {

@@ -20,6 +20,11 @@ module.exports = {
           if (statusCode === 404) {
             return h.view('404').code(statusCode)
           }
+          // In the event of 503 - Timeout
+          // return the `503` view
+          if (statusCode === 503) {
+            return h.view('503').code(statusCode)
+          }
           const err = {
             statusCode: statusCode,
             data: response.data,

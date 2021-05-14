@@ -17,7 +17,8 @@ const schema = Joi.object({
   appInsights: {
     key: Joi.string(),
     role: Joi.string().default('ffc-grants-frontend')
-  }
+  },
+  serverTimeout: Joi.number().default(3600000) // ms= 60 min
 })
 // Build config
 const config = {
@@ -36,7 +37,8 @@ const config = {
   appInsights: {
     key: process.env.APPINSIGHTS_INSTRUMENTATIONKEY,
     role: process.env.APPINSIGHTS_CLOUDROLE
-  }
+  },
+  serverTimeout: process.env.SERVER_TIMEOUT
 }
 
 // Validate config

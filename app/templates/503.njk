@@ -1,0 +1,25 @@
+{% extends '.layout.njk' %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% block content %}
+  <div class="govuk-width-container">
+    <div class="govuk-main-wrapper--auto-spacing">
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+          <h1 class="govuk-heading-xl">This session is closed</h1>
+          <p class="govuk-body">
+            This session has been closed as it was inactive for over an hour.
+            <br/>
+            For your security, we have deleted your answers.
+          </p>
+          {{ govukButton({
+            classes: "govuk-!-margin-top-2 govuk-!-margin-bottom-8",
+            href: "/",
+            isStartButton: true,
+            text: "Start again"
+          }) }}
+
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
