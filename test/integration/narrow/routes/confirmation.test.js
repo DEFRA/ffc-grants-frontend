@@ -1,4 +1,4 @@
-const { getCookieHeader, crumbToken } = require('./test-helper')
+const { crumbToken } = require('./test-helper')
 
 describe('Confirmation page', () => {
   beforeEach(async () => {

@@ -50,6 +50,14 @@ function getPostCodeHtml (postcodeData, error) {
       </div>`
 }
 
+function setYarValue (request, key, value) {
+  request.yar.set(key, value)
+}
+
+function getYarValue (request, key) {
+  return request.yar.get(key)
+}
+
 function errorExtractor (data) {
   const { details } = data
   const errorObject = {}
@@ -137,6 +145,8 @@ module.exports = {
   isChecked,
   setLabelData,
   getPostCodeHtml,
+  getYarValue,
+  setYarValue,
   errorExtractor,
   getErrorMessage,
   getGrantValues,

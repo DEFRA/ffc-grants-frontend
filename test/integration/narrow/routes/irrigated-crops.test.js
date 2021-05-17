@@ -1,18 +1,35 @@
-const { getCookieHeader, getCrumbCookie, crumbToken } = require('./test-helper')
+const { crumbToken } = require('./test-helper')
 describe('Irrigated crops page', () => {
-  let crumCookie
+  let sessionCookie = ''
   it('should load page successfully', async () => {
+    // injecting project details value
+    const postOptions = {
+      method: 'POST',
+      url: '/project-details',
+      payload: { project: 'some fake proj', crumb: crumbToken },
+      headers: {
+        cookie: 'crumb=' + crumbToken
+      }
+    }
+
+    const postResponse = await global.__SERVER__.inject(postOptions)
+    expect(postResponse.statusCode).toBe(302)
+
+    sessionCookie = postResponse.headers['set-cookie']
+      .find(line => line.includes('session='))
+      .split(' ')
+      .find(cookie => cookie.startsWith('session='))
+
     const options = {
       method: 'GET',
-      url: '/irrigated-crops'
+      url: '/irrigated-crops',
+      headers: {
+        cookie: 'crumb=' + crumbToken + '; ' + sessionCookie
+      }
     }
 
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
-    const header = getCookieHeader(response)
-    expect(header.length).toBe(3)
-    crumCookie = getCrumbCookie(response)
-    expect(response.result).toContain(crumCookie[1])
   })
 
   it('should returns error message if no option is selected', async () => {
@@ -21,7 +38,7 @@ describe('Irrigated crops page', () => {
       url: '/irrigated-crops',
       payload: { crumb: crumbToken },
       headers: {
-        cookie: 'crumb=' + crumbToken
+        cookie: 'crumb=' + crumbToken + '; ' + sessionCookie
       }
     }
 
@@ -43,5 +60,19 @@ describe('Irrigated crops page', () => {
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
     expect(postResponse.headers.location).toBe('./irrigated-land')
+  })
+
+  it('should redirects to istart page if any previous scoring answer is missing', async () => {
+    const postOptions = {
+      method: 'GET',
+      url: '/irrigated-crops',
+      headers: {
+        cookie: 'crumb=' + crumbToken
+      }
+    }
+
+    const postResponse = await global.__SERVER__.inject(postOptions)
+    expect(postResponse.statusCode).toBe(302)
+    expect(postResponse.headers.location).toBe('/start')
   })
 })
