@@ -26,7 +26,10 @@ describe('Confirmation page', () => {
     expect(postResponse.statusCode).toBe(302)
     expect(postResponse.request.yar.get('consentMain')).toBe(true)
 
-    const sessionCookie = getCookieHeader(postResponse)[0].split(' ').find(cookie => cookie.startsWith('session='))
+    const sessionCookie = postResponse.headers['set-cookie']
+      .find(line => line.includes('session='))
+      .split(' ')
+      .find(cookie => cookie.startsWith('session='))
 
     const options = {
       method: 'GET',

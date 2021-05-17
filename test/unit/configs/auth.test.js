@@ -11,6 +11,7 @@ describe('get auth config', () => {
   afterAll(() => {
     process.env = OLD_ENV
   })
+
   test('Should pass validation for all fields populated', async () => {
     expect(config).toBeDefined()
   })
