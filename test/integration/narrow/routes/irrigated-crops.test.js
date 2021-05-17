@@ -1,7 +1,27 @@
 const { crumbToken } = require('./test-helper')
 describe('Irrigated crops page', () => {
-  let sessionCookie = ''
+  let sessionCookie
+  const session = require('../../../../app/helpers/session')
+  const project = 'Horticulture'
+  const irrigatedCrops = 'some crop'
+
+  jest.mock('../../../../app/helpers/session', () => ({
+    setYarValue: () => null,
+    getYarValue: (request, key) => {
+      switch (key) {
+        case 'project':
+          return project
+        default:
+          return 'Error'
+      }
+    }
+  }))
+
+  afterAll(() => {
+    jest.resetAllMocks()
+  })
   it('should load page successfully', async () => {
+    // const session = require('../../../../app/helpers/session')
     // injecting project details value
     const postOptions = {
       method: 'POST',
@@ -14,6 +34,7 @@ describe('Irrigated crops page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
+    // expect(session.getValue(postResponse.request, 'project')).toBe(project)
 
     sessionCookie = postResponse.headers['set-cookie']
       .find(line => line.includes('session='))
@@ -29,7 +50,8 @@ describe('Irrigated crops page', () => {
     }
 
     const response = await global.__SERVER__.inject(options)
-    expect(response.statusCode).toBe(200)
+    expect(response.statusCode).toBe(302)
+    expect(session.getYarValue(response.request, 'project')).toBe(project)
   })
 
   it('should returns error message if no option is selected', async () => {
@@ -51,7 +73,7 @@ describe('Irrigated crops page', () => {
     const postOptions = {
       method: 'POST',
       url: '/irrigated-crops',
-      payload: { irrigatedCrops: 'some crop', crumb: crumbToken },
+      payload: { irrigatedCrops, crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
       }
@@ -62,7 +84,7 @@ describe('Irrigated crops page', () => {
     expect(postResponse.headers.location).toBe('./irrigated-land')
   })
 
-  it('should redirects to istart page if any previous scoring answer is missing', async () => {
+  it('should redirects to start page if any previous scoring answer is missing', async () => {
     const postOptions = {
       method: 'GET',
       url: '/irrigated-crops',
