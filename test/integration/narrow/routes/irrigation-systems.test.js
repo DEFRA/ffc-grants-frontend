@@ -36,8 +36,8 @@ describe('Irrigation syatems page', () => {
     }
   }))
 
-  afterAll(() => {
-    jest.resetAllMocks()
+  afterEach(() => {
+    jest.clearAllMocks()
   })
   it('should load page successfully', async () => {
     const options = {
