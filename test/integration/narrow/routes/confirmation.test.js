@@ -24,6 +24,7 @@ describe('Confirmation page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
+
     expect(postResponse.request.yar.get('consentMain')).toBe(true)
 
     const sessionCookie = postResponse.headers['set-cookie']

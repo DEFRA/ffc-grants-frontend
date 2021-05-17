@@ -1,5 +1,6 @@
 const Joi = require('joi')
 const { setLabelData, findErrorList } = require('../helpers/helper-functions')
+const { setYarValue, getYarValue } = require('../helpers/session')
 
 const CONSENT_MAIN = 'CONSENT_MAIN'
 const CONSENT_OPTIONAL = 'CONSENT_OPTIONAL'
@@ -39,13 +40,14 @@ module.exports = [
     path: '/confirm',
     handler: (request, h) => {
       const refererURL = request?.headers?.referer?.split('/').pop()
+      console.log(request.headers.referer, 'LLLLL')
 
-      if (!request.yar.get('farmerAddressDetails') || refererURL !== 'farmer-address-details') {
+      if (!getYarValue(request, 'farmerAddressDetails') || refererURL !== 'farmer-address-details') {
         console.log(refererURL)
         return h.redirect('./start')
       }
-      const consentMain = (request.yar.get('consentMain') && CONSENT_MAIN) || ''
-      const consentOptional = (request.yar.get('consentOptional') && CONSENT_OPTIONAL) || ''
+      const consentMain = (getYarValue(request, 'consentMain') && CONSENT_MAIN) || ''
+      const consentOptional = (getYarValue(request, 'consentOptional') && CONSENT_OPTIONAL) || ''
 
       return h.view('confirm', createModel(consentMain, consentOptional, null))
     }
@@ -74,8 +76,8 @@ module.exports = [
       }
     },
     handler: (request, h) => {
-      request.yar.set('consentMain', true)
-      request.yar.set('consentOptional', request.payload.consentOptional === CONSENT_OPTIONAL)
+      setYarValue(request, 'consentMain', true)
+      setYarValue(request, 'consentOptional', request.payload.consentOptional === CONSENT_OPTIONAL)
       return h.redirect('./confirmation')
     }
   }

@@ -1,5 +1,6 @@
 const Joi = require('joi')
 const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
+const { setYarValue, getYarValue } = require('../helpers/session')
 
 function createModel (errorMessage, errorSummary, currentData, plannedData) {
   return {
@@ -46,8 +47,8 @@ module.exports = [
     method: 'GET',
     path: '/irrigation-systems',
     handler: (request, h) => {
-      const currentData = request.yar.get('irrigationCurrent') || null
-      const plannedData = request.yar.get('irrigationPlanned') || null
+      const currentData = getYarValue(request, 'irrigationCurrent') || null
+      const plannedData = getYarValue(request, 'irrigationPlanned') || null
       return h.view('irrigation-systems', createModel(null, null, currentData, plannedData))
     }
   },
@@ -87,8 +88,8 @@ module.exports = [
             .takeover()
         }
 
-        request.yar.set('irrigationCurrent', irrigationCurrent)
-        request.yar.set('irrigationPlanned', irrigationPlanned)
+        setYarValue(request, 'irrigationCurrent', irrigationCurrent)
+        setYarValue(request, 'irrigationPlanned', irrigationPlanned)
         return h.redirect('./productivity')
       }
     }

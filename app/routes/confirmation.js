@@ -2,11 +2,13 @@ const { formatApplicationCode } = require('../helpers/helper-functions')
 const senders = require('../messaging/senders')
 const createMsg = require('../messaging/create-msg')
 const protectiveMonitoringServiceSendEvent = require('../services/protective-monitoring-service')
+const { getYarValue } = require('../helpers/session')
+
 module.exports = {
   method: 'GET',
   path: '/confirmation',
   handler: async (request, h) => {
-    if (!request.yar.get('consentMain')) {
+    if (!getYarValue(request, 'consentMain')) {
       return h.redirect('./start')
     }
     const confirmationId = formatApplicationCode(request.yar.id)

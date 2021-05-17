@@ -1,6 +1,5 @@
 const { crumbToken } = require('./test-helper')
 describe('Irrigated crops page', () => {
-  let sessionCookie
   const project = 'some fake data'
   const irrigatedCrops = 'some crop'
 
@@ -15,41 +14,20 @@ describe('Irrigated crops page', () => {
       }
     }
   }))
-  const session = require('../../../../app/helpers/session')
 
   afterAll(() => {
     jest.resetAllMocks()
   })
   it('should load page successfully', async () => {
-    // injecting project details value
-    const postOptions = {
-      method: 'POST',
-      url: '/project-details',
-      payload: { project, crumb: crumbToken },
+    const options = {
+      method: 'GET',
+      url: '/irrigated-crops',
       headers: {
         cookie: 'crumb=' + crumbToken
       }
     }
 
-    const postResponse = await global.__SERVER__.inject(postOptions)
-    expect(postResponse.statusCode).toBe(302)
-    expect(session.getYarValue(postResponse.request, 'project')).toStrictEqual([project])
-
-    sessionCookie = postResponse.headers['set-cookie']
-      .find(line => line.includes('session='))
-      .split(' ')
-      .find(cookie => cookie.startsWith('session='))
-
-    const options = {
-      method: 'GET',
-      url: '/irrigated-crops',
-      headers: {
-        cookie: 'crumb=' + crumbToken + '; ' + sessionCookie
-      }
-    }
-
     const response = await global.__SERVER__.inject(options)
-    expect(session.getYarValue(response.request, 'project')).toStrictEqual([project])
 
     expect(response.statusCode).toBe(200)
   })
@@ -60,7 +38,7 @@ describe('Irrigated crops page', () => {
       url: '/irrigated-crops',
       payload: { crumb: crumbToken },
       headers: {
-        cookie: 'crumb=' + crumbToken + '; ' + sessionCookie
+        cookie: 'crumb=' + crumbToken
       }
     }
 

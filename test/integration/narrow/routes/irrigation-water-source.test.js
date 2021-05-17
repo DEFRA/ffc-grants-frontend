@@ -1,38 +1,60 @@
-const { getCookieHeader, getCrumbCookie } = require('./test-helper')
+const { crumbToken } = require('./test-helper')
+
 describe('Irrigation water source page', () => {
-  let crumCookie
+  const project = ['some fake project']
+  const irrigatedCrops = 'some fake crop'
+  const irrigatedLandCurrent = '123'
+  const irrigatedLandTarget = '456'
+  const waterSourceCurrent = ['some source 1']
+  const waterSourcePlanned = ['some source 2', 'another source']
+
+  const session = require('../../../../app/helpers/session')
+
+  jest.mock('../../../../app/helpers/session', () => ({
+    setYarValue: (request, key, value) => null,
+    getYarValue: (request, key) => {
+      switch (key) {
+        case 'project':
+          return [project]
+        case 'irrigatedCrops':
+          return irrigatedCrops
+        case 'irrigatedLandCurrent':
+          return irrigatedLandCurrent
+        case 'irrigatedLandTarget':
+          return irrigatedLandTarget
+        case 'waterSourceCurrent':
+          return [waterSourceCurrent]
+        case 'waterSourcePlanned':
+          return [waterSourcePlanned]
+        default:
+          return 'Error'
+      }
+    }
+  }))
+
+  afterAll(() => {
+    jest.resetAllMocks()
+  })
   it('should load page successfully', async () => {
     const options = {
       method: 'GET',
-      url: '/irrigation-water-source'
+      url: '/irrigation-water-source',
+      headers: {
+        cookie: 'crumb=' + crumbToken
+      }
     }
 
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
-    const header = getCookieHeader(response)
-    expect(header.length).toBe(3)
-    crumCookie = getCrumbCookie(response)
-    expect(response.result).toContain(crumCookie[1])
   })
 
   it('should returns error message if no current water source option is selected', async () => {
-    const options = {
-      method: 'GET',
-      url: '/irrigation-water-source'
-    }
-
-    const response = await global.__SERVER__.inject(options)
-    expect(response.statusCode).toBe(200)
-    const header = getCookieHeader(response)
-    expect(header.length).toBe(3)
-    crumCookie = getCrumbCookie(response)
-    expect(response.result).toContain(crumCookie[1])
     const postOptions = {
       method: 'POST',
       url: '/irrigation-water-source',
-      payload: { waterSourcePlanned: 'some souce 2', crumb: crumCookie[1] },
+      payload: { waterSourcePlanned, crumb: crumbToken },
       headers: {
-        cookie: 'crumb=' + crumCookie[1]
+        cookie: 'crumb=' + crumbToken
       }
     }
 
@@ -42,23 +64,12 @@ describe('Irrigation water source page', () => {
   })
 
   it('should returns error message if no planned water source option is selected', async () => {
-    const options = {
-      method: 'GET',
-      url: '/irrigation-water-source'
-    }
-
-    const response = await global.__SERVER__.inject(options)
-    expect(response.statusCode).toBe(200)
-    const header = getCookieHeader(response)
-    expect(header.length).toBe(3)
-    crumCookie = getCrumbCookie(response)
-    expect(response.result).toContain(crumCookie[1])
     const postOptions = {
       method: 'POST',
       url: '/irrigation-water-source',
-      payload: { waterSourceCurrent: 'some souce 2', crumb: crumCookie[1] },
+      payload: { waterSourceCurrent, crumb: crumbToken },
       headers: {
-        cookie: 'crumb=' + crumCookie[1]
+        cookie: 'crumb=' + crumbToken
       }
     }
 
@@ -68,23 +79,12 @@ describe('Irrigation water source page', () => {
   })
 
   it('should store user response and redirects to irrigated crops page', async () => {
-    const options = {
-      method: 'GET',
-      url: '/irrigation-water-source'
-    }
-
-    const response = await global.__SERVER__.inject(options)
-    expect(response.statusCode).toBe(200)
-    const header = getCookieHeader(response)
-    expect(header.length).toBe(3)
-    crumCookie = getCrumbCookie(response)
-    expect(response.result).toContain(crumCookie[1])
     const postOptions = {
       method: 'POST',
       url: '/irrigation-water-source',
-      payload: { waterSourceCurrent: 'some source 1', waterSourcePlanned: 'some souce 2', crumb: crumCookie[1] },
+      payload: { waterSourceCurrent, waterSourcePlanned, crumb: crumbToken },
       headers: {
-        cookie: 'crumb=' + crumCookie[1]
+        cookie: 'crumb=' + crumbToken
       }
     }
 
@@ -94,27 +94,16 @@ describe('Irrigation water source page', () => {
   })
 
   it('should display the error summary if more than two options are selected for each question', async () => {
-    const options = {
-      method: 'GET',
-      url: '/irrigation-water-source'
-    }
-
-    const response = await global.__SERVER__.inject(options)
-    expect(response.statusCode).toBe(200)
-    const header = getCookieHeader(response)
-    expect(header.length).toBe(3)
-    crumCookie = getCrumbCookie(response)
-    expect(response.result).toContain(crumCookie[1])
     const postOptions = {
       method: 'POST',
       url: '/irrigation-water-source',
       payload: {
         waterSourceCurrent: ['some option-1', 'some option-2', 'some option-3'],
         waterSourcePlanned: ['another-option-1', 'another-option-2', 'another-option-3'],
-        crumb: crumCookie[1]
+        crumb: crumbToken
       },
       headers: {
-        cookie: 'crumb=' + crumCookie[1]
+        cookie: 'crumb=' + crumbToken
       }
     }
 

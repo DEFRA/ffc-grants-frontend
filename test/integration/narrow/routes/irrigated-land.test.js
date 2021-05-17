@@ -1,8 +1,8 @@
 const { crumbToken } = require('./test-helper')
 describe('Irrigated Land page', () => {
-  let sessionCookie
   const project = ['some fake project']
   const irrigatedCrops = 'some fake crop'
+  const session = require('../../../../app/helpers/session')
 
   jest.mock('../../../../app/helpers/session', () => ({
     setYarValue: () => null,
@@ -17,50 +17,16 @@ describe('Irrigated Land page', () => {
       }
     }
   }))
-  const session = require('../../../../app/helpers/session')
 
   afterAll(() => {
     jest.resetAllMocks()
   })
   it('should load page successfully', async () => {
-    // injecting project details value
-    const postOptions = {
-      method: 'POST',
-      url: '/project-details',
-      payload: { project, crumb: crumbToken },
-      headers: {
-        cookie: 'crumb=' + crumbToken
-      }
-    }
-
-    const postResponse = await global.__SERVER__.inject(postOptions)
-    expect(postResponse.statusCode).toBe(302)
-    expect(session.getYarValue(postResponse.request, 'project')).toStrictEqual([project])
-
-    sessionCookie = postResponse.headers['set-cookie']
-      .find(line => line.includes('session='))
-      .split(' ')
-      .find(cookie => cookie.startsWith('session='))
-
-    // injecting irrigated crops value
-    const cropsOptions = {
-      method: 'POST',
-      url: '/irrigated-crops',
-      payload: { irrigatedCrops, crumb: crumbToken },
-      headers: {
-        cookie: 'crumb=' + crumbToken + '; ' + sessionCookie
-      }
-    }
-    const cropResponse = await global.__SERVER__.inject(cropsOptions)
-    expect(cropResponse.statusCode).toBe(302)
-    expect(session.getYarValue(postResponse.request, 'irrigatedCrops')).toStrictEqual(irrigatedCrops)
-
-
     const options = {
       method: 'GET',
       url: '/irrigated-land',
       headers: {
-        cookie: 'crumb=' + crumbToken + '; ' + sessionCookie
+        cookie: 'crumb=' + crumbToken
       }
     }
 
@@ -74,7 +40,7 @@ describe('Irrigated Land page', () => {
       url: '/irrigated-land',
       payload: { crumb: crumbToken },
       headers: {
-        cookie: 'crumb=' + crumbToken + '; ' + sessionCookie
+        cookie: 'crumb=' + crumbToken
       }
     }
 
@@ -90,7 +56,7 @@ describe('Irrigated Land page', () => {
       url: '/irrigated-land',
       payload: { irrigatedLandTarget: '456.7', crumb: crumbToken },
       headers: {
-        cookie: 'crumb=' + crumbToken + '; ' + sessionCookie
+        cookie: 'crumb=' + crumbToken
       }
     }
 
@@ -105,7 +71,7 @@ describe('Irrigated Land page', () => {
       url: '/irrigated-land',
       payload: { irrigatedLandCurrent: '123', crumb: crumbToken },
       headers: {
-        cookie: 'crumb=' + crumbToken + '; ' + sessionCookie
+        cookie: 'crumb=' + crumbToken
       }
     }
 
@@ -120,7 +86,7 @@ describe('Irrigated Land page', () => {
       url: '/irrigated-land',
       payload: { irrigatedLandCurrent: 'e', crumb: crumbToken },
       headers: {
-        cookie: 'crumb=' + crumbToken + '; ' + sessionCookie
+        cookie: 'crumb=' + crumbToken
       }
     }
 
@@ -135,7 +101,7 @@ describe('Irrigated Land page', () => {
       url: '/irrigated-land',
       payload: { irrigatedLandCurrent: '.', crumb: crumbToken },
       headers: {
-        cookie: 'crumb=' + crumbToken + '; ' + sessionCookie
+        cookie: 'crumb=' + crumbToken
       }
     }
 
@@ -150,7 +116,7 @@ describe('Irrigated Land page', () => {
       url: '/irrigated-land',
       payload: { irrigatedLandCurrent: '123.45', crumb: crumbToken },
       headers: {
-        cookie: 'crumb=' + crumbToken + '; ' + sessionCookie
+        cookie: 'crumb=' + crumbToken
       }
     }
 
@@ -165,7 +131,7 @@ describe('Irrigated Land page', () => {
       url: '/irrigated-land',
       payload: { irrigatedLandTarget: 'e', crumb: crumbToken },
       headers: {
-        cookie: 'crumb=' + crumbToken + '; ' + sessionCookie
+        cookie: 'crumb=' + crumbToken
       }
     }
 
@@ -180,7 +146,7 @@ describe('Irrigated Land page', () => {
       url: '/irrigated-land',
       payload: { irrigatedLandTarget: '.', crumb: crumbToken },
       headers: {
-        cookie: 'crumb=' + crumbToken + '; ' + sessionCookie
+        cookie: 'crumb=' + crumbToken
       }
     }
 
@@ -195,7 +161,7 @@ describe('Irrigated Land page', () => {
       url: '/irrigated-land',
       payload: { irrigatedLandTarget: '123.45', crumb: crumbToken },
       headers: {
-        cookie: 'crumb=' + crumbToken + '; ' + sessionCookie
+        cookie: 'crumb=' + crumbToken
       }
     }
 
@@ -210,7 +176,7 @@ describe('Irrigated Land page', () => {
       url: '/irrigated-land',
       payload: { irrigatedLandCurrent: '123.4', irrigatedLandTarget: '567.8', crumb: crumbToken },
       headers: {
-        cookie: 'crumb=' + crumbToken + '; ' + sessionCookie
+        cookie: 'crumb=' + crumbToken
       }
     }
 

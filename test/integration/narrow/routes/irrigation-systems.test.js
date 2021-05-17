@@ -1,6 +1,44 @@
-const { getCookieHeader, getCrumbCookie, crumbToken } = require('./test-helper')
+const { crumbToken } = require('./test-helper')
+
 describe('Irrigation syatems page', () => {
-  let crumCookie
+  const project = ['some fake project']
+  const irrigatedCrops = 'some fake crop'
+  const irrigatedLandCurrent = '123'
+  const irrigatedLandTarget = '456'
+  const waterSourceCurrent = ['some source 1']
+  const waterSourcePlanned = ['some source 2', 'another source']
+  const irrigationCurrent = ['some source 2', 'another source']
+  const irrigationPlanned = ['some souce 2']
+
+  jest.mock('../../../../app/helpers/session', () => ({
+    setYarValue: (request, key, value) => null,
+    getYarValue: (request, key) => {
+      switch (key) {
+        case 'project':
+          return [project]
+        case 'irrigatedCrops':
+          return irrigatedCrops
+        case 'irrigatedLandCurrent':
+          return irrigatedLandCurrent
+        case 'irrigatedLandTarget':
+          return irrigatedLandTarget
+        case 'waterSourceCurrent':
+          return [waterSourceCurrent]
+        case 'waterSourcePlanned':
+          return [waterSourcePlanned]
+        case 'irrigationCurrent':
+          return [irrigationCurrent]
+        case 'irrigationPlanned':
+          return [irrigationPlanned]
+        default:
+          return 'Error'
+      }
+    }
+  }))
+
+  afterAll(() => {
+    jest.resetAllMocks()
+  })
   it('should load page successfully', async () => {
     const options = {
       method: 'GET',
@@ -9,17 +47,13 @@ describe('Irrigation syatems page', () => {
 
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
-    const header = getCookieHeader(response)
-    expect(header.length).toBe(3)
-    crumCookie = getCrumbCookie(response)
-    expect(response.result).toContain(crumCookie[1])
   })
 
   it('should returns error message if no current water system option is selected', async () => {
     const postOptions = {
       method: 'POST',
       url: '/irrigation-systems',
-      payload: { irrigationPlanned: 'some souce 2', crumb: crumbToken },
+      payload: { irrigationPlanned, crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
       }
@@ -34,7 +68,7 @@ describe('Irrigation syatems page', () => {
     const postOptions = {
       method: 'POST',
       url: '/irrigation-systems',
-      payload: { irrigationCurrent: 'some souce 2', crumb: crumbToken },
+      payload: { irrigationCurrent, crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
       }
@@ -49,7 +83,7 @@ describe('Irrigation syatems page', () => {
     const postOptions = {
       method: 'POST',
       url: '/irrigation-systems',
-      payload: { irrigationCurrent: 'some source 1', irrigationPlanned: 'some souce 2', crumb: crumbToken },
+      payload: { irrigationCurrent, irrigationPlanned, crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
       }
