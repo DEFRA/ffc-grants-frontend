@@ -2,6 +2,7 @@
 * Add an `onPreResponse` listener to add page guard for scoring questions
 */
 const questionBank = require('../config/question-bank')
+const { getYarValue } = require('../helpers/session')
 
 module.exports = {
   plugin: {
@@ -19,7 +20,7 @@ module.exports = {
           if (previousQuestions.length > 0) {
             previousQuestions.some((question) => {
               const prevQuestionYarKey = question.yarKey
-              result = !request.yar.get(prevQuestionYarKey)
+              result = !getYarValue(request, prevQuestionYarKey)
               return result
             })
           }
