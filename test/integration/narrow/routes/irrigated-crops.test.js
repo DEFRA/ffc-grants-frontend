@@ -1,21 +1,21 @@
 const { crumbToken } = require('./test-helper')
 describe('Irrigated crops page', () => {
   let sessionCookie
-  const session = require('../../../../app/helpers/session')
   const project = 'Horticulture'
   const irrigatedCrops = 'some crop'
 
-  jest.mock('../../../../app/helpers/session', () => ({
-    setYarValue: () => null,
-    getYarValue: (request, key) => {
-      switch (key) {
-        case 'project':
-          return project
-        default:
-          return 'Error'
-      }
-    }
-  }))
+  // jest.mock('../../../../app/helpers/session', () => ({
+  //   setYarValue: () => null,
+  //   getYarValue: (request, key) => {
+  //     switch (key) {
+  //       case 'project':
+  //         return project
+  //       default:
+  //         return 'Error'
+  //     }
+  //   }
+  // }))
+  const session = require('../../../../app/helpers/session')
 
   afterAll(() => {
     jest.resetAllMocks()
@@ -26,7 +26,7 @@ describe('Irrigated crops page', () => {
     const postOptions = {
       method: 'POST',
       url: '/project-details',
-      payload: { project: 'some fake proj', crumb: crumbToken },
+      payload: { project, crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
       }
@@ -34,7 +34,7 @@ describe('Irrigated crops page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    // expect(session.getValue(postResponse.request, 'project')).toBe(project)
+    expect(session.getYarValue(postResponse.request, 'project')).toStrictEqual([project])
 
     sessionCookie = postResponse.headers['set-cookie']
       .find(line => line.includes('session='))
@@ -50,8 +50,7 @@ describe('Irrigated crops page', () => {
     }
 
     const response = await global.__SERVER__.inject(options)
-    expect(response.statusCode).toBe(302)
-    expect(session.getYarValue(response.request, 'project')).toBe(project)
+    expect(response.statusCode).toBe(200)
   })
 
   it('should returns error message if no option is selected', async () => {
