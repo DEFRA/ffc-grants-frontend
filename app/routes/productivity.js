@@ -1,5 +1,6 @@
 const Joi = require('joi')
 const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
+const { setYarValue, getYarValue } = require('../helpers/session')
 
 function createModel (errorMessage, errorSummary, data) {
   return {
@@ -29,7 +30,7 @@ module.exports = [
     method: 'GET',
     path: '/productivity',
     handler: (request, h) => {
-      const productivity = request.yar.get('productivity')
+      const productivity = getYarValue(request, 'productivity')
       const data = productivity || null
       return h.view('productivity', createModel(null, null, data))
     }
@@ -54,7 +55,7 @@ module.exports = [
         if (productivity.length > 2) {
           return h.view('productivity', createModel('Select one or two options', 'Select how the project will improve productivity', productivity)).takeover()
         }
-        request.yar.set('productivity', productivity)
+        setYarValue(request, 'productivity', productivity)
         return h.redirect('./collaboration')
       }
     }

@@ -1,6 +1,7 @@
 const Joi = require('joi')
 const { fetchListObjectItems, findErrorList } = require('../helpers/helper-functions')
 const { IRRIGATED_LAND_REGEX } = require('../helpers/regex-validation')
+const { setYarValue, getYarValue } = require('../helpers/session')
 
 function createModel (irrigatedLandCurrent, irrigatedLandTarget, errorMessageList) {
   const [
@@ -56,8 +57,8 @@ module.exports = [
     method: 'GET',
     path: '/irrigated-land',
     handler: (request, h) => {
-      const irrigatedLandCurrent = request.yar.get('irrigatedLandCurrent')
-      const irrigatedLandTarget = request.yar.get('irrigatedLandTarget')
+      const irrigatedLandCurrent = getYarValue(request, 'irrigatedLandCurrent')
+      const irrigatedLandTarget = getYarValue(request, 'irrigatedLandTarget')
       const currentData = irrigatedLandCurrent || null
       const TargetData = irrigatedLandTarget || null
 
@@ -103,8 +104,8 @@ module.exports = [
             createModel(irrigatedLandCurrent, irrigatedLandTarget, errorMessageList)).takeover()
         }
 
-        request.yar.set('irrigatedLandCurrent', irrigatedLandCurrent)
-        request.yar.set('irrigatedLandTarget', irrigatedLandTarget)
+        setYarValue(request, 'irrigatedLandCurrent', irrigatedLandCurrent)
+        setYarValue(request, 'irrigatedLandTarget', irrigatedLandTarget)
         return h.redirect('./irrigation-water-source')
       }
     }

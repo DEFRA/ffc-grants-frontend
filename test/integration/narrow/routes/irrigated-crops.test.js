@@ -1,18 +1,34 @@
-const { getCookieHeader, getCrumbCookie, crumbToken } = require('./test-helper')
+const { crumbToken } = require('./test-helper')
 describe('Irrigated crops page', () => {
-  let crumCookie
+  const project = 'some fake data'
+  const irrigatedCrops = 'some crop'
+
+  jest.mock('../../../../app/helpers/session', () => ({
+    setYarValue: () => null,
+    getYarValue: (request, key) => {
+      switch (key) {
+        case 'project':
+          return [project]
+        default:
+          return 'Error'
+      }
+    }
+  }))
+
+  afterEach(() => {
+    jest.clearAllMocks()
+  })
   it('should load page successfully', async () => {
     const options = {
       method: 'GET',
-      url: '/irrigated-crops'
+      url: '/irrigated-crops',
+      headers: {
+        cookie: 'crumb=' + crumbToken
+      }
     }
 
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
-    const header = getCookieHeader(response)
-    expect(header.length).toBe(3)
-    crumCookie = getCrumbCookie(response)
-    expect(response.result).toContain(crumCookie[1])
   })
 
   it('should returns error message if no option is selected', async () => {
@@ -34,7 +50,7 @@ describe('Irrigated crops page', () => {
     const postOptions = {
       method: 'POST',
       url: '/irrigated-crops',
-      payload: { irrigatedCrops: 'some crop', crumb: crumbToken },
+      payload: { irrigatedCrops, crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
       }

@@ -1,6 +1,48 @@
-const { getCookieHeader, getCrumbCookie, crumbToken } = require('./test-helper')
+const { crumbToken } = require('./test-helper')
 describe('Collaboration page', () => {
-  let crumCookie
+  const project = ['some fake project']
+  const irrigatedCrops = 'some fake crop'
+  const irrigatedLandCurrent = '123'
+  const irrigatedLandTarget = '456'
+  const waterSourceCurrent = ['some source 1']
+  const waterSourcePlanned = ['some source 2', 'another source']
+  const irrigationCurrent = ['some source 2', 'another source']
+  const irrigationPlanned = ['some souce 2']
+  const productivity = ['some option-1', 'some option-2']
+  const collaboration = 'some fake data'
+
+  jest.mock('../../../../app/helpers/session', () => ({
+    setYarValue: (request, key, value) => null,
+    getYarValue: (request, key) => {
+      switch (key) {
+        case 'project':
+          return [project]
+        case 'irrigatedCrops':
+          return irrigatedCrops
+        case 'irrigatedLandCurrent':
+          return irrigatedLandCurrent
+        case 'irrigatedLandTarget':
+          return irrigatedLandTarget
+        case 'waterSourceCurrent':
+          return [waterSourceCurrent]
+        case 'waterSourcePlanned':
+          return [waterSourcePlanned]
+        case 'irrigationCurrent':
+          return [irrigationCurrent]
+        case 'irrigationPlanned':
+          return [irrigationPlanned]
+        case 'productivity':
+          return [productivity]
+        default:
+          return 'Error'
+      }
+    }
+  }))
+
+  afterEach(() => {
+    jest.clearAllMocks()
+  })
+
   it('should load page successfully', async () => {
     const options = {
       method: 'GET',
@@ -9,17 +51,13 @@ describe('Collaboration page', () => {
 
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
-    const header = getCookieHeader(response)
-    expect(header.length).toBe(3)
-    crumCookie = getCrumbCookie(response)
-    expect(response.result).toContain(crumCookie[1])
   })
 
   it('should returns error message if no option is selected', async () => {
     const postOptions = {
       method: 'POST',
       url: '/collaboration',
-      payload: { collaboration: null, crumb: crumbToken },
+      payload: { crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
       }
@@ -34,9 +72,9 @@ describe('Collaboration page', () => {
     const postOptions = {
       method: 'POST',
       url: '/collaboration',
-      payload: { crumb: crumCookie[1], collaboration: 'some fake data' },
+      payload: { crumb: crumbToken, collaboration },
       headers: {
-        cookie: 'crumb=' + crumCookie[1]
+        cookie: 'crumb=' + crumbToken
       }
     }
 

@@ -1,19 +1,35 @@
-const { getCookieHeader, getCrumbCookie, crumbToken } = require('./test-helper')
+const { crumbToken } = require('./test-helper')
 describe('Confirm page', () => {
-  let crumCookie
+  const farmerAddressDetails = 'some fake farmer details'
+
+  jest.mock('../../../../app/helpers/session', () => ({
+    setYarValue: (request, key, value) => null,
+    getYarValue: (request, key) => {
+      switch (key) {
+        case 'farmerAddressDetails':
+          return farmerAddressDetails
+        default:
+          return 'Error'
+      }
+    }
+  }))
+
+  afterEach(() => {
+    jest.clearAllMocks()
+  })
 
   it('should load page successfully', async () => {
     const options = {
       method: 'GET',
-      url: '/confirm'
+      url: '/confirm',
+      headers: {
+        cookie: 'crumb=' + crumbToken,
+        referer: 'localhost/farmer-address-details'
+      }
     }
 
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
-    const header = getCookieHeader(response)
-    expect(header.length).toBe(3)
-    crumCookie = getCrumbCookie(response)
-    expect(response.result).toContain(crumCookie[1])
   })
 
   it('should return error message if main confirm checkbox (the first) is not selected', async () => {
