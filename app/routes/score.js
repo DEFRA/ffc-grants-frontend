@@ -56,7 +56,7 @@ module.exports = [{
 
       // Poll for backend for results from scoring algorithm
       // If msgData is null then 500 page will be triggered when trying to access object below
-      const msgData = await getResult(request.yar.id)
+      const msgData = getResult(request.yar.id)
       const crop = questionBank.questions.find(question => question.key === 'Q15')
       const questionObject = {
         key: crop.key,

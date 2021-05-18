@@ -5,6 +5,10 @@
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
 {% from "./components/macro.njk" import crumbToken %}
 
+{% block pageTitle %}
+  GOV.UK - Defra grants - Question 2 of 19  
+{% endblock %}
+
 {% block beforeContent %}
   {{ govukBackLink({
     text: "Back",
@@ -15,6 +19,7 @@
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
+      <span class="govuk-caption-xl">Question 2 of 19  </span>
       <form method="POST" action="./legal-status" autocomplete="off" novalidate="novalidate">
         {{ crumbToken(crumb)}}
         {{ govukRadios(radios) }}

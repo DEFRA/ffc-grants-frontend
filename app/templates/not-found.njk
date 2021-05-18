@@ -2,7 +2,9 @@
 
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
-
+{% block pageTitle %}
+  GOV.UK - Defra grants - Page not found 
+{% endblock %}
 {% block beforeContent %}
   {{ govukBreadcrumbs({
     items: [

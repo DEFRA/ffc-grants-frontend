@@ -2,7 +2,9 @@
 
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
-
+{% block pageTitle %}
+  GOV.UK - Defra grants - You may be able to apply for a grant  
+{% endblock %}
 {% block beforeContent %}
   {{ govukBackLink({
     text: "Back",

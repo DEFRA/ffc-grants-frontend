@@ -1,7 +1,9 @@
 {% extends '.layout.njk' %}
 
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
-
+{% block pageTitle %}
+  GOV.UK - Defra grants - You cannot apply for grant
+{% endblock %}
 {% block beforeContent %}
   {{ govukBackLink({
     text: "Back",
