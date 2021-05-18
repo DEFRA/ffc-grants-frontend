@@ -1,7 +1,5 @@
-const { getCookieHeader, getCrumbCookie, crumbToken } = require('./test-helper')
+const { crumbToken } = require('./test-helper')
 describe('Project details page', () => {
-  let crumCookie
-
   it('should load page successfully', async () => {
     const options = {
       method: 'GET',
@@ -10,10 +8,6 @@ describe('Project details page', () => {
 
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
-    const header = getCookieHeader(response)
-    expect(header.length).toBe(3)
-    crumCookie = getCrumbCookie(response)
-    expect(response.result).toContain(crumCookie[1])
   })
 
   it('should returns error message if no option is selected', async () => {

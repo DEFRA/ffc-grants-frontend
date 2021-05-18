@@ -1,35 +1,50 @@
+const { crumbToken } = require('./test-helper')
 
 describe('Confirmation page', () => {
-  let crumCookie
-  let server
-  const { getCookieHeader, getCrumbCookie } = require('./test-helper')
-  const createServer = require('../../../../app/server')
-
   beforeEach(async () => {
     jest.mock('../../../../app/messaging')
     jest.mock('ffc-messaging')
-    server = await createServer()
-    await server.start()
   })
-  it('should load page with error score', async () => {
+  it('should load page successfully', async () => {
     const senders = require('../../../../app/messaging/senders')
     senders.sendContactDetails = jest.fn(async function (model, yarId) {
       throw new Error('Some error')
     })
-    const options = {
-      method: 'GET',
-      url: '/confirmation'
+    // setting yar variable needed  for the confirmation page
+    const consentMain = 'CONSENT_MAIN'
+
+    const postOptions = {
+      method: 'POST',
+      url: '/confirm',
+      payload: { consentMain, crumb: crumbToken },
+      headers: {
+        cookie: 'crumb=' + crumbToken
+      }
     }
 
-    const response = await server.inject(options)
+    const postResponse = await global.__SERVER__.inject(postOptions)
+    expect(postResponse.statusCode).toBe(302)
+
+    expect(postResponse.request.yar.get('consentMain')).toBe(true)
+
+    const sessionCookie = postResponse.headers['set-cookie']
+      .find(line => line.includes('session='))
+      .split(' ')
+      .find(cookie => cookie.startsWith('session='))
+
+    const options = {
+      method: 'GET',
+      url: '/confirmation',
+      headers: {
+        cookie: 'crumb=' + crumbToken + '; ' + sessionCookie
+      }
+    }
+
+    const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
-    const header = getCookieHeader(response)
-    expect(header.length).toBe(2)
-    crumCookie = getCrumbCookie(response)
-    expect(response.result).toContain(crumCookie[1])
   })
 
-  it('should load page with sucess', async () => {
+  it('should redirect page if no consent  is given', async () => {
     const options = {
       method: 'GET',
       url: '/confirmation'
@@ -38,15 +53,12 @@ describe('Confirmation page', () => {
     senders.sendContactDetails = jest.fn(async function (model, yarId) {
       return ''
     })
-    const response = await server.inject(options)
-    expect(response.statusCode).toBe(200)
-    const header = getCookieHeader(response)
-    expect(header.length).toBe(3)
-    crumCookie = getCrumbCookie(response)
-    expect(response.result).toContain(crumCookie[1])
+    const response = await await global.__SERVER__.inject(options)
+    expect(response.statusCode).toBe(302)
+    expect(response.headers.location).toBe('./start')
   })
 
   afterEach(async () => {
-    await server.stop()
+    jest.clearAllMocks()
   })
 })

@@ -1,5 +1,10 @@
 const Joi = require('joi')
-const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
+const {
+  setLabelData,
+  errorExtractor,
+  getErrorMessage
+} = require('../helpers/helper-functions')
+const { setYarValue, getYarValue } = require('../helpers/session')
 
 const createModel = (errorMessage, data) => ({
 
@@ -31,7 +36,7 @@ module.exports = [
     method: 'GET',
     path: '/irrigated-crops',
     handler: (request, h) => {
-      const irrigatedCrops = request.yar.get('irrigatedCrops')
+      const irrigatedCrops = getYarValue(request, 'irrigatedCrops')
       const data = irrigatedCrops || null
       return h.view('irrigated-crops', createModel(null, data))
     }
@@ -51,7 +56,7 @@ module.exports = [
         }
       },
       handler: (request, h) => {
-        request.yar.set('irrigatedCrops', request.payload.irrigatedCrops)
+        setYarValue(request, 'irrigatedCrops', request.payload.irrigatedCrops)
         return h.redirect('./irrigated-land')
       }
     }

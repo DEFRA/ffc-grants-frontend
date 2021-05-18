@@ -12,6 +12,7 @@ module.exports = {
       fundingPriorities: ' Improving productivity <br/> Reducing environmental impact <br/> Security of water supply',
       type: 'multiple-answer',
       url: 'project-details',
+      yarKey: 'project',
       answerCount: 2,
       answer: [
         {
@@ -44,6 +45,7 @@ module.exports = {
       fundingPriorities: 'Improving productivity',
       type: 'single-answer',
       url: 'irrigated-crops',
+      yarKey: 'irrigatedCrops',
       answer: [
         {
           key: 'Q15-A1',
@@ -69,7 +71,8 @@ module.exports = {
       group: 'Q16',
       type: 'number',
       unit: 'hectares',
-      url: 'irrigated-land'
+      url: 'irrigated-land',
+      yarKey: 'irrigatedLandCurrent'
     },
     {
       key: 'Q16a',
@@ -81,7 +84,8 @@ module.exports = {
       group: 'Q16',
       type: 'number',
       unit: 'hectares',
-      url: 'irrigated-land'
+      url: 'irrigated-land',
+      yarKey: 'irrigatedLandTarget'
     },
     {
       key: 'Q17',
@@ -89,6 +93,7 @@ module.exports = {
       title: 'Where does your current irrigation water come from?',
       pageTitle: 'Irrigation source',
       url: 'irrigation-water-source',
+      yarKey: 'waterSourceCurrent',
       fundingPriorities: 'Reducing environmental impact <br/> Security of water supply',
       type: 'multiple-answer',
       answerCount: 2,
@@ -126,6 +131,7 @@ module.exports = {
       title: 'Where will your irrigation water come from?',
       pageTitle: 'Irrigation source',
       url: 'irrigation-water-source',
+      yarKey: 'waterSourcePlanned',
       fundingPriorities: 'Reducing environmental impact <br/> Security of water supply',
       type: 'multiple-answer',
       answerCount: 2,
@@ -161,6 +167,7 @@ module.exports = {
       fundingPriorities: 'Reducing environmental impact <br/> Security of water supply',
       group: 'Q18',
       url: 'irrigation-systems',
+      yarKey: 'irrigationCurrent',
       type: 'multiple-answer',
       answerCount: 2,
       answer: [
@@ -207,6 +214,7 @@ module.exports = {
       pageTitle: 'Irrigation system',
       group: 'Q18',
       url: 'irrigation-systems',
+      yarKey: 'irrigationPlanned',
       type: 'multiple-answer',
       fundingPriorities: 'Reducing environmental imapact <br/> Security of water supply',
       answerCount: 2,
@@ -257,6 +265,7 @@ module.exports = {
       help: '',
       desc: 'Productivity is about how much is produced relative to inputs (eg increased yield for the same inputs or the same yield with lower inputs).',
       url: 'productivity',
+      yarKey: 'productivity',
       type: 'multiple-answer',
       answerCount: 2,
       answer: [
@@ -294,6 +303,7 @@ module.exports = {
       pageTitle: 'Other farms',
       desc: 'If you intend to supply water via a water sharing agreement as a result of this project.',
       url: 'collaboration',
+      yarKey: 'collaboration',
       type: 'single-answer',
       answer: [
         {
