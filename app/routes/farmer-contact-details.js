@@ -23,7 +23,7 @@ function createModel (errorMessageList, farmerContactDetails) {
       },
       hint: {
         text:
-          'We will only use this to send you a confirmation'
+          'We will use this to send you a confirmation'
       },
       ...(email ? { value: email } : {}),
       ...(emailError ? { errorMessage: { text: emailError } } : {})
