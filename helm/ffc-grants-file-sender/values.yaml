@@ -42,8 +42,10 @@ container:
   fileCreatedTopicAddress: file-created
   fileCreatedSubscriptionAddress: file-sender
   protectiveMonitoringUrl:
-  blobStorageConnectionString: blobby-blob
+  blobStorageAccountName: blob-account
   blobStorageContainerName: not-a-real-container
+  blobStorageConnectionString: dummy
+  useBlobStorageConnectionString: false
   sharePointSiteId: not-a-real-value
   sharePointTenantId: not-a-real-value
   sharePointClientId: not-a-real-value

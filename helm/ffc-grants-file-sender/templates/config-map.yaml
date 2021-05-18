@@ -7,8 +7,10 @@ data:
   FILE_CREATED_SUBSCRIPTION_ADDRESS: {{ quote .Values.container.fileCreatedSubscriptionAddress }}
   SERVICE_BUS_HOST: {{ quote .Values.container.messageQueueHost }}
   APPINSIGHTS_CLOUDROLE: {{ quote .Values.name }}
+  BLOB_STORAGE_ACCOUNT_NAME: {{ .Values.container.blobStorageAccountName | quote }}
   BLOB_STORAGE_CONTAINER_NAME: {{ .Values.container.blobStorageContainerName | quote }}
   SHAREPOINT_SITE_ID: {{ .Values.container.sharePointSiteId | quote }}
   SHAREPOINT_TENANT_ID: {{ .Values.container.sharePointTenantId | quote }}
   SHAREPOINT_DOCUMENT_LIBRARY_ID: {{ .Values.container.sharePointDocumentLibraryId | quote }}
+  USE_BLOB_STORAGE_CONNECTION_STRING: {{ .Values.container.useBlobStorageConnectionString | quote }}
 {{- end -}}

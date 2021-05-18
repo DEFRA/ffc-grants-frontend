@@ -5,7 +5,7 @@ afterEach(() => {
 describe('Upload to sharepoint tests', () => {
   jest.mock('../../../../../app/services/protective-monitoring-service')
   jest.mock('../../../../../app/config/sharepoint')
-  jest.mock('../../../../../app/config/blobStorage')
+  jest.mock('../../../../../app/config/blob-storage')
   jest.mock('@hapi/wreck')
   const wreck = require('@hapi/wreck')
   wreck.put = jest.fn(async (url, data) => { return null })

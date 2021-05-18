@@ -1,14 +1,12 @@
 const protectiveMonitoringServiceSendEvent = require('../services/protective-monitoring-service')
 const { AdalFetchClient } = require('@pnp/nodejs-commonjs')
-const { BlobServiceClient } = require('@azure/storage-blob')
 const sharepointConfig = require('../config/sharepoint')
-const blobStorageConfig = require('../config/blobStorage')
 const wreck = require('@hapi/wreck')
 const appInsights = require('../services/app-insights')
+const { blobContainerClient } = require('../services/blob-storage')
+
 async function downloadFromBlobStorage (filename) {
-  const blobServiceClient = BlobServiceClient.fromConnectionString(blobStorageConfig.connectionStr)
-  const containerClient = blobServiceClient.getContainerClient(blobStorageConfig.containerName)
-  const blockBlobClient = containerClient.getBlockBlobClient(filename)
+  const blockBlobClient = blobContainerClient.getBlockBlobClient(filename)
   const buffer = await blockBlobClient.downloadToBuffer()
   console.log('Downloaded successfully')
   return { buffer, blockBlobClient }
