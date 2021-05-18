@@ -1,9 +1,10 @@
 const Joi = require('joi')
 const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
+const { LICENSE_NOT_NEEDED, LICENSE_SECURED, LICENSE_EXPECTED, LICENSE_WILL_NOT_HAVE } = require('../helpers/license-dates')
 
-function createModel (errorMessage, data) {
+function createModel (backLink, errorMessage, data) {
   return {
-    backLink: './planning-permission',
+    backLink,
     radios: {
       classes: '',
       idPrefix: 'abstractionLicence',
@@ -29,9 +30,14 @@ module.exports = [
     method: 'GET',
     path: '/abstraction-licence',
     handler: (request, h) => {
+      const planningPermission = request.yar.get('planningPermission')
+      const backLink = (planningPermission === LICENSE_EXPECTED)
+        ? './planning-caveat'
+        : './planning-permission'
+
       const abstractionLicence = request.yar.get('abstractionLicence')
       const data = abstractionLicence || null
-      return h.view('abstraction-licence', createModel(null, data))
+      return h.view('abstraction-licence', createModel(backLink, null, data))
     }
   },
   {
@@ -43,9 +49,14 @@ module.exports = [
           abstractionLicence: Joi.string().required()
         }),
         failAction: (request, h, err) => {
+          const planningPermission = request.yar.get('planningPermission')
+          const backLink = (planningPermission === LICENSE_EXPECTED)
+            ? './planning-caveat'
+            : './planning-permission'
+
           const errorObject = errorExtractor(err)
           const errorMessage = getErrorMessage(errorObject)
-          return h.view('abstraction-licence', createModel(errorMessage)).takeover()
+          return h.view('abstraction-licence', createModel(backLink, errorMessage)).takeover()
         }
       },
       handler: (request, h) => {
