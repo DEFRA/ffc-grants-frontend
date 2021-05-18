@@ -40,7 +40,6 @@ module.exports = [
     path: '/confirm',
     handler: (request, h) => {
       const refererURL = request?.headers?.referer?.split('/').pop()
-      console.log(request.headers.referer, 'LLLLL')
 
       if (!getYarValue(request, 'farmerAddressDetails') || refererURL !== 'farmer-address-details') {
         console.log(refererURL)

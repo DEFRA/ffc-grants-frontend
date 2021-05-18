@@ -36,7 +36,7 @@ async function createServer () {
   await server.register(inert)
   await server.register(vision)
   await server.register(require('./plugins/cookies'))
-  await server.register(require('./plugins/questionBank'))
+  await server.register(require('./plugins/scoringPageGuard'))
   await server.register(require('./plugins/error-pages'))
   await server.register({
     plugin: require('./plugins/header'),
