@@ -53,9 +53,15 @@ module.exports = [
         const { planningPermission } = request.payload
         request.yar.set('planningPermission', planningPermission)
 
-        return (planningPermission === LICENSE_WILL_NOT_HAVE)
-          ? h.view('not-eligible', NOT_ELIGIBLE)
-          : h.redirect('./abstraction-licence')
+        if (planningPermission === LICENSE_WILL_NOT_HAVE) {
+          return h.view('not-eligible', NOT_ELIGIBLE)
+        }
+
+        if (planningPermission === LICENSE_EXPECTED) {
+          return h.redirect('./planning-caveat')
+        }
+
+        return h.redirect('./abstraction-licence')
       }
     }
   }
