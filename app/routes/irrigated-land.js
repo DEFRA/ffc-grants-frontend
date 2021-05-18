@@ -89,8 +89,23 @@ module.exports = [
         }
       },
       handler: (request, h) => {
-        setYarValue(request, 'irrigatedLandCurrent', request.payload.irrigatedLandCurrent)
-        setYarValue(request, 'irrigatedLandTarget', request.payload.irrigatedLandTarget)
+        const { irrigatedLandCurrent, irrigatedLandTarget } = request.payload
+
+        if (Number(irrigatedLandTarget) === 0 ||
+            (Number(irrigatedLandTarget) < Number(irrigatedLandCurrent))
+        ) {
+          const errorMessageList = {
+            irrigatedLandCurrentError: null,
+            irrigatedLandTargetError: 'Figure must be higher than current hectares'
+          }
+
+          return h.view(
+            'irrigated-land',
+            createModel(irrigatedLandCurrent, irrigatedLandTarget, errorMessageList)).takeover()
+        }
+
+        setYarValue(request, 'irrigatedLandCurrent', irrigatedLandCurrent)
+        setYarValue(request, 'irrigatedLandTarget', irrigatedLandTarget)
         return h.redirect('./irrigation-water-source')
       }
     }
