@@ -133,6 +133,40 @@ describe('Irrigated Land page', () => {
     expect(postResponse.payload).toContain('Hectare value must be a number, with only one decimal place')
   })
 
+  it('should validate target irrigated land - value cannot be 0', async () => {
+    const postOptions = {
+      method: 'POST',
+      url: '/irrigated-land',
+      payload: {
+        irrigatedLandCurrent: '0',
+        irrigatedLandTarget: '0',
+        crumb: crumbToken
+      },
+      headers: { cookie: 'crumb=' + crumbToken }
+    }
+
+    const postResponse = await global.__SERVER__.inject(postOptions)
+    expect(postResponse.statusCode).toBe(200)
+    expect(postResponse.payload).toContain('Figure must be higher than current hectares')
+  })
+
+  it('value of target irrigated land must not be lower than current value', async () => {
+    const postOptions = {
+      method: 'POST',
+      url: '/irrigated-land',
+      payload: {
+        irrigatedLandCurrent: '2',
+        irrigatedLandTarget: '1',
+        crumb: crumbToken
+      },
+      headers: { cookie: 'crumb=' + crumbToken }
+    }
+
+    const postResponse = await global.__SERVER__.inject(postOptions)
+    expect(postResponse.statusCode).toBe(200)
+    expect(postResponse.payload).toContain('Figure must be higher than current hectares')
+  })
+
   it('should store user response and redirects to water source page', async () => {
     const postOptions = {
       method: 'POST',

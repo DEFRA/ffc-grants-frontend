@@ -88,8 +88,23 @@ module.exports = [
         }
       },
       handler: (request, h) => {
-        request.yar.set('irrigatedLandCurrent', request.payload.irrigatedLandCurrent)
-        request.yar.set('irrigatedLandTarget', request.payload.irrigatedLandTarget)
+        const { irrigatedLandCurrent, irrigatedLandTarget } = request.payload
+
+        if (Number(irrigatedLandTarget) === 0 ||
+            (Number(irrigatedLandTarget) < Number(irrigatedLandCurrent))
+        ) {
+          const errorMessageList = {
+            irrigatedLandCurrentError: null,
+            irrigatedLandTargetError: 'Figure must be higher than current hectares'
+          }
+
+          return h.view(
+            'irrigated-land',
+            createModel(irrigatedLandCurrent, irrigatedLandTarget, errorMessageList)).takeover()
+        }
+
+        request.yar.set('irrigatedLandCurrent', irrigatedLandCurrent)
+        request.yar.set('irrigatedLandTarget', irrigatedLandTarget)
         return h.redirect('./irrigation-water-source')
       }
     }
