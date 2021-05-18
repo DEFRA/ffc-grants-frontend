@@ -184,7 +184,7 @@ describe('Irrigated Land page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Figure must be higher than current hectares')
+    expect(postResponse.payload).toContain('Figure must be equal to or higher than current hectares')
   })
 
   it('value of target irrigated land must not be lower than current value', async () => {
@@ -201,7 +201,7 @@ describe('Irrigated Land page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Figure must be higher than current hectares')
+    expect(postResponse.payload).toContain('Figure must be equal to or higher than current hectares')
   })
 
   it('should store user response and redirects to water source page', async () => {
