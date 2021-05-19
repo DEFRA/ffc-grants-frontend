@@ -3,6 +3,7 @@ const senders = require('../messaging/senders')
 const createMsg = require('../messaging/create-msg')
 const protectiveMonitoringServiceSendEvent = require('../services/protective-monitoring-service')
 const { getYarValue } = require('../helpers/session')
+const gapiService = require('../services/gapi-service')
 
 module.exports = {
   method: 'GET',
@@ -23,9 +24,12 @@ module.exports = {
       return h.view('500')
     }
     await protectiveMonitoringServiceSendEvent(request, request.yar.id, 'FTF-JOURNEY-COMPLETED', '0706')
-    await request.ga.event({
-      category: 'Confirmation',
-      action: `Success-${confirmationId}`
+
+    gapiService.sendDimension(request, {
+      category: gapiService.categories.CONFIRMATION,
+      url: request.route.path,
+      dimension: gapiService.dimensions.CONFIRMATION,
+      value: request.yar.id
     })
     request.yar.reset()
     return h.view('confirmation', {

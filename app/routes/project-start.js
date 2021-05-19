@@ -1,5 +1,6 @@
 const Joi = require('joi')
 const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
+const gapiService = require('../services/gapi-service')
 
 function createModel (errorMessage, data) {
   return {
@@ -21,7 +22,13 @@ function createModel (errorMessage, data) {
   }
 }
 
-function createModelNotEligible () {
+function createModelNotEligible (request) {
+  gapiService.sendDimension(request, {
+    category: gapiService.categories.ELIMINATION,
+    url: request.route.path,
+    dimension: gapiService.dimensions.ELIMINATION,
+    value: request.yar.id
+  })
   return {
     backLink: './project-start',
     messageContent:
@@ -57,7 +64,7 @@ module.exports = [
         request.yar.set('projectStarted', request.payload.projectStarted)
         return request.payload.projectStarted === 'No'
           ? h.redirect('./tenancy')
-          : h.view('./not-eligible', createModelNotEligible())
+          : h.view('./not-eligible', createModelNotEligible(request))
       }
     }
   }

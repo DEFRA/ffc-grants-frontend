@@ -1,6 +1,7 @@
 const Joi = require('joi')
 const { isChecked, getPostCodeHtml, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
 const { POSTCODE_REGEX, DELETE_POSTCODE_CHARS_REGEX } = require('../helpers/regex-validation')
+const gapiService = require('../services/gapi-service')
 
 function createModel (errorMessage, data, postcodeHtml) {
   return {
@@ -35,7 +36,13 @@ function createModel (errorMessage, data, postcodeHtml) {
   }
 }
 
-function createModelNotEligible () {
+function createModelNotEligible (request) {
+  gapiService.sendDimension(request, {
+    category: gapiService.categories.ELIMINATION,
+    url: request.route.path,
+    dimension: gapiService.dimensions.ELIMINATION,
+    value: request.yar.id
+  })
   return {
     backLink: './country',
     messageContent: 'This is only for projects in England.<br/><br/>Scotland, Wales and Northern Ireland have other grants available.'
@@ -91,7 +98,7 @@ module.exports = [
 
         request.yar.set('inEngland', inEngland)
         request.yar.set('projectPostcode', projectPostcode.toUpperCase())
-        return inEngland === 'Yes' ? h.redirect('./project-start') : h.view('not-eligible', createModelNotEligible())
+        return inEngland === 'Yes' ? h.redirect('./project-start') : h.view('not-eligible', createModelNotEligible(request))
       }
     }
   }

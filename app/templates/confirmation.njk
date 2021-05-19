@@ -3,7 +3,7 @@
 {% from "govuk/components/panel/macro.njk" import govukPanel %}
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
 {% block pageTitle %}
-  GOV.UK - Defra grants - Confirmation 
+  GOV.UK - Defra grants - Confirmation - {{output.confirmationId}} 
 {% endblock %}
 {% block content %}
   {{ govukPanel(output) }}

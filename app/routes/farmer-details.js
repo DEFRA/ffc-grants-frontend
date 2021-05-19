@@ -1,6 +1,7 @@
 const Joi = require('joi')
 const { setLabelData, fetchListObjectItems, findErrorList } = require('../helpers/helper-functions')
 const { NAME_REGEX } = require('../helpers/regex-validation')
+const gapiService = require('../services/gapi-service')
 
 function createModel (errorMessageList, farmerDetails, backLink) {
   const { title, firstName, lastName } = farmerDetails
@@ -65,6 +66,12 @@ module.exports = [
       const applying = request.yar.get('applying')
       const backLink = applying === 'Agent' ? './agent-address-details' : './applying'
 
+      gapiService.sendDimension(request, {
+        category: gapiService.categories.AGENTFORMER,
+        url: request.route.path,
+        dimension: gapiService.dimensions.AGENTFORMER,
+        value: 'Farmer'
+      })
       return h.view(
         'model-farmer-agent-details',
         createModel(null, farmerDetails, backLink)

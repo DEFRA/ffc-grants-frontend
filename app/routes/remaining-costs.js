@@ -1,5 +1,6 @@
 const Joi = require('joi')
 const { setLabelData, errorExtractor, getErrorMessage, formatUKCurrency } = require('../helpers/helper-functions')
+const gapiService = require('../services/gapi-service')
 
 function createModel (errorMessage, data, formattedRemainingCost) {
   return {
@@ -24,7 +25,13 @@ function createModel (errorMessage, data, formattedRemainingCost) {
   }
 }
 
-function createModelNotEligible () {
+function createModelNotEligible (request) {
+  gapiService.sendDimension(request, {
+    category: gapiService.categories.ELIMINATION,
+    url: request.route.path,
+    dimension: gapiService.dimensions.ELIMINATION,
+    value: request.yar.id
+  })
   return {
     backLink: './remaining-costs',
     messageContent:
@@ -69,7 +76,7 @@ module.exports = [
         request.yar.set('payRemainingCosts', request.payload.payRemainingCosts)
         return request.payload.payRemainingCosts === 'Yes'
           ? h.redirect('./planning-permission')
-          : h.view('./not-eligible', createModelNotEligible())
+          : h.view('./not-eligible', createModelNotEligible(request))
       }
     }
   }

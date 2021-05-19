@@ -3,6 +3,7 @@ const createMsg = require('../messaging/create-msg')
 const Wreck = require('@hapi/wreck')
 const questionBank = require('../config/question-bank')
 const pollingConfig = require('../config/polling')
+const gapiService = require('../services/gapi-service')
 function createModel (data) {
   return {
     backLink: './collaboration',
@@ -56,7 +57,7 @@ module.exports = [{
 
       // Poll for backend for results from scoring algorithm
       // If msgData is null then 500 page will be triggered when trying to access object below
-      const msgData = getResult(request.yar.id)
+      const msgData = await getResult(request.yar.id)
       const crop = questionBank.questions.find(question => question.key === 'Q15')
       const questionObject = {
         key: crop.key,
@@ -100,6 +101,12 @@ module.exports = [{
             scoreChance = 'seems unlikely to'
             break
         }
+        gapiService.sendDimension(request, {
+          category: gapiService.categories.SCORE,
+          url: request.route.path,
+          dimension: gapiService.dimensions.SCORE,
+          value: msgData.desirability.overallRating.band
+        })
         return h.view('score', createModel({
           titleText: msgData.desirability.overallRating.band,
           scoreData: msgData,
@@ -111,10 +118,7 @@ module.exports = [{
       }
     } catch (error) {
       request.log(error)
-      await request.ga.event({
-        category: 'Score',
-        action: 'Error'
-      })
+      gapiService.sendEvent(request, gapiService.categories.EXCEPTION, request.route.path)
     }
     request.log(err)
     return h.view('500')
