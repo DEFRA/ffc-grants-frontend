@@ -18,7 +18,7 @@ function createModel (backLink, errorMessage, data) {
       },
       items: setLabelData(
         data,
-        ['Not needed', 'Secured', 'Expected to have by 31 December 2021', 'Will not have by 31 December 2021']
+        [LICENSE_NOT_NEEDED, LICENSE_SECURED, LICENSE_EXPECTED, LICENSE_WILL_NOT_HAVE]
       ),
       ...(errorMessage ? { errorMessage: { text: errorMessage } } : {})
     }
@@ -60,7 +60,15 @@ module.exports = [
         }
       },
       handler: (request, h) => {
-        request.yar.set('abstractionLicence', request.payload.abstractionLicence)
+        const { abstractionLicence } = request.payload
+        request.yar.set('abstractionLicence', abstractionLicence)
+
+        if (
+          abstractionLicence === LICENSE_EXPECTED ||
+          abstractionLicence === LICENSE_WILL_NOT_HAVE
+        ) {
+          return h.redirect('./abstraction-caveat')
+        }
         return h.redirect('./SSSI')
       }
     }
