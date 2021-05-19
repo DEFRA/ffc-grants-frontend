@@ -29,11 +29,50 @@ describe('Abstraction licence page', () => {
     expect(postResponse.payload).toContain('Select when the project will have an abstraction licence or variation')
   })
 
-  it('should store valid user input and redirect to project details page', async () => {
+  it('if value = \'Expected to have by 31 December 2021\' ==> store and redirect to abstraction-caveat page', async () => {
     const postOptions = {
       method: 'POST',
       url: '/abstraction-licence',
-      payload: { abstractionLicence: 'some fake licence', crumb: crumbToken },
+      payload: { abstractionLicence: 'Expected to have by 31 December 2021', crumb: crumbToken },
+      headers: { cookie: 'crumb=' + crumbToken }
+    }
+
+    const postResponse = await global.__SERVER__.inject(postOptions)
+    expect(postResponse.statusCode).toBe(302)
+    expect(postResponse.headers.location).toBe('./abstraction-caveat')
+  })
+
+  it('if value = \'Will not have by 31 December 2021\' ==> store and redirect to abstraction-caveat page', async () => {
+    const postOptions = {
+      method: 'POST',
+      url: '/abstraction-licence',
+      payload: { abstractionLicence: 'Will not have by 31 December 2021', crumb: crumbToken },
+      headers: { cookie: 'crumb=' + crumbToken }
+    }
+
+    const postResponse = await global.__SERVER__.inject(postOptions)
+    expect(postResponse.statusCode).toBe(302)
+    expect(postResponse.headers.location).toBe('./abstraction-caveat')
+  })
+
+  it('if value = \'Not needed\' ==> store and redirect to SSSI page', async () => {
+    const postOptions = {
+      method: 'POST',
+      url: '/abstraction-licence',
+      payload: { abstractionLicence: 'Not needed', crumb: crumbToken },
+      headers: { cookie: 'crumb=' + crumbToken }
+    }
+
+    const postResponse = await global.__SERVER__.inject(postOptions)
+    expect(postResponse.statusCode).toBe(302)
+    expect(postResponse.headers.location).toBe('./SSSI')
+  })
+
+  it('if value = \'Secured\' ==> store and redirect to SSSI page', async () => {
+    const postOptions = {
+      method: 'POST',
+      url: '/abstraction-licence',
+      payload: { abstractionLicence: 'Secured', crumb: crumbToken },
       headers: { cookie: 'crumb=' + crumbToken }
     }
 

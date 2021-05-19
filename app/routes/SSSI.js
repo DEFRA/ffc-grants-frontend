@@ -1,9 +1,10 @@
 const Joi = require('joi')
 const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
+const { LICENSE_EXPECTED, LICENSE_WILL_NOT_HAVE } = require('../helpers/license-dates')
 
-function createModel (errorMessage, data) {
+function createModel (backLink, errorMessage, data) {
   return {
-    backLink: './abstraction-licence',
+    backLink,
     radios: {
       classes: 'govuk-radios--inline',
       idPrefix: 'sSSI',
@@ -26,9 +27,17 @@ module.exports = [
     method: 'GET',
     path: '/SSSI',
     handler: (request, h) => {
+      const abstractionLicence = request.yar.get('abstractionLicence')
+      const backLink = (
+        abstractionLicence === LICENSE_EXPECTED ||
+        abstractionLicence === LICENSE_WILL_NOT_HAVE
+      )
+        ? './abstraction-caveat'
+        : './abstraction-licence'
+
       const sSSI = request.yar.get('sSSI')
       const data = sSSI || null
-      return h.view('SSSI', createModel(null, data))
+      return h.view('SSSI', createModel(backLink, null, data))
     }
   },
   {
@@ -40,9 +49,17 @@ module.exports = [
           sSSI: Joi.string().required()
         }),
         failAction: (request, h, err) => {
+          const abstractionLicence = request.yar.get('abstractionLicence')
+          const backLink = (
+            abstractionLicence === LICENSE_EXPECTED ||
+            abstractionLicence === LICENSE_WILL_NOT_HAVE
+          )
+            ? './abstraction-caveat'
+            : './abstraction-licence'
+
           const errorObject = errorExtractor(err)
           const errorMessage = getErrorMessage(errorObject)
-          return h.view('SSSI', createModel(errorMessage)).takeover()
+          return h.view('SSSI', createModel(backLink, errorMessage)).takeover()
         }
       },
       handler: (request, h) => {

@@ -96,7 +96,7 @@ module.exports = [
         ) {
           const errorMessageList = {
             irrigatedLandCurrentError: null,
-            irrigatedLandTargetError: 'Figure must be higher than current hectares'
+            irrigatedLandTargetError: 'Figure must be equal to or higher than current hectares'
           }
 
           return h.view(
