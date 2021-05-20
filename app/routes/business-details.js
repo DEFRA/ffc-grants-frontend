@@ -1,8 +1,9 @@
 const Joi = require('joi')
+const { setYarValue, getYarValue } = require('../helpers/session')
 const { fetchListObjectItems, findErrorList } = require('../helpers/helper-functions')
 const { NUMBER_REGEX } = require('../helpers/regex-validation')
 
-function createModel (errorMessageList, businessDetails) {
+function createModel(errorMessageList, businessDetails) {
   const {
     projectName,
     businessName,
@@ -107,7 +108,7 @@ module.exports = [
     method: 'GET',
     path: '/business-details',
     handler: (request, h) => {
-      let businessDetails = request.yar.get('businessDetails') || null
+      let businessDetails = getYarValue(request, 'businessDetails') || null
 
       if (!businessDetails) {
         businessDetails = {
@@ -158,7 +159,7 @@ module.exports = [
           projectName, businessName, numberEmployees, businessTurnover, sbi
         } = request.payload
 
-        request.yar.set('businessDetails', {
+        setYarValue(request, 'businessDetails', {
           projectName, businessName, numberEmployees, businessTurnover, sbi
         })
 

@@ -1,7 +1,8 @@
 const Joi = require('joi')
+const { setYarValue, getYarValue } = require('../helpers/session')
 const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
 
-function createModel (errorMessage, data) {
+function createModel(errorMessage, data) {
   return {
     backLink: './country',
     radios: {
@@ -21,7 +22,7 @@ function createModel (errorMessage, data) {
   }
 }
 
-function createModelNotEligible () {
+function createModelNotEligible() {
   return {
     backLink: './project-start',
     messageContent:
@@ -34,7 +35,7 @@ module.exports = [
     method: 'GET',
     path: '/project-start',
     handler: (request, h) => {
-      const projectStarted = request.yar.get('projectStarted')
+      const projectStarted = getYarValue(request, 'projectStarted')
       const data = projectStarted || null
       return h.view('project-start', createModel(null, data))
     }
@@ -54,7 +55,7 @@ module.exports = [
         }
       },
       handler: (request, h) => {
-        request.yar.set('projectStarted', request.payload.projectStarted)
+        setYarValue(request, 'projectStarted', request.payload.projectStarted)
         return request.payload.projectStarted === 'No'
           ? h.redirect('./tenancy')
           : h.view('./not-eligible', createModelNotEligible())

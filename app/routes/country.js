@@ -1,8 +1,9 @@
 const Joi = require('joi')
+const { setYarValue, getYarValue } = require('../helpers/session')
 const { isChecked, getPostCodeHtml, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
 const { POSTCODE_REGEX, DELETE_POSTCODE_CHARS_REGEX } = require('../helpers/regex-validation')
 
-function createModel (errorMessage, data, postcodeHtml) {
+function createModel(errorMessage, data, postcodeHtml) {
   return {
     backLink: 'legal-status',
     radios: {
@@ -35,7 +36,7 @@ function createModel (errorMessage, data, postcodeHtml) {
   }
 }
 
-function createModelNotEligible () {
+function createModelNotEligible() {
   return {
     backLink: './country',
     messageContent: 'This is only for projects in England.<br/><br/>Scotland, Wales and Northern Ireland have other grants available.'
@@ -47,8 +48,8 @@ module.exports = [
     method: 'GET',
     path: '/country',
     handler: (request, h) => {
-      const inEngland = request.yar.get('inEngland') || null
-      const postcodeData = inEngland !== null ? request.yar.get('projectPostcode') : null
+      const inEngland = getYarValue(request, 'inEngland') || null
+      const postcodeData = inEngland !== null ? getYarValue(request, 'projectPostcode') : null
       const postcodeHtml = getPostCodeHtml(postcodeData)
 
       return h.view('country', createModel(null, inEngland, postcodeHtml))
@@ -89,8 +90,8 @@ module.exports = [
           ).takeover()
         }
 
-        request.yar.set('inEngland', inEngland)
-        request.yar.set('projectPostcode', projectPostcode.toUpperCase())
+        setYarValue(request, 'inEngland', inEngland)
+        setYarValue(request, 'projectPostcode', projectPostcode.toUpperCase())
         return inEngland === 'Yes' ? h.redirect('./project-start') : h.view('not-eligible', createModelNotEligible())
       }
     }

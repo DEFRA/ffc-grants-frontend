@@ -1,8 +1,9 @@
 const Joi = require('joi')
+const { setYarValue, getYarValue } = require('../helpers/session')
 const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
 const { LICENSE_EXPECTED, LICENSE_WILL_NOT_HAVE } = require('../helpers/license-dates')
 
-function createModel (backLink, errorMessage, data) {
+function createModel(backLink, errorMessage, data) {
   return {
     backLink,
     radios: {
@@ -27,7 +28,7 @@ module.exports = [
     method: 'GET',
     path: '/SSSI',
     handler: (request, h) => {
-      const abstractionLicence = request.yar.get('abstractionLicence')
+      const abstractionLicence = getYarValue(request, 'abstractionLicence')
       const backLink = (
         abstractionLicence === LICENSE_EXPECTED ||
         abstractionLicence === LICENSE_WILL_NOT_HAVE
@@ -35,7 +36,7 @@ module.exports = [
         ? './abstraction-caveat'
         : './abstraction-licence'
 
-      const sSSI = request.yar.get('sSSI')
+      const sSSI = getYarValue(request, 'sSSI')
       const data = sSSI || null
       return h.view('SSSI', createModel(backLink, null, data))
     }
@@ -49,7 +50,7 @@ module.exports = [
           sSSI: Joi.string().required()
         }),
         failAction: (request, h, err) => {
-          const abstractionLicence = request.yar.get('abstractionLicence')
+          const abstractionLicence = getYarValue(request, 'abstractionLicence')
           const backLink = (
             abstractionLicence === LICENSE_EXPECTED ||
             abstractionLicence === LICENSE_WILL_NOT_HAVE
@@ -63,7 +64,7 @@ module.exports = [
         }
       },
       handler: (request, h) => {
-        request.yar.set('sSSI', request.payload.sSSI)
+        setYarValue(request, 'sSSI', request.payload.sSSI)
         return h.redirect('./project-details')
       }
     }

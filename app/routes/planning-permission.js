@@ -1,4 +1,5 @@
 const Joi = require('joi')
+const { setYarValue, getYarValue } = require('../helpers/session')
 const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
 const { LICENSE_NOT_NEEDED, LICENSE_SECURED, LICENSE_EXPECTED, LICENSE_WILL_NOT_HAVE } = require('../helpers/license-dates')
 
@@ -31,7 +32,7 @@ module.exports = [
     method: 'GET',
     path: '/planning-permission',
     handler: (request, h) => {
-      const planningPermission = request.yar.get('planningPermission') || null
+      const planningPermission = getYarValue(request, 'planningPermission') || null
       return h.view('planning-permission', createModel(null, planningPermission))
     }
   },
@@ -51,7 +52,7 @@ module.exports = [
       },
       handler: (request, h) => {
         const { planningPermission } = request.payload
-        request.yar.set('planningPermission', planningPermission)
+        setYarValue(request, 'planningPermission', planningPermission)
 
         if (planningPermission === LICENSE_WILL_NOT_HAVE) {
           return h.view('not-eligible', NOT_ELIGIBLE)

@@ -1,8 +1,9 @@
 const Joi = require('joi')
+const { setYarValue, getYarValue } = require('../helpers/session')
 const { fetchListObjectItems, findErrorList } = require('../helpers/helper-functions')
 const { PHONE_REGEX } = require('../helpers/regex-validation')
 
-function createModel (errorMessageList, agentContactDetails) {
+function createModel(errorMessageList, agentContactDetails) {
   const { email, landline, mobile } = agentContactDetails
 
   const [emailError, landlineError, mobileError] = fetchListObjectItems(
@@ -56,7 +57,7 @@ module.exports = [
     method: 'GET',
     path: '/agent-contact-details',
     handler: (request, h) => {
-      let agentContactDetails = request.yar.get('agentContactDetails') || null
+      let agentContactDetails = getYarValue(request, 'agentContactDetails') || null
 
       if (!agentContactDetails) {
         agentContactDetails = {
@@ -101,7 +102,7 @@ module.exports = [
       handler: (request, h) => {
         const { email, landline, mobile } = request.payload
 
-        request.yar.set('agentContactDetails', {
+        setYarValue(request, 'agentContactDetails', {
           email, landline, mobile
         })
 

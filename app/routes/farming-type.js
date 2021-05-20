@@ -1,4 +1,5 @@
 const Joi = require('joi')
+const { setYarValue, getYarValue } = require('../helpers/session')
 const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
 
 function createModel (errorMessage, data) {
@@ -34,7 +35,7 @@ module.exports = [
     method: 'GET',
     path: '/farming-type',
     handler: (request, h) => {
-      const farmingType = request.yar.get('farmingType')
+      const farmingType = getYarValue(request, 'farmingType')
       const data = farmingType || null
       return h.view('farming-type', createModel(null, data))
     }
@@ -54,7 +55,7 @@ module.exports = [
         }
       },
       handler: (request, h) => {
-        request.yar.set('farmingType', request.payload.farmingType)
+        setYarValue(request, 'farmingType', request.payload.farmingType)
         return request.payload.farmingType !== 'Something else' ? h.redirect('./legal-status') : h.view('./not-eligible', createModelNotEligible())
       }
     }

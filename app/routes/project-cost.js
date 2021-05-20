@@ -1,9 +1,10 @@
 const Joi = require('joi')
+const { setYarValue, getYarValue } = require('../helpers/session')
 const { errorExtractor, getErrorMessage, getGrantValues } = require('../helpers/helper-functions')
 const { MIN_GRANT, MAX_GRANT } = require('../helpers/grant-details')
 const { PROJECT_COST_REGEX } = require('../helpers/regex-validation')
 
-function createModel (errorMessage, projectCost, projectItemsList) {
+function createModel(errorMessage, projectCost, projectItemsList) {
   return {
     backLink: './project-items',
     inputProjectCost: {
@@ -32,11 +33,11 @@ function createModel (errorMessage, projectCost, projectItemsList) {
   }
 }
 
-function createModelNotEligible () {
+function createModelNotEligible() {
   return {
     backLink: './project-cost',
     messageContent:
-    `You can only apply for a grant of up to <span class="govuk-!-font-weight-bold">40%</span> of the estimated costs.<br/><br/>
+      `You can only apply for a grant of up to <span class="govuk-!-font-weight-bold">40%</span> of the estimated costs.<br/><br/>
     The minimum grant you can apply for is £35,000 (40% of £87,500). The maximum grant is £1 million.`
   }
 }
@@ -46,8 +47,8 @@ module.exports = [
     method: 'GET',
     path: '/project-cost',
     handler: (request, h) => {
-      const projectCost = request.yar.get('projectCost') || null
-      const projectItemsList = request.yar.get('projectItemsList')
+      const projectCost = getYarValue(request, 'projectCost') || null
+      const projectItemsList = getYarValue(request, 'projectItemsList')
 
       return h.view(
         'project-cost',
@@ -64,7 +65,7 @@ module.exports = [
           projectCost: Joi.string().regex(PROJECT_COST_REGEX).max(7).required()
         }),
         failAction: (request, h, err) => {
-          const projectItemsList = request.yar.get('projectItemsList') || null
+          const projectItemsList = getYarValue(request, 'projectItemsList') || null
 
           const errorObject = errorExtractor(err)
           const errorMessage = getErrorMessage(errorObject)
@@ -75,9 +76,9 @@ module.exports = [
         const { projectCost } = request.payload
         const { calculatedGrant, remainingCost } = getGrantValues(projectCost)
 
-        request.yar.set('projectCost', projectCost)
-        request.yar.set('calculatedGrant', calculatedGrant)
-        request.yar.set('remainingCost', remainingCost)
+        setYarValue(request, 'projectCost', projectCost)
+        setYarValue(request, 'calculatedGrant', calculatedGrant)
+        setYarValue(request, 'remainingCost', remainingCost)
 
         if ((calculatedGrant < MIN_GRANT) || (calculatedGrant > MAX_GRANT)) {
           return h.view('./not-eligible', createModelNotEligible())
