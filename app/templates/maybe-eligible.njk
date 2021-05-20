@@ -14,14 +14,13 @@
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <form method="POST" action="{{postUrl}}" autocomplete="off" novalidate="novalidate">
-        {{ crumbToken(crumb)}}
-        <h1 class="govuk-heading-l">{{messageHeader}}</h1>
-        <p class="govuk-body">{{ messageContent | safe}}</p>
-        {{ govukButton({
-            text: "Continue"
-          }) }}
-      </form>
+      {{ crumbToken(crumb)}}
+      <h1 class="govuk-heading-l">{{messageHeader}}</h1>
+      <p class="govuk-body">{{ messageContent | safe}}</p>
+      {{ govukButton({
+          text: "Continue",
+          href: nextLink
+        }) }}
     </div>
   </div>
 {% endblock %}
