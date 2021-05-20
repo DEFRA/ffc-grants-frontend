@@ -21,11 +21,11 @@ function createModel (errorMessage, data) {
   }
 }
 
-function createModelTenancyCondition () {
-  return {
-    backLink: './tenancy-length',
-    messageContent: 'You will need to extend your tenancy agreement before you can complete a full application.'
-  }
+const MAYBE_ELIGIBLE = {
+  backLink: './tenancy-length',
+  nextLink: './project-items',
+  messageHeader: 'You may be able to apply for a grant from this scheme',
+  messageContent: 'You will need to extend your tenancy agreement before you can complete a full application.'
 }
 
 module.exports = [
@@ -56,7 +56,7 @@ module.exports = [
         request.yar.set('tenancyLength', request.payload.tenancyLength)
         return request.payload.tenancyLength === 'Yes'
           ? h.redirect('./project-items')
-          : h.view('./tenancy-length-condition', createModelTenancyCondition())
+          : h.view('./maybe-eligible', MAYBE_ELIGIBLE)
       }
     }
   }
