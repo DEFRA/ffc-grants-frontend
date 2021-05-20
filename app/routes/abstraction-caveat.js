@@ -1,6 +1,7 @@
 const MAYBE_ELIGIBLE = {
   backLink: './abstraction-licence',
   postUrl: './abstraction-caveat',
+  messageHeader: 'You may be able to apply for this grant',
   messageContent: `
   Any abstraction licences should be in place by 31 December 2021 (the end of the application window).<br/><br/>
   If you have already applied for an abstraction licence and expect to get it by then, you can submit a full application.<br/><br/>

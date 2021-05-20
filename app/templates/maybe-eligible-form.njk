@@ -16,7 +16,7 @@
     <div class="govuk-grid-column-two-thirds">
       <form method="POST" action="{{postUrl}}" autocomplete="off" novalidate="novalidate">
         {{ crumbToken(crumb)}}
-        <h1 class="govuk-heading-l">You may be able to apply for a grant from this scheme</h1>
+        <h1 class="govuk-heading-l">{{messageHeader}}</h1>
         <p class="govuk-body">{{ messageContent | safe}}</p>
         {{ govukButton({
             text: "Continue"
