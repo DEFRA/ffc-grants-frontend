@@ -1,4 +1,4 @@
-const { getCookieHeader, getCrumbCookie, crumbToken } = require('./test-helper')
+const { getCookieHeader, getCrumbCookie } = require('./test-helper')
 
 describe('Abstraction caveat page', () => {
   let crumCookie
@@ -15,18 +15,5 @@ describe('Abstraction caveat page', () => {
     expect(header.length).toBe(3)
     crumCookie = getCrumbCookie(response)
     expect(response.result).toContain(crumCookie[1])
-  })
-
-  it('redirects to SSSI page', async () => {
-    const postOptions = {
-      method: 'POST',
-      url: '/abstraction-caveat',
-      payload: { crumb: crumbToken },
-      headers: { cookie: 'crumb=' + crumbToken }
-    }
-
-    const postResponse = await global.__SERVER__.inject(postOptions)
-    expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe('./SSSI')
   })
 })
