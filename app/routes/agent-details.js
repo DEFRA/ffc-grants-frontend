@@ -13,6 +13,7 @@ function createModel (errorMessageList, agentDetails) {
 
   return {
     backLink: './applying',
+    pageId: 'Agent',
     pageHeader: 'Agent\'s details',
     formActionPage: './agent-details',
     selectTitle: {
@@ -62,10 +63,11 @@ module.exports = [
           lastName: null
         }
       }
-      gapiService.sendDimension(request, {
+
+      gapiService.sendDimensionOrMetric(request, {
         category: gapiService.categories.AGENTFORMER,
-        url: request.route.path,
-        dimension: gapiService.dimensions.AGENTFORMER,
+        action: gapiService.actions,
+        dimensionOrMetric: gapiService.dimensions.AGENTFORMER,
         value: 'Agent'
       })
       return h.view(

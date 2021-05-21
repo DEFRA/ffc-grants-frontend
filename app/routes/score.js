@@ -101,11 +101,18 @@ module.exports = [{
             scoreChance = 'seems unlikely to'
             break
         }
-        gapiService.sendDimension(request, {
+
+        gapiService.sendDimensionOrMetric(request, {
           category: gapiService.categories.SCORE,
-          url: request.route.path,
-          dimension: gapiService.dimensions.SCORE,
-          value: msgData.desirability.overallRating.band
+          action: gapiService.actions.SCORE,
+          dimensionOrMetric: gapiService.dimensions.SCORE,
+          value: request.yar.id
+        })
+        gapiService.sendDimensionOrMetric(request, {
+          category: gapiService.categories.JOURNEY,
+          action: gapiService.actions.SCORE,
+          dimensionOrMetric: gapiService.metrics.SCORE,
+          value: `${Date.now()}`
         })
         return h.view('score', createModel({
           titleText: msgData.desirability.overallRating.band,

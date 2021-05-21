@@ -6,7 +6,7 @@
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "./components/macro.njk" import crumbToken %}
 {% block pageTitle %}
-  GOV.UK - Defra grants - Question 18 of 19  
+  GOV.UK - Defra grants - Productivity
 {% endblock %}
 {% block beforeContent %}
   {{ govukBackLink({
@@ -29,7 +29,6 @@
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <span class="govuk-caption-xl">Question 18 of 19  </span>
       <form method="POST" action="./productivity" autocomplete="off" novalidate="novalidate">
         {{ crumbToken(crumb)}}
         {{ govukCheckboxes(checkboxes) }}

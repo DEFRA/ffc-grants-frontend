@@ -68,10 +68,10 @@ module.exports = [
           consentMain = (consentMain && CONSENT_MAIN) || ''
           consentOptional = (consentMain && CONSENT_OPTIONAL) || ''
 
-          gapiService.sendDimension(request, {
+          gapiService.sendDimensionOrMetric(request, {
             category: gapiService.categories.CONFIRM,
-            url: request.route.path,
-            dimension: gapiService.dimensions.CONFIRM,
+            action: gapiService.actions.CONFIRM,
+            dimensionOrMetric: gapiService.dimensions.CONFIRM,
             value: request.yar.id
           })
           return h.view(

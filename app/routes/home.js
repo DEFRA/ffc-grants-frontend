@@ -1,3 +1,5 @@
+
+const gapiService = require('../services/gapi-service')
 function createModel () {
   return {
     button: {
@@ -12,9 +14,17 @@ module.exports = {
   path: '/start',
   handler: async (request, h) => {
     request.yar.reset()
-    await request.ga.event({
-      category: 'Session',
-      action: 'Start'
+    gapiService.sendDimensionOrMetric(request, {
+      category: gapiService.categories.JOURNEY,
+      action: 'Start',
+      dimensionOrMetric: gapiService.dimensions.START,
+      value: request.yar?.id
+    })
+    gapiService.sendDimensionOrMetric(request, {
+      category: gapiService.categories.JOURNEY,
+      action: 'Start',
+      dimensionOrMetric: gapiService.metrics.START,
+      value: `${Date.now()}`
     })
     return h.view('home', createModel())
   }

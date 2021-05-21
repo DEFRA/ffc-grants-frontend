@@ -6,7 +6,7 @@
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "./components/macro.njk" import crumbToken %}
 {% block pageTitle %}
-  GOV.UK - Defra grants - Question 17 of 19  
+  GOV.UK - Defra grants - Irrigation systems  
 {% endblock %}
 
 {% block beforeContent %}
@@ -25,7 +25,6 @@
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <span class="govuk-caption-xl">Question 17 of 19  </span>
       <form method="POST" action="./irrigation-systems" autocomplete="off" novalidate="novalidate">
         {{ crumbToken(crumb)}}
         {{ govukCheckboxes(irrigationCurrent) }}

@@ -6,7 +6,7 @@
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "./components/macro.njk" import crumbToken %}
 {% block pageTitle %}
-  GOV.UK - Defra grants - Question 3 of 19  
+  GOV.UK - Defra grants - Project location
 {% endblock %}
 
 {% block beforeContent %}
@@ -23,7 +23,6 @@
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <span class="govuk-caption-xl">Question 3 of 19  </span>
       <form method="POST" action="./country" autocomplete="off" novalidate>
         {{ crumbToken(crumb)}}
         {{ govukRadios(radios) }}

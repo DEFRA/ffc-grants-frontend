@@ -13,6 +13,7 @@ function createModel (errorMessageList, farmerDetails, backLink) {
 
   return {
     backLink,
+    pageId: 'Farmer',
     pageHeader: 'Farmer\'s details',
     formActionPage: './farmer-details',
     selectTitle: {
@@ -66,11 +67,11 @@ module.exports = [
       const applying = request.yar.get('applying')
       const backLink = applying === 'Agent' ? './agent-address-details' : './applying'
 
-      gapiService.sendDimension(request, {
+      gapiService.sendDimensionOrMetric(request, {
         category: gapiService.categories.AGENTFORMER,
-        url: request.route.path,
-        dimension: gapiService.dimensions.AGENTFORMER,
-        value: 'Farmer'
+        action: gapiService.actions,
+        dimensionOrMetric: gapiService.dimensions.AGENTFORMER,
+        value: 'Former'
       })
       return h.view(
         'model-farmer-agent-details',

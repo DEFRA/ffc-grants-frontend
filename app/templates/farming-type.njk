@@ -6,7 +6,7 @@
 {% from "./components/macro.njk" import crumbToken %}
 {% from "govuk/components/details/macro.njk" import govukDetails %}
 {% block pageTitle %}
-  GOV.UK - Defra grants - Question 1 of 19  
+  GOV.UK - Defra grants - Farming type  
 {% endblock %}
 
 {% block beforeContent %}
@@ -19,25 +19,28 @@
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <span class="govuk-caption-xl">Question 1 of 19  </span>
       <form method="POST" action="./farming-type" autocomplete="off" novalidate>
         {{ crumbToken(crumb)}}
         {{ govukRadios(radios) }}
-        {{ govukDetails({
-            summaryText: "Eligibility",
-            html:
-            '<p>This grant is for:</p>
-            <ul class="govuk-list govuk-list--bullet">
-                <li>arable and horticultural farming businesses supplying the food industry</li>
-                <li>nurseries growing flowers</li>
-                <li>forestry nurseries</li>
-            </ul>'
-           })
-        }}
         {{ govukButton({
           text: "Continue"
         }) }}
       </form>
+    </div>
+    <div class="govuk-grid-column-one-third  govuk-body">
+      <div class="gem-c-contextual-sidebar">
+        <div class="gem-c-related-navigation">
+          <h2>
+            Eligibility
+          </h2>
+          <p>This grant is for:</p>
+            <ul class="govuk-list govuk-list--bullet">
+                <li>arable and horticultural farming businesses supplying the food industry</li>
+                <li>nurseries growing flowers</li>
+                <li>forestry nurseries</li>
+            </ul>
+        </div>
+      </div>
     </div>
   </div>
 {% endblock %}

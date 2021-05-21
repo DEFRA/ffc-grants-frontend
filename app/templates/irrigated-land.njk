@@ -5,7 +5,7 @@
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "./components/macro.njk" import crumbToken %}
 {% block pageTitle %}
-  GOV.UK - Defra grants - Question 15 of 19  
+  GOV.UK - Defra grants - Irrigated land  
 {% endblock %}
 {% block beforeContent %}
   {{ govukBackLink({
@@ -17,7 +17,6 @@
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <span class="govuk-caption-xl">Question 15 of 19  </span>
       <form method="POST" action="./irrigated-land" autocomplete="off" novalidate="novalidate">
         {{ crumbToken(crumb)}}
         {{ govukInput(currentInput) }}

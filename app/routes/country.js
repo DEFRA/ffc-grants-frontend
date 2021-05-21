@@ -37,11 +37,17 @@ function createModel (errorMessage, data, postcodeHtml) {
 }
 
 function createModelNotEligible (request) {
-  gapiService.sendDimension(request, {
+  gapiService.sendDimensionOrMetric(request, {
     category: gapiService.categories.ELIMINATION,
-    url: request.route.path,
-    dimension: gapiService.dimensions.ELIMINATION,
+    action: gapiService.actions.ELIMINATION,
+    dimensionOrMetric: gapiService.dimensions.ELIMINATION,
     value: request.yar.id
+  })
+  gapiService.sendDimensionOrMetric(request, {
+    category: gapiService.categories.JOURNEY,
+    action: gapiService.actions.ELIMINATION,
+    dimensionOrMetric: gapiService.metrics.ELIMINATION,
+    value: `${Date.now()}`
   })
   return {
     backLink: './country',

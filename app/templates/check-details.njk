@@ -2,6 +2,9 @@ z{% extends '.layout.njk' %}
 
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{% block pageTitle %}
+  GOV.UK - Defra grants - Check details
+{% endblock %}
 
 {% block beforeContent %}
   {{ govukBreadcrumbs({
@@ -11,7 +14,7 @@ z{% extends '.layout.njk' %}
         href: "./"
       },
       {
-        text: "Check if you can apply for a Farming Transformation Fund water grant",
+        text: "Check if you can apply for a Farming Transformation Fund water management grant",
         href: "./"
       }
     ]

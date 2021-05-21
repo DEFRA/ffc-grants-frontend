@@ -1,4 +1,5 @@
 const Joi = require('joi')
+const gapiService = require('../services/gapi-service')
 
 function createModel (errorMessage) {
   return {
@@ -29,7 +30,19 @@ function createModel (errorMessage) {
   }
 }
 
-function createModelNotEligible () {
+function createModelNotEligible (request) {
+  gapiService.sendDimensionOrMetric(request, {
+    category: gapiService.categories.ELIMINATION,
+    action: gapiService.actions.ELIMINATION,
+    dimensionOrMetric: gapiService.dimensions.ELIMINATION,
+    value: request.yar.id
+  })
+  gapiService.sendDimensionOrMetric(request, {
+    category: gapiService.categories.JOURNEY,
+    action: gapiService.actions.ELIMINATION,
+    dimensionOrMetric: gapiService.metrics.ELIMINATION,
+    value: `${Date.now()}`
+  })
   return {
     backLink: './arable',
     sentences: [
@@ -60,7 +73,7 @@ module.exports = [
           return h.redirect('./country')
         }
 
-        return h.view('./not-eligible', createModelNotEligible())
+        return h.view('./not-eligible', createModelNotEligible(request))
       }
     }
   }

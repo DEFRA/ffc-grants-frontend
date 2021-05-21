@@ -4,7 +4,7 @@
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "./components/macro.njk" import crumbToken %}
 {% block pageTitle %}
-  GOV.UK - Defra grants - Your project's score 
+  GOV.UK - Defra grants - Score
 {% endblock %}
 {% block beforeContent %}
   {{ govukBackLink({
@@ -95,5 +95,21 @@
     </form>
   </div>
 </div>
+{% endif %}
+{% if googleTagManagerKey %}
+
+<!-- Google Tag Manager -->
+<script>
+dataLayer.push(
+    {
+      pageCategory: 'Journey',
+      event: 'journey-score',
+      time: Date.now(),
+      score:"{{scoreData.desirability.overallRating.band}}",
+      metric2: Date.now(),
+      dimension1:"{{scoreData.desirability.overallRating.band}}"
+    });
+</script>
+<!-- End Google Tag Manager -->
 {% endif %}
 {% endblock %}

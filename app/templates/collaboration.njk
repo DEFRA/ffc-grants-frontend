@@ -5,7 +5,7 @@
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
 {% from "./components/macro.njk" import crumbToken %}
 {% block pageTitle %}
-  GOV.UK - Defra grants - Question 19 of 19 
+  GOV.UK - Defra grants - Water supply agreement
 {% endblock %}
 {% block beforeContent %}
   {{ govukBackLink({
@@ -17,7 +17,6 @@
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <span class="govuk-caption-xl">Question 19 of 19 </span>
       <form method="POST" action="./collaboration" autocomplete="off" novalidate="novalidate">
         {{ crumbToken(crumb)}}
         {{ govukRadios(radios) }}

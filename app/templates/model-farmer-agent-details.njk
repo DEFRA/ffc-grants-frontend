@@ -6,7 +6,7 @@
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/select/macro.njk" import govukSelect %}
 {% block pageTitle %}
-  GOV.UK - Defra grants - {{ pageHeader }} 
+  GOV.UK - Defra grants - {{ pageHeader }} details 
 {% endblock %}
 {% block beforeContent %}
   {{ govukBackLink({
@@ -30,4 +30,18 @@
       </form>
     </div>
   </div>
+
+{% if googleTagManagerKey %}
+
+<!-- Google Tag Manager -->
+<script>
+dataLayer.push(
+    {
+      pageCategory: 'Journey',
+      formerAgent:"{{pageId}}",
+      dimension3:"{{pageId}}"
+    });
+</script>
+<!-- End Google Tag Manager -->
+{% endif %}
 {% endblock %}

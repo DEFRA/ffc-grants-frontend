@@ -8,7 +8,7 @@
 
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% block pageTitle %}
-  GOV.UK - Defra grants - Question 7 of 19  
+  GOV.UK - Defra grants - Project cost
 {% endblock %}7
 
 {% block beforeContent %}
@@ -21,7 +21,6 @@
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <span class="govuk-caption-xl">Question 7 of 19  </span>
       <form method="POST" action="./project-cost" autocomplete="off" novalidate>
         {{ crumbToken(crumb)}}
         {{ govukInput(inputProjectCost) }}

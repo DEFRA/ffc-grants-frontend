@@ -25,18 +25,25 @@ module.exports = {
     }
     await protectiveMonitoringServiceSendEvent(request, request.yar.id, 'FTF-JOURNEY-COMPLETED', '0706')
 
-    gapiService.sendDimension(request, {
+    gapiService.sendDimensionOrMetric(request, {
       category: gapiService.categories.CONFIRMATION,
-      url: request.route.path,
-      dimension: gapiService.dimensions.CONFIRMATION,
-      value: request.yar.id
+      action: gapiService.actions.CONFIRMATION,
+      dimensionOrMetric: gapiService.dimensions.CONFIRMATION,
+      value: confirmationId
+    })
+    gapiService.sendDimensionOrMetric(request, {
+      category: gapiService.categories.JOURNEY,
+      action: gapiService.actions.CONFIRMATION,
+      dimensionOrMetric: gapiService.metrics.CONFIRMATION,
+      value: `${Date.now()}`
     })
     request.yar.reset()
     return h.view('confirmation', {
       output: {
         titleText: 'Details submitted',
         html: `Your reference number<br><strong>${confirmationId}</strong>`,
-        surveyLink: 'https://defragroup.eu.qualtrics.com/jfe/form/SV_e9fFpJ6tySfdHYa'
+        surveyLink: 'https://defragroup.eu.qualtrics.com/jfe/form/SV_e9fFpJ6tySfdHYa',
+        confirmationId: confirmationId
       }
     })
   }
