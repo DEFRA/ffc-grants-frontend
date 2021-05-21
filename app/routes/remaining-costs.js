@@ -2,7 +2,7 @@ const Joi = require('joi')
 const { setYarValue, getYarValue } = require('../helpers/session')
 const { setLabelData, errorExtractor, getErrorMessage, formatUKCurrency } = require('../helpers/helper-functions')
 
-function createModel(errorMessage, data, formattedRemainingCost) {
+function createModel (errorMessage, data, formattedRemainingCost) {
   return {
     backLink: './project-cost',
     radios: {
@@ -25,7 +25,7 @@ function createModel(errorMessage, data, formattedRemainingCost) {
   }
 }
 
-function createModelNotEligible() {
+function createModelNotEligible () {
   return {
     backLink: './remaining-costs',
     messageContent:
@@ -40,7 +40,6 @@ module.exports = [
     handler: (request, h) => {
       const payRemainingCosts = getYarValue(request, 'payRemainingCosts') || null
       const remainingCost = getYarValue(request, 'remainingCost') || null
-
       if (!remainingCost) {
         return h.redirect('./project-cost')
       }

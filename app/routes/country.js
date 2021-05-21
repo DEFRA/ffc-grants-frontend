@@ -3,7 +3,7 @@ const { setYarValue, getYarValue } = require('../helpers/session')
 const { isChecked, getPostCodeHtml, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
 const { POSTCODE_REGEX, DELETE_POSTCODE_CHARS_REGEX } = require('../helpers/regex-validation')
 
-function createModel(errorMessage, data, postcodeHtml) {
+function createModel (errorMessage, data, postcodeHtml) {
   return {
     backLink: 'legal-status',
     radios: {
@@ -36,7 +36,7 @@ function createModel(errorMessage, data, postcodeHtml) {
   }
 }
 
-function createModelNotEligible() {
+function createModelNotEligible () {
   return {
     backLink: './country',
     messageContent: 'This is only for projects in England.<br/><br/>Scotland, Wales and Northern Ireland have other grants available.'

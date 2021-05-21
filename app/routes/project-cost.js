@@ -4,7 +4,7 @@ const { errorExtractor, getErrorMessage, getGrantValues } = require('../helpers/
 const { MIN_GRANT, MAX_GRANT } = require('../helpers/grant-details')
 const { PROJECT_COST_REGEX } = require('../helpers/regex-validation')
 
-function createModel(errorMessage, projectCost, projectItemsList) {
+function createModel (errorMessage, projectCost, projectItemsList) {
   return {
     backLink: './project-items',
     inputProjectCost: {
@@ -33,7 +33,7 @@ function createModel(errorMessage, projectCost, projectItemsList) {
   }
 }
 
-function createModelNotEligible() {
+function createModelNotEligible () {
   return {
     backLink: './project-cost',
     messageContent:
@@ -75,7 +75,6 @@ module.exports = [
       handler: (request, h) => {
         const { projectCost } = request.payload
         const { calculatedGrant, remainingCost } = getGrantValues(projectCost)
-
         setYarValue(request, 'projectCost', projectCost)
         setYarValue(request, 'calculatedGrant', calculatedGrant)
         setYarValue(request, 'remainingCost', remainingCost)

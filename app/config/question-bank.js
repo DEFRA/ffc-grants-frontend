@@ -26,7 +26,7 @@ module.exports = {
       title: 'Is the planned project in England?',
       pageTitle: '',
       url: 'country',
-      yarKey: 'projectPostcode'
+      yarKey: 'inEngland'
     },
     {
       key: 'Q4',
@@ -66,7 +66,7 @@ module.exports = {
       title: '',
       pageTitle: 'Can you pay the remaining costs',
       url: 'remaining-costs',
-      yarKey: 'remainingCost'
+      yarKey: 'payRemainingCosts'
     },
     {
       key: 'Q9',

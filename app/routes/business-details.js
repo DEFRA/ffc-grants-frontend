@@ -3,7 +3,7 @@ const { setYarValue, getYarValue } = require('../helpers/session')
 const { fetchListObjectItems, findErrorList } = require('../helpers/helper-functions')
 const { NUMBER_REGEX } = require('../helpers/regex-validation')
 
-function createModel(errorMessageList, businessDetails) {
+function createModel (errorMessageList, businessDetails) {
   const {
     projectName,
     businessName,

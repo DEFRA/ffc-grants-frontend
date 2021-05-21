@@ -1,12 +1,31 @@
-const { getCookieHeader, getCrumbCookie, crumbToken } = require('./test-helper')
+const { crumbToken } = require('./test-helper')
+
 describe('Country Page', () => {
-  let crumCookie
+  const varList = {
+    farmingType: 'some fake crop',
+    legalStatus: 'fale status',
+    inEngland: 'Yes'
+  }
+  const inEngland = varList.inEngland
+
   let server
   const createServer = require('../../../../app/server')
+
+  jest.mock('../../../../app/helpers/session', () => ({
+    setYarValue: (request, key, value) => null,
+    getYarValue: (request, key) => {
+      if (Object.keys(varList).includes(key)) return varList[key]
+      else return 'Error'
+    }
+  }))
 
   beforeEach(async () => {
     server = await createServer()
     await server.start()
+  })
+
+  afterEach(() => {
+    jest.clearAllMocks()
   })
 
   it('should load country page sucessfully', async () => {
@@ -17,10 +36,6 @@ describe('Country Page', () => {
 
     const response = await server.inject(options)
     expect(response.statusCode).toBe(200)
-    const header = getCookieHeader(response)
-    expect(header.length).toBe(3)
-    crumCookie = getCrumbCookie(response)
-    expect(response.result).toContain(crumCookie[1])
   })
 
   it('should returns error message if no option is selected', async () => {
@@ -42,7 +57,7 @@ describe('Country Page', () => {
     const postOptions = {
       method: 'POST',
       url: '/country',
-      payload: { inEngland: 'Yes', projectPostcode: '', crumb: crumbToken },
+      payload: { inEngland, projectPostcode: '', crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
       }
@@ -57,7 +72,7 @@ describe('Country Page', () => {
     const postOptions = {
       method: 'POST',
       url: '/country',
-      payload: { inEngland: 'Yes', projectPostcode: 'AB123 4CD', crumb: crumbToken },
+      payload: { inEngland, projectPostcode: 'AB123 4CD', crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
       }
@@ -72,7 +87,7 @@ describe('Country Page', () => {
     const postOptions = {
       method: 'POST',
       url: '/country',
-      payload: { inEngland: 'Yes', projectPostcode: 'XX1 5XX', crumb: crumbToken },
+      payload: { inEngland, projectPostcode: 'XX1 5XX', crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
       }
