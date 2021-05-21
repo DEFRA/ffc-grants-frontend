@@ -2,6 +2,7 @@
 
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "./components/macro.njk" import crumbToken %}
 
 {% block beforeContent %}
   {{ govukBackLink({
@@ -13,13 +14,12 @@
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <h1 class="govuk-heading-l">You may be able to apply for a grant from this scheme</h1>
-      <p class="govuk-body">
-        {{ messageContent | safe}}
-      </p>
+      {{ crumbToken(crumb)}}
+      <h1 class="govuk-heading-l">{{messageHeader}}</h1>
+      <p class="govuk-body">{{ messageContent | safe}}</p>
       {{ govukButton({
           text: "Continue",
-          href: "./project-items"
+          href: nextLink
         }) }}
     </div>
   </div>
