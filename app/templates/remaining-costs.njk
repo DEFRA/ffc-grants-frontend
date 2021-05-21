@@ -4,9 +4,9 @@
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
 {% from "govuk/components/details/macro.njk" import govukDetails %}
-{% from "./components/macro.njk" import crumbToken %}
+{% from "./components/macro.njk" import crumbToken, sideBar %}
 {% block pageTitle %}
-  GOV.UK - Defra grants - Remaining costs
+  {{siteTitle}} - Remaining costs
 {% endblock %}
 
 {% block beforeContent %}
@@ -26,6 +26,11 @@
           text: "Continue"
         }) }}
       </form>
+    </div>
+    
+    <div class="govuk-grid-column-one-third  govuk-body">
+    {{ sideBar("Eligibility","You cannot use public money (for example grant funding from government or local authorities) towards the project costs. You can use loans, overdrafts and certain other grants, such as the Basic Payment Scheme or agri-environment schemes such as the Countryside Stewardship Scheme.",
+    []) }}
     </div>
   </div>
 {% endblock %}

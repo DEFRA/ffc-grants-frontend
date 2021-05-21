@@ -3,10 +3,10 @@
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
-{% from "./components/macro.njk" import crumbToken %}
+{% from "./components/macro.njk" import crumbToken, sideBar %}
 
 {% block pageTitle %}
-  GOV.UK - Defra grants - Legal status  
+  {{siteTitle}} - Legal status  
 {% endblock %}
 
 {% block beforeContent %}
@@ -26,6 +26,14 @@
           text: "Continue"
         }) }}
       </form>
+    </div>
+    <div class="govuk-grid-column-one-third  govuk-body">
+    {{ sideBar("Eligibility","You can apply if you are a:",
+    [
+      "Sole trader","Partnership","Ltd company","Charity","Public organisation","Trust",
+      "Limited liability partnership","Community interest company","Local authority",
+      "Limited partnership","Industrial and provident society","Co-operative society (Co-Op)","Community benefit society (BenCom)"
+    ]) }}
     </div>
   </div>
 {% endblock %}

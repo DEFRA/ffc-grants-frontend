@@ -4,9 +4,9 @@
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
 {% from "govuk/components/details/macro.njk" import govukDetails %}
-{% from "./components/macro.njk" import crumbToken %}
+{% from "./components/macro.njk" import crumbToken, sideBar %}
 {% block pageTitle %}
-  GOV.UK - Defra grants - Planning permission
+  {{siteTitle}} - Planning permission
 {% endblock %}
 {% block beforeContent %}
   {{ govukBackLink({
@@ -21,18 +21,14 @@
       <form method="POST" action="./planning-permission" autocomplete="off" novalidate="novalidate">
         {{ crumbToken(crumb)}}
         {{ govukRadios(radios) }}
-
-        {{ govukDetails({
-            summaryText: "Help",
-            html:
-            'Any planning permission required must be in place to submit a full application.'
-          })
-        }}
-
         {{ govukButton({
           text: "Continue"
         }) }}
       </form>
+    </div>
+    <div class="govuk-grid-column-one-third  govuk-body">
+    {{ sideBar("Eligibility","Any planning permission must be in place by 31 December 2021 (the end of the application window).",
+    []) }}
     </div>
   </div>
 {% endblock %}

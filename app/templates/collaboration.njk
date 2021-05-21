@@ -3,9 +3,9 @@
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
-{% from "./components/macro.njk" import crumbToken %}
+{% from "./components/macro.njk" import crumbToken, sideBar %}
 {% block pageTitle %}
-  GOV.UK - Defra grants - Water supply agreement
+  {{siteTitle}} - Water supply agreement
 {% endblock %}
 {% block beforeContent %}
   {{ govukBackLink({
@@ -24,6 +24,12 @@
           text: "Continue"
         }) }}
       </form>
+    </div>
+    <div class="govuk-grid-column-one-third  govuk-body">
+    {{ sideBar("Funding priorities","RPA wants to fund projects that:",
+    [
+      "improve water sustainability"
+    ]) }}
     </div>
   </div>
 {% endblock %}

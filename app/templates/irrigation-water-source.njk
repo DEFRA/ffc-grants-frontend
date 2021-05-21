@@ -4,9 +4,9 @@
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
-{% from "./components/macro.njk" import crumbToken %}
+{% from "./components/macro.njk" import crumbToken, sideBar %}
 {% block pageTitle %}
-  GOV.UK - Defra grants - Irrigation water
+  {{siteTitle}} - Irrigation water
 {% endblock %}
 {% block beforeContent %}
   {{ govukBackLink({
@@ -32,6 +32,12 @@
           text: "Continue"
         }) }}
       </form>
+    </div>
+    <div class="govuk-grid-column-one-third  govuk-body">
+    {{ sideBar("Funding priorities","RPA wants to fund projects that:",
+    [
+      "improve the environment","improve water sustainability"
+    ]) }}
     </div>
   </div>
 {% endblock %}

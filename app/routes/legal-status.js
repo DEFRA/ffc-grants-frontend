@@ -27,6 +27,10 @@ function createModel (errorMessage, data) {
           { text: 'Limited liability partnership', value: 'Limited Liability Partnership' },
           { text: 'Community interest company', value: 'Community Interest Company' },
           { text: 'Local authority', value: 'Local Authority' },
+          { text: 'Limited partnership', value: 'Limited Partnership' },
+          { text: 'Industrial and provident society', value: 'Industrial and Provident Society' },
+          { text: 'Co-operative society (Co-Op)', value: 'Co-operative Society (Co-Op)' },
+          { text: 'Community benefit society (BenCom)', value: 'Community Benefit Society (BenCom)' },
           'None of the above'
         ]),
       ...(errorMessage ? { errorMessage: { text: errorMessage } } : {})

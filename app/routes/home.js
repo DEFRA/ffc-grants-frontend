@@ -13,7 +13,6 @@ module.exports = {
   method: 'GET',
   path: '/start',
   handler: async (request, h) => {
-    request.yar.reset()
     gapiService.sendDimensionOrMetric(request, {
       category: gapiService.categories.JOURNEY,
       action: 'Start',
