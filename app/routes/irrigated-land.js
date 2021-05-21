@@ -1,6 +1,6 @@
 const Joi = require('joi')
 const { fetchListObjectItems, findErrorList } = require('../helpers/helper-functions')
-const { IRRIGATED_LAND_REGEX } = require('../helpers/regex-validation')
+const { IRRIGATED_LAND_REGEX, ONLY_ZEROES_REGEX } = require('../helpers/regex-validation')
 const { setYarValue, getYarValue } = require('../helpers/session')
 
 function createModel (irrigatedLandCurrent, irrigatedLandTarget, errorMessageList) {
@@ -76,9 +76,13 @@ module.exports = [
           irrigatedLandTarget: Joi.string().regex(IRRIGATED_LAND_REGEX).required()
         }),
         failAction: (request, h, err) => {
-          const [
+          let [
             irrigatedLandCurrentError, irrigatedLandTargetError
           ] = findErrorList(err, ['irrigatedLandCurrent', 'irrigatedLandTarget'])
+
+          if (!irrigatedLandTargetError && ONLY_ZEROES_REGEX.test(request.payload.irrigatedLandTarget)) {
+            irrigatedLandTargetError = 'Figure must be higher than 0'
+          }
 
           const errorMessageList = {
             irrigatedLandCurrentError, irrigatedLandTargetError
@@ -94,9 +98,14 @@ module.exports = [
         if (Number(irrigatedLandTarget) === 0 ||
             (Number(irrigatedLandTarget) < Number(irrigatedLandCurrent))
         ) {
+          const irrigatedLandCurrentError = null
+          const irrigatedLandTargetError = (Number(irrigatedLandTarget) === 0)
+            ? 'Figure must be higher than 0'
+            : 'Figure must be equal to or higher than current hectares'
+
           const errorMessageList = {
-            irrigatedLandCurrentError: null,
-            irrigatedLandTargetError: 'Figure must be higher than current hectares'
+            irrigatedLandCurrentError,
+            irrigatedLandTargetError
           }
 
           return h.view(

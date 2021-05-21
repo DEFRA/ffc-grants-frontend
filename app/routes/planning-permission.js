@@ -1,5 +1,6 @@
 const Joi = require('joi')
 const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
+const { LICENSE_NOT_NEEDED, LICENSE_SECURED, LICENSE_EXPECTED, LICENSE_WILL_NOT_HAVE } = require('../helpers/license-dates')
 
 function createModel (errorMessage, data) {
   return {
@@ -14,10 +15,15 @@ function createModel (errorMessage, data) {
           classes: 'govuk-fieldset__legend--l'
         }
       },
-      items: setLabelData(data, ['Not needed', 'Secured', 'Expected to have by 31 December 2021', 'Will not have by 31 December 2021']),
+      items: setLabelData(data, [LICENSE_NOT_NEEDED, LICENSE_SECURED, LICENSE_EXPECTED, LICENSE_WILL_NOT_HAVE]),
       ...(errorMessage ? { errorMessage: { text: errorMessage } } : {})
     }
   }
+}
+
+const NOT_ELIGIBLE = {
+  backLink: './planning-permission',
+  messageContent: 'Any planning permission must be in place by 31 December 2021 (the end of the application window).'
 }
 
 module.exports = [
@@ -44,7 +50,17 @@ module.exports = [
         }
       },
       handler: (request, h) => {
-        request.yar.set('planningPermission', request.payload.planningPermission)
+        const { planningPermission } = request.payload
+        request.yar.set('planningPermission', planningPermission)
+
+        if (planningPermission === LICENSE_WILL_NOT_HAVE) {
+          return h.view('not-eligible', NOT_ELIGIBLE)
+        }
+
+        if (planningPermission === LICENSE_EXPECTED) {
+          return h.redirect('./planning-caveat')
+        }
+
         return h.redirect('./abstraction-licence')
       }
     }
