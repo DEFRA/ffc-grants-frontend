@@ -22,14 +22,14 @@ function createModel (errorMessage, data) {
   }
 }
 
-function createModelNotEligible (request) {
-  gapiService.sendDimensionOrMetric(request, {
+async function createModelNotEligible (request) {
+  await gapiService.sendDimensionOrMetric(request, {
     category: gapiService.categories.ELIMINATION,
     action: gapiService.actions.ELIMINATION,
     dimensionOrMetric: gapiService.dimensions.ELIMINATION,
     value: request.yar.id
   })
-  gapiService.sendDimensionOrMetric(request, {
+  await gapiService.sendDimensionOrMetric(request, {
     category: gapiService.categories.JOURNEY,
     action: gapiService.actions.ELIMINATION,
     dimensionOrMetric: gapiService.metrics.ELIMINATION,
@@ -66,11 +66,13 @@ module.exports = [
           return h.view('project-start', createModel(errorMessage)).takeover()
         }
       },
-      handler: (request, h) => {
+      handler: async (request, h) => {
         request.yar.set('projectStarted', request.payload.projectStarted)
-        return request.payload.projectStarted === 'No'
-          ? h.redirect('./tenancy')
-          : h.view('./not-eligible', createModelNotEligible(request))
+        if (request.payload.projectStarted === 'No') {
+          return h.redirect('./tenancy')
+        }
+        const notEligible = await createModelNotEligible(request)
+        return h.view('./not-eligible', notEligible)
       }
     }
   }

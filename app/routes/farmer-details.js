@@ -53,7 +53,7 @@ module.exports = [
   {
     method: 'GET',
     path: '/farmer-details',
-    handler: (request, h) => {
+    handler: async (request, h) => {
       let farmerDetails = request.yar.get('farmerDetails') || null
 
       if (!farmerDetails) {
@@ -67,7 +67,7 @@ module.exports = [
       const applying = request.yar.get('applying')
       const backLink = applying === 'Agent' ? './agent-address-details' : './applying'
 
-      gapiService.sendDimensionOrMetric(request, {
+      await gapiService.sendDimensionOrMetric(request, {
         category: gapiService.categories.AGENTFORMER,
         action: gapiService.actions,
         dimensionOrMetric: gapiService.dimensions.AGENTFORMER,

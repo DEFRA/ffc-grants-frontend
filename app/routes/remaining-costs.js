@@ -25,14 +25,14 @@ function createModel (errorMessage, data, formattedRemainingCost) {
   }
 }
 
-function createModelNotEligible (request) {
-  gapiService.sendDimensionOrMetric(request, {
+async function createModelNotEligible (request) {
+  await gapiService.sendDimensionOrMetric(request, {
     category: gapiService.categories.ELIMINATION,
     action: gapiService.actions.ELIMINATION,
     dimensionOrMetric: gapiService.dimensions.ELIMINATION,
     value: request.yar.id
   })
-  gapiService.sendDimensionOrMetric(request, {
+  await gapiService.sendDimensionOrMetric(request, {
     category: gapiService.categories.JOURNEY,
     action: gapiService.actions.ELIMINATION,
     dimensionOrMetric: gapiService.metrics.ELIMINATION,
@@ -78,11 +78,13 @@ module.exports = [
           return h.view('remaining-costs', createModel(errorMessage, null, formattedRemainingCost)).takeover()
         }
       },
-      handler: (request, h) => {
+      handler: async (request, h) => {
         request.yar.set('payRemainingCosts', request.payload.payRemainingCosts)
-        return request.payload.payRemainingCosts === 'Yes'
-          ? h.redirect('./planning-permission')
-          : h.view('./not-eligible', createModelNotEligible(request))
+        if (request.payload.payRemainingCosts === 'Yes') {
+          return h.redirect('./planning-permission')
+        }
+        const notEligible = await createModelNotEligible(request)
+        return h.view('./not-eligible', notEligible)
       }
     }
   }

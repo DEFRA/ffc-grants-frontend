@@ -53,7 +53,7 @@ module.exports = [
   {
     method: 'GET',
     path: '/agent-details',
-    handler: (request, h) => {
+    handler: async (request, h) => {
       let agentDetails = request.yar.get('agentDetails') || null
 
       if (!agentDetails) {
@@ -64,7 +64,7 @@ module.exports = [
         }
       }
 
-      gapiService.sendDimensionOrMetric(request, {
+      await gapiService.sendDimensionOrMetric(request, {
         category: gapiService.categories.AGENTFORMER,
         action: gapiService.actions,
         dimensionOrMetric: gapiService.dimensions.AGENTFORMER,

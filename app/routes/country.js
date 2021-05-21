@@ -36,14 +36,14 @@ function createModel (errorMessage, data, postcodeHtml) {
   }
 }
 
-function createModelNotEligible (request) {
-  gapiService.sendDimensionOrMetric(request, {
+async function createModelNotEligible (request) {
+  await gapiService.sendDimensionOrMetric(request, {
     category: gapiService.categories.ELIMINATION,
     action: gapiService.actions.ELIMINATION,
     dimensionOrMetric: gapiService.dimensions.ELIMINATION,
     value: request.yar.id
   })
-  gapiService.sendDimensionOrMetric(request, {
+  await gapiService.sendDimensionOrMetric(request, {
     category: gapiService.categories.JOURNEY,
     action: gapiService.actions.ELIMINATION,
     dimensionOrMetric: gapiService.metrics.ELIMINATION,
@@ -92,7 +92,7 @@ module.exports = [
           ).takeover()
         }
       },
-      handler: (request, h) => {
+      handler: async (request, h) => {
         const { inEngland, projectPostcode } = request.payload
         if (inEngland === 'Yes' && projectPostcode.trim() === '') {
           const postcodeHtml = getPostCodeHtml(projectPostcode.toUpperCase(), 'Enter a postcode, like AA1 1AA')
@@ -104,7 +104,9 @@ module.exports = [
 
         request.yar.set('inEngland', inEngland)
         request.yar.set('projectPostcode', projectPostcode.toUpperCase())
-        return inEngland === 'Yes' ? h.redirect('./project-start') : h.view('not-eligible', createModelNotEligible(request))
+        if (inEngland === 'Yes') { return h.redirect('./project-start') }
+        const notEligible = await createModelNotEligible(request)
+        return h.view('not-eligible', notEligible)
       }
     }
   }

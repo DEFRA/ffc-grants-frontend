@@ -61,14 +61,14 @@ module.exports = [
           consentMain: Joi.string().required(),
           consentOptional: Joi.string().allow('')
         }),
-        failAction: (request, h, err) => {
+        failAction: async (request, h, err) => {
           const [consentMainError] = findErrorList(err, ['consentMain'])
 
           let { consentMain, consentOptional } = request.payload
           consentMain = (consentMain && CONSENT_MAIN) || ''
           consentOptional = (consentMain && CONSENT_OPTIONAL) || ''
 
-          gapiService.sendDimensionOrMetric(request, {
+          await gapiService.sendDimensionOrMetric(request, {
             category: gapiService.categories.CONFIRM,
             action: gapiService.actions.CONFIRM,
             dimensionOrMetric: gapiService.dimensions.CONFIRM,

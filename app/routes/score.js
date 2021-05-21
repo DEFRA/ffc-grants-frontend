@@ -102,13 +102,13 @@ module.exports = [{
             break
         }
 
-        gapiService.sendDimensionOrMetric(request, {
+        await gapiService.sendDimensionOrMetric(request, {
           category: gapiService.categories.SCORE,
           action: gapiService.actions.SCORE,
           dimensionOrMetric: gapiService.dimensions.SCORE,
           value: request.yar.id
         })
-        gapiService.sendDimensionOrMetric(request, {
+        await gapiService.sendDimensionOrMetric(request, {
           category: gapiService.categories.JOURNEY,
           action: gapiService.actions.SCORE,
           dimensionOrMetric: gapiService.metrics.SCORE,
@@ -125,7 +125,7 @@ module.exports = [{
       }
     } catch (error) {
       request.log(error)
-      gapiService.sendEvent(request, gapiService.categories.EXCEPTION, request.route.path)
+      await gapiService.sendEvent(request, gapiService.categories.EXCEPTION, request.route.path)
     }
     request.log(err)
     return h.view('500')

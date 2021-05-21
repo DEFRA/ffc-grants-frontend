@@ -38,14 +38,14 @@ function createModel (errorMessage, data) {
   }
 }
 
-function createModelNotEligible (request) {
-  gapiService.sendDimensionOrMetric(request, {
+async function createModelNotEligible (request) {
+  await gapiService.sendDimensionOrMetric(request, {
     category: gapiService.categories.ELIMINATION,
     action: gapiService.actions.ELIMINATION,
     dimensionOrMetric: gapiService.dimensions.ELIMINATION,
     value: request.yar.id
   })
-  gapiService.sendDimensionOrMetric(request, {
+  await gapiService.sendDimensionOrMetric(request, {
     category: gapiService.categories.JOURNEY,
     action: gapiService.actions.ELIMINATION,
     dimensionOrMetric: gapiService.metrics.ELIMINATION,
@@ -82,9 +82,13 @@ module.exports = [
           return h.view('legal-status', createModel(errorMessage)).takeover()
         }
       },
-      handler: (request, h) => {
+      handler: async (request, h) => {
         request.yar.set('legalStatus', request.payload.legalStatus)
-        return (request.payload.legalStatus === 'None of the above') ? h.view('./not-eligible', createModelNotEligible(request)) : h.redirect('./country')
+        if (request.payload.legalStatus === 'None of the above') {
+          const notEligible = await createModelNotEligible(request)
+          return h.view('./not-eligible', notEligible)
+        }
+        return h.redirect('./country')
       }
     }
   }

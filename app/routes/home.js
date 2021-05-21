@@ -13,13 +13,13 @@ module.exports = {
   method: 'GET',
   path: '/start',
   handler: async (request, h) => {
-    gapiService.sendDimensionOrMetric(request, {
+    await gapiService.sendDimensionOrMetric(request, {
       category: gapiService.categories.JOURNEY,
       action: 'Start',
       dimensionOrMetric: gapiService.dimensions.START,
       value: request.yar?.id
     })
-    gapiService.sendDimensionOrMetric(request, {
+    await gapiService.sendDimensionOrMetric(request, {
       category: gapiService.categories.JOURNEY,
       action: 'Start',
       dimensionOrMetric: gapiService.metrics.START,
