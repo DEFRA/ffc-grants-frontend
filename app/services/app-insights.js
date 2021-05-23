@@ -22,7 +22,7 @@ function logException (request, event) {
       }
     })
   } catch (err) {
-    console.log(err)
+    console.log(err, 'App Insights')
   }
 }
 module.exports = { setup, logException }

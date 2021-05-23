@@ -64,4 +64,18 @@ const sendDimensionOrMetric = async (request, { category, action, dimensionOrMet
     appInsights.logException(request, { error: err })
   }
 }
-module.exports = { sendEvent, sendPageView, sendDimensionOrMetric, dimensions, categories, metrics, actions }
+const sendNotEligibleEvent = async (request) => {
+  await sendDimensionOrMetric(request, {
+    category: categories.ELIMINATION,
+    action: actions.ELIMINATION,
+    dimensionOrMetric: dimensions.ELIMINATION,
+    value: request.yar.id
+  })
+  await sendDimensionOrMetric(request, {
+    category: categories.JOURNEY,
+    action: actions.ELIMINATION,
+    dimensionOrMetric: metrics.ELIMINATION,
+    value: `${Date.now()}`
+  })
+}
+module.exports = { sendEvent, sendPageView, sendDimensionOrMetric, sendNotEligibleEvent, dimensions, categories, metrics, actions }

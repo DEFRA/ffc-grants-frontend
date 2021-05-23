@@ -34,18 +34,7 @@ function createModel (errorMessage, projectCost, projectItemsList) {
 }
 
 async function createModelNotEligible (request) {
-  await gapiService.sendDimensionOrMetric(request, {
-    category: gapiService.categories.ELIMINATION,
-    action: gapiService.actions.ELIMINATION,
-    dimensionOrMetric: gapiService.dimensions.ELIMINATION,
-    value: request.yar.id
-  })
-  await gapiService.sendDimensionOrMetric(request, {
-    category: gapiService.categories.JOURNEY,
-    action: gapiService.actions.ELIMINATION,
-    dimensionOrMetric: gapiService.metrics.ELIMINATION,
-    value: `${Date.now()}`
-  })
+  await gapiService.sendNotEligibleEvent(request)
   return {
     backLink: './project-cost',
     messageContent:
