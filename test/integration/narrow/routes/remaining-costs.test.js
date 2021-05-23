@@ -1,29 +1,39 @@
 const { crumbToken } = require('./test-helper')
 
+const varListTemplate = {
+  farmingType: 'some fake crop',
+  legalStatus: 'fale status',
+  inEngland: 'Yes',
+  projectStarted: 'No',
+  landOwnership: 'Yes',
+  projectItemsList: {
+    projectEquipment: ['Boom', 'Trickle']
+  },
+  projectCost: '12345678',
+  remainingCost: 14082.00,
+  payRemainingCosts: 'Yes'
+}
+
+let varList
+const mockSession = {
+  setYarValue: (request, key, value) => null,
+  getYarValue: (request, key) => {
+    if (Object.keys(varList).includes(key)) return varList[key]
+    else return 'Error'
+  }
+}
+
+jest.mock('../../../../app/helpers/session', () => mockSession)
+
 describe('Remaining costs page', () => {
   beforeEach(() => {
-    jest.resetAllMocks()
-    const varList = {
-      farmingType: 'some fake crop',
-      legalStatus: 'fale status',
-      inEngland: 'Yes',
-      projectStarted: 'No',
-      landOwnership: 'Yes',
-      projectItemsList: {
-        projectEquipment: ['Boom', 'Trickle']
-      },
-      projectCost: '12345678',
-      remainingCost: 14082.00,
-      payRemainingCosts: 'Yes'
-    }
-    jest.mock('../../../../app/helpers/session', () => ({
-      setYarValue: (request, key, value) => null,
-      getYarValue: (request, key) => {
-        if (Object.keys(varList).includes(key)) return varList[key]
-        else return 'Error'
-      }
-    }))
+    varList = { ...varListTemplate }
   })
+
+  afterAll(() => {
+    jest.resetAllMocks()
+  })
+
   it('should load page successfully', async () => {
     const postOptions = {
       method: 'GET',
@@ -33,33 +43,11 @@ describe('Remaining costs page', () => {
     }
 
     const postResponse = await global.__SERVER__.inject(postOptions)
-    expect(postResponse.headers.location).toBe('./project-cost')
-
-    // expect(postResponse.statusCode).toBe(200)
+    expect(postResponse.statusCode).toBe(200)
   })
 
   it('redirects to /project-cost if projectCost value has not been saved', async () => {
-    const varList2 = {
-      farmingType: 'some fake crop',
-      legalStatus: 'fale status',
-      inEngland: 'Yes',
-      projectStarted: 'No',
-      landOwnership: 'Yes',
-      projectItemsList: {
-        projectEquipment: ['Boom', 'Trickle']
-      },
-      projectCost: '12345678',
-      remainingCost: null,
-      payRemainingCosts: 'Yes'
-    }
-
-    jest.mock('../../../../app/helpers/session', () => ({
-      setYarValue: (request, key, value) => null,
-      getYarValue: (request, key) => {
-        if (Object.keys(varList2).includes(key)) return varList2[key]
-        else return 'Error'
-      }
-    }))
+    varList.remainingCost = null
 
     const options = {
       method: 'GET',
@@ -95,9 +83,7 @@ describe('Remaining costs page', () => {
     }
 
     const postResponse = await global.__SERVER__.inject(postOptions)
-    expect(postResponse.headers.location).toBe('./project-cost')
-
-    // expect(postResponse.statusCode).toBe(200)
+    expect(postResponse.statusCode).toBe(200)
     expect(postResponse.payload).toContain('You cannot apply for a grant from this scheme')
   })
 
