@@ -2,20 +2,22 @@ const Joi = require('joi')
 
 // Define config schema
 const schema = Joi.object({
-  siteId: Joi.string().required(),
   tenantId: Joi.string().required(),
   clientId: Joi.string().required(),
   clientSecret: Joi.string().required(),
-  documentLibraryId: Joi.string().required()
+  hostname: Joi.string().required(),
+  sitePath: Joi.string().required(),
+  documentLibrary: Joi.string().required()
 })
 
 // Build config
 const config = {
-  siteId: process.env.SHAREPOINT_SITE_ID,
   tenantId: process.env.SHAREPOINT_TENANT_ID,
   clientId: process.env.SHAREPOINT_CLIENT_ID,
   clientSecret: process.env.SHAREPOINT_CLIENT_SECRET,
-  documentLibraryId: process.env.SHAREPOINT_DOCUMENT_LIBRARY_ID
+  hostname: process.env.SHAREPOINT_HOSTNAME,
+  sitePath: process.env.SHAREPOINT_SITE_PATH,
+  documentLibrary: process.env.SHAREPOINT_DOCUMENT_LIBRARY
 }
 
 // Validate config

@@ -23,11 +23,15 @@ containerSecret:
 deployment:
   restartPolicy: Always
   priorityClassName: default
-  replicas: 1
   minReadySeconds: 0
   redeployOnChange: update this field to force a change
   runAsNonRoot: true
-  runAsUser: 1000
+  runAsUser: 30301
+  replicas: 2
+  minReplicas: 2
+  maxReplicas: 3
+  cpuThreshold: 80
+  memoryThreshold: 80
 
 container:
   imagePullPolicy: IfNotPresent
@@ -46,22 +50,25 @@ container:
   blobStorageContainerName: not-a-real-container
   blobStorageConnectionString: dummy
   useBlobStorageConnectionString: false
-  sharePointSiteId: not-a-real-value
+  sharePointHostname: not-a-real-value
+  sharePointSitePath: not-a-real-value
   sharePointTenantId: not-a-real-value
   sharePointClientId: not-a-real-value
   sharePointClientSecret: not-a-real-value
-  sharePointDocumentLibraryId: not-a-real-value
+  sharePointDocumentLibrary: not-a-real-value
 
 livenessProbe:
   path: /healthz
   port: 3000
-  initialDelaySeconds: 10
-  periodSeconds: 10
-  failureThreshold: 3
+  initialDelaySeconds: 30
+  periodSeconds: 30
+  timeoutSeconds: 5
+  failureThreshold: 5
 
 readinessProbe:
   path: /healthy
   port: 3000
-  initialDelaySeconds: 10
-  periodSeconds: 10
-  failureThreshold: 3
+  initialDelaySeconds: 30
+  periodSeconds: 30
+  timeoutSeconds: 5
+  failureThreshold: 5

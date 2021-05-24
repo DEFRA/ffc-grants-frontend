@@ -9,8 +9,8 @@ data:
   APPINSIGHTS_CLOUDROLE: {{ quote .Values.name }}
   BLOB_STORAGE_ACCOUNT_NAME: {{ .Values.container.blobStorageAccountName | quote }}
   BLOB_STORAGE_CONTAINER_NAME: {{ .Values.container.blobStorageContainerName | quote }}
-  SHAREPOINT_SITE_ID: {{ .Values.container.sharePointSiteId | quote }}
-  SHAREPOINT_TENANT_ID: {{ .Values.container.sharePointTenantId | quote }}
-  SHAREPOINT_DOCUMENT_LIBRARY_ID: {{ .Values.container.sharePointDocumentLibraryId | quote }}
+  SHAREPOINT_HOSTNAME: {{ .Values.container.sharePointHostname | quote }}
+  SHAREPOINT_SITE_PATH: {{ .Values.container.sharePointSitePath | quote }}
+  SHAREPOINT_DOCUMENT_LIBRARY: {{ .Values.container.sharePointDocumentLibrary | quote }}
   USE_BLOB_STORAGE_CONNECTION_STRING: {{ .Values.container.useBlobStorageConnectionString | quote }}
 {{- end -}}

@@ -14,6 +14,17 @@ if (config.useConnectionStr) {
 
 const blobContainerClient = blobServiceClient.getContainerClient(config.containerName)
 
-module.exports = {
-  blobContainerClient
+async function downloadFile (filename) {
+  const blockBlobClient = blobContainerClient.getBlockBlobClient(filename)
+  const buffer = await blockBlobClient.downloadToBuffer()
+  console.log('Blob Storage downloaded successfully')
+  return { buffer, blockBlobClient }
 }
+
+async function deleteFile (blockBlobClient) {
+  // At a later date we can capture the response from this and check for any error codes
+  await blockBlobClient.delete()
+  console.log('Blob storage deleted successfully')
+}
+
+module.exports = { downloadFile, deleteFile }
