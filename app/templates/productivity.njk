@@ -4,9 +4,10 @@
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
-{% from "./components/macro.njk" import crumbToken %}
-
-
+{% from "./components/macro.njk" import crumbToken, sideBar %}
+{% block pageTitle %}
+  {{siteTitle}} - Productivity
+{% endblock %}
 {% block beforeContent %}
   {{ govukBackLink({
     text: "Back",
@@ -35,6 +36,12 @@
           text: "Continue"
         }) }}
       </form>
+    </div>
+    <div class="govuk-grid-column-one-third  govuk-body">
+    {{ sideBar("Funding priorities","RPA wants to fund projects that:",
+    [
+      "improve productivity"
+    ]) }}
     </div>
   </div>
 {% endblock %}

@@ -1,5 +1,6 @@
 const Joi = require('joi')
 const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
+const gapiService = require('../services/gapi-service')
 
 function createModel (errorMessage, data) {
   return {
@@ -21,7 +22,8 @@ function createModel (errorMessage, data) {
   }
 }
 
-function createModelNotEligible () {
+async function createModelNotEligible (request) {
+  await gapiService.sendNotEligibleEvent(request)
   return {
     backLink: './farming-type',
     messageContent:
@@ -53,9 +55,11 @@ module.exports = [
           return h.view('farming-type', createModel(errorMessage)).takeover()
         }
       },
-      handler: (request, h) => {
+      handler: async (request, h) => {
         request.yar.set('farmingType', request.payload.farmingType)
-        return request.payload.farmingType !== 'Something else' ? h.redirect('./legal-status') : h.view('./not-eligible', createModelNotEligible())
+        if (request.payload.farmingType !== 'Something else') { return h.redirect('./legal-status') }
+        const notEligible = await createModelNotEligible(request)
+        return h.view('./not-eligible', notEligible)
       }
     }
   }
