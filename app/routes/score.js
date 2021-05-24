@@ -3,6 +3,7 @@ const createMsg = require('../messaging/create-msg')
 const Wreck = require('@hapi/wreck')
 const questionBank = require('../config/question-bank')
 const pollingConfig = require('../config/polling')
+const gapiService = require('../services/gapi-service')
 function createModel (data) {
   return {
     backLink: './collaboration',
@@ -100,6 +101,19 @@ module.exports = [{
             scoreChance = 'seems unlikely to'
             break
         }
+
+        await gapiService.sendDimensionOrMetric(request, {
+          category: gapiService.categories.SCORE,
+          action: gapiService.actions.SCORE,
+          dimensionOrMetric: gapiService.dimensions.SCORE,
+          value: request.yar.id
+        })
+        await gapiService.sendDimensionOrMetric(request, {
+          category: gapiService.categories.JOURNEY,
+          action: gapiService.actions.SCORE,
+          dimensionOrMetric: gapiService.metrics.SCORE,
+          value: `${Date.now()}`
+        })
         return h.view('score', createModel({
           titleText: msgData.desirability.overallRating.band,
           scoreData: msgData,
@@ -111,10 +125,7 @@ module.exports = [{
       }
     } catch (error) {
       request.log(error)
-      await request.ga.event({
-        category: 'Score',
-        action: 'Error'
-      })
+      await gapiService.sendEvent(request, gapiService.categories.EXCEPTION, request.route.path)
     }
     request.log(err)
     return h.view('500')

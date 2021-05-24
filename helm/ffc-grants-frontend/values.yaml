@@ -23,13 +23,13 @@ containerSecret:
 deployment:
   restartPolicy: Always
   priorityClassName: high
-  replicas: 2
-  minReplicas: 2
-  maxReplicas: 4
   minReadySeconds: 2
   redeployOnChange: update this field to force a change
   runAsNonRoot: true
-  runAsUser: 1000
+  runAsUser: 30303
+  replicas: 2
+  minReplicas: 2
+  maxReplicas: 4
   cpuThreshold: 80
   memoryThreshold: 80
 

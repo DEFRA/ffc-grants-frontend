@@ -1,4 +1,5 @@
 const Joi = require('joi')
+const gapiService = require('../services/gapi-service')
 
 function createModel (errorMessage) {
   return {
@@ -29,7 +30,8 @@ function createModel (errorMessage) {
   }
 }
 
-function createModelNotEligible () {
+async function createModelNotEligible (request) {
+  await gapiService.sendNotEligibleEvent(request)
   return {
     backLink: './arable',
     sentences: [
@@ -54,13 +56,13 @@ module.exports = [
         }),
         failAction: (request, h) => h.view('arable', createModel('Select yes if the planned project is for an arable or horticultural farming businesses')).takeover()
       },
-      handler: (request, h) => {
+      handler: async (request, h) => {
         if (request.payload.isArable === 'yes') {
           request.yar.set('isArable', request.payload.isArable)
           return h.redirect('./country')
         }
-
-        return h.view('./not-eligible', createModelNotEligible())
+        const notEligible = await createModelNotEligible(request)
+        return h.view('./not-eligible', notEligible)
       }
     }
   }

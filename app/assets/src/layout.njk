@@ -1,9 +1,9 @@
 {% extends "govuk/template.njk" %}
 {% from "govuk/components/header/macro.njk" import govukHeader %}
 {% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
-
+{% set siteTitle = "Check if you can apply for a Farming Transformation Fund water grant" %}
 {% block pageTitle %}
-  GOV.UK - Defra grants
+  {{siteTitle}}
 {% endblock %}
 
 {% block head %}
@@ -17,7 +17,7 @@
 {% block header %}
   {{ govukHeader({
     homepageUrl: "./start",
-    serviceName: "Check if you can apply for a Farming Transformation Fund water grant",
+    serviceName: "Check if you can apply for a Farming Transformation Fund water management grant",
     serviceUrl: "./start"
   }) }}
   <div class="govuk-grid-row govuk-width-container">

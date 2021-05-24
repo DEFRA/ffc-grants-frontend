@@ -5,7 +5,9 @@
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/select/macro.njk" import govukSelect %}
-
+{% block pageTitle %}
+  {{siteTitle}} - {{ pageHeader }} details 
+{% endblock %}
 {% block beforeContent %}
   {{ govukBackLink({
     text: "Back",
@@ -28,4 +30,18 @@
       </form>
     </div>
   </div>
+
+{% if googleTagManagerKey %}
+
+<!-- Google Tag Manager -->
+<script>
+dataLayer.push(
+    {
+      pageCategory: 'Journey',
+      formerAgent:"{{pageId}}",
+      dimension3:"{{pageId}}"
+    });
+</script>
+<!-- End Google Tag Manager -->
+{% endif %}
 {% endblock %}

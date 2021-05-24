@@ -1,6 +1,7 @@
 const Joi = require('joi')
 const { setYarValue, getYarValue } = require('../helpers/session')
 const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
+const gapiService = require('../services/gapi-service')
 
 function createModel(errorMessage, data) {
   return {
@@ -27,6 +28,10 @@ function createModel(errorMessage, data) {
           { text: 'Limited liability partnership', value: 'Limited Liability Partnership' },
           { text: 'Community interest company', value: 'Community Interest Company' },
           { text: 'Local authority', value: 'Local Authority' },
+          { text: 'Limited partnership', value: 'Limited Partnership' },
+          { text: 'Industrial and provident society', value: 'Industrial and Provident Society' },
+          { text: 'Co-operative society (Co-Op)', value: 'Co-operative Society (Co-Op)' },
+          { text: 'Community benefit society (BenCom)', value: 'Community Benefit Society (BenCom)' },
           'None of the above'
         ]),
       ...(errorMessage ? { errorMessage: { text: errorMessage } } : {})
@@ -34,7 +39,9 @@ function createModel(errorMessage, data) {
   }
 }
 
-function createModelNotEligible() {
+async function createModelNotEligible (request) {
+  await gapiService.sendNotEligibleEvent(request)
+
   return {
     backLink: './legal-status',
     messageContent:
@@ -66,9 +73,13 @@ module.exports = [
           return h.view('legal-status', createModel(errorMessage)).takeover()
         }
       },
-      handler: (request, h) => {
+      handler: async (request, h) => {
         setYarValue(request, 'legalStatus', request.payload.legalStatus)
-        return (request.payload.legalStatus === 'None of the above') ? h.view('./not-eligible', createModelNotEligible()) : h.redirect('./country')
+        if (request.payload.legalStatus === 'None of the above') {
+          const notEligible = await createModelNotEligible(request)
+          return h.view('./not-eligible', notEligible)
+        }
+        return h.redirect('./country')
       }
     }
   }

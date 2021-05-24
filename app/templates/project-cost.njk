@@ -7,7 +7,9 @@
 {% from "./components/macro.njk" import crumbToken %}
 
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
-
+{% block pageTitle %}
+  {{siteTitle}} - Project cost
+{% endblock %}7
 
 {% block beforeContent %}
   {{ govukBackLink({

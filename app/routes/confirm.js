@@ -1,6 +1,7 @@
 const Joi = require('joi')
 const { setLabelData, findErrorList } = require('../helpers/helper-functions')
 const { setYarValue, getYarValue } = require('../helpers/session')
+const gapiService = require('../services/gapi-service')
 
 const CONSENT_MAIN = 'CONSENT_MAIN'
 const CONSENT_OPTIONAL = 'CONSENT_OPTIONAL'
@@ -60,13 +61,19 @@ module.exports = [
           consentMain: Joi.string().required(),
           consentOptional: Joi.string().allow('')
         }),
-        failAction: (request, h, err) => {
+        failAction: async (request, h, err) => {
           const [consentMainError] = findErrorList(err, ['consentMain'])
 
           let { consentMain, consentOptional } = request.payload
           consentMain = (consentMain && CONSENT_MAIN) || ''
           consentOptional = (consentMain && CONSENT_OPTIONAL) || ''
 
+          await gapiService.sendDimensionOrMetric(request, {
+            category: gapiService.categories.CONFIRM,
+            action: gapiService.actions.CONFIRM,
+            dimensionOrMetric: gapiService.dimensions.CONFIRM,
+            value: request.yar.id
+          })
           return h.view(
             'confirm',
             createModel(consentMain, consentOptional, consentMainError)

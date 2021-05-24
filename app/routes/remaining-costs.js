@@ -1,6 +1,7 @@
 const Joi = require('joi')
 const { setYarValue, getYarValue } = require('../helpers/session')
 const { setLabelData, errorExtractor, getErrorMessage, formatUKCurrency } = require('../helpers/helper-functions')
+const gapiService = require('../services/gapi-service')
 
 function createModel (errorMessage, data, formattedRemainingCost) {
   return {
@@ -25,7 +26,8 @@ function createModel (errorMessage, data, formattedRemainingCost) {
   }
 }
 
-function createModelNotEligible () {
+async function createModelNotEligible (request) {
+  await gapiService.sendNotEligibleEvent(request)
   return {
     backLink: './remaining-costs',
     messageContent:
@@ -65,11 +67,13 @@ module.exports = [
           return h.view('remaining-costs', createModel(errorMessage, null, formattedRemainingCost)).takeover()
         }
       },
-      handler: (request, h) => {
+      handler: async (request, h) => {
         setYarValue(request, 'payRemainingCosts', request.payload.payRemainingCosts)
-        return request.payload.payRemainingCosts === 'Yes'
-          ? h.redirect('./planning-permission')
-          : h.view('./not-eligible', createModelNotEligible())
+        if (request.payload.payRemainingCosts === 'Yes') {
+          return h.redirect('./planning-permission')
+        }
+        const notEligible = await createModelNotEligible(request)
+        return h.view('./not-eligible', notEligible)
       }
     }
   }
