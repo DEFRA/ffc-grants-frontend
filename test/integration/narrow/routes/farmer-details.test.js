@@ -1,6 +1,43 @@
-const { getCookieHeader, getCrumbCookie, crumbToken } = require('./test-helper')
+const { crumbToken } = require('./test-helper')
+
 describe('Farmer details page', () => {
-  let crumCookie
+  const varList = {
+    farmingType: 'some fake crop',
+    legalStatus: 'fale status',
+    inEngland: 'Yes',
+    projectStarted: 'No',
+    landOwnership: 'Yes',
+    projectItemsList: {
+      projectEquipment: ['Boom', 'Trickle']
+    },
+    projectCost: '12345678',
+    remainingCost: 14082.00,
+    payRemainingCosts: 'Yes',
+    planningPermission: 'Will not have by 31 December 2021',
+    abstractionLicence: 'Not needed',
+    sSSI: 'Yes',
+    businessDetails: {
+      projectName: 'Project Name',
+      businessName: 'Business Name',
+      applying: 'Farmer',
+      farmerDetails: {
+        firstName: 'First Name',
+        lastName: 'Last Name'
+      }
+    }
+  }
+
+  jest.mock('../../../../app/helpers/session', () => ({
+    setYarValue: (request, key, value) => null,
+    getYarValue: (request, key) => {
+      if (Object.keys(varList).includes(key)) return varList[key]
+      else return 'Error'
+    }
+  }))
+
+  afterEach(() => {
+    jest.resetAllMocks()
+  })
   it('should load page successfully', async () => {
     const options = {
       method: 'GET',
@@ -9,10 +46,6 @@ describe('Farmer details page', () => {
 
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
-    const header = getCookieHeader(response)
-    expect(header.length).toBe(3)
-    crumCookie = getCrumbCookie(response)
-    expect(response.result).toContain(crumCookie[1])
   })
 
   it('should return various error messages if no data is entered', async () => {

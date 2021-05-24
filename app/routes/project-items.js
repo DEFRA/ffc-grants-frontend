@@ -1,7 +1,8 @@
 const Joi = require('joi')
+const { setYarValue, getYarValue } = require('../helpers/session')
 const { setLabelData } = require('../helpers/helper-functions')
 
-function createModel (errorMessage, backLink, projectInfrastucture, projectEquipment, projectTechnology) {
+function createModel(errorMessage, backLink, projectInfrastucture, projectEquipment, projectTechnology) {
   return {
     backLink,
     checkboxesInfrastucture: {
@@ -82,12 +83,12 @@ module.exports = [
     method: 'GET',
     path: '/project-items',
     handler: (request, h) => {
-      const landOwnership = request.yar.get('landOwnership') || null
+      const landOwnership = getYarValue(request, 'landOwnership') || null
       const backUrl = landOwnership === 'No' ? './tenancy-length' : './tenancy'
 
-      const projectInfrastucture = request.yar.get('projectInfrastucture') || null
-      const projectEquipment = request.yar.get('projectEquipment') || null
-      const projectTechnology = request.yar.get('projectTechnology') || null
+      const projectInfrastucture = getYarValue(request, 'projectInfrastucture') || null
+      const projectEquipment = getYarValue(request, 'projectEquipment') || null
+      const projectTechnology = getYarValue(request, 'projectTechnology') || null
 
       return h.view(
         'project-items',
@@ -106,13 +107,13 @@ module.exports = [
           projectTechnology: Joi.any()
         }),
         failAction: (request, h) => {
-          const landOwnership = request.yar.get('landOwnership') || null
+          const landOwnership = getYarValue(request, 'landOwnership') || null
           const backUrl = landOwnership === 'No' ? './answers' : './tenancy'
           return h.view('project-items', createModel('Please select an option', backUrl, null)).takeover()
         }
       },
       handler: (request, h) => {
-        const landOwnership = request.yar.get('landOwnership') || null
+        const landOwnership = getYarValue(request, 'landOwnership') || null
         const backUrl = landOwnership === 'No' ? './tenancy-length' : './tenancy'
 
         let {
@@ -138,9 +139,9 @@ module.exports = [
         projectEquipment = [projectEquipment].flat()
         projectTechnology = [projectTechnology].flat()
 
-        request.yar.set('projectInfrastucture', projectInfrastucture)
-        request.yar.set('projectEquipment', projectEquipment)
-        request.yar.set('projectTechnology', projectTechnology)
+        setYarValue(request, 'projectInfrastucture', projectInfrastucture)
+        setYarValue(request, 'projectEquipment', projectEquipment)
+        setYarValue(request, 'projectTechnology', projectTechnology)
 
         const projectInfrastuctureList = projectInfrastucture.filter((x) => !!x)
         const projectEquipmentList = projectEquipment.filter((x) => !!x)
@@ -148,7 +149,7 @@ module.exports = [
 
         const projectItemsList = [...projectInfrastuctureList, ...projectEquipmentList, ...projectTechnologyList]
 
-        request.yar.set('projectItemsList', projectItemsList)
+        setYarValue(request, 'projectItemsList', projectItemsList)
 
         return h.redirect('./project-cost')
       }

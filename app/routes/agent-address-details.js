@@ -1,4 +1,5 @@
 const Joi = require('joi')
+const { setYarValue, getYarValue } = require('../helpers/session')
 const { setLabelData, fetchListObjectItems, findErrorList } = require('../helpers/helper-functions')
 const { POSTCODE_REGEX } = require('../helpers/regex-validation')
 const { LIST_COUNTIES } = require('../helpers/all-counties')
@@ -75,7 +76,7 @@ module.exports = [
     method: 'GET',
     path: '/agent-address-details',
     handler: (request, h) => {
-      let agentAddressDetails = request.yar.get('agentAddressDetails') || null
+      let agentAddressDetails = getYarValue(request, 'agentAddressDetails') || null
       if (!agentAddressDetails) {
         agentAddressDetails = {
           address1: null,
@@ -125,7 +126,7 @@ module.exports = [
           address1, address2, town, county, postcode
         } = request.payload
 
-        request.yar.set('agentAddressDetails', {
+        setYarValue(request, 'agentAddressDetails', {
           address1, address2, town, county, postcode: postcode.toUpperCase()
         })
 

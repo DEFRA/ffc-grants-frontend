@@ -78,16 +78,16 @@ module.exports = [{
       if (msgData) {
         msgData.desirability.questions.push(questionObject)
 
-        const questions = msgData.desirability.questions.map(question => {
-          const bankQuestion = questionBank.questions.filter(x => x.key === question.key)[0]
-          question.title = bankQuestion.title
-          question.desc = bankQuestion.desc ?? ''
-          question.url = bankQuestion.url
-          question.order = bankQuestion.order
-          question.unit = bankQuestion?.unit
-          question.pageTitle = bankQuestion.pageTitle
-          question.fundingPriorities = bankQuestion.fundingPriorities
-          return question
+        const questions = msgData.desirability.questions.map(desirabilityQuestion => {
+          const bankQuestion = questionBank.questions.filter(bankQuestion => bankQuestion.key === desirabilityQuestion.key)[0]
+          desirabilityQuestion.title = bankQuestion.title
+          desirabilityQuestion.desc = bankQuestion.desc ?? ''
+          desirabilityQuestion.url = bankQuestion.url
+          desirabilityQuestion.order = bankQuestion.order
+          desirabilityQuestion.unit = bankQuestion?.unit
+          desirabilityQuestion.pageTitle = bankQuestion.pageTitle
+          desirabilityQuestion.fundingPriorities = bankQuestion.fundingPriorities
+          return desirabilityQuestion
         })
         let scoreChance
         switch (msgData.desirability.overallRating.band.toLowerCase()) {

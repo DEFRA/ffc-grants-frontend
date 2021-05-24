@@ -1,8 +1,9 @@
 const Joi = require('joi')
+const { setYarValue, getYarValue } = require('../helpers/session')
 const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
 const gapiService = require('../services/gapi-service')
 
-function createModel (errorMessage, data) {
+function createModel(errorMessage, data) {
   return {
     backLink: './country',
     radios: {
@@ -36,7 +37,7 @@ module.exports = [
     method: 'GET',
     path: '/project-start',
     handler: (request, h) => {
-      const projectStarted = request.yar.get('projectStarted')
+      const projectStarted = getYarValue(request, 'projectStarted')
       const data = projectStarted || null
       return h.view('project-start', createModel(null, data))
     }
@@ -56,8 +57,8 @@ module.exports = [
         }
       },
       handler: async (request, h) => {
-        request.yar.set('projectStarted', request.payload.projectStarted)
-        if (request.payload.projectStarted === 'No') {
+        setYarValue(request, 'projectStarted', request.payload.projectStarted)
+         if (request.payload.projectStarted === 'No') {
           return h.redirect('./tenancy')
         }
         const notEligible = await createModelNotEligible(request)

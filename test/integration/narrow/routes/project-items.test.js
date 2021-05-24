@@ -1,6 +1,29 @@
-const { getCookieHeader, getCrumbCookie, crumbToken } = require('./test-helper')
+const { crumbToken } = require('./test-helper')
+
 describe('Irrigation water source page', () => {
-  let crumCookie
+  const varList = {
+    farmingType: 'some fake crop',
+    legalStatus: 'fale status',
+    inEngland: 'Yes',
+    projectStarted: 'No',
+    landOwnership: 'Yes',
+    projectItemsList: {
+      projectEquipment: ['Boom', 'Trickle']
+    }
+  }
+
+  jest.mock('../../../../app/helpers/session', () => ({
+    setYarValue: (request, key, value) => null,
+    getYarValue: (request, key) => {
+      if (Object.keys(varList).includes(key)) return varList[key]
+      else return 'Error'
+    }
+  }))
+
+  afterEach(() => {
+    jest.clearAllMocks()
+  })
+
   it('should load page successfully', async () => {
     const options = {
       method: 'GET',
@@ -9,10 +32,6 @@ describe('Irrigation water source page', () => {
 
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
-    const header = getCookieHeader(response)
-    expect(header.length).toBe(3)
-    crumCookie = getCrumbCookie(response)
-    expect(response.result).toContain(crumCookie[1])
   })
 
   it('should return error message if no option is selected', async () => {

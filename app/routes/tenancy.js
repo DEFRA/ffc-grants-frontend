@@ -1,7 +1,8 @@
 const Joi = require('joi')
+const { setYarValue, getYarValue } = require('../helpers/session')
 const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
 
-function createModel (errorMessage, data) {
+function createModel(errorMessage, data) {
   return {
     backLink: './project-start',
     radios: {
@@ -26,7 +27,7 @@ module.exports = [
     method: 'GET',
     path: '/tenancy',
     handler: (request, h) => {
-      const landOwnership = request.yar.get('landOwnership')
+      const landOwnership = getYarValue(request, 'landOwnership')
       const data = landOwnership || null
       return h.view('tenancy', createModel(null, data))
     }
@@ -46,7 +47,7 @@ module.exports = [
         }
       },
       handler: (request, h) => {
-        request.yar.set('landOwnership', request.payload.landOwnership)
+        setYarValue(request, 'landOwnership', request.payload.landOwnership)
         return request.payload.landOwnership === 'Yes'
           ? h.redirect('./project-items')
           : h.redirect('./tenancy-length')
