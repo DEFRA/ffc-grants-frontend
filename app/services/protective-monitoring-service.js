@@ -7,7 +7,7 @@ async function sendEvent (sessionId, event, pmcCode) {
     sessionid: sessionId,
     datetime: createEventDate(),
     version: '1.1',
-    application: 'FFC-GRANTS',
+    application: 'DEP00085',
     component: 'File sent to SharePoint',
     ip: '',
     pmccode: pmcCode,
