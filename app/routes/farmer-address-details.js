@@ -1,9 +1,10 @@
 const Joi = require('joi')
+const { setYarValue, getYarValue } = require('../helpers/session')
 const { setLabelData, fetchListObjectItems, findErrorList } = require('../helpers/helper-functions')
 const { POSTCODE_REGEX } = require('../helpers/regex-validation')
 const { LIST_COUNTIES } = require('../helpers/all-counties')
 
-function createModel (errorMessageList, farmerAddressDetails) {
+function createModel(errorMessageList, farmerAddressDetails) {
   const { address1, address2, town, county, postcode } = farmerAddressDetails
 
   const [address1Error, townError, countyError, postcodeError] = fetchListObjectItems(
@@ -75,7 +76,7 @@ module.exports = [
     method: 'GET',
     path: '/farmer-address-details',
     handler: (request, h) => {
-      let farmerAddressDetails = request.yar.get('farmerAddressDetails') || null
+      let farmerAddressDetails = getYarValue(request, 'farmerAddressDetails') || null
       if (!farmerAddressDetails) {
         farmerAddressDetails = {
           address1: null,
@@ -125,7 +126,7 @@ module.exports = [
           address1, address2, town, county, postcode
         } = request.payload
 
-        request.yar.set('farmerAddressDetails', {
+        setYarValue(request, 'farmerAddressDetails', {
           address1, address2, town, county, postcode: postcode.toUpperCase()
         })
 

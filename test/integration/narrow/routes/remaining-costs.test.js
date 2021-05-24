@@ -1,9 +1,42 @@
+const { crumbToken } = require('./test-helper')
+
+const varListTemplate = {
+  farmingType: 'some fake crop',
+  legalStatus: 'fale status',
+  inEngland: 'Yes',
+  projectStarted: 'No',
+  landOwnership: 'Yes',
+  projectItemsList: {
+    projectEquipment: ['Boom', 'Trickle']
+  },
+  projectCost: '12345678',
+  remainingCost: 14082.00,
+  payRemainingCosts: 'Yes'
+}
+
+let varList
+const mockSession = {
+  setYarValue: (request, key, value) => null,
+  getYarValue: (request, key) => {
+    if (Object.keys(varList).includes(key)) return varList[key]
+    else return 'Error'
+  }
+}
+
+jest.mock('../../../../app/helpers/session', () => mockSession)
+
 describe('Remaining costs page', () => {
-  const { crumbToken } = require('./test-helper')
+  beforeEach(() => {
+    varList = { ...varListTemplate }
+  })
+
+  afterAll(() => {
+    jest.resetAllMocks()
+  })
 
   it('should load page successfully', async () => {
     const postOptions = {
-      method: 'POST',
+      method: 'GET',
       url: '/remaining-costs',
       payload: { crumb: crumbToken },
       headers: { cookie: 'crumb=' + crumbToken }
@@ -11,10 +44,11 @@ describe('Remaining costs page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Can you pay the remaining costs of')
   })
 
   it('redirects to /project-cost if projectCost value has not been saved', async () => {
+    varList.remainingCost = null
+
     const options = {
       method: 'GET',
       url: '/remaining-costs',

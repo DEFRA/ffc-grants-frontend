@@ -1,9 +1,10 @@
 const Joi = require('joi')
+const { setYarValue, getYarValue } = require('../helpers/session')
 const { setLabelData, fetchListObjectItems, findErrorList } = require('../helpers/helper-functions')
 const { NAME_REGEX } = require('../helpers/regex-validation')
 const gapiService = require('../services/gapi-service')
 
-function createModel (errorMessageList, farmerDetails, backLink) {
+function createModel(errorMessageList, farmerDetails, backLink) {
   const { title, firstName, lastName } = farmerDetails
 
   const [titleError, firstNameError, lastNameError] = fetchListObjectItems(
@@ -54,8 +55,7 @@ module.exports = [
     method: 'GET',
     path: '/farmer-details',
     handler: async (request, h) => {
-      let farmerDetails = request.yar.get('farmerDetails') || null
-
+      let farmerDetails = getYarValue(request, 'farmerDetails') || null
       if (!farmerDetails) {
         farmerDetails = {
           title: 'Other',
@@ -64,7 +64,7 @@ module.exports = [
         }
       }
 
-      const applying = request.yar.get('applying')
+      const applying = getYarValue(request, 'applying')
       const backLink = applying === 'Agent' ? './agent-address-details' : './applying'
 
       await gapiService.sendDimensionOrMetric(request, {
@@ -102,7 +102,7 @@ module.exports = [
           const { title, firstName, lastName } = request.payload
           const farmerDetails = { title, firstName, lastName }
 
-          const applying = request.yar.get('applying')
+          const applying = getYarValue(request, 'applying')
           const backLink = applying === 'Agent' ? './agent-address-details' : './applying'
 
           return h.view('model-farmer-agent-details', createModel(errorMessageList, farmerDetails, backLink)).takeover()
@@ -113,7 +113,7 @@ module.exports = [
           title, firstName, lastName
         } = request.payload
 
-        request.yar.set('farmerDetails', {
+        setYarValue(request, 'farmerDetails', {
           title, firstName, lastName
         })
 

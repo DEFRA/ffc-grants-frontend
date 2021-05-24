@@ -1,8 +1,9 @@
 const Joi = require('joi')
+const { setYarValue, getYarValue } = require('../helpers/session')
 const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
 const gapiService = require('../services/gapi-service')
 
-function createModel (errorMessage, data) {
+function createModel(errorMessage, data) {
   return {
     backLink: './farming-type',
     radios: {
@@ -40,6 +41,7 @@ function createModel (errorMessage, data) {
 
 async function createModelNotEligible (request) {
   await gapiService.sendNotEligibleEvent(request)
+
   return {
     backLink: './legal-status',
     messageContent:
@@ -52,7 +54,7 @@ module.exports = [
     method: 'GET',
     path: '/legal-status',
     handler: (request, h) => {
-      const legalStatus = request.yar.get('legalStatus')
+      const legalStatus = getYarValue(request, 'legalStatus')
       const data = legalStatus || null
       return h.view('legal-status', createModel(null, data))
     }
@@ -72,7 +74,7 @@ module.exports = [
         }
       },
       handler: async (request, h) => {
-        request.yar.set('legalStatus', request.payload.legalStatus)
+        setYarValue(request, 'legalStatus', request.payload.legalStatus)
         if (request.payload.legalStatus === 'None of the above') {
           const notEligible = await createModelNotEligible(request)
           return h.view('./not-eligible', notEligible)

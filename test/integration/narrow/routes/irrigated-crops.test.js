@@ -15,8 +15,8 @@ describe('Irrigated crops page', () => {
     }
   }))
 
-  afterEach(() => {
-    jest.clearAllMocks()
+  beforeEach(() => {
+    jest.resetAllMocks()
   })
   it('should load page successfully', async () => {
     const options = {

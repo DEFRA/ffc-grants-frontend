@@ -1,4 +1,5 @@
 const Joi = require('joi')
+const { setYarValue, getYarValue } = require('../helpers/session')
 const { setLabelData, errorExtractor, getErrorMessage, formatUKCurrency } = require('../helpers/helper-functions')
 const gapiService = require('../services/gapi-service')
 
@@ -39,9 +40,8 @@ module.exports = [
     method: 'GET',
     path: '/remaining-costs',
     handler: (request, h) => {
-      const payRemainingCosts = request.yar.get('payRemainingCosts') || null
-      const remainingCost = request.yar.get('remainingCost') || null
-
+      const payRemainingCosts = getYarValue(request, 'payRemainingCosts') || null
+      const remainingCost = getYarValue(request, 'remainingCost') || null
       if (!remainingCost) {
         return h.redirect('./project-cost')
       }
@@ -61,14 +61,14 @@ module.exports = [
         failAction: (request, h, err) => {
           const errorObject = errorExtractor(err)
           const errorMessage = getErrorMessage(errorObject)
-          const remainingCost = request.yar.get('remainingCost') || null
+          const remainingCost = getYarValue(request, 'remainingCost') || null
 
           const formattedRemainingCost = formatUKCurrency(remainingCost)
           return h.view('remaining-costs', createModel(errorMessage, null, formattedRemainingCost)).takeover()
         }
       },
       handler: async (request, h) => {
-        request.yar.set('payRemainingCosts', request.payload.payRemainingCosts)
+        setYarValue(request, 'payRemainingCosts', request.payload.payRemainingCosts)
         if (request.payload.payRemainingCosts === 'Yes') {
           return h.redirect('./planning-permission')
         }

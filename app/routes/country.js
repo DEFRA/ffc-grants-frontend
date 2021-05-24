@@ -1,4 +1,5 @@
 const Joi = require('joi')
+const { setYarValue, getYarValue } = require('../helpers/session')
 const { isChecked, getPostCodeHtml, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
 const { POSTCODE_REGEX, DELETE_POSTCODE_CHARS_REGEX } = require('../helpers/regex-validation')
 const gapiService = require('../services/gapi-service')
@@ -49,8 +50,8 @@ module.exports = [
     method: 'GET',
     path: '/country',
     handler: (request, h) => {
-      const inEngland = request.yar.get('inEngland') || null
-      const postcodeData = inEngland !== null ? request.yar.get('projectPostcode') : null
+      const inEngland = getYarValue(request, 'inEngland') || null
+      const postcodeData = inEngland !== null ? getYarValue(request, 'projectPostcode') : null
       const postcodeHtml = getPostCodeHtml(postcodeData)
 
       return h.view('country', createModel(null, inEngland, postcodeHtml))
@@ -91,8 +92,8 @@ module.exports = [
           ).takeover()
         }
 
-        request.yar.set('inEngland', inEngland)
-        request.yar.set('projectPostcode', projectPostcode.toUpperCase())
+        setYarValue(request, 'inEngland', inEngland)
+        setYarValue(request, 'projectPostcode', projectPostcode.toUpperCase())
         if (inEngland === 'Yes') { return h.redirect('./project-start') }
         const notEligible = await createModelNotEligible(request)
         return h.view('not-eligible', notEligible)

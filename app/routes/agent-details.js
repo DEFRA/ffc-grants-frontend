@@ -1,9 +1,10 @@
 const Joi = require('joi')
+const { setYarValue, getYarValue } = require('../helpers/session')
 const { setLabelData, fetchListObjectItems, findErrorList } = require('../helpers/helper-functions')
 const { NAME_REGEX } = require('../helpers/regex-validation')
 const gapiService = require('../services/gapi-service')
 
-function createModel (errorMessageList, agentDetails) {
+function createModel(errorMessageList, agentDetails) {
   const { title, firstName, lastName } = agentDetails
 
   const [titleError, firstNameError, lastNameError] = fetchListObjectItems(
@@ -54,8 +55,7 @@ module.exports = [
     method: 'GET',
     path: '/agent-details',
     handler: async (request, h) => {
-      let agentDetails = request.yar.get('agentDetails') || null
-
+      let agentDetails = getYarValue(request, 'agentDetails') || null
       if (!agentDetails) {
         agentDetails = {
           title: 'Other',
@@ -107,7 +107,7 @@ module.exports = [
           title, firstName, lastName
         } = request.payload
 
-        request.yar.set('agentDetails', {
+        setYarValue(request, 'agentDetails', {
           title, firstName, lastName
         })
 

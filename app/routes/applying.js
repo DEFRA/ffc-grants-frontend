@@ -1,7 +1,8 @@
 const Joi = require('joi')
+const { setYarValue, getYarValue } = require('../helpers/session')
 const { setLabelData } = require('../helpers/helper-functions')
 
-function createModel (errorMessage, data) {
+function createModel(errorMessage, data) {
   return {
     backLink: './business-details',
     radios: {
@@ -26,7 +27,7 @@ module.exports = [
     method: 'GET',
     path: '/applying',
     handler: (request, h) => {
-      const applying = request.yar.get('applying')
+      const applying = getYarValue(request, 'applying')
       const data = applying || null
       return h.view('applying', createModel(null, data))
     }
@@ -46,7 +47,7 @@ module.exports = [
       },
       handler: (request, h) => {
         const { applying } = request.payload
-        request.yar.set('applying', applying)
+        setYarValue(request, 'applying', applying)
 
         if (applying === 'Agent') {
           return h.redirect('./agent-details')

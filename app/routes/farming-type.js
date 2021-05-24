@@ -1,4 +1,5 @@
 const Joi = require('joi')
+const { setYarValue, getYarValue } = require('../helpers/session')
 const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
 const gapiService = require('../services/gapi-service')
 
@@ -36,7 +37,7 @@ module.exports = [
     method: 'GET',
     path: '/farming-type',
     handler: (request, h) => {
-      const farmingType = request.yar.get('farmingType')
+      const farmingType = getYarValue(request, 'farmingType')
       const data = farmingType || null
       return h.view('farming-type', createModel(null, data))
     }
@@ -56,7 +57,7 @@ module.exports = [
         }
       },
       handler: async (request, h) => {
-        request.yar.set('farmingType', request.payload.farmingType)
+        setYarValue(request, 'farmingType', request.payload.farmingType)
         if (request.payload.farmingType !== 'Something else') { return h.redirect('./legal-status') }
         const notEligible = await createModelNotEligible(request)
         return h.view('./not-eligible', notEligible)

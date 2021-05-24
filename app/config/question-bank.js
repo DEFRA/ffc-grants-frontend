@@ -5,6 +5,94 @@ module.exports = {
   },
   questions: [
     {
+      key: 'Q1',
+      order: 1,
+      title: 'What crops are you growing?',
+      pageTitle: '',
+      url: 'farming-type',
+      yarKey: 'farmingType'
+    },
+    {
+      key: 'Q2',
+      order: 2,
+      title: 'What is the legal status of the farm business?',
+      pageTitle: '',
+      url: 'legal-status',
+      yarKey: 'legalStatus'
+    },
+    {
+      key: 'Q3',
+      order: 3,
+      title: 'Is the planned project in England?',
+      pageTitle: '',
+      url: 'country',
+      yarKey: 'inEngland'
+    },
+    {
+      key: 'Q4',
+      order: 4,
+      title: 'Have you already started work on the project?',
+      pageTitle: '',
+      url: 'project-start',
+      yarKey: 'projectStarted'
+    },
+    {
+      key: 'Q5',
+      order: 5,
+      title: 'Is the planned project on land the farm business owns?',
+      pageTitle: '',
+      url: 'tenancy',
+      yarKey: 'landOwnership'
+    },
+    {
+      key: 'Q6',
+      order: 6,
+      title: 'Which eligible items does your project need?',
+      pageTitle: '',
+      url: 'project-items',
+      yarKey: 'projectItemsList'
+    },
+    {
+      key: 'Q7',
+      order: 7,
+      title: 'What is the estimated cost of the items?',
+      pageTitle: '',
+      url: 'project-cost',
+      yarKey: 'projectCost'
+    },
+    {
+      key: 'Q8',
+      order: 8,
+      title: '',
+      pageTitle: 'Can you pay the remaining costs',
+      url: 'remaining-costs',
+      yarKey: 'payRemainingCosts'
+    },
+    {
+      key: 'Q9',
+      order: 9,
+      title: 'Does the project need planning permission?',
+      pageTitle: '',
+      url: 'planning-permission',
+      yarKey: 'planningPermission'
+    },
+    {
+      key: 'Q10',
+      order: 10,
+      title: 'Does the project need an abstraction licence or a variation of one?',
+      pageTitle: '',
+      url: 'abstraction-licence',
+      yarKey: 'abstractionLicence'
+    },
+    {
+      key: 'Q11',
+      order: 11,
+      title: 'Does the project directly impact a Site of Special Scientific Interest?',
+      pageTitle: '',
+      url: 'SSSI',
+      yarKey: 'sSSI'
+    },
+    {
       key: 'Q14',
       order: 14,
       title: 'The project will:',
@@ -315,6 +403,47 @@ module.exports = {
           desc: 'No'
         }
       ]
+    },
+    {
+      key: 'Q21',
+      order: 21,
+      title: 'Business details',
+      pageTitle: '',
+      url: 'business-details',
+      yarKey: 'businessDetails'
+    },
+    {
+      key: 'Q22',
+      order: 22,
+      title: 'Who is applying for this grant?',
+      pageTitle: '',
+      url: 'applying',
+      yarKey: 'applying'
+    },
+    {
+      key: 'Q23',
+      order: 23,
+      title: 'Farmers details',
+      pageTitle: '',
+      url: 'farmer-details',
+      yarKey: 'farmerDetails'
+    },
+    {
+      key: 'Q24',
+      order: 24,
+      title: 'Farmer\'s contact details',
+      pageTitle: '',
+      url: 'farmer-contact-details',
+      yarKey: 'farmerContactDetails'
+    },
+    {
+      key: 'Q25',
+      order: 25,
+      title: 'Farmer\'s address details',
+      pageTitle: '',
+      url: 'farmer-address-details',
+      yarKey: 'farmerAddressDetails'
     }
+
   ]
 }

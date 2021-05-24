@@ -1,6 +1,6 @@
 const Joi = require('joi')
-const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
 const { setYarValue, getYarValue } = require('../helpers/session')
+const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
 
 function createModel (errorMessage, data) {
   return {
