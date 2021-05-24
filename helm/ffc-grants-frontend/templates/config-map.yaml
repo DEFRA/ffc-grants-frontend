@@ -20,4 +20,5 @@ data:
   REDIS_PORT: {{ .Values.container.redisPort | quote }}
   REDIS_PARTITION: {{ .Values.container.redisPartition | quote }}
   SESSION_CACHE_TTL: {{ .Values.container.sessionCacheTTL | quote }}
+  SITE_VERSION: {{ .Values.container.siteVersion | quote }}
 {{- end -}}
