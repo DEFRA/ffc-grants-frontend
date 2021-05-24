@@ -1,0 +1,17 @@
+{{- include "ffc-helm-library.horizontal-pod-autoscaler" (list . "ffc-grants-frontend.horizontal-pod-autoscaler") -}}
+{{- define "ffc-grants-frontend.horizontal-pod-autoscaler" -}}
+spec:
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: {{ .Values.deployment.cpuThreshold }}
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: {{ .Values.deployment.memoryThreshold }}
+{{- end -}}

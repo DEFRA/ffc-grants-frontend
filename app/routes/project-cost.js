@@ -2,6 +2,7 @@ const Joi = require('joi')
 const { errorExtractor, getErrorMessage, getGrantValues } = require('../helpers/helper-functions')
 const { MIN_GRANT, MAX_GRANT } = require('../helpers/grant-details')
 const { PROJECT_COST_REGEX } = require('../helpers/regex-validation')
+const gapiService = require('../services/gapi-service')
 
 function createModel (errorMessage, projectCost, projectItemsList) {
   return {
@@ -32,7 +33,8 @@ function createModel (errorMessage, projectCost, projectItemsList) {
   }
 }
 
-function createModelNotEligible () {
+async function createModelNotEligible (request) {
+  await gapiService.sendNotEligibleEvent(request)
   return {
     backLink: './project-cost',
     messageContent:
@@ -71,7 +73,7 @@ module.exports = [
           return h.view('project-cost', createModel(errorMessage, null, projectItemsList)).takeover()
         }
       },
-      handler: (request, h) => {
+      handler: async (request, h) => {
         const { projectCost } = request.payload
         const { calculatedGrant, remainingCost } = getGrantValues(projectCost)
 
@@ -80,7 +82,8 @@ module.exports = [
         request.yar.set('remainingCost', remainingCost)
 
         if ((calculatedGrant < MIN_GRANT) || (calculatedGrant > MAX_GRANT)) {
-          return h.view('./not-eligible', createModelNotEligible())
+          const notEligible = await createModelNotEligible(request)
+          return h.view('./not-eligible', notEligible)
         }
         return h.redirect('./grant')
       }

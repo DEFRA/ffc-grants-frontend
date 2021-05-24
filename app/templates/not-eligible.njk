@@ -1,7 +1,9 @@
 {% extends '.layout.njk' %}
 
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
-
+{% block pageTitle %}
+  {{siteTitle}} - You cannot apply for grant
+{% endblock %}
 {% block beforeContent %}
   {{ govukBackLink({
     text: "Back",
@@ -18,4 +20,19 @@
       </p>
     </div>
   </div>
+  
+{% if googleTagManagerKey %}
+
+<!-- Google Tag Manager -->
+<script>
+dataLayer.push(
+    {
+      pageCategory: 'Journey',
+      event: 'journey-eliminated',
+      dimension4:'Not-Eligible',
+      metric2: Date.now()
+    });
+</script>
+<!-- End Google Tag Manager -->
+{% endif %}
 {% endblock %}

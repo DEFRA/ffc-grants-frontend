@@ -8,6 +8,9 @@
 {% from "./components/macro.njk" import crumbToken %}
 
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+{% block pageTitle %}
+  {{siteTitle}} - Potential funding
+{% endblock %}
 
 {% block beforeContent %}
   {{ govukBackLink({

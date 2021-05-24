@@ -2,7 +2,9 @@
 
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
-
+{% block pageTitle %}
+  {{siteTitle}} - Page not found 
+{% endblock %}
 {% block beforeContent %}
   {{ govukBreadcrumbs({
     items: [
@@ -11,7 +13,7 @@
         href: "./"
       },
       {
-        text: "Check if you can apply for a Farming Transformation Fund water grant",
+        text: "Check if you can apply for a Farming Transformation Fund water management grant",
         href: "./"
       }
     ]
