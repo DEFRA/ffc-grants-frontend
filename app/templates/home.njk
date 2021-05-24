@@ -4,7 +4,9 @@
 {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
-
+{% block pageTitle %}
+  {{siteTitle}} - Start
+{% endblock %}
 {% block beforeContent %}
   {{ govukBreadcrumbs({
     items: [
@@ -13,7 +15,7 @@
         href: "./"
       },
       {
-        text: "Check if you can apply for a Farming Transformation Fund water grant",
+        text: "Check if you can apply for a Farming Transformation Fund water management grant",
         href: "./"
       }
     ]
@@ -23,7 +25,7 @@
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds govuk-body">
-      <h1 class="govuk-heading-l">Check if you can apply for a Farming Transformation Fund water grant</h1>
+      <h1 class="govuk-heading-l">Check if you can apply for a Farming Transformation Fund water management grant</h1>
       <p>Use this service to:</p>
       <ul class="govuk-list govuk-list--bullet">
         <li>check if you can apply for a grant for your project (takes about 5 minutes)</li>
@@ -54,15 +56,16 @@
      
     </div>
   </div>
-{% endblock %}
 {% if googleTagManagerKey %}
 <script>
-window.dataLayer.push(
+dataLayer.push(
     {
-        pageTitle: document.title,
-        pageCategory: 'Landing',
-        pagePath:  document.location.href,
-        event: 'Start'
-        });
+      pageCategory: 'Journey',
+      event: 'journey-start',
+      time: Date.now(),
+      metric1:Date.now(),
+      dimension1: 'started'
+    });
 </script>
 {% endif %}
+{% endblock %}

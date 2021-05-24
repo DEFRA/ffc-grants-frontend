@@ -4,7 +4,10 @@
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
-{% from "./components/macro.njk" import crumbToken %}
+{% from "./components/macro.njk" import crumbToken, sideBar %}
+{% block pageTitle %}
+  {{siteTitle}} - Project location
+{% endblock %}
 
 {% block beforeContent %}
   {{ govukBackLink({
@@ -27,6 +30,10 @@
           text: "Continue"
         }) }}
       </form>
+    </div>
+    <div class="govuk-grid-column-one-third  govuk-body">
+    {{ sideBar("Eligibility","This is only for projects in England. 
+Scotland, Wales and Northern Ireland have other grants available",[]) }}
     </div>
   </div>
 {% endblock %}

@@ -3,8 +3,10 @@
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
-{% from "./components/macro.njk" import crumbToken %}
-
+{% from "./components/macro.njk" import crumbToken, sideBar %}
+{% block pageTitle %}
+  {{siteTitle}} - Irrigated crops 
+{% endblock %}
 {% block beforeContent %}
   {{ govukBackLink({
     text: "Back",
@@ -22,6 +24,12 @@
           text: "Continue"
         }) }}
       </form>
+    </div>
+    <div class="govuk-grid-column-one-third  govuk-body">
+    {{ sideBar("Funding priorities","RPA wants to fund projects that:",
+    [
+      "improve productivity"
+    ]) }}
     </div>
   </div>
 {% endblock %}

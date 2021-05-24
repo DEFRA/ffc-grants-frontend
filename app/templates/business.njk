@@ -4,7 +4,9 @@
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "./components/macro.njk" import crumbToken %}
-
+{% block pageTitle %}
+  {{siteTitle}} - {{ heading }} 
+{% endblock %}
 {% block beforeContent %}
   {{ govukBackLink({
     text: "Back",
