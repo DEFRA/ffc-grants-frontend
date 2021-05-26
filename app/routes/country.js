@@ -93,7 +93,7 @@ module.exports = [
         }
 
         setYarValue(request, 'inEngland', inEngland)
-        setYarValue(request, 'projectPostcode', projectPostcode.toUpperCase())
+        setYarValue(request, 'projectPostcode', projectPostcode.split(/(?=.{3}$)/).join(' ').toUpperCase())
         if (inEngland === 'Yes') { return h.redirect('./project-start') }
         const notEligible = await createModelNotEligible(request)
         return h.view('not-eligible', notEligible)
