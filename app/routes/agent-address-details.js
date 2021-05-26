@@ -116,7 +116,7 @@ module.exports = [
           }
 
           const { address1, address2, town, county, postcode } = request.payload
-          const agentAddressDetails = { address1, address2, town, county, postcode: postcode.toUpperCase() }
+          const agentAddressDetails = { address1, address2, town, county, postcode: postcode.split(/(?=.{3}$)/).join(' ').toUpperCase() }
 
           return h.view('model-farmer-agent-address-details', createModel(errorMessageList, agentAddressDetails)).takeover()
         }
@@ -127,7 +127,7 @@ module.exports = [
         } = request.payload
 
         setYarValue(request, 'agentAddressDetails', {
-          address1, address2, town, county, postcode: postcode.toUpperCase()
+          address1, address2, town, county, postcode: postcode.split(/(?=.{3}$)/).join(' ').toUpperCase()
         })
 
         return h.redirect('./farmer-details')
