@@ -4,7 +4,7 @@ const { setLabelData, fetchListObjectItems, findErrorList } = require('../helper
 const { POSTCODE_REGEX } = require('../helpers/regex-validation')
 const { LIST_COUNTIES } = require('../helpers/all-counties')
 
-function createModel(errorMessageList, farmerAddressDetails) {
+function createModel (errorMessageList, farmerAddressDetails) {
   const { address1, address2, town, county, postcode } = farmerAddressDetails
 
   const [address1Error, townError, countyError, postcodeError] = fetchListObjectItems(
@@ -127,9 +127,8 @@ module.exports = [
         } = request.payload
 
         setYarValue(request, 'farmerAddressDetails', {
-          address1, address2, town, county, postcode: postcode.toUpperCase()
+          address1, address2, town, county, postcode: postcode.split(/(?=.{3}$)/).join(' ').toUpperCase()
         })
-
         return h.redirect('./confirm')
       }
     }
