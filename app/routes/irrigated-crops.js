@@ -21,9 +21,9 @@ const createModel = (errorMessage, data) => ({
       }
     },
     items: setLabelData(data, [
-      { text: 'Field-scale crops (eg potatoes, onions, carrots)', value: 'Field-scale crops' },
-      { text: 'Protected cropping (eg glasshouse or poly tunnel)', value: 'Protected cropping' },
-      { text: 'Fruit (eg top fruit, bush fruit)', value: 'Fruit' }
+      { text: 'Field-scale crops (for example potatoes, onions, carrots)', value: 'Field-scale crops' },
+      { text: 'Protected cropping (for example glasshouse or poly tunnel)', value: 'Protected cropping' },
+      { text: 'Fruit (for example top fruit, bush fruit)', value: 'Fruit' }
     ]),
 
     ...(errorMessage ? { errorMessage: { text: errorMessage } } : {})

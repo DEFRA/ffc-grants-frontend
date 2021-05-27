@@ -2,7 +2,7 @@ const Joi = require('joi')
 const { setYarValue, getYarValue } = require('../helpers/session')
 const { setLabelData } = require('../helpers/helper-functions')
 
-function createModel(errorMessage, backLink, projectInfrastucture, projectEquipment, projectTechnology) {
+function createModel (errorMessage, backLink, projectInfrastucture, projectEquipment, projectTechnology) {
   return {
     backLink,
     checkboxesInfrastucture: {
@@ -29,7 +29,7 @@ function createModel(errorMessage, backLink, projectInfrastucture, projectEquipm
           'Pipework to fill the reservoir',
           'Pumphouse',
           'Underground water distribution main and hydrants',
-          'Electricity installation for pump house',
+          'Electricity installation for pumphouse',
           'Water meter'
         ]
       ),
