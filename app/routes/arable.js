@@ -30,8 +30,7 @@ function createModel (errorMessage) {
   }
 }
 
-async function createModelNotEligible (request) {
-  await gapiService.sendNotEligibleEvent(request)
+function createModelNotEligible () {
   return {
     backLink: './arable',
     sentences: [
@@ -57,12 +56,12 @@ module.exports = [
         failAction: (request, h) => h.view('arable', createModel('Select yes if the planned project is for an arable or horticultural farming businesses')).takeover()
       },
       handler: async (request, h) => {
+        await gapiService.sendEligibilityEvent(request, request.payload.isArable === 'yes')
         if (request.payload.isArable === 'yes') {
           request.yar.set('isArable', request.payload.isArable)
           return h.redirect('./country')
         }
-        const notEligible = await createModelNotEligible(request)
-        return h.view('./not-eligible', notEligible)
+        return h.view('./not-eligible', createModelNotEligible())
       }
     }
   }

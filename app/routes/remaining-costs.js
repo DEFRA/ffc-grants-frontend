@@ -26,8 +26,7 @@ function createModel (errorMessage, data, formattedRemainingCost) {
   }
 }
 
-async function createModelNotEligible (request) {
-  await gapiService.sendNotEligibleEvent(request)
+function createModelNotEligible () {
   return {
     backLink: './remaining-costs',
     messageContent:
@@ -69,11 +68,11 @@ module.exports = [
       },
       handler: async (request, h) => {
         setYarValue(request, 'payRemainingCosts', request.payload.payRemainingCosts)
+        await gapiService.sendEligibilityEvent(request, request.payload.payRemainingCosts === 'Yes')
         if (request.payload.payRemainingCosts === 'Yes') {
           return h.redirect('./planning-permission')
         }
-        const notEligible = await createModelNotEligible(request)
-        return h.view('./not-eligible', notEligible)
+        return h.view('./not-eligible', createModelNotEligible())
       }
     }
   }

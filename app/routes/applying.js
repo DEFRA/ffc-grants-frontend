@@ -1,8 +1,9 @@
 const Joi = require('joi')
 const { setYarValue, getYarValue } = require('../helpers/session')
 const { setLabelData } = require('../helpers/helper-functions')
+const gapiService = require('../services/gapi-service')
 
-function createModel(errorMessage, data) {
+function createModel (errorMessage, data) {
   return {
     backLink: './business-details',
     radios: {
@@ -45,10 +46,14 @@ module.exports = [
             .view('applying', createModel('Select who is applying for this grant', null))
             .takeover()
       },
-      handler: (request, h) => {
+      handler: async (request, h) => {
         const { applying } = request.payload
         setYarValue(request, 'applying', applying)
 
+        await gapiService.sendDimensionOrMetric(request, {
+          dimensionOrMetric: gapiService.dimensions.AGENTFORMER,
+          value: applying
+        })
         if (applying === 'Agent') {
           return h.redirect('./agent-details')
         }

@@ -2,9 +2,8 @@ const Joi = require('joi')
 const { setYarValue, getYarValue } = require('../helpers/session')
 const { setLabelData, fetchListObjectItems, findErrorList } = require('../helpers/helper-functions')
 const { NAME_REGEX } = require('../helpers/regex-validation')
-const gapiService = require('../services/gapi-service')
 
-function createModel(errorMessageList, agentDetails) {
+function createModel (errorMessageList, agentDetails) {
   const { title, firstName, lastName } = agentDetails
 
   const [titleError, firstNameError, lastNameError] = fetchListObjectItems(
@@ -63,13 +62,6 @@ module.exports = [
           lastName: null
         }
       }
-
-      await gapiService.sendDimensionOrMetric(request, {
-        category: gapiService.categories.AGENTFORMER,
-        action: gapiService.actions,
-        dimensionOrMetric: gapiService.dimensions.AGENTFORMER,
-        value: 'Agent'
-      })
       return h.view(
         'model-farmer-agent-details',
         createModel(null, agentDetails)

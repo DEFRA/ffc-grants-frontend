@@ -3,7 +3,10 @@ function setYarValue (request, key, value) {
 }
 
 function getYarValue (request, key) {
-  return request.yar.get(key)
+  if (request.yar) {
+    return request.yar.get(key)
+  }
+  return null
 }
 
 module.exports = {

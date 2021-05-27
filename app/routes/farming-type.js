@@ -23,8 +23,7 @@ function createModel (errorMessage, data) {
   }
 }
 
-async function createModelNotEligible (request) {
-  await gapiService.sendNotEligibleEvent(request)
+function createModelNotEligible () {
   return {
     backLink: './farming-type',
     messageContent:
@@ -58,9 +57,9 @@ module.exports = [
       },
       handler: async (request, h) => {
         setYarValue(request, 'farmingType', request.payload.farmingType)
+        await gapiService.sendEligibilityEvent(request, request.payload.farmingType !== 'Something else')
         if (request.payload.farmingType !== 'Something else') { return h.redirect('./legal-status') }
-        const notEligible = await createModelNotEligible(request)
-        return h.view('./not-eligible', notEligible)
+        return h.view('./not-eligible', createModelNotEligible())
       }
     }
   }

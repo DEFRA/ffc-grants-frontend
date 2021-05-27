@@ -1,7 +1,7 @@
 const Joi = require('joi')
 const { setYarValue, getYarValue } = require('../helpers/session')
 const { setLabelData, fetchListObjectItems, findErrorList } = require('../helpers/helper-functions')
-const { POSTCODE_REGEX } = require('../helpers/regex-validation')
+const { POSTCODE_REGEX, DELETE_POSTCODE_CHARS_REGEX } = require('../helpers/regex-validation')
 const { LIST_COUNTIES } = require('../helpers/all-counties')
 
 function createModel (errorMessageList, agentAddressDetails) {
@@ -104,7 +104,7 @@ module.exports = [
           address2: Joi.string().allow(''),
           town: Joi.string().required(),
           county: Joi.string().required(),
-          postcode: Joi.string().regex(POSTCODE_REGEX).trim().required()
+          postcode: Joi.string().replace(DELETE_POSTCODE_CHARS_REGEX, '').regex(POSTCODE_REGEX).trim().allow('').required()
         }),
         failAction: (request, h, err) => {
           const [

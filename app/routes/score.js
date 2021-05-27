@@ -4,6 +4,7 @@ const Wreck = require('@hapi/wreck')
 const questionBank = require('../config/question-bank')
 const pollingConfig = require('../config/polling')
 const gapiService = require('../services/gapi-service')
+const { setYarValue } = require('../helpers/session')
 function createModel (data) {
   return {
     backLink: './collaboration',
@@ -79,7 +80,7 @@ module.exports = [{
         msgData.desirability.questions.push(questionObject)
 
         const questions = msgData.desirability.questions.map(desirabilityQuestion => {
-          const bankQuestion = questionBank.questions.filter(bankQuestion => bankQuestion.key === desirabilityQuestion.key)[0]
+          const bankQuestion = questionBank.questions.filter(bankQuestionD => bankQuestionD.key === desirabilityQuestion.key)[0]
           desirabilityQuestion.title = bankQuestion.title
           desirabilityQuestion.desc = bankQuestion.desc ?? ''
           desirabilityQuestion.url = bankQuestion.url
@@ -101,19 +102,12 @@ module.exports = [{
             scoreChance = 'seems unlikely to'
             break
         }
-
+        setYarValue(request, 'current-score', msgData.desirability.overallRating.band)
         await gapiService.sendDimensionOrMetric(request, {
-          category: gapiService.categories.SCORE,
-          action: gapiService.actions.SCORE,
           dimensionOrMetric: gapiService.dimensions.SCORE,
-          value: request.yar.id
+          value: msgData.desirability.overallRating.band
         })
-        await gapiService.sendDimensionOrMetric(request, {
-          category: gapiService.categories.JOURNEY,
-          action: gapiService.actions.SCORE,
-          dimensionOrMetric: gapiService.metrics.SCORE,
-          value: `${Date.now()}`
-        })
+        await gapiService.sendJourneyTime(request, gapiService.metrics.SCORE)
         return h.view('score', createModel({
           titleText: msgData.desirability.overallRating.band,
           scoreData: msgData,
@@ -125,7 +119,7 @@ module.exports = [{
       }
     } catch (error) {
       request.log(error)
-      await gapiService.sendEvent(request, gapiService.categories.EXCEPTION, request.route.path)
+      await gapiService.sendEvent(request, gapiService.categories.EXCEPTION, 'Error')
     }
     request.log(err)
     return h.view('500')
