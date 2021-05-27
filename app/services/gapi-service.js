@@ -1,17 +1,17 @@
 const appInsights = require('./app-insights')
+const { getYarValue } = require('../helpers/session')
 const dimensions = {
-  SCORE: 'dimension1',
-  CONFIRMATION: 'dimension2',
-  CONFIRM: 'dimension3',
-  ELIMINATION: 'dimension4',
-  AGENTFORMER: 'dimension5',
-  START: 'dimension6'
+  SCORE: 'cd1',
+  FINALSCORE: 'cd2',
+  CONFIRMATION: 'cd5',
+  ELIMINATION: 'cd6',
+  AGENTFORMER: 'cd3'
 }
 const metrics = {
-  START: 'metric1',
-  SCORE: 'metric2',
-  CONFIRMATION: 'metric3',
-  ELIMINATION: 'metric4'
+  SCORE: 'cm3',
+  CONFIRMATION: 'cm1',
+  ELIGIBILITY: 'cm2',
+  ELIMINATION: 'cm4'
 }
 
 const actions = {
@@ -34,48 +34,55 @@ const sendEvent = async (request, category, action) => {
     await request.ga.event({
       category: category,
       action: action,
-      userId: request.yar.id
+      userId: request.yar?.id
     })
   } catch (err) {
-    console.log(err)
-    appInsights.logException(request, { error: err })
-  }
-}
-const sendPageView = async (request) => {
-  try {
-    await request.ga.pageView()
-  } catch (err) {
-    console.log(err)
     appInsights.logException(request, { error: err })
   }
 }
 
-const sendDimensionOrMetric = async (request, { category, action, dimensionOrMetric, value }) => {
+const sendDimensionOrMetric = async (request, { dimensionOrMetric, value }) => {
   try {
-    await request.ga.event({
-      category: category,
-      userId: request.yar.id,
-      action: action,
-      label: dimensionOrMetric ?? '',
-      value: value ?? ''
-    })
+    const dmetrics = {}
+    dmetrics[dimensionOrMetric] = value
+    await request.ga.pageView(dmetrics)
   } catch (err) {
-    console.log(err)
     appInsights.logException(request, { error: err })
   }
 }
-const sendNotEligibleEvent = async (request) => {
+const sendDimensionOrMetrics = async (request, dimenisons) => {
+  try {
+    const dmetrics = {}
+    dimenisons.forEach(item => {
+      dmetrics[item.dimensionOrMetric] = item.value
+    })
+    await request.ga.pageView(dmetrics)
+  } catch (err) {
+    appInsights.logException(request, { error: err })
+  }
+}
+const sendEligibilityEvent = async (request, isEligible = true) => {
   await sendDimensionOrMetric(request, {
-    category: categories.ELIMINATION,
-    action: actions.ELIMINATION,
     dimensionOrMetric: dimensions.ELIMINATION,
-    value: request.yar.id
+    value: isEligible
   })
+  if (!isEligible) {
+    await sendDimensionOrMetric(request, {
+      dimensionOrMetric: metrics.ELIMINATION,
+      value: getTimeofJourneySinceStart(request).toString()
+    })
+  }
+}
+const sendJourneyTime = async (request, metric) => {
   await sendDimensionOrMetric(request, {
-    category: categories.JOURNEY,
-    action: actions.ELIMINATION,
-    dimensionOrMetric: metrics.ELIMINATION,
-    value: `${Date.now()}`
+    dimensionOrMetric: metric,
+    value: getTimeofJourneySinceStart(request).toString()
   })
 }
-module.exports = { sendEvent, sendPageView, sendDimensionOrMetric, sendNotEligibleEvent, dimensions, categories, metrics, actions }
+const getTimeofJourneySinceStart = (request) => {
+  if (getYarValue(request, 'journey-start-time')) {
+    return Math.abs(((new Date()).getTime() - (new Date(getYarValue(request, 'journey-start-time'))).getTime()) / 1000)
+  }
+  return 0
+}
+module.exports = { sendEvent, sendDimensionOrMetric, sendEligibilityEvent, dimensions, categories, metrics, actions, sendJourneyTime, sendDimensionOrMetrics }

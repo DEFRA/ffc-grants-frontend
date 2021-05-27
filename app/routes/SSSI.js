@@ -1,9 +1,10 @@
 const Joi = require('joi')
 const { setYarValue, getYarValue } = require('../helpers/session')
 const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
+const gapiService = require('../services/gapi-service')
 const { LICENSE_EXPECTED, LICENSE_WILL_NOT_HAVE } = require('../helpers/license-dates')
 
-function createModel(backLink, errorMessage, data) {
+function createModel (backLink, errorMessage, data) {
   return {
     backLink,
     radios: {
@@ -63,8 +64,9 @@ module.exports = [
           return h.view('SSSI', createModel(backLink, errorMessage)).takeover()
         }
       },
-      handler: (request, h) => {
+      handler: async (request, h) => {
         setYarValue(request, 'sSSI', request.payload.sSSI)
+        await gapiService.sendJourneyTime(request, gapiService.metrics.ELIGIBILITY)
         return h.redirect('./project-details')
       }
     }

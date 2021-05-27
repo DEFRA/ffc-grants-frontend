@@ -34,8 +34,7 @@ function createModel (errorMessage, projectCost, projectItemsList) {
   }
 }
 
-async function createModelNotEligible (request) {
-  await gapiService.sendNotEligibleEvent(request)
+function createModelNotEligible () {
   return {
     backLink: './project-cost',
     messageContent:
@@ -81,9 +80,9 @@ module.exports = [
         setYarValue(request, 'calculatedGrant', calculatedGrant)
         setYarValue(request, 'remainingCost', remainingCost)
 
+        await gapiService.sendEligibilityEvent(request, (calculatedGrant >= MIN_GRANT) && (calculatedGrant <= MAX_GRANT))
         if ((calculatedGrant < MIN_GRANT) || (calculatedGrant > MAX_GRANT)) {
-          const notEligible = await createModelNotEligible(request)
-          return h.view('./not-eligible', notEligible)
+          return h.view('./not-eligible', createModelNotEligible())
         }
         return h.redirect('./grant')
       }

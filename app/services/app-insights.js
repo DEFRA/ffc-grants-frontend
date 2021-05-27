@@ -16,7 +16,7 @@ function logException (request, event) {
       exception: event.error ?? new Error('unknown'),
       properties: {
         statusCode: request ? request.statusCode : '',
-        sessionId: request ? request.yar.id : '',
+        sessionId: request ? request.yar?.id : '',
         payload: request ? request.payload : '',
         request: event.request ?? 'Server Error'
       }

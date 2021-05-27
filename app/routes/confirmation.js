@@ -17,26 +17,20 @@ module.exports = {
     try {
       await senders.sendContactDetails(createMsg.getAllDetails(request, confirmationId), request.yar.id)
     } catch (err) {
-      await gapiService.sendDimensionOrMetric(request, {
-        category: gapiService.categories.CONFIRMATION,
-        action: 'Error'
-      })
+      await gapiService.sendEvent(request, gapiService.categories.CONFIRMATION, 'Error')
       return h.view('500')
     }
     await protectiveMonitoringServiceSendEvent(request, request.yar.id, 'FTF-JOURNEY-COMPLETED', '0706')
-
-    await gapiService.sendDimensionOrMetric(request, {
-      category: gapiService.categories.CONFIRMATION,
-      action: gapiService.actions.CONFIRMATION,
+    const score = getYarValue(request, 'current-score')
+    await gapiService.sendDimensionOrMetrics(request, [{
       dimensionOrMetric: gapiService.dimensions.CONFIRMATION,
       value: confirmationId
-    })
-    await gapiService.sendDimensionOrMetric(request, {
-      category: gapiService.categories.JOURNEY,
-      action: gapiService.actions.CONFIRMATION,
-      dimensionOrMetric: gapiService.metrics.CONFIRMATION,
-      value: `${Date.now()}`
-    })
+    }, {
+      dimensionOrMetric: gapiService.dimensions.FINALSCORE,
+      value: score
+    }
+    ])
+    await gapiService.sendJourneyTime(request, gapiService.metrics.CONFIRMATION)
     request.yar.reset()
     return h.view('confirmation', {
       output: {

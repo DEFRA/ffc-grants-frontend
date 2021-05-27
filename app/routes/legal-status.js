@@ -3,7 +3,7 @@ const { setYarValue, getYarValue } = require('../helpers/session')
 const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
 const gapiService = require('../services/gapi-service')
 
-function createModel(errorMessage, data) {
+function createModel (errorMessage, data) {
   return {
     backLink: './farming-type',
     radios: {
@@ -39,9 +39,7 @@ function createModel(errorMessage, data) {
   }
 }
 
-async function createModelNotEligible (request) {
-  await gapiService.sendNotEligibleEvent(request)
-
+function createModelNotEligible () {
   return {
     backLink: './legal-status',
     messageContent:
@@ -75,9 +73,9 @@ module.exports = [
       },
       handler: async (request, h) => {
         setYarValue(request, 'legalStatus', request.payload.legalStatus)
+        await gapiService.sendEligibilityEvent(request, request.payload.legalStatus !== 'None of the above')
         if (request.payload.legalStatus === 'None of the above') {
-          const notEligible = await createModelNotEligible(request)
-          return h.view('./not-eligible', notEligible)
+          return h.view('./not-eligible', createModelNotEligible())
         }
         return h.redirect('./country')
       }

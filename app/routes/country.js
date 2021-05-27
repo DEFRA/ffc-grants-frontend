@@ -37,8 +37,7 @@ function createModel (errorMessage, data, postcodeHtml) {
   }
 }
 
-async function createModelNotEligible (request) {
-  await gapiService.sendNotEligibleEvent(request)
+function createModelNotEligible () {
   return {
     backLink: './country',
     messageContent: 'This is only for projects in England.<br/><br/>Scotland, Wales and Northern Ireland have other grants available.'
@@ -94,9 +93,9 @@ module.exports = [
 
         setYarValue(request, 'inEngland', inEngland)
         setYarValue(request, 'projectPostcode', projectPostcode.split(/(?=.{3}$)/).join(' ').toUpperCase())
+        await gapiService.sendEligibilityEvent(request, inEngland === 'yes')
         if (inEngland === 'Yes') { return h.redirect('./project-start') }
-        const notEligible = await createModelNotEligible(request)
-        return h.view('not-eligible', notEligible)
+        return h.view('not-eligible', createModelNotEligible())
       }
     }
   }
