@@ -104,7 +104,7 @@ module.exports = [
           address2: Joi.string().allow(''),
           town: Joi.string().required(),
           county: Joi.string().required(),
-          postcode: Joi.string().replace(DELETE_POSTCODE_CHARS_REGEX, '').regex(POSTCODE_REGEX).trim().allow('').required()
+          postcode: Joi.string().replace(DELETE_POSTCODE_CHARS_REGEX, '').regex(POSTCODE_REGEX).trim().required()
         }),
         failAction: (request, h, err) => {
           const [
