@@ -81,8 +81,7 @@ const sendJourneyTime = async (request, metric) => {
 }
 const getTimeofJourneySinceStart = (request) => {
   if (getYarValue(request, 'journey-start-time')) {
-    const timeBetweenStartToScore = Math.abs(((new Date()).getTime() - (new Date(getYarValue(request, 'journey-start-time'))).getTime()) / 1000)
-    return timeBetweenStartToScore // in seconds
+    return Math.abs(((new Date()).getTime() - (new Date(getYarValue(request, 'journey-start-time'))).getTime()) / 1000)
   }
   return 0
 }
