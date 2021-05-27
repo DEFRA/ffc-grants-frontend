@@ -137,15 +137,15 @@ module.exports = {
       answer: [
         {
           key: 'Q15-A1',
-          desc: 'Protected cropping (eg glass house or poly tunnel)'
+          desc: 'Protected cropping (for example glass house or poly tunnel)'
         },
         {
           key: 'Q15-A2',
-          desc: 'Fruit (eg top fruit, bush fruit)'
+          desc: 'Fruit (for example top fruit, bush fruit)'
         },
         {
           key: 'Q15-A3',
-          desc: 'Field-scale crops (eg potatoes, onions, carrots)'
+          desc: 'Field-scale crops (for example potatoes, onions, carrots)'
         }
       ]
     },
@@ -351,7 +351,7 @@ module.exports = {
       pageTitle: 'Productivity',
       fundingPriorities: 'Improving productivity',
       help: '',
-      desc: 'Productivity is about how much is produced relative to inputs (eg increased yield for the same inputs or the same yield with lower inputs).',
+      desc: 'Productivity is about how much is produced relative to inputs (for example increased yield for the same inputs or the same yield with lower inputs).',
       url: 'productivity',
       yarKey: 'productivity',
       type: 'multiple-answer',
