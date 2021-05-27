@@ -10,7 +10,7 @@ function createModel (errorMessage, data) {
       name: 'tenancyLength',
       fieldset: {
         legend: {
-          text: 'Is the planned project on land with a tenancy agreement in place until 2026 or after?',
+          text: 'Do you have a tenancy agreement until 2026 or after?',
           isPageHeading: true,
           classes: 'govuk-fieldset__legend--l'
         }
