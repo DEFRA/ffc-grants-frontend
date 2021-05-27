@@ -2,10 +2,10 @@ const Joi = require('joi')
 const { setYarValue, getYarValue } = require('../helpers/session')
 const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
 const gapiService = require('../services/gapi-service')
-
-function createModel (errorMessage, data) {
+const { LICENSE_EXPECTED } = require('../helpers/license-dates')
+function createModel (errorMessage, data, backLink) {
   return {
-    backLink: './country',
+    backLink: backLink,
     radios: {
       classes: 'govuk-radios--inline',
       idPrefix: 'projectStarted',
@@ -23,6 +23,13 @@ function createModel (errorMessage, data) {
   }
 }
 
+const getBackLink = (request) => {
+  const planningPermission = getYarValue(request, 'planningPermission')
+  return (planningPermission === LICENSE_EXPECTED)
+    ? './planning-caveat'
+    : './planning-permission'
+}
+
 function createModelNotEligible () {
   return {
     backLink: './project-start',
@@ -38,7 +45,7 @@ module.exports = [
     handler: (request, h) => {
       const projectStarted = getYarValue(request, 'projectStarted')
       const data = projectStarted || null
-      return h.view('project-start', createModel(null, data))
+      return h.view('project-start', createModel(null, data, getBackLink(request)))
     }
   },
   {
@@ -52,7 +59,7 @@ module.exports = [
         failAction: (request, h, err) => {
           const errorObject = errorExtractor(err)
           const errorMessage = getErrorMessage(errorObject)
-          return h.view('project-start', createModel(errorMessage)).takeover()
+          return h.view('project-start', createModel(errorMessage, null, getBackLink(request))).takeover()
         }
       },
       handler: async (request, h) => {
