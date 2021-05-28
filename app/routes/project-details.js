@@ -6,9 +6,10 @@ const {
 } = require('../helpers/helper-functions')
 const { setYarValue, getYarValue } = require('../helpers/session')
 
-function createModel (errorMessage, errorSummary, data) {
+function createModel (errorMessage, errorSummary, data, hasScore) {
   return {
     backLink: './SSSI',
+    hasScore: hasScore,
     ...errorSummary ? { errorList: errorSummary } : {},
     checkboxes: {
       idPrefix: 'project',
@@ -36,8 +37,9 @@ module.exports = [
     handler: (request, h) => {
       const project = getYarValue(request, 'project')
       const data = project || null
+      const hasScore = getYarValue(request, 'current-score') || null
 
-      return h.view('project-details', createModel(null, null, data))
+      return h.view('project-details', createModel(null, null, data, hasScore))
     }
   },
   {

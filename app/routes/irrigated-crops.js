@@ -6,9 +6,10 @@ const {
   getErrorMessage
 } = require('../helpers/helper-functions')
 
-const createModel = (errorMessage, data) => ({
+const createModel = (errorMessage, data, hasScore) => ({
 
   backLink: './project-details',
+  hasScore: hasScore,
   radios: {
     classes: '',
     idPrefix: 'irrigatedCrops',
@@ -38,7 +39,7 @@ module.exports = [
     handler: (request, h) => {
       const irrigatedCrops = getYarValue(request, 'irrigatedCrops')
       const data = irrigatedCrops || null
-      return h.view('irrigated-crops', createModel(null, data))
+      return h.view('irrigated-crops', createModel(null, data, getYarValue(request, 'current-score')))
     }
   },
   {

@@ -1,9 +1,13 @@
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
 {% macro crumbToken(crumb) %}
   <input type="hidden" name="crumb" id="crumb"
-         value="{{ crumb }}"  autocomplete="off" />
+    value="{{ crumb }}"  autocomplete="off" />
 {% endmacro %}
+
 {% macro sideBar(heading, para, items) %}
- <div style="padding-top:9px; border-top: 2px solid #1d70b8;">
+  <div class="govuk-grid-column-one-third  govuk-body">
+  <hr class="sideBarColor"/>
         <h2 class="govuk-heading-m" id="subsection-title">
           {{ heading }}
         </h2>        
@@ -14,4 +18,21 @@
               {% endfor %}
             </ul>
       </div>
+{% endmacro %}
+
+{% macro conditionalButtons (hasScore) %}
+  {% if hasScore %}
+    {{ govukButton({
+          text: "Back to results",
+          href: '/score'
+        }) }} &nbsp;
+          {{ govukButton({
+            classes: "govuk-button--secondary",
+            text: "Next question"
+        }) }}
+  {% else %}
+    {{ govukButton({
+            text: "Continue"
+          }) }}
+  {% endif %} 
 {% endmacro %}
