@@ -1,9 +1,8 @@
 {% extends '.layout.njk' %}
 
-{% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
-{% from "./components/macro.njk" import crumbToken, sideBar %}
+{% from "./components/macro.njk" import crumbToken, sideBar, conditionalButtons %}
 {% block pageTitle %}
   {{siteTitle}} - Irrigated land  
 {% endblock %}
@@ -21,9 +20,7 @@
         {{ crumbToken(crumb)}}
         {{ govukInput(currentInput) }}
         {{ govukInput(targetInput) }}
-        {{ govukButton({
-          text: "Continue"
-        }) }}
+        {{ conditionalButtons(hasScore) }}
       </form>
     </div>
     {{ sideBar("Funding priorities","RPA wants to fund projects that:",

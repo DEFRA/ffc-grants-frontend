@@ -37,9 +37,7 @@ module.exports = [
     handler: (request, h) => {
       const project = getYarValue(request, 'project')
       const data = project || null
-      const hasScore = getYarValue(request, 'current-score') || null
-
-      return h.view('project-details', createModel(null, null, data, hasScore))
+      return h.view('project-details', createModel(null, null, data, getYarValue(request, 'current-score')))
     }
   },
   {
@@ -48,26 +46,28 @@ module.exports = [
     options: {
       validate: {
         payload: Joi.object({
-          project: Joi.any().required()
+          project: Joi.any().required(),
+          results: Joi.any()
         }),
         failAction: (request, h, err) => {
           const errorObject = errorExtractor(err)
           const errorMessage = getErrorMessage(errorObject)
-          return h.view('project-details', createModel(errorMessage, null, null)).takeover()
+          return h.view('project-details', createModel(errorMessage, null, null, getYarValue(request, 'current-score'))).takeover()
         }
       },
       handler: (request, h) => {
-        let { project } = request.payload
+        let { project, results } = request.payload
         const errorList = []
+        const hasScore = getYarValue(request, 'current-score')
         project = [project].flat()
 
         if (project.length > 2) {
           errorList.push({ text: 'Select one or two options of what the project will achieve', href: '#project' })
-          return h.view('project-details', createModel('Select one or two options', errorList, project)).takeover()
+          return h.view('project-details', createModel('Select one or two options', errorList, project, hasScore)).takeover()
         }
 
         setYarValue(request, 'project', project)
-        return h.redirect('./irrigated-crops')
+        return results ? h.redirect('./score') : h.redirect('./irrigated-crops')
       }
     }
   }

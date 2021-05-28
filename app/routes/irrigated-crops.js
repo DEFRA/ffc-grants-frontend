@@ -48,17 +48,20 @@ module.exports = [
     options: {
       validate: {
         payload: Joi.object({
-          irrigatedCrops: Joi.string().required()
+          irrigatedCrops: Joi.string().required(),
+          results: Joi.any()
+
         }),
         failAction: (request, h, err) => {
           const errorObject = errorExtractor(err)
           const errorMessage = getErrorMessage(errorObject)
-          return h.view('irrigated-crops', createModel(errorMessage)).takeover()
+          return h.view('irrigated-crops', createModel(errorMessage, null, getYarValue(request, 'current-score'))).takeover()
         }
       },
       handler: (request, h) => {
+        const results = request.payload.results
         setYarValue(request, 'irrigatedCrops', request.payload.irrigatedCrops)
-        return h.redirect('./irrigated-land')
+        return results ? h.redirect('./score') : h.redirect('./irrigated-land')
       }
     }
   }

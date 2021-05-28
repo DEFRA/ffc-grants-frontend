@@ -1,10 +1,9 @@
 {% extends '.layout.njk' %}
 
-{% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
-{% from "./components/macro.njk" import crumbToken, sideBar %}
+{% from "./components/macro.njk" import crumbToken, sideBar, conditionalButtons%}
 {% block pageTitle %}
   {{siteTitle}} - Irrigation systems  
 {% endblock %}
@@ -29,9 +28,7 @@
         {{ crumbToken(crumb)}}
         {{ govukCheckboxes(irrigationCurrent) }}
         {{ govukCheckboxes(irrigationPlanned) }}
-        {{ govukButton({
-          text: "Continue"
-        }) }}
+        {{ conditionalButtons(hasScore) }}
       </form>
     </div>
     {{ sideBar("Funding priorities","RPA wants to fund projects that:",

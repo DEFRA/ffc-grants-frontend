@@ -2,9 +2,10 @@ const Joi = require('joi')
 const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
 const { setYarValue, getYarValue } = require('../helpers/session')
 
-function createModel (errorMessage, errorSummary, currentData, plannedData) {
+function createModel (errorMessage, errorSummary, currentData, plannedData, hasScore) {
   return {
     backLink: './irrigation-water-source',
+    hasScore: hasScore,
     ...errorSummary ? { errorList: errorSummary } : {},
     irrigationCurrent: {
       idPrefix: 'irrigationCurrent',
@@ -49,7 +50,7 @@ module.exports = [
     handler: (request, h) => {
       const currentData = getYarValue(request, 'irrigationCurrent') || null
       const plannedData = getYarValue(request, 'irrigationPlanned') || null
-      return h.view('irrigation-systems', createModel(null, null, currentData, plannedData))
+      return h.view('irrigation-systems', createModel(null, null, currentData, plannedData, getYarValue(request, 'current-score')))
     }
   },
   {
@@ -59,7 +60,8 @@ module.exports = [
       validate: {
         payload: Joi.object({
           irrigationCurrent: Joi.any().required(),
-          irrigationPlanned: Joi.any().required()
+          irrigationPlanned: Joi.any().required(),
+          results: Joi.any()
         }),
         failAction: (request, h, err) => {
           let { irrigationCurrent, irrigationPlanned } = request.payload
@@ -68,11 +70,11 @@ module.exports = [
 
           irrigationCurrent = irrigationCurrent ? [irrigationCurrent].flat() : irrigationCurrent
           irrigationPlanned = irrigationPlanned ? [irrigationPlanned].flat() : irrigationPlanned
-          return h.view('irrigation-systems', createModel(errorMessage, null, irrigationCurrent, irrigationPlanned)).takeover()
+          return h.view('irrigation-systems', createModel(errorMessage, null, irrigationCurrent, irrigationPlanned, getYarValue(request, 'current-score'))).takeover()
         }
       },
       handler: (request, h) => {
-        let { irrigationCurrent, irrigationPlanned } = request.payload
+        let { irrigationCurrent, irrigationPlanned, results } = request.payload
         const errorList = []
         irrigationCurrent = [irrigationCurrent].flat()
         irrigationPlanned = [irrigationPlanned].flat()
@@ -90,7 +92,7 @@ module.exports = [
 
         setYarValue(request, 'irrigationCurrent', irrigationCurrent)
         setYarValue(request, 'irrigationPlanned', irrigationPlanned)
-        return h.redirect('./productivity')
+        return results ? h.redirect('./score') : h.redirect('./productivity')
       }
     }
   }

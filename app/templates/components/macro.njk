@@ -24,7 +24,8 @@
   {% if hasScore %}
     {{ govukButton({
           text: "Back to results",
-          href: '/score'
+          name: "results",
+          value: "results"
         }) }} &nbsp;
           {{ govukButton({
             classes: "govuk-button--secondary",
