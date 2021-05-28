@@ -1,4 +1,4 @@
-window.onload = function () {
+export function validation() {
   let elements = document.querySelectorAll('input[type="checkbox"]')
   if (elements) {
     elements = Array.from(elements)
