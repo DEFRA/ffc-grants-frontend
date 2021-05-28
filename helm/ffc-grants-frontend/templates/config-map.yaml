@@ -20,4 +20,6 @@ data:
   REDIS_PORT: {{ .Values.container.redisPort | quote }}
   REDIS_PARTITION: {{ .Values.container.redisPartition | quote }}
   SESSION_CACHE_TTL: {{ .Values.container.sessionCacheTTL | quote }}
+  GOOGLE_TAG_MANAGER_KEY: {{ .Values.container.googleTagManagerKey | quote }}
+  GOOGLE_TAG_MANAGER_SERVER_KEY: {{ .Values.container.googleTagManagerServerKey | quote }}
 {{- end -}}
