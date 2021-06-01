@@ -77,7 +77,7 @@ describe('Planning permission page', () => {
     expect(postResponse.headers.location).toBe('./planning-caveat')
   })
 
-  it('if value = \'Not needed\' ==> store and redirect to abstraction licence page', async () => {
+  it('if value = \'Not needed\' ==> store and redirect to project start page', async () => {
     const postOptions = {
       method: 'POST',
       url: '/planning-permission',
@@ -87,10 +87,10 @@ describe('Planning permission page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe('./abstraction-licence')
+    expect(postResponse.headers.location).toBe('./project-start')
   })
 
-  it('if value = \'Secured\' ==> store and redirect to abstraction licence page', async () => {
+  it('if value = \'Secured\' ==> store and redirect to project start page', async () => {
     const postOptions = {
       method: 'POST',
       url: '/planning-permission',
@@ -100,6 +100,6 @@ describe('Planning permission page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe('./abstraction-licence')
+    expect(postResponse.headers.location).toBe('./project-start')
   })
 })

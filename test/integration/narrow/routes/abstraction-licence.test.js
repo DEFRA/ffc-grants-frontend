@@ -77,7 +77,7 @@ describe('Abstraction licence page', () => {
     expect(postResponse.headers.location).toBe('./abstraction-caveat')
   })
 
-  it('if value = \'Not needed\' ==> store and redirect to SSSI page', async () => {
+  it('if value = \'Not needed\' ==> store and redirect to project-details page', async () => {
     const postOptions = {
       method: 'POST',
       url: '/abstraction-licence',
@@ -87,10 +87,10 @@ describe('Abstraction licence page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe('./SSSI')
+    expect(postResponse.headers.location).toBe('./project-details')
   })
 
-  it('if value = \'Secured\' ==> store and redirect to SSSI page', async () => {
+  it('if value = \'Secured\' ==> store and redirect to project-details page', async () => {
     const postOptions = {
       method: 'POST',
       url: '/abstraction-licence',
@@ -100,6 +100,6 @@ describe('Abstraction licence page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe('./SSSI')
+    expect(postResponse.headers.location).toBe('./project-details')
   })
 })

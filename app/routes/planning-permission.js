@@ -5,7 +5,7 @@ const { LICENSE_NOT_NEEDED, LICENSE_SECURED, LICENSE_EXPECTED, LICENSE_WILL_NOT_
 
 function createModel (errorMessage, data) {
   return {
-    backLink: './remaining-costs',
+    backLink: './country',
     radios: {
       idPrefix: 'planningPermission',
       name: 'planningPermission',
@@ -62,7 +62,7 @@ module.exports = [
           return h.redirect('./planning-caveat')
         }
 
-        return h.redirect('./abstraction-licence')
+        return h.redirect('./project-start')
       }
     }
   }
