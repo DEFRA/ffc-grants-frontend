@@ -1,10 +1,9 @@
 {% extends '.layout.njk' %}
 
-{% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
-{% from "./components/macro.njk" import crumbToken, sideBar %}
+{% from "./components/macro.njk" import crumbToken, sideBar, conditionalButtons %}
 {% block pageTitle %}
   {{siteTitle}} - Productivity
 {% endblock %}
@@ -32,16 +31,12 @@
       <form method="POST" action="./productivity" autocomplete="off" novalidate="novalidate">
         {{ crumbToken(crumb)}}
         {{ govukCheckboxes(checkboxes) }}
-        {{ govukButton({
-          text: "Continue"
-        }) }}
+        {{ conditionalButtons(hasScore) }}
       </form>
     </div>
-    <div class="govuk-grid-column-one-third  govuk-body">
     {{ sideBar("Funding priorities","RPA wants to fund projects that:",
     [
       "improve productivity"
     ]) }}
-    </div>
   </div>
 {% endblock %}

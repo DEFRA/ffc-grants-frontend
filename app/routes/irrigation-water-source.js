@@ -2,9 +2,10 @@ const Joi = require('joi')
 const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
 const { setYarValue, getYarValue } = require('../helpers/session')
 
-function createModel (errorMessage, errorSummary, currentData, plannedData) {
+function createModel (errorMessage, errorSummary, currentData, plannedData, hasScore) {
   return {
     backLink: './irrigated-land',
+    hasScore: hasScore,
     ...errorSummary ? { errorList: errorSummary } : {},
     waterSourceCurrent: {
       idPrefix: 'waterSourceCurrent',
@@ -48,7 +49,7 @@ module.exports = [
     handler: (request, h) => {
       const currentData = getYarValue(request, 'waterSourceCurrent') || null
       const plannedData = getYarValue(request, 'waterSourcePlanned') || null
-      return h.view('irrigation-water-source', createModel(null, null, currentData, plannedData))
+      return h.view('irrigation-water-source', createModel(null, null, currentData, plannedData, getYarValue(request, 'current-score')))
     }
   },
   {
@@ -58,7 +59,9 @@ module.exports = [
       validate: {
         payload: Joi.object({
           waterSourceCurrent: Joi.any().required(),
-          waterSourcePlanned: Joi.any().required()
+          waterSourcePlanned: Joi.any().required(),
+          results: Joi.any()
+
         }),
         failAction: (request, h, err) => {
           let { waterSourceCurrent, waterSourcePlanned } = request.payload
@@ -68,12 +71,12 @@ module.exports = [
 
           waterSourceCurrent = waterSourceCurrent ? [waterSourceCurrent].flat() : waterSourceCurrent
           waterSourcePlanned = waterSourcePlanned ? [waterSourcePlanned].flat() : waterSourcePlanned
-          return h.view('irrigation-water-source', createModel(errorMessage, null, waterSourceCurrent, waterSourcePlanned)).takeover()
+          return h.view('irrigation-water-source', createModel(errorMessage, null, waterSourceCurrent, waterSourcePlanned, getYarValue(request, 'current-score'))).takeover()
         }
       },
       handler: (request, h) => {
         const errorList = []
-        let { waterSourceCurrent, waterSourcePlanned } = request.payload
+        let { waterSourceCurrent, waterSourcePlanned, results } = request.payload
 
         waterSourceCurrent = [waterSourceCurrent].flat()
         waterSourcePlanned = [waterSourcePlanned].flat()
@@ -85,13 +88,13 @@ module.exports = [
           if (waterSourcePlanned.length > 2) {
             errorList.push({ text: 'Select where your irrigation water will come from', href: '#waterSourcePlanned' })
           }
-          return h.view('irrigation-water-source', createModel('Select one or two options', errorList, waterSourceCurrent, waterSourcePlanned))
+          return h.view('irrigation-water-source', createModel('Select one or two options', errorList, waterSourceCurrent, waterSourcePlanned, getYarValue(request, 'current-score')))
             .takeover()
         }
 
         setYarValue(request, 'waterSourceCurrent', waterSourceCurrent)
         setYarValue(request, 'waterSourcePlanned', waterSourcePlanned)
-        return h.redirect('./irrigation-systems')
+        return results ? h.redirect('./score') : h.redirect('./irrigation-systems')
       }
     }
   }
