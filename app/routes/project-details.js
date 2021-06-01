@@ -7,9 +7,9 @@ const {
 const { setYarValue, getYarValue } = require('../helpers/session')
 const { LICENSE_EXPECTED, LICENSE_WILL_NOT_HAVE } = require('../helpers/license-dates')
 
-function createModel (errorMessage, errorSummary, data, hasScore) {
+function createModel (errorMessage, errorSummary, data, backLink, hasScore) {
   return {
-    backLink: './SSSI',
+    backLink: backLink,
     hasScore: hasScore,
     ...errorSummary ? { errorList: errorSummary } : {},
     checkboxes: {
@@ -46,7 +46,7 @@ module.exports = [
     handler: (request, h) => {
       const project = getYarValue(request, 'project')
       const data = project || null
-      return h.view('project-details', createModel(null, null, data, getYarValue(request, 'current-score')))
+      return h.view('project-details', createModel(null, null, data, getBackLink(request), getYarValue(request, 'current-score')))
     }
   },
   {
@@ -61,7 +61,7 @@ module.exports = [
         failAction: (request, h, err) => {
           const errorObject = errorExtractor(err)
           const errorMessage = getErrorMessage(errorObject)
-          return h.view('project-details', createModel(errorMessage, null, null, getYarValue(request, 'current-score'))).takeover()
+          return h.view('project-details', createModel(errorMessage, null, null, getBackLink(request), getYarValue(request, 'current-score'))).takeover()
         }
       },
       handler: (request, h) => {
@@ -72,7 +72,7 @@ module.exports = [
 
         if (project.length > 2) {
           errorList.push({ text: 'Select one or two options of what the project will achieve', href: '#project' })
-          return h.view('project-details', createModel('Select one or two options', errorList, project, hasScore)).takeover()
+          return h.view('project-details', createModel('Select one or two options', errorList, project, getBackLink(request), hasScore)).takeover()
         }
 
         setYarValue(request, 'project', project)
