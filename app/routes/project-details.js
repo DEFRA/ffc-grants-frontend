@@ -5,10 +5,11 @@ const {
   getErrorMessage
 } = require('../helpers/helper-functions')
 const { setYarValue, getYarValue } = require('../helpers/session')
+const { LICENSE_EXPECTED, LICENSE_WILL_NOT_HAVE } = require('../helpers/license-dates')
 
-function createModel (errorMessage, errorSummary, data) {
+function createModel (errorMessage, errorSummary, data, backLink) {
   return {
-    backLink: './SSSI',
+    backLink: backLink,
     ...errorSummary ? { errorList: errorSummary } : {},
     checkboxes: {
       idPrefix: 'project',
@@ -28,7 +29,15 @@ function createModel (errorMessage, errorSummary, data) {
     }
   }
 }
-
+const getBackLink = (request) => {
+  const abstractionLicence = getYarValue(request, 'abstractionLicence')
+  return (
+    abstractionLicence === LICENSE_EXPECTED ||
+    abstractionLicence === LICENSE_WILL_NOT_HAVE
+  )
+    ? './abstraction-caveat'
+    : './abstraction-licence'
+}
 module.exports = [
   {
     method: 'GET',
@@ -36,8 +45,7 @@ module.exports = [
     handler: (request, h) => {
       const project = getYarValue(request, 'project')
       const data = project || null
-
-      return h.view('project-details', createModel(null, null, data))
+      return h.view('project-details', createModel(null, null, data, getBackLink(request)))
     }
   },
   {
@@ -51,7 +59,7 @@ module.exports = [
         failAction: (request, h, err) => {
           const errorObject = errorExtractor(err)
           const errorMessage = getErrorMessage(errorObject)
-          return h.view('project-details', createModel(errorMessage, null, null)).takeover()
+          return h.view('project-details', createModel(errorMessage, null, null, getBackLink(request))).takeover()
         }
       },
       handler: (request, h) => {
@@ -65,7 +73,7 @@ module.exports = [
         }
         if (project.length > 2) {
           errorList.push({ text: 'Select one or two options of what the project will achieve', href: '#project' })
-          return h.view('project-details', createModel('Select one or two options', errorList, project)).takeover()
+          return h.view('project-details', createModel('Select one or two options', errorList, project, getBackLink(request))).takeover()
         }
 
         setYarValue(request, 'project', project)
