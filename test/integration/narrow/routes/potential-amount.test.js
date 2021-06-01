@@ -4,7 +4,7 @@ describe('Grant page', () => {
   it('redirects to project-cost if user project-cost has not been saved', async () => {
     const options = {
       method: 'GET',
-      url: '/grant'
+      url: '/potential-amount'
     }
 
     const response = await global.__SERVER__.inject(options)
@@ -15,7 +15,7 @@ describe('Grant page', () => {
   it('redirects to project details page', async () => {
     const postOptions = {
       method: 'POST',
-      url: '/grant',
+      url: '/potential-amount',
       payload: { crumb: crumbToken, analytics: true },
       headers: {
         cookie: 'crumb=' + crumbToken
