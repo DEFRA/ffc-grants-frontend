@@ -1,6 +1,6 @@
 const MAYBE_ELIGIBLE = {
   backLink: './abstraction-licence',
-  nextLink: './SSSI',
+  nextLink: './project-details',
   messageHeader: 'You may be able to apply for this grant',
   messageContent: `
   Any abstraction licences should be in place by 31 December 2021 (the end of the application window).<br/><br/>

@@ -5,6 +5,7 @@ const {
   getErrorMessage
 } = require('../helpers/helper-functions')
 const { setYarValue, getYarValue } = require('../helpers/session')
+const { LICENSE_EXPECTED, LICENSE_WILL_NOT_HAVE } = require('../helpers/license-dates')
 
 function createModel (errorMessage, errorSummary, data, hasScore) {
   return {
@@ -29,7 +30,15 @@ function createModel (errorMessage, errorSummary, data, hasScore) {
     }
   }
 }
-
+const getBackLink = (request) => {
+  const abstractionLicence = getYarValue(request, 'abstractionLicence')
+  return (
+    abstractionLicence === LICENSE_EXPECTED ||
+    abstractionLicence === LICENSE_WILL_NOT_HAVE
+  )
+    ? './abstraction-caveat'
+    : './abstraction-licence'
+}
 module.exports = [
   {
     method: 'GET',

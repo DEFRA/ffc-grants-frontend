@@ -94,7 +94,7 @@ module.exports = [
         setYarValue(request, 'inEngland', inEngland)
         setYarValue(request, 'projectPostcode', projectPostcode.split(/(?=.{3}$)/).join(' ').toUpperCase())
         await gapiService.sendEligibilityEvent(request, inEngland === 'yes')
-        if (inEngland === 'Yes') { return h.redirect('./project-start') }
+        if (inEngland === 'Yes') { return h.redirect('./planning-permission') }
         return h.view('not-eligible', createModelNotEligible())
       }
     }

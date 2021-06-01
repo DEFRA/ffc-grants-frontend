@@ -4,7 +4,7 @@ const { setYarValue, getYarValue } = require('../helpers/session')
 const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
 const { LICENSE_NOT_NEEDED, LICENSE_SECURED, LICENSE_EXPECTED, LICENSE_WILL_NOT_HAVE } = require('../helpers/license-dates')
 
-function createModel(backLink, errorMessage, data) {
+function createModel (backLink, errorMessage, data) {
   return {
     backLink,
     radios: {
@@ -32,14 +32,9 @@ module.exports = [
     method: 'GET',
     path: '/abstraction-licence',
     handler: (request, h) => {
-      const planningPermission = getYarValue(request, 'planningPermission')
-      const backLink = (planningPermission === LICENSE_EXPECTED)
-        ? './planning-caveat'
-        : './planning-permission'
-
       const abstractionLicence = getYarValue(request, 'abstractionLicence')
       const data = abstractionLicence || null
-      return h.view('abstraction-licence', createModel(backLink, null, data))
+      return h.view('abstraction-licence', createModel('./SSSI', null, data))
     }
   },
   {
@@ -51,14 +46,9 @@ module.exports = [
           abstractionLicence: Joi.string().required()
         }),
         failAction: (request, h, err) => {
-          const planningPermission = getYarValue(request, 'planningPermission')
-          const backLink = (planningPermission === LICENSE_EXPECTED)
-            ? './planning-caveat'
-            : './planning-permission'
-
           const errorObject = errorExtractor(err)
           const errorMessage = getErrorMessage(errorObject)
-          return h.view('abstraction-licence', createModel(backLink, errorMessage)).takeover()
+          return h.view('abstraction-licence', createModel('./SSSI', errorMessage)).takeover()
         }
       },
       handler: (request, h) => {
@@ -71,7 +61,7 @@ module.exports = [
         ) {
           return h.redirect('./abstraction-caveat')
         }
-        return h.redirect('./SSSI')
+        return h.redirect('./project-details')
       }
     }
   }

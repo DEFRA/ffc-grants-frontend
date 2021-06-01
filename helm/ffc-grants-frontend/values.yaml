@@ -58,6 +58,8 @@ container:
   redisPort: 6379
   redisPartition: ffc-grants-frontend
   sessionCacheTTL: 3600000
+  googleTagManagerKey: dummy
+  googleTagManagerServerKey: dummy
 
 livenessProbe:
   path: /healthz

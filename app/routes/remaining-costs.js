@@ -70,7 +70,7 @@ module.exports = [
         setYarValue(request, 'payRemainingCosts', request.payload.payRemainingCosts)
         await gapiService.sendEligibilityEvent(request, request.payload.payRemainingCosts === 'Yes')
         if (request.payload.payRemainingCosts === 'Yes') {
-          return h.redirect('./planning-permission')
+          return h.redirect('./SSSI')
         }
         return h.view('./not-eligible', createModelNotEligible())
       }
