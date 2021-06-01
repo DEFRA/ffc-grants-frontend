@@ -23,10 +23,7 @@ module.exports = [
       const formattedGrant = formatUKCurrency(calculatedGrant)
       const formattedProjectCost = formatUKCurrency(projectCost)
 
-      return h.view(
-        'grant',
-        createModel(formattedGrant, formattedProjectCost)
-      )
+      return h.view('potential-amount', createModel(formattedGrant, formattedProjectCost))
     }
   },
   {
