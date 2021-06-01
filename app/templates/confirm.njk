@@ -14,28 +14,16 @@
   }) }}
 {% endblock %}
 
-{% set checkboxConfirmSub = {
+
+{% set checkboxConfirmOptional = {
     idPrefix: consentOptionalData.idPrefix,
     name: consentOptionalData.name,
-    items: consentOptionalData.items,
-    checked: consentOptionalData.items[0].checked,
-    selected: consentOptionalData.items[0].selected
-  }
-%}
-
-{% set checkboxConfirmMain = {
-    idPrefix: consentMainData.idPrefix,
-    name: consentMainData.name,
     items: [{
-      value: consentMainData.items[0].value,
-      text: consentMainData.items[0].text,
-      checked: consentMainData.items[0].checked,
-      selected: consentMainData.items[0].selected,
-      conditional: {
-        html: govukCheckboxes(checkboxConfirmSub)
-      }
-    }],
-    errorMessage: consentMainData.errorMessage if (consentMainData.errorMessage) else null
+      value: consentOptionalData.items[0].value,
+      text: consentOptionalData.items[0].text,
+      checked: consentOptionalData.items[0].checked,
+      selected: consentOptionalData.items[0].selected
+    }]
   }
 %}
 
@@ -47,12 +35,13 @@
       <p>I confirm that, to the best of my knowledge, the details I have provided are correct.</p>
       <p>I understand the score was based on the answers I provided.</p>
       <p>I am aware the information I submit will be checked.</p>
+      <p>I am happy to be contacted by Defra and RPA (or a third-party on their behalf) about the application.</p>
     </div>
 
     <div class="govuk-grid-column-two-thirds">
       <form method="POST" action="./confirm" autocomplete="off" novalidate="novalidate">
         {{ crumbToken(crumb)}}
-        {{ govukCheckboxes(checkboxConfirmMain) }}
+        {{ govukCheckboxes(checkboxConfirmOptional) }}
         {{ govukButton({
           text: "Confirm and send"
         }) }}
