@@ -3,7 +3,7 @@
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
-{% from "./components/macro.njk" import crumbToken, sideBar %}
+{% from "./components/macro.njk" import crumbToken, sideBar, conditionalButtons %}
 {% block pageTitle %}
   {{siteTitle}} - Irrigated crops 
 {% endblock %}
@@ -20,16 +20,12 @@
       <form method="POST" action="./irrigated-crops" autocomplete="off" novalidate>
         {{ crumbToken(crumb)}}
         {{ govukRadios(radios) }}
-        {{ govukButton({
-          text: "Continue"
-        }) }}
+        {{ conditionalButtons(hasScore) }}
       </form>
     </div>
-    <div class="govuk-grid-column-one-third  govuk-body">
     {{ sideBar("Funding priorities","RPA wants to fund projects that:",
     [
       "improve productivity"
     ]) }}
-    </div>
   </div>
 {% endblock %}

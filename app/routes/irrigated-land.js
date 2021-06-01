@@ -3,7 +3,7 @@ const { fetchListObjectItems, findErrorList } = require('../helpers/helper-funct
 const { IRRIGATED_LAND_REGEX, ONLY_ZEROES_REGEX } = require('../helpers/regex-validation')
 const { setYarValue, getYarValue } = require('../helpers/session')
 
-function createModel (irrigatedLandCurrent, irrigatedLandTarget, errorMessageList) {
+function createModel (irrigatedLandCurrent, irrigatedLandTarget, errorMessageList, hasScore) {
   const [
     irrigatedLandCurrentError,
     irrigatedLandTargetError
@@ -13,6 +13,7 @@ function createModel (irrigatedLandCurrent, irrigatedLandTarget, errorMessageLis
   )
   return {
     backLink: './irrigated-crops',
+    hasScore: hasScore,
     currentInput: {
       label: {
         text: 'How much land is currently irrigated per year?',
@@ -62,7 +63,7 @@ module.exports = [
       const currentData = irrigatedLandCurrent || null
       const TargetData = irrigatedLandTarget || null
 
-      return h.view('irrigated-land', createModel(currentData, TargetData, null))
+      return h.view('irrigated-land', createModel(currentData, TargetData, null, getYarValue(request, 'current-score')))
     }
   },
   {
@@ -73,7 +74,8 @@ module.exports = [
         options: { abortEarly: false },
         payload: Joi.object({
           irrigatedLandCurrent: Joi.string().regex(IRRIGATED_LAND_REGEX).required(),
-          irrigatedLandTarget: Joi.string().regex(IRRIGATED_LAND_REGEX).required()
+          irrigatedLandTarget: Joi.string().regex(IRRIGATED_LAND_REGEX).required(),
+          results: Joi.any()
         }),
         failAction: (request, h, err) => {
           let [
@@ -89,12 +91,12 @@ module.exports = [
           }
 
           const { irrigatedLandCurrent, irrigatedLandTarget } = request.payload
-          return h.view('irrigated-land', createModel(irrigatedLandCurrent, irrigatedLandTarget, errorMessageList)).takeover()
+          return h.view('irrigated-land', createModel(irrigatedLandCurrent, irrigatedLandTarget, errorMessageList, getYarValue(request, 'current-score'))).takeover()
         }
       },
       handler: (request, h) => {
-        const { irrigatedLandCurrent, irrigatedLandTarget } = request.payload
-
+        const { irrigatedLandCurrent, irrigatedLandTarget, results } = request.payload
+        const hasScore = getYarValue(request, 'current-score')
         if (Number(irrigatedLandTarget) === 0 ||
             (Number(irrigatedLandTarget) < Number(irrigatedLandCurrent))
         ) {
@@ -110,12 +112,12 @@ module.exports = [
 
           return h.view(
             'irrigated-land',
-            createModel(irrigatedLandCurrent, irrigatedLandTarget, errorMessageList)).takeover()
+            createModel(irrigatedLandCurrent, irrigatedLandTarget, errorMessageList, hasScore)).takeover()
         }
 
         setYarValue(request, 'irrigatedLandCurrent', irrigatedLandCurrent)
         setYarValue(request, 'irrigatedLandTarget', irrigatedLandTarget)
-        return h.redirect('./irrigation-water-source')
+        return results ? h.redirect('./score') : h.redirect('./irrigation-water-source')
       }
     }
   }

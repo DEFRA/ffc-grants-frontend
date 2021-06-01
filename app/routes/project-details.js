@@ -7,9 +7,10 @@ const {
 const { setYarValue, getYarValue } = require('../helpers/session')
 const { LICENSE_EXPECTED, LICENSE_WILL_NOT_HAVE } = require('../helpers/license-dates')
 
-function createModel (errorMessage, errorSummary, data, backLink) {
+function createModel (errorMessage, errorSummary, data, backLink, hasScore) {
   return {
     backLink: backLink,
+    hasScore: hasScore,
     ...errorSummary ? { errorList: errorSummary } : {},
     checkboxes: {
       idPrefix: 'project',
@@ -45,7 +46,7 @@ module.exports = [
     handler: (request, h) => {
       const project = getYarValue(request, 'project')
       const data = project || null
-      return h.view('project-details', createModel(null, null, data, getBackLink(request)))
+      return h.view('project-details', createModel(null, null, data, getBackLink(request), getYarValue(request, 'current-score')))
     }
   },
   {
@@ -54,17 +55,19 @@ module.exports = [
     options: {
       validate: {
         payload: Joi.object({
-          project: Joi.any().required()
+          project: Joi.any().required(),
+          results: Joi.any()
         }),
         failAction: (request, h, err) => {
           const errorObject = errorExtractor(err)
           const errorMessage = getErrorMessage(errorObject)
-          return h.view('project-details', createModel(errorMessage, null, null, getBackLink(request))).takeover()
+          return h.view('project-details', createModel(errorMessage, null, null, getBackLink(request), getYarValue(request, 'current-score'))).takeover()
         }
       },
       handler: (request, h) => {
-        let { project } = request.payload
+        let { project, results } = request.payload
         const errorList = []
+        const hasScore = getYarValue(request, 'current-score')
         project = [project].flat()
 
         if (project.filter(option => option === 'None of the above').length > 0 && project.length > 1) {
@@ -73,11 +76,11 @@ module.exports = [
         }
         if (project.length > 2) {
           errorList.push({ text: 'Select one or two options of what the project will achieve', href: '#project' })
-          return h.view('project-details', createModel('Select one or two options', errorList, project, getBackLink(request))).takeover()
+          return h.view('project-details', createModel('Select one or two options', errorList, project, getBackLink(request), hasScore)).takeover()
         }
 
         setYarValue(request, 'project', project)
-        return h.redirect('./irrigated-crops')
+        return results ? h.redirect('./score') : h.redirect('./irrigated-crops')
       }
     }
   }
