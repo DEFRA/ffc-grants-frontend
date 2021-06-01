@@ -81,4 +81,18 @@ describe('Project details page', () => {
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.payload).toContain('There is a problem')
   })
+
+  it('should display the error summary if more than one options are selected along with None of above', async () => {
+    const postOptions = {
+      method: 'POST',
+      url: '/project-details',
+      payload: { project: ['Improve irrigation efficiency','None of the above'], crumb: crumbToken },
+      headers: {
+        cookie: 'crumb=' + crumbToken
+      }
+    }
+
+    const postResponse = await global.__SERVER__.inject(postOptions)
+    expect(postResponse.payload).toContain('Select one or two options of what the project will achieve')
+  })
 })
