@@ -6,9 +6,10 @@ const {
   getErrorMessage
 } = require('../helpers/helper-functions')
 
-const createModel = (errorMessage, data) => ({
+const createModel = (errorMessage, data, hasScore) => ({
 
   backLink: './project-details',
+  hasScore: hasScore,
   radios: {
     classes: '',
     idPrefix: 'irrigatedCrops',
@@ -38,7 +39,7 @@ module.exports = [
     handler: (request, h) => {
       const irrigatedCrops = getYarValue(request, 'irrigatedCrops')
       const data = irrigatedCrops || null
-      return h.view('irrigated-crops', createModel(null, data))
+      return h.view('irrigated-crops', createModel(null, data, getYarValue(request, 'current-score')))
     }
   },
   {
@@ -47,17 +48,20 @@ module.exports = [
     options: {
       validate: {
         payload: Joi.object({
-          irrigatedCrops: Joi.string().required()
+          irrigatedCrops: Joi.string().required(),
+          results: Joi.any()
+
         }),
         failAction: (request, h, err) => {
           const errorObject = errorExtractor(err)
           const errorMessage = getErrorMessage(errorObject)
-          return h.view('irrigated-crops', createModel(errorMessage)).takeover()
+          return h.view('irrigated-crops', createModel(errorMessage, null, getYarValue(request, 'current-score'))).takeover()
         }
       },
       handler: (request, h) => {
+        const results = request.payload.results
         setYarValue(request, 'irrigatedCrops', request.payload.irrigatedCrops)
-        return h.redirect('./irrigated-land')
+        return results ? h.redirect('./score') : h.redirect('./irrigated-land')
       }
     }
   }

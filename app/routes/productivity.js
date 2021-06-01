@@ -2,9 +2,10 @@ const Joi = require('joi')
 const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
 const { setYarValue, getYarValue } = require('../helpers/session')
 
-function createModel (errorMessage, errorSummary, data) {
+function createModel (errorMessage, errorSummary, data, hasScore) {
   return {
     backLink: './irrigation-systems',
+    hasScore: hasScore,
     ...(errorSummary ? { errorText: errorSummary } : {}),
     checkboxes: {
       idPrefix: 'productivity',
@@ -32,7 +33,7 @@ module.exports = [
     handler: (request, h) => {
       const productivity = getYarValue(request, 'productivity')
       const data = productivity || null
-      return h.view('productivity', createModel(null, null, data))
+      return h.view('productivity', createModel(null, null, data, getYarValue(request, 'current-score')))
     }
   },
   {
@@ -41,22 +42,24 @@ module.exports = [
     options: {
       validate: {
         payload: Joi.object({
-          productivity: Joi.any().required()
+          productivity: Joi.any().required(),
+          results: Joi.any()
         }),
         failAction: (request, h, err) => {
           const errorObject = errorExtractor(err)
           const errorMessage = getErrorMessage(errorObject)
-          return h.view('productivity', createModel(errorMessage, null, null)).takeover()
+          return h.view('productivity', createModel(errorMessage, null, null, getYarValue(request, 'current-score'))).takeover()
         }
       },
       handler: (request, h) => {
-        let { productivity } = request.payload
+        const hasScore = getYarValue(request, 'current-score')
+        let { productivity, results } = request.payload
         productivity = [productivity].flat()
         if (productivity.length > 2) {
-          return h.view('productivity', createModel('Select one or two options', 'Select how the project will improve productivity', productivity)).takeover()
+          return h.view('productivity', createModel('Select one or two options', 'Select how the project will improve productivity', productivity, hasScore)).takeover()
         }
         setYarValue(request, 'productivity', productivity)
-        return h.redirect('./collaboration')
+        return results ? h.redirect('./score') : h.redirect('./collaboration')
       }
     }
   }

@@ -5,6 +5,10 @@ $govuk-assets-path: "~govuk-frontend/govuk/assets/";
   display: none;
 }
 
+.sideBarColor {
+  border: 1px solid #1d70b8;
+}
+
 .js-enabled .nojs-hidden {
   display: block;
 }
