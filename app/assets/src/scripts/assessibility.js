@@ -1,5 +1,5 @@
 
-window.onload = function () {
+export function assessibility () {
   const elements = document.querySelectorAll('input[type="checkbox"]')
   if (elements) {
     elements.forEach(function (checkBox) {
@@ -7,6 +7,8 @@ window.onload = function () {
         event.preventDefault()
         if (event.which === 13) {
           this.checked = !this.checked
+          const e = new Event('change')
+          this.dispatchEvent(e)
         }
       })
     })
