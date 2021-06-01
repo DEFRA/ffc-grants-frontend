@@ -11,7 +11,7 @@ function createModel (calculatedGrant, projectCost) {
 module.exports = [
   {
     method: 'GET',
-    path: '/grant',
+    path: '/potential-amount',
     handler: (request, h) => {
       const calculatedGrant = request.yar.get('calculatedGrant') || null
       const projectCost = request.yar.get('projectCost') || null
@@ -31,7 +31,7 @@ module.exports = [
   },
   {
     method: 'POST',
-    path: '/grant',
+    path: '/potential-amount',
     handler: (request, h) => {
       return h.redirect('./remaining-costs')
     }
