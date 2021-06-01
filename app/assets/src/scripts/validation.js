@@ -1,4 +1,4 @@
-export function validation() {
+export function validation () {
   let elements = document.querySelectorAll('input[type="checkbox"]')
   if (elements) {
     elements = Array.from(elements)
@@ -12,6 +12,11 @@ export function validation() {
           checkBox.checked = false
         })
       })
+      // in case you back to this page
+      if (noneOfAbove[0].checked) {
+        const e = new Event('change')
+        noneOfAbove[0].dispatchEvent(e)
+      }
     }
   }
 }
