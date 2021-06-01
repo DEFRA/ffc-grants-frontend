@@ -86,7 +86,7 @@ module.exports = [
           if (irrigationPlanned.length > 2) {
             errorList.push({ text: 'Select the systems that will be used to irrigate', href: '#irrigationPlanned' })
           }
-          return h.view('irrigation-systems', createModel('Select one or two options', errorList, irrigationCurrent, irrigationPlanned))
+          return h.view('irrigation-systems', createModel('Select one or two options', errorList, irrigationCurrent, irrigationPlanned, getYarValue(request, 'current-score')))
             .takeover()
         }
 
