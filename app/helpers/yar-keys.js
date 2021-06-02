@@ -1,7 +1,5 @@
 module.exports = [
   'abstractionLicence',
-  'agentAddressDetails',
-  'agentContactDetails',
   'agentDetails',
   'applying',
   'isArable',
