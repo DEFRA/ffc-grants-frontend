@@ -11,12 +11,11 @@ describe('Confirmation page', () => {
       throw new Error('Some error')
     })
     // setting yar variable needed  for the confirmation page
-    const consentMain = 'CONSENT_MAIN'
 
     const postOptions = {
       method: 'POST',
       url: '/confirm',
-      payload: { consentMain, crumb: crumbToken },
+      payload: { crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
       }

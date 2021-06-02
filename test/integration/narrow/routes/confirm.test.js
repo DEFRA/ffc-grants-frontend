@@ -1,21 +1,26 @@
 const { crumbToken } = require('./test-helper')
-describe('Confirm page', () => {
-  const farmerAddressDetails = 'some fake farmer details'
 
-  jest.mock('../../../../app/helpers/session', () => ({
-    setYarValue: (request, key, value) => null,
-    getYarValue: (request, key) => {
-      switch (key) {
-        case 'farmerAddressDetails':
-          return farmerAddressDetails
-        default:
-          return 'Error'
-      }
-    }
-  }))
+const varListTemplate = {
+  farmerAddressDetails: 'some fake farmer details'
+}
+
+let varList
+const mockSession = {
+  setYarValue: (request, key, value) => null,
+  getYarValue: (request, key) => {
+    if (Object.keys(varList).includes(key)) return varList[key]
+    else return 'Error'
+  }
+}
+jest.mock('../../../../app/helpers/session', () => mockSession)
+
+describe('Confirm page', () => {
+  beforeEach(() => {
+    varList = { ...varListTemplate }
+  })
 
   afterEach(() => {
-    jest.clearAllMocks()
+    jest.resetAllMocks()
   })
 
   it('should load page successfully', async () => {
@@ -32,24 +37,39 @@ describe('Confirm page', () => {
     expect(response.statusCode).toBe(200)
   })
 
-  it('should return error message if main confirm checkbox (the first) is not selected', async () => {
-    const postOptions = {
-      method: 'POST',
+  it('should redirect to /start page if the referer URL is NOT farmer-address-details', async () => {
+    const options = {
+      method: 'GET',
       url: '/confirm',
-      payload: { crumb: crumbToken },
+      headers: {
+        cookie: 'crumb=' + crumbToken,
+        referer: 'localhost/project-details'
+      }
+    }
+
+    const response = await global.__SERVER__.inject(options)
+    expect(response.statusCode).toBe(302)
+    expect(response.headers.location).toBe('./start')
+  })
+
+  it('should redirect to /start page if farmerAddressDetails are missing', async () => {
+    varList.farmerAddressDetails = null
+    const options = {
+      method: 'GET',
+      url: '/confirm',
       headers: { cookie: 'crumb=' + crumbToken }
     }
 
-    const postResponse = await global.__SERVER__.inject(postOptions)
-    expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Please confirm you are happy to be contacted about your application.')
+    const response = await global.__SERVER__.inject(options)
+    expect(response.statusCode).toBe(302)
+    expect(response.headers.location).toBe('./start')
   })
 
   it('should store user response and redirects to confirmation page', async () => {
     const postOptions = {
       method: 'POST',
       url: '/confirm',
-      payload: { consentMain: 'CONSENT_MAIN', crumb: crumbToken },
+      payload: { consentOptional: 'some conscent', crumb: crumbToken },
       headers: { cookie: 'crumb=' + crumbToken }
     }
 
