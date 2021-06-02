@@ -25,7 +25,7 @@ function createModel (errorMessage, errorSummary, data, backLink, hasScore) {
       hint: {
         text: 'Select one or two options'
       },
-      items: setLabelData(data, ['Change water source', 'Improve irrigation efficiency', 'Increase irrigation', 'Introduce irrigation']),
+      items: setLabelData(data, ['Change water source', 'Improve irrigation efficiency', 'Increase irrigation', 'Introduce irrigation', 'None of the above']),
       ...(errorMessage ? { errorMessage: { text: errorMessage } } : {})
     }
   }
@@ -70,6 +70,10 @@ module.exports = [
         const hasScore = getYarValue(request, 'current-score')
         project = [project].flat()
 
+        if (project.filter(option => option === 'None of the above').length > 0 && project.length > 1) {
+          errorList.push({ text: 'Select one or two options of what the project will achieve', href: '#project' })
+          return h.view('project-details', createModel('If you select \'None of the above\', you cannot select another option', errorList, project)).takeover()
+        }
         if (project.length > 2) {
           errorList.push({ text: 'Select one or two options of what the project will achieve', href: '#project' })
           return h.view('project-details', createModel('Select one or two options', errorList, project, getBackLink(request), hasScore)).takeover()
