@@ -9,7 +9,7 @@ const crumb = require('@hapi/crumb')
 const { version } = require('../package.json')
 const authConfig = require('./config/auth')
 const Uuid = require('uuid')
-const protectiveMonitoringServiceSendEvent = require('./services/protective-monitoring-service')
+// const protectiveMonitoringServiceSendEvent = require('./services/protective-monitoring-service')
 const cacheConfig = require('./config/cache')
 const catbox = cacheConfig.useRedis ? require('@hapi/catbox-redis') : require('@hapi/catbox-memory')
 
@@ -98,7 +98,7 @@ async function createServer () {
         },
         customSessionIDGenerator: function (request) {
           const sessionID = Uuid.v4()
-          protectiveMonitoringServiceSendEvent(request, sessionID, 'FTF-SESSION-CREATED', '0701')
+          // protectiveMonitoringServiceSendEvent(request, sessionID, 'FTF-SESSION-CREATED', '0701')
           return sessionID
         }
       }

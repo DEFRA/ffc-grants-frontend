@@ -9,6 +9,7 @@ module.exports = {
     name: 'page-guard',
     register: (server, options) => {
       server.ext('onPreResponse', (request, h) => {
+        console.log(`Request to: ${request.url}`)
         const currentUrl = request.url.pathname.split('/').pop()
         let result
 

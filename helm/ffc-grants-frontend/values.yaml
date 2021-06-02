@@ -27,8 +27,8 @@ deployment:
   redeployOnChange: update this field to force a change
   runAsNonRoot: true
   runAsUser: 30303
-  replicas: 2
-  minReplicas: 2
+  replicas: 1
+  minReplicas: 1
   maxReplicas: 4
   cpuThreshold: 80
   memoryThreshold: 80
