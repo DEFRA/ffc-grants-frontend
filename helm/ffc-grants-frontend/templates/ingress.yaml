@@ -13,7 +13,7 @@ spec:
   - host: {{ .Values.ingress.endpoint }}-{{ .Values.pr }}.{{ .Values.ingress.server }}
     http:
       paths:
-      - path: /water
+      - path: /water/
         backend:
           serviceName: {{ .Values.name | quote }}
           servicePort: {{ .Values.service.port }}
