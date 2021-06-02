@@ -1,3 +1,19 @@
-{{- include "ffc-helm-library.azure-ingress" (list . "ffc-grants-frontend.ingress") -}}
-{{- define "ffc-grants-frontend.ingress" -}}
-{{- end -}}
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ .Values.name | quote }}
+  namespace: {{ .Values.namespace | quote }}
+  labels:
+    {{- include "ffc-helm-library.labels" . | nindent 4 }}
+  annotations:
+    kubernetes.io/ingress.class: {{ .Values.ingress.class | quote }}
+    ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: {{ .Values.ingress.endpoint }}-{{ .Values.pr }}.{{ .Values.ingress.server }}
+    http:
+      paths:
+      - path: /water
+        backend:
+          serviceName: {{ .Values.name | quote }}
+          servicePort: {{ .Values.service.port }}
