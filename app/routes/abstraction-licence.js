@@ -30,7 +30,7 @@ function createModel (backLink, errorMessage, data) {
 module.exports = [
   {
     method: 'GET',
-    path: '/abstraction-licence',
+    path: '/water/abstraction-licence',
     handler: (request, h) => {
       const abstractionLicence = getYarValue(request, 'abstractionLicence')
       const data = abstractionLicence || null
@@ -39,7 +39,7 @@ module.exports = [
   },
   {
     method: 'POST',
-    path: '/abstraction-licence',
+    path: '/water/abstraction-licence',
     options: {
       validate: {
         payload: Joi.object({
