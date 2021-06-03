@@ -1,25 +1,12 @@
 const Joi = require('joi')
-const { setLabelData, findErrorList } = require('../helpers/helper-functions')
+const { setLabelData } = require('../helpers/helper-functions')
 const { setYarValue, getYarValue } = require('../helpers/session')
 
-const CONSENT_MAIN = 'CONSENT_MAIN'
 const CONSENT_OPTIONAL = 'CONSENT_OPTIONAL'
 
-function createModel (consentMain, consentOptional, errorMessage) {
+function createModel (consentOptional, errorMessage) {
   return {
     backLink: './farmer-address-details',
-    consentMainData: {
-      idPrefix: 'consentMain',
-      name: 'consentMain',
-      items: setLabelData(
-        consentMain,
-        [{
-          value: CONSENT_MAIN,
-          text: 'I am happy to be contacted by Defra and RPA (or a third-party on their behalf) about the application.'
-        }]
-      ),
-      ...(errorMessage ? { errorMessage: { text: errorMessage } } : {})
-    },
     consentOptionalData: {
       idPrefix: 'consentOptional',
       name: 'consentOptional',
@@ -27,7 +14,7 @@ function createModel (consentMain, consentOptional, errorMessage) {
         consentOptional,
         [{
           value: CONSENT_OPTIONAL,
-          text: 'So that we can continue to improve our services and schemes, we may wish to contact you in the future. Please confirm if you are happy for us, or a third party working for us, to contact you.'
+          text: '(Optional) So that we can continue to improve our services and schemes, we may wish to contact you in the future. Please confirm if you are happy for us, or a third-party working for us, to contact you.'
         }]
       )
     }
@@ -42,13 +29,11 @@ module.exports = [
       const refererURL = request?.headers?.referer?.split('/').pop()
 
       if (!getYarValue(request, 'farmerAddressDetails') || refererURL !== 'farmer-address-details') {
-        console.log(refererURL)
         return h.redirect('./start')
       }
-      const consentMain = (getYarValue(request, 'consentMain') && CONSENT_MAIN) || ''
       const consentOptional = (getYarValue(request, 'consentOptional') && CONSENT_OPTIONAL) || ''
 
-      return h.view('confirm', createModel(consentMain, consentOptional, null))
+      return h.view('confirm', createModel(consentOptional, null))
     }
   },
   {
@@ -57,20 +42,8 @@ module.exports = [
     options: {
       validate: {
         payload: Joi.object({
-          consentMain: Joi.string().required(),
           consentOptional: Joi.string().allow('')
-        }),
-        failAction: (request, h, err) => {
-          const [consentMainError] = findErrorList(err, ['consentMain'])
-
-          let { consentMain, consentOptional } = request.payload
-          consentMain = (consentMain && CONSENT_MAIN) || ''
-          consentOptional = (consentMain && CONSENT_OPTIONAL) || ''
-          return h.view(
-            'confirm',
-            createModel(consentMain, consentOptional, consentMainError)
-          ).takeover()
-        }
+        })
       }
     },
     handler: (request, h) => {
