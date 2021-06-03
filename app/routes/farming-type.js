@@ -58,8 +58,8 @@ module.exports = [
       handler: async (request, h) => {
         setYarValue(request, 'farmingType', request.payload.farmingType)
         await gapiService.sendEligibilityEvent(request, request.payload.farmingType !== 'Something else')
-        if (request.payload.farmingType !== 'Something else') { return h.redirect('./legal-status') }
-        return h.view('./not-eligible', createModelNotEligible())
+        if (request.payload.farmingType !== 'Something else') { return h.redirect('legal-status') }
+        return h.view('not-eligible', createModelNotEligible())
       }
     }
   }
