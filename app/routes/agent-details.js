@@ -1,6 +1,6 @@
 const Joi = require('joi')
 const { setYarValue, getYarValue } = require('../helpers/session')
-const { setLabelData, fetchListObjectItems, findErrorList } = require('../helpers/helper-functions')
+const { setLabelData, fetchListObjectItems, findErrorList, formInputObject } = require('../helpers/helper-functions')
 const { NAME_REGEX, PHONE_REGEX, POSTCODE_REGEX, DELETE_POSTCODE_CHARS_REGEX } = require('../helpers/regex-validation')
 const { LIST_COUNTIES } = require('../helpers/all-counties')
 
@@ -40,99 +40,24 @@ function createModel (errorMessageList, agentDetails) {
     pageId: 'Agent',
     pageHeader: 'Agent\'s details',
     formActionPage: './agent-details',
-    inputFirstName: {
-      id: 'firstName',
-      name: 'firstName',
-      classes: 'govuk-input--width-20',
-      label: {
-        text: 'First name'
-      },
-      ...(firstName ? { value: firstName } : {}),
-      ...(firstNameError ? { errorMessage: { text: firstNameError } } : {})
-    },
-    inputLastName: {
-      id: 'lastName',
-      name: 'lastName',
-      classes: 'govuk-input--width-20',
-      label: {
-        text: 'Last name'
-      },
-      ...(lastName ? { value: lastName } : {}),
-      ...(lastNameError ? { errorMessage: { text: lastNameError } } : {})
-    },
-    inputBusinessName: {
-      id: 'businessName',
-      name: 'businessName',
-      classes: 'govuk-input--width-20',
-      label: {
-        text: 'Business name'
-      },
-      ...(businessName ? { value: businessName } : {}),
-      ...(businessNameError ? { errorMessage: { text: businessNameError } } : {})
-    },
-    inputEmail: {
-      id: 'email',
-      name: 'email',
-      classes: 'govuk-input--width-20',
-      label: {
-        text: 'Email address'
-      },
-      hint: {
-        text:
-          'We will use this to send you a confirmation'
-      },
-      ...(email ? { value: email } : {}),
-      ...(emailError ? { errorMessage: { text: emailError } } : {})
-    },
-    inputMobile: {
-      id: 'mobile',
-      name: 'mobile',
-      classes: 'govuk-input--width-20',
-      label: {
-        text: 'Mobile number'
-      },
-      ...(mobile ? { value: mobile } : {}),
-      ...(mobileError ? { errorMessage: { text: mobileError } } : {})
-    },
-    inputLandline: {
-      id: 'landline',
-      name: 'landline',
-      classes: 'govuk-input--width-20',
-      label: {
-        text: 'Landline number (optional)'
-      },
-      ...(landline ? { value: landline } : {}),
-      ...(landlineError ? { errorMessage: { text: landlineError } } : {})
-    },
-    inputAddress1: {
-      id: 'address1',
-      name: 'address1',
-      classes: 'govuk-input--width-20',
-      label: {
-        text: 'Address 1'
-      },
-      ...(address1 ? { value: address1 } : {}),
-      ...(address1Error ? { errorMessage: { text: address1Error } } : {})
-    },
-    inputAddress2: {
-      id: 'address2',
-      name: 'address2',
-      classes: 'govuk-input--width-20',
-      label: {
-        text: 'Address 2 (optional)'
-      },
-      ...(address2 ? { value: address2 } : {})
-    },
-    inputTown: {
-      id: 'town',
-      name: 'town',
-      classes: 'govuk-input--width-10',
-      label: {
-        text: 'Town'
-      },
-      ...(town ? { value: town } : {}),
-      ...(townError ? { errorMessage: { text: townError } } : {})
-    },
+    inputFirstName: formInputObject('firstName', 'govuk-input--width-20', 'First name', null, firstName, firstNameError),
+
+    inputLastName: formInputObject('lastName', 'govuk-input--width-20', 'Last name', null, lastName, lastNameError),
+
+    inputBusinessName: formInputObject('businessName', 'govuk-input--width-20', 'Business name', null, businessName, businessNameError),
+
+    inputEmail: formInputObject('email', 'govuk-input--width-20', 'Email address', 'We will use this to send you a confirmation', email, emailError),
+
+    inputMobile: formInputObject('mobile', 'govuk-input--width-20', 'Mobile number', null, mobile, mobileError),
+
+    inputLandline: formInputObject('landline', 'govuk-input--width-20', 'Landline number (optional)', null, landline, landlineError),
+
+    inputAddress1: formInputObject('address1', 'govuk-input--width-20', 'Address 1', null, address1, address1Error),
+
+    inputAddress2: formInputObject('address2', 'govuk-input--width-20', 'Address 2', null, address2, null),
+
+    inputTown: formInputObject('town', 'govuk-input--width-10', 'Town', null, town, townError),
+
     selectCounty: {
       id: 'county',
       name: 'county',
@@ -146,16 +71,7 @@ function createModel (errorMessageList, agentDetails) {
       ]),
       ...(countyError ? { errorMessage: { text: countyError } } : {})
     },
-    inputPostcode: {
-      id: 'postcode',
-      name: 'postcode',
-      classes: 'govuk-input--width-5',
-      label: {
-        text: 'Postcode'
-      },
-      ...(postcode ? { value: postcode } : {}),
-      ...(postcodeError ? { errorMessage: { text: postcodeError } } : {})
-    }
+    inputPostcode: formInputObject('postcode', 'govuk-input--width-5', 'Postcode', null, postcode, postcodeError)
   }
 }
 
@@ -235,7 +151,7 @@ module.exports = [
         } = request.payload
 
         setYarValue(request, 'agentDetails', {
-          firstName, lastName, businessName, email, mobile, landline, address1, address2, town, county, postcode
+          firstName, lastName, businessName, email, mobile, landline, address1, address2, town, county, postcode: postcode.split(/(?=.{3}$)/).join(' ').toUpperCase()
         })
 
         return h.redirect('./farmer-details')
