@@ -14,7 +14,7 @@ function createModel (consentOptional, errorMessage) {
         consentOptional,
         [{
           value: CONSENT_OPTIONAL,
-          text: '(Optional) So that we can continue to improve our services and schemes, we may wish to contact you in the future. Please confirm if you are happy for us, or a third party working for us, to contact you.'
+          text: '(Optional) So that we can continue to improve our services and schemes, we may wish to contact you in the future. Please confirm if you are happy for us, or a third-party working for us, to contact you.'
         }]
       )
     }

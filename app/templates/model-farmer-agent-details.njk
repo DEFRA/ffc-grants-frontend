@@ -5,6 +5,7 @@
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/select/macro.njk" import govukSelect %}
+
 {% block pageTitle %}
   {{siteTitle}} - {{ pageHeader }} 
 {% endblock %}
@@ -21,9 +22,20 @@
     <h1 class="govuk-heading-l">{{pageHeader}}</h1>
       <form method="POST" action="{{formActionPage}}" autocomplete="off" novalidate>
         <input type="hidden" name="crumb" value="{{crumb}}" />
-        {{ govukSelect(selectTitle) }}
         {{ govukInput(inputFirstName) }}
         {{ govukInput(inputLastName) }}
+        {{ govukInput(inputBusinessName) }}
+        <h1 class="govuk-heading-m">Contact details</h1><br/>
+        {{ govukInput(inputEmail) }}
+        {{ govukInput(inputMobile) }}
+        {{ govukInput(inputLandline) }}
+        <h1 class="govuk-heading-m">Address details</h1><br/>
+        {{ govukInput(inputAddress1) }}
+        {{ govukInput(inputAddress2) }}
+        {{ govukInput(inputTown) }}
+        {{ govukSelect(selectCounty) }}
+        {{ govukInput(inputPostcode) }}
+       
         {{ govukButton({
           text: "Continue"
         }) }}

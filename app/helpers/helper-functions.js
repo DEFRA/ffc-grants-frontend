@@ -26,6 +26,22 @@ function setLabelData (data, labelData) {
   })
 }
 
+function formInputObject (name, classes, text, hint, fieldName, fieldError) {
+  return {
+    id: name,
+    name: name,
+    classes: classes,
+    label: {
+      text: text
+    },
+    hint: {
+      text: hint
+    },
+    ...(fieldName ? { value: fieldName } : {}),
+    ...(fieldError ? { errorMessage: { text: fieldError } } : {})
+  }
+}
+
 function getPostCodeHtml (postcodeData, error) {
   const postcode = postcodeData || ''
 
@@ -136,6 +152,7 @@ function findErrorList ({ details }, inputFields) {
 module.exports = {
   isChecked,
   setLabelData,
+  formInputObject,
   getPostCodeHtml,
   errorExtractor,
   getErrorMessage,
