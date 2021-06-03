@@ -427,23 +427,6 @@ module.exports = {
       pageTitle: '',
       url: 'farmer-details',
       yarKey: 'farmerDetails'
-    },
-    {
-      key: 'Q24',
-      order: 24,
-      title: 'Farmer\'s contact details',
-      pageTitle: '',
-      url: 'farmer-contact-details',
-      yarKey: 'farmerContactDetails'
-    },
-    {
-      key: 'Q25',
-      order: 25,
-      title: 'Farmer\'s address details',
-      pageTitle: '',
-      url: 'farmer-address-details',
-      yarKey: 'farmerAddressDetails'
     }
-
   ]
 }
