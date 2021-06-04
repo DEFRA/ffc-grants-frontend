@@ -1,7 +1,7 @@
 const POSTCODE_REGEX = /^[\s]*[a-z]{1,2}\d[a-z\d]?[\s]*\d[a-z]{2}[\s]*$/i
 const DELETE_POSTCODE_CHARS_REGEX = /[)(.\s-]*/g
 const PHONE_REGEX = /^[0-9\t-+()]+$/
-const NAME_REGEX = /^[a-zA-Z' -]+$/
+const NAME_REGEX = /^[a-zA-Z' -,]+$/
 const NUMBER_REGEX = /^\d+$/
 const PROJECT_COST_REGEX = /^[1-9][0-9]*$/
 const IRRIGATED_LAND_REGEX = /^(\d+([.]\d?)?|[.]\d)$/

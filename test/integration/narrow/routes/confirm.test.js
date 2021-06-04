@@ -1,7 +1,10 @@
 const { crumbToken } = require('./test-helper')
 
 const varListTemplate = {
-  farmerAddressDetails: 'some fake farmer details'
+  farmerDetails: {
+    firstName: 'some fake farmer',
+    lastName: 'surname'
+  }
 }
 
 let varList
@@ -29,7 +32,7 @@ describe('Confirm page', () => {
       url: '/confirm',
       headers: {
         cookie: 'crumb=' + crumbToken,
-        referer: 'localhost/farmer-address-details'
+        referer: 'localhost/farmer-details'
       }
     }
 
@@ -37,7 +40,7 @@ describe('Confirm page', () => {
     expect(response.statusCode).toBe(200)
   })
 
-  it('should redirect to /start page if the referer URL is NOT farmer-address-details', async () => {
+  it('should redirect to /start page if the referer URL is NOT farmer-details', async () => {
     const options = {
       method: 'GET',
       url: '/confirm',
