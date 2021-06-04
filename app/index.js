@@ -1,9 +1,10 @@
 const createServer = require('./server')
+const appInsights = require('./services/app-insights')
 
 process.on('unhandledRejection', (err) => {
   console.log('# Hapi server error')
   console.log(err)
-  process.exit(1)
+  appInsights.logException(null, { error: err })
 })
 
 const initialise = async () => {
