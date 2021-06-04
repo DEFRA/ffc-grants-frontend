@@ -3,7 +3,7 @@
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
-{% from "govuk/components/input/macro.njk" import govukInput %}
+
 {% block pageTitle %}
   {{siteTitle}} - Start
 {% endblock %}
@@ -39,7 +39,7 @@
       isStartButton: true,
       text: button.text
     }) }}
-     <h2 class="govuk-heading-m">Before you start</h2>
+    <h2 class="govuk-heading-m">Before you start</h2>
 
       <p>You need:</p>
       <ul class="govuk-list govuk-list--bullet">
@@ -53,7 +53,6 @@
       <p>Monday to Friday, 9am to 5pm (except public holidays)</p> 
       <p><a target="_blank" href="https://www.gov.uk/call-charges">Find out about call charges</a></p> 
       <p>Email: <a href="mailto:FTF@rpa.gov.uk">FTF@rpa.gov.uk</a></p>
-     
     </div>
   </div>
 {% if googleTagManagerKey %}
