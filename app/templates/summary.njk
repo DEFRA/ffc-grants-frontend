@@ -38,7 +38,7 @@
             actions: {
               items: [
                 {
-                  href: "#",
+                  href: "/business-details",
                   text: "Change",
                   visuallyHiddenText: "name"
                 }
@@ -48,9 +48,9 @@
         ]
       }) }}
       {{ govukSummaryList({
-        classes: 'govuk-summary-list--no-border',
         rows: [
           {
+            classes: 'govuk-summary-list__row--no-border',
             key: {
               text: "Project name"
             },
@@ -59,6 +59,7 @@
             }
           },
           {
+            classes: 'govuk-summary-list__row--no-border',
             key: {
               text: "Business name"
             },
@@ -67,6 +68,7 @@
             }
           },
           {
+            classes: 'govuk-summary-list__row--no-border',
             key: {
               text: "Number of employees"
             },
@@ -75,28 +77,26 @@
             }
           },
           {
+            classes: 'govuk-summary-list__row--no-border',
             key: {
               text: "Business turnover"
             },
             value: {
               text: businessDetails.businessTurnover
             }
-          }          
-        ]
-      }) }}
-       
-      {{ govukSummaryList({
-        rows: [
+          },
           {
             key: {
               text: "Single Business Identifier (SBI)"
             },
             value: {
-              text: businessDetails.businessTurnover
+              text: businessDetails.sbi
             }
-          }
+          } 
+
         ]
       }) }}
+      
       {% endif %}
      
       {% if agentDetails %}   
@@ -119,14 +119,14 @@
               text: "Name"
             },
             value: {
-              text:  agentDetails.title + ' ' + agentDetails.firstName + ' ' + agentDetails.lastName
+              text:  agentDetails.firstName + ' ' + agentDetails.lastName
             },
             actions: {
               items: [
                 {
-                  href: "#",
+                  href: "/agent-details",
                   text: "Change",
-                  visuallyHiddenText: "name"
+                  visuallyHiddenText: "agent-details"
                 }
               ]
             }
@@ -136,14 +136,14 @@
               text: "Home address"
             },
             value: {
-              html: agentAddressDetails.address1 + '<br/>' +agentAddressDetails.address2 + '<br/>' +agentAddressDetails.town + '<br/>' +agentAddressDetails.county + '<br/>' +agentAddressDetails.postcode
+              html: agentDetails.address1 + '<br/>' +agentDetails.address2 + '<br/>' +agentDetails.town + '<br/>' +agentDetails.county + '<br/>' +agentDetails.postcode
             },
             actions: {
               items: [
                 {
-                  href: "#",
+                  href: "/agent-details",
                   text: "Change",
-                  visuallyHiddenText: "name"
+                  visuallyHiddenText: "agent-details"
                 }
               ]
             }
@@ -153,14 +153,14 @@
               text: "Contact details"
             },
             value: {
-              html: agentContactDetails.email  + '<br/>' +agentContactDetails.landline  + '<br/>' +agentContactDetails.mobile
+              html: agentDetails.email  + '<br/>' +agentDetails.landline  + '<br/>' +agentDetails.mobile
             },
             actions: {
               items: [
                 {
-                  href: "#",
+                  href: "/agent-details",
                   text: "Change",
-                  visuallyHiddenText: "name"
+                  visuallyHiddenText: "agent-details"
                 }
               ]
             }
@@ -189,14 +189,14 @@
               text: "Name"
             },
             value: {
-              text:  farmerDetails.title + ' ' + farmerDetails.firstName + ' ' + farmerDetails.lastName
+              text:  farmerDetails.firstName + ' ' + farmerDetails.lastName
             },
             actions: {
               items: [
                 {
-                  href: "#",
+                  href: "/farmer-details",
                   text: "Change",
-                  visuallyHiddenText: "name"
+                  visuallyHiddenText: "farmer-details"
                 }
               ]
             }
@@ -211,9 +211,9 @@
             actions: {
               items: [
                 {
-                  href: "#",
+                  href: "/farmer-details",
                   text: "Change",
-                  visuallyHiddenText: "name"
+                  visuallyHiddenText: "farmer-details"
                 }
               ]
             }
@@ -228,9 +228,9 @@
             actions: {
               items: [
                 {
-                  href: "#",
+                  href: "/farmer-details",
                   text: "Change",
-                  visuallyHiddenText: "name"
+                  visuallyHiddenText: "farmer-details"
                 }
               ]
             }
@@ -242,7 +242,7 @@
     </div>
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
-        <form method="POST" action="./summary" autocomplete="off" novalidate>
+        <form method="POST" action="./check-details" autocomplete="off" novalidate>
           {{ crumbToken(crumb)}}
           {{ govukButton({
             text: "Continue"

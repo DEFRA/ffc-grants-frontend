@@ -1,14 +1,14 @@
 const createMsg = require('../messaging/create-msg')
 function createModel (data) {
   return {
-    backLink: './confirm',
+    backLink: './farmer-details',
     ...data
   }
 }
 
 module.exports = [{
   method: 'GET',
-  path: '/summary',
+  path: '/check-details',
   options: {
     log: {
       collect: true
@@ -17,13 +17,14 @@ module.exports = [{
   handler: (request, h, err) => {
     const msg = createMsg.getAllDetails(request, '')
     console.log(msg)
-    return h.view('summary', createModel(msg))
+    return h.view('check-details', createModel(msg))
   }
 },
 {
   method: 'POST',
-  path: '/summary',
+  path: '/check-details',
   handler: (request, h) => {
+    console.log('Redirect')
     return h.redirect('./confirm')
   }
 }]

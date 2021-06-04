@@ -3,7 +3,7 @@ const createServer = require('./server')
 process.on('unhandledRejection', (err) => {
   console.log('# Hapi server error')
   console.log(err)
-  process.exit(1)
+  // process.exit(1)
 })
 
 const initialise = async () => {

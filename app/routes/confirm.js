@@ -6,7 +6,7 @@ const CONSENT_OPTIONAL = 'CONSENT_OPTIONAL'
 
 function createModel (consentOptional, errorMessage) {
   return {
-    backLink: './farmer-address-details',
+    backLink: './check-details',
     consentOptionalData: {
       idPrefix: 'consentOptional',
       name: 'consentOptional',
@@ -28,7 +28,7 @@ module.exports = [
     handler: (request, h) => {
       const refererURL = request?.headers?.referer?.split('/').pop()
 
-      if (!getYarValue(request, 'farmerAddressDetails') || refererURL !== 'farmer-address-details') {
+      if (!getYarValue(request, 'farmerAddressDetails') || refererURL !== 'check-details') {
         return h.redirect('./start')
       }
       const consentOptional = (getYarValue(request, 'consentOptional') && CONSENT_OPTIONAL) || ''

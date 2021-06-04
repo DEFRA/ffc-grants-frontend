@@ -129,7 +129,7 @@ module.exports = [
         setYarValue(request, 'farmerAddressDetails', {
           address1, address2, town, county, postcode: postcode.split(/(?=.{3}$)/).join(' ').toUpperCase()
         })
-        return h.redirect('./summary')
+        return h.redirect('./check-details')
       }
     }
   }

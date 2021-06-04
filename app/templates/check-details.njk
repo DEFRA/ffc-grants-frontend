@@ -1,27 +1,254 @@
-z{% extends '.layout.njk' %}
+{% extends '.layout.njk' %}
 
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "./components/macro.njk" import crumbToken %}
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
-{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
 {% block pageTitle %}
-  {{siteTitle}} - Check details
+  {{siteTitle}} - Check your details
 {% endblock %}
-
 {% block beforeContent %}
-  {{ govukBreadcrumbs({
-    items: [
-      {
-        text: "Home",
-        href: "./"
-      },
-      {
-        text: "Check if you can apply for a Farming Transformation Fund water management grant",
-        href: "./"
-      }
-    ]
+  {{ govukBackLink({
+    text: "Back",
+    href: backLink
   }) }}
+
 {% endblock %}
 
 {% block content %}
-  <h1 class="govuk-heading-l">Application details</h1>
-  {{ govukSummaryList(details) }}
+  <div class="govuk-body">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-xl">Check your details</h1>
+      </div>
+    </div>
+    <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+ 
+      {% if businessDetails %}   
+      {{ govukSummaryList({
+        rows: [
+          {
+            key: {
+              html: "<h1 class='govuk-heading-m'>Business details</h1>"
+            },
+            value: {
+              text: ""
+            },
+            actions: {
+              items: [
+                {
+                  href: "/business-details",
+                  text: "Change",
+                  visuallyHiddenText: "name"
+                }
+              ]
+            }
+          }
+        ]
+      }) }}
+      {{ govukSummaryList({
+        rows: [
+          {
+            classes: 'govuk-summary-list__row--no-border',
+            key: {
+              text: "Project name"
+            },
+            value: {
+              text:  businessDetails.projectName
+            }
+          },
+          {
+            classes: 'govuk-summary-list__row--no-border',
+            key: {
+              text: "Business name"
+            },
+            value: {
+              text: businessDetails.businessName
+            }
+          },
+          {
+            classes: 'govuk-summary-list__row--no-border',
+            key: {
+              text: "Number of employees"
+            },
+            value: {
+              text: businessDetails.numberEmployees
+            }
+          },
+          {
+            classes: 'govuk-summary-list__row--no-border',
+            key: {
+              text: "Business turnover"
+            },
+            value: {
+              text: businessDetails.businessTurnover
+            }
+          },
+          {
+            key: {
+              text: "Single Business Identifier (SBI)"
+            },
+            value: {
+              text: businessDetails.sbi
+            }
+          } 
+
+        ]
+      }) }}
+      
+      {% endif %}
+     
+      {% if agentDetails %}   
+      {{ govukSummaryList({
+        rows: [
+          {
+            key: {
+              html: "<h1 class='govuk-heading-m'>Agent's details</h1>"
+            },
+            value: {
+              text: ""
+            }
+          }
+        ]
+      }) }}
+      {{ govukSummaryList({
+        rows: [
+          {
+            key: {
+              text: "Name"
+            },
+            value: {
+              text:  agentDetails.firstName + ' ' + agentDetails.lastName
+            },
+            actions: {
+              items: [
+                {
+                  href: "/agent-details",
+                  text: "Change",
+                  visuallyHiddenText: "agent-details"
+                }
+              ]
+            }
+          },
+          {
+            key: {
+              text: "Home address"
+            },
+            value: {
+              html: agentDetails.address1 + '<br/>' +agentDetails.address2 + '<br/>' +agentDetails.town + '<br/>' +agentDetails.county + '<br/>' +agentDetails.postcode
+            },
+            actions: {
+              items: [
+                {
+                  href: "/agent-details",
+                  text: "Change",
+                  visuallyHiddenText: "agent-details"
+                }
+              ]
+            }
+          },
+          {
+            key: {
+              text: "Contact details"
+            },
+            value: {
+              html: agentDetails.email  + '<br/>' +agentDetails.landline  + '<br/>' +agentDetails.mobile
+            },
+            actions: {
+              items: [
+                {
+                  href: "/agent-details",
+                  text: "Change",
+                  visuallyHiddenText: "agent-details"
+                }
+              ]
+            }
+          }
+        ]
+      }) }}
+      {% endif %}
+     
+      {% if farmerDetails %}   
+      {{ govukSummaryList({
+        rows: [
+          {
+            key: {
+              html: "<h1 class='govuk-heading-m'>Farmer's details</h1>"
+            },
+            value: {
+              text: ""
+            }
+          }
+        ]
+      }) }}
+      {{ govukSummaryList({
+        rows: [
+          {
+            key: {
+              text: "Name"
+            },
+            value: {
+              text:  farmerDetails.firstName + ' ' + farmerDetails.lastName
+            },
+            actions: {
+              items: [
+                {
+                  href: "/farmer-details",
+                  text: "Change",
+                  visuallyHiddenText: "farmer-details"
+                }
+              ]
+            }
+          },
+          {
+            key: {
+              text: "Home address"
+            },
+            value: {
+              html: farmerAddressDetails.address1 + '<br/>' +farmerAddressDetails.address2 + '<br/>' +farmerAddressDetails.town + '<br/>' +farmerAddressDetails.county + '<br/>' +farmerAddressDetails.postcode
+            },
+            actions: {
+              items: [
+                {
+                  href: "/farmer-details",
+                  text: "Change",
+                  visuallyHiddenText: "farmer-details"
+                }
+              ]
+            }
+          },
+          {
+            key: {
+              text: "Contact details"
+            },
+            value: {
+              html: farmerContactDetails.email  + '<br/>' +farmerContactDetails.landline  + '<br/>' +farmerContactDetails.mobile
+            },
+            actions: {
+              items: [
+                {
+                  href: "/farmer-details",
+                  text: "Change",
+                  visuallyHiddenText: "farmer-details"
+                }
+              ]
+            }
+          }
+        ]
+      }) }}
+      {% endif %}     
+     
+    </div>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <form method="POST" action="./check-details" autocomplete="off" novalidate>
+          {{ crumbToken(crumb)}}
+          {{ govukButton({
+            text: "Continue"
+          }) }}
+        </form>
+      </div>
+    </div>
+  </div>
 {% endblock %}
