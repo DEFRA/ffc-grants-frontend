@@ -7,6 +7,7 @@ function createModel (data) {
     farmerContactDetails: `${data.farmerDetails.email}${(data.farmerDetails.landline ?? '').length > 0 ? '<br/>' : ''}${data.farmerDetails.landline}<br/>${data.farmerDetails.mobile}`
   }
   if (data.agentDetails) {
+    model.agentBusinessName = data.agentDetails.businessName
     model.agentDetails = data.agentDetails.firstName + ' ' + data.agentDetails.lastName
     model.agentAddressDetails = `${data.agentDetails.address1}${(data.agentDetails.address2 ?? '').length > 0 ? '<br/>' : ''}${data.agentDetails.address2}<br/>${data.agentDetails.town}<br/>${data.agentDetails.county}<br/>${data.agentDetails.postcode}`
     model.agentContactDetails = `${data.agentDetails.email}${(data.agentDetails.landline ?? '').length > 0 ? '<br/>' : ''}${data.agentDetails.landline}<br/>${data.agentDetails.mobile}`
