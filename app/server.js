@@ -68,15 +68,6 @@ async function createServer () {
       sessionIdProducer: async request => {
         return request.yar ? request.yar.id : Uuid.v4()
       },
-      attributionProducer: async request => {
-        return {
-          campaign: 'attribution_campaign',
-          source: 'attribution_source',
-          medium: 'attribution_medium',
-          content: 'attribution_content',
-          term: 'attribution_term'
-        }
-      },
       batchSize: 20,
       batchInterval: 15000
     }
