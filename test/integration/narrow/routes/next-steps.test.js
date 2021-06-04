@@ -1,6 +1,5 @@
-const { getCookieHeader, getCrumbCookie, crumbToken } = require('./test-helper')
+const { crumbToken } = require('./test-helper')
 describe('Next Steps page', () => {
-  let crumCookie
   let server
   const createServer = require('../../../../app/server')
 
@@ -15,12 +14,8 @@ describe('Next Steps page', () => {
       url: '/next-steps'
     }
 
-    const response = await server.inject(options)
+    const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
-    const header = getCookieHeader(response)
-    expect(header.length).toBe(3)
-    crumCookie = getCrumbCookie(response)
-    expect(response.result).toContain(crumCookie[1])
   })
 
   it('should have Two steps info ', async () => {

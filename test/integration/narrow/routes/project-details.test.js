@@ -86,7 +86,7 @@ describe('Project details page', () => {
     const postOptions = {
       method: 'POST',
       url: '/project-details',
-      payload: { project: ['Improve irrigation efficiency','None of the above'], crumb: crumbToken },
+      payload: { project: ['Improve irrigation efficiency', 'None of the above'], crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
       }
