@@ -23,7 +23,7 @@
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <form method="POST" action="./country" autocomplete="off" novalidate>
+      <form method="POST" action="/water/country" autocomplete="off" novalidate>
         {{ crumbToken(crumb)}}
         {{ govukRadios(radios) }}
         {{ govukButton({
@@ -31,7 +31,7 @@
         }) }}
       </form>
     </div>
-    {{ sideBar("Eligibility","This grant is only for projects in England. 
+    {{ sideBar("Eligibility","This grant is only for projects in England.
 Scotland, Wales and Northern Ireland have other grants available",[]) }}
   </div>
 {% endblock %}

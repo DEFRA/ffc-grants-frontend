@@ -3,14 +3,14 @@ function createModel () {
   return {
     button: {
       text: 'Start now',
-      nextLink: './farming-type'
+      nextLink: '/water/farming-type'
     }
   }
 }
 
 module.exports = {
   method: 'GET',
-  path: '/start',
+  path: '/water/start',
   handler: async (request, h) => {
     setYarValue(request, 'journey-start-time', Date.now())
     return h.view('home', createModel())

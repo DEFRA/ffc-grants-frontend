@@ -5,7 +5,7 @@ const gapiService = require('../services/gapi-service')
 
 function createModel (errorMessage, data) {
   return {
-    backLink: './start',
+    backLink: '/water/start',
     radios: {
       classes: '',
       idPrefix: 'farmingType',
@@ -25,7 +25,7 @@ function createModel (errorMessage, data) {
 
 function createModelNotEligible () {
   return {
-    backLink: './farming-type',
+    backLink: '/water/farming-type',
     messageContent:
       'This grant is only available to<ul class="govuk-list govuk-list--bullet"><li> arable and horticultural farming businesses that supply the food industry</li><li>nurseries growing flowers</li><li>forestry nurseries</li></ul><p class="govuk-body"> <a href=\'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments\'>See other grants you may be eligible for.</a></p>'
   }
@@ -34,7 +34,7 @@ function createModelNotEligible () {
 module.exports = [
   {
     method: 'GET',
-    path: '/farming-type',
+    path: '/water/farming-type',
     handler: (request, h) => {
       const farmingType = getYarValue(request, 'farmingType')
       const data = farmingType || null
@@ -43,7 +43,7 @@ module.exports = [
   },
   {
     method: 'POST',
-    path: '/farming-type',
+    path: '/water/farming-type',
     options: {
       validate: {
         payload: Joi.object({
@@ -58,8 +58,8 @@ module.exports = [
       handler: async (request, h) => {
         setYarValue(request, 'farmingType', request.payload.farmingType)
         await gapiService.sendEligibilityEvent(request, request.payload.farmingType !== 'Something else')
-        if (request.payload.farmingType !== 'Something else') { return h.redirect('./legal-status') }
-        return h.view('./not-eligible', createModelNotEligible())
+        if (request.payload.farmingType !== 'Something else') { return h.redirect('/water/legal-status') }
+        return h.view('not-eligible', createModelNotEligible())
       }
     }
   }

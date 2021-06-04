@@ -6,7 +6,7 @@ const gapiService = require('../services/gapi-service')
 
 function createModel (errorMessage, data, postcodeHtml) {
   return {
-    backLink: 'legal-status',
+    backLink: '/water/legal-status',
     radios: {
       idPrefix: 'inEngland',
       name: 'inEngland',
@@ -39,7 +39,7 @@ function createModel (errorMessage, data, postcodeHtml) {
 
 function createModelNotEligible () {
   return {
-    backLink: './country',
+    backLink: '/water/country',
     messageContent: 'This grant is only for projects in England.<br/><br/>Scotland, Wales and Northern Ireland have other grants available.'
   }
 }
@@ -47,7 +47,7 @@ function createModelNotEligible () {
 module.exports = [
   {
     method: 'GET',
-    path: '/country',
+    path: '/water/country',
     handler: (request, h) => {
       const inEngland = getYarValue(request, 'inEngland') || null
       const postcodeData = inEngland !== null ? getYarValue(request, 'projectPostcode') : null
@@ -58,7 +58,7 @@ module.exports = [
   },
   {
     method: 'POST',
-    path: '/country',
+    path: '/water/country',
     options: {
       validate: {
         payload: Joi.object({
@@ -83,18 +83,21 @@ module.exports = [
       },
       handler: async (request, h) => {
         const { inEngland, projectPostcode } = request.payload
+
         if (inEngland === 'Yes' && projectPostcode.trim() === '') {
+          console.log('IN HERE')
           const postcodeHtml = getPostCodeHtml(projectPostcode.toUpperCase(), 'Enter a postcode, like AA1 1AA')
-          return h.view(
-            'country',
-            createModel(null, inEngland, postcodeHtml)
-          ).takeover()
+          return h.view('country', createModel(null, inEngland, postcodeHtml))
         }
 
         setYarValue(request, 'inEngland', inEngland)
         setYarValue(request, 'projectPostcode', projectPostcode.split(/(?=.{3}$)/).join(' ').toUpperCase())
         await gapiService.sendEligibilityEvent(request, inEngland === 'yes')
-        if (inEngland === 'Yes') { return h.redirect('./planning-permission') }
+
+        if (inEngland === 'Yes') {
+          return h.redirect('/water/planning-permission')
+        }
+
         return h.view('not-eligible', createModelNotEligible())
       }
     }

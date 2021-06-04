@@ -5,7 +5,7 @@ const { LICENSE_NOT_NEEDED, LICENSE_SECURED, LICENSE_EXPECTED, LICENSE_WILL_NOT_
 
 function createModel (errorMessage, data) {
   return {
-    backLink: './country',
+    backLink: '/water/country',
     radios: {
       idPrefix: 'planningPermission',
       name: 'planningPermission',
@@ -23,14 +23,14 @@ function createModel (errorMessage, data) {
 }
 
 const NOT_ELIGIBLE = {
-  backLink: './planning-permission',
+  backLink: '/water/planning-permission',
   messageContent: 'Any planning permission must be in place by 31 December 2021 (the end of the application window).'
 }
 
 module.exports = [
   {
     method: 'GET',
-    path: '/planning-permission',
+    path: '/water/planning-permission',
     handler: (request, h) => {
       const planningPermission = getYarValue(request, 'planningPermission') || null
       return h.view('planning-permission', createModel(null, planningPermission))
@@ -38,7 +38,7 @@ module.exports = [
   },
   {
     method: 'POST',
-    path: '/planning-permission',
+    path: '/water/planning-permission',
     options: {
       validate: {
         payload: Joi.object({
@@ -59,10 +59,10 @@ module.exports = [
         }
 
         if (planningPermission === LICENSE_EXPECTED) {
-          return h.redirect('./planning-required-condition')
+          return h.redirect('/water/planning-required-condition')
         }
 
-        return h.redirect('./project-start')
+        return h.redirect('/water/project-start')
       }
     }
   }

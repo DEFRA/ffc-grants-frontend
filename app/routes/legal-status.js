@@ -5,7 +5,7 @@ const gapiService = require('../services/gapi-service')
 
 function createModel (errorMessage, data) {
   return {
-    backLink: './farming-type',
+    backLink: '/water/farming-type',
     radios: {
       classes: '',
       idPrefix: 'legalStatus',
@@ -41,7 +41,7 @@ function createModel (errorMessage, data) {
 
 function createModelNotEligible () {
   return {
-    backLink: './legal-status',
+    backLink: '/water/legal-status',
     messageContent:
       'This is only open to a business with a legal status of: <ul class="govuk-list govuk-list--bullet"><li>Sole trader</li><li>Partnership</li><li>Ltd company</li><li>Charity</li><li>Public organisation</li><li>Trust</li><li>Limited liability partnership</li><li>Community interest company</li><li>Local authority</li></ul> <p class="govuk-body">Other types of business may be supported in future schemes.</p>'
   }
@@ -50,7 +50,7 @@ function createModelNotEligible () {
 module.exports = [
   {
     method: 'GET',
-    path: '/legal-status',
+    path: '/water/legal-status',
     handler: (request, h) => {
       const legalStatus = getYarValue(request, 'legalStatus')
       const data = legalStatus || null
@@ -59,7 +59,7 @@ module.exports = [
   },
   {
     method: 'POST',
-    path: '/legal-status',
+    path: '/water/legal-status',
     options: {
       validate: {
         payload: Joi.object({
@@ -75,9 +75,9 @@ module.exports = [
         setYarValue(request, 'legalStatus', request.payload.legalStatus)
         await gapiService.sendEligibilityEvent(request, request.payload.legalStatus !== 'None of the above')
         if (request.payload.legalStatus === 'None of the above') {
-          return h.view('./not-eligible', createModelNotEligible())
+          return h.view('not-eligible', createModelNotEligible())
         }
-        return h.redirect('./country')
+        return h.redirect('/water/country')
       }
     }
   }
