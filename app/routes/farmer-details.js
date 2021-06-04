@@ -151,7 +151,7 @@ module.exports = [
           firstName, lastName, email, mobile, landline, address1, address2, town, county, postcode: postcode.split(/(?=.{3}$)/).join(' ').toUpperCase()
         })
 
-        return h.redirect('./confirm')
+        return h.redirect('./check-details')
       }
     }
   }

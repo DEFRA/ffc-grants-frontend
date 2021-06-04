@@ -108,6 +108,15 @@
             },
             value: {
               text: ""
+            },
+            actions: {
+              items: [
+                {
+                  href: "/agent-details",
+                  text: "Change",
+                  visuallyHiddenText: "agent-details"
+                }
+              ]
             }
           }
         ]
@@ -119,33 +128,15 @@
               text: "Name"
             },
             value: {
-              text:  agentDetails.firstName + ' ' + agentDetails.lastName
-            },
-            actions: {
-              items: [
-                {
-                  href: "/agent-details",
-                  text: "Change",
-                  visuallyHiddenText: "agent-details"
-                }
-              ]
+              text:  agentDetails
             }
           },
           {
             key: {
-              text: "Home address"
+              text: "Address"
             },
             value: {
-              html: agentDetails.address1 + '<br/>' +agentDetails.address2 + '<br/>' +agentDetails.town + '<br/>' +agentDetails.county + '<br/>' +agentDetails.postcode
-            },
-            actions: {
-              items: [
-                {
-                  href: "/agent-details",
-                  text: "Change",
-                  visuallyHiddenText: "agent-details"
-                }
-              ]
+              html: agentAddressDetails
             }
           },
           {
@@ -153,16 +144,7 @@
               text: "Contact details"
             },
             value: {
-              html: agentDetails.email  + '<br/>' +agentDetails.landline  + '<br/>' +agentDetails.mobile
-            },
-            actions: {
-              items: [
-                {
-                  href: "/agent-details",
-                  text: "Change",
-                  visuallyHiddenText: "agent-details"
-                }
-              ]
+              html: agentContactDetails
             }
           }
         ]
@@ -178,6 +160,15 @@
             },
             value: {
               text: ""
+            },
+            actions: {
+              items: [
+                {
+                  href: "/farmer-details",
+                  text: "Change",
+                  visuallyHiddenText: "farmer-details"
+                }
+              ]
             }
           }
         ]
@@ -189,16 +180,7 @@
               text: "Name"
             },
             value: {
-              text:  farmerDetails.firstName + ' ' + farmerDetails.lastName
-            },
-            actions: {
-              items: [
-                {
-                  href: "/farmer-details",
-                  text: "Change",
-                  visuallyHiddenText: "farmer-details"
-                }
-              ]
+              text:  farmerDetails
             }
           },
           {
@@ -206,16 +188,7 @@
               text: "Home address"
             },
             value: {
-              html: farmerAddressDetails.address1 + '<br/>' +farmerAddressDetails.address2 + '<br/>' +farmerAddressDetails.town + '<br/>' +farmerAddressDetails.county + '<br/>' +farmerAddressDetails.postcode
-            },
-            actions: {
-              items: [
-                {
-                  href: "/farmer-details",
-                  text: "Change",
-                  visuallyHiddenText: "farmer-details"
-                }
-              ]
+              html: farmerAddressDetails
             }
           },
           {
@@ -223,16 +196,7 @@
               text: "Contact details"
             },
             value: {
-              html: farmerContactDetails.email  + '<br/>' +farmerContactDetails.landline  + '<br/>' +farmerContactDetails.mobile
-            },
-            actions: {
-              items: [
-                {
-                  href: "/farmer-details",
-                  text: "Change",
-                  visuallyHiddenText: "farmer-details"
-                }
-              ]
+              html: farmerContactDetails
             }
           }
         ]
