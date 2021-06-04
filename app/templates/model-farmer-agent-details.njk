@@ -24,7 +24,11 @@
         <input type="hidden" name="crumb" value="{{crumb}}" />
         {{ govukInput(inputFirstName) }}
         {{ govukInput(inputLastName) }}
-        {{ govukInput(inputBusinessName) }}
+
+        {% if formActionPage == './agent-details' %}
+          {{ govukInput(inputBusinessName) }}
+        {% endif %}
+        
         <h1 class="govuk-heading-m">Contact details</h1><br/>
         {{ govukInput(inputEmail) }}
         {{ govukInput(inputMobile) }}
@@ -35,7 +39,6 @@
         {{ govukInput(inputTown) }}
         {{ govukSelect(selectCounty) }}
         {{ govukInput(inputPostcode) }}
-       
         {{ govukButton({
           text: "Continue"
         }) }}

@@ -38,6 +38,7 @@ const LIST_COUNTIES = [
   'Northumberland',
   'Nottinghamshire',
   'Oxfordshire',
+  'Other',
   'Rutland',
   'Shropshire',
   'Somerset',

@@ -11,8 +11,6 @@ module.exports = [
   'emailAddress',
   'inEngland',
   'projectPostcode',
-  'farmerAddressDetails',
-  'farmerContactDetails',
   'farmerDetails',
   'farmingType',
   'irrigatedCrops',

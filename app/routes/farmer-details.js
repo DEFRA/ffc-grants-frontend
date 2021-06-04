@@ -1,14 +1,36 @@
 const Joi = require('joi')
 const { setYarValue, getYarValue } = require('../helpers/session')
-const { setLabelData, fetchListObjectItems, findErrorList } = require('../helpers/helper-functions')
-const { NAME_REGEX } = require('../helpers/regex-validation')
+const { setLabelData, fetchListObjectItems, findErrorList, formInputObject } = require('../helpers/helper-functions')
+const { NAME_REGEX, PHONE_REGEX, POSTCODE_REGEX, DELETE_POSTCODE_CHARS_REGEX } = require('../helpers/regex-validation')
+const { LIST_COUNTIES } = require('../helpers/all-counties')
 
 function createModel (errorMessageList, farmerDetails, backLink) {
-  const { title, firstName, lastName } = farmerDetails
+  const {
+    firstName,
+    lastName,
+    email,
+    mobile,
+    landline,
+    address1,
+    address2,
+    town,
+    county,
+    postcode
+  } = farmerDetails
 
-  const [titleError, firstNameError, lastNameError] = fetchListObjectItems(
+  const [
+    firstNameError,
+    lastNameError,
+    emailError,
+    mobileError,
+    landlineError,
+    address1Error,
+    townError,
+    countyError,
+    postcodeError
+  ] = fetchListObjectItems(
     errorMessageList,
-    ['titleError', 'firstNameError', 'lastNameError']
+    ['firstNameError', 'lastNameError', 'emailError', 'mobileError', 'landlineError', 'address1Error', 'townError', 'countyError', 'postcodeError']
   )
 
   return {
@@ -16,36 +38,37 @@ function createModel (errorMessageList, farmerDetails, backLink) {
     pageId: 'Farmer',
     pageHeader: 'Farmer\'s details',
     formActionPage: './farmer-details',
-    selectTitle: {
-      id: 'title',
-      name: 'title',
+    inputFirstName: formInputObject('firstName', 'govuk-input--width-20', 'First name', null, firstName, firstNameError),
+
+    inputLastName: formInputObject('lastName', 'govuk-input--width-20', 'Last name', null, lastName, lastNameError),
+
+    inputEmail: formInputObject('email', 'govuk-input--width-20', 'Email address', 'We will use this to send you a confirmation', email, emailError),
+
+    inputMobile: formInputObject('mobile', 'govuk-input--width-20', 'Mobile number', null, mobile, mobileError),
+
+    inputLandline: formInputObject('landline', 'govuk-input--width-20', 'Landline number (optional)', null, landline, landlineError),
+
+    inputAddress1: formInputObject('address1', 'govuk-input--width-20', 'Address 1', null, address1, address1Error),
+
+    inputAddress2: formInputObject('address2', 'govuk-input--width-20', 'Address 2', null, address2, null),
+
+    inputTown: formInputObject('town', 'govuk-input--width-10', 'Town', null, town, townError),
+
+    selectCounty: {
+      id: 'county',
+      name: 'county',
       classes: 'govuk-input--width-10',
       label: {
-        text: 'Title (optional)'
+        text: 'County'
       },
-      items: setLabelData(title, [{ value: 'Other', text: 'Select an option' }, 'Mr', 'Mrs', 'Ms', 'Miss', 'Dr']),
-      ...(titleError ? { errorMessage: { text: titleError } } : {})
+      items: setLabelData(county, [
+        { text: 'Select an option', value: null },
+        ...LIST_COUNTIES
+      ]),
+      ...(countyError ? { errorMessage: { text: countyError } } : {})
     },
-    inputFirstName: {
-      id: 'firstName',
-      name: 'firstName',
-      classes: 'govuk-input--width-20',
-      label: {
-        text: 'First name'
-      },
-      ...(firstName ? { value: firstName } : {}),
-      ...(firstNameError ? { errorMessage: { text: firstNameError } } : {})
-    },
-    inputLastName: {
-      id: 'lastName',
-      name: 'lastName',
-      classes: 'govuk-input--width-20',
-      label: {
-        text: 'Last name'
-      },
-      ...(lastName ? { value: lastName } : {}),
-      ...(lastNameError ? { errorMessage: { text: lastNameError } } : {})
-    }
+    inputPostcode: formInputObject('postcode', 'govuk-input--width-5', 'Postcode', null, postcode, postcodeError)
+
   }
 }
 
@@ -57,18 +80,22 @@ module.exports = [
       let farmerDetails = getYarValue(request, 'farmerDetails') || null
       if (!farmerDetails) {
         farmerDetails = {
-          title: 'Other',
           firstName: null,
-          lastName: null
+          lastName: null,
+          email: null,
+          mobile: null,
+          landline: null,
+          address1: null,
+          address2: null,
+          town: null,
+          county: null,
+          postcode: null
         }
       }
 
       const applying = getYarValue(request, 'applying')
-      const backLink = applying === 'Agent' ? './agent-address-details' : './applying'
-      return h.view(
-        'model-farmer-agent-details',
-        createModel(null, farmerDetails, backLink)
-      )
+      const backLink = applying === 'Agent' ? './agent-details' : './applying'
+      return h.view('model-farmer-agent-details', createModel(null, farmerDetails, backLink))
     }
   },
   {
@@ -78,38 +105,53 @@ module.exports = [
       validate: {
         options: { abortEarly: false },
         payload: Joi.object({
-          title: Joi.any(),
           firstName: Joi.string().regex(NAME_REGEX).required(),
-          lastName: Joi.string().regex(NAME_REGEX).required()
+          lastName: Joi.string().regex(NAME_REGEX).required(),
+          email: Joi.string().email().required(),
+          mobile: Joi.string().regex(PHONE_REGEX).required(),
+          landline: Joi.string().regex(PHONE_REGEX).allow(''),
+          address1: Joi.string().required(),
+          address2: Joi.string().allow(''),
+          town: Joi.string().required(),
+          county: Joi.string().required(),
+          postcode: Joi.string().replace(DELETE_POSTCODE_CHARS_REGEX, '').regex(POSTCODE_REGEX).trim().required()
         }),
         failAction: (request, h, err) => {
           const [
-            titleError, firstNameError, lastNameError
-          ] = findErrorList(err, ['title', 'firstName', 'lastName'])
+            firstNameError,
+            lastNameError,
+            emailError,
+            mobileError,
+            landlineError,
+            address1Error,
+            townError,
+            countyError,
+            postcodeError
+          ] = findErrorList(err, ['firstName', 'lastName', 'email', 'mobile', 'landline', 'address1', 'town', 'county', 'postcode'])
 
           const errorMessageList = {
-            titleError, firstNameError, lastNameError
+            firstNameError, lastNameError, emailError, mobileError, landlineError, address1Error, townError, countyError, postcodeError
           }
 
-          const { title, firstName, lastName } = request.payload
-          const farmerDetails = { title, firstName, lastName }
+          const { firstName, lastName, email, mobile, landline, address1, address2, town, county, postcode } = request.payload
+          const farmerDetails = { firstName, lastName, email, mobile, landline, address1, address2, town, county, postcode }
 
           const applying = getYarValue(request, 'applying')
-          const backLink = applying === 'Agent' ? './agent-address-details' : './applying'
+          const backLink = applying === 'Agent' ? './agent-details' : './applying'
 
           return h.view('model-farmer-agent-details', createModel(errorMessageList, farmerDetails, backLink)).takeover()
         }
       },
       handler: (request, h) => {
         const {
-          title, firstName, lastName
+          firstName, lastName, email, mobile, landline, address1, address2, town, county, postcode
         } = request.payload
 
         setYarValue(request, 'farmerDetails', {
-          title, firstName, lastName
+          firstName, lastName, email, mobile, landline, address1, address2, town, county, postcode: postcode.split(/(?=.{3}$)/).join(' ').toUpperCase()
         })
 
-        return h.redirect('./farmer-contact-details')
+        return h.redirect('./confirm')
       }
     }
   }
