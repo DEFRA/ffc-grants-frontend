@@ -42,7 +42,7 @@ describe('Irrigation syatems page', () => {
   it('should load page successfully', async () => {
     const options = {
       method: 'GET',
-      url: '/irrigation-systems'
+      url: `${global.__URLPREFIX__}/irrigation-systems`
     }
 
     const response = await global.__SERVER__.inject(options)
@@ -52,7 +52,7 @@ describe('Irrigation syatems page', () => {
   it('should returns error message if no current water system option is selected', async () => {
     const postOptions = {
       method: 'POST',
-      url: '/irrigation-systems',
+      url: `${global.__URLPREFIX__}/irrigation-systems`,
       payload: { irrigationPlanned, crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
@@ -67,7 +67,7 @@ describe('Irrigation syatems page', () => {
   it('should returns error message if no planned water system option is selected', async () => {
     const postOptions = {
       method: 'POST',
-      url: '/irrigation-systems',
+      url: `${global.__URLPREFIX__}/irrigation-systems`,
       payload: { irrigationCurrent, crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
@@ -82,7 +82,7 @@ describe('Irrigation syatems page', () => {
   it('should store user response and redirects to productivity page', async () => {
     const postOptions = {
       method: 'POST',
-      url: '/irrigation-systems',
+      url: `${global.__URLPREFIX__}/irrigation-systems`,
       payload: { irrigationCurrent, irrigationPlanned, crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
@@ -91,13 +91,13 @@ describe('Irrigation syatems page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe('./productivity')
+    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/productivity`)
   })
 
   it('should display the error summary if more than two options are selected', async () => {
     const postOptions = {
       method: 'POST',
-      url: '/irrigation-systems',
+      url: `${global.__URLPREFIX__}/irrigation-systems`,
       payload: {
         irrigationCurrent: ['some option-1', 'some option-2', 'some option-3'],
         irrigationPlanned: ['another-option-1', 'another-option-2', 'another-option-3'],

@@ -1,5 +1,9 @@
 const { updatePolicy } = require('../cookies')
 const Joi = require('joi')
+const urlPrefix = require('../config/server').urlPrefix
+
+const viewTemplate = 'cookies/cookie-policy'
+const currentPath = `${urlPrefix}/cookies`
 
 function createModel (cookiesPolicy = {}, updated = false) {
   return {
@@ -25,13 +29,13 @@ function createModel (cookiesPolicy = {}, updated = false) {
 
 module.exports = [{
   method: 'GET',
-  path: '/cookies',
+  path: currentPath,
   handler: (request, h) => {
-    return h.view('cookies/cookie-policy', createModel(request.state.cookies_policy, request.query.updated))
+    return h.view(viewTemplate, createModel(request.state.cookies_policy, request.query.updated))
   }
 }, {
   method: 'POST',
-  path: '/cookies',
+  path: currentPath,
   options: {
     validate: {
       payload: Joi.object({
@@ -48,7 +52,7 @@ module.exports = [{
       if (request.payload.async) {
         return h.response('ok')
       }
-      return h.redirect('./cookies?updated=true')
+      return h.redirect(`${currentPath}?updated=true`)
     }
   }
 }]

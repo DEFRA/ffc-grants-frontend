@@ -31,7 +31,7 @@ describe('Planning permission page', () => {
   it('should load page successfully', async () => {
     const options = {
       method: 'GET',
-      url: '/planning-permission'
+      url: `${global.__URLPREFIX__}/planning-permission`
     }
 
     const response = await global.__SERVER__.inject(options)
@@ -41,7 +41,7 @@ describe('Planning permission page', () => {
   it('should return an error message if no option is selected', async () => {
     const postOptions = {
       method: 'POST',
-      url: '/planning-permission',
+      url: `${global.__URLPREFIX__}/planning-permission`,
       payload: { crumb: crumbToken },
       headers: { cookie: 'crumb=' + crumbToken }
     }
@@ -54,7 +54,7 @@ describe('Planning permission page', () => {
   it('if value = \'Will not have by 31 December 2021\' ==> disqualify user', async () => {
     const postOptions = {
       method: 'POST',
-      url: '/planning-permission',
+      url: `${global.__URLPREFIX__}/planning-permission`,
       payload: { planningPermission: 'Will not have by 31 December 2021', crumb: crumbToken },
       headers: { cookie: 'crumb=' + crumbToken }
     }
@@ -67,39 +67,39 @@ describe('Planning permission page', () => {
   it('if value = \'Expected to have by 31 December 2021\' ==> store and redirect to planning-required-condition page', async () => {
     const postOptions = {
       method: 'POST',
-      url: '/planning-permission',
+      url: `${global.__URLPREFIX__}/planning-permission`,
       payload: { planningPermission: 'Expected to have by 31 December 2021', crumb: crumbToken },
       headers: { cookie: 'crumb=' + crumbToken }
     }
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe('./planning-required-condition')
+    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/planning-required-condition`)
   })
 
   it('if value = \'Not needed\' ==> store and redirect to project start page', async () => {
     const postOptions = {
       method: 'POST',
-      url: '/planning-permission',
+      url: `${global.__URLPREFIX__}/planning-permission`,
       payload: { planningPermission: 'Not needed', crumb: crumbToken },
       headers: { cookie: 'crumb=' + crumbToken }
     }
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe('./project-start')
+    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/project-start`)
   })
 
   it('if value = \'Secured\' ==> store and redirect to project start page', async () => {
     const postOptions = {
       method: 'POST',
-      url: '/planning-permission',
+      url: `${global.__URLPREFIX__}/planning-permission`,
       payload: { planningPermission: 'Secured', crumb: crumbToken },
       headers: { cookie: 'crumb=' + crumbToken }
     }
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe('./project-start')
+    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/project-start`)
   })
 })

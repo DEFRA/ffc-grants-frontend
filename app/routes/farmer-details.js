@@ -4,6 +4,12 @@ const { setLabelData, fetchListObjectItems, findErrorList, formInputObject } = r
 const { NAME_REGEX, PHONE_REGEX, POSTCODE_REGEX, DELETE_POSTCODE_CHARS_REGEX } = require('../helpers/regex-validation')
 const { LIST_COUNTIES } = require('../helpers/all-counties')
 
+const urlPrefix = require('../config/server').urlPrefix
+
+const viewTemplate = 'model-farmer-agent-details'
+const currentPath = `${urlPrefix}/farmer-details`
+const nextPath = `${urlPrefix}/confirm`
+
 function createModel (errorMessageList, farmerDetails, backLink) {
   const {
     firstName,
@@ -36,8 +42,8 @@ function createModel (errorMessageList, farmerDetails, backLink) {
   return {
     backLink,
     pageId: 'Farmer',
+    formActionPage: currentPath,
     pageHeader: 'Farmer\'s details',
-    formActionPage: './farmer-details',
     inputFirstName: formInputObject('firstName', 'govuk-input--width-20', 'First name', null, firstName, firstNameError),
 
     inputLastName: formInputObject('lastName', 'govuk-input--width-20', 'Last name', null, lastName, lastNameError),
@@ -75,7 +81,7 @@ function createModel (errorMessageList, farmerDetails, backLink) {
 module.exports = [
   {
     method: 'GET',
-    path: '/farmer-details',
+    path: currentPath,
     handler: async (request, h) => {
       let farmerDetails = getYarValue(request, 'farmerDetails') || null
       if (!farmerDetails) {
@@ -94,13 +100,13 @@ module.exports = [
       }
 
       const applying = getYarValue(request, 'applying')
-      const backLink = applying === 'Agent' ? './agent-details' : './applying'
-      return h.view('model-farmer-agent-details', createModel(null, farmerDetails, backLink))
+      const backLink = applying === 'Agent' ? `${urlPrefix}/agent-details` : `${urlPrefix}/applying`
+      return h.view(viewTemplate, createModel(null, farmerDetails, backLink))
     }
   },
   {
     method: 'POST',
-    path: '/farmer-details',
+    path: currentPath,
     options: {
       validate: {
         options: { abortEarly: false },
@@ -139,7 +145,7 @@ module.exports = [
           const applying = getYarValue(request, 'applying')
           const backLink = applying === 'Agent' ? './agent-details' : './applying'
 
-          return h.view('model-farmer-agent-details', createModel(errorMessageList, farmerDetails, backLink)).takeover()
+          return h.view(viewTemplate, createModel(errorMessageList, farmerDetails, backLink)).takeover()
         }
       },
       handler: (request, h) => {
@@ -151,7 +157,7 @@ module.exports = [
           firstName, lastName, email, mobile, landline, address1, address2, town, county, postcode: postcode.split(/(?=.{3}$)/).join(' ').toUpperCase()
         })
 
-        return h.redirect('./check-details')
+        return h.redirect(nextPath)
       }
     }
   }

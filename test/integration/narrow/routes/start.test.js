@@ -10,7 +10,7 @@ describe('Start Page', () => {
   it('should load start page successfully', async () => {
     const options = {
       method: 'GET',
-      url: '/start'
+      url: `${global.__URLPREFIX__}/start`
     }
 
     const response = await server.inject(options)

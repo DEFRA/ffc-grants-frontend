@@ -7,6 +7,6 @@ describe('redirect Page', () => {
 
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(302)
-    expect(response.headers.location).toBe('./start')
+    expect(response.headers.location).toBe(`${global.__URLPREFIX__}/start`)
   })
 })

@@ -1,12 +1,20 @@
 const Joi = require('joi')
 const { setLabelData } = require('../helpers/helper-functions')
 const { setYarValue, getYarValue } = require('../helpers/session')
+const urlPrefix = require('../config/server').urlPrefix
+
+const viewTemplate = 'confirm'
+const currentPath = `${urlPrefix}/${viewTemplate}`
+const previousPath = `${urlPrefix}/farmer-details`
+const nextPath = `${urlPrefix}/confirmation`
+const startPath = `${urlPrefix}/start`
 
 const CONSENT_OPTIONAL = 'CONSENT_OPTIONAL'
 
 function createModel (consentOptional, errorMessage) {
   return {
-    backLink: './check-details',
+    backLink: previousPath,
+    formActionPage: currentPath,
     consentOptionalData: {
       idPrefix: 'consentOptional',
       name: 'consentOptional',
@@ -24,21 +32,21 @@ function createModel (consentOptional, errorMessage) {
 module.exports = [
   {
     method: 'GET',
-    path: '/confirm',
+    path: currentPath,
     handler: (request, h) => {
       const refererURL = request?.headers?.referer?.split('/').pop()
 
       if (!getYarValue(request, 'farmerDetails') || refererURL !== 'check-details') {
-        return h.redirect('./start')
+        return h.redirect(startPath)
       }
       const consentOptional = (getYarValue(request, 'consentOptional') && CONSENT_OPTIONAL) || ''
 
-      return h.view('confirm', createModel(consentOptional, null))
+      return h.view(viewTemplate, createModel(consentOptional, null))
     }
   },
   {
     method: 'POST',
-    path: '/confirm',
+    path: currentPath,
     options: {
       validate: {
         payload: Joi.object({
@@ -49,7 +57,7 @@ module.exports = [
     handler: (request, h) => {
       setYarValue(request, 'consentMain', true)
       setYarValue(request, 'consentOptional', request.payload.consentOptional === CONSENT_OPTIONAL)
-      return h.redirect('./confirmation')
+      return h.redirect(nextPath)
     }
   }
 ]

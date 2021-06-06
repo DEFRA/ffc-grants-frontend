@@ -37,7 +37,7 @@ describe('Applicant page', () => {
   it('should load page successfully', async () => {
     const options = {
       method: 'GET',
-      url: '/applying'
+      url: `${global.__URLPREFIX__}/applying`
     }
 
     const response = await global.__SERVER__.inject(options)
@@ -47,7 +47,7 @@ describe('Applicant page', () => {
   it('should return error message if no option is selected', async () => {
     const postOptions = {
       method: 'POST',
-      url: '/applying',
+      url: `${global.__URLPREFIX__}/applying`,
       payload: { crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
@@ -62,7 +62,7 @@ describe('Applicant page', () => {
   it('if applicant: AGENT, should store user response and redirect to agent details page', async () => {
     const postOptions = {
       method: 'POST',
-      url: '/applying',
+      url: `${global.__URLPREFIX__}/applying`,
       payload: { applying: 'Agent', crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
@@ -71,13 +71,13 @@ describe('Applicant page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe('./agent-details')
+    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/agent-details`)
   })
 
   it('if applicant: FARMER, should store user response and redirect to farmer details page', async () => {
     const postOptions = {
       method: 'POST',
-      url: '/applying',
+      url: `${global.__URLPREFIX__}/applying`,
       payload: { applying: 'Farmer', crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
@@ -86,6 +86,6 @@ describe('Applicant page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe('./farmer-details')
+    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/farmer-details`)
   })
 })

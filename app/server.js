@@ -64,6 +64,7 @@ async function createServer () {
     }
   })
   // Session cache redis with yar
+
   await server.register([
     {
       plugin: require('@hapi/yar'),

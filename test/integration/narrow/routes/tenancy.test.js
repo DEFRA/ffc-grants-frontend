@@ -23,7 +23,7 @@ describe('Water tenancy page', () => {
   it('should load page successfully', async () => {
     const options = {
       method: 'GET',
-      url: '/tenancy'
+      url: `${global.__URLPREFIX__}/tenancy`
     }
 
     const response = await global.__SERVER__.inject(options)
@@ -33,7 +33,7 @@ describe('Water tenancy page', () => {
   it('should returns error message in body if no option is selected', async () => {
     const postOptions = {
       method: 'POST',
-      url: '/tenancy',
+      url: `${global.__URLPREFIX__}/tenancy`,
       payload: { crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
@@ -48,7 +48,7 @@ describe('Water tenancy page', () => {
   it('should redirect to tenancy length page when user selects "No"', async () => {
     const postOptions = {
       method: 'POST',
-      url: '/tenancy',
+      url: `${global.__URLPREFIX__}/tenancy`,
       payload: { landOwnership: 'No', crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
@@ -57,13 +57,13 @@ describe('Water tenancy page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe('./tenancy-length')
+    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/tenancy-length`)
   })
 
   it('should redirect to project items page when user selects "Yes"', async () => {
     const postOptions = {
       method: 'POST',
-      url: '/tenancy',
+      url: `${global.__URLPREFIX__}/tenancy`,
       payload: { landOwnership: 'Yes', crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
@@ -72,6 +72,6 @@ describe('Water tenancy page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe('./project-items')
+    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/project-items`)
   })
 })

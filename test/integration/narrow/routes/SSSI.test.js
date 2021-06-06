@@ -32,7 +32,7 @@ describe('SSSI page', () => {
   it('should load page successfully', async () => {
     const options = {
       method: 'GET',
-      url: '/SSSI'
+      url: `${global.__URLPREFIX__}/SSSI`
     }
 
     const response = await global.__SERVER__.inject(options)
@@ -42,7 +42,7 @@ describe('SSSI page', () => {
   it('should return an error message if no option is selected', async () => {
     const postOptions = {
       method: 'POST',
-      url: '/SSSI',
+      url: `${global.__URLPREFIX__}/SSSI`,
       payload: { crumb: crumbToken },
       headers: { cookie: 'crumb=' + crumbToken }
     }
@@ -55,13 +55,13 @@ describe('SSSI page', () => {
   it('should store valid user input and redirect to project details page', async () => {
     const postOptions = {
       method: 'POST',
-      url: '/SSSI',
+      url: `${global.__URLPREFIX__}/SSSI`,
       payload: { sSSI: 'Yes', crumb: crumbToken },
       headers: { cookie: 'crumb=' + crumbToken }
     }
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe('./abstraction-licence')
+    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/abstraction-licence`)
   })
 })

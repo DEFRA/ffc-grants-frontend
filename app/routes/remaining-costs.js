@@ -54,7 +54,7 @@ module.exports = [
       const payRemainingCosts = getYarValue(request, 'payRemainingCosts') || null
       const remainingCost = getYarValue(request, 'remainingCost') || null
       if (!remainingCost) {
-        return h.redirect(previousPath)
+        return h.redirect(`${urlPrefix}/project-cost`)
       }
 
       const formattedRemainingCost = formatUKCurrency(remainingCost)

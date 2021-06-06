@@ -8,8 +8,6 @@ describe('Irrigation water source page', () => {
   const waterSourceCurrent = ['some source 1']
   const waterSourcePlanned = ['some source 2', 'another source']
 
-  const session = require('../../../../app/helpers/session')
-
   jest.mock('../../../../app/helpers/session', () => ({
     setYarValue: (request, key, value) => null,
     getYarValue: (request, key) => {
@@ -38,7 +36,7 @@ describe('Irrigation water source page', () => {
   it('should load page successfully', async () => {
     const options = {
       method: 'GET',
-      url: '/irrigation-water-source',
+      url: `${global.__URLPREFIX__}/irrigation-water-source`,
       headers: {
         cookie: 'crumb=' + crumbToken
       }
@@ -51,7 +49,7 @@ describe('Irrigation water source page', () => {
   it('should returns error message if no current water source option is selected', async () => {
     const postOptions = {
       method: 'POST',
-      url: '/irrigation-water-source',
+      url: `${global.__URLPREFIX__}/irrigation-water-source`,
       payload: { waterSourcePlanned, crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
@@ -66,7 +64,7 @@ describe('Irrigation water source page', () => {
   it('should returns error message if no planned water source option is selected', async () => {
     const postOptions = {
       method: 'POST',
-      url: '/irrigation-water-source',
+      url: `${global.__URLPREFIX__}/irrigation-water-source`,
       payload: { waterSourceCurrent, crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
@@ -81,7 +79,7 @@ describe('Irrigation water source page', () => {
   it('should store user response and redirects to irrigated crops page', async () => {
     const postOptions = {
       method: 'POST',
-      url: '/irrigation-water-source',
+      url: `${global.__URLPREFIX__}/irrigation-water-source`,
       payload: { waterSourceCurrent, waterSourcePlanned, crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
@@ -90,13 +88,13 @@ describe('Irrigation water source page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe('./irrigation-systems')
+    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/irrigation-systems`)
   })
 
   it('should display the error summary if more than two options are selected for each question', async () => {
     const postOptions = {
       method: 'POST',
-      url: '/irrigation-water-source',
+      url: `${global.__URLPREFIX__}/irrigation-water-source`,
       payload: {
         waterSourceCurrent: ['some option-1', 'some option-2', 'some option-3'],
         waterSourcePlanned: ['another-option-1', 'another-option-2', 'another-option-3'],

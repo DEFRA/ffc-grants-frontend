@@ -11,7 +11,7 @@ describe('Next Steps page', () => {
   it('should load page successfully', async () => {
     const options = {
       method: 'GET',
-      url: '/next-steps'
+      url: `${global.__URLPREFIX__}/next-steps`
     }
 
     const response = await global.__SERVER__.inject(options)
@@ -21,7 +21,7 @@ describe('Next Steps page', () => {
   it('should have Two steps info ', async () => {
     const options = {
       method: 'GET',
-      url: '/next-steps',
+      url: `${global.__URLPREFIX__}/next-steps`,
       payload: { crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
@@ -37,7 +37,7 @@ describe('Next Steps page', () => {
   it('should have warning text ', async () => {
     const options = {
       method: 'GET',
-      url: '/next-steps',
+      url: `${global.__URLPREFIX__}/next-steps`,
       payload: { crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
@@ -52,7 +52,7 @@ describe('Next Steps page', () => {
   it('should have continue button to redirect to business details page ', async () => {
     const options = {
       method: 'GET',
-      url: '/next-steps',
+      url: `${global.__URLPREFIX__}/next-steps`,
       payload: { crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
@@ -61,7 +61,7 @@ describe('Next Steps page', () => {
 
     const response = await server.inject(options)
     expect(response.statusCode).toBe(200)
-    expect(response.payload).toContain('/business-detail')
+    expect(response.payload).toContain(`${global.__URLPREFIX__}/business-detail`)
   })
 
   afterEach(async () => {

@@ -10,7 +10,7 @@ describe('Error Page', () => {
   test('should return 404', async () => {
     const options = {
       method: 'GET',
-      url: '/somethingnotavailable'
+      url: `${global.__URLPREFIX__}/somethingnotavailable`
     }
 
     const response = await server.inject(options)

@@ -4,6 +4,13 @@ const { setLabelData, fetchListObjectItems, findErrorList, formInputObject } = r
 const { NAME_REGEX, PHONE_REGEX, POSTCODE_REGEX, DELETE_POSTCODE_CHARS_REGEX } = require('../helpers/regex-validation')
 const { LIST_COUNTIES } = require('../helpers/all-counties')
 
+const urlPrefix = require('../config/server').urlPrefix
+
+const viewTemplate = 'model-farmer-agent-details'
+const currentPath = `${urlPrefix}/agent-details`
+const previousPath = `${urlPrefix}/applying`
+const nextPath = `${urlPrefix}/farmer-details`
+
 function createModel (errorMessageList, agentDetails) {
   const {
     firstName,
@@ -36,10 +43,10 @@ function createModel (errorMessageList, agentDetails) {
   )
 
   return {
-    backLink: './applying',
+    backLink: previousPath,
+    formActionPage: currentPath,
     pageId: 'Agent',
     pageHeader: 'Agent\'s details',
-    formActionPage: './agent-details',
     inputFirstName: formInputObject('firstName', 'govuk-input--width-20', 'First name', null, firstName, firstNameError),
 
     inputLastName: formInputObject('lastName', 'govuk-input--width-20', 'Last name', null, lastName, lastNameError),
@@ -78,7 +85,7 @@ function createModel (errorMessageList, agentDetails) {
 module.exports = [
   {
     method: 'GET',
-    path: '/agent-details',
+    path: currentPath,
     handler: async (request, h) => {
       let agentDetails = getYarValue(request, 'agentDetails') || null
       if (!agentDetails) {
@@ -96,15 +103,12 @@ module.exports = [
           postcode: null
         }
       }
-      return h.view(
-        'model-farmer-agent-details',
-        createModel(null, agentDetails)
-      )
+      return h.view(viewTemplate, createModel(null, agentDetails))
     }
   },
   {
     method: 'POST',
-    path: '/agent-details',
+    path: currentPath,
     options: {
       validate: {
         options: { abortEarly: false },
@@ -122,6 +126,7 @@ module.exports = [
           postcode: Joi.string().replace(DELETE_POSTCODE_CHARS_REGEX, '').regex(POSTCODE_REGEX).trim().required()
         }),
         failAction: (request, h, err) => {
+          console.log(err)
           const [
             firstNameError,
             lastNameError,
@@ -142,7 +147,7 @@ module.exports = [
           const { firstName, lastName, businessName, email, mobile, landline, address1, address2, town, county, postcode } = request.payload
           const agentDetails = { firstName, lastName, businessName, email, mobile, landline, address1, address2, town, county, postcode }
 
-          return h.view('model-farmer-agent-details', createModel(errorMessageList, agentDetails)).takeover()
+          return h.view(viewTemplate, createModel(errorMessageList, agentDetails)).takeover()
         }
       },
       handler: (request, h) => {
@@ -154,7 +159,7 @@ module.exports = [
           firstName, lastName, businessName, email, mobile, landline, address1, address2, town, county, postcode: postcode.split(/(?=.{3}$)/).join(' ').toUpperCase()
         })
 
-        return h.redirect('./farmer-details')
+        return h.redirect(nextPath)
       }
     }
   }

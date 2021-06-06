@@ -27,7 +27,7 @@ describe('Irrigation water source page', () => {
   it('should load page successfully', async () => {
     const options = {
       method: 'GET',
-      url: '/project-items'
+      url: `${global.__URLPREFIX__}/project-items`
     }
 
     const response = await global.__SERVER__.inject(options)
@@ -37,7 +37,7 @@ describe('Irrigation water source page', () => {
   it('should return error message if no option is selected', async () => {
     const postOptions = {
       method: 'POST',
-      url: '/project-items',
+      url: `${global.__URLPREFIX__}/project-items`,
       payload: { crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
@@ -52,7 +52,7 @@ describe('Irrigation water source page', () => {
   it('should store user response from column: "projectInfrastucture" and redirect to project cost page', async () => {
     const postOptions = {
       method: 'POST',
-      url: '/project-items',
+      url: `${global.__URLPREFIX__}/project-items`,
       payload: { projectInfrastucture: 'Synthetic liner', crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
@@ -61,13 +61,13 @@ describe('Irrigation water source page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe('./project-cost')
+    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/project-cost`)
   })
 
   it('should store user response from column: "projectEquipment" and redirect to project cost page', async () => {
     const postOptions = {
       method: 'POST',
-      url: '/project-items',
+      url: `${global.__URLPREFIX__}/project-items`,
       payload: { projectEquipment: ['Boom', 'Trickle'], crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
@@ -76,13 +76,13 @@ describe('Irrigation water source page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe('./project-cost')
+    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/project-cost`)
   })
 
   it('should store user response from column: "projectTechnology" and redirect to project cost page', async () => {
     const postOptions = {
       method: 'POST',
-      url: '/project-items',
+      url: `${global.__URLPREFIX__}/project-items`,
       payload: { projectTechnology: 'Software to monitor soil moisture levels and schedule irrigation', crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
@@ -91,13 +91,13 @@ describe('Irrigation water source page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe('./project-cost')
+    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/project-cost`)
   })
 
   it('should store user response from all columns and redirect to project cost page', async () => {
     const postOptions = {
       method: 'POST',
-      url: '/project-items',
+      url: `${global.__URLPREFIX__}/project-items`,
       payload: {
         projectInfrastucture: 'Overflow/spillway',
         projectEquipment: ['Ebb and flood or capillary bed', 'Sprinklers and mist'],
@@ -111,6 +111,6 @@ describe('Irrigation water source page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe('./project-cost')
+    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/project-cost`)
   })
 })

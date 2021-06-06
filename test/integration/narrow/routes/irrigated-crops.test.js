@@ -21,7 +21,7 @@ describe('Irrigated crops page', () => {
   it('should load page successfully', async () => {
     const options = {
       method: 'GET',
-      url: '/irrigated-crops',
+      url: `${global.__URLPREFIX__}/irrigated-crops`,
       headers: {
         cookie: 'crumb=' + crumbToken
       }
@@ -34,7 +34,7 @@ describe('Irrigated crops page', () => {
   it('should returns error message if no option is selected', async () => {
     const postOptions = {
       method: 'POST',
-      url: '/irrigated-crops',
+      url: `${global.__URLPREFIX__}/irrigated-crops`,
       payload: { crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
@@ -49,7 +49,7 @@ describe('Irrigated crops page', () => {
   it('should store user response and redirects to irrigated land page', async () => {
     const postOptions = {
       method: 'POST',
-      url: '/irrigated-crops',
+      url: `${global.__URLPREFIX__}/irrigated-crops`,
       payload: { irrigatedCrops, crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
@@ -58,6 +58,6 @@ describe('Irrigated crops page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe('./irrigated-land')
+    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/irrigated-land`)
   })
 })

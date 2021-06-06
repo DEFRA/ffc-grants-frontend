@@ -7,7 +7,7 @@
 {% from "govuk/components/select/macro.njk" import govukSelect %}
 
 {% block pageTitle %}
-  {{siteTitle}} - {{ pageHeader }} 
+  {{siteTitle}} - {{ pageHeader }}
 {% endblock %}
 {% block beforeContent %}
   {{ govukBackLink({
@@ -26,10 +26,10 @@
         {{ govukInput(inputFirstName) }}
         {{ govukInput(inputLastName) }}
 
-        {% if formActionPage == './agent-details' %}
+        {% if inputBusinessName %}
           {{ govukInput(inputBusinessName) }}
         {% endif %}
-        
+
         <h1 class="govuk-heading-m">Contact details</h1><br/>
         {{ govukInput(inputEmail) }}
         {{ govukInput(inputMobile) }}

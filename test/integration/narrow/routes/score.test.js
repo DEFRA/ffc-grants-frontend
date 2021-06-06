@@ -25,7 +25,7 @@ describe('Score page', () => {
     jest.mock('@hapi/wreck')
     const options = {
       method: 'GET',
-      url: '/score'
+      url: `${global.__URLPREFIX__}/score`
     }
     const wreckResponse = {
       payload: null,
@@ -48,7 +48,7 @@ describe('Score page', () => {
     jest.mock('@hapi/wreck')
     const options = {
       method: 'GET',
-      url: '/score'
+      url: `${global.__URLPREFIX__}/score`
     }
     const wreckResponse = {
       payload: null,
@@ -71,7 +71,7 @@ describe('Score page', () => {
     jest.mock('@hapi/wreck')
     const options = {
       method: 'GET',
-      url: '/score'
+      url: `${global.__URLPREFIX__}/score`
     }
     const wreckResponse = {
       payload: { desirability: null },
@@ -93,7 +93,7 @@ describe('Score page', () => {
     jest.mock('@hapi/wreck')
     const options = {
       method: 'GET',
-      url: '/score'
+      url: `${global.__URLPREFIX__}/score`
     }
     Wreck.get = jest.fn(async function (url, type) {
       throw new Error('can\'t reach')
@@ -109,7 +109,7 @@ describe('Score page', () => {
     jest.mock('@hapi/wreck')
     const options = {
       method: 'GET',
-      url: '/score'
+      url: `${global.__URLPREFIX__}/score`
     }
     Wreck.get = jest.fn(async function (url, type) {
       return null
@@ -125,7 +125,7 @@ describe('Score page', () => {
     jest.mock('@hapi/wreck')
     const options = {
       method: 'GET',
-      url: '/score'
+      url: `${global.__URLPREFIX__}/score`
     }
     const wreckResponse = {
       payload: scoreData,
@@ -149,7 +149,7 @@ describe('Score page', () => {
     jest.mock('@hapi/wreck')
     const options = {
       method: 'GET',
-      url: '/score'
+      url: `${global.__URLPREFIX__}/score`
     }
     scoreData.desirability.overallRating.band = 'Average'
     const wreckResponse = {
@@ -174,7 +174,7 @@ describe('Score page', () => {
     jest.mock('@hapi/wreck')
     const options = {
       method: 'GET',
-      url: '/score'
+      url: `${global.__URLPREFIX__}/score`
     }
     scoreData.desirability.overallRating.band = 'Weak'
     const wreckResponse = {
@@ -198,7 +198,7 @@ describe('Score page', () => {
   it('redirects to project next steps page', async () => {
     const postOptions = {
       method: 'POST',
-      url: '/score',
+      url: `${global.__URLPREFIX__}/score`,
       payload: { crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
@@ -207,7 +207,7 @@ describe('Score page', () => {
 
     const postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe('./next-steps')
+    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/next-steps`)
   })
 
   afterEach(async () => {

@@ -5,7 +5,7 @@ describe('cookies route', () => {
   it('GET /cookies context includes Header', async () => {
     const options = {
       method: 'GET',
-      url: '/cookies'
+      url: `${global.__URLPREFIX__}/cookies`
     }
 
     const result = await global.__SERVER__.inject(options)
@@ -35,7 +35,7 @@ describe('cookies route', () => {
   it('POST /cookies returns 302 if not async', async () => {
     const options = {
       method: 'POST',
-      url: '/cookies',
+      url: `${global.__URLPREFIX__}/cookies`,
       payload: { crumb: crumbToken, analytics: true },
       headers: {
         cookie: 'crumb=' + crumbToken
@@ -49,7 +49,7 @@ describe('cookies route', () => {
   it('GET /cookies returns cookie policy', async () => {
     const options = {
       method: 'GET',
-      url: '/cookies'
+      url: `${global.__URLPREFIX__}/cookies`
     }
 
     const result = await global.__SERVER__.inject(options)
@@ -64,7 +64,7 @@ describe('cookies route', () => {
   it('POST /cookies returns 200 if async', async () => {
     const options = {
       method: 'POST',
-      url: '/cookies',
+      url: `${global.__URLPREFIX__}/cookies`,
       payload: { crumb: crumbToken, analytics: true, async: true },
       headers: {
         cookie: 'crumb=' + crumbToken
@@ -78,7 +78,7 @@ describe('cookies route', () => {
   it('POST /cookies invalid returns 400', async () => {
     const options = {
       method: 'POST',
-      url: '/cookies',
+      url: `${global.__URLPREFIX__}/cookies`,
       payload: { crumb: crumbToken, invalid: 'aaaaaa' },
       headers: {
         cookie: 'crumb=' + crumbToken
@@ -92,7 +92,7 @@ describe('cookies route', () => {
   it('GET /cookies returns 200', async () => {
     const options = {
       method: 'GET',
-      url: '/cookies'
+      url: `${global.__URLPREFIX__}/cookies`
     }
 
     const result = await global.__SERVER__.inject(options)
@@ -106,7 +106,7 @@ describe('cookies route', () => {
   it('POST /cookies redirects to GET with querystring', async () => {
     const options = {
       method: 'POST',
-      url: '/cookies',
+      url: `${global.__URLPREFIX__}/cookies`,
       payload: { crumb: crumbToken, analytics: true },
       headers: {
         cookie: 'crumb=' + crumbToken
@@ -115,6 +115,6 @@ describe('cookies route', () => {
 
     const result = await global.__SERVER__.inject(options)
     expect(result.statusCode).toBe(302)
-    expect(result.headers.location).toBe('./cookies?updated=true')
+    expect(result.headers.location).toBe(`${global.__URLPREFIX__}/cookies?updated=true`)
   })
 })

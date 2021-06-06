@@ -14,7 +14,7 @@ describe('Confirmation page', () => {
 
     const postOptions = {
       method: 'POST',
-      url: '/confirm',
+      url: `${global.__URLPREFIX__}/confirm`,
       payload: { crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
@@ -33,7 +33,7 @@ describe('Confirmation page', () => {
 
     const options = {
       method: 'GET',
-      url: '/confirmation',
+      url: `${global.__URLPREFIX__}/confirmation`,
       headers: {
         cookie: 'crumb=' + crumbToken + '; ' + sessionCookie
       }
@@ -46,7 +46,7 @@ describe('Confirmation page', () => {
   it('should redirect page if no consent  is given', async () => {
     const options = {
       method: 'GET',
-      url: '/confirmation'
+      url: `${global.__URLPREFIX__}/confirmation`
     }
     const senders = require('../../../../app/messaging/senders')
     senders.sendContactDetails = jest.fn(async function (model, yarId) {
@@ -54,7 +54,7 @@ describe('Confirmation page', () => {
     })
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(302)
-    expect(response.headers.location).toBe('./start')
+    expect(response.headers.location).toBe(`${global.__URLPREFIX__}/start`)
   })
 
   afterEach(async () => {
