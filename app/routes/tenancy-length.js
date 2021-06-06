@@ -1,9 +1,10 @@
 const Joi = require('joi')
 const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
+const urlPrefix = require('../config/server').urlPrefix
 
 function createModel (errorMessage, data) {
   return {
-    backLink: './tenancy',
+    backLink: `${urlPrefix}/tenancy`,
     radios: {
       classes: 'govuk-radios--inline',
       idPrefix: 'tenancyLength',
@@ -22,8 +23,8 @@ function createModel (errorMessage, data) {
 }
 
 const MAYBE_ELIGIBLE = {
-  backLink: './tenancy-length',
-  nextLink: './project-items',
+  backLink: `${urlPrefix}/tenancy-length`,
+  nextLink: `${urlPrefix}/project-items`,
   messageHeader: 'You may be able to apply for a grant from this scheme',
   messageContent: 'You will need to extend your tenancy agreement before you can complete a full application.'
 }
@@ -31,7 +32,7 @@ const MAYBE_ELIGIBLE = {
 module.exports = [
   {
     method: 'GET',
-    path: '/tenancy-length',
+    path: `${urlPrefix}/tenancy-length`,
     handler: (request, h) => {
       const tenancyLength = request.yar.get('tenancyLength')
       const data = tenancyLength || null
@@ -40,7 +41,7 @@ module.exports = [
   },
   {
     method: 'POST',
-    path: '/tenancy-length',
+    path: `${urlPrefix}/tenancy-length`,
     options: {
       validate: {
         payload: Joi.object({
@@ -55,8 +56,8 @@ module.exports = [
       handler: (request, h) => {
         request.yar.set('tenancyLength', request.payload.tenancyLength)
         return request.payload.tenancyLength === 'Yes'
-          ? h.redirect('./project-items')
-          : h.view('./maybe-eligible', MAYBE_ELIGIBLE)
+          ? h.redirect(`${urlPrefix}/project-items`)
+          : h.view('maybe-eligible', MAYBE_ELIGIBLE)
       }
     }
   }

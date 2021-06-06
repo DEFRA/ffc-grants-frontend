@@ -4,10 +4,17 @@ const { errorExtractor, getErrorMessage, getGrantValues } = require('../helpers/
 const { MIN_GRANT, MAX_GRANT } = require('../helpers/grant-details')
 const { PROJECT_COST_REGEX } = require('../helpers/regex-validation')
 const gapiService = require('../services/gapi-service')
+const urlPrefix = require('../config/server').urlPrefix
+
+const viewTemplate = 'project-cost'
+const currentPath = `${urlPrefix}/${viewTemplate}`
+const previousPath = `${urlPrefix}/project-items`
+const nextPath = `${urlPrefix}/potential-amount`
 
 function createModel (errorMessage, projectCost, projectItemsList) {
   return {
-    backLink: './project-items',
+    backLink: previousPath,
+    formActionPage: currentPath,
     inputProjectCost: {
       id: 'projectCost',
       name: 'projectCost',
@@ -36,7 +43,7 @@ function createModel (errorMessage, projectCost, projectItemsList) {
 
 function createModelNotEligible () {
   return {
-    backLink: './project-cost',
+    backLink: currentPath,
     messageContent:
       `You can only apply for a grant of up to <span class="govuk-!-font-weight-bold">40%</span> of the estimated costs.<br/><br/>
     The minimum grant you can apply for is £35,000 (40% of £87,500). The maximum grant is £1 million.`
@@ -46,20 +53,17 @@ function createModelNotEligible () {
 module.exports = [
   {
     method: 'GET',
-    path: '/project-cost',
+    path: currentPath,
     handler: (request, h) => {
       const projectCost = getYarValue(request, 'projectCost') || null
       const projectItemsList = getYarValue(request, 'projectItemsList')
 
-      return h.view(
-        'project-cost',
-        createModel(null, projectCost, projectItemsList)
-      )
+      return h.view(viewTemplate, createModel(null, projectCost, projectItemsList))
     }
   },
   {
     method: 'POST',
-    path: '/project-cost',
+    path: currentPath,
     options: {
       validate: {
         payload: Joi.object({
@@ -70,7 +74,7 @@ module.exports = [
 
           const errorObject = errorExtractor(err)
           const errorMessage = getErrorMessage(errorObject)
-          return h.view('project-cost', createModel(errorMessage, null, projectItemsList)).takeover()
+          return h.view(viewTemplate, createModel(errorMessage, null, projectItemsList)).takeover()
         }
       },
       handler: async (request, h) => {
@@ -82,9 +86,9 @@ module.exports = [
 
         await gapiService.sendEligibilityEvent(request, (calculatedGrant >= MIN_GRANT) && (calculatedGrant <= MAX_GRANT))
         if ((calculatedGrant < MIN_GRANT) || (calculatedGrant > MAX_GRANT)) {
-          return h.view('./not-eligible', createModelNotEligible())
+          return h.view('not-eligible', createModelNotEligible())
         }
-        return h.redirect('./potential-amount')
+        return h.redirect(nextPath)
       }
     }
   }

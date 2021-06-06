@@ -4,9 +4,12 @@ const { isChecked, getPostCodeHtml, errorExtractor, getErrorMessage } = require(
 const { POSTCODE_REGEX, DELETE_POSTCODE_CHARS_REGEX } = require('../helpers/regex-validation')
 const gapiService = require('../services/gapi-service')
 
+const pageDetails = require('../helpers/page-details')('Q3')
+
 function createModel (errorMessage, data, postcodeHtml) {
   return {
-    backLink: '/water/legal-status',
+    backLink: pageDetails.previousPath,
+    formActionPage: pageDetails.path,
     radios: {
       idPrefix: 'inEngland',
       name: 'inEngland',
@@ -39,7 +42,7 @@ function createModel (errorMessage, data, postcodeHtml) {
 
 function createModelNotEligible () {
   return {
-    backLink: '/water/country',
+    backLink: pageDetails.path,
     messageContent: 'This grant is only for projects in England.<br/><br/>Scotland, Wales and Northern Ireland have other grants available.'
   }
 }
@@ -47,18 +50,18 @@ function createModelNotEligible () {
 module.exports = [
   {
     method: 'GET',
-    path: '/water/country',
+    path: pageDetails.path,
     handler: (request, h) => {
       const inEngland = getYarValue(request, 'inEngland') || null
       const postcodeData = inEngland !== null ? getYarValue(request, 'projectPostcode') : null
       const postcodeHtml = getPostCodeHtml(postcodeData)
 
-      return h.view('country', createModel(null, inEngland, postcodeHtml))
+      return h.view(pageDetails.template, createModel(null, inEngland, postcodeHtml))
     }
   },
   {
     method: 'POST',
-    path: '/water/country',
+    path: pageDetails.path,
     options: {
       validate: {
         payload: Joi.object({
@@ -72,7 +75,7 @@ module.exports = [
           const postcodeHtml = getPostCodeHtml(projectPostcode.toUpperCase(), inEngland ? errorMessage : null)
 
           return h.view(
-            'country',
+            pageDetails.template,
             createModel(
               !inEngland ? errorMessage : null,
               inEngland,
@@ -85,9 +88,8 @@ module.exports = [
         const { inEngland, projectPostcode } = request.payload
 
         if (inEngland === 'Yes' && projectPostcode.trim() === '') {
-          console.log('IN HERE')
           const postcodeHtml = getPostCodeHtml(projectPostcode.toUpperCase(), 'Enter a postcode, like AA1 1AA')
-          return h.view('country', createModel(null, inEngland, postcodeHtml))
+          return h.view(pageDetails.template, createModel(null, inEngland, postcodeHtml))
         }
 
         setYarValue(request, 'inEngland', inEngland)
@@ -95,7 +97,7 @@ module.exports = [
         await gapiService.sendEligibilityEvent(request, inEngland === 'yes')
 
         if (inEngland === 'Yes') {
-          return h.redirect('/water/planning-permission')
+          return h.redirect(pageDetails.nextPath)
         }
 
         return h.view('not-eligible', createModelNotEligible())

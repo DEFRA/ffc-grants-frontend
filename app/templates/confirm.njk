@@ -5,7 +5,7 @@
 {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
 {% from "./components/macro.njk" import crumbToken %}
 {% block pageTitle %}
-  {{siteTitle}} - Confirm 
+  {{siteTitle}} - Confirm
 {% endblock %}
 {% block beforeContent %}
   {{ govukBackLink({
@@ -39,7 +39,7 @@
     </div>
 
     <div class="govuk-grid-column-two-thirds">
-      <form method="POST" action="./confirm" autocomplete="off" novalidate="novalidate">
+      <form method="POST" action="{{ formActionPage }}" autocomplete="off" novalidate="novalidate">
         {{ crumbToken(crumb)}}
         {{ govukCheckboxes(checkboxConfirmOptional) }}
         {{ govukButton({
@@ -52,7 +52,7 @@
   <div class="govuk-grid-row govuk-body">
     <div class="govuk-grid-column-two-thirds">
       <p>
-        The Department for Environment, Food and Rural Affairs (Defra) is the data controller for personal data you give to RPA. For information on how we handle personal data go to GOV.UK and search 
+        The Department for Environment, Food and Rural Affairs (Defra) is the data controller for personal data you give to RPA. For information on how we handle personal data go to GOV.UK and search
         <a href="https://www.gov.uk/government/organisations/rural-payments-agency/about/personal-information-charter" target="_blank" rel="noopener noreferrer">Rural Payments Agency personal information charter.</a>
       </p>
     </div>

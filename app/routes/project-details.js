@@ -7,9 +7,12 @@ const {
 const { setYarValue, getYarValue } = require('../helpers/session')
 const { LICENSE_EXPECTED, LICENSE_WILL_NOT_HAVE } = require('../helpers/license-dates')
 
+const pageDetails = require('../helpers/page-details')('Q14')
+
 function createModel (errorMessage, errorSummary, data, backLink, hasScore) {
   return {
     backLink: backLink,
+    formActionPage: pageDetails.path,
     hasScore: hasScore,
     ...errorSummary ? { errorList: errorSummary } : {},
     checkboxes: {
@@ -30,28 +33,30 @@ function createModel (errorMessage, errorSummary, data, backLink, hasScore) {
     }
   }
 }
+
 const getBackLink = (request) => {
   const abstractionLicence = getYarValue(request, 'abstractionLicence')
   return (
     abstractionLicence === LICENSE_EXPECTED ||
     abstractionLicence === LICENSE_WILL_NOT_HAVE
   )
-    ? './abstraction-required-condition'
-    : './abstraction-licence'
+    ? `${pageDetails.pathPrefix}/abstraction-required-condition`
+    : pageDetails.previousPath
 }
+
 module.exports = [
   {
     method: 'GET',
-    path: '/project-details',
+    path: pageDetails.path,
     handler: (request, h) => {
       const project = getYarValue(request, 'project')
       const data = project || null
-      return h.view('project-details', createModel(null, null, data, getBackLink(request), getYarValue(request, 'current-score')))
+      return h.view(pageDetails.template, createModel(null, null, data, getBackLink(request), getYarValue(request, 'current-score')))
     }
   },
   {
     method: 'POST',
-    path: '/project-details',
+    path: pageDetails.path,
     options: {
       validate: {
         payload: Joi.object({
@@ -61,7 +66,7 @@ module.exports = [
         failAction: (request, h, err) => {
           const errorObject = errorExtractor(err)
           const errorMessage = getErrorMessage(errorObject)
-          return h.view('project-details', createModel(errorMessage, null, null, getBackLink(request), getYarValue(request, 'current-score'))).takeover()
+          return h.view(pageDetails.template, createModel(errorMessage, null, null, getBackLink(request), getYarValue(request, 'current-score'))).takeover()
         }
       },
       handler: (request, h) => {
@@ -72,15 +77,16 @@ module.exports = [
 
         if (project.filter(option => option === 'None of the above').length > 0 && project.length > 1) {
           errorList.push({ text: 'Select one or two options of what the project will achieve', href: '#project' })
-          return h.view('project-details', createModel('If you select \'None of the above\', you cannot select another option', errorList, project)).takeover()
+          return h.view(pageDetails.template, createModel('If you select \'None of the above\', you cannot select another option', errorList, project, getBackLink(request), hasScore))
         }
+
         if (project.length > 2) {
           errorList.push({ text: 'Select one or two options of what the project will achieve', href: '#project' })
-          return h.view('project-details', createModel('Select one or two options', errorList, project, getBackLink(request), hasScore)).takeover()
+          return h.view(pageDetails.template, createModel('Select one or two options', errorList, project, getBackLink(request), hasScore))
         }
 
         setYarValue(request, 'project', project)
-        return results ? h.redirect('./score') : h.redirect('./irrigated-crops')
+        return results ? h.redirect(`${pageDetails.pathPrefix}/score`) : h.redirect(pageDetails.nextPath)
       }
     }
   }

@@ -9,7 +9,6 @@ services:
     environment:
       NODE_ENV: production
       SITE_URL: localhost:3000
-      SITE_VERSION: ${SITE_VERSION}
       LOGIN_REQUIRED: ${LOGIN_REQUIRED:-false}
       AUTH_USERNAME: ${AUTH_USERNAME:-grants}
       AUTH_PASSWORD_HASH: ${AUTH_PASSWORD_HASH:-grants}

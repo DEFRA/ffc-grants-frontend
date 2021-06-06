@@ -2,9 +2,11 @@ const Joi = require('joi')
 const { setYarValue, getYarValue } = require('../helpers/session')
 const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
 
-function createModel(errorMessage, data) {
+const pageDetails = require('../helpers/page-details')('Q6')
+
+function createModel (errorMessage, data) {
   return {
-    backLink: './project-start',
+    backLink: pageDetails.previousPath,
     radios: {
       classes: 'govuk-radios--inline',
       idPrefix: 'landOwnership',
@@ -25,16 +27,16 @@ function createModel(errorMessage, data) {
 module.exports = [
   {
     method: 'GET',
-    path: '/tenancy',
+    path: pageDetails.path,
     handler: (request, h) => {
       const landOwnership = getYarValue(request, 'landOwnership')
       const data = landOwnership || null
-      return h.view('tenancy', createModel(null, data))
+      return h.view(pageDetails.template, createModel(null, data))
     }
   },
   {
     method: 'POST',
-    path: '/tenancy',
+    path: pageDetails.path,
     options: {
       validate: {
         payload: Joi.object({
@@ -43,14 +45,14 @@ module.exports = [
         failAction: (request, h, err) => {
           const errorObject = errorExtractor(err)
           const errorMessage = getErrorMessage(errorObject)
-          return h.view('tenancy', createModel(errorMessage)).takeover()
+          return h.view(pageDetails.template, createModel(errorMessage)).takeover()
         }
       },
       handler: (request, h) => {
         setYarValue(request, 'landOwnership', request.payload.landOwnership)
         return request.payload.landOwnership === 'Yes'
-          ? h.redirect('./project-items')
-          : h.redirect('./tenancy-length')
+          ? h.redirect(pageDetails.nextPath)
+          : h.redirect(`${pageDetails.pathPrefix}/tenancy-length`)
       }
     }
   }

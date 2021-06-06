@@ -1,6 +1,8 @@
+const urlPrefix = require('../config/server').urlPrefix
+
 const MAYBE_ELIGIBLE = {
-  backLink: '/water/abstraction-licence',
-  nextLink: '/water/project-details',
+  backLink: `${urlPrefix}/abstraction-licence`,
+  nextLink: `${urlPrefix}/project-details`,
   messageHeader: 'You may be able to apply for this grant',
   messageContent: `
   Any abstraction licences should be in place by 31 December 2021 (the end of the application window).<br/><br/>
@@ -12,9 +14,9 @@ const MAYBE_ELIGIBLE = {
 module.exports = [
   {
     method: 'GET',
-    path: '/water/abstraction-required-condition',
+    path: `${urlPrefix}/abstraction-required-condition`,
     handler: (request, h) => {
-      return h.view('maybe-eligible', MAYBE_ELIGIBLE).takeover()
+      return h.view('maybe-eligible', MAYBE_ELIGIBLE)
     }
   }
 ]

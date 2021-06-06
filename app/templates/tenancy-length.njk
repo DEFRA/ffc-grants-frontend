@@ -6,7 +6,7 @@
 {% from "govuk/components/details/macro.njk" import govukDetails %}
 {% from "./components/macro.njk" import crumbToken, sideBar %}
 {% block pageTitle %}
-  {{siteTitle}} - Tenancy length 
+  {{siteTitle}} - Tenancy length
 {% endblock %}
 {% block beforeContent %}
   {{ govukBackLink({
@@ -18,7 +18,7 @@
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <form method="POST" action="./tenancy-length" autocomplete="off" novalidate="novalidate">
+      <form method="POST" action="{{ formActionPage }}" autocomplete="off" novalidate="novalidate">
         {{ crumbToken(crumb)}}
         {{ govukRadios(radios) }}
         {{ govukButton({

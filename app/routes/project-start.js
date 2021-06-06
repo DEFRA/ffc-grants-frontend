@@ -3,9 +3,13 @@ const { setYarValue, getYarValue } = require('../helpers/session')
 const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
 const gapiService = require('../services/gapi-service')
 const { LICENSE_EXPECTED } = require('../helpers/license-dates')
+
+const pageDetails = require('../helpers/page-details')('Q5')
+
 function createModel (errorMessage, data, backLink) {
   return {
     backLink: backLink,
+    formActionPage: pageDetails.path,
     radios: {
       classes: 'govuk-radios--inline',
       idPrefix: 'projectStarted',
@@ -26,13 +30,13 @@ function createModel (errorMessage, data, backLink) {
 const getBackLink = (request) => {
   const planningPermission = getYarValue(request, 'planningPermission')
   return (planningPermission === LICENSE_EXPECTED)
-    ? './planning-required-condition'
-    : './planning-permission'
+    ? `${pageDetails.pathPrefix}/planning-required-condition`
+    : `${pageDetails.pathPrefix}/planning-permission`
 }
 
 function createModelNotEligible () {
   return {
-    backLink: './project-start',
+    backLink: pageDetails.path,
     messageContent:
       'You cannot apply for a grant if you have already started work on the project. <br/>Starting the project or committing to any costs (such as placing orders) before you receive a funding agreement invalidates your application.'
   }
@@ -41,16 +45,16 @@ function createModelNotEligible () {
 module.exports = [
   {
     method: 'GET',
-    path: '/project-start',
+    path: pageDetails.path,
     handler: (request, h) => {
       const projectStarted = getYarValue(request, 'projectStarted')
       const data = projectStarted || null
-      return h.view('project-start', createModel(null, data, getBackLink(request)))
+      return h.view(pageDetails.template, createModel(null, data, getBackLink(request)))
     }
   },
   {
     method: 'POST',
-    path: '/project-start',
+    path: pageDetails.path,
     options: {
       validate: {
         payload: Joi.object({
@@ -59,14 +63,14 @@ module.exports = [
         failAction: (request, h, err) => {
           const errorObject = errorExtractor(err)
           const errorMessage = getErrorMessage(errorObject)
-          return h.view('project-start', createModel(errorMessage, null, getBackLink(request))).takeover()
+          return h.view(pageDetails.template, createModel(errorMessage, null, getBackLink(request))).takeover()
         }
       },
       handler: async (request, h) => {
         setYarValue(request, 'projectStarted', request.payload.projectStarted)
         await gapiService.sendEligibilityEvent(request, request.payload.projectStarted === 'No')
         if (request.payload.projectStarted === 'No') {
-          return h.redirect('./tenancy')
+          return h.redirect(pageDetails.nextPath)
         }
         return h.view('./not-eligible', createModelNotEligible())
       }

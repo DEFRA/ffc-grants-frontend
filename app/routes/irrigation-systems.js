@@ -2,9 +2,12 @@ const Joi = require('joi')
 const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
 const { setYarValue, getYarValue } = require('../helpers/session')
 
+const pageDetails = require('../helpers/page-details')('Q18')
+
 function createModel (errorMessage, errorSummary, currentData, plannedData, hasScore) {
   return {
-    backLink: './irrigation-water-source',
+    backLink: pageDetails.previousPath,
+    formActionPage: pageDetails.path,
     hasScore: hasScore,
     ...errorSummary ? { errorList: errorSummary } : {},
     irrigationCurrent: {
@@ -46,16 +49,16 @@ function createModel (errorMessage, errorSummary, currentData, plannedData, hasS
 module.exports = [
   {
     method: 'GET',
-    path: '/irrigation-systems',
+    path: pageDetails.path,
     handler: (request, h) => {
       const currentData = getYarValue(request, 'irrigationCurrent') || null
       const plannedData = getYarValue(request, 'irrigationPlanned') || null
-      return h.view('irrigation-systems', createModel(null, null, currentData, plannedData, getYarValue(request, 'current-score')))
+      return h.view(pageDetails.template, createModel(null, null, currentData, plannedData, getYarValue(request, 'current-score')))
     }
   },
   {
     method: 'POST',
-    path: '/irrigation-systems',
+    path: pageDetails.path,
     options: {
       validate: {
         payload: Joi.object({
@@ -70,7 +73,7 @@ module.exports = [
 
           irrigationCurrent = irrigationCurrent ? [irrigationCurrent].flat() : irrigationCurrent
           irrigationPlanned = irrigationPlanned ? [irrigationPlanned].flat() : irrigationPlanned
-          return h.view('irrigation-systems', createModel(errorMessage, null, irrigationCurrent, irrigationPlanned, getYarValue(request, 'current-score'))).takeover()
+          return h.view(pageDetails.template, createModel(errorMessage, null, irrigationCurrent, irrigationPlanned, getYarValue(request, 'current-score'))).takeover()
         }
       },
       handler: (request, h) => {
@@ -86,13 +89,12 @@ module.exports = [
           if (irrigationPlanned.length > 2) {
             errorList.push({ text: 'Select the systems that will be used to irrigate', href: '#irrigationPlanned' })
           }
-          return h.view('irrigation-systems', createModel('Select one or two options', errorList, irrigationCurrent, irrigationPlanned, getYarValue(request, 'current-score')))
-            .takeover()
+          return h.view(pageDetails.template, createModel('Select one or two options', errorList, irrigationCurrent, irrigationPlanned, getYarValue(request, 'current-score')))
         }
 
         setYarValue(request, 'irrigationCurrent', irrigationCurrent)
         setYarValue(request, 'irrigationPlanned', irrigationPlanned)
-        return results ? h.redirect('./score') : h.redirect('./productivity')
+        return results ? h.redirect(`${pageDetails.pathPrefix}/score`) : h.redirect(pageDetails.nextPath)
       }
     }
   }

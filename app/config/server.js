@@ -2,6 +2,7 @@ const Joi = require('joi')
 
 // Define config schema
 const schema = Joi.object({
+  urlPrefix: Joi.string().default('/water'),
   cookiePassword: Joi.string().default('dummycookiepassworddummycookiepassword'),
   googleTagManagerKey: Joi.string().default('GTM-WJ5C78H'),
   googleTagManagerServerKey: Joi.string().default('UA-179628664-4'),
@@ -21,6 +22,7 @@ const schema = Joi.object({
 })
 // Build config
 const config = {
+  urlPrefix: process.env.URL_PREFIX,
   cookiePassword: process.env.COOKIE_PASSWORD,
   googleTagManagerKey: process.env.GOOGLE_TAG_MANAGER_KEY,
   googleTagManagerServerKey: process.env.GOOGLE_TAG_MANAGER_SERVER_KEY,

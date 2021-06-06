@@ -19,7 +19,7 @@
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <form method="POST" action="/water/legal-status" autocomplete="off" novalidate="novalidate">
+      <form method="POST" action="{{ formActionPage }}" autocomplete="off" novalidate="novalidate">
         {{ crumbToken(crumb)}}
         {{ govukRadios(radios) }}
         {{ govukButton({

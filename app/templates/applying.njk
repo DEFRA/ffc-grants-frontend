@@ -18,7 +18,7 @@
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <form method="POST" action="./applying" novalidate="novalidate">
+      <form method="POST" action="{{ formActionPage }}" novalidate="novalidate">
         {{ crumbToken(crumb)}}
         {{ govukRadios(radios) }}
         {{ govukButton({

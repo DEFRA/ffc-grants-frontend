@@ -6,9 +6,11 @@ const {
   getErrorMessage
 } = require('../helpers/helper-functions')
 
-const createModel = (errorMessage, data, hasScore) => ({
+const pageDetails = require('../helpers/page-details')('Q15')
 
-  backLink: './project-details',
+const createModel = (errorMessage, data, hasScore) => ({
+  backLink: pageDetails.previousPath,
+  formActionPage: pageDetails.path,
   hasScore: hasScore,
   radios: {
     classes: '',
@@ -35,16 +37,16 @@ const createModel = (errorMessage, data, hasScore) => ({
 module.exports = [
   {
     method: 'GET',
-    path: '/irrigated-crops',
+    path: pageDetails.path,
     handler: (request, h) => {
       const irrigatedCrops = getYarValue(request, 'irrigatedCrops')
       const data = irrigatedCrops || null
-      return h.view('irrigated-crops', createModel(null, data, getYarValue(request, 'current-score')))
+      return h.view(pageDetails.template, createModel(null, data, getYarValue(request, 'current-score')))
     }
   },
   {
     method: 'POST',
-    path: '/irrigated-crops',
+    path: pageDetails.path,
     options: {
       validate: {
         payload: Joi.object({
@@ -55,13 +57,13 @@ module.exports = [
         failAction: (request, h, err) => {
           const errorObject = errorExtractor(err)
           const errorMessage = getErrorMessage(errorObject)
-          return h.view('irrigated-crops', createModel(errorMessage, null, getYarValue(request, 'current-score'))).takeover()
+          return h.view(pageDetails.template, createModel(errorMessage, null, getYarValue(request, 'current-score'))).takeover()
         }
       },
       handler: (request, h) => {
         const results = request.payload.results
         setYarValue(request, 'irrigatedCrops', request.payload.irrigatedCrops)
-        return results ? h.redirect('./score') : h.redirect('./irrigated-land')
+        return results ? h.redirect(`${pageDetails.pathPrefix}/score`) : h.redirect(pageDetails.nextPath)
       }
     }
   }

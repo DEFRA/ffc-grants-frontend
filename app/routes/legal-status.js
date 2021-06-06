@@ -3,9 +3,12 @@ const { setYarValue, getYarValue } = require('../helpers/session')
 const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
 const gapiService = require('../services/gapi-service')
 
+const pageDetails = require('../helpers/page-details')('Q2')
+
 function createModel (errorMessage, data) {
   return {
-    backLink: '/water/farming-type',
+    backLink: pageDetails.previousPath,
+    formActionPage: pageDetails.path,
     radios: {
       classes: '',
       idPrefix: 'legalStatus',
@@ -41,7 +44,7 @@ function createModel (errorMessage, data) {
 
 function createModelNotEligible () {
   return {
-    backLink: '/water/legal-status',
+    backLink: pageDetails.path,
     messageContent:
       'This is only open to a business with a legal status of: <ul class="govuk-list govuk-list--bullet"><li>Sole trader</li><li>Partnership</li><li>Ltd company</li><li>Charity</li><li>Public organisation</li><li>Trust</li><li>Limited liability partnership</li><li>Community interest company</li><li>Local authority</li></ul> <p class="govuk-body">Other types of business may be supported in future schemes.</p>'
   }
@@ -50,16 +53,16 @@ function createModelNotEligible () {
 module.exports = [
   {
     method: 'GET',
-    path: '/water/legal-status',
+    path: pageDetails.path,
     handler: (request, h) => {
       const legalStatus = getYarValue(request, 'legalStatus')
       const data = legalStatus || null
-      return h.view('legal-status', createModel(null, data))
+      return h.view(pageDetails.template, createModel(null, data))
     }
   },
   {
     method: 'POST',
-    path: '/water/legal-status',
+    path: pageDetails.path,
     options: {
       validate: {
         payload: Joi.object({
@@ -68,7 +71,7 @@ module.exports = [
         failAction: (request, h, err) => {
           const errorObject = errorExtractor(err)
           const errorMessage = getErrorMessage(errorObject)
-          return h.view('legal-status', createModel(errorMessage)).takeover()
+          return h.view(pageDetails.template, createModel(errorMessage)).takeover()
         }
       },
       handler: async (request, h) => {
@@ -77,7 +80,7 @@ module.exports = [
         if (request.payload.legalStatus === 'None of the above') {
           return h.view('not-eligible', createModelNotEligible())
         }
-        return h.redirect('/water/country')
+        return h.redirect(pageDetails.nextPath)
       }
     }
   }

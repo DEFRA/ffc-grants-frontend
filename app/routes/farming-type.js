@@ -3,9 +3,12 @@ const { setYarValue, getYarValue } = require('../helpers/session')
 const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
 const gapiService = require('../services/gapi-service')
 
+const pageDetails = require('../helpers/page-details')('Q1')
+
 function createModel (errorMessage, data) {
   return {
-    backLink: '/water/start',
+    backLink: pageDetails.previousPath,
+    formActionPage: pageDetails.path,
     radios: {
       classes: '',
       idPrefix: 'farmingType',
@@ -25,7 +28,7 @@ function createModel (errorMessage, data) {
 
 function createModelNotEligible () {
   return {
-    backLink: '/water/farming-type',
+    backLink: pageDetails.path,
     messageContent:
       'This grant is only available to<ul class="govuk-list govuk-list--bullet"><li> arable and horticultural farming businesses that supply the food industry</li><li>nurseries growing flowers</li><li>forestry nurseries</li></ul><p class="govuk-body"> <a href=\'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments\'>See other grants you may be eligible for.</a></p>'
   }
@@ -34,16 +37,16 @@ function createModelNotEligible () {
 module.exports = [
   {
     method: 'GET',
-    path: '/water/farming-type',
+    path: pageDetails.path,
     handler: (request, h) => {
       const farmingType = getYarValue(request, 'farmingType')
       const data = farmingType || null
-      return h.view('farming-type', createModel(null, data))
+      return h.view(pageDetails.template, createModel(null, data))
     }
   },
   {
     method: 'POST',
-    path: '/water/farming-type',
+    path: pageDetails.path,
     options: {
       validate: {
         payload: Joi.object({
@@ -52,13 +55,13 @@ module.exports = [
         failAction: (request, h, err) => {
           const errorObject = errorExtractor(err)
           const errorMessage = getErrorMessage(errorObject)
-          return h.view('farming-type', createModel(errorMessage)).takeover()
+          return h.view(pageDetails.template, createModel(errorMessage)).takeover()
         }
       },
       handler: async (request, h) => {
         setYarValue(request, 'farmingType', request.payload.farmingType)
         await gapiService.sendEligibilityEvent(request, request.payload.farmingType !== 'Something else')
-        if (request.payload.farmingType !== 'Something else') { return h.redirect('/water/legal-status') }
+        if (request.payload.farmingType !== 'Something else') { return h.redirect(pageDetails.nextPath) }
         return h.view('not-eligible', createModelNotEligible())
       }
     }

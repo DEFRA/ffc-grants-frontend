@@ -19,7 +19,7 @@
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <form method="POST" action="./remaining-costs" autocomplete="off" novalidate="novalidate">
+      <form method="POST" action="{{ formActionPage }}" autocomplete="off" novalidate="novalidate">
         {{ crumbToken(crumb)}}
         {{ govukRadios(radios) }}
         {{ govukButton({
@@ -27,7 +27,7 @@
         }) }}
       </form>
     </div>
-    
+
     {{ sideBar("Eligibility","You cannot use public money (for example grant funding from government or local authorities) towards the project costs. You can use loans, overdrafts and certain other grants, such as the Basic Payment Scheme or agri-environment schemes such as the Countryside Stewardship Scheme.",
     []) }}
   </div>

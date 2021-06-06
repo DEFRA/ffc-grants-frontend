@@ -4,7 +4,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 const isDev = process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test'
-const siteUrl = (process.env.SITE_VERSION ?? '') === '' ? '' : `/${process.env.SITE_VERSION}`
 console.log(`Running webpack in ${isDev ? 'development' : 'production'} mode`)
 
 module.exports = {
@@ -58,7 +57,7 @@ module.exports = {
   output: {
     filename: 'js/bundle.[hash].js',
     path: path.resolve(__dirname, 'app/assets/dist'),
-    publicPath: `${siteUrl}/assets/`
+    publicPath: '/assets/'
   },
   plugins: [
     new CleanWebpackPlugin(),
