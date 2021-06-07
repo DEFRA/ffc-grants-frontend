@@ -2,18 +2,22 @@ beforeEach(async () => {
   // ...
   // Set reference to server in order to close the server during teardown.
   const createServer = require('../app/server')
+  const mockSession = {
+    getCurrentPolicy: (request, h) => true,
+    createDefaultPolicy: (h) => true,
+    updatePolicy: (request, h, analytics) => null,
+    validSession: (request) => {
+      return global.__VALIDSESSION__ ?? true
+    }
+  }
+
+  jest.mock('../app/cookies/index', () => mockSession)
   jest.mock('../app/services/gapi-service.js')
   jest.mock('../app/services/app-insights.js')
   jest.mock('../app/services/protective-monitoring-service.js')
-  // global mySession = jest.mock('../app/cookies/index')
-  // jest.mock('../app/cookies/index', () => ({
-  //   getCurrentPolicy: (request, h) => true,
-  //   createDefaultPolicy: (h) => true,
-  //   updatePolicy: (request, h, analytics) => null,
-  //   validSession: (request) => {
-  //     return true
-  //   }
-  // }))
+  jest.mock('../app/cookies/index', () => mockSession)
+
   const server = await createServer()
   global.__SERVER__ = server
+  global.__VALIDSESSION__ = true
 })

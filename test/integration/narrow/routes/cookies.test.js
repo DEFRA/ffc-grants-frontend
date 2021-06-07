@@ -1,21 +1,6 @@
 const { getCookieHeader, getCrumbCookie, crumbToken } = require('./test-helper')
 
-let varList
-const mockSession = {
-  getCurrentPolicy: (request, h) => true,
-  createDefaultPolicy: (h) => true,
-  updatePolicy: (request, h, analytics) => null,
-  validSession: (request) => {
-    return varList ?? true
-  }
-}
-
-jest.mock('../../../../app/cookies/index', () => mockSession)
-
 describe('cookies route', () => {
-  beforeEach(() => {
-    varList = true
-  })
   let crumCookie
   it('GET /cookies context includes Header', async () => {
     const options = {
@@ -32,7 +17,7 @@ describe('cookies route', () => {
   })
 
   it('should redirect to timeout page when session expire', async () => {
-    varList = false
+    global.__VALIDSESSION__ = false
     const options = {
       method: 'GET',
       url: '/cookies',
