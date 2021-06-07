@@ -3,7 +3,7 @@ const { setYarValue, getYarValue } = require('../helpers/session')
 const { fetchListObjectItems, findErrorList } = require('../helpers/helper-functions')
 const { PHONE_REGEX } = require('../helpers/regex-validation')
 
-function createModel(errorMessageList, farmerContactDetails) {
+function createModel (errorMessageList, farmerContactDetails) {
   const { email, landline, mobile } = farmerContactDetails
 
   const [emailError, landlineError, mobileError] = fetchListObjectItems(

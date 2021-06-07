@@ -32,7 +32,7 @@ describe('Confirm page', () => {
       url: '/confirm',
       headers: {
         cookie: 'crumb=' + crumbToken,
-        referer: 'localhost/farmer-details'
+        referer: 'localhost/check-details'
       }
     }
 
@@ -40,7 +40,7 @@ describe('Confirm page', () => {
     expect(response.statusCode).toBe(200)
   })
 
-  it('should redirect to /start page if the referer URL is NOT farmer-details', async () => {
+  it('should redirect to /start page if the referer URL is NOT check-details', async () => {
     const options = {
       method: 'GET',
       url: '/confirm',

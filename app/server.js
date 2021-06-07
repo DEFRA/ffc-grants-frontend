@@ -66,7 +66,7 @@ async function createServer () {
         }
       ],
       sessionIdProducer: async request => {
-        return Uuid.v4()
+        return request.yar ? request.yar.id : Uuid.v4()
       },
       batchSize: 20,
       batchInterval: 15000

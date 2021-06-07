@@ -184,7 +184,7 @@ describe('Farmer details page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe('./confirm')
+    expect(postResponse.headers.location).toBe('./check-details')
   })
 
   it('should store user response and redirects to confirm page', async () => {
@@ -209,6 +209,6 @@ describe('Farmer details page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe('./confirm')
+    expect(postResponse.headers.location).toBe('./check-details')
   })
 })
