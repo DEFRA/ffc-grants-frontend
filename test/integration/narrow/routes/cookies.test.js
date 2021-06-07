@@ -1,7 +1,23 @@
 const { getCookieHeader, getCrumbCookie, crumbToken } = require('./test-helper')
+
+let varList
+const mockSession = {
+  getCurrentPolicy: (request, h) => true,
+  createDefaultPolicy: (h) => true,
+  updatePolicy: (request, h, analytics) => null,
+  validSession: (request) => {
+    return varList ?? true
+  }
+}
+
+jest.mock('../../../../app/cookies/index', () => mockSession)
+
 describe('cookies route', () => {
+  beforeEach(() => {
+    varList = true
+  })
   let crumCookie
-  test('GET /cookies context includes Header', async () => {
+  it('GET /cookies context includes Header', async () => {
     const options = {
       method: 'GET',
       url: '/cookies'
@@ -15,7 +31,23 @@ describe('cookies route', () => {
     expect(result.result).toContain(crumCookie[1])
   })
 
-  test('POST /cookies returns 302 if not async', async () => {
+  it('should redirect to timeout page when session expire', async () => {
+    varList = false
+    const options = {
+      method: 'GET',
+      url: '/cookies',
+      headers: {
+        cookie: 'crumb=' + crumbToken,
+        referer: 'localhost/farmer-details'
+      }
+    }
+
+    const response = await global.__SERVER__.inject(options)
+    expect(response.statusCode).toBe(302)
+    expect(response.headers.location).toBe('session-timeout')
+  })
+
+  it('POST /cookies returns 302 if not async', async () => {
     const options = {
       method: 'POST',
       url: '/cookies',
@@ -29,7 +61,7 @@ describe('cookies route', () => {
     expect(result.statusCode).toBe(302)
   })
 
-  test('GET /cookies returns cookie policy', async () => {
+  it('GET /cookies returns cookie policy', async () => {
     const options = {
       method: 'GET',
       url: '/cookies'
@@ -44,7 +76,7 @@ describe('cookies route', () => {
     expect(result.result).toContain(crumCookie[1])
   })
 
-  test('POST /cookies returns 200 if async', async () => {
+  it('POST /cookies returns 200 if async', async () => {
     const options = {
       method: 'POST',
       url: '/cookies',
@@ -58,7 +90,7 @@ describe('cookies route', () => {
     expect(result.statusCode).toBe(200)
   })
 
-  test('POST /cookies invalid returns 400', async () => {
+  it('POST /cookies invalid returns 400', async () => {
     const options = {
       method: 'POST',
       url: '/cookies',
@@ -72,7 +104,7 @@ describe('cookies route', () => {
     expect(result.statusCode).toBe(400)
   })
 
-  test('GET /cookies returns 200', async () => {
+  it('GET /cookies returns 200', async () => {
     const options = {
       method: 'GET',
       url: '/cookies'
@@ -86,7 +118,7 @@ describe('cookies route', () => {
     crumCookie = getCrumbCookie(result)
     expect(result.result).toContain(crumCookie[1])
   })
-  test('POST /cookies redirects to GET with querystring', async () => {
+  it('POST /cookies redirects to GET with querystring', async () => {
     const options = {
       method: 'POST',
       url: '/cookies',
