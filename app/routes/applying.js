@@ -54,11 +54,9 @@ module.exports = [
           dimensionOrMetric: gapiService.dimensions.AGENTFORMER,
           value: applying
         })
-        if (applying === 'Agent') {
-          return h.redirect('./agent-details')
-        } else {
-          setYarValue(request, 'agentDetails', null)
-        }
+
+        applying === 'Agent' ? h.redirect('./agent-details') : setYarValue(request, 'agentDetails', null)
+
         return h.redirect('./farmer-details')
       }
     }
