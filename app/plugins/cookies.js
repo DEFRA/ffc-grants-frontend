@@ -9,7 +9,7 @@ module.exports = {
 
       server.ext('onPreResponse', (request, h) => {
         const pageUrl = request?.headers?.referer?.split('/').pop()
-        if (!validSession(request) && pageUrl !== 'start' && pageUrl !== 'session-timeout') {
+        if (!validSession(request) && pageUrl !== 'start' && pageUrl !== 'session-timeout' && pageUrl !== 'cookies' && pageUrl !== 'accessibility') {
           return h.redirect('session-timeout')
         }
 

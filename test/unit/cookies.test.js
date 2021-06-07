@@ -7,7 +7,8 @@ describe('cookies', () => {
   beforeEach(() => {
     request = {
       state: {
-        cookies_policy: undefined
+        cookies_policy: undefined,
+        session: true
       }
     }
     h = {
@@ -39,6 +40,19 @@ describe('cookies', () => {
     request.state.cookies_policy = { confirmed: true, essential: false, analytics: true }
     cookies.getCurrentPolicy(request, h)
     expect(h.state).not.toHaveBeenCalled()
+  })
+
+
+  test('validSession returns true if the session is valid ', () => {
+    request.state.cookies_policy = { confirmed: true, essential: false, analytics: true }
+    const result = cookies.validSession(request)
+    expect(result).toBeTruthy()
+  })
+
+  test('validSession returns false if the session has Expired ', () => {
+    request.state.session = false
+    const result = cookies.validSession(request)
+    expect(result).toBeFalsy()
   })
 
   test('updatePolicy sets cookie twice if does not exist', () => {

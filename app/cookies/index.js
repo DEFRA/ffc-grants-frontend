@@ -27,7 +27,7 @@ function updatePolicy (request, h, analytics) {
 }
 
 function validSession (request) {
-  return request.state.session
+  return request.state?.session
 }
 module.exports = {
   getCurrentPolicy,

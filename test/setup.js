@@ -6,9 +6,7 @@ beforeEach(async () => {
     getCurrentPolicy: (request, h) => true,
     createDefaultPolicy: (h) => true,
     updatePolicy: (request, h, analytics) => null,
-    validSession: (request) => {
-      return global.__VALIDSESSION__ ?? true
-    }
+    validSession: (request) => global.__VALIDSESSION__ ?? true
   }
 
   jest.mock('../app/cookies/index', () => mockSession)
