@@ -2,7 +2,6 @@ const Joi = require('joi')
 const { setYarValue, getYarValue } = require('../helpers/session')
 const { fetchListObjectItems, findErrorList } = require('../helpers/helper-functions')
 const { NUMBER_REGEX } = require('../helpers/regex-validation')
-
 const urlPrefix = require('../config/server').urlPrefix
 
 const viewTemplate = 'business-details'

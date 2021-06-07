@@ -3,13 +3,17 @@ const { setYarValue, getYarValue } = require('../helpers/session')
 const { isChecked, getPostCodeHtml, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
 const { POSTCODE_REGEX, DELETE_POSTCODE_CHARS_REGEX } = require('../helpers/regex-validation')
 const gapiService = require('../services/gapi-service')
+const urlPrefix = require('../config/server').urlPrefix
 
-const pageDetails = require('../helpers/page-details')('Q3')
+const viewTemplate = 'country'
+const currentPath = `${urlPrefix}/${viewTemplate}`
+const previousPath = `${urlPrefix}/legal-status`
+const nextPath = `${urlPrefix}/planning-permission`
 
 function createModel (errorMessage, data, postcodeHtml) {
   return {
-    backLink: pageDetails.previousPath,
-    formActionPage: pageDetails.path,
+    backLink: previousPath,
+    formActionPage: currentPath,
     radios: {
       idPrefix: 'inEngland',
       name: 'inEngland',
@@ -42,7 +46,7 @@ function createModel (errorMessage, data, postcodeHtml) {
 
 function createModelNotEligible () {
   return {
-    backLink: pageDetails.path,
+    backLink: currentPath,
     messageContent: 'This grant is only for projects in England.<br/><br/>Scotland, Wales and Northern Ireland have other grants available.'
   }
 }
@@ -50,18 +54,18 @@ function createModelNotEligible () {
 module.exports = [
   {
     method: 'GET',
-    path: pageDetails.path,
+    path: currentPath,
     handler: (request, h) => {
       const inEngland = getYarValue(request, 'inEngland') || null
       const postcodeData = inEngland !== null ? getYarValue(request, 'projectPostcode') : null
       const postcodeHtml = getPostCodeHtml(postcodeData)
 
-      return h.view(pageDetails.template, createModel(null, inEngland, postcodeHtml))
+      return h.view(viewTemplate, createModel(null, inEngland, postcodeHtml))
     }
   },
   {
     method: 'POST',
-    path: pageDetails.path,
+    path: currentPath,
     options: {
       validate: {
         payload: Joi.object({
@@ -75,7 +79,7 @@ module.exports = [
           const postcodeHtml = getPostCodeHtml(projectPostcode.toUpperCase(), inEngland ? errorMessage : null)
 
           return h.view(
-            pageDetails.template,
+            viewTemplate,
             createModel(
               !inEngland ? errorMessage : null,
               inEngland,
@@ -89,7 +93,7 @@ module.exports = [
 
         if (inEngland === 'Yes' && projectPostcode.trim() === '') {
           const postcodeHtml = getPostCodeHtml(projectPostcode.toUpperCase(), 'Enter a postcode, like AA1 1AA')
-          return h.view(pageDetails.template, createModel(null, inEngland, postcodeHtml))
+          return h.view(viewTemplate, createModel(null, inEngland, postcodeHtml))
         }
 
         setYarValue(request, 'inEngland', inEngland)
@@ -97,7 +101,7 @@ module.exports = [
         await gapiService.sendEligibilityEvent(request, inEngland === 'yes')
 
         if (inEngland === 'Yes') {
-          return h.redirect(pageDetails.nextPath)
+          return h.redirect(nextPath)
         }
 
         return h.view('not-eligible', createModelNotEligible())

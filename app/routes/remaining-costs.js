@@ -2,7 +2,6 @@ const Joi = require('joi')
 const { setYarValue, getYarValue } = require('../helpers/session')
 const { setLabelData, errorExtractor, getErrorMessage, formatUKCurrency } = require('../helpers/helper-functions')
 const gapiService = require('../services/gapi-service')
-
 const urlPrefix = require('../config/server').urlPrefix
 
 const viewTemplate = 'remaining-costs'

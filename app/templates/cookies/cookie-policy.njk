@@ -43,10 +43,10 @@
   <li>the pages you visit on GOV.UK and government digital services, and how long you spend on each page</li>
   <li>what you click on while you're visiting the site</li>
 </ul>
-    <form action="./cookies" method="post" novalidate>
+    <form action="/water/cookies" method="post" novalidate>
       {{ crumbToken(crumb)}}
       {{ govukRadios(analytics) }}
-      
+
  <h3 class="govuk-heading-m">Strictly necessary cookies</h3>
         <p class="govuk-body govuk-hint">These essential cookies do things like remember your progress through a form (for example a licence application)</p>
         <p class="govuk-body govuk-hint">They always need to be on.</p>

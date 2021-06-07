@@ -2,8 +2,13 @@ const Joi = require('joi')
 const { fetchListObjectItems, findErrorList } = require('../helpers/helper-functions')
 const { IRRIGATED_LAND_REGEX, ONLY_ZEROES_REGEX } = require('../helpers/regex-validation')
 const { setYarValue, getYarValue } = require('../helpers/session')
+const urlPrefix = require('../config/server').urlPrefix
 
-const pageDetails = require('../helpers/page-details')('Q16')
+const viewTemplate = 'irrigated-land'
+const currentPath = `${urlPrefix}/${viewTemplate}`
+const previousPath = `${urlPrefix}/irrigated-crops`
+const nextPath = `${urlPrefix}/irrigation-water-source`
+const scorePath = `${urlPrefix}/score`
 
 function createModel (irrigatedLandCurrent, irrigatedLandTarget, errorMessageList, hasScore) {
   const [
@@ -14,8 +19,8 @@ function createModel (irrigatedLandCurrent, irrigatedLandTarget, errorMessageLis
     ['irrigatedLandCurrentError', 'irrigatedLandTargetError']
   )
   return {
-    backLink: pageDetails.previousPath,
-    formActionPage: pageDetails.path,
+    backLink: previousPath,
+    formActionPage: currentPath,
     hasScore: hasScore,
     currentInput: {
       label: {
@@ -59,19 +64,19 @@ function createModel (irrigatedLandCurrent, irrigatedLandTarget, errorMessageLis
 module.exports = [
   {
     method: 'GET',
-    path: pageDetails.path,
+    path: currentPath,
     handler: (request, h) => {
       const irrigatedLandCurrent = getYarValue(request, 'irrigatedLandCurrent')
       const irrigatedLandTarget = getYarValue(request, 'irrigatedLandTarget')
       const currentData = irrigatedLandCurrent || null
       const TargetData = irrigatedLandTarget || null
 
-      return h.view(pageDetails.template, createModel(currentData, TargetData, null, getYarValue(request, 'current-score')))
+      return h.view(viewTemplate, createModel(currentData, TargetData, null, getYarValue(request, 'current-score')))
     }
   },
   {
     method: 'POST',
-    path: pageDetails.path,
+    path: currentPath,
     options: {
       validate: {
         options: { abortEarly: false },
@@ -94,7 +99,7 @@ module.exports = [
           }
 
           const { irrigatedLandCurrent, irrigatedLandTarget } = request.payload
-          return h.view(pageDetails.template, createModel(irrigatedLandCurrent, irrigatedLandTarget, errorMessageList, getYarValue(request, 'current-score'))).takeover()
+          return h.view(viewTemplate, createModel(irrigatedLandCurrent, irrigatedLandTarget, errorMessageList, getYarValue(request, 'current-score'))).takeover()
         }
       },
       handler: (request, h) => {
@@ -113,12 +118,12 @@ module.exports = [
             irrigatedLandTargetError
           }
 
-          return h.view(pageDetails.template, createModel(irrigatedLandCurrent, irrigatedLandTarget, errorMessageList, hasScore))
+          return h.view(viewTemplate, createModel(irrigatedLandCurrent, irrigatedLandTarget, errorMessageList, hasScore))
         }
 
         setYarValue(request, 'irrigatedLandCurrent', irrigatedLandCurrent)
         setYarValue(request, 'irrigatedLandTarget', irrigatedLandTarget)
-        return results ? h.redirect(`${pageDetails.pathPrefix}/score`) : h.redirect(pageDetails.nextPath)
+        return results ? h.redirect(scorePath) : h.redirect(nextPath)
       }
     }
   }

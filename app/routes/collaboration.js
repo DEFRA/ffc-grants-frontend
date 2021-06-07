@@ -1,14 +1,17 @@
 const Joi = require('joi')
 const { setYarValue, getYarValue } = require('../helpers/session')
 const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
+const urlPrefix = require('../config/server').urlPrefix
 
-const pageDetails = require('../helpers/page-details')('Q20')
-// console.log(pageDetails)
+const viewTemplate = 'collaboration'
+const currentPath = `${urlPrefix}/${viewTemplate}`
+const previousPath = `${urlPrefix}/productivity`
+const nextPath = `${urlPrefix}/score`
 
 function createModel (errorMessage, data) {
   return {
-    backLink: pageDetails.previousPath,
-    formActionPage: pageDetails.path,
+    backLink: previousPath,
+    formActionPage: currentPath,
     radios: {
       classes: 'govuk-radios--inline',
       idPrefix: 'collaboration',
@@ -33,16 +36,16 @@ function createModel (errorMessage, data) {
 module.exports = [
   {
     method: 'GET',
-    path: pageDetails.path,
+    path: currentPath,
     handler: (request, h) => {
       const collaboration = getYarValue(request, 'collaboration')
       const data = collaboration || null
-      return h.view(pageDetails.template, createModel(null, data))
+      return h.view(viewTemplate, createModel(null, data))
     }
   },
   {
     method: 'POST',
-    path: pageDetails.path,
+    path: currentPath,
     options: {
       validate: {
         payload: Joi.object({
@@ -51,12 +54,12 @@ module.exports = [
         failAction: (request, h, err) => {
           const errorObject = errorExtractor(err)
           const errorMessage = getErrorMessage(errorObject)
-          return h.view(pageDetails.template, createModel(errorMessage)).takeover()
+          return h.view(viewTemplate, createModel(errorMessage)).takeover()
         }
       },
       handler: (request, h) => {
         setYarValue(request, 'collaboration', request.payload.collaboration)
-        return h.redirect(`${pageDetails.pathPrefix}/score`)
+        return h.redirect(nextPath)
       }
     }
   }

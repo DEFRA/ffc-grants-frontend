@@ -2,7 +2,8 @@
 {% from "govuk/components/header/macro.njk" import govukHeader %}
 {% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
 
-{% set assetPath = "<%= htmlWebpackPlugin.options.metadata.urlPrefix %>/assets" %}
+{% set urlPrefix = "<%= htmlWebpackPlugin.options.metadata.urlPrefix %>" %}
+{% set assetPath = urlPrefix + "/assets" %}
 {% set siteTitle = "Check if you can apply for a Farming Transformation Fund water grant" %}
 
 {% block pageTitle %}
@@ -19,9 +20,9 @@
 
 {% block header %}
   {{ govukHeader({
-    homepageUrl: "<%= htmlWebpackPlugin.options.metadata.urlPrefix %>/start",
+    homepageUrl: urlPrefix + "/start",
     serviceName: "Check if you can apply for a Farming Transformation Fund water management grant",
-    serviceUrl: "<%= htmlWebpackPlugin.options.metadata.urlPrefix %>/start"
+    serviceUrl: urlPrefix + "/start"
   }) }}
   <div class="govuk-grid-row govuk-width-container">
     {{ govukPhaseBanner({
@@ -34,6 +35,11 @@
 {% endblock %}
 
 {% block bodyStart %}
+ {% for item in cookiesPolicy %}
+ {{item}}
+ {% for k,v in item %}
+      {{k}}: {{v}}sa
+   {% endfor %}{% endfor %}
   {% if not cookiesPolicy.confirmed %}
     {% include "cookies/cookie-banner.njk" %}
   {% endif %}

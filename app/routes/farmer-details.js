@@ -3,12 +3,13 @@ const { setYarValue, getYarValue } = require('../helpers/session')
 const { setLabelData, fetchListObjectItems, findErrorList, formInputObject } = require('../helpers/helper-functions')
 const { NAME_REGEX, PHONE_REGEX, POSTCODE_REGEX, DELETE_POSTCODE_CHARS_REGEX } = require('../helpers/regex-validation')
 const { LIST_COUNTIES } = require('../helpers/all-counties')
-
 const urlPrefix = require('../config/server').urlPrefix
 
 const viewTemplate = 'model-farmer-agent-details'
 const currentPath = `${urlPrefix}/farmer-details`
-const nextPath = `${urlPrefix}/confirm`
+const nextPath = `${urlPrefix}/check-details`
+const agentDetailsPath = `${urlPrefix}/agent-details`
+const applyingPath = `${urlPrefix}/applying`
 
 function createModel (errorMessageList, farmerDetails, backLink) {
   const {
@@ -100,7 +101,7 @@ module.exports = [
       }
 
       const applying = getYarValue(request, 'applying')
-      const backLink = applying === 'Agent' ? `${urlPrefix}/agent-details` : `${urlPrefix}/applying`
+      const backLink = applying === 'Agent' ? agentDetailsPath : applyingPath
       return h.view(viewTemplate, createModel(null, farmerDetails, backLink))
     }
   },
@@ -143,7 +144,7 @@ module.exports = [
           const farmerDetails = { firstName, lastName, email, mobile, landline, address1, address2, town, county, postcode }
 
           const applying = getYarValue(request, 'applying')
-          const backLink = applying === 'Agent' ? './agent-details' : './applying'
+          const backLink = applying === 'Agent' ? agentDetailsPath : applyingPath
 
           return h.view(viewTemplate, createModel(errorMessageList, farmerDetails, backLink)).takeover()
         }

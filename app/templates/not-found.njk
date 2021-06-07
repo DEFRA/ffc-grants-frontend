@@ -3,18 +3,18 @@
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% block pageTitle %}
-  {{siteTitle}} - Page not found 
+  {{siteTitle}} - Page not found
 {% endblock %}
 {% block beforeContent %}
   {{ govukBreadcrumbs({
     items: [
       {
         text: "Home",
-        href: "./"
+        href: urlPrefix + "/start"
       },
       {
         text: "Check if you can apply for a Farming Transformation Fund water management grant",
-        href: "./"
+        href: urlPrefix + "/start"
       }
     ]
   }) }}

@@ -16,6 +16,7 @@ function createDefaultPolicy (h) {
 
 function updatePolicy (request, h, analytics) {
   let cookiesPolicy = request.state.cookies_policy
+
   if (!cookiesPolicy) {
     cookiesPolicy = createDefaultPolicy(h)
   }

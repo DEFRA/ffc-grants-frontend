@@ -5,7 +5,6 @@ const questionBank = require('../config/question-bank')
 const pollingConfig = require('../config/polling')
 const gapiService = require('../services/gapi-service')
 const { setYarValue } = require('../helpers/session')
-
 const urlPrefix = require('../config/server').urlPrefix
 
 const pageDetails = {
@@ -94,7 +93,7 @@ module.exports = [{
           const bankQuestion = questionBank.questions.filter(bankQuestionD => bankQuestionD.key === desirabilityQuestion.key)[0]
           desirabilityQuestion.title = bankQuestion.title
           desirabilityQuestion.desc = bankQuestion.desc ?? ''
-          desirabilityQuestion.url = bankQuestion.url
+          desirabilityQuestion.url = `${urlPrefix}/${bankQuestion.url}`
           desirabilityQuestion.order = bankQuestion.order
           desirabilityQuestion.unit = bankQuestion?.unit
           desirabilityQuestion.pageTitle = bankQuestion.pageTitle

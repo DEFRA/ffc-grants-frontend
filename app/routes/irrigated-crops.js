@@ -1,16 +1,17 @@
 const Joi = require('joi')
 const { setYarValue, getYarValue } = require('../helpers/session')
-const {
-  setLabelData,
-  errorExtractor,
-  getErrorMessage
-} = require('../helpers/helper-functions')
+const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
+const urlPrefix = require('../config/server').urlPrefix
 
-const pageDetails = require('../helpers/page-details')('Q15')
+const viewTemplate = 'irrigated-crops'
+const currentPath = `${urlPrefix}/${viewTemplate}`
+const previousPath = `${urlPrefix}/project-details`
+const nextPath = `${urlPrefix}/irrigated-land`
+const scorePath = `${urlPrefix}/score`
 
 const createModel = (errorMessage, data, hasScore) => ({
-  backLink: pageDetails.previousPath,
-  formActionPage: pageDetails.path,
+  backLink: previousPath,
+  formActionPage: currentPath,
   hasScore: hasScore,
   radios: {
     classes: '',
@@ -37,16 +38,16 @@ const createModel = (errorMessage, data, hasScore) => ({
 module.exports = [
   {
     method: 'GET',
-    path: pageDetails.path,
+    path: currentPath,
     handler: (request, h) => {
       const irrigatedCrops = getYarValue(request, 'irrigatedCrops')
       const data = irrigatedCrops || null
-      return h.view(pageDetails.template, createModel(null, data, getYarValue(request, 'current-score')))
+      return h.view(viewTemplate, createModel(null, data, getYarValue(request, 'current-score')))
     }
   },
   {
     method: 'POST',
-    path: pageDetails.path,
+    path: currentPath,
     options: {
       validate: {
         payload: Joi.object({
@@ -57,13 +58,13 @@ module.exports = [
         failAction: (request, h, err) => {
           const errorObject = errorExtractor(err)
           const errorMessage = getErrorMessage(errorObject)
-          return h.view(pageDetails.template, createModel(errorMessage, null, getYarValue(request, 'current-score'))).takeover()
+          return h.view(viewTemplate, createModel(errorMessage, null, getYarValue(request, 'current-score'))).takeover()
         }
       },
       handler: (request, h) => {
         const results = request.payload.results
         setYarValue(request, 'irrigatedCrops', request.payload.irrigatedCrops)
-        return results ? h.redirect(`${pageDetails.pathPrefix}/score`) : h.redirect(pageDetails.nextPath)
+        return results ? h.redirect(scorePath) : h.redirect(nextPath)
       }
     }
   }
