@@ -1,36 +1,37 @@
 const { getCookieHeader, getCrumbCookie, crumbToken } = require('./test-helper')
 describe('Check Details page', () => {
-  const varList = {
-    businessDetails: {
-      projectName: 'Project Name',
-      businessName: 'Business Name',
-      applying: 'Farmer'
-    },
-    farmerDetails: {
-      firstName: 'First Name',
-      lastName: 'Last Name',
-      address1: '12 Henley Wood Road',
-      address2: '12 Henley Wood Road',
-      town: 'Reading',
-      county: 'Berkshire',
-      postcode: 'RG6 7EE',
-      email: 's@s.com',
-      landline: '',
-      mobile: '012346789'
-    },
-    agentDetails: {
-      firstName: 'First Name',
-      lastName: 'Last Name',
-      address1: '12 Henley Wood Road',
-      address2: null,
-      town: 'Reading',
-      county: 'Berkshire',
-      postcode: 'RG6 7EE',
-      email: 's@s.com',
-      landline: '',
-      mobile: '012346789'
+  const varList =
+    {
+      businessDetails: {
+        projectName: 'Project Name',
+        businessName: 'Business Name',
+        applying: 'Farmer'
+      },
+      farmerDetails: {
+        firstName: 'First Name',
+        lastName: 'Last Name',
+        address1: '12 Henley Wood Road',
+        address2: '12 Henley Wood Road',
+        town: 'Reading',
+        county: 'Berkshire',
+        postcode: 'RG6 7EE',
+        email: 's@s.com',
+        landline: '',
+        mobile: '012346789'
+      },
+      agentDetails: {
+        firstName: 'First Name',
+        lastName: 'Last Name',
+        address1: '12 Henley Wood Road',
+        address2: null,
+        town: 'Reading',
+        county: 'Berkshire',
+        postcode: 'RG6 7EE',
+        email: 's@s.com',
+        landline: '',
+        mobile: '012346789'
+      }
     }
-  }
 
   jest.mock('../../../../app/messaging/create-msg', () => ({
     getAllDetails: (request, id) => {
