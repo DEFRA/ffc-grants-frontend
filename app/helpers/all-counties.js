@@ -38,7 +38,6 @@ const LIST_COUNTIES = [
   'Northumberland',
   'Nottinghamshire',
   'Oxfordshire',
-  'Other',
   'Rutland',
   'Shropshire',
   'Somerset',
@@ -53,7 +52,8 @@ const LIST_COUNTIES = [
   'West Sussex',
   'West Yorkshire',
   'Wiltshire',
-  'Worcestershire'
+  'Worcestershire',
+  'Other'
 ]
 
 module.exports = { LIST_COUNTIES }
