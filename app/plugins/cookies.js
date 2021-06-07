@@ -8,7 +8,7 @@ module.exports = {
       server.state('cookies_policy', config)
 
       server.ext('onPreResponse', (request, h) => {
-        const pageUrl = request?.headers?.referer?.split('/').pop()
+        const pageUrl = request.path.split('/').pop()
         if (!validSession(request) && pageUrl !== 'start' && pageUrl !== 'session-timeout' && pageUrl !== 'cookies' && pageUrl !== 'accessibility') {
           return h.redirect('session-timeout')
         }
