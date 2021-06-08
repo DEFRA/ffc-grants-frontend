@@ -56,6 +56,8 @@ module.exports = [
         })
         if (applying === 'Agent') {
           return h.redirect('./agent-details')
+        } else {
+          setYarValue(request, 'agentDetails', null)
         }
         return h.redirect('./farmer-details')
       }
