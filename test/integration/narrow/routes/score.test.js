@@ -62,7 +62,6 @@ describe('Score page', () => {
     const response = await server.inject(options)
     expect(response.statusCode).toBe(200)
     const header = getCookieHeader(response)
-    console.log(header)
     expect(header.length).toBe(2)
     crumCookie = getCrumbCookie(response)
     expect(response.result).toContain(crumCookie[1])

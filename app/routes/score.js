@@ -7,17 +7,15 @@ const gapiService = require('../services/gapi-service')
 const { setYarValue } = require('../helpers/session')
 const urlPrefix = require('../config/server').urlPrefix
 
-const pageDetails = {
-  path: `${urlPrefix}/score`,
-  previousPath: `${urlPrefix}/collaboration`,
-  nextPath: `${urlPrefix}/next-steps`,
-  template: 'score'
-}
+const viewTemplate = 'score'
+const currentPath = `${urlPrefix}/${viewTemplate}`
+const previousPath = `${urlPrefix}/collaboration`
+const nextPath = `${urlPrefix}/next-steps`
 
 function createModel (data) {
   return {
-    backLink: pageDetails.previousPath,
-    formActionPage: pageDetails.path,
+    backLink: previousPath,
+    formActionPage: currentPath,
     ...data
   }
 }
@@ -54,7 +52,7 @@ async function getResult (correlationId) {
 
 module.exports = [{
   method: 'GET',
-  path: pageDetails.path,
+  path: currentPath,
   options: {
     log: {
       collect: true
@@ -118,7 +116,7 @@ module.exports = [{
           value: msgData.desirability.overallRating.band
         })
         await gapiService.sendJourneyTime(request, gapiService.metrics.SCORE)
-        return h.view(pageDetails.template, createModel({
+        return h.view(viewTemplate, createModel({
           titleText: msgData.desirability.overallRating.band,
           scoreData: msgData,
           questions: questions.sort((a, b) => a.order - b.order),
@@ -137,9 +135,9 @@ module.exports = [{
 },
 {
   method: 'POST',
-  path: pageDetails.path,
+  path: currentPath,
   handler: (request, h) => {
     request.yar.set('score-calculated', true)
-    return h.redirect(pageDetails.nextPath)
+    return h.redirect(nextPath)
   }
 }]

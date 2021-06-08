@@ -125,7 +125,6 @@ module.exports = [
           postcode: Joi.string().replace(DELETE_POSTCODE_CHARS_REGEX, '').regex(POSTCODE_REGEX).trim().required()
         }),
         failAction: (request, h, err) => {
-          console.log(err)
           const [
             firstNameError,
             lastNameError,
