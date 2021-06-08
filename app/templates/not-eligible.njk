@@ -18,6 +18,9 @@
       <p class="govuk-body">
         {{ messageContent | safe}}
       </p>
+      {% if messageLink %}
+        <p class="govuk-body"><a href="{{messageLink.url}}" class="govuk-link">{{messageLink.title}}</a></p>
+      {% endif %}
     </div>
   </div>
   
