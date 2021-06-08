@@ -3,7 +3,7 @@
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
-{% from "./components/macro.njk" import crumbToken, sideBar, conditionalButtons%}
+{% from "./components/macro.njk" import crumbToken, sideBar,multiSideBar, conditionalButtons%}
 {% block pageTitle %}
   {{siteTitle}} - Irrigation water
 {% endblock %}
@@ -30,9 +30,12 @@
         {{ conditionalButtons(hasScore) }}
       </form>
     </div>
-    {{ sideBar("Funding priorities","RPA wants to fund projects that:",
-    [
+    {{ multiSideBar([{heading:"Funding priorities",para:"RPA wants to fund projects that:",
+    items:[
       "improve the environment","improve water sustainability"
-    ]) }}
+    ]},{ para:"RPA will not fund projects where water is supplied by:",
+    items:[
+      "summer water surface abstraction","mains"
+    ]}]) }}
   </div>
 {% endblock %}

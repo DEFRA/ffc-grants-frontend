@@ -30,7 +30,11 @@ function createModelNotEligible () {
   return {
     backLink: './remaining-costs',
     messageContent:
-      'It is not possible to use public money towards the project costs when applying for a grant.'
+      'You cannot use public money (for example grant funding from government or local authorities) towards the project costs.<br/><br/>You can use loans, overdrafts and certain other grants, such as the Basic Payment Scheme or agri-environment schemes such as the Countryside Stewardship Scheme.',
+    messageLink: {
+      url: 'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments',
+      title: 'See other grants you may be eligible for.'
+    }
   }
 }
 

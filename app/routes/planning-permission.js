@@ -59,7 +59,7 @@ module.exports = [
         }
 
         if (planningPermission === LICENSE_EXPECTED) {
-          return h.redirect('./planning-caveat')
+          return h.redirect('./planning-required-condition')
         }
 
         return h.redirect('./project-start')
