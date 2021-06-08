@@ -78,7 +78,7 @@ async function createServer () {
         cookieOptions: {
           password: config.cookiePassword,
           isSecure: config.cookieOptions.isSecure,
-          ttl: cacheConfig.expiresIn
+          ttl: 5000 // cacheConfig.expiresIn
         },
         customSessionIDGenerator: function (request) {
           const sessionID = Uuid.v4()
