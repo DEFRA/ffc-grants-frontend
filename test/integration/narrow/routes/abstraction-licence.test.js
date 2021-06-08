@@ -51,7 +51,7 @@ describe('Abstraction licence page', () => {
     expect(postResponse.payload).toContain('Select when the project will have an abstraction licence or variation')
   })
 
-  it('if value = \'Expected to have by 31 December 2021\' ==> store and redirect to abstraction-caveat page', async () => {
+  it('if value = \'Expected to have by 31 December 2021\' ==> store and redirect to abstraction-required-condition page', async () => {
     const postOptions = {
       method: 'POST',
       url: '/abstraction-licence',
@@ -61,10 +61,10 @@ describe('Abstraction licence page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe('./abstraction-caveat')
+    expect(postResponse.headers.location).toBe('./abstraction-required-condition')
   })
 
-  it('if value = \'Will not have by 31 December 2021\' ==> store and redirect to abstraction-caveat page', async () => {
+  it('if value = \'Will not have by 31 December 2021\' ==> store and redirect to abstraction-required-condition page', async () => {
     const postOptions = {
       method: 'POST',
       url: '/abstraction-licence',
@@ -74,7 +74,7 @@ describe('Abstraction licence page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe('./abstraction-caveat')
+    expect(postResponse.headers.location).toBe('./abstraction-required-condition')
   })
 
   it('if value = \'Not needed\' ==> store and redirect to project-details page', async () => {

@@ -22,6 +22,7 @@
     <h1 class="govuk-heading-l">{{pageHeader}}</h1>
       <form method="POST" action="{{formActionPage}}" autocomplete="off" novalidate>
         <input type="hidden" name="crumb" value="{{crumb}}" />
+        <h1 class="govuk-heading-m">Name</h1><br/>
         {{ govukInput(inputFirstName) }}
         {{ govukInput(inputLastName) }}
 
@@ -33,7 +34,7 @@
         {{ govukInput(inputEmail) }}
         {{ govukInput(inputMobile) }}
         {{ govukInput(inputLandline) }}
-        <h1 class="govuk-heading-m">Address details</h1><br/>
+        <h1 class="govuk-heading-m">Address</h1><br/>
         {{ govukInput(inputAddress1) }}
         {{ govukInput(inputAddress2) }}
         {{ govukInput(inputTown) }}

@@ -26,7 +26,7 @@ function createModel (errorMessage, data, backLink) {
 const getBackLink = (request) => {
   const planningPermission = getYarValue(request, 'planningPermission')
   return (planningPermission === LICENSE_EXPECTED)
-    ? './planning-caveat'
+    ? './planning-required-condition'
     : './planning-permission'
 }
 
@@ -34,7 +34,7 @@ function createModelNotEligible () {
   return {
     backLink: './project-start',
     messageContent:
-      'Only projects that have not yet started can apply for a grant.'
+      'You cannot apply for a grant if you have already started work on the project. <br/>Starting the project or committing to any costs (such as placing orders) before you receive a funding agreement invalidates your application.'
   }
 }
 

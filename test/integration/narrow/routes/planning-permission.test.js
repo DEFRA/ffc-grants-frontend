@@ -64,7 +64,7 @@ describe('Planning permission page', () => {
     expect(postResponse.payload).toContain('You cannot apply for a grant from this scheme')
   })
 
-  it('if value = \'Expected to have by 31 December 2021\' ==> store and redirect to planning-caveat page', async () => {
+  it('if value = \'Expected to have by 31 December 2021\' ==> store and redirect to planning-required-condition page', async () => {
     const postOptions = {
       method: 'POST',
       url: '/planning-permission',
@@ -74,7 +74,7 @@ describe('Planning permission page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe('./planning-caveat')
+    expect(postResponse.headers.location).toBe('./planning-required-condition')
   })
 
   it('if value = \'Not needed\' ==> store and redirect to project start page', async () => {

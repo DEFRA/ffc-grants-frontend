@@ -59,7 +59,7 @@ module.exports = [
           abstractionLicence === LICENSE_EXPECTED ||
           abstractionLicence === LICENSE_WILL_NOT_HAVE
         ) {
-          return h.redirect('./abstraction-caveat')
+          return h.redirect('./abstraction-required-condition')
         }
         return h.redirect('./project-details')
       }
