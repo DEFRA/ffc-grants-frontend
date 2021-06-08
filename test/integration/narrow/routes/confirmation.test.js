@@ -52,7 +52,7 @@ describe('Confirmation page', () => {
     senders.sendContactDetails = jest.fn(async function (model, yarId) {
       return ''
     })
-    const response = await await global.__SERVER__.inject(options)
+    const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(302)
     expect(response.headers.location).toBe('./start')
   })

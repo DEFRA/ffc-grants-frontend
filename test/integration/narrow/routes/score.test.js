@@ -139,7 +139,7 @@ describe('Score page', () => {
     const response = await server.inject(options)
     expect(response.statusCode).toBe(200)
     const header = getCookieHeader(response)
-    expect(header.length).toBe(3)
+    expect(header.length).toBe(2)
     crumCookie = getCrumbCookie(response)
     expect(response.result).toContain(crumCookie[1])
     const responseScoreMessage = 'This means your project seems likely to be successful.'
@@ -164,7 +164,7 @@ describe('Score page', () => {
     const response = await server.inject(options)
     expect(response.statusCode).toBe(200)
     const header = getCookieHeader(response)
-    expect(header.length).toBe(3)
+    expect(header.length).toBe(2)
     crumCookie = getCrumbCookie(response)
     expect(response.result).toContain(crumCookie[1])
     const responseScoreMessage = 'This means your project might be successful.'
@@ -189,7 +189,7 @@ describe('Score page', () => {
     const response = await server.inject(options)
     expect(response.statusCode).toBe(200)
     const header = getCookieHeader(response)
-    expect(header.length).toBe(3)
+    expect(header.length).toBe(2)
     crumCookie = getCrumbCookie(response)
     expect(response.result).toContain(crumCookie[1])
     const responseScoreMessage = 'This means your project seems unlikely to be successful.'

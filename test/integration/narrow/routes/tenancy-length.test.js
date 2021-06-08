@@ -10,7 +10,7 @@ describe('Water tenancy length page', () => {
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
     const header = getCookieHeader(response)
-    expect(header.length).toBe(3)
+    expect(header.length).toBe(2)
     crumCookie = getCrumbCookie(response)
     expect(response.result).toContain(crumCookie[1])
   })

@@ -63,5 +63,3 @@ if (result.error) {
 }
 
 module.exports = result.value
-
-module.exports = config

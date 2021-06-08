@@ -1,9 +1,8 @@
-
-describe('Abstraction caveat page', () => {
-  it('should load page successfully', async () => {
+describe('Session time out page', () => {
+  it('should load page successfully ', async () => {
     const options = {
       method: 'GET',
-      url: '/planning-required-condition'
+      url: '/session-timeout'
     }
 
     const response = await global.__SERVER__.inject(options)

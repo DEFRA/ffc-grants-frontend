@@ -35,9 +35,9 @@ async function createServer () {
   }
   await server.register(inert)
   await server.register(vision)
-  await server.register(require('./plugins/cookies'))
-  await server.register(require('./plugins/pageGuard'))
   await server.register(require('./plugins/error-pages'))
+  await server.register(require('./plugins/pageGuard'))
+  await server.register(require('./plugins/cookies'))
   await server.register({
     plugin: require('./plugins/header'),
     options: {
@@ -85,7 +85,8 @@ async function createServer () {
         },
         cookieOptions: {
           password: config.cookiePassword,
-          isSecure: config.cookieOptions.isSecure
+          isSecure: config.cookieOptions.isSecure,
+          ttl: cacheConfig.expiresIn
         },
         customSessionIDGenerator: function (request) {
           const sessionID = Uuid.v4()
