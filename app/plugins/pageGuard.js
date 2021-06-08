@@ -3,6 +3,7 @@
 */
 const questionBank = require('../config/question-bank')
 const { getYarValue } = require('../helpers/session')
+const { validSession } = require('../cookies')
 
 module.exports = {
   plugin: {
@@ -12,7 +13,7 @@ module.exports = {
         const currentUrl = request.url.pathname.split('/').pop()
         let result
 
-        if (request.response.variety === 'view' && questionBank.questions.filter(question => question.url === currentUrl).length > 0) {
+        if (validSession(request) && request.response.variety === 'view' && questionBank.questions.filter(question => question.url === currentUrl).length > 0) {
           const currentQuestionNumber = questionBank.questions.filter(question => question.url === currentUrl)[0].order
           const previousQuestions = questionBank.questions.filter(question => question.order < currentQuestionNumber).sort((a, b) => b.order ?? 0 - a.order ?? 0)
 

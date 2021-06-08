@@ -8,11 +8,12 @@ module.exports = {
       server.state('cookies_policy', config)
 
       server.ext('onPreResponse', (request, h) => {
-        const pageUrl = request.path.split('/').pop()
-        if (!validSession(request) && pageUrl !== 'start' && pageUrl !== 'session-timeout' && pageUrl !== 'cookies' && pageUrl !== 'accessibility') {
-          return h.redirect('session-timeout')
+        const pageUrl = request?.headers?.referer?.split('/').pop()
+        if (request.path !== '/') {
+          if (!validSession(request) && pageUrl !== 'start' && pageUrl !== 'session-timeout' && pageUrl !== 'cookies' && pageUrl !== 'accessibility' && pageUrl !== 'farming-type') {
+            return h.redirect('session-timeout')
+          }
         }
-
         const statusCode = request.response.statusCode
         if (request.response.variety === 'view' && statusCode !== 404 && statusCode !== 500 && request.response.source.context) {
           const cookiesPolicy = getCurrentPolicy(request, h)
