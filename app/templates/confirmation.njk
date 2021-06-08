@@ -2,6 +2,8 @@
 
 {% from "govuk/components/panel/macro.njk" import govukPanel %}
 {% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+
 {% block pageTitle %}
   {{siteTitle}} - Reference 
 {% endblock %}
@@ -9,7 +11,7 @@
   {{ govukPanel(output) }}
 <div class="govuk-width-container">
     <div class="govuk-main-wrapper--auto-spacing">
-     <div class="govuk-grid-row">
+      <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds  govuk-body">
           <p>You will get an email with a record of your answers.</p> 
           <p>If you do not get an email within 72 hours, please call the RPA helpline and follow the options for the Farming Transformation Fund scheme:</p> 
@@ -26,11 +28,15 @@
           <p>Monday to Friday, 9am to 5pm (except public holidays)</p> 
           <p><a target="_blank" href="https://www.gov.uk/call-charges">Find out about call charges</a></p> 
           <p>Email: <a href="mailto:FTF@rpa.gov.uk">FTF@rpa.gov.uk</a></p>
+          <p>RPA will be in touch when the full application period opens. They’ll tell you about the application form and any guidance you need to submit a full application.</p>
         </div>
       </div>
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds  govuk-body">
-        <h2 class="govuk-heading-s">You must not start the project</h2> 
+        {{ govukWarningText({
+          html: "<h2 class='govuk-heading-m'>You must not start the project.</h2>",
+          iconFallbackText: "Warning"
+        }) }}
         <p>Starting the project or committing to any costs (such as placing orders) before you receive a funding agreement will invalidate your application.</p> 
         <p>Before you start the project, you can:</p>
         <ul>
