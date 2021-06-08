@@ -8,7 +8,7 @@ const MAYBE_ELIGIBLE = {
 module.exports = [
   {
     method: 'GET',
-    path: '/planning-caveat',
+    path: '/planning-required-condition',
     handler: (request, h) => {
       return h.view('maybe-eligible', MAYBE_ELIGIBLE).takeover()
     }
