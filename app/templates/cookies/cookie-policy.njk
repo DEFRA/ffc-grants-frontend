@@ -43,7 +43,7 @@
   <li>the pages you visit on GOV.UK and government digital services, and how long you spend on each page</li>
   <li>what you click on while you're visiting the site</li>
 </ul>
-    <form action="/water/cookies" method="post" novalidate>
+    <form action="{{ urlPrefix }}/cookies" method="post" novalidate>
       {{ crumbToken(crumb)}}
       {{ govukRadios(analytics) }}
 

@@ -14,6 +14,17 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.js$/,
+        use: {
+          loader: 'string-replace-loader',
+          options: {
+            search: '__URLPREFIX__',
+            replace: urlPrefix,
+            flags: 'g'
+          }
+        }
+      },
+      {
         test: /\.s[ac]ss$/i,
         use: [
           'style-loader',

@@ -19,12 +19,12 @@
   {% endset %}
   {% set acceptHtml %}
   <p>You’ve accepted analytics cookies. You can
-    <a href="/water/cookies">change your cookie settings</a>
+    <a href="{{ urlPrefix }}/cookies">change your cookie settings</a>
     at any time.</p>
   {% endset %}
   {% set rejectHtml %}
   <p>You’ve rejected analytics cookies. You can
-    <a href="/water/cookies">change your cookie settings</a>
+    <a href="{{ urlPrefix }}/cookies">change your cookie settings</a>
     at any time.</p>
   {% endset %}
   {{ govukCookieBanner({
@@ -52,7 +52,7 @@
           },
           {
             text: "View cookies",
-            href: "/water/cookies",
+            href: urlPrefix + "/cookies",
             attributes: {target: "_blank"}
           }
         ]
