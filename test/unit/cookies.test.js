@@ -42,7 +42,6 @@ describe('cookies', () => {
     expect(h.state).not.toHaveBeenCalled()
   })
 
-
   test('validSession returns true if the session is valid ', () => {
     request.state.cookies_policy = { confirmed: true, essential: false, analytics: true }
     const result = cookies.validSession(request)

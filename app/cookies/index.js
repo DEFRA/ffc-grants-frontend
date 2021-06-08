@@ -29,8 +29,19 @@ function updatePolicy (request, h, analytics) {
 function validSession (request) {
   return request.state?.session
 }
+
 module.exports = {
   getCurrentPolicy,
   updatePolicy,
-  validSession
+  validSession,
+  sessionIgnorePaths: [
+    '/start',
+    '/session-timeout',
+    '/cookies',
+    '/accessibility',
+    '/farming-type',
+    '/assets',
+    '/healthy',
+    '/healthz'
+  ]
 }

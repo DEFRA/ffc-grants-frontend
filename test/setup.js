@@ -6,14 +6,14 @@ beforeEach(async () => {
     getCurrentPolicy: (request, h) => true,
     createDefaultPolicy: (h) => true,
     updatePolicy: (request, h, analytics) => null,
-    validSession: (request) => global.__VALIDSESSION__ ?? true
+    validSession: (request) => global.__VALIDSESSION__ ?? true,
+    sessionIgnorePaths: []
   }
 
   jest.mock('../app/cookies/index', () => mockSession)
   jest.mock('../app/services/gapi-service.js')
   jest.mock('../app/services/app-insights.js')
   jest.mock('../app/services/protective-monitoring-service.js')
-  jest.mock('../app/cookies/index', () => mockSession)
 
   const server = await createServer()
   global.__SERVER__ = server

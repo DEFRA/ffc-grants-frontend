@@ -1,5 +1,5 @@
 const config = require('../config/server').cookieOptions
-const { getCurrentPolicy, validSession } = require('../cookies')
+const { getCurrentPolicy, validSession, sessionIgnorePaths } = require('../cookies')
 
 module.exports = {
   plugin: {
@@ -8,12 +8,12 @@ module.exports = {
       server.state('cookies_policy', config)
 
       server.ext('onPreResponse', (request, h) => {
-        const pageUrl = request?.headers?.referer?.split('/').pop()
-        if (request.path !== '/') {
-          if (!validSession(request) && pageUrl !== 'start' && pageUrl !== 'session-timeout' && pageUrl !== 'cookies' && pageUrl !== 'accessibility' && pageUrl !== 'farming-type') {
+        if (!sessionIgnorePaths.find(path => request.path.startsWith(path)) && request.path !== '/') {
+          if (!validSession(request)) {
             return h.redirect('session-timeout')
           }
         }
+
         const statusCode = request.response.statusCode
         if (request.response.variety === 'view' && statusCode !== 404 && statusCode !== 500 && request.response.source.context) {
           const cookiesPolicy = getCurrentPolicy(request, h)
