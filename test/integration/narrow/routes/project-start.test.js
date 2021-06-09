@@ -42,7 +42,7 @@ describe('Project start page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Select yes if you have already started work on the project')
+    expect(postResponse.payload).toContain('Select the option that applies to your project')
   })
 
   it('should redirect to details pagewhen user selects "No"', async () => {
