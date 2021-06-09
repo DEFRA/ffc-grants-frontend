@@ -6,7 +6,7 @@ const errors = {
   'error.farmingType.any.required': 'Select the crops you are growing',
   'error.waterSourceCurrent.any.required': 'Select one or two options for each question',
   'error.waterSourcePlanned.any.required': 'Select one or two options for each question',
-  'error.projectStarted.any.required': 'Select yes if you have already started work on the project',
+  'error.projectStarted.any.required': 'Select the option that applies to your project',
   'error.landOwnership.any.required': 'Select yes if the planned project is on land the farm business owns',
   'error.irrigationPlanned.any.required': 'Select one or two options for each question',
   'error.irrigationCurrent.any.required': 'Select one or two options for each question',

@@ -30,11 +30,9 @@ function createModel (errorMessage, data) {
           'Partnership',
           { text: 'Limited company', value: 'Ltd Company' },
           'Charity',
-          { text: 'Public organisation', value: 'Public Organisation' },
           'Trust',
           { text: 'Limited liability partnership', value: 'Limited Liability Partnership' },
           { text: 'Community interest company', value: 'Community Interest Company' },
-          { text: 'Local authority', value: 'Local Authority' },
           { text: 'Limited partnership', value: 'Limited Partnership' },
           { text: 'Industrial and provident society', value: 'Industrial and Provident Society' },
           { text: 'Co-operative society (Co-Op)', value: 'Co-operative Society (Co-Op)' },
@@ -50,7 +48,7 @@ function createModelNotEligible () {
   return {
     backLink: currentPath,
     messageContent:
-      'This is only open to a business with a legal status of: <ul class="govuk-list govuk-list--bullet"><li>Sole trader</li><li>Partnership</li><li>Ltd company</li><li>Charity</li><li>Public organisation</li><li>Trust</li><li>Limited liability partnership</li><li>Community interest company</li><li>Local authority</li></ul> <p class="govuk-body">Other types of business may be supported in future schemes.</p>'
+      'This is only open to a business with a legal status of: <ul class="govuk-list govuk-list--bullet"><li>Sole trader</li><li>Partnership</li><li>Limited company</li><li>Charity</li><li>Trust</li><li>Limited liability partnership</li><li>Community interest company</li><li>Limited partnership</li><li>Industrial and provident society</li><li>Co-operative society (Co-Op)</li><li>Community benefit society (BenCom)</li></ul> <p class="govuk-body">Other types of business may be supported in future schemes.</p>'
   }
 }
 
