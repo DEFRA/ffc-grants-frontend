@@ -18,4 +18,5 @@ beforeEach(async () => {
   const server = await createServer()
   global.__SERVER__ = server
   global.__VALIDSESSION__ = true
+  global.__URLPREFIX__ = require('../app/config/server').urlPrefix
 })

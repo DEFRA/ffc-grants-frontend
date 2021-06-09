@@ -5,9 +5,17 @@ const questionBank = require('../config/question-bank')
 const pollingConfig = require('../config/polling')
 const gapiService = require('../services/gapi-service')
 const { setYarValue } = require('../helpers/session')
+const urlPrefix = require('../config/server').urlPrefix
+
+const viewTemplate = 'score'
+const currentPath = `${urlPrefix}/${viewTemplate}`
+const previousPath = `${urlPrefix}/collaboration`
+const nextPath = `${urlPrefix}/next-steps`
+
 function createModel (data) {
   return {
-    backLink: './collaboration',
+    backLink: previousPath,
+    formActionPage: currentPath,
     ...data
   }
 }
@@ -44,7 +52,7 @@ async function getResult (correlationId) {
 
 module.exports = [{
   method: 'GET',
-  path: '/score',
+  path: currentPath,
   options: {
     log: {
       collect: true
@@ -83,7 +91,7 @@ module.exports = [{
           const bankQuestion = questionBank.questions.filter(bankQuestionD => bankQuestionD.key === desirabilityQuestion.key)[0]
           desirabilityQuestion.title = bankQuestion.title
           desirabilityQuestion.desc = bankQuestion.desc ?? ''
-          desirabilityQuestion.url = bankQuestion.url
+          desirabilityQuestion.url = `${urlPrefix}/${bankQuestion.url}`
           desirabilityQuestion.order = bankQuestion.order
           desirabilityQuestion.unit = bankQuestion?.unit
           desirabilityQuestion.pageTitle = bankQuestion.pageTitle
@@ -108,7 +116,7 @@ module.exports = [{
           value: msgData.desirability.overallRating.band
         })
         await gapiService.sendJourneyTime(request, gapiService.metrics.SCORE)
-        return h.view('score', createModel({
+        return h.view(viewTemplate, createModel({
           titleText: msgData.desirability.overallRating.band,
           scoreData: msgData,
           questions: questions.sort((a, b) => a.order - b.order),
@@ -127,9 +135,9 @@ module.exports = [{
 },
 {
   method: 'POST',
-  path: '/score',
+  path: currentPath,
   handler: (request, h) => {
     request.yar.set('score-calculated', true)
-    return h.redirect('./next-steps')
+    return h.redirect(nextPath)
   }
 }]

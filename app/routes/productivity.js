@@ -1,10 +1,18 @@
 const Joi = require('joi')
 const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
 const { setYarValue, getYarValue } = require('../helpers/session')
+const urlPrefix = require('../config/server').urlPrefix
+
+const viewTemplate = 'productivity'
+const currentPath = `${urlPrefix}/${viewTemplate}`
+const previousPath = `${urlPrefix}/irrigation-systems`
+const nextPath = `${urlPrefix}/collaboration`
+const scorePath = `${urlPrefix}/score`
 
 function createModel (errorMessage, errorSummary, data, hasScore) {
   return {
-    backLink: './irrigation-systems',
+    backLink: previousPath,
+    formActionPage: currentPath,
     hasScore: hasScore,
     ...(errorSummary ? { errorText: errorSummary } : {}),
     checkboxes: {
@@ -29,16 +37,16 @@ function createModel (errorMessage, errorSummary, data, hasScore) {
 module.exports = [
   {
     method: 'GET',
-    path: '/productivity',
+    path: currentPath,
     handler: (request, h) => {
       const productivity = getYarValue(request, 'productivity')
       const data = productivity || null
-      return h.view('productivity', createModel(null, null, data, getYarValue(request, 'current-score')))
+      return h.view(viewTemplate, createModel(null, null, data, getYarValue(request, 'current-score')))
     }
   },
   {
     method: 'POST',
-    path: '/productivity',
+    path: currentPath,
     options: {
       validate: {
         payload: Joi.object({
@@ -48,7 +56,7 @@ module.exports = [
         failAction: (request, h, err) => {
           const errorObject = errorExtractor(err)
           const errorMessage = getErrorMessage(errorObject)
-          return h.view('productivity', createModel(errorMessage, null, null, getYarValue(request, 'current-score'))).takeover()
+          return h.view(viewTemplate, createModel(errorMessage, null, null, getYarValue(request, 'current-score'))).takeover()
         }
       },
       handler: (request, h) => {
@@ -56,10 +64,10 @@ module.exports = [
         let { productivity, results } = request.payload
         productivity = [productivity].flat()
         if (productivity.length > 2) {
-          return h.view('productivity', createModel('Select one or two options', 'Select how the project will improve productivity', productivity, hasScore)).takeover()
+          return h.view(viewTemplate, createModel('Select one or two options', 'Select how the project will improve productivity', productivity, hasScore))
         }
         setYarValue(request, 'productivity', productivity)
-        return results ? h.redirect('./score') : h.redirect('./collaboration')
+        return results ? h.redirect(scorePath) : h.redirect(nextPath)
       }
     }
   }

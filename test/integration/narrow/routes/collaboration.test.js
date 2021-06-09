@@ -46,7 +46,7 @@ describe('Collaboration page', () => {
   it('should load page successfully', async () => {
     const options = {
       method: 'GET',
-      url: '/collaboration'
+      url: `${global.__URLPREFIX__}/collaboration`
     }
 
     const response = await global.__SERVER__.inject(options)
@@ -56,7 +56,7 @@ describe('Collaboration page', () => {
   it('should returns error message if no option is selected', async () => {
     const postOptions = {
       method: 'POST',
-      url: '/collaboration',
+      url: `${global.__URLPREFIX__}/collaboration`,
       payload: { crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
@@ -71,7 +71,7 @@ describe('Collaboration page', () => {
   it('should store user response and redirects to answers page', async () => {
     const postOptions = {
       method: 'POST',
-      url: '/collaboration',
+      url: `${global.__URLPREFIX__}/collaboration`,
       payload: { crumb: crumbToken, collaboration },
       headers: {
         cookie: 'crumb=' + crumbToken
@@ -80,6 +80,6 @@ describe('Collaboration page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe('./score')
+    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/score`)
   })
 })

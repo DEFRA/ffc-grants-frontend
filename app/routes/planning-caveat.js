@@ -1,6 +1,8 @@
+const urlPrefix = require('../config/server').urlPrefix
+
 const MAYBE_ELIGIBLE = {
-  backLink: './planning-permission',
-  nextLink: './project-start',
+  backLink: `${urlPrefix}/planning-permission`,
+  nextLink: `${urlPrefix}/project-start`,
   messageHeader: 'You may be able to apply for this grant',
   messageContent: 'Any planning permission must be in place by 31 December 2021 (the end of the application window).'
 }
@@ -8,9 +10,9 @@ const MAYBE_ELIGIBLE = {
 module.exports = [
   {
     method: 'GET',
-    path: '/planning-required-condition',
+    path: `${urlPrefix}/planning-required-condition`,
     handler: (request, h) => {
-      return h.view('maybe-eligible', MAYBE_ELIGIBLE).takeover()
+      return h.view('maybe-eligible', MAYBE_ELIGIBLE)
     }
   }
 ]

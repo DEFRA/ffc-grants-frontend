@@ -4,13 +4,18 @@ const createMsg = require('../messaging/create-msg')
 const protectiveMonitoringServiceSendEvent = require('../services/protective-monitoring-service')
 const { getYarValue } = require('../helpers/session')
 const gapiService = require('../services/gapi-service')
+const urlPrefix = require('../config/server').urlPrefix
+
+const viewTemplate = 'confirmation'
+const currentPath = `${urlPrefix}/${viewTemplate}`
+const startPath = `${urlPrefix}/start`
 
 module.exports = {
   method: 'GET',
-  path: '/confirmation',
+  path: currentPath,
   handler: async (request, h) => {
     if (!getYarValue(request, 'consentMain')) {
-      return h.redirect('./start')
+      return h.redirect(startPath)
     }
     const confirmationId = formatApplicationCode(request.yar.id)
 
@@ -32,7 +37,7 @@ module.exports = {
     ])
     await gapiService.sendJourneyTime(request, gapiService.metrics.CONFIRMATION)
     request.yar.reset()
-    return h.view('confirmation', {
+    return h.view(viewTemplate, {
       output: {
         titleText: 'Details submitted',
         html: `Your reference number<br><strong>${confirmationId}</strong>`,

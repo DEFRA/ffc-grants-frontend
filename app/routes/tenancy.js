@@ -1,10 +1,18 @@
 const Joi = require('joi')
 const { setYarValue, getYarValue } = require('../helpers/session')
 const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
+const urlPrefix = require('../config/server').urlPrefix
 
-function createModel(errorMessage, data) {
+const viewTemplate = 'tenancy'
+const currentPath = `${urlPrefix}/${viewTemplate}`
+const previousPath = `${urlPrefix}/project-start`
+const nextPath = `${urlPrefix}/project-items`
+const tenancyLengthPath = `${urlPrefix}/tenancy-length`
+
+function createModel (errorMessage, data) {
   return {
-    backLink: './project-start',
+    backLink: previousPath,
+    formActionPage: currentPath,
     radios: {
       classes: 'govuk-radios--inline',
       idPrefix: 'landOwnership',
@@ -25,16 +33,16 @@ function createModel(errorMessage, data) {
 module.exports = [
   {
     method: 'GET',
-    path: '/tenancy',
+    path: currentPath,
     handler: (request, h) => {
       const landOwnership = getYarValue(request, 'landOwnership')
       const data = landOwnership || null
-      return h.view('tenancy', createModel(null, data))
+      return h.view(viewTemplate, createModel(null, data))
     }
   },
   {
     method: 'POST',
-    path: '/tenancy',
+    path: currentPath,
     options: {
       validate: {
         payload: Joi.object({
@@ -43,14 +51,14 @@ module.exports = [
         failAction: (request, h, err) => {
           const errorObject = errorExtractor(err)
           const errorMessage = getErrorMessage(errorObject)
-          return h.view('tenancy', createModel(errorMessage)).takeover()
+          return h.view(viewTemplate, createModel(errorMessage)).takeover()
         }
       },
       handler: (request, h) => {
         setYarValue(request, 'landOwnership', request.payload.landOwnership)
         return request.payload.landOwnership === 'Yes'
-          ? h.redirect('./project-items')
-          : h.redirect('./tenancy-length')
+          ? h.redirect(nextPath)
+          : h.redirect(tenancyLengthPath)
       }
     }
   }

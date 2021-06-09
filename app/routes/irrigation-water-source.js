@@ -1,10 +1,18 @@
 const Joi = require('joi')
 const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
 const { setYarValue, getYarValue } = require('../helpers/session')
+const urlPrefix = require('../config/server').urlPrefix
+
+const viewTemplate = 'irrigation-water-source'
+const currentPath = `${urlPrefix}/${viewTemplate}`
+const previousPath = `${urlPrefix}/irrigated-land`
+const nextPath = `${urlPrefix}/irrigation-systems`
+const scorePath = `${urlPrefix}/score`
 
 function createModel (errorMessage, errorSummary, currentData, plannedData, hasScore) {
   return {
-    backLink: './irrigated-land',
+    backLink: previousPath,
+    formActionPage: currentPath,
     hasScore: hasScore,
     ...errorSummary ? { errorList: errorSummary } : {},
     waterSourceCurrent: {
@@ -45,16 +53,16 @@ function createModel (errorMessage, errorSummary, currentData, plannedData, hasS
 module.exports = [
   {
     method: 'GET',
-    path: '/irrigation-water-source',
+    path: currentPath,
     handler: (request, h) => {
       const currentData = getYarValue(request, 'waterSourceCurrent') || null
       const plannedData = getYarValue(request, 'waterSourcePlanned') || null
-      return h.view('irrigation-water-source', createModel(null, null, currentData, plannedData, getYarValue(request, 'current-score')))
+      return h.view(viewTemplate, createModel(null, null, currentData, plannedData, getYarValue(request, 'current-score')))
     }
   },
   {
     method: 'POST',
-    path: '/irrigation-water-source',
+    path: currentPath,
     options: {
       validate: {
         payload: Joi.object({
@@ -71,7 +79,7 @@ module.exports = [
 
           waterSourceCurrent = waterSourceCurrent ? [waterSourceCurrent].flat() : waterSourceCurrent
           waterSourcePlanned = waterSourcePlanned ? [waterSourcePlanned].flat() : waterSourcePlanned
-          return h.view('irrigation-water-source', createModel(errorMessage, null, waterSourceCurrent, waterSourcePlanned, getYarValue(request, 'current-score'))).takeover()
+          return h.view(viewTemplate, createModel(errorMessage, null, waterSourceCurrent, waterSourcePlanned, getYarValue(request, 'current-score'))).takeover()
         }
       },
       handler: (request, h) => {
@@ -88,13 +96,12 @@ module.exports = [
           if (waterSourcePlanned.length > 2) {
             errorList.push({ text: 'Select where your irrigation water will come from', href: '#waterSourcePlanned' })
           }
-          return h.view('irrigation-water-source', createModel('Select one or two options', errorList, waterSourceCurrent, waterSourcePlanned, getYarValue(request, 'current-score')))
-            .takeover()
+          return h.view(viewTemplate, createModel('Select one or two options', errorList, waterSourceCurrent, waterSourcePlanned, getYarValue(request, 'current-score')))
         }
 
         setYarValue(request, 'waterSourceCurrent', waterSourceCurrent)
         setYarValue(request, 'waterSourcePlanned', waterSourcePlanned)
-        return results ? h.redirect('./score') : h.redirect('./irrigation-systems')
+        return results ? h.redirect(scorePath) : h.redirect(nextPath)
       }
     }
   }

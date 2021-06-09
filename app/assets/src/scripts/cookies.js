@@ -5,6 +5,7 @@ const rejectedBanner = document.querySelector('.js-cookies-rejected')
 const questionBanner = document.querySelector('.js-question-banner')
 const cookieBanner = document.querySelector('.js-cookies-banner')
 const cookieContainer = document.querySelector('.js-cookies-container')
+
 if (cookieContainer && cookieContainer.style) {
   cookieContainer.style.display = 'block'
 
@@ -43,7 +44,7 @@ if (cookieContainer && cookieContainer.style) {
   function submitPreference (accepted) {
     const crumbToken = window.document.getElementById('crumbBanner')
     const xhr = new XMLHttpRequest()
-    xhr.open('POST', './cookies', true)
+    xhr.open('POST', '__URLPREFIX__/cookies', true)
     xhr.setRequestHeader('Content-Type', 'application/json')
     xhr.setRequestHeader('crumb', crumbToken.value)
     xhr.send(JSON.stringify({

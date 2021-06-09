@@ -2,6 +2,12 @@ const Joi = require('joi')
 const { setYarValue, getYarValue } = require('../helpers/session')
 const { fetchListObjectItems, findErrorList } = require('../helpers/helper-functions')
 const { NUMBER_REGEX } = require('../helpers/regex-validation')
+const urlPrefix = require('../config/server').urlPrefix
+
+const viewTemplate = 'business-details'
+const currentPath = `${urlPrefix}/${viewTemplate}`
+const previousPath = `${urlPrefix}/next-steps`
+const nextPath = `${urlPrefix}/applying`
 
 function createModel (errorMessageList, businessDetails) {
   const {
@@ -24,7 +30,8 @@ function createModel (errorMessageList, businessDetails) {
   )
 
   return {
-    backLink: './next-steps',
+    backLink: previousPath,
+    formActionPage: currentPath,
     inputProjectName: {
       id: 'projectName',
       name: 'projectName',
@@ -106,7 +113,7 @@ function createModel (errorMessageList, businessDetails) {
 module.exports = [
   {
     method: 'GET',
-    path: '/business-details',
+    path: currentPath,
     handler: (request, h) => {
       let businessDetails = getYarValue(request, 'businessDetails') || null
 
@@ -120,15 +127,12 @@ module.exports = [
         }
       }
 
-      return h.view(
-        'business-details',
-        createModel(null, businessDetails)
-      )
+      return h.view(viewTemplate, createModel(null, businessDetails))
     }
   },
   {
     method: 'POST',
-    path: '/business-details',
+    path: currentPath,
     options: {
       validate: {
         options: { abortEarly: false },
@@ -151,7 +155,7 @@ module.exports = [
           const { projectName, businessName, numberEmployees, businessTurnover, sbi } = request.payload
           const businessDetails = { projectName, businessName, numberEmployees, businessTurnover, sbi }
 
-          return h.view('business-details', createModel(errorMessageList, businessDetails)).takeover()
+          return h.view(viewTemplate, createModel(errorMessageList, businessDetails)).takeover()
         }
       },
       handler: (request, h) => {
@@ -163,7 +167,7 @@ module.exports = [
           projectName, businessName, numberEmployees, businessTurnover, sbi
         })
 
-        return h.redirect('./applying')
+        return h.redirect(nextPath)
       }
     }
   }

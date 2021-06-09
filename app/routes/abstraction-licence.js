@@ -1,12 +1,19 @@
 const Joi = require('joi')
 const { setYarValue, getYarValue } = require('../helpers/session')
-
 const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
 const { LICENSE_NOT_NEEDED, LICENSE_SECURED, LICENSE_EXPECTED, LICENSE_WILL_NOT_HAVE } = require('../helpers/license-dates')
+const urlPrefix = require('../config/server').urlPrefix
 
-function createModel (backLink, errorMessage, data) {
+const viewTemplate = 'abstraction-licence'
+const currentPath = `${urlPrefix}/${viewTemplate}`
+const previousPath = `${urlPrefix}/SSSI`
+const nextPath = `${urlPrefix}/project-details`
+const caveatPath = `${urlPrefix}/abstraction-required-condition`
+
+function createModel (errorMessage, data) {
   return {
-    backLink,
+    backLink: previousPath,
+    formActionPage: currentPath,
     radios: {
       classes: '',
       idPrefix: 'abstractionLicence',
@@ -30,16 +37,16 @@ function createModel (backLink, errorMessage, data) {
 module.exports = [
   {
     method: 'GET',
-    path: '/abstraction-licence',
+    path: currentPath,
     handler: (request, h) => {
       const abstractionLicence = getYarValue(request, 'abstractionLicence')
       const data = abstractionLicence || null
-      return h.view('abstraction-licence', createModel('./SSSI', null, data))
+      return h.view(viewTemplate, createModel(null, data))
     }
   },
   {
     method: 'POST',
-    path: '/abstraction-licence',
+    path: currentPath,
     options: {
       validate: {
         payload: Joi.object({
@@ -48,20 +55,18 @@ module.exports = [
         failAction: (request, h, err) => {
           const errorObject = errorExtractor(err)
           const errorMessage = getErrorMessage(errorObject)
-          return h.view('abstraction-licence', createModel('./SSSI', errorMessage)).takeover()
+          return h.view(viewTemplate, createModel(errorMessage)).takeover()
         }
       },
       handler: (request, h) => {
         const { abstractionLicence } = request.payload
         setYarValue(request, 'abstractionLicence', abstractionLicence)
 
-        if (
-          abstractionLicence === LICENSE_EXPECTED ||
-          abstractionLicence === LICENSE_WILL_NOT_HAVE
-        ) {
-          return h.redirect('./abstraction-required-condition')
+        if (abstractionLicence === LICENSE_EXPECTED || abstractionLicence === LICENSE_WILL_NOT_HAVE) {
+          return h.redirect(caveatPath)
         }
-        return h.redirect('./project-details')
+
+        return h.redirect(nextPath)
       }
     }
   }

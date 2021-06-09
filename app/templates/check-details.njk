@@ -24,8 +24,8 @@
     </div>
     <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
- 
-      {% if businessDetails %}   
+
+      {% if businessDetails %}
       {{ govukSummaryList({
         rows: [
           {
@@ -38,7 +38,7 @@
             actions: {
               items: [
                 {
-                  href: "/business-details",
+                  href: businessDetailsLink,
                   text: "Change",
                   visuallyHiddenText: "name"
                 }
@@ -92,14 +92,14 @@
             value: {
               text: businessDetails.sbi
             }
-          } 
+          }
 
         ]
       }) }}
-      
+
       {% endif %}
-     
-      {% if agentDetails %}   
+
+      {% if agentDetails %}
       {{ govukSummaryList({
         rows: [
           {
@@ -112,7 +112,7 @@
             actions: {
               items: [
                 {
-                  href: "/agent-details",
+                  href: agentDetailsLink,
                   text: "Change",
                   visuallyHiddenText: "agent-details"
                 }
@@ -158,8 +158,8 @@
         ]
       }) }}
       {% endif %}
-     
-      {% if farmerDetails %}   
+
+      {% if farmerDetails %}
       {{ govukSummaryList({
         rows: [
           {
@@ -172,7 +172,7 @@
             actions: {
               items: [
                 {
-                  href: "/farmer-details",
+                  href: farmerDetailsLink,
                   text: "Change",
                   visuallyHiddenText: "farmer-details"
                 }
@@ -209,12 +209,12 @@
           }
         ]
       }) }}
-      {% endif %}     
-     
+      {% endif %}
+
     </div>
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
-        <form method="POST" action="./check-details" autocomplete="off" novalidate>
+        <form method="POST" action="{{ formActionPage }}" autocomplete="off" novalidate>
           {{ crumbToken(crumb)}}
           {{ govukButton({
             text: "Continue"

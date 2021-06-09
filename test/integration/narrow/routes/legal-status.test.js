@@ -21,7 +21,7 @@ describe('Legal status page', () => {
   it('should load page successfully', async () => {
     const options = {
       method: 'GET',
-      url: '/legal-status'
+      url: `${global.__URLPREFIX__}/legal-status`
     }
 
     const response = await global.__SERVER__.inject(options)
@@ -31,7 +31,7 @@ describe('Legal status page', () => {
   it('should returns error message in body if no option is selected', async () => {
     const postOptions = {
       method: 'POST',
-      url: '/legal-status',
+      url: `${global.__URLPREFIX__}/legal-status`,
       payload: { crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
@@ -46,7 +46,7 @@ describe('Legal status page', () => {
   it('should store user response and redirects to project details page', async () => {
     const postOptions = {
       method: 'POST',
-      url: '/legal-status',
+      url: `${global.__URLPREFIX__}/legal-status`,
       payload: { legalStatus, crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
@@ -55,13 +55,13 @@ describe('Legal status page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe('./country')
+    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/country`)
   })
 
   it('should redirect to ineligible page when lagal staus is others', async () => {
     const postOptions = {
       method: 'POST',
-      url: '/legal-status',
+      url: `${global.__URLPREFIX__}/legal-status`,
       payload: { legalStatus: 'None of the above', crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken

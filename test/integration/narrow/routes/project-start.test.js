@@ -23,7 +23,7 @@ describe('Project start page', () => {
   it('should load page successfully', async () => {
     const options = {
       method: 'GET',
-      url: '/project-start'
+      url: `${global.__URLPREFIX__}/project-start`
     }
 
     const response = await global.__SERVER__.inject(options)
@@ -33,7 +33,7 @@ describe('Project start page', () => {
   it('should returns error message in body if no option is selected', async () => {
     const postOptions = {
       method: 'POST',
-      url: '/project-start',
+      url: `${global.__URLPREFIX__}/project-start`,
       payload: { crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
@@ -48,7 +48,7 @@ describe('Project start page', () => {
   it('should redirect to details pagewhen user selects "No"', async () => {
     const postOptions = {
       method: 'POST',
-      url: '/project-start',
+      url: `${global.__URLPREFIX__}/project-start`,
       payload: { projectStarted, crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
@@ -57,13 +57,13 @@ describe('Project start page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe('./tenancy')
+    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/tenancy`)
   })
 
   it('should redirect to ineligible page when user selects "Yes"', async () => {
     const postOptions = {
       method: 'POST',
-      url: '/project-start',
+      url: `${global.__URLPREFIX__}/project-start`,
       payload: { projectStarted: 'Yes', crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken

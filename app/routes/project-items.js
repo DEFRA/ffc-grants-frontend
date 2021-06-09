@@ -1,10 +1,18 @@
 const Joi = require('joi')
 const { setYarValue, getYarValue } = require('../helpers/session')
 const { setLabelData } = require('../helpers/helper-functions')
+const urlPrefix = require('../config/server').urlPrefix
+
+const viewTemplate = 'project-items'
+const currentPath = `${urlPrefix}/${viewTemplate}`
+const nextPath = `${urlPrefix}/project-cost`
+const tenancyLengthPath = `${urlPrefix}/tenancy-length`
+const tenancyPath = `${urlPrefix}/tenancy`
 
 function createModel (errorMessage, backLink, projectInfrastucture, projectEquipment, projectTechnology) {
   return {
     backLink,
+    formActionLink: currentPath,
     checkboxesInfrastucture: {
       idPrefix: 'projectInfrastucture',
       name: 'projectInfrastucture',
@@ -81,24 +89,21 @@ function createModel (errorMessage, backLink, projectInfrastucture, projectEquip
 module.exports = [
   {
     method: 'GET',
-    path: '/project-items',
+    path: currentPath,
     handler: (request, h) => {
       const landOwnership = getYarValue(request, 'landOwnership') || null
-      const backUrl = landOwnership === 'No' ? './tenancy-length' : './tenancy'
+      const backUrl = landOwnership === 'No' ? tenancyLengthPath : tenancyPath
 
       const projectInfrastucture = getYarValue(request, 'projectInfrastucture') || null
       const projectEquipment = getYarValue(request, 'projectEquipment') || null
       const projectTechnology = getYarValue(request, 'projectTechnology') || null
 
-      return h.view(
-        'project-items',
-        createModel(null, backUrl, projectInfrastucture, projectEquipment, projectTechnology)
-      )
+      return h.view(viewTemplate, createModel(null, backUrl, projectInfrastucture, projectEquipment, projectTechnology))
     }
   },
   {
     method: 'POST',
-    path: '/project-items',
+    path: currentPath,
     options: {
       validate: {
         payload: Joi.object({
@@ -108,13 +113,14 @@ module.exports = [
         }),
         failAction: (request, h) => {
           const landOwnership = getYarValue(request, 'landOwnership') || null
-          const backUrl = landOwnership === 'No' ? './answers' : './tenancy'
-          return h.view('project-items', createModel('Please select an option', backUrl, null)).takeover()
+          const backUrl = landOwnership === 'No' ? tenancyLengthPath : tenancyPath
+
+          return h.view(viewTemplate, createModel('Please select an option', backUrl, null)).takeover()
         }
       },
       handler: (request, h) => {
         const landOwnership = getYarValue(request, 'landOwnership') || null
-        const backUrl = landOwnership === 'No' ? './tenancy-length' : './tenancy'
+        const backUrl = landOwnership === 'No' ? tenancyLengthPath : tenancyPath
 
         let {
           projectInfrastucture,
@@ -124,7 +130,7 @@ module.exports = [
 
         if (!projectInfrastucture && !projectEquipment && !projectTechnology) {
           return h.view(
-            'project-items',
+            viewTemplate,
             createModel(
               'Select all the items your project needs',
               backUrl,
@@ -132,7 +138,7 @@ module.exports = [
               projectEquipment,
               projectTechnology
             )
-          ).takeover()
+          )
         }
 
         projectInfrastucture = [projectInfrastucture].flat()
@@ -151,7 +157,7 @@ module.exports = [
 
         setYarValue(request, 'projectItemsList', projectItemsList)
 
-        return h.redirect('./project-cost')
+        return h.redirect(nextPath)
       }
     }
   }

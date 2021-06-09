@@ -2,10 +2,18 @@ const Joi = require('joi')
 const { setYarValue, getYarValue } = require('../helpers/session')
 const { setLabelData } = require('../helpers/helper-functions')
 const gapiService = require('../services/gapi-service')
+const urlPrefix = require('../config/server').urlPrefix
+
+const viewTemplate = 'applying'
+const currentPath = `${urlPrefix}/${viewTemplate}`
+const previousPath = `${urlPrefix}/business-details`
+const nextPathAgent = `${urlPrefix}/agent-details`
+const nextPathFarmer = `${urlPrefix}/farmer-details`
 
 function createModel (errorMessage, data) {
   return {
-    backLink: './business-details',
+    backLink: previousPath,
+    formActionPage: currentPath,
     radios: {
       classes: 'govuk-radios--inline',
       idPrefix: 'applying',
@@ -26,25 +34,22 @@ function createModel (errorMessage, data) {
 module.exports = [
   {
     method: 'GET',
-    path: '/applying',
+    path: currentPath,
     handler: (request, h) => {
       const applying = getYarValue(request, 'applying')
       const data = applying || null
-      return h.view('applying', createModel(null, data))
+      return h.view(viewTemplate, createModel(null, data))
     }
   },
   {
     method: 'POST',
-    path: '/applying',
+    path: currentPath,
     options: {
       validate: {
         payload: Joi.object({
           applying: Joi.string().required()
         }),
-        failAction: (request, h) =>
-          h
-            .view('applying', createModel('Select who is applying for this grant', null))
-            .takeover()
+        failAction: (request, h) => h.view(viewTemplate, createModel('Select who is applying for this grant', null)).takeover()
       },
       handler: async (request, h) => {
         const { applying } = request.payload
@@ -55,11 +60,11 @@ module.exports = [
           value: applying
         })
         if (applying === 'Agent') {
-          return h.redirect('./agent-details')
+          return h.redirect(nextPathAgent)
         } else {
           setYarValue(request, 'agentDetails', null)
         }
-        return h.redirect('./farmer-details')
+        return h.redirect(nextPathFarmer)
       }
     }
   }

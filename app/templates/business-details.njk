@@ -6,7 +6,7 @@
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "./components/macro.njk" import crumbToken %}
 {% block pageTitle %}
-  {{siteTitle}} - Business details 
+  {{siteTitle}} - Business details
 {% endblock %}
 {% block beforeContent %}
   {{ govukBackLink({
@@ -19,7 +19,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-l">Business details</h1>
-      <form method="POST" action="./business-details" autocomplete="off" novalidate>
+      <form method="POST" action="{{ formActionPage }}" autocomplete="off" novalidate>
         {{ crumbToken(crumb)}}<br/>
         {{ govukInput(inputProjectName) }}<br/>
         {{ govukInput(inputBusinessName) }}<br/>

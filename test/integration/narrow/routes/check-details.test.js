@@ -46,7 +46,7 @@ describe('Check Details page', () => {
   it('should load page successfully', async () => {
     const options = {
       method: 'GET',
-      url: '/check-details'
+      url: `${global.__URLPREFIX__}/check-details`
     }
 
     const response = await global.__SERVER__.inject(options)
@@ -60,7 +60,7 @@ describe('Check Details page', () => {
   it('should have Check your details title', async () => {
     const options = {
       method: 'GET',
-      url: '/check-details',
+      url: `${global.__URLPREFIX__}/check-details`,
       payload: { crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
@@ -76,7 +76,7 @@ describe('Check Details page', () => {
   it('should have back link to formers-details', async () => {
     const options = {
       method: 'GET',
-      url: '/check-details',
+      url: `${global.__URLPREFIX__}/check-details`,
       payload: { crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
@@ -86,13 +86,13 @@ describe('Check Details page', () => {
     const response = await global.__SERVER__.inject(options)
     console.log(response.headers.location, 'Redirect Location')
     expect(response.statusCode).toBe(200)
-    expect(response.payload).toContain('./farmer-details')
+    expect(response.payload).toContain(`${global.__URLPREFIX__}/farmer-details`)
   })
 
   it('should have continue button to redirect to confirm page ', async () => {
     const options = {
       method: 'POST',
-      url: '/check-details',
+      url: `${global.__URLPREFIX__}/check-details`,
       payload: { crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
@@ -101,6 +101,6 @@ describe('Check Details page', () => {
 
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(302)
-    expect(response.headers.location).toBe('./confirm')
+    expect(response.headers.location).toBe(`${global.__URLPREFIX__}/confirm`)
   })
 })

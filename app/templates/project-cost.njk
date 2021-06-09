@@ -21,7 +21,7 @@
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <form method="POST" action="./project-cost" autocomplete="off" novalidate>
+      <form method="POST" action="{{ formActionPage }}" autocomplete="off" novalidate>
         {{ crumbToken(crumb)}}
         {{ govukInput(inputProjectCost) }}
         {{ govukButton({

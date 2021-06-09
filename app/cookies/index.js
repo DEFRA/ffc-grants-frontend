@@ -1,4 +1,5 @@
 const config = require('../config/server').cookieOptions
+const urlPrefix = require('../config/server').urlPrefix
 
 function getCurrentPolicy (request, h) {
   let cookiesPolicy = request.state.cookies_policy
@@ -16,6 +17,7 @@ function createDefaultPolicy (h) {
 
 function updatePolicy (request, h, analytics) {
   let cookiesPolicy = request.state.cookies_policy
+
   if (!cookiesPolicy) {
     cookiesPolicy = createDefaultPolicy(h)
   }
@@ -35,12 +37,12 @@ module.exports = {
   updatePolicy,
   validSession,
   sessionIgnorePaths: [
-    '/start',
-    '/session-timeout',
-    '/cookies',
-    '/accessibility',
-    '/farming-type',
-    '/assets',
+    `${urlPrefix}/start`,
+    `${urlPrefix}/session-timeout`,
+    `${urlPrefix}/cookies`,
+    `${urlPrefix}/accessibility`,
+    `${urlPrefix}/farming-type`,
+    `${urlPrefix}/assets`,
     '/healthy',
     '/healthz'
   ]

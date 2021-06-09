@@ -4,7 +4,7 @@ describe('Farming type page', () => {
   it('should load page successfully', async () => {
     const options = {
       method: 'GET',
-      url: '/farming-type'
+      url: `${global.__URLPREFIX__}/farming-type`
     }
 
     const response = await global.__SERVER__.inject(options)
@@ -14,7 +14,7 @@ describe('Farming type page', () => {
   it('should returns error message if no option is selected', async () => {
     const postOptions = {
       method: 'POST',
-      url: '/farming-type',
+      url: `${global.__URLPREFIX__}/farming-type`,
       payload: { crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
@@ -29,7 +29,7 @@ describe('Farming type page', () => {
   it('should store user response and redirects to legal status page', async () => {
     const postOptions = {
       method: 'POST',
-      url: '/farming-type',
+      url: `${global.__URLPREFIX__}/farming-type`,
       payload: { farmingType: 'Horticulture', crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
@@ -38,13 +38,13 @@ describe('Farming type page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe('./legal-status')
+    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/legal-status`)
   })
 
   it('should redirect to ineligible page when farming type is \'Something else\'', async () => {
     const postOptions = {
       method: 'POST',
-      url: '/farming-type',
+      url: `${global.__URLPREFIX__}/farming-type`,
       payload: { farmingType: 'Something else', crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken

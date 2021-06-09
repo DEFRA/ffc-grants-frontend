@@ -4,14 +4,26 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 const isDev = process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test'
-const siteUrl = (process.env.SITE_VERSION ?? '') === '' ? '' : `/${process.env.SITE_VERSION}`
 console.log(`Running webpack in ${isDev ? 'development' : 'production'} mode`)
+
+const urlPrefix = '/water'
 
 module.exports = {
   entry: './app/assets/src/index.js',
   mode: isDev ? 'development' : 'production',
   module: {
     rules: [
+      {
+        test: /\.js$/,
+        use: {
+          loader: 'string-replace-loader',
+          options: {
+            search: '__URLPREFIX__',
+            replace: urlPrefix,
+            flags: 'g'
+          }
+        }
+      },
       {
         test: /\.s[ac]ss$/i,
         use: [
@@ -58,14 +70,15 @@ module.exports = {
   output: {
     filename: 'js/bundle.[hash].js',
     path: path.resolve(__dirname, 'app/assets/dist'),
-    publicPath: `${siteUrl}/assets/`
+    publicPath: `${urlPrefix}/assets/`
   },
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       inject: false,
       filename: '.layout.njk',
-      template: 'app/assets/src/layout.njk'
+      template: 'app/assets/src/layout.njk',
+      metadata: { urlPrefix }
     }),
     new MiniCssExtractPlugin({
       filename: 'css/application.[hash].css'

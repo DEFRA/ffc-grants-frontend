@@ -6,7 +6,7 @@ describe('Planning caveat page', () => {
   it('should load page successfully', async () => {
     const options = {
       method: 'GET',
-      url: '/planning-required-condition'
+      url: `${global.__URLPREFIX__}/planning-required-condition`
     }
 
     const response = await global.__SERVER__.inject(options)

@@ -1,6 +1,8 @@
+const urlPrefix = require('../config/server').urlPrefix
+
 module.exports = {
   method: 'GET',
-  path: '/assets/{path*}',
+  path: `${urlPrefix}/assets/{path*}`,
   options: {
     handler: {
       directory: {
@@ -9,7 +11,6 @@ module.exports = {
     },
     cache: {
       privacy: 'private'
-    },
-    auth: false
+    }
   }
 }

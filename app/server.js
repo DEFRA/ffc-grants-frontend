@@ -7,7 +7,6 @@ const inert = require('@hapi/inert')
 const config = require('./config/server')
 const crumb = require('@hapi/crumb')
 const { version } = require('../package.json')
-const authConfig = require('./config/auth')
 const Uuid = require('uuid')
 const protectiveMonitoringServiceSendEvent = require('./services/protective-monitoring-service')
 const cacheConfig = require('./config/cache')
@@ -24,15 +23,7 @@ async function createServer () {
       }
     }]
   })
-  const siteUrl = (process.env.SITE_VERSION ?? '') === '' ? '' : `/${process.env.SITE_VERSION}`
-  if (siteUrl.length > 0) {
-    server.realm.modifiers.route.prefix = siteUrl
-  }
 
-  if (authConfig.enabled) {
-    console.log('Login required, enabling authorisation plugin')
-    await server.register(require('./plugins/auth'))
-  }
   await server.register(inert)
   await server.register(vision)
   await server.register(require('./plugins/error-pages'))
@@ -73,6 +64,7 @@ async function createServer () {
     }
   })
   // Session cache redis with yar
+
   await server.register([
     {
       plugin: require('@hapi/yar'),

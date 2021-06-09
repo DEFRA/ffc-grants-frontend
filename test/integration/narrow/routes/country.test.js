@@ -31,7 +31,7 @@ describe('Country Page', () => {
   it('should load country page sucessfully', async () => {
     const options = {
       method: 'GET',
-      url: '/country'
+      url: `${global.__URLPREFIX__}/country`
     }
 
     const response = await server.inject(options)
@@ -41,7 +41,7 @@ describe('Country Page', () => {
   it('should returns error message if no option is selected', async () => {
     const postOptions = {
       method: 'POST',
-      url: '/country',
+      url: `${global.__URLPREFIX__}/country`,
       payload: { projectPostcode: '', crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
@@ -56,7 +56,7 @@ describe('Country Page', () => {
   it('should returns error message if postcode is not entered for selected yes option ', async () => {
     const postOptions = {
       method: 'POST',
-      url: '/country',
+      url: `${global.__URLPREFIX__}/country`,
       payload: { inEngland, projectPostcode: '', crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
@@ -71,7 +71,7 @@ describe('Country Page', () => {
   it('should returns error message if postcode is not in the correct format ', async () => {
     const postOptions = {
       method: 'POST',
-      url: '/country',
+      url: `${global.__URLPREFIX__}/country`,
       payload: { inEngland, projectPostcode: 'AB123 4CD', crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
@@ -86,7 +86,7 @@ describe('Country Page', () => {
   it('should store user response and redirects to planning permission page', async () => {
     const postOptions = {
       method: 'POST',
-      url: '/country',
+      url: `${global.__URLPREFIX__}/country`,
       payload: { inEngland, projectPostcode: 'XX1 5XX', crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
@@ -95,13 +95,13 @@ describe('Country Page', () => {
 
     const postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe('./planning-permission')
+    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/planning-permission`)
   })
 
   it('should display ineligible page when user response is \'No\'', async () => {
     const postOptions = {
       method: 'POST',
-      url: '/country',
+      url: `${global.__URLPREFIX__}/country`,
       payload: { projectPostcode: '', inEngland: 'No', crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken

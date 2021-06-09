@@ -2,10 +2,17 @@ const Joi = require('joi')
 const { setYarValue, getYarValue } = require('../helpers/session')
 const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
 const gapiService = require('../services/gapi-service')
+const urlPrefix = require('../config/server').urlPrefix
+
+const viewTemplate = 'legal-status'
+const currentPath = `${urlPrefix}/${viewTemplate}`
+const previousPath = `${urlPrefix}/farming-type`
+const nextPath = `${urlPrefix}/country`
 
 function createModel (errorMessage, data) {
   return {
-    backLink: './farming-type',
+    backLink: previousPath,
+    formActionPage: currentPath,
     radios: {
       classes: '',
       idPrefix: 'legalStatus',
@@ -41,7 +48,7 @@ function createModel (errorMessage, data) {
 
 function createModelNotEligible () {
   return {
-    backLink: './legal-status',
+    backLink: currentPath,
     messageContent:
       'This is only open to a business with a legal status of: <ul class="govuk-list govuk-list--bullet"><li>Sole trader</li><li>Partnership</li><li>Ltd company</li><li>Charity</li><li>Public organisation</li><li>Trust</li><li>Limited liability partnership</li><li>Community interest company</li><li>Local authority</li></ul> <p class="govuk-body">Other types of business may be supported in future schemes.</p>'
   }
@@ -50,16 +57,16 @@ function createModelNotEligible () {
 module.exports = [
   {
     method: 'GET',
-    path: '/legal-status',
+    path: currentPath,
     handler: (request, h) => {
       const legalStatus = getYarValue(request, 'legalStatus')
       const data = legalStatus || null
-      return h.view('legal-status', createModel(null, data))
+      return h.view(viewTemplate, createModel(null, data))
     }
   },
   {
     method: 'POST',
-    path: '/legal-status',
+    path: currentPath,
     options: {
       validate: {
         payload: Joi.object({
@@ -68,16 +75,16 @@ module.exports = [
         failAction: (request, h, err) => {
           const errorObject = errorExtractor(err)
           const errorMessage = getErrorMessage(errorObject)
-          return h.view('legal-status', createModel(errorMessage)).takeover()
+          return h.view(viewTemplate, createModel(errorMessage)).takeover()
         }
       },
       handler: async (request, h) => {
         setYarValue(request, 'legalStatus', request.payload.legalStatus)
         await gapiService.sendEligibilityEvent(request, request.payload.legalStatus !== 'None of the above')
         if (request.payload.legalStatus === 'None of the above') {
-          return h.view('./not-eligible', createModelNotEligible())
+          return h.view('not-eligible', createModelNotEligible())
         }
-        return h.redirect('./country')
+        return h.redirect(nextPath)
       }
     }
   }
