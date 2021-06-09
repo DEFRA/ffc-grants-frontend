@@ -55,16 +55,4 @@
       <p>Email: <a href="mailto:FTF@rpa.gov.uk">FTF@rpa.gov.uk</a></p>
     </div>
   </div>
-{% if googleTagManagerKey %}
-<script>
-dataLayer.push(
-    {
-      pageCategory: 'Journey',
-      event: 'journey-start',
-      time: Date.now(),
-      metric1:Date.now(),
-      dimension1: 'started'
-    });
-</script>
-{% endif %}
 {% endblock %}
