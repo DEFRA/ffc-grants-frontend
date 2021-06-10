@@ -96,20 +96,4 @@
   </div>
 </div>
 {% endif %}
-{% if googleTagManagerKey %}
-
-<!-- Google Tag Manager -->
-<script>
-dataLayer.push(
-    {
-      pageCategory: 'Journey',
-      event: 'journey-score',
-      time: Date.now(),
-      score:"{{scoreData.desirability.overallRating.band}}",
-      metric2: Date.now(),
-      dimension1:"{{scoreData.desirability.overallRating.band}}"
-    });
-</script>
-<!-- End Google Tag Manager -->
-{% endif %}
 {% endblock %}

@@ -5,7 +5,7 @@ describe('Project start page', () => {
     farmingType: 'some fake crop',
     legalStatus: 'fale status',
     inEngland: 'Yes',
-    projectStarted: 'No'
+    projectStarted: 'No, we have not done any work on this project yet'
   }
   const projectStarted = varList.projectStarted
 
@@ -42,7 +42,7 @@ describe('Project start page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Select yes if you have already started work on the project')
+    expect(postResponse.payload).toContain('Select the option that applies to your project')
   })
 
   it('should redirect to details pagewhen user selects "No"', async () => {
@@ -60,11 +60,11 @@ describe('Project start page', () => {
     expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/tenancy`)
   })
 
-  it('should redirect to ineligible page when user selects "Yes"', async () => {
+  it('should redirect to ineligible page when user selects "Yes, we have begun project work (for example digging, signing contracts, placing orders)"', async () => {
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/project-start`,
-      payload: { projectStarted: 'Yes', crumb: crumbToken },
+      payload: { projectStarted: 'Yes, we have begun project work (for example digging, signing contracts, placing orders)', crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
       }
@@ -74,5 +74,19 @@ describe('Project start page', () => {
     expect(postResponse.payload).toContain(
       'You cannot apply for a grant from this scheme'
     )
+  })
+  it('should redirect to ineligible page when user selects "Yes, preparatory work (for example quotes from suppliers, applying for planning permission)"', async () => {
+    const postOptions = {
+      method: 'POST',
+      url: `${global.__URLPREFIX__}/project-start`,
+      payload: { projectStarted: 'Yes, preparatory work (for example quotes from suppliers, applying for planning permission)', crumb: crumbToken },
+      headers: {
+        cookie: 'crumb=' + crumbToken
+      }
+    }
+
+    const postResponse = await global.__SERVER__.inject(postOptions)
+    expect(postResponse.statusCode).toBe(302)
+    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/tenancy`)
   })
 })

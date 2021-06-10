@@ -47,21 +47,4 @@
     </div>
   </div>
   <p class="govuk-body"><a href={{ output.surveyLink }} target="_blank" rel="noopener noreferrer">What do you think of this service?</a></p>
-
-{% if googleTagManagerKey %}
-
-<!-- Google Tag Manager -->
-<script>
-dataLayer.push(
-    {
-      pageCategory: 'Journey',
-      event: 'journey-confirmation',
-      time: Date.now(),
-      correlationId:"{{output.confirmationId}}",
-      metric3:Date.now(),
-      dimension2: "{{output.confirmationId}}"
-    });
-</script>
-<!-- End Google Tag Manager -->
-{% endif %}
 {% endblock %}
