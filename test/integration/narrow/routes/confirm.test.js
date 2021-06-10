@@ -46,7 +46,7 @@ describe('Confirm page', () => {
       url: `${global.__URLPREFIX__}/confirm`,
       headers: {
         cookie: 'crumb=' + crumbToken,
-        referer: 'localhost/project-details'
+        referer: 'localhost/project-summary'
       }
     }
 
