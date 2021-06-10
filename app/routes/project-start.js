@@ -26,7 +26,9 @@ function createModel (errorMessage, data, backLink) {
           classes: 'govuk-fieldset__legend--l'
         }
       },
-      items: setLabelData(data, ['Yes', 'No']),
+      items: setLabelData(data, ['Yes, preparatory work (for example quotes from suppliers, applying for planning permission)',
+        'Yes, we have begun project work (for example digging, signing contracts, placing orders)',
+        'No, we have not done any work on this project yet']),
       ...(errorMessage ? { errorMessage: { text: errorMessage } } : {})
     }
   }
@@ -71,9 +73,9 @@ module.exports = [
       },
       handler: async (request, h) => {
         setYarValue(request, 'projectStarted', request.payload.projectStarted)
-        await gapiService.sendEligibilityEvent(request, request.payload.projectStarted === 'No')
+        await gapiService.sendEligibilityEvent(request, request.payload.projectStarted === 'Yes, we have begun project work (for example digging, signing contracts, placing orders)')
 
-        if (request.payload.projectStarted === 'No') {
+        if (request.payload.projectStarted !== 'Yes, we have begun project work (for example digging, signing contracts, placing orders)') {
           return h.redirect(nextPath)
         }
 

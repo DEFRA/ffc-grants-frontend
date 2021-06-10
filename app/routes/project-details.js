@@ -20,13 +20,6 @@ function createModel (errorMessage, errorSummary, data, backLink, hasScore) {
     checkboxes: {
       idPrefix: 'project',
       name: 'project',
-      fieldset: {
-        legend: {
-          text: 'The project will:',
-          isPageHeading: false,
-          classes: 'govuk-fieldset__legend--m'
-        }
-      },
       hint: {
         text: 'Select one or two options'
       },

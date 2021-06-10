@@ -23,19 +23,4 @@
       {% endif %}
     </div>
   </div>
-  
-{% if googleTagManagerKey %}
-
-<!-- Google Tag Manager -->
-<script>
-dataLayer.push(
-    {
-      pageCategory: 'Journey',
-      event: 'journey-eliminated',
-      dimension4:'Not-Eligible',
-      metric2: Date.now()
-    });
-</script>
-<!-- End Google Tag Manager -->
-{% endif %}
 {% endblock %}
