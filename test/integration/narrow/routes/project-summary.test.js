@@ -1,5 +1,5 @@
 const { crumbToken } = require('./test-helper')
-describe('Project details page', () => {
+describe('Project summary page', () => {
   const varList = {
     farmingType: 'some fake crop',
     legalStatus: 'fale status',
