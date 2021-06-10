@@ -4,7 +4,7 @@ const { setYarValue, getYarValue } = require('../helpers/session')
 const { LICENSE_EXPECTED, LICENSE_WILL_NOT_HAVE } = require('../helpers/license-dates')
 const urlPrefix = require('../config/server').urlPrefix
 
-const viewTemplate = 'project-details'
+const viewTemplate = 'project-summary'
 const currentPath = `${urlPrefix}/${viewTemplate}`
 const previousPath = `${urlPrefix}/abstraction-licence`
 const nextPath = `${urlPrefix}/irrigated-crops`

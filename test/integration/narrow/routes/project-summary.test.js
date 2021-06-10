@@ -1,5 +1,5 @@
 const { crumbToken } = require('./test-helper')
-describe('Project details page', () => {
+describe('Project summary page', () => {
   const varList = {
     farmingType: 'some fake crop',
     legalStatus: 'fale status',
@@ -31,7 +31,7 @@ describe('Project details page', () => {
   it('should load page successfully', async () => {
     const options = {
       method: 'GET',
-      url: `${global.__URLPREFIX__}/project-details`
+      url: `${global.__URLPREFIX__}/project-summary`
     }
 
     const response = await global.__SERVER__.inject(options)
@@ -41,7 +41,7 @@ describe('Project details page', () => {
   it('should returns error message if no option is selected', async () => {
     const postOptions = {
       method: 'POST',
-      url: `${global.__URLPREFIX__}/project-details`,
+      url: `${global.__URLPREFIX__}/project-summary`,
       payload: { crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
@@ -56,7 +56,7 @@ describe('Project details page', () => {
   it('should store user response and redirects to irrigated crops page', async () => {
     const postOptions = {
       method: 'POST',
-      url: `${global.__URLPREFIX__}/project-details`,
+      url: `${global.__URLPREFIX__}/project-summary`,
       payload: { project: 'Improve irrigation efficiency', crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
@@ -71,7 +71,7 @@ describe('Project details page', () => {
   it('should display the error summary if more than two options are selected', async () => {
     const postOptions = {
       method: 'POST',
-      url: `${global.__URLPREFIX__}/project-details`,
+      url: `${global.__URLPREFIX__}/project-summary`,
       payload: { project: ['some option-1', 'some option-2', 'some option-3'], crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
@@ -85,7 +85,7 @@ describe('Project details page', () => {
   it('should display the error summary if more than one options are selected along with None of above', async () => {
     const postOptions = {
       method: 'POST',
-      url: `${global.__URLPREFIX__}/project-details`,
+      url: `${global.__URLPREFIX__}/project-summary`,
       payload: { project: ['Improve irrigation efficiency', 'None of the above'], crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken

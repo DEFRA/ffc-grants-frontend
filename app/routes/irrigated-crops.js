@@ -5,7 +5,7 @@ const urlPrefix = require('../config/server').urlPrefix
 
 const viewTemplate = 'irrigated-crops'
 const currentPath = `${urlPrefix}/${viewTemplate}`
-const previousPath = `${urlPrefix}/project-details`
+const previousPath = `${urlPrefix}/project-summary`
 const nextPath = `${urlPrefix}/irrigated-land`
 const scorePath = `${urlPrefix}/score`
 

@@ -7,7 +7,7 @@ const urlPrefix = require('../config/server').urlPrefix
 const viewTemplate = 'abstraction-licence'
 const currentPath = `${urlPrefix}/${viewTemplate}`
 const previousPath = `${urlPrefix}/SSSI`
-const nextPath = `${urlPrefix}/project-details`
+const nextPath = `${urlPrefix}/project-summary`
 const caveatPath = `${urlPrefix}/abstraction-required-condition`
 
 function createModel (errorMessage, data) {
