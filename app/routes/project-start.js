@@ -43,7 +43,7 @@ function createModelNotEligible () {
   return {
     backLink: currentPath,
     messageContent:
-      'You cannot apply for a grant if you have already started work on the project. <br/>Starting the project or committing to any costs (such as placing orders) before you receive a funding agreement invalidates your application.'
+      'Only projects that have not yet started can apply for a grant.'
   }
 }
 
