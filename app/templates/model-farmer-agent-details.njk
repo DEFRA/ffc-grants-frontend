@@ -30,18 +30,4 @@
       </form>
     </div>
   </div>
-
-{% if googleTagManagerKey %}
-
-<!-- Google Tag Manager -->
-<script>
-dataLayer.push(
-    {
-      pageCategory: 'Journey',
-      formerAgent:"{{pageId}}",
-      dimension3:"{{pageId}}"
-    });
-</script>
-<!-- End Google Tag Manager -->
-{% endif %}
 {% endblock %}
