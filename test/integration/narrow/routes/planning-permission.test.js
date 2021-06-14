@@ -1,28 +1,36 @@
 const { crumbToken } = require('./test-helper')
 
-describe('Planning permission page', () => {
-  const varList = {
-    farmingType: 'some fake crop',
-    legalStatus: 'fale status',
-    inEngland: 'Yes',
-    projectStarted: 'No',
-    landOwnership: 'Yes',
-    projectItemsList: {
-      projectEquipment: ['Boom', 'Trickle']
-    },
-    projectCost: '12345678',
-    remainingCost: 14082.00,
-    payRemainingCosts: 'Yes',
-    planningPermission: 'Will not have by 31 December 2021'
-  }
+const varListTemplate = {
+  farmingType: 'some fake crop',
+  legalStatus: 'fale status',
+  inEngland: 'Yes',
+  projectStarted: 'No',
+  landOwnership: 'Yes',
+  projectItemsList: {
+    projectEquipment: ['Boom', 'Trickle']
+  },
+  projectCost: '12345678',
+  remainingCost: 14082.00,
+  payRemainingCosts: 'Yes',
+  planningPermission: 'Will not have by 31 December 2021',
+  'current-score': ''
+}
 
-  jest.mock('../../../../app/helpers/session', () => ({
-    setYarValue: (request, key, value) => null,
-    getYarValue: (request, key) => {
-      if (Object.keys(varList).includes(key)) return varList[key]
-      else return 'Error'
-    }
-  }))
+let varList
+const mockSession = {
+  setYarValue: (request, key, value) => null,
+  getYarValue: (request, key) => {
+    if (Object.keys(varList).includes(key)) return varList[key]
+    else return 'Error'
+  }
+}
+
+jest.mock('../../../../app/helpers/session', () => mockSession)
+
+describe('Planning permission page', () => {
+  beforeEach(() => {
+    varList = { ...varListTemplate }
+  })
 
   afterEach(() => {
     jest.clearAllMocks()
@@ -36,6 +44,18 @@ describe('Planning permission page', () => {
 
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
+  })
+
+  it('should redirect to project summary page if theres score', async () => {
+    varList['current-score'] = true
+    const options = {
+      method: 'GET',
+      url: `${global.__URLPREFIX__}/planning-permission`
+    }
+
+    const response = await global.__SERVER__.inject(options)
+    expect(response.statusCode).toBe(302)
+    expect(response.headers.location).toBe(`${global.__URLPREFIX__}/project-summary`)
   })
 
   it('should return an error message if no option is selected', async () => {

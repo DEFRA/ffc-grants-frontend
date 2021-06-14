@@ -1,27 +1,27 @@
 const { crumbToken } = require('./test-helper')
+const varListTemplate = {
+  farmingType: 'some fake crop',
+  legalStatus: 'fale status',
+  inEngland: 'Yes',
+  'current-score': ''
+}
+
+let varList
+const mockSession = {
+  setYarValue: (request, key, value) => null,
+  getYarValue: (request, key) => {
+    if (Object.keys(varList).includes(key)) return varList[key]
+    else return 'Error'
+  }
+}
+
+jest.mock('../../../../app/helpers/session', () => mockSession)
 
 describe('Country Page', () => {
-  const varList = {
-    farmingType: 'some fake crop',
-    legalStatus: 'fale status',
-    inEngland: 'Yes'
-  }
-  const inEngland = varList.inEngland
+  const inEngland = varListTemplate.inEngland
 
-  let server
-  const createServer = require('../../../../app/server')
-
-  jest.mock('../../../../app/helpers/session', () => ({
-    setYarValue: (request, key, value) => null,
-    getYarValue: (request, key) => {
-      if (Object.keys(varList).includes(key)) return varList[key]
-      else return 'Error'
-    }
-  }))
-
-  beforeEach(async () => {
-    server = await createServer()
-    await server.start()
+  beforeEach(() => {
+    varList = { ...varListTemplate }
   })
 
   afterEach(() => {
@@ -34,8 +34,20 @@ describe('Country Page', () => {
       url: `${global.__URLPREFIX__}/country`
     }
 
-    const response = await server.inject(options)
+    const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
+  })
+
+  it('should redirect to project summary page when theres score ', async () => {
+    varList['current-score'] = true
+    const options = {
+      method: 'GET',
+      url: `${global.__URLPREFIX__}/country`
+    }
+
+    const response = await global.__SERVER__.inject(options)
+    expect(response.statusCode).toBe(302)
+    expect(response.headers.location).toBe(`${global.__URLPREFIX__}/project-summary`)
   })
 
   it('should returns error message if no option is selected', async () => {
@@ -48,7 +60,7 @@ describe('Country Page', () => {
       }
     }
 
-    const postResponse = await server.inject(postOptions)
+    const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
     expect(postResponse.payload).toContain('Select yes if the project is in England')
   })
@@ -63,7 +75,7 @@ describe('Country Page', () => {
       }
     }
 
-    const postResponse = await server.inject(postOptions)
+    const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
     expect(postResponse.payload).toContain('Enter a postcode, like AA1 1AA')
   })
@@ -78,7 +90,7 @@ describe('Country Page', () => {
       }
     }
 
-    const postResponse = await server.inject(postOptions)
+    const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
     expect(postResponse.payload).toContain('Enter a postcode, like AA1 1AA')
   })
@@ -93,7 +105,7 @@ describe('Country Page', () => {
       }
     }
 
-    const postResponse = await server.inject(postOptions)
+    const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
     expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/planning-permission`)
   })
@@ -108,13 +120,9 @@ describe('Country Page', () => {
       }
     }
 
-    const postResponse = await server.inject(postOptions)
+    const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.payload).toContain(
       'You cannot apply for a grant from this scheme'
     )
-  })
-
-  afterEach(async () => {
-    await server.stop()
   })
 })

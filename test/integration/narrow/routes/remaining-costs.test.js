@@ -11,7 +11,9 @@ const varListTemplate = {
   },
   projectCost: '12345678',
   remainingCost: 14082.00,
-  payRemainingCosts: 'Yes'
+  payRemainingCosts: 'Yes',
+  'current-score': ''
+
 }
 
 let varList
@@ -59,6 +61,20 @@ describe('Remaining costs page', () => {
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(302)
     expect(response.headers.location).toBe(`${global.__URLPREFIX__}/project-cost`)
+  })
+
+  it('should redirects to peoject summary page if thers score ', async () => {
+    varList['current-score'] = true
+    const postOptions = {
+      method: 'GET',
+      url: `${global.__URLPREFIX__}/remaining-costs`,
+      payload: { crumb: crumbToken },
+      headers: { cookie: 'crumb=' + crumbToken }
+    }
+
+    const postResponse = await global.__SERVER__.inject(postOptions)
+    expect(postResponse.statusCode).toBe(302)
+    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/project-summary`)
   })
 
   it('should return an error message if no option is selected', async () => {
