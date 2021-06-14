@@ -12,9 +12,12 @@ module.exports = {
       server.ext('onPreResponse', (request, h) => {
         const currentUrl = request.url.pathname.split('/').pop()
         let result
+        let score
 
         if (request.response.variety === 'view' && questionBank.questions.filter(question => question.url === currentUrl).length > 0) {
           const currentQuestionNumber = questionBank.questions.filter(question => question.url === currentUrl)[0].order
+          score = (getYarValue(request, 'current-score') && currentQuestionNumber < 14)
+
           const previousQuestions = questionBank.questions.filter(question => question.order < currentQuestionNumber).sort((a, b) => b.order ?? 0 - a.order ?? 0)
 
           if (previousQuestions.length > 0) {
@@ -26,6 +29,7 @@ module.exports = {
           }
         }
         if (result) return h.redirect(`${urlPrefix}/start`)
+        if (score) return h.redirect(`${urlPrefix}/project-summary`).takeover()
         return h.continue
       })
     }
