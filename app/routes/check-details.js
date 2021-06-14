@@ -1,11 +1,11 @@
 const createMsg = require('../messaging/create-msg')
-const urlPrefix = require('../config/server').urlPrefix
+const { urlPrefix, startPageUrl } = require('../config/server')
 
 const viewTemplate = 'check-details'
 const currentPath = `${urlPrefix}/${viewTemplate}`
 const previousPath = `${urlPrefix}/farmer-details`
 const nextPath = `${urlPrefix}/confirm`
-const startPath = `${urlPrefix}/start`
+const startPath = startPageUrl
 const businessDetailsPath = `${urlPrefix}/business-details`
 const agentDetailsPath = `${urlPrefix}/agent-details`
 const farmerDetailsPath = previousPath

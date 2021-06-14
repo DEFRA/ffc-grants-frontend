@@ -1,7 +1,7 @@
-const urlPrefix = require('../config/server').urlPrefix
+const startPageUrl = require('../config/server').startPageUrl
 
 module.exports = {
   method: 'GET',
   path: '/{p?}',
-  handler: (request, h) => h.redirect(`${urlPrefix}/start`)
+  handler: (request, h) => h.redirect(startPageUrl)
 }

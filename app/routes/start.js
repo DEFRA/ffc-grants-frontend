@@ -1,4 +1,3 @@
-const { setYarValue } = require('../helpers/session')
 const urlPrefix = require('../config/server').urlPrefix
 
 const viewTemplate = 'start'
@@ -19,7 +18,7 @@ module.exports = {
   method: 'GET',
   path: currentPath,
   handler: async (request, h) => {
-    setYarValue(request, 'journey-start-time', Date.now())
+    console.log('Start Page Started.')
     return h.view(viewTemplate, createModel())
   }
 }

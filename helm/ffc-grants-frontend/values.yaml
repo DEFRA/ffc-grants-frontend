@@ -60,6 +60,7 @@ container:
   sessionCacheTTL: 3600000
   googleTagManagerKey: dummy
   googleTagManagerServerKey: dummy
+  startPageUrl: dummy
 
 livenessProbe:
   path: /healthz

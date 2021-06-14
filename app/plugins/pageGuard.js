@@ -3,7 +3,7 @@
 */
 const questionBank = require('../config/question-bank')
 const { getYarValue } = require('../helpers/session')
-const urlPrefix = require('../config/server').urlPrefix
+const startPageUrl = require('../config/server').startPageUrl
 
 module.exports = {
   plugin: {
@@ -25,7 +25,10 @@ module.exports = {
             })
           }
         }
-        if (result) return h.redirect(`${urlPrefix}/start`)
+        console.log(currentUrl, 'pageGuardUrl')
+        console.log(result, 'pageGuard')
+        if (result) return h.redirect(startPageUrl)
+        console.log(startPageUrl, 'startPageUrl')
         return h.continue
       })
     }
