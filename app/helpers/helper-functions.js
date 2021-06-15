@@ -7,13 +7,16 @@ function isChecked (data, option) {
 
 function setLabelData (data, labelData) {
   return labelData.map((label) => {
-    if (typeof (label) === 'string') {
+    if (typeof (label) === 'string' && label !== 'divider') {
       return {
         value: label,
         text: label,
         checked: isChecked(data, label),
         selected: data === label
       }
+    }
+    if (label === 'divider') {
+      return { divider: 'or' }
     }
 
     const { text, value } = label

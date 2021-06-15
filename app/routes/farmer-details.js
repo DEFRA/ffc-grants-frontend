@@ -15,6 +15,7 @@ function createModel (errorMessageList, farmerDetails, backLink) {
   const {
     firstName,
     lastName,
+    gender,
     email,
     mobile,
     landline,
@@ -28,6 +29,7 @@ function createModel (errorMessageList, farmerDetails, backLink) {
   const [
     firstNameError,
     lastNameError,
+    genderError,
     emailError,
     mobileError,
     landlineError,
@@ -37,7 +39,7 @@ function createModel (errorMessageList, farmerDetails, backLink) {
     postcodeError
   ] = fetchListObjectItems(
     errorMessageList,
-    ['firstNameError', 'lastNameError', 'emailError', 'mobileError', 'landlineError', 'address1Error', 'townError', 'countyError', 'postcodeError']
+    ['firstNameError', 'lastNameError', 'genderError', 'emailError', 'mobileError', 'landlineError', 'address1Error', 'townError', 'countyError', 'postcodeError']
   )
 
   return {
@@ -48,6 +50,25 @@ function createModel (errorMessageList, farmerDetails, backLink) {
     inputFirstName: formInputObject('firstName', 'govuk-input--width-20', 'First name', null, firstName, firstNameError),
 
     inputLastName: formInputObject('lastName', 'govuk-input--width-20', 'Last name', null, lastName, lastNameError),
+
+    ...((backLink === applyingPath)
+      ? {
+          genderRadio: {
+            idPrefix: 'gender',
+            name: 'gender',
+            fieldset: {
+              legend: {
+                text: 'Gender'
+              }
+            },
+            hint: {
+              text: 'We collect this equality data to improve our future schemes.'
+            },
+            items: setLabelData(gender, ['Female', 'Male', 'divider', 'Prefer not to say']),
+            ...(genderError ? { errorMessage: { text: genderError } } : {})
+          }
+        }
+      : {}),
 
     inputEmail: formInputObject('email', 'govuk-input--width-20', 'Email address', 'We will use this to send you a confirmation', email, emailError),
 
@@ -75,7 +96,6 @@ function createModel (errorMessageList, farmerDetails, backLink) {
       ...(countyError ? { errorMessage: { text: countyError } } : {})
     },
     inputPostcode: formInputObject('postcode', 'govuk-input--width-5', 'Postcode', null, postcode, postcodeError)
-
   }
 }
 
@@ -89,6 +109,7 @@ module.exports = [
         farmerDetails = {
           firstName: null,
           lastName: null,
+          gender: null,
           email: null,
           mobile: null,
           landline: null,
@@ -114,6 +135,7 @@ module.exports = [
         payload: Joi.object({
           firstName: Joi.string().regex(NAME_REGEX).required(),
           lastName: Joi.string().regex(NAME_REGEX).required(),
+          gender: Joi.string(),
           email: Joi.string().email().required(),
           mobile: Joi.string().regex(PHONE_REGEX).required(),
           landline: Joi.string().regex(PHONE_REGEX).allow(''),
@@ -127,6 +149,7 @@ module.exports = [
           const [
             firstNameError,
             lastNameError,
+            genderError,
             emailError,
             mobileError,
             landlineError,
@@ -134,28 +157,33 @@ module.exports = [
             townError,
             countyError,
             postcodeError
-          ] = findErrorList(err, ['firstName', 'lastName', 'email', 'mobile', 'landline', 'address1', 'town', 'county', 'postcode'])
+          ] = findErrorList(err, ['firstName', 'lastName', 'gender', 'email', 'mobile', 'landline', 'address1', 'town', 'county', 'postcode'])
 
           const errorMessageList = {
-            firstNameError, lastNameError, emailError, mobileError, landlineError, address1Error, townError, countyError, postcodeError
+            firstNameError, lastNameError, genderError, emailError, mobileError, landlineError, address1Error, townError, countyError, postcodeError
           }
 
-          const { firstName, lastName, email, mobile, landline, address1, address2, town, county, postcode } = request.payload
-          const farmerDetails = { firstName, lastName, email, mobile, landline, address1, address2, town, county, postcode }
+          const { firstName, lastName, gender, email, mobile, landline, address1, address2, town, county, postcode } = request.payload
+          const farmerDetails = { firstName, lastName, gender, email, mobile, landline, address1, address2, town, county, postcode }
+          console.log(gender, 'GGGGGG')
+          console.log(lastName, 'LLLLLLLLLL')
 
           const applying = getYarValue(request, 'applying')
           const backLink = applying === 'Agent' ? agentDetailsPath : applyingPath
+          // if (applying === 'Agent' && !gender) {
+
+          // }
 
           return h.view(viewTemplate, createModel(errorMessageList, farmerDetails, backLink)).takeover()
         }
       },
       handler: (request, h) => {
         const {
-          firstName, lastName, email, mobile, landline, address1, address2, town, county, postcode
+          firstName, lastName, gender, email, mobile, landline, address1, address2, town, county, postcode
         } = request.payload
 
         setYarValue(request, 'farmerDetails', {
-          firstName, lastName, email, mobile, landline, address1, address2, town, county, postcode: postcode.split(/(?=.{3}$)/).join(' ').toUpperCase()
+          firstName, lastName, gender, email, mobile, landline, address1, address2, town, county, postcode: postcode.split(/(?=.{3}$)/).join(' ').toUpperCase()
         })
 
         return h.redirect(nextPath)
