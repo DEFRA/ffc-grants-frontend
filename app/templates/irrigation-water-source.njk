@@ -30,12 +30,24 @@
         {{ conditionalButtons(hasScore) }}
       </form>
     </div>
-    {{ multiSideBar([{heading:"Funding priorities",para:"RPA wants to fund projects that:",
-    items:[
-      "improve the environment","improve water sustainability"
-    ]},{ para:"RPA will not fund projects where water is supplied by:",
-    items:[
-      "summer water surface abstraction","mains"
-    ]}]) }}
+
+    {{ 
+      multiSideBar([
+        {
+          heading:"Funding priorities",para:"RPA wants to fund projects that:",
+          items:[
+            "improve the environment",
+            "improve water sustainability"
+          ]
+        },
+        { 
+          para:"RPA will not fund projects where water is supplied by:",
+          items:[
+            "summer water surface abstraction",
+            "mains"
+          ]
+        }
+      ])
+    }}
   </div>
 {% endblock %}
