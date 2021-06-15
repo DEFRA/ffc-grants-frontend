@@ -25,10 +25,7 @@ module.exports = {
             })
           }
         }
-        console.log(currentUrl, 'pageGuardUrl')
-        console.log(result, 'pageGuard')
         if (result) return h.redirect(startPageUrl)
-        console.log(startPageUrl, 'startPageUrl')
         return h.continue
       })
     }
