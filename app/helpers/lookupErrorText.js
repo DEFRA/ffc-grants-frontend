@@ -70,7 +70,8 @@ const errors = {
   'error.irrigatedLandTarget.string.pattern.base': 'Hectare value must be a number, with only one decimal place',
   'error.sSSI.any.required': 'Select yes if the project directly impacts a Site of Special Scientific Interest',
   'error.consentMain.string.empty': 'Please confirm you are happy to be contacted about your application.',
-  'error.consentMain.any.required': 'Please confirm you are happy to be contacted about your application.'
+  'error.consentMain.any.required': 'Please confirm you are happy to be contacted about your application.',
+  'error.currentlyIrrigating.any.required': 'Select yes if you are currently irrigating'
 }
 const lookupErrorText = (key) => {
   return errors[key] || key

@@ -6,7 +6,7 @@ const urlPrefix = require('../config/server').urlPrefix
 
 const viewTemplate = 'irrigated-land'
 const currentPath = `${urlPrefix}/${viewTemplate}`
-const previousPath = `${urlPrefix}/irrigated-crops`
+const previousPath = `${urlPrefix}/irrigation-status`
 const nextPath = `${urlPrefix}/irrigation-water-source`
 const scorePath = `${urlPrefix}/score`
 
@@ -120,8 +120,6 @@ module.exports = [
 
           return h.view(viewTemplate, createModel(irrigatedLandCurrent, irrigatedLandTarget, errorMessageList, hasScore))
         }
-
-        setYarValue(request, 'currentlyIrrigating', true) // delete this & set this in [FFTF-1036] => NEW PAGE: /irrigation-status
 
         setYarValue(request, 'irrigatedLandCurrent', irrigatedLandCurrent)
         setYarValue(request, 'irrigatedLandTarget', irrigatedLandTarget)
