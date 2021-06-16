@@ -5,6 +5,7 @@
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/select/macro.njk" import govukSelect %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
 
 {% block pageTitle %}
   {{siteTitle}} - {{ pageHeader }}
@@ -25,10 +26,19 @@
         <h1 class="govuk-heading-m">Name</h1><br/>
         {{ govukInput(inputFirstName) }}
         {{ govukInput(inputLastName) }}
+        
+        {% if hiddenInput %}
+        {{ govukInput(hiddenInput) }}
+        {% endif %}
 
         {% if inputBusinessName %}
           {{ govukInput(inputBusinessName) }}
         {% endif %}
+
+        {% if genderRadio %}
+        {{ govukRadios(genderRadio) }}
+        {% endif %}
+
 
         <h1 class="govuk-heading-m">Contact details</h1><br/>
         {{ govukInput(inputEmail) }}

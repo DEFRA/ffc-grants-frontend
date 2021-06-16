@@ -1,39 +1,45 @@
 const { crumbToken } = require('./test-helper')
-
-describe('Farmer details page', () => {
-  const varList = {
-    farmingType: 'some fake crop',
-    legalStatus: 'fale status',
-    inEngland: 'Yes',
-    projectStarted: 'No',
-    landOwnership: 'Yes',
-    projectItemsList: {
-      projectEquipment: ['Boom', 'Trickle']
-    },
-    projectCost: '12345678',
-    remainingCost: 14082.00,
-    payRemainingCosts: 'Yes',
-    planningPermission: 'Will not have by 31 December 2021',
-    abstractionLicence: 'Not needed',
-    sSSI: 'Yes',
-    businessDetails: {
-      projectName: 'Project Name',
-      businessName: 'Business Name',
-      applying: 'Farmer',
-      farmerDetails: {
-        firstName: 'First Name',
-        lastName: 'Last Name'
-      }
+const varListTemplate = {
+  farmingType: 'some fake crop',
+  legalStatus: 'fale status',
+  inEngland: 'Yes',
+  projectStarted: 'No',
+  landOwnership: 'Yes',
+  projectItemsList: {
+    projectEquipment: ['Boom', 'Trickle']
+  },
+  projectCost: '12345678',
+  remainingCost: 14082.00,
+  payRemainingCosts: 'Yes',
+  planningPermission: 'Will not have by 31 December 2021',
+  abstractionLicence: 'Not needed',
+  sSSI: 'Yes',
+  businessDetails: {
+    projectName: 'Project Name',
+    businessName: 'Business Name',
+    applying: 'Farmer',
+    farmerDetails: {
+      firstName: 'First Name',
+      lastName: 'Last Name'
     }
   }
+}
 
-  jest.mock('../../../../app/helpers/session', () => ({
-    setYarValue: (request, key, value) => null,
-    getYarValue: (request, key) => {
-      if (Object.keys(varList).includes(key)) return varList[key]
-      else return 'Error'
-    }
-  }))
+let varList
+const mockSession = {
+  setYarValue: (request, key, value) => null,
+  getYarValue: (request, key) => {
+    if (Object.keys(varList).includes(key)) return varList[key]
+    else return 'Error'
+  }
+}
+
+jest.mock('../../../../app/helpers/session', () => mockSession)
+
+describe('Farmer details page', () => {
+  beforeEach(() => {
+    varList = { ...varListTemplate }
+  })
 
   afterEach(() => {
     jest.resetAllMocks()
@@ -163,13 +169,14 @@ describe('Farmer details page', () => {
     expect(postResponse.payload).toContain('Enter a postcode, like AA1 1AA')
   })
 
-  it('should store user response and redirects to farmer details page, landline is optional', async () => {
+  it('should store user response and redirects to check details page, landline is optional', async () => {
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/farmer-details`,
       payload: {
         firstName: 'First Name',
         lastName: 'Last Name',
+        gender: 'Male',
         email: 'my@name.com',
         mobile: '07700 900 982',
         address1: 'Address 1',
@@ -187,13 +194,40 @@ describe('Farmer details page', () => {
     expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/check-details`)
   })
 
-  it('should store user response and redirects to confirm page', async () => {
+  it('should store user response incase Agent is applying redirects to check details page, landline is optional', async () => {
+    varList.applying = 'Agent'
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/farmer-details`,
       payload: {
         firstName: 'First Name',
         lastName: 'Last Name',
+        email: 'my@name.com',
+        gender: ' ',
+        mobile: '07700 900 982',
+        address1: 'Address 1',
+        address2: 'Address 2',
+        town: 'MyTown',
+        county: 'Devon',
+        postcode: 'AA1 1AA',
+        crumb: crumbToken
+      },
+      headers: { cookie: 'crumb=' + crumbToken }
+    }
+
+    const postResponse = await global.__SERVER__.inject(postOptions)
+    expect(postResponse.statusCode).toBe(302)
+    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/check-details`)
+  })
+
+  it('should store user response and redirects to details page', async () => {
+    const postOptions = {
+      method: 'POST',
+      url: `${global.__URLPREFIX__}/farmer-details`,
+      payload: {
+        firstName: 'First Name',
+        lastName: 'Last Name',
+        gender: 'Male',
         email: 'my@name.com',
         landline: '+44 0808 157 0192',
         mobile: '07700 900 982',

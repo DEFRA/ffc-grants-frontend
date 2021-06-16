@@ -1,23 +1,32 @@
 const { crumbToken } = require('./test-helper')
+const varListTemplate = {
+  farmingType: 'some fake crop',
+  legalStatus: 'fale status',
+  'current-score': ''
+}
+
+let varList
+const mockSession = {
+  setYarValue: (request, key, value) => null,
+  getYarValue: (request, key) => {
+    if (Object.keys(varList).includes(key)) return varList[key]
+    else return 'Error'
+  }
+}
+
+jest.mock('../../../../app/helpers/session', () => mockSession)
 
 describe('Legal status page', () => {
-  const varList = {
-    farmingType: 'some fake crop',
-    legalStatus: 'fale status'
-  }
-  const legalStatus = varList.legalStatus
+  const legalStatus = varListTemplate.legalStatus
 
-  jest.mock('../../../../app/helpers/session', () => ({
-    setYarValue: (request, key, value) => null,
-    getYarValue: (request, key) => {
-      if (Object.keys(varList).includes(key)) return varList[key]
-      else return 'Error'
-    }
-  }))
+  beforeEach(() => {
+    varList = { ...varListTemplate }
+  })
 
   afterEach(() => {
-    jest.clearAllMocks()
+    jest.resetAllMocks()
   })
+
   it('should load page successfully', async () => {
     const options = {
       method: 'GET',
@@ -26,6 +35,19 @@ describe('Legal status page', () => {
 
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
+  })
+
+  it('should load redirect to project summary page if thers score', async () => {
+    varList['current-score'] = true
+
+    const options = {
+      method: 'GET',
+      url: `${global.__URLPREFIX__}/legal-status`
+    }
+
+    const response = await global.__SERVER__.inject(options)
+    expect(response.statusCode).toBe(302)
+    expect(response.headers.location).toBe(`${global.__URLPREFIX__}/project-summary`)
   })
 
   it('should returns error message in body if no option is selected', async () => {

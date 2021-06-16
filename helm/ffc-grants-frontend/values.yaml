@@ -85,3 +85,4 @@ ingress:
   class: nginx
   endpoint: ffc-grants-frontend
   server: example.com
+  path: /water

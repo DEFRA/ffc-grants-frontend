@@ -42,6 +42,7 @@ const errors = {
   'error.lastName.string.empty': 'Enter your last name',
   'error.lastName.any.required': 'Enter your last name',
   'error.lastName.string.pattern.base': 'Name must only include letters, hyphens and apostrophes',
+  'error.gender.any.required': 'Select an option',
   'error.email.string.empty': 'Enter your email address',
   'error.email.any.required': 'Enter your email address',
   'error.email.string.email': 'Enter an email address in the correct format, like name@example.com',

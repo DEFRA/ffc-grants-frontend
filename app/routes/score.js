@@ -4,13 +4,14 @@ const Wreck = require('@hapi/wreck')
 const questionBank = require('../config/question-bank')
 const pollingConfig = require('../config/polling')
 const gapiService = require('../services/gapi-service')
-const { setYarValue } = require('../helpers/session')
+const { setYarValue, getYarValue } = require('../helpers/session')
 const urlPrefix = require('../config/server').urlPrefix
 
 const viewTemplate = 'score'
 const currentPath = `${urlPrefix}/${viewTemplate}`
 const previousPath = `${urlPrefix}/collaboration`
 const nextPath = `${urlPrefix}/next-steps`
+const startPath = `${urlPrefix}/start`
 
 function createModel (data) {
   return {
@@ -59,6 +60,11 @@ module.exports = [{
     }
   },
   handler: async (request, h, err) => {
+    const refererURL = request?.headers?.referer?.split('/').pop()
+
+    if (!getYarValue(request, 'current-score') && refererURL !== 'collaboration') {
+      return h.redirect(startPath)
+    }
     try {
       const msgDataToSend = createMsg.getDesirabilityAnswers(request)
       // Always re-calculate our score before rendering this page
