@@ -26,6 +26,10 @@
         <h1 class="govuk-heading-m">Name</h1><br/>
         {{ govukInput(inputFirstName) }}
         {{ govukInput(inputLastName) }}
+        
+        {% if hiddenInput %}
+        {{ govukInput(hiddenInput) }}
+        {% endif %}
 
         {% if inputBusinessName %}
           {{ govukInput(inputBusinessName) }}

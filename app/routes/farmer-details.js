@@ -1,6 +1,6 @@
 const Joi = require('joi')
 const { setYarValue, getYarValue } = require('../helpers/session')
-const { setLabelData, fetchListObjectItems, findErrorList, formInputObject } = require('../helpers/helper-functions')
+const { setLabelData, fetchListObjectItems, getGender, findErrorList, formInputObject } = require('../helpers/helper-functions')
 const { NAME_REGEX, PHONE_REGEX, POSTCODE_REGEX, DELETE_POSTCODE_CHARS_REGEX } = require('../helpers/regex-validation')
 const { LIST_COUNTIES } = require('../helpers/all-counties')
 const urlPrefix = require('../config/server').urlPrefix
@@ -51,24 +51,7 @@ function createModel (errorMessageList, farmerDetails, backLink) {
 
     inputLastName: formInputObject('lastName', 'govuk-input--width-20', 'Last name', null, lastName, lastNameError),
 
-    ...((backLink === applyingPath)
-      ? {
-          genderRadio: {
-            idPrefix: 'gender',
-            name: 'gender',
-            fieldset: {
-              legend: {
-                text: 'Gender'
-              }
-            },
-            hint: {
-              text: 'We collect this equality data to improve our future schemes.'
-            },
-            items: setLabelData(gender, ['Female', 'Male', 'divider', 'Prefer not to say']),
-            ...(genderError ? { errorMessage: { text: genderError } } : {})
-          }
-        }
-      : {}),
+    ...(getGender(backLink, applyingPath, gender, genderError)),
 
     inputEmail: formInputObject('email', 'govuk-input--width-20', 'Email address', 'We will use this to send you a confirmation', email, emailError),
 
@@ -135,7 +118,7 @@ module.exports = [
         payload: Joi.object({
           firstName: Joi.string().regex(NAME_REGEX).required(),
           lastName: Joi.string().regex(NAME_REGEX).required(),
-          gender: Joi.string(),
+          gender: Joi.string().required(),
           email: Joi.string().email().required(),
           mobile: Joi.string().regex(PHONE_REGEX).required(),
           landline: Joi.string().regex(PHONE_REGEX).allow(''),
@@ -165,14 +148,9 @@ module.exports = [
 
           const { firstName, lastName, gender, email, mobile, landline, address1, address2, town, county, postcode } = request.payload
           const farmerDetails = { firstName, lastName, gender, email, mobile, landline, address1, address2, town, county, postcode }
-          console.log(gender, 'GGGGGG')
-          console.log(lastName, 'LLLLLLLLLL')
 
           const applying = getYarValue(request, 'applying')
           const backLink = applying === 'Agent' ? agentDetailsPath : applyingPath
-          // if (applying === 'Agent' && !gender) {
-
-          // }
 
           return h.view(viewTemplate, createModel(errorMessageList, farmerDetails, backLink)).takeover()
         }
