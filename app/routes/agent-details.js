@@ -56,11 +56,11 @@ function createModel (errorMessageList, agentDetails) {
 
     inputMobile: formInputObject('mobile', 'govuk-input--width-20', 'Mobile number', null, mobile, mobileError),
 
-    inputLandline: formInputObject('landline', 'govuk-input--width-20', 'Landline number (optional)', null, landline, landlineError),
+    inputLandline: formInputObject('landline', 'govuk-input--width-20', 'Landline number', null, landline, landlineError),
 
     inputAddress1: formInputObject('address1', 'govuk-input--width-20', 'Address 1', null, address1, address1Error),
 
-    inputAddress2: formInputObject('address2', 'govuk-input--width-20', 'Address 2', null, address2, null),
+    inputAddress2: formInputObject('address2', 'govuk-input--width-20', 'Address 2  (optional)', null, address2, null),
 
     inputTown: formInputObject('town', 'govuk-input--width-10', 'Town', null, town, townError),
 
