@@ -132,6 +132,7 @@
             }
           },
           {
+          classes: 'govuk-summary-list__row--no-border',
             key: {
               text: "Business name"
             },
@@ -160,29 +161,7 @@
       {% endif %}
 
       {% if farmerDetails %}
-      {{ govukSummaryList({
-        rows: [
-          {
-            key: {
-              html: "<h1 class='govuk-heading-m'>Farmer's details</h1>"
-            },
-            value: {
-              text: ""
-            },
-            actions: {
-              items: [
-                {
-                  href: farmerDetailsLink,
-                  text: "Change",
-                  visuallyHiddenText: "farmer-details"
-                }
-              ]
-            }
-          }
-        ]
-      }) }}
-      {{ govukSummaryList({
-        rows: [
+      {% set farmerfarmerSummaryItems = [
           {
             key: {
               text: "Name"
@@ -207,8 +186,41 @@
               html: farmerAddressDetails
             }
           }
+        ] %}
+
+      {% if farmerGender %}
+      {% set farmerSummaryItems = (farmerSummaryItems.splice(1, 0,{
+            key: {
+              text: "Gender"
+            },
+            value: {
+              text:  farmerGender
+            }
+          }), farmerSummaryItems)%}
+      {% endif %}
+
+      {{ govukSummaryList({
+        rows: [
+          {
+            key: {
+              html: "<h1 class='govuk-heading-m'>Farmer's details</h1>"
+            },
+            value: {
+              text: ""
+            },
+            actions: {
+              items: [
+                {
+                  href: farmerDetailsLink,
+                  text: "Change",
+                  visuallyHiddenText: "farmer-details"
+                }
+              ]
+            }
+          }
         ]
       }) }}
+      {{ govukSummaryList({ rows: farmerSummaryItems }) }}
       {% endif %}
 
     </div>
