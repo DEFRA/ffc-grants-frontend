@@ -121,6 +121,8 @@ module.exports = [
           return h.view(viewTemplate, createModel(irrigatedLandCurrent, irrigatedLandTarget, errorMessageList, hasScore))
         }
 
+        setYarValue(request, 'currentlyIrrigating', true) // delete this & set this in [FFTF-1036] => NEW PAGE: /irrigation-status
+
         setYarValue(request, 'irrigatedLandCurrent', irrigatedLandCurrent)
         setYarValue(request, 'irrigatedLandTarget', irrigatedLandTarget)
         return results ? h.redirect(scorePath) : h.redirect(nextPath)

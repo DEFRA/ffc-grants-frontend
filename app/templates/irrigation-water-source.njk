@@ -2,11 +2,14 @@
 
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "./components/macro.njk" import crumbToken, sideBar,multiSideBar, conditionalButtons%}
+
 {% block pageTitle %}
   {{siteTitle}} - Irrigation water
 {% endblock %}
+
 {% block beforeContent %}
   {{ govukBackLink({
     text: "Back",
@@ -23,12 +26,22 @@
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <form method="POST" action="{{ formActionPage }}" autocomplete="off" novalidate="novalidate">
-        {{ crumbToken(crumb)}}
-        {{ govukCheckboxes(waterSourceCurrent) }}
-        {{ govukCheckboxes(waterSourcePlanned) }}
-        {{ conditionalButtons(hasScore) }}
-      </form>
+      <h1 class="govuk-heading-l">{{pageTitle}}</h1>
+
+        <form method="POST" action="{{ formActionPage }}" autocomplete="off" novalidate="novalidate">
+          {{ crumbToken(crumb)}}
+
+          {% if currentlyIrrigating %}
+              {{ govukCheckboxes(waterSourceCurrent) }}
+          {% else %}
+              {{ govukInput(mockCheckbox) }}
+          {% endif %}
+
+          {{ govukCheckboxes(waterSourcePlanned) }}
+          {{ conditionalButtons(hasScore) }}
+        </form>
+
+
     </div>
 
     {{ 
