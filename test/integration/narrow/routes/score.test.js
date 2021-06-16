@@ -25,7 +25,10 @@ describe('Score page', () => {
     jest.mock('@hapi/wreck')
     const options = {
       method: 'GET',
-      url: `${global.__URLPREFIX__}/score`
+      url: `${global.__URLPREFIX__}/score`,
+      headers: {
+        referer: 'localhost/collaboration'
+      }
     }
     const wreckResponse = {
       payload: null,
@@ -48,7 +51,10 @@ describe('Score page', () => {
     jest.mock('@hapi/wreck')
     const options = {
       method: 'GET',
-      url: `${global.__URLPREFIX__}/score`
+      url: `${global.__URLPREFIX__}/score`,
+      headers: {
+        referer: 'localhost/collaboration'
+      }
     }
     const wreckResponse = {
       payload: null,
@@ -71,7 +77,10 @@ describe('Score page', () => {
     jest.mock('@hapi/wreck')
     const options = {
       method: 'GET',
-      url: `${global.__URLPREFIX__}/score`
+      url: `${global.__URLPREFIX__}/score`,
+      headers: {
+        referer: 'localhost/collaboration'
+      }
     }
     const wreckResponse = {
       payload: { desirability: null },
@@ -93,7 +102,10 @@ describe('Score page', () => {
     jest.mock('@hapi/wreck')
     const options = {
       method: 'GET',
-      url: `${global.__URLPREFIX__}/score`
+      url: `${global.__URLPREFIX__}/score`,
+      headers: {
+        referer: 'localhost/collaboration'
+      }
     }
     Wreck.get = jest.fn(async function (url, type) {
       throw new Error('can\'t reach')
@@ -109,7 +121,10 @@ describe('Score page', () => {
     jest.mock('@hapi/wreck')
     const options = {
       method: 'GET',
-      url: `${global.__URLPREFIX__}/score`
+      url: `${global.__URLPREFIX__}/score`,
+      headers: {
+        referer: 'localhost/collaboration'
+      }
     }
     Wreck.get = jest.fn(async function (url, type) {
       return null
@@ -125,7 +140,10 @@ describe('Score page', () => {
     jest.mock('@hapi/wreck')
     const options = {
       method: 'GET',
-      url: `${global.__URLPREFIX__}/score`
+      url: `${global.__URLPREFIX__}/score`,
+      headers: {
+        referer: 'localhost/collaboration'
+      }
     }
     const wreckResponse = {
       payload: scoreData,
@@ -149,7 +167,10 @@ describe('Score page', () => {
     jest.mock('@hapi/wreck')
     const options = {
       method: 'GET',
-      url: `${global.__URLPREFIX__}/score`
+      url: `${global.__URLPREFIX__}/score`,
+      headers: {
+        referer: 'localhost/collaboration'
+      }
     }
     scoreData.desirability.overallRating.band = 'Average'
     const wreckResponse = {
@@ -174,7 +195,10 @@ describe('Score page', () => {
     jest.mock('@hapi/wreck')
     const options = {
       method: 'GET',
-      url: `${global.__URLPREFIX__}/score`
+      url: `${global.__URLPREFIX__}/score`,
+      headers: {
+        referer: 'localhost/collaboration'
+      }
     }
     scoreData.desirability.overallRating.band = 'Weak'
     const wreckResponse = {
