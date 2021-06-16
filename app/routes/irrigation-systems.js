@@ -15,7 +15,7 @@ function createModel (currentlyIrrigating, errorMessage, errorSummary, currentDa
     formActionPage: currentPath,
     hasScore,
     currentlyIrrigating,
-    pageTitle: currentlyIrrigating ? 'Will your irrigation system change?' : 'What systems will be used to irrigte?',
+    pageTitle: currentlyIrrigating ? 'Will your irrigation system change?' : 'What systems will be used to irrigate?',
 
     mockCheckbox: {
       id: 'irrigationCurrent',
@@ -28,15 +28,8 @@ function createModel (currentlyIrrigating, errorMessage, errorSummary, currentDa
     irrigationCurrent: {
       idPrefix: 'irrigationCurrent',
       name: 'irrigationCurrent',
-      fieldset: {
-        legend: {
-          text: 'What systems are currently used to irrigate?',
-          isPageHeading: true,
-          classes: 'govuk-fieldset__legend--l'
-        }
-      },
       hint: {
-        text: 'Select one or two options'
+        html: '<span class="govuk-label">What systems are currently used to irrigate?</span>Select one or two options'
       },
       items: setLabelData(currentData,
         ['Boom', 'Capillary bed', 'Ebb and flow', 'Mist', 'Rain gun', 'Sprinklers', 'Trickle', 'Not currently irrigating']),
@@ -45,15 +38,11 @@ function createModel (currentlyIrrigating, errorMessage, errorSummary, currentDa
     irrigationPlanned: {
       idPrefix: 'irrigationPlanned',
       name: 'irrigationPlanned',
-      fieldset: {
-        legend: {
-          text: 'What systems will be used to irrigate?',
-          isPageHeading: true,
-          classes: 'govuk-fieldset__legend--l'
-        }
-      },
       hint: {
-        text: 'Select one or two options'
+        html: `
+          ${currentlyIrrigating ? '<span class="govuk-label">What systems will be used to irrigate?</span>' : ''}
+          Select one or two options
+        `
       },
       items: setLabelData(plannedData, ['Boom', 'Capillary bed', 'Ebb and flow', 'Mist', 'Rain gun', 'Sprinklers', 'Trickle']),
       ...(errorMessage && (!plannedData || plannedData.length > 2) ? { errorMessage: { text: errorMessage } } : {})

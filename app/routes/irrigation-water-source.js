@@ -28,15 +28,8 @@ function createModel (currentlyIrrigating, errorMessage, errorSummary, currentDa
     waterSourceCurrent: {
       idPrefix: 'waterSourceCurrent',
       name: 'waterSourceCurrent',
-      fieldset: {
-        legend: {
-          text: 'Where does your current irrigation water come from?',
-          isPageHeading: true,
-          classes: 'govuk-fieldset__legend--l'
-        }
-      },
       hint: {
-        text: 'Select one or two options'
+        html: '<span class="govuk-label">Where does your current irrigation water come from?</span>Select one or two options'
       },
       items: setLabelData(currentData, ['Peak-flow surface water', 'Bore hole/aquifer', 'Rain water harvesting', 'Summer water surface abstraction', 'Mains', 'Not currently irrigating']),
       ...(errorMessage && (!currentData || currentData.length > 2) ? { errorMessage: { text: errorMessage } } : {})
@@ -44,15 +37,11 @@ function createModel (currentlyIrrigating, errorMessage, errorSummary, currentDa
     waterSourcePlanned: {
       idPrefix: 'waterSourcePlanned',
       name: 'waterSourcePlanned',
-      fieldset: {
-        legend: {
-          text: 'Where will the irrigation water come from?',
-          isPageHeading: true,
-          classes: 'govuk-fieldset__legend--l'
-        }
-      },
       hint: {
-        text: 'Select one or two options'
+        html: `
+          ${currentlyIrrigating ? '<span class="govuk-label">Where will the irrigation water come from?</span>' : ''}
+          Select one or two options
+        `
       },
       items: setLabelData(plannedData, ['Peak-flow surface water', 'Bore hole/aquifer', 'Rain water harvesting', 'Summer water surface abstraction', 'Mains']),
       ...(errorMessage && (!plannedData || plannedData.length > 2) ? { errorMessage: { text: errorMessage } } : {})
