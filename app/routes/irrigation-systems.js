@@ -9,11 +9,21 @@ const previousPath = `${urlPrefix}/irrigation-water-source`
 const nextPath = `${urlPrefix}/productivity`
 const scorePath = `${urlPrefix}/score`
 
-function createModel (errorMessage, errorSummary, currentData, plannedData, hasScore) {
+function createModel (currentlyIrrigating, errorMessage, errorSummary, currentData, plannedData, hasScore) {
   return {
     backLink: previousPath,
     formActionPage: currentPath,
-    hasScore: hasScore,
+    hasScore,
+    currentlyIrrigating,
+    pageTitle: currentlyIrrigating ? 'Will your irrigation system change?' : 'What systems will be used to irrigte?',
+
+    mockCheckbox: {
+      id: 'irrigationCurrent',
+      name: 'irrigationCurrent',
+      value: ' ',
+      type: 'hidden'
+    },
+
     ...errorSummary ? { errorList: errorSummary } : {},
     irrigationCurrent: {
       idPrefix: 'irrigationCurrent',
@@ -58,7 +68,9 @@ module.exports = [
     handler: (request, h) => {
       const currentData = getYarValue(request, 'irrigationCurrent') || null
       const plannedData = getYarValue(request, 'irrigationPlanned') || null
-      return h.view(viewTemplate, createModel(null, null, currentData, plannedData, getYarValue(request, 'current-score')))
+
+      const currentlyIrrigating = getYarValue(request, 'currentlyIrrigating') || null
+      return h.view(viewTemplate, createModel(currentlyIrrigating, null, null, currentData, plannedData, getYarValue(request, 'current-score')))
     }
   },
   {
@@ -78,7 +90,9 @@ module.exports = [
 
           irrigationCurrent = irrigationCurrent ? [irrigationCurrent].flat() : irrigationCurrent
           irrigationPlanned = irrigationPlanned ? [irrigationPlanned].flat() : irrigationPlanned
-          return h.view(viewTemplate, createModel(errorMessage, null, irrigationCurrent, irrigationPlanned, getYarValue(request, 'current-score'))).takeover()
+
+          const currentlyIrrigating = getYarValue(request, 'currentlyIrrigating') || null
+          return h.view(viewTemplate, createModel(currentlyIrrigating, errorMessage, null, irrigationCurrent, irrigationPlanned, getYarValue(request, 'current-score'))).takeover()
         }
       },
       handler: (request, h) => {
@@ -86,6 +100,7 @@ module.exports = [
         const errorList = []
         irrigationCurrent = [irrigationCurrent].flat()
         irrigationPlanned = [irrigationPlanned].flat()
+        const currentlyIrrigating = getYarValue(request, 'currentlyIrrigating') || null
 
         if (irrigationCurrent.length > 2 || irrigationPlanned.length > 2) {
           if (irrigationCurrent.length > 2) {
@@ -94,7 +109,10 @@ module.exports = [
           if (irrigationPlanned.length > 2) {
             errorList.push({ text: 'Select the systems that will be used to irrigate', href: '#irrigationPlanned' })
           }
-          return h.view(viewTemplate, createModel('Select one or two options', errorList, irrigationCurrent, irrigationPlanned, getYarValue(request, 'current-score')))
+          return h.view(
+            viewTemplate,
+            createModel(currentlyIrrigating, 'Select one or two options', errorList, irrigationCurrent, irrigationPlanned, getYarValue(request, 'current-score'))
+          )
         }
 
         setYarValue(request, 'irrigationCurrent', irrigationCurrent)
