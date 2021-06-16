@@ -35,11 +35,6 @@
 {% endblock %}
 
 {% block bodyStart %}
- {% for item in cookiesPolicy %}
- {{item}}
- {% for k,v in item %}
-      {{k}}: {{v}}sa
-   {% endfor %}{% endfor %}
   {% if not cookiesPolicy.confirmed %}
     {% include "cookies/cookie-banner.njk" %}
   {% endif %}
