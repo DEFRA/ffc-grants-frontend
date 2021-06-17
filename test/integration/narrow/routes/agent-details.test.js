@@ -156,7 +156,7 @@ describe('Agent details page', () => {
         lastName: 'Last Name',
         businessName: 'some business',
         email: 'my@name.com',
-        landline: '+44 0808 157 0192',
+        landline: '44 0808 157 0192',
         mobile: '07700 900 982',
         address1: 'Address 1',
         address2: 'Address 2',
