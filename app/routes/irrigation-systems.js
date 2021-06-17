@@ -20,7 +20,7 @@ function createModel (currentlyIrrigating, errorMessage, errorSummary, currentDa
     mockCheckbox: {
       id: 'irrigationCurrent',
       name: 'irrigationCurrent',
-      value: ' ',
+      value: 'Not currently irrigating',
       type: 'hidden'
     },
 
