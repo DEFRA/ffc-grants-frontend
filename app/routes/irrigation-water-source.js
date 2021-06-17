@@ -34,7 +34,7 @@ function createModel (currentlyIrrigating, errorMessage, errorSummary, currentDa
       hint: {
         html: '<span class="govuk-label">Where does your current irrigation water come from?</span>Select one or two options'
       },
-      items: setLabelData(currentData, ['Peak-flow surface water', 'Bore hole/aquifer', 'Rain water harvesting', 'Summer water surface abstraction', 'Mains', 'Not currently irrigating']),
+      items: setLabelData(currentData, ['Peak-flow surface water', 'Bore hole/aquifer', 'Rain water harvesting', 'Summer water surface abstraction', 'Mains']),
       ...(errorMessage && (!currentData || currentData.length > 2) ? { errorMessage: { text: errorMessage } } : {})
     },
     waterSourcePlanned: {

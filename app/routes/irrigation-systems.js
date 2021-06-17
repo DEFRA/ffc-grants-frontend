@@ -35,7 +35,7 @@ function createModel (currentlyIrrigating, errorMessage, errorSummary, currentDa
         html: '<span class="govuk-label">What systems are currently used to irrigate?</span>Select one or two options'
       },
       items: setLabelData(currentData,
-        ['Boom', 'Capillary bed', 'Ebb and flow', 'Mist', 'Rain gun', 'Sprinklers', 'Trickle', 'Not currently irrigating']),
+        ['Boom', 'Capillary bed', 'Ebb and flow', 'Mist', 'Rain gun', 'Sprinklers', 'Trickle']),
       ...(errorMessage && (!currentData || currentData.length > 2) ? { errorMessage: { text: errorMessage } } : {})
     },
     irrigationPlanned: {
