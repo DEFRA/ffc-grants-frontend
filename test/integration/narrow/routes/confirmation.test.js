@@ -42,41 +42,7 @@ describe('Confirmation page', () => {
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(500)
   })
-  it('should load page successfully', async () => {
-    const senders = require('../../../../app/messaging/senders')
-    senders.sendContactDetails = jest.fn(async function (model, yarId) {
-      return {}
-    })
 
-    const postOptions = {
-      method: 'POST',
-      url: `${global.__URLPREFIX__}/confirm`,
-      payload: { crumb: crumbToken },
-      headers: {
-        cookie: 'crumb=' + crumbToken
-      }
-    }
-
-    const postResponse = await global.__SERVER__.inject(postOptions)
-    expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.request.yar.get('consentMain')).toBe(true)
-
-    const sessionCookie = postResponse.headers['set-cookie']
-      .find(line => line.includes('session='))
-      .split(' ')
-      .find(cookie => cookie.startsWith('session='))
-
-    const options = {
-      method: 'GET',
-      url: `${global.__URLPREFIX__}/confirmation`,
-      headers: {
-        cookie: 'crumb=' + crumbToken + '; ' + sessionCookie
-      }
-    }
-
-    const response = await global.__SERVER__.inject(options)
-    expect(response.statusCode).toBe(200)
-  })
   it('should redirect page if no consent  is given', async () => {
     const options = {
       method: 'GET',
