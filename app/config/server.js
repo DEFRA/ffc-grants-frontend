@@ -1,13 +1,14 @@
 const Joi = require('joi')
-
+const urlPrefix = '/water'
+const startPageUrl = '/start'
 // Define config schema
 const schema = Joi.object({
-  urlPrefix: Joi.string().default('/water'),
+  urlPrefix: Joi.string().default(urlPrefix),
   cookiePassword: Joi.string().default('dummycookiepassworddummycookiepassword'),
   googleTagManagerKey: Joi.string().default('GTM-WJ5C78H'),
   googleTagManagerServerKey: Joi.string().default('UA-179628664-4'),
   protectiveMonitoringUrl: Joi.string().allow(''),
-  startPageUrl: Joi.string().default('/start'),
+  startPageUrl: Joi.string().default(`${urlPrefix}${startPageUrl}`),
   cookieOptions: Joi.object({
     ttl: Joi.number().default(1000 * 60 * 60 * 24 * 365),
     encoding: Joi.string().valid('base64json').default('base64json'),
@@ -22,9 +23,7 @@ const schema = Joi.object({
   }
 })
 // start page with prefix
-process.env.START_PAGE_URL = process.env.START_PAGE_URL && process.env.START_PAGE_URL.toLowerCase() === '/start' ? `${process.env.URL_PREFIX ?? ''}${process.env.START_PAGE_URL}` : process.env.START_PAGE_URL
-console.log(process.env.URL_PREFIX, 'URL_PREFIX')
-console.log(process.env.START_PAGE_URL, 'START_PAGE_URL')
+
 // Build config
 const config = {
   urlPrefix: process.env.URL_PREFIX,
