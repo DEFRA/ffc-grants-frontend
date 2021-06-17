@@ -1,7 +1,7 @@
 const Joi = require('joi')
 const { setYarValue, getYarValue } = require('../helpers/session')
 const { setLabelData, fetchListObjectItems, findErrorList, formInputObject } = require('../helpers/helper-functions')
-const { NAME_REGEX, PHONE_REGEX, POSTCODE_REGEX, DELETE_POSTCODE_CHARS_REGEX } = require('../helpers/regex-validation')
+const { NAME_REGEX, BUSINESSNAME_REGEX, PHONE_REGEX, POSTCODE_REGEX, DELETE_POSTCODE_CHARS_REGEX } = require('../helpers/regex-validation')
 const { LIST_COUNTIES } = require('../helpers/all-counties')
 const urlPrefix = require('../config/server').urlPrefix
 
@@ -33,12 +33,13 @@ function createModel (errorMessageList, agentDetails) {
     mobileError,
     landlineError,
     address1Error,
+    address2Error,
     townError,
     countyError,
     postcodeError
   ] = fetchListObjectItems(
     errorMessageList,
-    ['firstNameError', 'lastNameError', 'businessNameError', 'emailError', 'mobileError', 'landlineError', 'address1Error', 'townError', 'countyError', 'postcodeError']
+    ['firstNameError', 'lastNameError', 'businessNameError', 'emailError', 'mobileError', 'landlineError', 'address1Error' , 'address2Error' , 'townError', 'countyError', 'postcodeError']
   )
 
   return {
@@ -60,7 +61,7 @@ function createModel (errorMessageList, agentDetails) {
 
     inputAddress1: formInputObject('address1', 'govuk-input--width-20', 'Address 1', null, address1, address1Error),
 
-    inputAddress2: formInputObject('address2', 'govuk-input--width-20', 'Address 2  (optional)', null, address2, null),
+    inputAddress2: formInputObject('address2', 'govuk-input--width-20', 'Address 2  (optional)', null, address2, address2Error),
 
     inputTown: formInputObject('town', 'govuk-input--width-10', 'Town', null, town, townError),
 
@@ -114,12 +115,12 @@ module.exports = [
         payload: Joi.object({
           firstName: Joi.string().regex(NAME_REGEX).required(),
           lastName: Joi.string().regex(NAME_REGEX).required(),
-          businessName: Joi.string().max(100).required(),
+          businessName: Joi.string().regex(BUSINESSNAME_REGEX).max(100).required(),
           email: Joi.string().email().required(),
-          mobile: Joi.string().regex(PHONE_REGEX).required(),
-          landline: Joi.string().regex(PHONE_REGEX).allow(''),
+          mobile: Joi.string().regex(PHONE_REGEX).min(10).required(),
+          landline: Joi.string().regex(PHONE_REGEX).min(10).required(),
           address1: Joi.string().required(),
-          address2: Joi.string().allow(''),
+          address2: Joi.string().required(),
           town: Joi.string().required(),
           county: Joi.string().required(),
           postcode: Joi.string().replace(DELETE_POSTCODE_CHARS_REGEX, '').regex(POSTCODE_REGEX).trim().required()
@@ -133,13 +134,14 @@ module.exports = [
             mobileError,
             landlineError,
             address1Error,
+            address2Error,
             townError,
             countyError,
             postcodeError
-          ] = findErrorList(err, ['firstName', 'lastName', 'businessName', 'email', 'mobile', 'landline', 'address1', 'town', 'county', 'postcode'])
+          ] = findErrorList(err, ['firstName', 'lastName', 'businessName', 'email', 'mobile', 'landline', 'address1', 'address2' ,'town', 'county', 'postcode'])
 
           const errorMessageList = {
-            firstNameError, lastNameError, businessNameError, emailError, mobileError, landlineError, address1Error, townError, countyError, postcodeError
+            firstNameError, lastNameError, businessNameError, emailError, mobileError, landlineError, address1Error, address2Error, townError, countyError, postcodeError
           }
 
           const { firstName, lastName, businessName, email, mobile, landline, address1, address2, town, county, postcode } = request.payload
