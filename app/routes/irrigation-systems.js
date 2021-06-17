@@ -9,41 +9,46 @@ const previousPath = `${urlPrefix}/irrigation-water-source`
 const nextPath = `${urlPrefix}/productivity`
 const scorePath = `${urlPrefix}/score`
 
-function createModel (errorMessage, errorSummary, currentData, plannedData, hasScore) {
+function createModel (currentlyIrrigating, errorMessage, errorSummary, currentData, plannedData, hasScore) {
   return {
     backLink: previousPath,
     formActionPage: currentPath,
-    hasScore: hasScore,
+    hasScore,
+    currentlyIrrigating: (currentlyIrrigating === 'Yes' || currentlyIrrigating === 'yes'),
+    pageTitle: (currentlyIrrigating === 'Yes' || currentlyIrrigating === 'yes'
+      ? 'Will your irrigation system change?'
+      : 'What systems will be used to irrigate?'
+    ),
+
+    mockCheckbox: {
+      id: 'irrigationCurrent',
+      name: 'irrigationCurrent',
+      value: 'Not currently irrigating',
+      type: 'hidden'
+    },
+
     ...errorSummary ? { errorList: errorSummary } : {},
     irrigationCurrent: {
       idPrefix: 'irrigationCurrent',
       name: 'irrigationCurrent',
-      fieldset: {
-        legend: {
-          text: 'What systems are currently used to irrigate?',
-          isPageHeading: true,
-          classes: 'govuk-fieldset__legend--l'
-        }
-      },
       hint: {
-        text: 'Select one or two options'
+        html: '<span class="govuk-label">What systems are currently used to irrigate?</span>Select one or two options'
       },
       items: setLabelData(currentData,
-        ['Boom', 'Capillary bed', 'Ebb and flow', 'Mist', 'Rain gun', 'Sprinklers', 'Trickle', 'Not currently irrigating']),
+        ['Boom', 'Capillary bed', 'Ebb and flow', 'Mist', 'Rain gun', 'Sprinklers', 'Trickle']),
       ...(errorMessage && (!currentData || currentData.length > 2) ? { errorMessage: { text: errorMessage } } : {})
     },
     irrigationPlanned: {
       idPrefix: 'irrigationPlanned',
       name: 'irrigationPlanned',
-      fieldset: {
-        legend: {
-          text: 'What systems will be used to irrigate?',
-          isPageHeading: true,
-          classes: 'govuk-fieldset__legend--l'
-        }
-      },
       hint: {
-        text: 'Select one or two options'
+        html: `
+        ${(currentlyIrrigating === 'Yes' || currentlyIrrigating === 'yes')
+          ? '<span class="govuk-label">What systems will be used to irrigate?</span>'
+          : ''
+        }
+        Select one or two options
+      `
       },
       items: setLabelData(plannedData, ['Boom', 'Capillary bed', 'Ebb and flow', 'Mist', 'Rain gun', 'Sprinklers', 'Trickle']),
       ...(errorMessage && (!plannedData || plannedData.length > 2) ? { errorMessage: { text: errorMessage } } : {})
@@ -58,7 +63,9 @@ module.exports = [
     handler: (request, h) => {
       const currentData = getYarValue(request, 'irrigationCurrent') || null
       const plannedData = getYarValue(request, 'irrigationPlanned') || null
-      return h.view(viewTemplate, createModel(null, null, currentData, plannedData, getYarValue(request, 'current-score')))
+
+      const currentlyIrrigating = getYarValue(request, 'currentlyIrrigating') || null
+      return h.view(viewTemplate, createModel(currentlyIrrigating, null, null, currentData, plannedData, getYarValue(request, 'current-score')))
     }
   },
   {
@@ -78,7 +85,9 @@ module.exports = [
 
           irrigationCurrent = irrigationCurrent ? [irrigationCurrent].flat() : irrigationCurrent
           irrigationPlanned = irrigationPlanned ? [irrigationPlanned].flat() : irrigationPlanned
-          return h.view(viewTemplate, createModel(errorMessage, null, irrigationCurrent, irrigationPlanned, getYarValue(request, 'current-score'))).takeover()
+
+          const currentlyIrrigating = getYarValue(request, 'currentlyIrrigating') || null
+          return h.view(viewTemplate, createModel(currentlyIrrigating, errorMessage, null, irrigationCurrent, irrigationPlanned, getYarValue(request, 'current-score'))).takeover()
         }
       },
       handler: (request, h) => {
@@ -86,6 +95,7 @@ module.exports = [
         const errorList = []
         irrigationCurrent = [irrigationCurrent].flat()
         irrigationPlanned = [irrigationPlanned].flat()
+        const currentlyIrrigating = getYarValue(request, 'currentlyIrrigating') || null
 
         if (irrigationCurrent.length > 2 || irrigationPlanned.length > 2) {
           if (irrigationCurrent.length > 2) {
@@ -94,7 +104,10 @@ module.exports = [
           if (irrigationPlanned.length > 2) {
             errorList.push({ text: 'Select the systems that will be used to irrigate', href: '#irrigationPlanned' })
           }
-          return h.view(viewTemplate, createModel('Select one or two options', errorList, irrigationCurrent, irrigationPlanned, getYarValue(request, 'current-score')))
+          return h.view(
+            viewTemplate,
+            createModel(currentlyIrrigating, 'Select one or two options', errorList, irrigationCurrent, irrigationPlanned, getYarValue(request, 'current-score'))
+          )
         }
 
         setYarValue(request, 'irrigationCurrent', irrigationCurrent)
