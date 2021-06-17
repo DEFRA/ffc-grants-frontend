@@ -3,7 +3,7 @@
 */
 const questionBank = require('../config/question-bank')
 const { getYarValue } = require('../helpers/session')
-const startPageUrl = require('../config/server').startPageUrl
+const { urlPrefix, startPageUrl } = require('../config/server')
 
 module.exports = {
   plugin: {
