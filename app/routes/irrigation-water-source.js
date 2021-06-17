@@ -14,8 +14,11 @@ function createModel (currentlyIrrigating, errorMessage, errorSummary, currentDa
     backLink: previousPath,
     formActionPage: currentPath,
     hasScore,
-    currentlyIrrigating,
-    pageTitle: currentlyIrrigating ? 'Will your water source change?' : 'Where will the irrigation water come from?',
+    currentlyIrrigating: (currentlyIrrigating === 'Yes' || currentlyIrrigating === 'yes'),
+    pageTitle: (currentlyIrrigating === 'Yes' || currentlyIrrigating === 'yes'
+      ? 'Will your water source change?'
+      : 'Where will the irrigation water come from?'
+    ),
     ...errorSummary ? { errorList: errorSummary } : {},
 
     mockCheckbox: {
@@ -39,7 +42,10 @@ function createModel (currentlyIrrigating, errorMessage, errorSummary, currentDa
       name: 'waterSourcePlanned',
       hint: {
         html: `
-          ${currentlyIrrigating ? '<span class="govuk-label">Where will the irrigation water come from?</span>' : ''}
+          ${(currentlyIrrigating === 'Yes' || currentlyIrrigating === 'yes')
+            ? '<span class="govuk-label">Where will the irrigation water come from?</span>'
+            : ''
+          }
           Select one or two options
         `
       },

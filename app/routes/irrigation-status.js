@@ -35,15 +35,8 @@ module.exports = [
     method: 'GET',
     path: currentPath,
     handler: (request, h) => {
-      const currentlyIrrigating = getYarValue(request, 'currentlyIrrigating')
-
-      let data = null
-      if (currentlyIrrigating === true) {
-        data = 'Yes'
-      } else if (currentlyIrrigating === false) {
-        data = 'No'
-      }
-      return h.view(viewTemplate, createModel(null, data))
+      const currentlyIrrigating = getYarValue(request, 'currentlyIrrigating') || null
+      return h.view(viewTemplate, createModel(null, currentlyIrrigating))
     }
   },
   {
@@ -61,10 +54,9 @@ module.exports = [
         }
       },
       handler: async (request, h) => {
-        let { currentlyIrrigating } = request.payload
-        currentlyIrrigating = (currentlyIrrigating === 'Yes' || currentlyIrrigating === 'yes')
-
+        const { currentlyIrrigating } = request.payload
         setYarValue(request, 'currentlyIrrigating', currentlyIrrigating)
+
         await gapiService.sendJourneyTime(request, gapiService.metrics.ELIGIBILITY)
         return h.redirect(nextPath)
       }

@@ -14,8 +14,11 @@ function createModel (currentlyIrrigating, errorMessage, errorSummary, currentDa
     backLink: previousPath,
     formActionPage: currentPath,
     hasScore,
-    currentlyIrrigating,
-    pageTitle: currentlyIrrigating ? 'Will your irrigation system change?' : 'What systems will be used to irrigate?',
+    currentlyIrrigating: (currentlyIrrigating === 'Yes' || currentlyIrrigating === 'yes'),
+    pageTitle: (currentlyIrrigating === 'Yes' || currentlyIrrigating === 'yes'
+      ? 'Will your irrigation system change?'
+      : 'What systems will be used to irrigate?'
+    ),
 
     mockCheckbox: {
       id: 'irrigationCurrent',
@@ -40,9 +43,12 @@ function createModel (currentlyIrrigating, errorMessage, errorSummary, currentDa
       name: 'irrigationPlanned',
       hint: {
         html: `
-          ${currentlyIrrigating ? '<span class="govuk-label">What systems will be used to irrigate?</span>' : ''}
-          Select one or two options
-        `
+        ${(currentlyIrrigating === 'Yes' || currentlyIrrigating === 'yes')
+          ? '<span class="govuk-label">What systems will be used to irrigate?</span>'
+          : ''
+        }
+        Select one or two options
+      `
       },
       items: setLabelData(plannedData, ['Boom', 'Capillary bed', 'Ebb and flow', 'Mist', 'Rain gun', 'Sprinklers', 'Trickle']),
       ...(errorMessage && (!plannedData || plannedData.length > 2) ? { errorMessage: { text: errorMessage } } : {})
