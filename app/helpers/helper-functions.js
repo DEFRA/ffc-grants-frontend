@@ -175,6 +175,10 @@ function findErrorList ({ details }, inputFields) {
   ))
 }
 
+const URL_REGEX = /^(?:\w+:)?\/\/([^\s.]+\.\S{2}|localhost[:?\d]*)\S*$/
+function isURL (str) {
+  return URL_REGEX.test(str)
+}
 module.exports = {
   isChecked,
   setLabelData,
@@ -189,5 +193,6 @@ module.exports = {
   fetchObjectItem,
   fetchListObjectItems,
   findErrorList,
-  formatApplicationCode
+  formatApplicationCode,
+  isURL
 }
