@@ -5,7 +5,7 @@ describe('Confirmation page', () => {
     jest.mock('../../../../app/messaging')
     jest.mock('ffc-messaging')
   })
-  it('should load page successfully', async () => {
+  it('should load page successfully with 500', async () => {
     const senders = require('../../../../app/messaging/senders')
     senders.sendContactDetails = jest.fn(async function (model, yarId) {
       throw new Error('Some error')
@@ -40,7 +40,7 @@ describe('Confirmation page', () => {
     }
 
     const response = await global.__SERVER__.inject(options)
-    expect(response.statusCode).toBe(200)
+    expect(response.statusCode).toBe(500)
   })
 
   it('should redirect page if no consent  is given', async () => {
