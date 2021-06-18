@@ -66,12 +66,12 @@ module.exports = [
         project = [project].flat()
 
         if (project.filter(option => option === 'None of the above').length > 0 && project.length > 1) {
-          errorList.push({ text: 'Select one or two options of what the project will achieve', href: '#project' })
+          errorList.push({ text: 'Select one or two options to describe the project impact', href: '#project' })
           return h.view(viewTemplate, createModel('If you select \'None of the above\', you cannot select another option', errorList, project, getBackLink(request), hasScore))
         }
 
         if (project.length > 2) {
-          errorList.push({ text: 'Select one or two options of what the project will achieve', href: '#project' })
+          errorList.push({ text: 'Select one or two options to describe the project impact', href: '#project' })
           return h.view(viewTemplate, createModel('Select one or two options', errorList, project, getBackLink(request), hasScore))
         }
 

@@ -81,11 +81,11 @@ describe('Project start page', () => {
     expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/tenancy`)
   })
 
-  it('should redirect to ineligible page when user selects "Yes, we have begun project work (for example digging, signing contracts, placing orders)"', async () => {
+  it('should redirect to ineligible page when user selects "Yes, we have begun project work"', async () => {
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/project-start`,
-      payload: { projectStarted: 'Yes, we have begun project work (for example digging, signing contracts, placing orders)', crumb: crumbToken },
+      payload: { projectStarted: 'Yes, we have begun project work', crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
       }
@@ -96,11 +96,11 @@ describe('Project start page', () => {
       'You cannot apply for a grant from this scheme'
     )
   })
-  it('should redirect to ineligible page when user selects "Yes, preparatory work (for example quotes from suppliers, applying for planning permission)"', async () => {
+  it('should redirect to ineligible page when user selects "Yes, preparatory work"', async () => {
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/project-start`,
-      payload: { projectStarted: 'Yes, preparatory work (for example quotes from suppliers, applying for planning permission)', crumb: crumbToken },
+      payload: { projectStarted: 'Yes, preparatory work', crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
       }

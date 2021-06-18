@@ -96,8 +96,8 @@ module.exports = {
       key: 'Q14',
       order: 14,
       title: 'What impact will the project have?',
-      pageTitle: 'Project Summary',
-      fundingPriorities: ' Improve productivity <br/> Improve the environment <br/> Improving water sustainability',
+      pageTitle: 'Project impact',
+      fundingPriorities: 'Improve productivity <br/> Improve the environment <br/> Improving water sustainability',
       type: 'multiple-answer',
       url: 'project-summary',
       yarKey: 'project',
@@ -197,7 +197,7 @@ module.exports = {
       answer: [
         {
           key: 'Q18a-A1',
-          desc: 'Peak flow surface water'
+          desc: 'Peak-flow/winter abstraction'
         },
         {
           key: 'Q18a-A2',
@@ -235,7 +235,7 @@ module.exports = {
       answer: [
         {
           key: 'Q18b-A1',
-          desc: 'Peak flow surface water'
+          desc: 'Peak-flow/winter abstraction'
         },
         {
           key: 'Q18b-A2',

@@ -19,12 +19,13 @@ function setLabelData (data, labelData) {
       return { divider: 'or' }
     }
 
-    const { text, value } = label
+    const { text, value, hint } = label
     return {
       value,
       text,
       checked: isChecked(data, value),
-      selected: data === value
+      selected: data === value,
+      hint
     }
   })
 }
@@ -74,13 +75,13 @@ function getPostCodeHtml (postcodeData, error) {
   return !error
     ? `<div>
         <label class="govuk-label" for="projectPostcode">
-          In which postcode will the project take place?<br/><br/> Postcode
+          What is the site postcode?<br/><br/> Postcode
         </label>
         <input class="govuk-input govuk-!-width-one-third" id="projectPostcode" name="projectPostcode" value="${postcode}">
       </div>`
     : `<div class="govuk-form-group--error">
         <label class="govuk-label" for="projectPostcode">
-          In which postcode will the project take place?<br/><br/> Postcode
+          What is the site postcode?<br/><br/> Postcode
         </label>
         <span id="post-code-error" class="govuk-error-message">
           <span class="govuk-visually-hidden">
