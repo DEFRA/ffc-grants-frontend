@@ -39,7 +39,7 @@ function createModel (errorMessageList, agentDetails) {
     postcodeError
   ] = fetchListObjectItems(
     errorMessageList,
-    ['firstNameError', 'lastNameError', 'businessNameError', 'emailError', 'mobileError', 'landlineError', 'address1Error' , 'address2Error' , 'townError', 'countyError', 'postcodeError']
+    ['firstNameError', 'lastNameError', 'businessNameError', 'emailError', 'mobileError', 'landlineError', 'address1Error', 'address2Error', 'townError', 'countyError', 'postcodeError']
   )
 
   return {
@@ -138,17 +138,17 @@ module.exports = [
             townError,
             countyError,
             postcodeError
-          ] = findErrorList(err, ['firstName', 'lastName', 'businessName', 'email', 'mobile', 'landline', 'address1', 'address2' ,'town', 'county', 'postcode'])
+          ] = findErrorList(err, ['firstName', 'lastName', 'businessName', 'email', 'mobile', 'landline', 'address1', 'address2', 'town', 'county', 'postcode'])
 
           const errorMessageList = {
             firstNameError, lastNameError, businessNameError, emailError, mobileError, landlineError, address1Error, address2Error, townError, countyError, postcodeError
           }
-  
+
           if (request.payload.landline === '' && request.payload.mobile === '') {
             errorMessageList.mobileError = 'Enter your mobile number'
             errorMessageList.landlineError = 'Enter your landline number'
-          } 
-          
+          }
+
           const { firstName, lastName, businessName, email, mobile, landline, address1, address2, town, county, postcode } = request.payload
           const agentDetails = { firstName, lastName, businessName, email, mobile, landline, address1, address2, town, county, postcode }
           return h.view(viewTemplate, createModel(errorMessageList, agentDetails)).takeover()
@@ -158,17 +158,17 @@ module.exports = [
         const {
           firstName, lastName, businessName, email, mobile, landline, address1, address2, town, county, postcode
         } = request.payload
-        
-        const phoneErrors ={ 
+
+        const phoneErrors = {
           mobileError: 'Enter your mobile number',
           landlineError: 'Enter your landline number'
         }
 
-        if (!landline &&  !mobile) {
-            return h.view(viewTemplate, createModel(phoneErrors,{
-              firstName, lastName, businessName, email, mobile, landline, address1, address2, town, county, postcode
-            })).takeover()
-        } 
+        if (!landline && !mobile) {
+          return h.view(viewTemplate, createModel(phoneErrors, {
+            firstName, lastName, businessName, email, mobile, landline, address1, address2, town, county, postcode
+          })).takeover()
+        }
 
         setYarValue(request, 'agentDetails', {
           firstName, lastName, businessName, email, mobile, landline, address1, address2, town, county, postcode: postcode.split(/(?=.{3}$)/).join(' ').toUpperCase()
