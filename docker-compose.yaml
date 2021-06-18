@@ -30,4 +30,3 @@ services:
       REDIS_PARTITION: ffc-grants-frontend
       REDIS_PASSWORD: ""
       SESSION_CACHE_TTL: 3600000
-      START_PAGE_URL: "/start"

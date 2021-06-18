@@ -5,6 +5,9 @@ const questionBank = require('../config/question-bank')
 const { getYarValue } = require('../helpers/session')
 const { urlPrefix, startPageUrl } = require('../config/server')
 
+console.log(startPageUrl, 'LLLLLLLLL')
+console.log(process.env.START_PAGE_URL, 'EEEEEEEEE')
+
 module.exports = {
   plugin: {
     name: 'page-guard',

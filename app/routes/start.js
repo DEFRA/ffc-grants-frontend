@@ -18,7 +18,6 @@ module.exports = {
   method: 'GET',
   path: currentPath,
   handler: async (request, h) => {
-    console.log('Start Page Started.')
     return h.view(viewTemplate, createModel())
   }
 }
