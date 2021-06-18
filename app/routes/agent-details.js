@@ -143,7 +143,12 @@ module.exports = [
           const errorMessageList = {
             firstNameError, lastNameError, businessNameError, emailError, mobileError, landlineError, address1Error, address2Error, townError, countyError, postcodeError
           }
-          console.log("errorMessageList ELILEIEEI",errorMessageList)
+  
+          if (request.payload.landline === '' && request.payload.mobile === '') {
+            errorMessageList.mobileError = 'Enter your mobile number'
+            errorMessageList.landlineError = 'Enter your landline number'
+          } 
+          
           const { firstName, lastName, businessName, email, mobile, landline, address1, address2, town, county, postcode } = request.payload
           const agentDetails = { firstName, lastName, businessName, email, mobile, landline, address1, address2, town, county, postcode }
           return h.view(viewTemplate, createModel(errorMessageList, agentDetails)).takeover()
@@ -153,14 +158,16 @@ module.exports = [
         const {
           firstName, lastName, businessName, email, mobile, landline, address1, address2, town, county, postcode
         } = request.payload
+        
         const phoneErrors ={ 
-        mobileError: 'Enter your mobile number',
-        landlineError: 'Enter your landline number'
+          mobileError: 'Enter your mobile number',
+          landlineError: 'Enter your landline number'
         }
+
         if (!landline &&  !mobile) {
-          return h.view(viewTemplate, createModel(phoneErrors,{
-            firstName, lastName, businessName, email, mobile, landline, address1, address2, town, county, postcode
-          })).takeover()
+            return h.view(viewTemplate, createModel(phoneErrors,{
+              firstName, lastName, businessName, email, mobile, landline, address1, address2, town, county, postcode
+            })).takeover()
         } 
 
         setYarValue(request, 'agentDetails', {
