@@ -23,7 +23,7 @@ describe('Agent details page', () => {
     expect(postResponse.payload).toContain('Enter your first name')
     expect(postResponse.payload).toContain('Enter your last name')
     expect(postResponse.payload).toContain('Enter your email address')
-    expect(postResponse.payload).toContain('Enter your mobile number')
+    expect(postResponse.payload).toContain('Enter line 1 of your address')
   })
 
   it('should validate first name - no digits', async () => {
@@ -74,12 +74,12 @@ describe('Agent details page', () => {
     expect(postResponse.payload).toContain('Enter an email address in the correct format, like name@example.com')
   })
 
-  it('should validate landline (optional) - if typed in', async () => {
+  it('should validate landline - if typed in', async () => {
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/agent-details`,
       payload: {
-        landline: '1234567a90',
+        landline: '12345679a0${',
         crumb: crumbToken
       },
       headers: { cookie: 'crumb=' + crumbToken }
@@ -87,15 +87,16 @@ describe('Agent details page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Enter a telephone number, like 01632 960 001, 07700 900 982 or +44 0808 157 0192')
+    expect(postResponse.payload).toContain('Enter a landline number, like 01632 960 001, 07700 900 982 or +44 0808 157 0192')
   })
 
-  it('should validate mobile', async () => {
+  it('should validate mobile correct format - if typed in', async () => {
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/agent-details`,
       payload: {
-        landline: '(123):456789010',
+        mobile: '07700:?$900 982',
+        landline: '123456789010',
         crumb: crumbToken
       },
       headers: { cookie: 'crumb=' + crumbToken }
@@ -171,5 +172,30 @@ describe('Agent details page', () => {
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
     expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/farmer-details`)
+  })
+
+  it('should raise an error if both mobile and landline is missing', async () => {
+    const postOptions = {
+      method: 'POST',
+      url: `${global.__URLPREFIX__}/agent-details`,
+      payload: {
+        firstName: 'First Name',
+        lastName: 'Last Name',
+        businessName: 'some business',
+        email: 'my@name.com',
+        address1: 'Address 1',
+        address2: 'Address 2',
+        town: 'MyTown',
+        county: 'Devon',
+        postcode: 'AA1 1AA',
+        crumb: crumbToken
+      },
+      headers: { cookie: 'crumb=' + crumbToken }
+    }
+
+    const postResponse = await global.__SERVER__.inject(postOptions)
+    expect(postResponse.statusCode).toBe(200)
+    expect(postResponse.payload).toContain('Enter your mobile number')
+    expect(postResponse.payload).toContain('Enter your landline number')
   })
 })
