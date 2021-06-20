@@ -174,7 +174,7 @@ describe('Agent details page', () => {
     expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/farmer-details`)
   })
 
-  it('should raise an error if both mobile and landline is missing', async () => {
+  it('should raise an error if both mobile and landline are missing', async () => {
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/agent-details`,
