@@ -134,7 +134,7 @@ describe('Farmer details page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Enter a telephone number, like 01632 960 001, 07700 900 982 or +44 0808 157 0192')
+    expect(postResponse.payload).toContain('Enter a landline number, like 01632 960 001, 07700 900 982 or +44 0808 157 0192')
   })
 
   it('should validate mobile', async () => {
