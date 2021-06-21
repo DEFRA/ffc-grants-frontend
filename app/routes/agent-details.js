@@ -33,13 +33,12 @@ function createModel (errorMessageList, agentDetails) {
     mobileError,
     landlineError,
     address1Error,
-    address2Error,
     townError,
     countyError,
     postcodeError
   ] = fetchListObjectItems(
     errorMessageList,
-    ['firstNameError', 'lastNameError', 'businessNameError', 'emailError', 'mobileError', 'landlineError', 'address1Error', 'address2Error', 'townError', 'countyError', 'postcodeError']
+    ['firstNameError', 'lastNameError', 'businessNameError', 'emailError', 'mobileError', 'landlineError', 'address1Error', 'townError', 'countyError', 'postcodeError']
   )
 
   return {
@@ -61,7 +60,7 @@ function createModel (errorMessageList, agentDetails) {
 
     inputAddress1: formInputObject('address1', 'govuk-input--width-20', 'Address 1', null, address1, address1Error),
 
-    inputAddress2: formInputObject('address2', 'govuk-input--width-20', 'Address 2  (optional)', null, address2, address2Error),
+    inputAddress2: formInputObject('address2', 'govuk-input--width-20', 'Address 2', null, address2, null),
 
     inputTown: formInputObject('town', 'govuk-input--width-10', 'Town', null, town, townError),
 
@@ -134,14 +133,13 @@ module.exports = [
             mobileError,
             landlineError,
             address1Error,
-            address2Error,
             townError,
             countyError,
             postcodeError
-          ] = findErrorList(err, ['firstName', 'lastName', 'businessName', 'email', 'mobile', 'landline', 'address1', 'address2', 'town', 'county', 'postcode'])
+          ] = findErrorList(err, ['firstName', 'lastName', 'businessName', 'email', 'mobile', 'landline', 'address1', 'town', 'county', 'postcode'])
 
           const errorMessageList = {
-            firstNameError, lastNameError, businessNameError, emailError, mobileError, landlineError, address1Error, address2Error, townError, countyError, postcodeError
+            firstNameError, lastNameError, businessNameError, emailError, mobileError, landlineError, address1Error, townError, countyError, postcodeError
           }
 
           if (request.payload.landline === '' && request.payload.mobile === '') {
