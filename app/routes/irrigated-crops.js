@@ -6,7 +6,7 @@ const urlPrefix = require('../config/server').urlPrefix
 const viewTemplate = 'irrigated-crops'
 const currentPath = `${urlPrefix}/${viewTemplate}`
 const previousPath = `${urlPrefix}/project-summary`
-const nextPath = `${urlPrefix}/irrigated-land`
+const nextPath = `${urlPrefix}/irrigation-status`
 const scorePath = `${urlPrefix}/score`
 
 const createModel = (errorMessage, data, hasScore) => ({

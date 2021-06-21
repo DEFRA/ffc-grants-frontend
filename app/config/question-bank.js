@@ -96,8 +96,8 @@ module.exports = {
       key: 'Q14',
       order: 14,
       title: 'What impact will the project have?',
-      pageTitle: 'Project Summary',
-      fundingPriorities: ' Improve productivity <br/> Improve the environment <br/> Improving water sustainability',
+      pageTitle: 'Project impact',
+      fundingPriorities: 'Improve productivity <br/> Improve the environment <br/> Improving water sustainability',
       type: 'multiple-answer',
       url: 'project-summary',
       yarKey: 'project',
@@ -152,32 +152,40 @@ module.exports = {
     {
       key: 'Q16',
       order: 16,
+      title: 'Are you currently irrigating?',
+      pageTitle: '',
+      url: 'irrigation-status',
+      yarKey: 'currentlyIrrigating'
+    },
+    {
+      key: 'Q17',
+      order: 17,
       title: 'How much land is currently irrigated per year?',
       pageTitle: 'Irrigated land',
       desc: 'Enter figure in hectares',
       fundingPriorities: 'Improve productivity',
-      group: 'Q16',
+      group: 'Q17',
       type: 'number',
       unit: 'hectares',
       url: 'irrigated-land',
       yarKey: 'irrigatedLandCurrent'
     },
     {
-      key: 'Q16a',
-      order: 16.1,
+      key: 'Q17a',
+      order: 17.1,
       title: 'How much land will be irrigated after the project?',
       pageTitle: 'Irrigated land',
       desc: 'Enter figure in hectares',
       fundingPriorities: 'Improve productivity',
-      group: 'Q16',
+      group: 'Q17',
       type: 'number',
       unit: 'hectares',
       url: 'irrigated-land',
       yarKey: 'irrigatedLandTarget'
     },
     {
-      key: 'Q17',
-      order: 17,
+      key: 'Q18',
+      order: 18,
       title: 'Where does your current irrigation water come from?',
       pageTitle: 'Irrigation source',
       url: 'irrigation-water-source',
@@ -185,37 +193,37 @@ module.exports = {
       fundingPriorities: 'Improve the environment <br/> Improving water sustainability',
       type: 'multiple-answer',
       answerCount: 2,
-      group: 'Q17',
+      group: 'Q18',
       answer: [
         {
-          key: 'Q17a-A1',
-          desc: 'Peak flow surface water'
+          key: 'Q18a-A1',
+          desc: 'Peak-flow/winter abstraction'
         },
         {
-          key: 'Q17a-A2',
+          key: 'Q18a-A2',
           desc: 'Rain water harvesting'
         },
         {
-          key: 'Q17a-A3',
+          key: 'Q18a-A3',
           desc: 'Bore hole / aquifer'
         },
         {
-          key: 'Q17a-A4',
+          key: 'Q18a-A4',
           desc: 'Summer water surface abstraction'
         },
         {
-          key: 'Q17a-A5',
+          key: 'Q18a-A5',
           desc: 'Mains'
         },
         {
-          key: 'Q17a-A6',
+          key: 'Q18a-A6',
           desc: 'Not currently irrigating'
         }
       ]
     },
     {
-      key: 'Q17b',
-      order: 17.1,
+      key: 'Q18b',
+      order: 18.1,
       title: 'Where will your irrigation water come from?',
       pageTitle: 'Irrigation source',
       url: 'irrigation-water-source',
@@ -223,84 +231,84 @@ module.exports = {
       fundingPriorities: 'Improve the environment <br/> Improving water sustainability',
       type: 'multiple-answer',
       answerCount: 2,
-      group: 'Q17',
+      group: 'Q18',
       answer: [
         {
-          key: 'Q17b-A1',
-          desc: 'Peak flow surface water'
+          key: 'Q18b-A1',
+          desc: 'Peak-flow/winter abstraction'
         },
         {
-          key: 'Q17b-A2',
+          key: 'Q18b-A2',
           desc: 'Rain water harvesting'
         },
         {
-          key: 'Q17b-A3',
+          key: 'Q18b-A3',
           desc: 'Bore hole / aquifer'
         },
         {
-          key: 'Q17b-A4',
+          key: 'Q18b-A4',
           desc: 'Summer water surface abstraction'
         },
         {
-          key: 'Q17b-A5',
+          key: 'Q18b-A5',
           desc: 'Mains'
         }
       ]
     },
     {
-      key: 'Q18',
-      order: 18,
+      key: 'Q19',
+      order: 19,
       title: 'What systems are currently used to irrigate?',
       pageTitle: 'Irrigation system',
       fundingPriorities: 'Improve the environment <br/> Improving water sustainability',
-      group: 'Q18',
+      group: 'Q19',
       url: 'irrigation-systems',
       yarKey: 'irrigationCurrent',
       type: 'multiple-answer',
       answerCount: 2,
       answer: [
         {
-          key: 'Q18a-A1',
+          key: 'Q19a-A1',
           desc: 'Trickle',
           weight: 6
         },
         {
-          key: 'Q18a-A2',
+          key: 'Q19a-A2',
           desc: 'Mist',
           weight: 5
         },
         {
-          key: 'Q18a-A3',
+          key: 'Q19a-A3',
           desc: 'Ebb and flow',
           weight: 4
         },
         {
-          key: 'Q18a-A4',
+          key: 'Q19a-A4',
           desc: 'Sprinklers',
           weight: 3
         },
         {
-          key: 'Q18a-A5',
+          key: 'Q19a-A5',
           desc: 'Capillary Bed',
           weight: 2
         },
         {
-          key: 'Q18a-A6',
+          key: 'Q19a-A6',
           desc: 'Boom',
           weight: 1
         },
         {
-          key: 'Q18a-A7',
+          key: 'Q19a-A7',
           desc: 'Rain Gun / Not currently irrigating',
           weight: 0
         }
       ]
     },
     {
-      key: 'Q18b',
+      key: 'Q19b',
       title: 'What systems will be used to irrigate?',
       pageTitle: 'Irrigation system',
-      group: 'Q18',
+      group: 'Q19',
       url: 'irrigation-systems',
       yarKey: 'irrigationPlanned',
       type: 'multiple-answer',
@@ -308,45 +316,45 @@ module.exports = {
       answerCount: 2,
       answer: [
         {
-          key: 'Q18b-A1',
+          key: 'Q19b-A1',
           desc: 'Trickle',
           weight: 6
         },
         {
-          key: 'Q18b-A2',
+          key: 'Q19b-A2',
           desc: 'Mist',
           weight: 5
         },
         {
-          key: 'Q18b-A3',
+          key: 'Q19b-A3',
           desc: 'Ebb and flow',
           weight: 4
         },
         {
-          key: 'Q18b-A4',
+          key: 'Q19b-A4',
           desc: 'Sprinklers',
           weight: 3
         },
         {
-          key: 'Q18b-A5',
+          key: 'Q19b-A5',
           desc: 'Capillary Bed',
           weight: 2
         },
         {
-          key: 'Q18b-A6',
+          key: 'Q19b-A6',
           desc: 'Boom',
           weight: 1
         },
         {
-          key: 'Q18b-A7',
+          key: 'Q19b-A7',
           desc: 'Rain Gun / Not currently irrigating',
           weight: 0
         }
       ]
     },
     {
-      key: 'Q19',
-      order: 19,
+      key: 'Q20',
+      order: 20,
       title: 'How will the project improve productivity',
       pageTitle: 'Productivity',
       fundingPriorities: 'Improve productivity',
@@ -358,35 +366,35 @@ module.exports = {
       answerCount: 2,
       answer: [
         {
-          key: 'Q19-A1',
+          key: 'Q20-A1',
           desc: 'Introduce or expand high Value Crops',
           weight: 3
         },
         {
-          key: 'Q19-A2',
+          key: 'Q20-A2',
           desc: 'Introduce or expand protected Crops',
           weight: 3
         },
         {
-          key: 'Q19-A3',
+          key: 'Q20-A3',
           desc: 'Improved Yield per Ha',
           weight: 1
         },
         {
-          key: 'Q19-A4',
+          key: 'Q20-A4',
           desc: 'Improved Quality',
           weight: 1
         },
         {
-          key: 'Q19-A5',
+          key: 'Q20-A5',
           desc: 'Maintain productivity',
           weight: 0
         }
       ]
     },
     {
-      key: 'Q20',
-      order: 20,
+      key: 'Q21',
+      order: 21,
       title: 'Will water be supplied to other farms?',
       pageTitle: 'Other farms',
       fundingPriorities: 'Improve water sustainability',
@@ -396,34 +404,34 @@ module.exports = {
       type: 'single-answer',
       answer: [
         {
-          key: 'Q20-A1',
+          key: 'Q21-A1',
           desc: 'Yes'
         },
         {
-          key: 'Q20-A2',
+          key: 'Q21-A2',
           desc: 'No'
         }
       ]
     },
     {
-      key: 'Q21',
-      order: 21,
+      key: 'Q22',
+      order: 22,
       title: 'Business details',
       pageTitle: '',
       url: 'business-details',
       yarKey: 'businessDetails'
     },
     {
-      key: 'Q22',
-      order: 22,
+      key: 'Q23',
+      order: 23,
       title: 'Who is applying for this grant?',
       pageTitle: '',
       url: 'applying',
       yarKey: 'applying'
     },
     {
-      key: 'Q23',
-      order: 23,
+      key: 'Q24',
+      order: 24,
       title: 'Farmers details',
       pageTitle: '',
       url: 'farmer-details',

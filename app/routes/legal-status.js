@@ -37,6 +37,7 @@ function createModel (errorMessage, data) {
           { text: 'Industrial and provident society', value: 'Industrial and Provident Society' },
           { text: 'Co-operative society (Co-Op)', value: 'Co-operative Society (Co-Op)' },
           { text: 'Community benefit society (BenCom)', value: 'Community Benefit Society (BenCom)' },
+          'divider',
           'None of the above'
         ]),
       ...(errorMessage ? { errorMessage: { text: errorMessage } } : {})
@@ -48,7 +49,19 @@ function createModelNotEligible () {
   return {
     backLink: currentPath,
     messageContent:
-      'This is only open to a business with a legal status of: <ul class="govuk-list govuk-list--bullet"><li>Sole trader</li><li>Partnership</li><li>Limited company</li><li>Charity</li><li>Trust</li><li>Limited liability partnership</li><li>Community interest company</li><li>Limited partnership</li><li>Industrial and provident society</li><li>Co-operative society (Co-Op)</li><li>Community benefit society (BenCom)</li></ul> <p class="govuk-body">Other types of business may be supported in future schemes.</p>'
+      'This is only open to a business with a different legal status.',
+    details: {
+      summaryText: 'Who is eligible',
+      html: '<ul class="govuk-list govuk-list--bullet"><li>Sole trader</li><li>Partnership</li><li>Limited company</li><li>Charity</li><li>Trust</li><li>Limited liability partnership</li><li>Community interest company</li><li>Limited partnership</li><li>Industrial and provident society</li><li>Co-operative society (Co-Op)</li><li>Community benefit society (BenCom)</li></ul>'
+    },
+    messageLink: {
+      url: 'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments',
+      title: 'See other grants you may be eligible for.'
+    },
+    warning: {
+      text: 'Other types of business may be supported in future schemes',
+      iconFallbackText: 'Warning'
+    }
   }
 }
 

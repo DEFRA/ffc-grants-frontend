@@ -1,6 +1,10 @@
 {% extends '.layout.njk' %}
 
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
+{% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+{% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
+
 {% block pageTitle %}
   {{siteTitle}} - You cannot apply for grant
 {% endblock %}
@@ -18,6 +22,15 @@
       <p class="govuk-body">
         {{ messageContent | safe}}
       </p>
+      {% if insertText %}  
+        {{ govukInsetText(insertText) }}
+      {% endif %}
+      {% if details %}      
+        {{ govukDetails(details) }}
+      {% endif %}
+      {% if warning %}   
+        {{ govukWarningText(warning) }}
+      {% endif %}
       {% if messageLink %}
         <p class="govuk-body"><a href="{{messageLink.url}}" class="govuk-link">{{messageLink.title}}</a></p>
       {% endif %}
