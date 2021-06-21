@@ -46,21 +46,6 @@ describe('Irrigation water source page', () => {
     expect(response.statusCode).toBe(200)
   })
 
-  it('should returns error message if no current water source option is selected', async () => {
-    const postOptions = {
-      method: 'POST',
-      url: `${global.__URLPREFIX__}/irrigation-water-source`,
-      payload: { waterSourcePlanned, crumb: crumbToken },
-      headers: {
-        cookie: 'crumb=' + crumbToken
-      }
-    }
-
-    const postResponse = await global.__SERVER__.inject(postOptions)
-    expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Select one or two options for each question')
-  })
-
   it('should returns error message if no planned water source option is selected', async () => {
     const postOptions = {
       method: 'POST',

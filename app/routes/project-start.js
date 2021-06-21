@@ -26,9 +26,24 @@ function createModel (errorMessage, data, backLink) {
           classes: 'govuk-fieldset__legend--l'
         }
       },
-      items: setLabelData(data, ['Yes, preparatory work (for example quotes from suppliers, applying for planning permission)',
-        'Yes, we have begun project work (for example digging, signing contracts, placing orders)',
-        'No, we have not done any work on this project yet']),
+      items: setLabelData(data,
+        [
+          {
+            text: 'Yes, preparatory work',
+            value: 'Yes, preparatory work',
+            hint: {
+              text: 'For example quotes from suppliers, applying for planning permission'
+            }
+          },
+          {
+            text: 'Yes, we have begun project work',
+            value: 'Yes, we have begun project work',
+            hint: {
+              text: 'For example digging, signing contracts, placing orders'
+            }
+          },
+          'No, we have not done any work on this project yet'
+        ]),
       ...(errorMessage ? { errorMessage: { text: errorMessage } } : {})
     }
   }
@@ -43,7 +58,14 @@ function createModelNotEligible () {
   return {
     backLink: currentPath,
     messageContent:
-      'Only projects that have not yet started can apply for a grant.'
+      'You cannot apply for a grant if you have already started work on the project.',
+    insertText: {
+      text: 'Starting the project or committing to any costs (such as placing orders) before you receive a funding agreement invalidates your application.'
+    },
+    messageLink: {
+      url: 'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments',
+      title: 'See other grants you may be eligible for.'
+    }
   }
 }
 
@@ -73,9 +95,9 @@ module.exports = [
       },
       handler: async (request, h) => {
         setYarValue(request, 'projectStarted', request.payload.projectStarted)
-        await gapiService.sendEligibilityEvent(request, request.payload.projectStarted === 'Yes, we have begun project work (for example digging, signing contracts, placing orders)')
+        await gapiService.sendEligibilityEvent(request, request.payload.projectStarted === 'Yes, we have begun project work')
 
-        if (request.payload.projectStarted !== 'Yes, we have begun project work (for example digging, signing contracts, placing orders)') {
+        if (request.payload.projectStarted !== 'Yes, we have begun project work') {
           return h.redirect(nextPath)
         }
 

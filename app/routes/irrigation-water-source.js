@@ -9,42 +9,47 @@ const previousPath = `${urlPrefix}/irrigated-land`
 const nextPath = `${urlPrefix}/irrigation-systems`
 const scorePath = `${urlPrefix}/score`
 
-function createModel (errorMessage, errorSummary, currentData, plannedData, hasScore) {
+function createModel (currentlyIrrigating, errorMessage, errorSummary, currentData, plannedData, hasScore) {
   return {
     backLink: previousPath,
     formActionPage: currentPath,
-    hasScore: hasScore,
+    hasScore,
+    currentlyIrrigating: (currentlyIrrigating === 'Yes' || currentlyIrrigating === 'yes'),
+    pageTitle: (currentlyIrrigating === 'Yes' || currentlyIrrigating === 'yes'
+      ? 'Will your water source change?'
+      : 'Where will the irrigation water come from?'
+    ),
     ...errorSummary ? { errorList: errorSummary } : {},
+
+    mockCheckbox: {
+      id: 'waterSourceCurrent',
+      name: 'waterSourceCurrent',
+      value: 'Not currently irrigating',
+      type: 'hidden'
+    },
+
     waterSourceCurrent: {
       idPrefix: 'waterSourceCurrent',
       name: 'waterSourceCurrent',
-      fieldset: {
-        legend: {
-          text: 'Where does your current irrigation water come from?',
-          isPageHeading: true,
-          classes: 'govuk-fieldset__legend--l'
-        }
-      },
       hint: {
-        text: 'Select one or two options'
+        html: '<span class="govuk-label">Where does your current irrigation water come from?</span>Select one or two options'
       },
-      items: setLabelData(currentData, ['Peak-flow surface water', 'Bore hole/aquifer', 'Rain water harvesting', 'Summer water surface abstraction', 'Mains', 'Not currently irrigating']),
+      items: setLabelData(currentData, ['Peak-flow/winter abstraction', 'Bore hole/aquifer', 'Rain water harvesting', 'Summer water surface abstraction', 'Mains']),
       ...(errorMessage && (!currentData || currentData.length > 2) ? { errorMessage: { text: errorMessage } } : {})
     },
     waterSourcePlanned: {
       idPrefix: 'waterSourcePlanned',
       name: 'waterSourcePlanned',
-      fieldset: {
-        legend: {
-          text: 'Where will the irrigation water come from?',
-          isPageHeading: true,
-          classes: 'govuk-fieldset__legend--l'
-        }
-      },
       hint: {
-        text: 'Select one or two options'
+        html: `
+          ${(currentlyIrrigating === 'Yes' || currentlyIrrigating === 'yes')
+            ? '<span class="govuk-label">Where will the irrigation water come from?</span>'
+            : ''
+          }
+          Select one or two options
+        `
       },
-      items: setLabelData(plannedData, ['Peak-flow surface water', 'Bore hole/aquifer', 'Rain water harvesting', 'Summer water surface abstraction', 'Mains']),
+      items: setLabelData(plannedData, ['Peak-flow/winter abstraction', 'Bore hole/aquifer', 'Rain water harvesting', 'Summer water surface abstraction', 'Mains']),
       ...(errorMessage && (!plannedData || plannedData.length > 2) ? { errorMessage: { text: errorMessage } } : {})
     }
   }
@@ -57,7 +62,9 @@ module.exports = [
     handler: (request, h) => {
       const currentData = getYarValue(request, 'waterSourceCurrent') || null
       const plannedData = getYarValue(request, 'waterSourcePlanned') || null
-      return h.view(viewTemplate, createModel(null, null, currentData, plannedData, getYarValue(request, 'current-score')))
+
+      const currentlyIrrigating = getYarValue(request, 'currentlyIrrigating') || null
+      return h.view(viewTemplate, createModel(currentlyIrrigating, null, null, currentData, plannedData, getYarValue(request, 'current-score')))
     }
   },
   {
@@ -79,7 +86,9 @@ module.exports = [
 
           waterSourceCurrent = waterSourceCurrent ? [waterSourceCurrent].flat() : waterSourceCurrent
           waterSourcePlanned = waterSourcePlanned ? [waterSourcePlanned].flat() : waterSourcePlanned
-          return h.view(viewTemplate, createModel(errorMessage, null, waterSourceCurrent, waterSourcePlanned, getYarValue(request, 'current-score'))).takeover()
+
+          const currentlyIrrigating = getYarValue(request, 'currentlyIrrigating') || null
+          return h.view(viewTemplate, createModel(currentlyIrrigating, errorMessage, null, waterSourceCurrent, waterSourcePlanned, getYarValue(request, 'current-score'))).takeover()
         }
       },
       handler: (request, h) => {
@@ -88,6 +97,7 @@ module.exports = [
 
         waterSourceCurrent = [waterSourceCurrent].flat()
         waterSourcePlanned = [waterSourcePlanned].flat()
+        const currentlyIrrigating = getYarValue(request, 'currentlyIrrigating') || null
 
         if (waterSourceCurrent.length > 2 || waterSourcePlanned.length > 2) {
           if (waterSourceCurrent.length > 2) {
@@ -96,7 +106,7 @@ module.exports = [
           if (waterSourcePlanned.length > 2) {
             errorList.push({ text: 'Select where your irrigation water will come from', href: '#waterSourcePlanned' })
           }
-          return h.view(viewTemplate, createModel('Select one or two options', errorList, waterSourceCurrent, waterSourcePlanned, getYarValue(request, 'current-score')))
+          return h.view(viewTemplate, createModel(currentlyIrrigating, 'Select one or two options', errorList, waterSourceCurrent, waterSourcePlanned, getYarValue(request, 'current-score')))
         }
 
         setYarValue(request, 'waterSourceCurrent', waterSourceCurrent)
