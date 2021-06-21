@@ -47,7 +47,10 @@ function createModel (errorMessage, data, postcodeHtml) {
 function createModelNotEligible () {
   return {
     backLink: currentPath,
-    messageContent: 'This grant is only for projects in England.<br/><br/>Scotland, Wales and Northern Ireland have other grants available.'
+    insertText: {
+      text: 'Scotland, Wales and Northern Ireland have other grants available.'
+    },
+    messageContent: 'This grant is only for projects in England.'
   }
 }
 
