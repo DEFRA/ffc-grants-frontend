@@ -16,9 +16,15 @@
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-l">{{pageTitle}}</h1>
       <form method="POST" action="{{ formActionPage }}" autocomplete="off" novalidate="novalidate">
         {{ crumbToken(crumb)}}
+        {% if currentlyIrrigating %}
         {{ govukInput(currentInput) }}
+        {% else %}
+              {{ govukInput(hiddenInput) }}
+          {% endif %}
+        
         {{ govukInput(targetInput) }}
         {{ conditionalButtons(hasScore) }}
       </form>

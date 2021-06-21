@@ -10,7 +10,7 @@ const previousPath = `${urlPrefix}/irrigation-status`
 const nextPath = `${urlPrefix}/irrigation-water-source`
 const scorePath = `${urlPrefix}/score`
 
-function createModel (irrigatedLandCurrent, irrigatedLandTarget, errorMessageList, hasScore) {
+function createModel (currentlyIrrigating, irrigatedLandCurrent, irrigatedLandTarget, errorMessageList, hasScore) {
   const [
     irrigatedLandCurrentError,
     irrigatedLandTargetError
@@ -22,12 +22,18 @@ function createModel (irrigatedLandCurrent, irrigatedLandTarget, errorMessageLis
     backLink: previousPath,
     formActionPage: currentPath,
     hasScore: hasScore,
+    currentlyIrrigating: (currentlyIrrigating === 'Yes' || currentlyIrrigating === 'yes'),
+    pageTitle: (currentlyIrrigating === 'Yes' || currentlyIrrigating === 'yes'
+      ? 'Will the area of irrigated land change?'
+      : 'Where will the irrigation water come from?'
+    ),
+    hiddenInput: {
+      id: 'irrigatedLandCurrent',
+      name: 'irrigatedLandCurrent',
+      value: '0',
+      type: 'hidden'
+    },
     currentInput: {
-      label: {
-        text: 'How much land is currently irrigated per year?',
-        isPageHeading: true,
-        classes: 'govuk-label--l'
-      },
       classes: 'govuk-input--width-4',
       id: 'irrigatedLandCurrent',
       name: 'irrigatedLandCurrent',
@@ -35,22 +41,17 @@ function createModel (irrigatedLandCurrent, irrigatedLandTarget, errorMessageLis
         text: 'ha'
       },
       hint: {
-        html: '<span class="govuk-label"> Hectares </span>Enter figure in hectares, for example 543.5'
+        html: '<span class="govuk-label">How much land is currently irrigated per year? </span>Enter figure in hectares, for example 543.5'
       },
       ...(irrigatedLandCurrent ? { value: irrigatedLandCurrent } : {}),
       ...(irrigatedLandCurrentError ? { errorMessage: { text: irrigatedLandCurrentError } } : {})
     },
     targetInput: {
-      label: {
-        text: 'How much land will be irrigated after the project?',
-        isPageHeading: true,
-        classes: 'govuk-label--l'
-      },
       classes: 'govuk-input--width-4',
       id: 'irrigatedLandTarget',
       name: 'irrigatedLandTarget',
       hint: {
-        html: '<span class="govuk-label"> Hectares </span>Enter figure in hectares, for example 543.5'
+        html: '<span class="govuk-label">How much land will be irrigated per year after the project? </span>Enter figure in hectares, for example 543.5'
       },
       suffix: {
         text: 'ha'
@@ -70,8 +71,9 @@ module.exports = [
       const irrigatedLandTarget = getYarValue(request, 'irrigatedLandTarget')
       const currentData = irrigatedLandCurrent || null
       const TargetData = irrigatedLandTarget || null
+      const currentlyIrrigating = getYarValue(request, 'currentlyIrrigating') || null
 
-      return h.view(viewTemplate, createModel(currentData, TargetData, null, getYarValue(request, 'current-score')))
+      return h.view(viewTemplate, createModel(currentlyIrrigating, currentData, TargetData, null, getYarValue(request, 'current-score')))
     }
   },
   {
@@ -99,12 +101,16 @@ module.exports = [
           }
 
           const { irrigatedLandCurrent, irrigatedLandTarget } = request.payload
-          return h.view(viewTemplate, createModel(irrigatedLandCurrent, irrigatedLandTarget, errorMessageList, getYarValue(request, 'current-score'))).takeover()
+          const currentlyIrrigating = getYarValue(request, 'currentlyIrrigating') || null
+
+          return h.view(viewTemplate, createModel(currentlyIrrigating, irrigatedLandCurrent, irrigatedLandTarget, errorMessageList, getYarValue(request, 'current-score'))).takeover()
         }
       },
       handler: (request, h) => {
         const { irrigatedLandCurrent, irrigatedLandTarget, results } = request.payload
         const hasScore = getYarValue(request, 'current-score')
+        const currentlyIrrigating = getYarValue(request, 'currentlyIrrigating') || null
+
         if (Number(irrigatedLandTarget) === 0 ||
             (Number(irrigatedLandTarget) < Number(irrigatedLandCurrent))
         ) {
@@ -118,7 +124,7 @@ module.exports = [
             irrigatedLandTargetError
           }
 
-          return h.view(viewTemplate, createModel(irrigatedLandCurrent, irrigatedLandTarget, errorMessageList, hasScore))
+          return h.view(viewTemplate, createModel(currentlyIrrigating, irrigatedLandCurrent, irrigatedLandTarget, errorMessageList, hasScore))
         }
 
         setYarValue(request, 'irrigatedLandCurrent', irrigatedLandCurrent)

@@ -1,25 +1,46 @@
 const { crumbToken } = require('./test-helper')
+const varListTemplate = {
+  farmingType: 'some fake crop',
+  legalStatus: 'fale status',
+  inEngland: 'Yes',
+  planningPermission: 'some data',
+  projectStarted: 'No',
+  landOwnership: 'Yes',
+  projectItemsList: {
+    projectEquipment: ['Boom', 'Trickle']
+  },
+  projectCost: '12345678',
+  remainingCost: 14082.00,
+  payRemainingCosts: 'Yes',
+  sSSI: 'yes',
+  abstractionLicence: 'Not needed',
+  project: ['some fake project'],
+  irrigatedCrops: 'some crop',
+  currentlyIrrigating: 'yes',
+  'current-score': ''
+
+}
+
+let varList
+const mockSession = {
+  setYarValue: (request, key, value) => null,
+  getYarValue: (request, key) => {
+    if (Object.keys(varList).includes(key)) return varList[key]
+    else return 'Error'
+  }
+}
+
+jest.mock('../../../../app/helpers/session', () => mockSession)
+
 describe('Irrigated Land page', () => {
-  const project = ['some fake project']
-  const irrigatedCrops = 'some fake crop'
-
-  jest.mock('../../../../app/helpers/session', () => ({
-    setYarValue: () => null,
-    getYarValue: (request, key) => {
-      switch (key) {
-        case 'project':
-          return [project]
-        case 'irrigatedCrops':
-          return irrigatedCrops
-        default:
-          return 'Error'
-      }
-    }
-  }))
-
-  afterEach(() => {
-    jest.clearAllMocks()
+  beforeEach(() => {
+    varList = { ...varListTemplate }
   })
+
+  afterAll(() => {
+    jest.resetAllMocks()
+  })
+
   it('should load page successfully', async () => {
     const options = {
       method: 'GET',
@@ -49,7 +70,7 @@ describe('Irrigated Land page', () => {
     expect(postResponse.payload).toContain('Enter how many hectares will be irrigated after the project')
   })
 
-  it('should return an error message if no value is entered for \'currently irrigated land\' ', async () => {
+  it('should return an error message if no value is entered for currently irrigated land', async () => {
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/irrigated-land`,
@@ -216,5 +237,20 @@ describe('Irrigated Land page', () => {
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
     expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/irrigation-water-source`)
+  })
+
+  it('should store default 0 for irrigatedLandCurrent if user select currently Irrigating NO', async () => {
+    varList.currentlyIrrigating = 'No'
+    const postOptions = {
+      method: 'POST',
+      url: `${global.__URLPREFIX__}/irrigated-land`,
+      payload: { irrigatedLandTarget: '567.8', crumb: crumbToken },
+      headers: {
+        cookie: 'crumb=' + crumbToken
+      }
+    }
+
+    const postResponse = await global.__SERVER__.inject(postOptions)
+    expect(postResponse.payload).toContain('<input class="govuk-input" id="irrigatedLandCurrent" name="irrigatedLandCurrent" type="hidden" value="0">')
   })
 })
