@@ -1,5 +1,4 @@
 const Joi = require('joi')
-const { isURL } = require('../helpers/helper-functions')
 const urlPrefix = '/water'
 const startPageUrl = '/start'
 // Define config schema
@@ -56,5 +55,4 @@ const result = schema.validate(config, {
 if (result.error) {
   throw new Error(`The server config is invalid. ${result.error.message}`)
 }
-console.log(result.value.startPageUrl, 'Config')
 module.exports = result.value
