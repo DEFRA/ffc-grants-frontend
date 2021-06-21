@@ -15,7 +15,7 @@ module.exports = {
     {
       key: 'Q2',
       order: 2,
-      title: 'What is the legal status of the farm business?',
+      title: 'What is the legal status of the business?',
       pageTitle: '',
       url: 'legal-status',
       yarKey: 'legalStatus'

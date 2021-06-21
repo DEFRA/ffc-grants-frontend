@@ -19,7 +19,7 @@ function createModel (errorMessage, data) {
       name: 'legalStatus',
       fieldset: {
         legend: {
-          text: 'What is the legal status of the farm business?',
+          text: 'What is the legal status of the business?',
           isPageHeading: true,
           classes: 'govuk-fieldset__legend--l'
         }
