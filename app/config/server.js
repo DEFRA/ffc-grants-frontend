@@ -56,6 +56,5 @@ const result = schema.validate(config, {
 if (result.error) {
   throw new Error(`The server config is invalid. ${result.error.message}`)
 }
-result.value.startPageUrl = `${isURL(startPageUrl) ? '' : result.value.urlPrefix}${startPageUrl}`
 console.log(result.value.startPageUrl, 'Config')
 module.exports = result.value
