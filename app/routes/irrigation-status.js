@@ -9,10 +9,11 @@ const currentPath = `${urlPrefix}/${viewTemplate}`
 const previousPath = `${urlPrefix}/irrigated-crops`
 const nextPath = `${urlPrefix}/irrigated-land`
 
-function createModel (errorMessage, data) {
+function createModel (errorMessage, data, hasScore) {
   return {
     backLink: previousPath,
     formActionPage: currentPath,
+    hasScore,
     radios: {
       classes: '',
       idPrefix: 'currentlyIrrigating',
@@ -36,7 +37,7 @@ module.exports = [
     path: currentPath,
     handler: (request, h) => {
       const currentlyIrrigating = getYarValue(request, 'currentlyIrrigating') || null
-      return h.view(viewTemplate, createModel(null, currentlyIrrigating))
+      return h.view(viewTemplate, createModel(null, currentlyIrrigating, getYarValue(request, 'current-score')))
     }
   },
   {
@@ -50,7 +51,7 @@ module.exports = [
         failAction: (request, h, err) => {
           const errorObject = errorExtractor(err)
           const errorMessage = getErrorMessage(errorObject)
-          return h.view(viewTemplate, createModel(errorMessage)).takeover()
+          return h.view(viewTemplate, createModel(errorMessage, null, getYarValue(request, 'current-score'))).takeover()
         }
       },
       handler: async (request, h) => {
