@@ -5,9 +5,8 @@
 {% set urlPrefix = "<%= htmlWebpackPlugin.options.metadata.urlPrefix %>" %}
 {% set assetPath = urlPrefix + "/assets" %}
 {% set siteTitle = "Check if you can apply for a Farming Transformation Fund water grant" %}
-{% set startPageUrl1 = ""%}
 {% block pageTitle %}
- {{startPageUrl}} {{siteTitle}}
+  {{siteTitle}}
 {% endblock %}
 
 {% block head %}
@@ -20,9 +19,9 @@
 
 {% block header %}
   {{ govukHeader({
-    homepageUrl: urlPrefix + "/start",
+    homepageUrl: startPageUrl,
     serviceName: "Check if you can apply for a Farming Transformation Fund water management grant",
-    serviceUrl: urlPrefix + "/start"
+    serviceUrl: startPageUrl
   }) }}
   <div class="govuk-grid-row govuk-width-container">
     {{ govukPhaseBanner({
