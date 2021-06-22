@@ -3,7 +3,7 @@
 */
 const questionBank = require('../config/question-bank')
 const { getYarValue } = require('../helpers/session')
-const urlPrefix = require('../config/server').urlPrefix
+const { urlPrefix, startPageUrl } = require('../config/server')
 
 module.exports = {
   plugin: {
@@ -28,7 +28,7 @@ module.exports = {
             })
           }
         }
-        if (result) return h.redirect(`${urlPrefix}/start`)
+        if (result) return h.redirect(startPageUrl)
         if (score) return h.redirect(`${urlPrefix}/project-summary`).takeover()
         return h.continue
       })

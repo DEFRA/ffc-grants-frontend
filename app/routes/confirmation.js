@@ -4,12 +4,12 @@ const createMsg = require('../messaging/create-msg')
 const protectiveMonitoringServiceSendEvent = require('../services/protective-monitoring-service')
 const { getYarValue } = require('../helpers/session')
 const gapiService = require('../services/gapi-service')
-const urlPrefix = require('../config/server').urlPrefix
+const { urlPrefix, startPageUrl } = require('../config/server')
 const { appInsights } = require('ffc-messaging')
 
 const viewTemplate = 'confirmation'
 const currentPath = `${urlPrefix}/${viewTemplate}`
-const startPath = `${urlPrefix}/start`
+const startPath = startPageUrl
 
 module.exports = {
   method: 'GET',

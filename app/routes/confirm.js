@@ -1,13 +1,13 @@
 const Joi = require('joi')
 const { setLabelData } = require('../helpers/helper-functions')
 const { setYarValue, getYarValue } = require('../helpers/session')
-const urlPrefix = require('../config/server').urlPrefix
+const { urlPrefix, startPageUrl } = require('../config/server')
 
 const viewTemplate = 'confirm'
 const currentPath = `${urlPrefix}/${viewTemplate}`
 const previousPath = `${urlPrefix}/farmer-details`
 const nextPath = `${urlPrefix}/confirmation`
-const startPath = `${urlPrefix}/start`
+const startPath = startPageUrl
 
 const CONSENT_OPTIONAL = 'CONSENT_OPTIONAL'
 

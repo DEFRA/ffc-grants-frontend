@@ -26,9 +26,9 @@ async function createServer () {
 
   await server.register(inert)
   await server.register(vision)
+  await server.register(require('./plugins/cookies'))
   await server.register(require('./plugins/error-pages'))
   await server.register(require('./plugins/pageGuard'))
-  await server.register(require('./plugins/cookies'))
   await server.register({
     plugin: require('./plugins/header'),
     options: {
@@ -122,7 +122,8 @@ async function createServer () {
       govukAssetpath: '/assets',
       serviceName: 'FFC Grants Service',
       pageTitle: 'FFC Grants Service - GOV.UK',
-      googleTagManagerKey: config.googleTagManagerKey
+      googleTagManagerKey: config.googleTagManagerKey,
+      startPageUrl: config.startPageUrl
     }
   })
 

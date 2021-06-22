@@ -2,11 +2,11 @@ const Joi = require('joi')
 const { setYarValue, getYarValue } = require('../helpers/session')
 const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
 const gapiService = require('../services/gapi-service')
-const urlPrefix = require('../config/server').urlPrefix
+const { urlPrefix, startPageUrl } = require('../config/server')
 
 const viewTemplate = 'farming-type'
 const currentPath = `${urlPrefix}/${viewTemplate}`
-const previousPath = `${urlPrefix}/start`
+const previousPath = startPageUrl
 const nextPath = `${urlPrefix}/legal-status`
 
 function createModel (errorMessage, data) {
@@ -43,6 +43,7 @@ module.exports = [
     method: 'GET',
     path: currentPath,
     handler: (request, h) => {
+      setYarValue(request, 'journey-start-time', Date.now())
       const farmingType = getYarValue(request, 'farmingType')
       const data = farmingType || null
       return h.view(viewTemplate, createModel(null, data))
