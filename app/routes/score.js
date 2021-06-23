@@ -83,7 +83,6 @@ module.exports = [{
 
       if (msgData) {
         msgData.desirability.questions.push(irrigationStatusObject, cropObject)
-        console.log(msgData.desirability.questions)
         const questions = msgData.desirability.questions.map(desirabilityQuestion => {
           const bankQuestion = questionBank.questions.filter(bankQuestionD => bankQuestionD.key === desirabilityQuestion.key)[0]
           desirabilityQuestion.title = bankQuestion.title
