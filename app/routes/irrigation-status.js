@@ -14,7 +14,7 @@ function createModel (errorMessage, data) {
     backLink: previousPath,
     formActionPage: currentPath,
     radios: {
-      classes: '',
+      classes: 'govuk-radios--inline',
       idPrefix: 'currentlyIrrigating',
       name: 'currentlyIrrigating',
       fieldset: {
