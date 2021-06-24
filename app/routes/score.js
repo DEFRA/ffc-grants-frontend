@@ -5,6 +5,8 @@ const questionBank = require('../config/question-bank')
 const pollingConfig = require('../config/polling')
 const gapiService = require('../services/gapi-service')
 const { setYarValue, getYarValue } = require('../helpers/session')
+const { addSummaryRow } = require('../helpers/score-helpers')
+
 const urlPrefix = require('../config/server').urlPrefix
 
 const viewTemplate = 'score'
@@ -74,25 +76,13 @@ module.exports = [{
       // If msgData is null then 500 page will be triggered when trying to access object below
       const msgData = await getResult(request.yar.id)
       const crop = questionBank.questions.find(question => question.key === 'Q15')
-      const questionObject = {
-        key: crop.key,
-        answers: [
-          {
-            key: crop.key,
-            title: crop.title,
-            input: [{ value: request.yar.get('irrigatedCrops') }]
-          }],
-        title: crop.title,
-        desc: crop.desc ?? '',
-        url: crop.url,
-        order: 15,
-        unit: crop?.unit,
-        pageTitle: crop.pageTitle,
-        fundingPriorities: crop.fundingPriorities
-      }
-      if (msgData) {
-        msgData.desirability.questions.push(questionObject)
+      const irrigationStatus = questionBank.questions.find(question => question.key === 'Q15.1')
 
+      const cropObject = addSummaryRow(crop, request)
+      const irrigationStatusObject = addSummaryRow(irrigationStatus, request)
+
+      if (msgData) {
+        msgData.desirability.questions.push(irrigationStatusObject, cropObject)
         const questions = msgData.desirability.questions.map(desirabilityQuestion => {
           const bankQuestion = questionBank.questions.filter(bankQuestionD => bankQuestionD.key === desirabilityQuestion.key)[0]
           desirabilityQuestion.title = bankQuestion.title
