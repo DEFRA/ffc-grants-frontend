@@ -103,11 +103,14 @@ module.exports = [{
             break
         }
         setYarValue(request, 'current-score', msgData.desirability.overallRating.band)
-        await gapiService.sendDimensionOrMetric(request, {
+        await gapiService.sendDimensionOrMetrics(request, [{
           dimensionOrMetric: gapiService.dimensions.SCORE,
           value: msgData.desirability.overallRating.band
-        })
-        await gapiService.sendJourneyTime(request, gapiService.metrics.SCORE)
+        },
+        {
+          dimensionOrMetric: gapiService.metrics.SCORE,
+          value: 'TIME'
+        }])
         return h.view('score', createModel({
           titleText: msgData.desirability.overallRating.band,
           scoreData: msgData,

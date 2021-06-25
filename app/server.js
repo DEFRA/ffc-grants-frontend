@@ -1,5 +1,4 @@
 const hapi = require('@hapi/hapi')
-const HapiGapi = require('@defra/hapi-gapi')
 const nunjucks = require('nunjucks')
 const vision = require('@hapi/vision')
 const path = require('path')
@@ -57,7 +56,7 @@ async function createServer () {
   })
   // GTM Server side
   await server.register({
-    plugin: HapiGapi,
+    plugin: require('./plugins/gapi'),
     options: {
       propertySettings: [
         {

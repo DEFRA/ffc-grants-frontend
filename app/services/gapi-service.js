@@ -5,7 +5,9 @@ const dimensions = {
   FINALSCORE: 'cd2',
   CONFIRMATION: 'cd5',
   ELIMINATION: 'cd6',
-  AGENTFORMER: 'cd3'
+  AGENTFORMER: 'cd3',
+  ANALYTICS: 'cd4',
+  DUP_PAGEVIEW: 'cd7'
 }
 const metrics = {
   SCORE: 'cm3',
@@ -45,7 +47,9 @@ const sendDimensionOrMetric = async (request, { dimensionOrMetric, value }) => {
   try {
     const dmetrics = {}
     dmetrics[dimensionOrMetric] = value
+    dmetrics[dimensions.DUP_PAGEVIEW] = false
     await request.ga.pageView(dmetrics)
+    console.log(dmetrics, 'CD')
   } catch (err) {
     appInsights.logException(request, { error: err })
   }
@@ -54,22 +58,32 @@ const sendDimensionOrMetrics = async (request, dimenisons) => {
   try {
     const dmetrics = {}
     dimenisons.forEach(item => {
+      if (item.value === 'TIME') {
+        item.value = getTimeofJourneySinceStart(request).toString()
+      }
       dmetrics[item.dimensionOrMetric] = item.value
     })
+    dmetrics[dimensions.DUP_PAGEVIEW] = false
+    console.log(dmetrics, 'CD')
     await request.ga.pageView(dmetrics)
   } catch (err) {
     appInsights.logException(request, { error: err })
   }
 }
 const sendEligibilityEvent = async (request, isEligible = true) => {
-  await sendDimensionOrMetric(request, {
-    dimensionOrMetric: dimensions.ELIMINATION,
-    value: isEligible
-  })
   if (!isEligible) {
-    await sendDimensionOrMetric(request, {
+    await sendDimensionOrMetrics(request, [{
       dimensionOrMetric: metrics.ELIMINATION,
       value: getTimeofJourneySinceStart(request).toString()
+    },
+    {
+      dimensionOrMetric: dimensions.ELIMINATION,
+      value: isEligible
+    }])
+  } else {
+    await sendDimensionOrMetric(request, {
+      dimensionOrMetric: dimensions.ELIMINATION,
+      value: isEligible
     })
   }
 }
