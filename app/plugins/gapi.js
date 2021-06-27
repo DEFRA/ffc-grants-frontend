@@ -1,5 +1,5 @@
 const Analytics = require('@defra/hapi-gapi/lib/analytics')
-const gapiService = require('../services/gapi-service')
+const { getYarValue, setYarValue } = require('../helpers/session')
 exports.plugin = {
   name: 'Gapi',
   /**
@@ -17,15 +17,14 @@ exports.plugin = {
       try {
         const response = request.response
         const statusFamily = Math.floor(response.statusCode / 100)
-        if (statusFamily === 2 && response.variety === 'view') {
+        if (statusFamily === 2 && response.variety === 'view' && (getYarValue(request, 'GA-Sent') ?? false) === false) {
           console.log('Sending analytics page-view for %s', request.route.path)
-          const dmetrics = {}
-          dmetrics[gapiService.dimensions.DUP_PAGEVIEW] = true
-          await request.ga.pageView(dmetrics)
+          await request.ga.pageView()
         } else if (statusFamily === 5) {
           console.log('Sending exception event for route %s with with status code %s', request.route.path, response.statusCode)
           await request.ga.event({ category: 'Exception', action: request.route.path, label: response.statusCode })
         }
+        setYarValue(request, 'GA-Sent', false)
       } catch {
         // ignore any error
       }

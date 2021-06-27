@@ -1,13 +1,12 @@
 const appInsights = require('./app-insights')
-const { getYarValue } = require('../helpers/session')
+const { getYarValue, setYarValue } = require('../helpers/session')
 const dimensions = {
   SCORE: 'cd1',
   FINALSCORE: 'cd2',
   CONFIRMATION: 'cd5',
   ELIMINATION: 'cd6',
   AGENTFORMER: 'cd3',
-  ANALYTICS: 'cd4',
-  DUP_PAGEVIEW: 'cd7'
+  ANALYTICS: 'cd4'
 }
 const metrics = {
   SCORE: 'cm3',
@@ -47,9 +46,8 @@ const sendDimensionOrMetric = async (request, { dimensionOrMetric, value }) => {
   try {
     const dmetrics = {}
     dmetrics[dimensionOrMetric] = value
-    dmetrics[dimensions.DUP_PAGEVIEW] = false
     await request.ga.pageView(dmetrics)
-    console.log(dmetrics, 'CD')
+    setYarValue(request, 'GA-Sent', true)
   } catch (err) {
     appInsights.logException(request, { error: err })
   }
@@ -63,9 +61,8 @@ const sendDimensionOrMetrics = async (request, dimenisons) => {
       }
       dmetrics[item.dimensionOrMetric] = item.value
     })
-    dmetrics[dimensions.DUP_PAGEVIEW] = false
-    console.log(dmetrics, 'CD')
     await request.ga.pageView(dmetrics)
+    setYarValue(request, 'GA-Sent', true)
   } catch (err) {
     appInsights.logException(request, { error: err })
   }
