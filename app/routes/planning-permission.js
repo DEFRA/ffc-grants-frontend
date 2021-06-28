@@ -2,6 +2,7 @@ const Joi = require('joi')
 const { setYarValue, getYarValue } = require('../helpers/session')
 const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
 const { LICENSE_NOT_NEEDED, LICENSE_SECURED, LICENSE_EXPECTED, LICENSE_WILL_NOT_HAVE } = require('../helpers/license-dates')
+const gapiService = require('../services/gapi-service')
 
 function createModel (errorMessage, data) {
   return {
@@ -50,10 +51,10 @@ module.exports = [
           return h.view('planning-permission', createModel(errorMessage)).takeover()
         }
       },
-      handler: (request, h) => {
+      handler: async (request, h) => {
         const { planningPermission } = request.payload
         setYarValue(request, 'planningPermission', planningPermission)
-
+        await gapiService.sendEligibilityEvent(request, planningPermission === LICENSE_WILL_NOT_HAVE)
         if (planningPermission === LICENSE_WILL_NOT_HAVE) {
           return h.view('not-eligible', NOT_ELIGIBLE)
         }

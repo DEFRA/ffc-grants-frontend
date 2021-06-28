@@ -2,6 +2,7 @@
 const { updatePolicy } = require('../cookies')
 const Joi = require('joi')
 const authConfig = require('../config/auth')
+const gapiService = require('../services/gapi-service')
 
 function createModel (cookiesPolicy = {}, updated = false) {
   return {
@@ -67,9 +68,9 @@ module.exports = [{
     },
     handler: async (request, h) => {
       updatePolicy(request, h, request.payload.analytics)
-      await request.ga.event({
-        category: 'Analytics',
-        action: request.payload.analytics ? 'Accepted' : 'Rejected'
+      await gapiService.sendDimensionOrMetric(request, {
+        dimensionOrMetric: gapiService.dimensions.ANALYTICS,
+        value: request.payload.analytics ? 'Accepted' : 'Rejected'
       })
       if (request.payload.async) {
         return h.response('ok')
