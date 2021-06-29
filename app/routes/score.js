@@ -12,7 +12,7 @@ const urlPrefix = require('../config/server').urlPrefix
 const viewTemplate = 'score'
 const currentPath = `${urlPrefix}/${viewTemplate}`
 const previousPath = `${urlPrefix}/collaboration`
-const nextPath = `${urlPrefix}/next-steps`
+const nextPath = `${urlPrefix}/business-details`
 const startPath = `${urlPrefix}/start`
 
 function createModel (data) {

@@ -6,7 +6,7 @@ const urlPrefix = require('../config/server').urlPrefix
 
 const viewTemplate = 'business-details'
 const currentPath = `${urlPrefix}/${viewTemplate}`
-const previousPath = `${urlPrefix}/next-steps`
+const previousPath = `${urlPrefix}/score`
 const nextPath = `${urlPrefix}/applying`
 
 function createModel (errorMessageList, businessDetails) {
