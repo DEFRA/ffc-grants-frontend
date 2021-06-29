@@ -76,13 +76,10 @@ module.exports = [{
       // If msgData is null then 500 page will be triggered when trying to access object below
       const msgData = await getResult(request.yar.id)
       const crop = questionBank.questions.find(question => question.key === 'Q15')
-      const irrigationStatus = questionBank.questions.find(question => question.key === 'Q15.1')
 
       const cropObject = addSummaryRow(crop, request)
-      const irrigationStatusObject = addSummaryRow(irrigationStatus, request)
-
       if (msgData) {
-        msgData.desirability.questions.push(irrigationStatusObject, cropObject)
+        msgData.desirability.questions.push(cropObject)
         const questions = msgData.desirability.questions.map(desirabilityQuestion => {
           const bankQuestion = questionBank.questions.filter(bankQuestionD => bankQuestionD.key === desirabilityQuestion.key)[0]
           desirabilityQuestion.title = bankQuestion.title

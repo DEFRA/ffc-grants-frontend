@@ -5,7 +5,7 @@ function addSummaryRow (object, request) {
     answers: [
       {
         key: object.key,
-        title: object.title,
+        title: object.pageTitle,
         input: [{ value: request.yar.get(object.yarKey) }]
       }],
     title: object.title,
