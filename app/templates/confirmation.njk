@@ -7,9 +7,11 @@
 {% block pageTitle %}
   {{siteTitle}} - Reference 
 {% endblock %}
+
 {% block content %}
   {{ govukPanel(output) }}
-<div class="govuk-width-container">
+
+  <div class="govuk-width-container">
     <div class="govuk-main-wrapper--auto-spacing">
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds  govuk-body">
@@ -20,17 +22,20 @@
           <p><a target="_blank" href="https://www.gov.uk/call-charges">Find out about call charges</a></p> 
         </div>
       </div>
+
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds  govuk-body">
           <p>RPA will be in touch when the full application period opens. They’ll tell you about the application form and any guidance you need to submit a full application.</p>
         </div>
       </div>
+
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds  govuk-body">
         {{ govukWarningText({
-          html: "<h2 class='govuk-heading-m'>You must not start the project.</h2>",
-          iconFallbackText: "Warning"
-        }) }}
+            html: "<h2 class='govuk-heading-m'>You must not start the project.</h2>",
+            iconFallbackText: "Warning"
+          })
+        }}
         <p>Starting the project or committing to any costs (such as placing orders) before you receive a funding agreement will invalidate your application.</p> 
         <p>Before you start the project, you can:</p>
         <ul>
@@ -40,5 +45,6 @@
         <p><b>You will not automatically get a grant.</b> The grant is expected to be highly competitive and you are competing against other projects.</p>
     </div>
   </div>
+
   <p class="govuk-body"><a href={{ output.surveyLink }} target="_blank" rel="noopener noreferrer">What do you think of this service?</a></p>
 {% endblock %}
