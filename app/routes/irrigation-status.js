@@ -9,7 +9,7 @@ const currentPath = `${urlPrefix}/${viewTemplate}`
 const previousPath = `${urlPrefix}/irrigated-crops`
 const nextPath = `${urlPrefix}/irrigated-land`
 
-function createModel (errorMessage, data) {
+function createModel (errorMessage, data, hasScore) {
   return {
     backLink: previousPath,
     formActionPage: currentPath,
@@ -36,7 +36,7 @@ module.exports = [
     path: currentPath,
     handler: (request, h) => {
       const currentlyIrrigating = getYarValue(request, 'currentlyIrrigating') || null
-      return h.view(viewTemplate, createModel(null, currentlyIrrigating))
+      return h.view(viewTemplate, createModel(null, currentlyIrrigating, getYarValue(request, 'current-score')))
     }
   },
   {
