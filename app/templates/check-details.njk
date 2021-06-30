@@ -20,25 +20,13 @@
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
         <h1 class="govuk-heading-xl">Check your details</h1>
+        
       {% if businessDetails %}
-      {{ govukSummaryList({
-        rows: [
-          {
-            key: {
-              html: '<p class="govuk-body govuk-!-font-size-24"><strong>Business details</strong></p>'
-            },
-            actions: {
-              items: [
-                {
-                  href: businessDetailsLink,
-                  text: "Change",
-                  visuallyHiddenText: "business details"
-                }
-              ]
-            }
-          }
-        ]
-      }) }}
+
+      <div>
+        <h2 class="govuk-heading-m check-detail-heading">Business details</h2><a class="check-detail-change" href="{{businessDetailsLink}}">Change</a>
+      </div>
+      
       {{ govukSummaryList({
         rows: [
           {
@@ -86,29 +74,11 @@
       }) }}
 
       {% endif %}
-      <br/>
+  
       {% if agentDetails %}
-      {{ govukSummaryList({
-        rows: [
-          {
-            key: {
-              html: "<h4>Agent's details</h4>"
-            },
-            value: {
-              text: ""
-            },
-            actions: {
-              items: [
-                {
-                  href: agentDetailsLink,
-                  text: "Change",
-                  visuallyHiddenText: "agent-details"
-                }
-              ]
-            }
-          }
-        ]
-      }) }}
+      <div>
+        <h2 class="govuk-heading-m check-detail-heading">Agent's details</h2><a class="check-detail-change" href="{{agentDetailsLink}}">Change</a>
+      </div>
       {{ govukSummaryList({
         rows: [
           {
@@ -174,34 +144,9 @@
             }
           }
         ] %}
-
-      {% if farmerGender %}
-      {% set farmerSummaryItems = (farmerSummaryItems.splice(1, 0,{
-            
-          }), farmerSummaryItems)%}
-      {% endif %}
-
-      {{ govukSummaryList({
-        rows: [
-          {
-            key: {
-              html: "<h4>Farmer's details</h4>"
-            },
-            value: {
-              text: ""
-            },
-            actions: {
-              items: [
-                {
-                  href: farmerDetailsLink,
-                  text: "Change",
-                  visuallyHiddenText: "farmer-details"
-                }
-              ]
-            }
-          }
-        ]
-      }) }}
+<div>
+    <h2 class="govuk-heading-m check-detail-heading">Farmer's details</h2><a class="check-detail-change" href="{{farmerDetailsLink}}">Change</a>
+</div>
       {{ govukSummaryList({ rows: farmerSummaryItems }) }}
       {% endif %}
 
@@ -218,218 +163,3 @@
     </div>
   </div>
 {% endblock %}
-
-
-
-
-/////////////////////////////
-
-[14:22] Nagy, Robert
-    
-{​​​​​​​% extends "layout.html" %}​​​​​​​
-
-
-{​​​​​​​% block pageTitle %}​​​​​​​
-  Check your answers
-{​​​​​​​% endblock %}​​​​​​​
-{​​​​​​​% from "govuk/components/back-link/macro.njk" import govukBackLink %}​​​​​​​
-{​​​​​​​% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}​​​​​​​
-{​​​​​​​% from "govuk/components/button/macro.njk" import govukButton %}​​​​​​​
-
-
-{​​​​​​​% block beforeContent %}​​​​​​​
-  {​​​​​​​{​​​​​​​ govukBackLink({​​​​​​​
-    text: "Back",
-    href: "#"
-  }​​​​​​​) }​​​​​​​}​​​​​​​
-{​​​​​​​% endblock %}​​​​​​​
-
-
-{​​​​​​​% block content %}​​​​​​​
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds-from-desktop">
-
-
-      <h1 class="govuk-heading-l">Check your answers before sending your application</h1>
-
-
-      <h2 class="govuk-heading-m">Personal details</h2>
-
-
-      {​​​​​​​{​​​​​​​ govukSummaryList({​​​​​​​
-        classes: 'govuk-!-margin-bottom-9',
-        rows: [
-          {​​​​​​​
-            key: {​​​​​​​
-              text: "Name"
-            }​​​​​​​,
-            value: {​​​​​​​
-              text: "Sarah Philips"
-            }​​​​​​​,
-            actions: {​​​​​​​
-              items: [
-                {​​​​​​​
-                  href: "#",
-                  text: "Change",
-                  visuallyHiddenText: "name"
-                }​​​​​​​
-              ]
-            }​​​​​​​
-          }​​​​​​​,
-          {​​​​​​​
-            key: {​​​​​​​
-              text: "Date of birth"
-            }​​​​​​​,
-            value: {​​​​​​​
-              text: "5 January 1978"
-            }​​​​​​​,
-            actions: {​​​​​​​
-              items: [
-                {​​​​​​​
-                  href: "#",
-                  text: "Change",
-                  visuallyHiddenText: "date of birth"
-                }​​​​​​​
-              ]
-            }​​​​​​​
-          }​​​​​​​,
-          {​​​​​​​
-            key: {​​​​​​​
-              text: "Address"
-            }​​​​​​​,
-            value: {​​​​​​​
-              html: "72 Guild Street<br>London<br>SE23 6FH"
-            }​​​​​​​,
-            actions: {​​​​​​​
-              items: [
-                {​​​​​​​
-                  href: "#",
-                  text: "Change",
-                  visuallyHiddenText: "address"
-                }​​​​​​​
-              ]
-            }​​​​​​​
-          }​​​​​​​,
-          {​​​​​​​
-            key: {​​​​​​​
-              text: "Contact details"
-            }​​​​​​​,
-            value: {​​​​​​​
-              html: '<p class="govuk-body">07700 900457</p><p class="govuk-body">sarah.phillips@example.com</p>'
-            }​​​​​​​,
-            actions: {​​​​​​​
-              items: [
-                {​​​​​​​
-                  href: "#",
-                  text: "Change",
-                  visuallyHiddenText: "contact details"
-                }​​​​​​​
-              ]
-            }​​​​​​​
-          }​​​​​​​
-        ]
-      }​​​​​​​) }​​​​​​​}​​​​​​​
-
-
-
-      <h2 class="govuk-heading-m">Application details</h2>
-
-
-      {​​​​​​​{​​​​​​​ govukSummaryList({​​​​​​​
-        classes: 'govuk-!-margin-bottom-9',
-        rows: [
-          {​​​​​​​
-            key: {​​​​​​​
-              text: "Previous application number"
-            }​​​​​​​,
-            value: {​​​​​​​
-              text: "502135326"
-            }​​​​​​​,
-            actions: {​​​​​​​
-              items: [
-                {​​​​​​​
-                  href: "#",
-                  text: "Change",
-                  visuallyHiddenText: "previous application number"
-                }​​​​​​​
-              ]
-            }​​​​​​​
-          }​​​​​​​,
-          {​​​​​​​
-            key: {​​​​​​​
-              text: "Licence type"
-            }​​​​​​​,
-            value: {​​​​​​​
-              text: "For personal use"
-            }​​​​​​​,
-            actions: {​​​​​​​
-              items: [
-                {​​​​​​​
-                  href: "#",
-                  text: "Change",
-                  visuallyHiddenText: "licence type"
-                }​​​​​​​
-              ]
-            }​​​​​​​
-          }​​​​​​​,
-          {​​​​​​​
-            key: {​​​​​​​
-              text: "Home address"
-            }​​​​​​​,
-            value: {​​​​​​​
-              html: "72 Guild Street<br>London<br>SE23 6FH"
-            }​​​​​​​,
-            actions: {​​​​​​​
-              items: [
-                {​​​​​​​
-                  href: "#",
-                  text: "Change",
-                  visuallyHiddenText: "home address"
-                }​​​​​​​
-              ]
-            }​​​​​​​
-          }​​​​​​​,
-          {​​​​​​​
-            key: {​​​​​​​
-              text: "Licence period"
-            }​​​​​​​,
-            value: {​​​​​​​
-              text: "Valid for 6 months"
-            }​​​​​​​,
-            actions: {​​​​​​​
-              items: [
-                {​​​​​​​
-                  href: "#",
-                  text: "Change",
-                  visuallyHiddenText: "licence period"
-                }​​​​​​​
-              ]
-            }​​​​​​​
-          }​​​​​​​
-        ]
-      }​​​​​​​) }​​​​​​​}​​​​​​​
-
-
-      <h2 class="govuk-heading-m">Now send your application</h2>
-
-
-      <p class="govuk-body">By submitting this notification you are confirming that, to the best of your knowledge, the details you are providing are correct.</p>
-
-
-      <form action="/form-handler" method="post" novalidate>
-
-
-        <input type="hidden" name="answers-checked" value="true">
-
-
-        {​​​​​​​{​​​​​​​ govukButton({​​​​​​​
-          text: "Accept and send"
-        }​​​​​​​) }​​​​​​​}​​​​​​​
-
-
-      </form>
-
-
-    </div>
-  </div>
-{​​​​​​​% endblock %}​​​​​​​
