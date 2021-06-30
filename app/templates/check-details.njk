@@ -25,6 +25,7 @@
 
       <div>
         <h2 class="govuk-heading-m check-detail-heading">Business details</h2><a class="check-detail-change" href="{{businessDetailsLink}}">Change</a>
+        <hr/>
       </div>
       
       {{ govukSummaryList({
@@ -78,6 +79,7 @@
       {% if agentDetails %}
       <div>
         <h2 class="govuk-heading-m check-detail-heading">Agent's details</h2><a class="check-detail-change" href="{{agentDetailsLink}}">Change</a>
+        <hr/>
       </div>
       {{ govukSummaryList({
         rows: [
@@ -146,6 +148,7 @@
         ] %}
 <div>
     <h2 class="govuk-heading-m check-detail-heading">Farmer's details</h2><a class="check-detail-change" href="{{farmerDetailsLink}}">Change</a>
+    <hr/>
 </div>
       {{ govukSummaryList({ rows: farmerSummaryItems }) }}
       {% endif %}
