@@ -22,18 +22,23 @@
 
 {% macro multiSideBar(sideBars) %}
   <div class="govuk-grid-column-one-third  govuk-!-padding-top-4 govuk-body">
-  <hr class="sideBarColor"/>
-  {% for sidebar in sideBars %}
-    <h2 class="govuk-heading-m" id="subsection-title">
-      {{ sidebar.heading }}
-    </h2>        
-    <p>{{sidebar.para  | striptags(true) | escape | nl2br }}</p>
-    <ul class="govuk-list govuk-list--bullet">
-      {% for item in sidebar.items %}
-        <li>{{ item }}</li>
+    <hr class="sideBarColor"/>
+
+    {% for sidebar in sideBars %}
+      <h2 class="govuk-heading-m" id="subsection-title">
+        {{ sidebar.heading }}
+      </h2>
+
+      {% for content in sidebar.content %}
+        <p>{{content.para  | striptags(true) | escape | nl2br }}</p>
+        <ul class="govuk-list govuk-list--bullet">
+          {% for item in content.items %}
+            <li>{{ item }}</li>
+          {% endfor %}
+        </ul>
       {% endfor %}
-    </ul>
-  {% endfor %}
+    {% endfor %}
+
   </div>
 {% endmacro %}
 
