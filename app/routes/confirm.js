@@ -5,7 +5,7 @@ const { urlPrefix, startPageUrl } = require('../config/server')
 
 const viewTemplate = 'confirm'
 const currentPath = `${urlPrefix}/${viewTemplate}`
-const previousPath = `${urlPrefix}/farmer-details`
+const previousPath = `${urlPrefix}/check-details`
 const nextPath = `${urlPrefix}/confirmation`
 const startPath = startPageUrl
 
