@@ -47,6 +47,7 @@ function createModel (errorMessageList, farmerDetails, backLink) {
     pageId: 'Farmer',
     formActionPage: currentPath,
     pageHeader: 'Farmer\'s details',
+    checkDetail: farmerDetails,
     inputFirstName: formInputObject('firstName', 'govuk-input--width-20', 'First name', null, firstName, firstNameError),
 
     inputLastName: formInputObject('lastName', 'govuk-input--width-20', 'Last name', null, lastName, lastNameError),
