@@ -24,9 +24,6 @@ function createModel (errorMessage, data, formattedRemainingCost) {
           classes: 'govuk-fieldset__legend--l'
         }
       },
-      hint: {
-        html: 'You cannot use any grant funding from government or local authorities. You can use money from the Basic Payment Scheme or agri-environment schemes such as Countryside Stewardship Scheme.</br><br/>'
-      },
       items: setLabelData(data, ['Yes', 'No']),
       ...(errorMessage ? { errorMessage: { text: errorMessage } } : {})
     }
@@ -37,7 +34,10 @@ function createModelNotEligible () {
   return {
     backLink: currentPath,
     messageContent:
-      'You cannot use public money (for example grant funding from government or local authorities) towards the project costs.<br/><br/>You can use loans, overdrafts and certain other grants, such as the Basic Payment Scheme or agri-environment schemes such as the Countryside Stewardship Scheme.',
+      'You cannot use public money (for example, grant funding from government or local authorities) towards the project costs.',
+    insertText: {
+      text: 'You can use loans, overdrafts and certain other grants, such as the Basic Payment Scheme or agri-environment schemes such as the Countryside Stewardship Scheme.'
+    },
     messageLink: {
       url: 'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments',
       title: 'See other grants you may be eligible for.'
