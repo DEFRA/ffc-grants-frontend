@@ -19,60 +19,80 @@
   <div class="govuk-body">
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
-        <h1 class="govuk-heading-xl">Your project’s score</h1>
+        <h1 class="govuk-heading-xl">Scoring results</h1>
+        <p class="govuk-!-font-size-24">Based on your answers, your project’s score is:</p>
         <div class="govuk-inset-text">
-          <p>Based on your answers, your project’s score is:</p>
           <h2 class="govuk-heading-m">{{scoreData.desirability.overallRating.band}}</h2>
           <p>This means your project {{scoreChance}} be successful.</p>
         </div>
-        <h1 class="govuk-heading-m">Scoring</h1>
-        <p class="govuk-body"><span class="govuk-!-font-weight-bold">Strong:</span>
-          Your project seems like it’s a strong fit with the funding priorities. Based on your answers, a grant application seems likely to be successful. </p>
-        <p class="govuk-body"><span class="govuk-!-font-weight-bold">Average:</span>
-          Your project seems like it’s an average fit with the funding priorities. Based on your answers, a grant application seems like it might be successful.</p>
-        <p class="govuk-body"><span class="govuk-!-font-weight-bold">Weak:</span>
-          Your project seems like it’s a weak fit with the funding priorities. Based on your answers, a grant application seems unlikely to be successful.</p>
+
+        <div class="scoring-block">
+          <dl class="govuk-body">
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key govuk-!-font-size-16">
+                Strong
+              </dt>
+              <dd class="govuk-summary-list__value govuk-!-font-size-16">
+                Your project seems like it’s a strong fit with the funding priorities. Based on your answers, a grant application seems likely to be successful. 
+              </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key govuk-!-font-size-16">
+                Average
+              </dt>
+              <dd class="govuk-summary-list__value govuk-!-font-size-16">
+                Your project seems like it’s a weak fit with the funding priorities.  Based on your answers, a grant application seems unlikely to be successful.  
+              </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+              <dt class="scoring-block-key govuk-!-font-size-16">
+                Weak
+              </dt>
+              <dd class="scoring-block-value govuk-!-font-size-16">
+                Your project seems like it’s an average fit with the funding priorities.  Based on your answers, a grant application seems like it might be successful. 
+              </dd>
+            </div>
+          </dl>
+        </div>
       </div>
     </div>
+
     <div class="govuk-grid-row">
-  <div class="govuk-grid-column-full">
-    <br>
-    <h1 class="govuk-heading-l">Your answers</h1>
-    <p>You can go back through the checker as many times as you like but you can only submit your details once. Once you’re happy that your answers accurately reflect your project, add your contact details.</p>
-  <table class="govuk-table">
-    <thead class="govuk-table__head">
+      <div class="govuk-grid-column-two-thirds">
+        <br>
+        <h1 class="govuk-heading-l">Your scoring answers</h1>
+        <p>You can go back through the checker as many times as you like but you can only submit your details once. Once you’re happy that your answers accurately reflect your project, add your contact details.</p>
+
+      <table class="govuk-table govuk-body govuk-!-font-size-16">
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">Answers</th>
+            <th scope="col" class="govuk-table__header">Your score</th>
+            <th scope="col" class="govuk-table__header ">Funding priorities</th>
+            <th scope="col" class="govuk-table__header"> </th>
+          </tr>
+        </thead>
+
+      <tbody class="govuk-table__body">
+        {% for question in questions %}
         <tr class="govuk-table__row">
-        <th scope="col" class="govuk-table__header govuk-!-width-one-third">Sections</th>
-        <th scope="col" class="govuk-table__header govuk-!-padding-left-3">Your score</th>
-        <th scope="col" class="govuk-table__header  govuk-!-padding-left-8">Funding priorities</th>
-        <th scope="col" class="govuk-table__header">Change answers</th>
-      </tr>
-    </thead>
-    <tbody class="govuk-table__body">
-
-    {% for question in questions %}
-      <tr class="govuk-table__row">
-        <th scope="row" class="govuk-table__header">
-        {{question.pageTitle}}
-        <br><br>
+          <th scope="row" class="govuk-table__header">
             {% for answer in question.answers %}
-            <p class=" govuk-body">{{answer.title}}</p>
-          <ul class="govuk-list govuk-list--bullet">
-            {% for selectedAns in answer.input %}
-              <li>{{selectedAns.value}} {{question.unit}}</li>
+              {{answer.title}}
+              <ul class="govuk-list govuk-list--bullet govuk-!-font-size-16">
+                {% for selectedAns in answer.input %}
+                <li>{{selectedAns.value}} {{question.unit}}</li>
+                {% endfor %}
+              </ul>
             {% endfor %}
+          </th>
 
-          </ul>
-            {% endfor %}
-        </th>
-      <td class="govuk-table__cell govuk-!-padding-left-3">
+      <td class="govuk-table__cell">
       <br><br>
         {{ question.rating.band }}
       </td>
       <td class="govuk-table__cell">
-        <div class="govuk-!-padding-left-8">
-        <p>{{question.fundingPriorities | safe}}</p>
-        </div>
+        {{question.fundingPriorities | safe}}
       </td>
       <td class="govuk-table__cell">
           <br><br>
@@ -86,14 +106,17 @@
 </table>
 
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
+    <h2 class="govuk-heading-m">Next steps</h2>
+    <p class="govuk-body">Next, add your business and contact details and submit them to the RPA (you should only do this once).</p>
+    <p>You’ll get an email with your score and answers, and a reference number.</p>
+
+<br/><br/>
     <form method="POST" action="{{ formActionPage }}" autocomplete="off" novalidate>
       {{ crumbToken(crumb)}}
       {{ govukButton({
         text: "Continue"
       }) }}
     </form>
-  </div>
 </div>
 {% endif %}
 {% endblock %}

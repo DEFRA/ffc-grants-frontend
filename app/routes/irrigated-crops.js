@@ -6,7 +6,6 @@ const urlPrefix = require('../config/server').urlPrefix
 const viewTemplate = 'irrigated-crops'
 const currentPath = `${urlPrefix}/${viewTemplate}`
 const previousPath = `${urlPrefix}/project-summary`
-const nextPath = `${urlPrefix}/irrigation-status`
 const scorePath = `${urlPrefix}/score`
 
 const createModel = (errorMessage, data, hasScore) => ({
@@ -52,6 +51,7 @@ module.exports = [
       validate: {
         payload: Joi.object({
           irrigatedCrops: Joi.string().required(),
+          score: Joi.any(),
           results: Joi.any()
 
         }),
@@ -63,6 +63,8 @@ module.exports = [
       },
       handler: (request, h) => {
         const results = request.payload.results
+        const hasScore = request.payload.score
+        const nextPath = hasScore ? `${urlPrefix}/irrigated-land` : `${urlPrefix}/irrigation-status`
         setYarValue(request, 'irrigatedCrops', request.payload.irrigatedCrops)
         return results ? h.redirect(scorePath) : h.redirect(nextPath)
       }

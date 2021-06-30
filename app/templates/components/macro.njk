@@ -38,19 +38,15 @@
 {% endmacro %}
 
 {% macro conditionalButtons (hasScore) %}
+{{ govukButton({
+            text: "Continue"
+          }) }} &nbsp;
   {% if hasScore %}
     {{ govukButton({
-          text: "Back to results",
-          name: "results",
-          value: "results"
-        }) }} &nbsp;
-          {{ govukButton({
-            classes: "govuk-button--secondary",
-            text: "Next question"
-        }) }}
-  {% else %}
-    {{ govukButton({
-            text: "Continue"
-          }) }}
+      classes: "govuk-button--secondary",
+      text: "Back to score",
+      name: "results",
+    value: "results"
+  }) }}
   {% endif %} 
 {% endmacro %}
