@@ -35,9 +35,6 @@
           {{ govukInput(inputBusinessName) }}
         {% endif %}
 
-        {% if genderRadio %}
-        {{ govukRadios(genderRadio) }}
-        {% endif %}
 
 
         <h1 class="govuk-heading-m">Contact details</h1><br/>
@@ -50,7 +47,7 @@
         {{ govukInput(inputTown) }}
         {{ govukSelect(selectCounty) }}
         {{ govukInput(inputPostcode) }}
-        {{ conditionalButtons(checkDetail) }}
+        {{ conditionalButtons(checkDetail,'Back to details') }}
 
       </form>
     </div>

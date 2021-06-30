@@ -8,8 +8,9 @@ const viewTemplate = 'business-details'
 const currentPath = `${urlPrefix}/${viewTemplate}`
 const previousPath = `${urlPrefix}/score`
 const nextPath = `${urlPrefix}/applying`
+const detailsPath = `${urlPrefix}/check-details`
 
-function createModel (errorMessageList, businessDetails) {
+function createModel (errorMessageList, businessDetails, hasDetails) {
   const {
     projectName,
     businessName,
@@ -31,6 +32,7 @@ function createModel (errorMessageList, businessDetails) {
 
   return {
     backLink: previousPath,
+    checkDetail: hasDetails,
     formActionPage: currentPath,
     inputProjectName: {
       id: 'projectName',
@@ -127,7 +129,7 @@ module.exports = [
         }
       }
 
-      return h.view(viewTemplate, createModel(null, businessDetails))
+      return h.view(viewTemplate, createModel(null, businessDetails, getYarValue(request, 'farmerDetails')))
     }
   },
   {
@@ -141,7 +143,8 @@ module.exports = [
           businessName: Joi.string().max(100).required(),
           numberEmployees: Joi.string().regex(NUMBER_REGEX).max(7).required(),
           businessTurnover: Joi.string().regex(NUMBER_REGEX).max(9).required(),
-          sbi: Joi.string().regex(NUMBER_REGEX).min(9).max(9).allow('')
+          sbi: Joi.string().regex(NUMBER_REGEX).min(9).max(9).allow(''),
+          results: Joi.any()
         }),
         failAction: (request, h, err) => {
           const [
@@ -155,19 +158,19 @@ module.exports = [
           const { projectName, businessName, numberEmployees, businessTurnover, sbi } = request.payload
           const businessDetails = { projectName, businessName, numberEmployees, businessTurnover, sbi }
 
-          return h.view(viewTemplate, createModel(errorMessageList, businessDetails)).takeover()
+          return h.view(viewTemplate, createModel(errorMessageList, businessDetails, getYarValue(request, 'farmerDetails'))).takeover()
         }
       },
       handler: (request, h) => {
         const {
-          projectName, businessName, numberEmployees, businessTurnover, sbi
+          projectName, businessName, numberEmployees, businessTurnover, sbi, results
         } = request.payload
 
         setYarValue(request, 'businessDetails', {
           projectName, businessName, numberEmployees, businessTurnover, sbi
         })
 
-        return h.redirect(nextPath)
+        return results ? h.redirect(detailsPath) : h.redirect(nextPath)
       }
     }
   }

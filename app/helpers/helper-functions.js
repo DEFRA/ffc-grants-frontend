@@ -48,27 +48,6 @@ function formInputObject (name, classes, text, hint, fieldName, fieldError, valu
   }
 }
 
-function getGender (backLink, applyingPath, gender, genderError) {
-  if (backLink === applyingPath) {
-    return {
-      genderRadio: {
-        idPrefix: 'gender',
-        name: 'gender',
-        fieldset: {
-          legend: {
-            text: 'Gender'
-          }
-        },
-        hint: {
-          text: 'We collect this equality data to improve our future schemes.'
-        },
-        items: setLabelData(gender, ['Female', 'Male', 'divider', 'Prefer not to say']),
-        ...(genderError ? { errorMessage: { text: genderError } } : {})
-      }
-    }
-  } else return { hiddenInput: formInputObject('gender', null, null, null, null, genderError, ' ') }
-}
-
 function getPostCodeHtml (postcodeData, error) {
   const postcode = postcodeData || ''
 
@@ -184,7 +163,6 @@ module.exports = {
   isChecked,
   setLabelData,
   formInputObject,
-  getGender,
   getPostCodeHtml,
   errorExtractor,
   getErrorMessage,
