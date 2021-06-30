@@ -129,7 +129,7 @@ module.exports = {
       key: 'Q15',
       order: 15,
       title: 'What main crops will be irrigated?',
-      pageTitle: 'Crops',
+      pageTitle: 'Main crop',
       fundingPriorities: 'Improve productivity',
       type: 'single-answer',
       url: 'irrigated-crops',

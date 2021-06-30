@@ -9,6 +9,29 @@ $govuk-assets-path: "~govuk-frontend/govuk/assets/";
   border: 1px solid #1d70b8;
 }
 
+.scoring-block {
+  background: #F8F8F8;
+  border: 1px solid #b1b4b6;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.scoring-block-key {
+  width: 30%;
+  padding: 10px 20px 10px 0;
+  text-align: left;
+  vertical-align: top;
+  font-weight: 700;
+  display: table-cell;
+}
+
+.scoring-block-value {
+  display: table-cell;
+  padding: 10px 20px 10px 0;
+  text-align: left;
+  vertical-align: top;
+}
+
 .js-enabled .nojs-hidden {
   display: block;
 }

@@ -19,7 +19,7 @@ function createModel (currentlyIrrigating, irrigatedLandCurrent, irrigatedLandTa
     ['irrigatedLandCurrentError', 'irrigatedLandTargetError']
   )
   return {
-    backLink: previousPath,
+    backLink: hasScore ? `${urlPrefix}/irrigated-crops` : previousPath,
     formActionPage: currentPath,
     hasScore: hasScore,
     currentlyIrrigating: (currentlyIrrigating === 'Yes' || currentlyIrrigating === 'yes'),
