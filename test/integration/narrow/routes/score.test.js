@@ -219,7 +219,7 @@ describe('Score page', () => {
     const responseScoreMessage = 'This means your project seems unlikely to be successful.'
     expect(response.payload).toContain(responseScoreMessage)
   })
-  it('redirects to project next steps page', async () => {
+  it('redirects to project business details page', async () => {
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/score`,
@@ -231,7 +231,7 @@ describe('Score page', () => {
 
     const postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/next-steps`)
+    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/business-details`)
   })
 
   afterEach(async () => {
