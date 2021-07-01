@@ -9,8 +9,9 @@ const viewTemplate = 'model-farmer-agent-details'
 const currentPath = `${urlPrefix}/agent-details`
 const previousPath = `${urlPrefix}/applying`
 const nextPath = `${urlPrefix}/farmer-details`
+const detailsPath = `${urlPrefix}/check-details`
 
-function createModel (errorMessageList, agentDetails) {
+function createModel (errorMessageList, agentDetails, hasDetails) {
   const {
     firstName,
     lastName,
@@ -46,6 +47,7 @@ function createModel (errorMessageList, agentDetails) {
     formActionPage: currentPath,
     pageId: 'Agent',
     pageHeader: 'Agent\'s details',
+    checkDetail: hasDetails,
     inputFirstName: formInputObject('firstName', 'govuk-input--width-20', 'First name', null, firstName, firstNameError),
 
     inputLastName: formInputObject('lastName', 'govuk-input--width-20', 'Last name', null, lastName, lastNameError),
@@ -102,7 +104,7 @@ module.exports = [
           postcode: null
         }
       }
-      return h.view(viewTemplate, createModel(null, agentDetails))
+      return h.view(viewTemplate, createModel(null, agentDetails, getYarValue(request, 'farmerDetails')))
     }
   },
   {
@@ -122,7 +124,8 @@ module.exports = [
           address2: Joi.string().allow(''),
           town: Joi.string().required(),
           county: Joi.string().required(),
-          postcode: Joi.string().replace(DELETE_POSTCODE_CHARS_REGEX, '').regex(POSTCODE_REGEX).trim().required()
+          postcode: Joi.string().replace(DELETE_POSTCODE_CHARS_REGEX, '').regex(POSTCODE_REGEX).trim().required(),
+          results: Joi.any()
         }),
         failAction: (request, h, err) => {
           const [
@@ -149,12 +152,12 @@ module.exports = [
 
           const { firstName, lastName, businessName, email, mobile, landline, address1, address2, town, county, postcode } = request.payload
           const agentDetails = { firstName, lastName, businessName, email, mobile, landline, address1, address2, town, county, postcode }
-          return h.view(viewTemplate, createModel(errorMessageList, agentDetails)).takeover()
+          return h.view(viewTemplate, createModel(errorMessageList, agentDetails, getYarValue(request, 'farmerDetails'))).takeover()
         }
       },
       handler: (request, h) => {
         const {
-          firstName, lastName, businessName, email, mobile, landline, address1, address2, town, county, postcode
+          firstName, lastName, businessName, email, mobile, landline, address1, address2, town, county, postcode, results
         } = request.payload
 
         const phoneErrors = {
@@ -165,14 +168,14 @@ module.exports = [
         if (!landline && !mobile) {
           return h.view(viewTemplate, createModel(phoneErrors, {
             firstName, lastName, businessName, email, mobile, landline, address1, address2, town, county, postcode
-          })).takeover()
+          }, getYarValue(request, 'farmerDetails'))).takeover()
         }
 
         setYarValue(request, 'agentDetails', {
           firstName, lastName, businessName, email, mobile, landline, address1, address2, town, county, postcode: postcode.split(/(?=.{3}$)/).join(' ').toUpperCase()
         })
 
-        return h.redirect(nextPath)
+        return results ? h.redirect(detailsPath) : h.redirect(nextPath)
       }
     }
   }

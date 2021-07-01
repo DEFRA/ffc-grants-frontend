@@ -16,7 +16,6 @@ function createModel (data) {
     farmerDetailsLink: farmerDetailsPath,
     businessDetails: data.businessDetails,
     farmerDetails: data.farmerDetails.firstName + ' ' + data.farmerDetails.lastName,
-    ...(!data.agentDetails ? { farmerGender: data.farmerDetails.gender } : {}),
     farmerAddressDetails: `${data.farmerDetails.address1}${(data.farmerDetails.address2 ?? '').length > 0 ? '<br/>' : ''}${data.farmerDetails.address2}<br/>${data.farmerDetails.town}<br/>${data.farmerDetails.county}<br/>${data.farmerDetails.postcode}`,
     farmerContactDetails: `${data.farmerDetails.email}${(data.farmerDetails.landline ?? '').length > 0 ? '<br/>' : ''}${data.farmerDetails.landline}<br/>${data.farmerDetails.mobile}`
   }

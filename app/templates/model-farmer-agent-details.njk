@@ -1,6 +1,6 @@
 {% extends '.layout.njk' %}
 
-{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "./components/macro.njk" import conditionalButtons %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
@@ -35,9 +35,6 @@
           {{ govukInput(inputBusinessName) }}
         {% endif %}
 
-        {% if genderRadio %}
-        {{ govukRadios(genderRadio) }}
-        {% endif %}
 
 
         <h1 class="govuk-heading-m">Contact details</h1><br/>
@@ -50,9 +47,8 @@
         {{ govukInput(inputTown) }}
         {{ govukSelect(selectCounty) }}
         {{ govukInput(inputPostcode) }}
-        {{ govukButton({
-          text: "Continue"
-        }) }}
+        {{ conditionalButtons(checkDetail,'Back to details') }}
+
       </form>
     </div>
   </div>

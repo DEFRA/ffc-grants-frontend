@@ -20,37 +20,17 @@
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
         <h1 class="govuk-heading-xl">Check your details</h1>
-      </div>
-    </div>
-    <div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
-
+        
       {% if businessDetails %}
+
+      <div>
+        <h2 class="govuk-heading-m check-detail-heading">Business details</h2><a class="check-detail-change" href="{{businessDetailsLink}}">Change</a>
+        <hr/>
+      </div>
+      
       {{ govukSummaryList({
         rows: [
           {
-            key: {
-              html: "<h1 class='govuk-heading-m'>Business details</h1>"
-            },
-            value: {
-              text: ""
-            },
-            actions: {
-              items: [
-                {
-                  href: businessDetailsLink,
-                  text: "Change",
-                  visuallyHiddenText: "name"
-                }
-              ]
-            }
-          }
-        ]
-      }) }}
-      {{ govukSummaryList({
-        rows: [
-          {
-            classes: 'govuk-summary-list__row--no-border',
             key: {
               text: "Project name"
             },
@@ -59,7 +39,6 @@
             }
           },
           {
-            classes: 'govuk-summary-list__row--no-border',
             key: {
               text: "Business name"
             },
@@ -68,7 +47,6 @@
             }
           },
           {
-            classes: 'govuk-summary-list__row--no-border',
             key: {
               text: "Number of employees"
             },
@@ -77,7 +55,6 @@
             }
           },
           {
-            classes: 'govuk-summary-list__row--no-border',
             key: {
               text: "Business turnover"
             },
@@ -98,29 +75,12 @@
       }) }}
 
       {% endif %}
-
+  
       {% if agentDetails %}
-      {{ govukSummaryList({
-        rows: [
-          {
-            key: {
-              html: "<h1 class='govuk-heading-m'>Agent's details</h1>"
-            },
-            value: {
-              text: ""
-            },
-            actions: {
-              items: [
-                {
-                  href: agentDetailsLink,
-                  text: "Change",
-                  visuallyHiddenText: "agent-details"
-                }
-              ]
-            }
-          }
-        ]
-      }) }}
+      <div>
+        <h2 class="govuk-heading-m check-detail-heading">Agent's details</h2><a class="check-detail-change" href="{{agentDetailsLink}}">Change</a>
+        <hr/>
+      </div>
       {{ govukSummaryList({
         rows: [
           {
@@ -132,7 +92,6 @@
             }
           },
           {
-          classes: 'govuk-summary-list__row--no-border',
             key: {
               text: "Business name"
             },
@@ -159,7 +118,7 @@
         ]
       }) }}
       {% endif %}
-
+      <br/>
       {% if farmerDetails %}
       {% set farmerSummaryItems = [
           {
@@ -187,39 +146,10 @@
             }
           }
         ] %}
-
-      {% if farmerGender %}
-      {% set farmerSummaryItems = (farmerSummaryItems.splice(1, 0,{
-            key: {
-              text: "Gender"
-            },
-            value: {
-              text:  farmerGender
-            }
-          }), farmerSummaryItems)%}
-      {% endif %}
-
-      {{ govukSummaryList({
-        rows: [
-          {
-            key: {
-              html: "<h1 class='govuk-heading-m'>Farmer's details</h1>"
-            },
-            value: {
-              text: ""
-            },
-            actions: {
-              items: [
-                {
-                  href: farmerDetailsLink,
-                  text: "Change",
-                  visuallyHiddenText: "farmer-details"
-                }
-              ]
-            }
-          }
-        ]
-      }) }}
+<div>
+    <h2 class="govuk-heading-m check-detail-heading">Farmer's details</h2><a class="check-detail-change" href="{{farmerDetailsLink}}">Change</a>
+    <hr/>
+</div>
       {{ govukSummaryList({ rows: farmerSummaryItems }) }}
       {% endif %}
 
