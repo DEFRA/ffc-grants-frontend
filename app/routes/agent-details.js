@@ -104,7 +104,7 @@ module.exports = [
           postcode: null
         }
       }
-      return h.view(viewTemplate, createModel(null, agentDetails, getYarValue(request, 'farmerDetails')))
+      return h.view(viewTemplate, createModel(null, agentDetails, getYarValue(request, 'checkDetails')))
     }
   },
   {
@@ -152,7 +152,7 @@ module.exports = [
 
           const { firstName, lastName, businessName, email, mobile, landline, address1, address2, town, county, postcode } = request.payload
           const agentDetails = { firstName, lastName, businessName, email, mobile, landline, address1, address2, town, county, postcode }
-          return h.view(viewTemplate, createModel(errorMessageList, agentDetails, getYarValue(request, 'farmerDetails'))).takeover()
+          return h.view(viewTemplate, createModel(errorMessageList, agentDetails, getYarValue(request, 'checkDetails'))).takeover()
         }
       },
       handler: (request, h) => {
@@ -168,7 +168,7 @@ module.exports = [
         if (!landline && !mobile) {
           return h.view(viewTemplate, createModel(phoneErrors, {
             firstName, lastName, businessName, email, mobile, landline, address1, address2, town, county, postcode
-          }, getYarValue(request, 'farmerDetails'))).takeover()
+          }, getYarValue(request, 'checkDetails'))).takeover()
         }
 
         setYarValue(request, 'agentDetails', {

@@ -11,7 +11,7 @@ const nextPath = `${urlPrefix}/check-details`
 const agentDetailsPath = `${urlPrefix}/agent-details`
 const applyingPath = `${urlPrefix}/applying`
 
-function createModel (errorMessageList, farmerDetails, backLink) {
+function createModel (errorMessageList, farmerDetails, backLink, hasDetails) {
   const {
     firstName,
     lastName,
@@ -45,7 +45,7 @@ function createModel (errorMessageList, farmerDetails, backLink) {
     pageId: 'Farmer',
     formActionPage: currentPath,
     pageHeader: 'Farmer\'s details',
-    checkDetail: farmerDetails.firstName,
+    checkDetail: hasDetails,
     inputFirstName: formInputObject('firstName', 'govuk-input--width-20', 'First name', null, firstName, firstNameError),
 
     inputLastName: formInputObject('lastName', 'govuk-input--width-20', 'Last name', null, lastName, lastNameError),
@@ -102,7 +102,7 @@ module.exports = [
 
       const applying = getYarValue(request, 'applying')
       const backLink = applying === 'Agent' ? agentDetailsPath : applyingPath
-      return h.view(viewTemplate, createModel(null, farmerDetails, backLink))
+      return h.view(viewTemplate, createModel(null, farmerDetails, backLink, getYarValue(request, 'checkDetails')))
     }
   },
   {
@@ -147,7 +147,7 @@ module.exports = [
           const applying = getYarValue(request, 'applying')
           const backLink = applying === 'Agent' ? agentDetailsPath : applyingPath
 
-          return h.view(viewTemplate, createModel(errorMessageList, farmerDetails, backLink)).takeover()
+          return h.view(viewTemplate, createModel(errorMessageList, farmerDetails, backLink, getYarValue(request, 'checkDetails'))).takeover()
         }
       },
       handler: (request, h) => {
