@@ -36,6 +36,11 @@ module.exports = [
     path: currentPath,
     handler: (request, h) => {
       const currentlyIrrigating = getYarValue(request, 'currentlyIrrigating') || null
+
+      if (getYarValue(request, 'current-score')) {
+        return h.redirect(`${urlPrefix}/irrigated-crops`)
+      }
+
       return h.view(viewTemplate, createModel(null, currentlyIrrigating, getYarValue(request, 'current-score')))
     }
   },

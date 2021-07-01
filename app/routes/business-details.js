@@ -129,7 +129,7 @@ module.exports = [
         }
       }
 
-      return h.view(viewTemplate, createModel(null, businessDetails, getYarValue(request, 'farmerDetails')))
+      return h.view(viewTemplate, createModel(null, businessDetails, getYarValue(request, 'checkDetails')))
     }
   },
   {
@@ -158,7 +158,7 @@ module.exports = [
           const { projectName, businessName, numberEmployees, businessTurnover, sbi } = request.payload
           const businessDetails = { projectName, businessName, numberEmployees, businessTurnover, sbi }
 
-          return h.view(viewTemplate, createModel(errorMessageList, businessDetails, getYarValue(request, 'farmerDetails'))).takeover()
+          return h.view(viewTemplate, createModel(errorMessageList, businessDetails, getYarValue(request, 'checkDetails'))).takeover()
         }
       },
       handler: (request, h) => {

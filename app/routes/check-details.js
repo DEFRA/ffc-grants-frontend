@@ -1,5 +1,6 @@
 const createMsg = require('../messaging/create-msg')
 const { urlPrefix, startPageUrl } = require('../config/server')
+const { setYarValue } = require('../helpers/session')
 
 const viewTemplate = 'check-details'
 const currentPath = `${urlPrefix}/${viewTemplate}`
@@ -46,6 +47,7 @@ module.exports = [{
     if (!msg.farmerDetails) {
       return h.redirect(startPath)
     }
+    setYarValue(request, 'checkDetails', 'true')
     return h.view(viewTemplate, createModel(msg))
   }
 },
