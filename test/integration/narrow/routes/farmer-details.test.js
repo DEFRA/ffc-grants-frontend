@@ -359,6 +359,7 @@ describe('Farmer details page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Enter a contact number')
+    expect(postResponse.payload).toContain('Enter your mobile number')
+    expect(postResponse.payload).toContain('Enter your landline number')
   })
 })
