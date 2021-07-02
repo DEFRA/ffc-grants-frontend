@@ -31,9 +31,12 @@ module.exports = {
       }, {
         dimensionOrMetric: gapiService.dimensions.FINALSCORE,
         value: score
+      },
+      {
+        dimensionOrMetric: gapiService.metrics.CONFIRMATION,
+        value: 'TIME'
       }
       ])
-      await gapiService.sendJourneyTime(request, gapiService.metrics.CONFIRMATION)
       request.yar.reset()
       return h.view(viewTemplate, {
         output: {

@@ -7,7 +7,7 @@ module.exports = {
       server.events.on('request', (request, event, tags) => {
         if (tags.error) {
           logException(request, event)
-          console.error(`Request ${event.request} error: ${event.error ? event.error.message : 'unknown'}`)
+          console.error(`Request ${event.request} error: ${event.error ? event.error.message : 'unknown'} url:${event.request.path}`)
         }
       })
       server.events.on('log', (event, tags) => {
