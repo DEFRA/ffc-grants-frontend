@@ -146,8 +146,8 @@ module.exports = [
           }
 
           if (request.payload.landline === '' && request.payload.mobile === '') {
-            errorMessageList.mobileError = 'Enter your mobile number'
-            errorMessageList.landlineError = 'Enter your landline number'
+            errorMessageList.mobileError = 'Enter a contact number'
+            errorMessageList.landlineError = 'Enter a contact number'
           }
 
           const { firstName, lastName, businessName, email, mobile, landline, address1, address2, town, county, postcode } = request.payload
@@ -161,8 +161,8 @@ module.exports = [
         } = request.payload
 
         const phoneErrors = {
-          mobileError: 'Enter your mobile number',
-          landlineError: 'Enter your landline number'
+          mobileError: 'Enter a contact number',
+          landlineError: 'Enter a contact number'
         }
 
         if (!landline && !mobile) {

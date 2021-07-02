@@ -54,7 +54,7 @@ function createModel (errorMessageList, farmerDetails, backLink, hasDetails) {
 
     inputMobile: formInputObject('mobile', 'govuk-input--width-20', 'Mobile number', null, mobile, mobileError),
 
-    inputLandline: formInputObject('landline', 'govuk-input--width-20', 'Landline number (optional)', null, landline, landlineError),
+    inputLandline: formInputObject('landline', 'govuk-input--width-20', 'Landline number', null, landline, landlineError),
 
     inputAddress1: formInputObject('address1', 'govuk-input--width-20', 'Address 1', null, address1, address1Error),
 
@@ -115,8 +115,8 @@ module.exports = [
           firstName: Joi.string().regex(NAME_REGEX).required(),
           lastName: Joi.string().regex(NAME_REGEX).required(),
           email: Joi.string().email().required(),
-          mobile: Joi.string().regex(PHONE_REGEX).required(),
-          landline: Joi.string().regex(PHONE_REGEX).allow(''),
+          mobile: Joi.string().regex(PHONE_REGEX).min(10).allow(''),
+          landline: Joi.string().regex(PHONE_REGEX).min(10).allow(''),
           address1: Joi.string().required(),
           address2: Joi.string().allow(''),
           town: Joi.string().required(),
@@ -141,6 +141,11 @@ module.exports = [
             firstNameError, lastNameError, emailError, mobileError, landlineError, address1Error, townError, countyError, postcodeError
           }
 
+          if (request.payload.landline === '' && request.payload.mobile === '') {
+            errorMessageList.mobileError = 'Enter a contact number'
+            errorMessageList.landlineError = 'Enter a contact number'
+          }
+
           const { firstName, lastName, email, mobile, landline, address1, address2, town, county, postcode } = request.payload
           const farmerDetails = { firstName, lastName, email, mobile, landline, address1, address2, town, county, postcode }
 
@@ -154,6 +159,17 @@ module.exports = [
         const {
           firstName, lastName, email, mobile, landline, address1, address2, town, county, postcode
         } = request.payload
+
+        const phoneErrors = {
+          mobileError: 'Enter a contact number',
+          landlineError: 'Enter a contact number'
+        }
+
+        if (!landline && !mobile) {
+          return h.view(viewTemplate, createModel(phoneErrors, {
+            firstName, lastName, email, mobile, landline, address1, address2, town, county, postcode
+          }, getYarValue(request, 'checkDetails'))).takeover()
+        }
 
         setYarValue(request, 'farmerDetails', {
           firstName, lastName, email, mobile, landline, address1, address2, town, county, postcode: postcode.split(/(?=.{3}$)/).join(' ').toUpperCase()
