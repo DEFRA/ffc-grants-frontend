@@ -43,7 +43,6 @@ const errors = {
   'error.businessName.any.required': 'Enter a business name',
   'error.businessName.string.pattern.base': 'Name must only include letters, hyphens and apostrophes',
   'error.businessName.string.max': 'Name must be 100 characters or fewer',
-  'error.gender.any.required': 'Select an option',
   'error.email.string.empty': 'Enter your email address',
   'error.email.any.required': 'Enter your email address',
   'error.email.string.email': 'Enter an email address in the correct format, like name@example.com',

@@ -176,7 +176,6 @@ describe('Farmer details page', () => {
       payload: {
         firstName: 'First Name',
         lastName: 'Last Name',
-        gender: 'Male',
         email: 'my@name.com',
         mobile: '07700 900 982',
         address1: 'Address 1',
@@ -203,7 +202,6 @@ describe('Farmer details page', () => {
         firstName: 'First Name',
         lastName: 'Last Name',
         email: 'my@name.com',
-        gender: ' ',
         mobile: '07700 900 982',
         address1: 'Address 1',
         address2: 'Address 2',
@@ -227,7 +225,6 @@ describe('Farmer details page', () => {
       payload: {
         firstName: 'First Name',
         lastName: 'Last Name',
-        gender: 'Male',
         email: 'my@name.com',
         landline: '+44 0808 157 0192',
         mobile: '07700 900 982',

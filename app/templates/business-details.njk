@@ -1,6 +1,6 @@
 {% extends '.layout.njk' %}
 
-{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "./components/macro.njk" import conditionalButtons %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
@@ -20,15 +20,14 @@
     <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-l">Business details</h1>
       <form method="POST" action="{{ formActionPage }}" autocomplete="off" novalidate>
-        {{ crumbToken(crumb)}}<br/>
-        {{ govukInput(inputProjectName) }}<br/>
-        {{ govukInput(inputBusinessName) }}<br/>
-        {{ govukInput(inputNumberEmployees) }}<br/>
-        {{ govukInput(inputBusinessTurnover) }}<br/>
+        {{ crumbToken(crumb)}}
+        {{ govukInput(inputProjectName) }}
+        {{ govukInput(inputBusinessName) }}
+        {{ govukInput(inputNumberEmployees) }}
+        {{ govukInput(inputBusinessTurnover) }}
         {{ govukInput(inputSbi) }}
-        {{ govukButton({
-          text: "Continue"
-        }) }}
+        {{ conditionalButtons(checkDetail,'Back to details') }}
+
       </form>
     </div>
   </div>

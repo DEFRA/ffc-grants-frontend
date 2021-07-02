@@ -66,9 +66,9 @@
       <table class="govuk-table govuk-body govuk-!-font-size-16">
         <thead class="govuk-table__head">
           <tr class="govuk-table__row">
-            <th scope="col" class="govuk-table__header">Answers</th>
-            <th scope="col" class="govuk-table__header">Your score</th>
-            <th scope="col" class="govuk-table__header ">Funding priorities</th>
+            <th scope="col" class="govuk-table__header govuk-!-width-one-third">Answers</th>
+            <th scope="col" class="govuk-table__header ">Score</th>
+            <th scope="col" class="govuk-table__header govuk-!-width-one-third">Funding priorities</th>
             <th scope="col" class="govuk-table__header"> </th>
           </tr>
         </thead>
@@ -88,14 +88,14 @@
           </th>
 
       <td class="govuk-table__cell">
-      <br><br>
+      <br>
         {{ question.rating.band }}
       </td>
       <td class="govuk-table__cell">
         {{question.fundingPriorities | safe}}
       </td>
       <td class="govuk-table__cell">
-          <br><br>
+          <br>
           <a class="govuk-link" href="{{question.url}}">
             Change<span class="govuk-visually-hidden"> project summary</span>
           </a>

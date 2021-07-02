@@ -1,6 +1,6 @@
 const Joi = require('joi')
 const { setYarValue, getYarValue } = require('../helpers/session')
-const { setLabelData, fetchListObjectItems, getGender, findErrorList, formInputObject } = require('../helpers/helper-functions')
+const { setLabelData, fetchListObjectItems, findErrorList, formInputObject } = require('../helpers/helper-functions')
 const { NAME_REGEX, PHONE_REGEX, POSTCODE_REGEX, DELETE_POSTCODE_CHARS_REGEX } = require('../helpers/regex-validation')
 const { LIST_COUNTIES } = require('../helpers/all-counties')
 const urlPrefix = require('../config/server').urlPrefix
@@ -11,11 +11,10 @@ const nextPath = `${urlPrefix}/check-details`
 const agentDetailsPath = `${urlPrefix}/agent-details`
 const applyingPath = `${urlPrefix}/applying`
 
-function createModel (errorMessageList, farmerDetails, backLink) {
+function createModel (errorMessageList, farmerDetails, backLink, hasDetails) {
   const {
     firstName,
     lastName,
-    gender,
     email,
     mobile,
     landline,
@@ -29,7 +28,6 @@ function createModel (errorMessageList, farmerDetails, backLink) {
   const [
     firstNameError,
     lastNameError,
-    genderError,
     emailError,
     mobileError,
     landlineError,
@@ -39,7 +37,7 @@ function createModel (errorMessageList, farmerDetails, backLink) {
     postcodeError
   ] = fetchListObjectItems(
     errorMessageList,
-    ['firstNameError', 'lastNameError', 'genderError', 'emailError', 'mobileError', 'landlineError', 'address1Error', 'townError', 'countyError', 'postcodeError']
+    ['firstNameError', 'lastNameError', 'emailError', 'mobileError', 'landlineError', 'address1Error', 'townError', 'countyError', 'postcodeError']
   )
 
   return {
@@ -47,11 +45,10 @@ function createModel (errorMessageList, farmerDetails, backLink) {
     pageId: 'Farmer',
     formActionPage: currentPath,
     pageHeader: 'Farmer\'s details',
+    checkDetail: hasDetails,
     inputFirstName: formInputObject('firstName', 'govuk-input--width-20', 'First name', null, firstName, firstNameError),
 
     inputLastName: formInputObject('lastName', 'govuk-input--width-20', 'Last name', null, lastName, lastNameError),
-
-    ...(getGender(backLink, applyingPath, gender, genderError)),
 
     inputEmail: formInputObject('email', 'govuk-input--width-20', 'Email address', 'We will use this to send you a confirmation', email, emailError),
 
@@ -92,7 +89,6 @@ module.exports = [
         farmerDetails = {
           firstName: null,
           lastName: null,
-          gender: null,
           email: null,
           mobile: null,
           landline: null,
@@ -106,7 +102,7 @@ module.exports = [
 
       const applying = getYarValue(request, 'applying')
       const backLink = applying === 'Agent' ? agentDetailsPath : applyingPath
-      return h.view(viewTemplate, createModel(null, farmerDetails, backLink))
+      return h.view(viewTemplate, createModel(null, farmerDetails, backLink, getYarValue(request, 'checkDetails')))
     }
   },
   {
@@ -118,7 +114,6 @@ module.exports = [
         payload: Joi.object({
           firstName: Joi.string().regex(NAME_REGEX).required(),
           lastName: Joi.string().regex(NAME_REGEX).required(),
-          gender: Joi.string().required(),
           email: Joi.string().email().required(),
           mobile: Joi.string().regex(PHONE_REGEX).required(),
           landline: Joi.string().regex(PHONE_REGEX).allow(''),
@@ -126,13 +121,13 @@ module.exports = [
           address2: Joi.string().allow(''),
           town: Joi.string().required(),
           county: Joi.string().required(),
-          postcode: Joi.string().replace(DELETE_POSTCODE_CHARS_REGEX, '').regex(POSTCODE_REGEX).trim().required()
+          postcode: Joi.string().replace(DELETE_POSTCODE_CHARS_REGEX, '').regex(POSTCODE_REGEX).trim().required(),
+          results: Joi.any()
         }),
         failAction: (request, h, err) => {
           const [
             firstNameError,
             lastNameError,
-            genderError,
             emailError,
             mobileError,
             landlineError,
@@ -140,28 +135,28 @@ module.exports = [
             townError,
             countyError,
             postcodeError
-          ] = findErrorList(err, ['firstName', 'lastName', 'gender', 'email', 'mobile', 'landline', 'address1', 'town', 'county', 'postcode'])
+          ] = findErrorList(err, ['firstName', 'lastName', 'email', 'mobile', 'landline', 'address1', 'town', 'county', 'postcode'])
 
           const errorMessageList = {
-            firstNameError, lastNameError, genderError, emailError, mobileError, landlineError, address1Error, townError, countyError, postcodeError
+            firstNameError, lastNameError, emailError, mobileError, landlineError, address1Error, townError, countyError, postcodeError
           }
 
-          const { firstName, lastName, gender, email, mobile, landline, address1, address2, town, county, postcode } = request.payload
-          const farmerDetails = { firstName, lastName, gender, email, mobile, landline, address1, address2, town, county, postcode }
+          const { firstName, lastName, email, mobile, landline, address1, address2, town, county, postcode } = request.payload
+          const farmerDetails = { firstName, lastName, email, mobile, landline, address1, address2, town, county, postcode }
 
           const applying = getYarValue(request, 'applying')
           const backLink = applying === 'Agent' ? agentDetailsPath : applyingPath
 
-          return h.view(viewTemplate, createModel(errorMessageList, farmerDetails, backLink)).takeover()
+          return h.view(viewTemplate, createModel(errorMessageList, farmerDetails, backLink, getYarValue(request, 'checkDetails'))).takeover()
         }
       },
       handler: (request, h) => {
         const {
-          firstName, lastName, gender, email, mobile, landline, address1, address2, town, county, postcode
+          firstName, lastName, email, mobile, landline, address1, address2, town, county, postcode
         } = request.payload
 
         setYarValue(request, 'farmerDetails', {
-          firstName, lastName, gender, email, mobile, landline, address1, address2, town, county, postcode: postcode.split(/(?=.{3}$)/).join(' ').toUpperCase()
+          firstName, lastName, email, mobile, landline, address1, address2, town, county, postcode: postcode.split(/(?=.{3}$)/).join(' ').toUpperCase()
         })
 
         return h.redirect(nextPath)

@@ -42,14 +42,14 @@
   </div>
 {% endmacro %}
 
-{% macro conditionalButtons (hasScore) %}
+{% macro conditionalButtons (hasScore,secondryText='Back to score') %}
 {{ govukButton({
             text: "Continue"
           }) }} &nbsp;
   {% if hasScore %}
     {{ govukButton({
       classes: "govuk-button--secondary",
-      text: "Back to score",
+      text: secondryText ,
       name: "results",
     value: "results"
   }) }}
