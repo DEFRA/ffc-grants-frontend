@@ -32,14 +32,14 @@ function createModel (errorMessage, data, backLink) {
             text: 'Yes, preparatory work',
             value: 'Yes, preparatory work',
             hint: {
-              text: 'For example quotes from suppliers, applying for planning permission'
+              text: 'For example, quotes from suppliers, applying for planning permission'
             }
           },
           {
             text: 'Yes, we have begun project work',
             value: 'Yes, we have begun project work',
             hint: {
-              text: 'For example digging, signing contracts, placing orders'
+              text: 'For example, digging, signing contracts, placing orders'
             }
           },
           'No, we have not done any work on this project yet'

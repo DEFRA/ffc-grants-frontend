@@ -31,7 +31,14 @@
         }) }}
       </form>
     </div>
-    {{ sideBar("Eligibility","This grant is only for projects in England.
-Scotland, Wales and Northern Ireland have other grants available",[]) }}
+
+    {{
+      sideBar(
+        "Eligibility",
+        "This grant is only for projects in England.\n\n
+          Scotland, Wales and Northern Ireland have other grants available.",
+        []
+      )
+    }}
   </div>
 {% endblock %}

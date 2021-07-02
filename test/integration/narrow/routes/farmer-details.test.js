@@ -242,4 +242,27 @@ describe('Farmer details page', () => {
     expect(postResponse.statusCode).toBe(302)
     expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/check-details`)
   })
+
+  it('should validate - if both mobile and landline are missing', async () => {
+    const postOptions = {
+      method: 'POST',
+      url: `${global.__URLPREFIX__}/farmer-details`,
+      payload: {
+        firstName: 'Farmer First Name',
+        lastName: 'Farmer Last Name',
+        email: 'my@name.com',
+        address1: 'Address 1',
+        address2: 'Address 2',
+        town: 'MyTown',
+        county: 'Devon',
+        postcode: 'AA1 1AA',
+        crumb: crumbToken
+      },
+      headers: { cookie: 'crumb=' + crumbToken }
+    }
+
+    const postResponse = await global.__SERVER__.inject(postOptions)
+    expect(postResponse.statusCode).toBe(200)
+    expect(postResponse.payload).toContain('Enter a contact number')
+  })
 })
