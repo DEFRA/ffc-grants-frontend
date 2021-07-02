@@ -1,6 +1,8 @@
 const { updatePolicy } = require('../cookies')
 const Joi = require('joi')
 const urlPrefix = require('../config/server').urlPrefix
+const gapiService = require('../services/gapi-service')
+
 
 const viewTemplate = 'cookies/cookie-policy'
 const currentPath = `${urlPrefix}/cookies`
@@ -44,10 +46,10 @@ module.exports = [{
       })
     },
     handler: async (request, h) => {
-      updatePolicy(request, h, request.payload.analytics)
-      await request.ga.event({
-        category: 'Analytics',
-        action: request.payload.analytics ? 'Accepted' : 'Rejected'
+      updatePolicy(request, h, request.payload.analytics)      
+      await gapiService.sendDimensionOrMetric(request, {
+        dimensionOrMetric: gapiService.dimensions.ANALYTICS,
+        value: request.payload.analytics ? 'Accepted' : 'Rejected'
       })
       if (request.payload.async) {
         return h.response('ok')

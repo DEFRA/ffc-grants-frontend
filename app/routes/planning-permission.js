@@ -3,6 +3,7 @@ const { setYarValue, getYarValue } = require('../helpers/session')
 const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
 const { LICENSE_NOT_NEEDED, LICENSE_SECURED, LICENSE_EXPECTED, LICENSE_WILL_NOT_HAVE } = require('../helpers/license-dates')
 const urlPrefix = require('../config/server').urlPrefix
+const gapiService = require('../services/gapi-service')
 
 const viewTemplate = 'planning-permission'
 const currentPath = `${urlPrefix}/${viewTemplate}`
@@ -32,7 +33,7 @@ function createModel (errorMessage, data) {
 
 const NOT_ELIGIBLE = {
   backLink: currentPath,
-  messageContent: 'Any planning permission must be in place by 31 December 2021 (the end of the application window)',
+  messageContent: 'Any planning permission must be in place by 31 December 2021 (the end of the application window).',
   messageLink: {
     url: 'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments',
     title: 'See other grants you may be eligible for.'
@@ -62,9 +63,10 @@ module.exports = [
           return h.view(viewTemplate, createModel(errorMessage)).takeover()
         }
       },
-      handler: (request, h) => {
+      handler: async (request, h) => {
         const { planningPermission } = request.payload
         setYarValue(request, 'planningPermission', planningPermission)
+        await gapiService.sendEligibilityEvent(request, planningPermission === LICENSE_WILL_NOT_HAVE)
 
         if (planningPermission === LICENSE_WILL_NOT_HAVE) {
           return h.view('not-eligible', NOT_ELIGIBLE)

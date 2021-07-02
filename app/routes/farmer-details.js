@@ -161,8 +161,10 @@ module.exports = [
         } = request.payload
 
         const phoneErrors = {
+
           mobileError: 'Enter your mobile number',
           landlineError: 'Enter your landline number'
+
         }
 
         if (!landline && !mobile) {
