@@ -12,7 +12,8 @@
 {% block beforeContent %}
   {{ govukBackLink({
     text: "Back",
-    href: backLink
+    href: backLink,
+	  attributes: {id: 'linkBack'}
   }) }}
 {% endblock %}
 
@@ -27,7 +28,8 @@
         {{ crumbToken(crumb)}}
         {{ govukRadios(radios) }}
         {{ govukButton({
-          text: "Continue"
+          text: "Continue",
+          attributes: {id: "btnContinue"}
         }) }}
       </form>
     </div>

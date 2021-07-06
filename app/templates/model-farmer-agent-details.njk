@@ -13,7 +13,8 @@
 {% block beforeContent %}
   {{ govukBackLink({
     text: "Back",
-    href: backLink
+    href: backLink,
+	  attributes: {id: 'linkBack'}
   }) }}
 {% endblock %}
 
@@ -47,7 +48,7 @@
         {{ govukInput(inputTown) }}
         {{ govukSelect(selectCounty) }}
         {{ govukInput(inputPostcode) }}
-        {{ conditionalButtons(checkDetail,'Back to details') }}
+        {{ conditionalButtons(checkDetail, 'details') }}
 
       </form>
     </div>

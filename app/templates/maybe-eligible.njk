@@ -10,7 +10,8 @@
 {% block beforeContent %}
   {{ govukBackLink({
     text: "Back",
-    href: backLink
+    href: backLink,
+	  attributes: {id: 'linkBack'}
   }) }}
 {% endblock %}
 
@@ -22,6 +23,7 @@
       <p class="govuk-body">{{ messageContent | safe}}</p>
       {{ govukButton({
           text: "Continue",
+          attributes: {id: "btnContinue"},
           href: nextLink
         }) }}
     </div>

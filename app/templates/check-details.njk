@@ -10,7 +10,8 @@
 {% block beforeContent %}
   {{ govukBackLink({
     text: "Back",
-    href: backLink
+    href: backLink,
+	  attributes: {id: 'linkBack'}
   }) }}
 
 {% endblock %}
@@ -159,7 +160,8 @@
         <form method="POST" action="{{ formActionPage }}" autocomplete="off" novalidate>
           {{ crumbToken(crumb)}}
           {{ govukButton({
-            text: "Continue"
+            text: "Continue",
+            attributes: {id: "btnContinue"}
           }) }}
         </form>
       </div>
