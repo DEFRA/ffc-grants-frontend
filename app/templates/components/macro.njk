@@ -42,16 +42,30 @@
   </div>
 {% endmacro %}
 
-{% macro conditionalButtons (hasScore,secondryText='Back to score') %}
-{{ govukButton({
-            text: "Continue"
-          }) }} &nbsp;
-  {% if hasScore %}
+{% macro conditionalButtons (hasScoreOrDetails, destination) %}
+  {{ govukButton({
+      text: "Continue",
+      attributes: {id: "btnContinue"}
+    })
+  }} &nbsp;
+
+  {% if hasScoreOrDetails %}
+    {% if destination == 'score' %}
+      {% set buttonText = 'Back to score' %}
+      {% set buttonId = 'btnBackToScore' %}
+    {% elif destination == 'details' %}
+      {% set buttonText = 'Back to details' %}
+      {% set buttonId = 'btnBackToContact' %}
+    {% endif %}
+
     {{ govukButton({
-      classes: "govuk-button--secondary",
-      text: secondryText ,
-      name: "results",
-    value: "results"
-  }) }}
+        classes: "govuk-button--secondary",
+        text: buttonText,
+        name: "results",
+        value: "results",
+        attributes: {id: buttonId}
+      })
+    }}
   {% endif %} 
+
 {% endmacro %}

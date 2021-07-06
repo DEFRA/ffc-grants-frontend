@@ -31,7 +31,7 @@
       <form method="POST" action="{{ formActionPage }}" autocomplete="off" novalidate="novalidate">
         {{ crumbToken(crumb)}}
         {{ govukCheckboxes(checkboxes) }}
-        {{ conditionalButtons(hasScore) }}
+        {{ conditionalButtons(hasScore, 'score') }}
       </form>
     </div>
     {{ sideBar("Funding priorities","RPA wants to fund projects that:",
