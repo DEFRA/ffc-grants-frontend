@@ -13,7 +13,8 @@
   {% if not hasScore %}
     {{ govukBackLink({
       text: "Back",
-      href: backLink
+      href: backLink,
+	  attributes: {id: 'linkBack'}
     }) }}
   {% endif %}
   {% if errorList %}
