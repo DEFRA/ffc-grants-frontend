@@ -44,7 +44,8 @@
         {{ crumbToken(crumb)}}
         {{ govukCheckboxes(checkboxConfirmOptional) }}
         {{ govukButton({
-          text: "Confirm and send"
+          text: "Confirm and send",
+          attributes: {id: "btnContinue"}
         }) }}
       </form>
     </div>
