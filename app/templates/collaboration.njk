@@ -22,7 +22,8 @@
         {{ crumbToken(crumb)}}
         {{ govukRadios(radios) }}
         {{ govukButton({
-          text: "Get your score"
+          text: "Get your score",
+          attributes: {id: "btnGetScore"}
         }) }}
       </form>
     </div>
