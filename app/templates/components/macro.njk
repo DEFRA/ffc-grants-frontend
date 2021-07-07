@@ -42,7 +42,7 @@
   </div>
 {% endmacro %}
 
-{% macro conditionalButtons (showSecondaryButton, destination = 'score') %}
+{% macro conditionalButtons (showSecondaryButton, buttonText = 'Back to score') %}
   {{ govukButton({
       text: "Continue",
       attributes: {id: "btnContinue"}
@@ -50,19 +50,12 @@
   }} &nbsp;
 
   {% if showSecondaryButton %}
-
-    {% set buttonText %}
-      Back to {{destination}} 
-    {% endset %}
-    
-    {% set buttonId %}btnBackTo{{destination | title}}{% endset %}
-
     {{ govukButton({
         classes: "govuk-button--secondary",
         text: buttonText,
         name: "results",
         value: "results",
-        attributes: {id: buttonId}
+        attributes: {id: buttonText.split(' ').join('-')}
       })
     }}
   {% endif %} 
