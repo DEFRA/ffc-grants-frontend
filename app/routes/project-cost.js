@@ -74,7 +74,7 @@ module.exports = [
         }),
         failAction: (request, h, err) => {
           const projectItemsList = getYarValue(request, 'projectItemsList') || null
-
+          gapiService.sendDimensionOrMetric(request, { dimensionOrMetric: gapiService.dimensions.VALIDATION, value: true })
           const errorObject = errorExtractor(err)
           const errorMessage = getErrorMessage(errorObject)
           return h.view(viewTemplate, createModel(errorMessage, null, projectItemsList)).takeover()

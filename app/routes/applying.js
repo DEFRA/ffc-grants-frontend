@@ -49,7 +49,10 @@ module.exports = [
         payload: Joi.object({
           applying: Joi.string().required()
         }),
-        failAction: (request, h) => h.view(viewTemplate, createModel('Select who is applying for this grant', null)).takeover()
+        failAction: (request, h) => {
+          gapiService.sendDimensionOrMetric(request, { dimensionOrMetric: gapiService.dimensions.VALIDATION, value: true })
+          return h.view(viewTemplate, createModel('Select who is applying for this grant', null)).takeover()
+        }
       },
       handler: async (request, h) => {
         const { applying } = request.payload

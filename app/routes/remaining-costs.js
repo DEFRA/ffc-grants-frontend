@@ -69,6 +69,7 @@ module.exports = [
           payRemainingCosts: Joi.string().required()
         }),
         failAction: (request, h, err) => {
+          gapiService.sendDimensionOrMetric(request, { dimensionOrMetric: gapiService.dimensions.VALIDATION, value: true })
           const errorObject = errorExtractor(err)
           const errorMessage = getErrorMessage(errorObject)
           const remainingCost = getYarValue(request, 'remainingCost') || null

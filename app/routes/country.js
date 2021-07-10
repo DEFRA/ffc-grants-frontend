@@ -76,6 +76,7 @@ module.exports = [
           projectPostcode: Joi.string().replace(DELETE_POSTCODE_CHARS_REGEX, '').regex(POSTCODE_REGEX).trim().allow('')
         }),
         failAction: (request, h, err) => {
+          gapiService.sendDimensionOrMetric(request, { dimensionOrMetric: gapiService.dimensions.VALIDATION, value: true })
           const { inEngland, projectPostcode } = request.payload
           const errorObject = errorExtractor(err)
           const errorMessage = getErrorMessage(errorObject)
