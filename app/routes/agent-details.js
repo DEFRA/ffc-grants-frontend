@@ -49,21 +49,13 @@ function createModel (errorMessageList, agentDetails, hasDetails) {
     pageHeader: 'Agent\'s details',
     checkDetail: hasDetails,
     inputFirstName: formInputObject('firstName', 'govuk-input--width-20', 'First name', null, firstName, firstNameError),
-
     inputLastName: formInputObject('lastName', 'govuk-input--width-20', 'Last name', null, lastName, lastNameError),
-
     inputBusinessName: formInputObject('businessName', 'govuk-input--width-20', 'Business name', null, businessName, businessNameError),
-
     inputEmail: formInputObject('email', 'govuk-input--width-20', 'Email address', 'We will use this to send you a confirmation', email, emailError),
-
     inputMobile: formInputObject('mobile', 'govuk-input--width-20', 'Mobile number', null, mobile, mobileError),
-
     inputLandline: formInputObject('landline', 'govuk-input--width-20', 'Landline number', null, landline, landlineError),
-
     inputAddress1: formInputObject('address1', 'govuk-input--width-20', 'Address 1', null, address1, address1Error),
-
     inputAddress2: formInputObject('address2', 'govuk-input--width-20', 'Address 2', null, address2, null),
-
     inputTown: formInputObject('town', 'govuk-input--width-10', 'Town', null, town, townError),
 
     selectCounty: {
