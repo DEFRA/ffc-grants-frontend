@@ -11,7 +11,7 @@ const previousPath = `${urlPrefix}/irrigated-crops`
 const nextPath = `${urlPrefix}/irrigated-land`
 
 const prefixModelParams = [
-  previousPath, currentPath, 'Yes', 'No', 'currentlyIrrigating', 'currentlyIrrigating', 'Are you currently irrigating?'
+  previousPath, currentPath, 'Yes', 'No', 'currentlyIrrigating', 'Are you currently irrigating?'
 ]
 
 module.exports = [

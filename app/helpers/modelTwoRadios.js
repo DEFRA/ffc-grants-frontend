@@ -1,13 +1,13 @@
 const { setLabelData } = require('../helpers/helper-functions')
 
 const createModelTwoRadios = (
-  previousPath, currentPath, valueOne, valueTwo, idPrefix, name, text, errorMessage, data
+  previousPath, currentPath, valueOne, valueTwo, name, text, errorMessage, data
 ) => ({
   backLink: previousPath,
   formActionPage: currentPath,
   radios: {
     classes: 'govuk-radios--inline',
-    idPrefix,
+    idPrefix: name,
     name,
     fieldset: {
       legend: {

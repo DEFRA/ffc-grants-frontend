@@ -11,7 +11,7 @@ const nextPath = `${urlPrefix}/project-items`
 const tenancyLengthPath = `${urlPrefix}/tenancy-length`
 
 const prefixModelParams = [
-  previousPath, currentPath, 'Yes', 'No', 'landOwnership', 'landOwnership',
+  previousPath, currentPath, 'Yes', 'No', 'landOwnership',
   'Is the planned project on land the farm business owns?'
 ]
 

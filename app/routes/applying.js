@@ -11,7 +11,7 @@ const nextPathAgent = `${urlPrefix}/agent-details`
 const nextPathFarmer = `${urlPrefix}/farmer-details`
 
 const prefixModelParams = [
-  previousPath, currentPath, 'Farmer', 'Agent', 'applying', 'applying', 'Who is applying for this grant?'
+  previousPath, currentPath, 'Farmer', 'Agent', 'applying', 'Who is applying for this grant?'
 ]
 
 module.exports = [

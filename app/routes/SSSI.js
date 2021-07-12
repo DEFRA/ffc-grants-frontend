@@ -11,7 +11,7 @@ const previousPath = `${urlPrefix}/remaining-costs`
 const nextPath = `${urlPrefix}/abstraction-licence`
 
 const prefixModelParams = [
-  previousPath, currentPath, 'Yes', 'No', 'sSSI', 'sSSI',
+  previousPath, currentPath, 'Yes', 'No', 'sSSI',
   'Does the project directly impact a Site of Special Scientific Interest?'
 ]
 
