@@ -1,6 +1,7 @@
 const Joi = require('joi')
 const { setYarValue, getYarValue } = require('../helpers/session')
-const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
+const { errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
+const { createModelTwoRadios } = require('../helpers/modelTwoRadios')
 const gapiService = require('../services/gapi-service')
 const urlPrefix = require('../config/server').urlPrefix
 
@@ -9,26 +10,9 @@ const currentPath = `${urlPrefix}/${viewTemplate}`
 const previousPath = `${urlPrefix}/irrigated-crops`
 const nextPath = `${urlPrefix}/irrigated-land`
 
-function createModel (errorMessage, data) {
-  return {
-    backLink: previousPath,
-    formActionPage: currentPath,
-    radios: {
-      classes: 'govuk-radios--inline',
-      idPrefix: 'currentlyIrrigating',
-      name: 'currentlyIrrigating',
-      fieldset: {
-        legend: {
-          text: 'Are you currently irrigating?',
-          isPageHeading: true,
-          classes: 'govuk-fieldset__legend--l'
-        }
-      },
-      items: setLabelData(data, ['Yes', 'No']),
-      ...(errorMessage ? { errorMessage: { text: errorMessage } } : {})
-    }
-  }
-}
+const prefixModelParams = [
+  previousPath, currentPath, 'Yes', 'No', 'currentlyIrrigating', 'currentlyIrrigating', 'Are you currently irrigating?'
+]
 
 module.exports = [
   {
@@ -41,7 +25,7 @@ module.exports = [
         return h.redirect(`${urlPrefix}/irrigated-crops`)
       }
 
-      return h.view(viewTemplate, createModel(null, currentlyIrrigating))
+      return h.view(viewTemplate, createModelTwoRadios(...prefixModelParams, null, currentlyIrrigating))
     }
   },
   {
@@ -55,7 +39,7 @@ module.exports = [
         failAction: (request, h, err) => {
           const errorObject = errorExtractor(err)
           const errorMessage = getErrorMessage(errorObject)
-          return h.view(viewTemplate, createModel(errorMessage)).takeover()
+          return h.view(viewTemplate, createModelTwoRadios(...prefixModelParams, errorMessage)).takeover()
         }
       },
       handler: async (request, h) => {
