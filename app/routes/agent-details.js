@@ -57,21 +57,18 @@ function createModel (errorMessageList, agentDetails, hasDetails) {
     inputLandline: formInputObject('landline', 'govuk-input--width-20', 'Landline number', null, landline, landlineError),
     inputMobile: formInputObject('mobile', 'govuk-input--width-20', 'Mobile number', null, mobile, mobileError),
     inputEmail: formInputObject('email', 'govuk-input--width-20', 'Email address', 'We will use this to send you a confirmation', email, emailError),
-
+    inputPostcode: formInputObject('postcode', 'govuk-input--width-5', 'Postcode', null, postcode, postcodeError),
     selectCounty: {
-      id: 'county',
-      name: 'county',
-      classes: 'govuk-input--width-10',
-      label: {
-        text: 'County'
-      },
       items: setLabelData(county, [
         { text: 'Select an option', value: null },
         ...LIST_COUNTIES
       ]),
+      label: { text: 'County' },
+      classes: 'govuk-input--width-10',
+      name: 'county',
+      id: 'county',
       ...(countyError ? { errorMessage: { text: countyError } } : {})
-    },
-    inputPostcode: formInputObject('postcode', 'govuk-input--width-5', 'Postcode', null, postcode, postcodeError)
+    }
   }
 }
 
