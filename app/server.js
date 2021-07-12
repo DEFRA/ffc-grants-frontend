@@ -9,6 +9,7 @@ const { version } = require('../package.json')
 const Uuid = require('uuid')
 const protectiveMonitoringServiceSendEvent = require('./services/protective-monitoring-service')
 const cacheConfig = require('./config/cache')
+const authConfig = require('./config/auth')
 const catbox = cacheConfig.useRedis ? require('@hapi/catbox-redis') : require('@hapi/catbox-memory')
 
 async function createServer () {
@@ -22,6 +23,11 @@ async function createServer () {
       }
     }]
   })
+
+  if (authConfig.enabled) {
+    console.log('[LOGIN REQUIRED][ENABLING AUTHORISATION PLUGIN]')
+    await server.register(require('./plugins/auth'))
+  }
 
   await server.register(inert)
   await server.register(vision)
