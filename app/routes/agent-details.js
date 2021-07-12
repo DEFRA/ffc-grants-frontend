@@ -114,18 +114,18 @@ module.exports = [
       validate: {
         options: { abortEarly: false },
         payload: Joi.object({
-          firstName: Joi.string().regex(NAME_REGEX).required(),
           lastName: Joi.string().regex(NAME_REGEX).required(),
           businessName: Joi.string().regex(BUSINESSNAME_REGEX).max(100).required(),
-          email: Joi.string().email().required(),
-          mobile: Joi.string().regex(PHONE_REGEX).min(10).allow(''),
-          landline: Joi.string().regex(PHONE_REGEX).min(10).allow(''),
-          address1: Joi.string().required(),
-          address2: Joi.string().allow(''),
-          town: Joi.string().required(),
-          county: Joi.string().required(),
+          firstName: Joi.string().regex(NAME_REGEX).required(),
+          results: Joi.any(),
           postcode: Joi.string().replace(DELETE_POSTCODE_CHARS_REGEX, '').regex(POSTCODE_REGEX).trim().required(),
-          results: Joi.any()
+          county: Joi.string().required(),
+          town: Joi.string().required(),
+          address2: Joi.string().allow(''),
+          address1: Joi.string().required(),
+          landline: Joi.string().regex(PHONE_REGEX).min(10).allow(''),
+          mobile: Joi.string().regex(PHONE_REGEX).min(10).allow(''),
+          email: Joi.string().email().required()
         }),
         failAction: (request, h, err) => {
           const [
