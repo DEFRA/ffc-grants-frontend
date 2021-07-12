@@ -1,7 +1,7 @@
 const { setLabelData } = require('../helpers/helper-functions')
 
 const createModelTwoRadios = (
-  previousPath, currentPath, valueOne, valueTwo, name, text, errorMessage, data
+  previousPath, currentPath, values, name, text, errorMessage, data
 ) => ({
   backLink: previousPath,
   formActionPage: currentPath,
@@ -16,7 +16,7 @@ const createModelTwoRadios = (
         classes: 'govuk-fieldset__legend--l'
       }
     },
-    items: setLabelData(data, [valueOne, valueTwo]),
+    items: setLabelData(data, [values.valueOne, values.valueTwo]),
     ...(errorMessage ? { errorMessage: { text: errorMessage } } : {})
   }
 })

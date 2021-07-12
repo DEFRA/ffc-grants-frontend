@@ -10,8 +10,9 @@ const currentPath = `${urlPrefix}/${viewTemplate}`
 const previousPath = `${urlPrefix}/remaining-costs`
 const nextPath = `${urlPrefix}/abstraction-licence`
 
+const values = { valueOne: 'Yes', valueTwo: 'No' }
 const prefixModelParams = [
-  previousPath, currentPath, 'Yes', 'No', 'sSSI',
+  previousPath, currentPath, values, 'sSSI',
   'Does the project directly impact a Site of Special Scientific Interest?'
 ]
 

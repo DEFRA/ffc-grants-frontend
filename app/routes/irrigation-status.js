@@ -10,8 +10,9 @@ const currentPath = `${urlPrefix}/${viewTemplate}`
 const previousPath = `${urlPrefix}/irrigated-crops`
 const nextPath = `${urlPrefix}/irrigated-land`
 
+const values = { valueOne: 'Yes', valueTwo: 'No' }
 const prefixModelParams = [
-  previousPath, currentPath, 'Yes', 'No', 'currentlyIrrigating', 'Are you currently irrigating?'
+  previousPath, currentPath, values, 'currentlyIrrigating', 'Are you currently irrigating?'
 ]
 
 module.exports = [
