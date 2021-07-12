@@ -1,6 +1,6 @@
 const Joi = require('joi')
 const { setYarValue, getYarValue } = require('../helpers/session')
-const { setLabelData } = require('../helpers/helper-functions')
+const { createModelTwoRadios } = require('../helpers/modelTwoRadios')
 const gapiService = require('../services/gapi-service')
 const urlPrefix = require('../config/server').urlPrefix
 
@@ -10,26 +10,10 @@ const previousPath = `${urlPrefix}/business-details`
 const nextPathAgent = `${urlPrefix}/agent-details`
 const nextPathFarmer = `${urlPrefix}/farmer-details`
 
-function createModel (errorMessage, data) {
-  return {
-    backLink: previousPath,
-    formActionPage: currentPath,
-    radios: {
-      classes: 'govuk-radios--inline',
-      idPrefix: 'applying',
-      name: 'applying',
-      fieldset: {
-        legend: {
-          text: 'Who is applying for this grant?',
-          isPageHeading: true,
-          classes: 'govuk-fieldset__legend--l'
-        }
-      },
-      items: setLabelData(data, ['Farmer', 'Agent']),
-      ...(errorMessage ? { errorMessage: { text: errorMessage } } : {})
-    }
-  }
-}
+const values = { valueOne: 'Farmer', valueTwo: 'Agent' }
+const prefixModelParams = [
+  previousPath, currentPath, values, 'applying', 'Who is applying for this grant?'
+]
 
 module.exports = [
   {
@@ -38,7 +22,7 @@ module.exports = [
     handler: (request, h) => {
       const applying = getYarValue(request, 'applying')
       const data = applying || null
-      return h.view(viewTemplate, createModel(null, data))
+      return h.view(viewTemplate, createModelTwoRadios(...prefixModelParams, null, data))
     }
   },
   {
@@ -49,7 +33,7 @@ module.exports = [
         payload: Joi.object({
           applying: Joi.string().required()
         }),
-        failAction: (request, h) => h.view(viewTemplate, createModel('Select who is applying for this grant', null)).takeover()
+        failAction: (request, h) => h.view(viewTemplate, createModelTwoRadios(...prefixModelParams, 'Select who is applying for this grant', null)).takeover()
       },
       handler: async (request, h) => {
         const { applying } = request.payload

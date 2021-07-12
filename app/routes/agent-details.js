@@ -48,38 +48,27 @@ function createModel (errorMessageList, agentDetails, hasDetails) {
     pageId: 'Agent',
     pageHeader: 'Agent\'s details',
     checkDetail: hasDetails,
-    inputFirstName: formInputObject('firstName', 'govuk-input--width-20', 'First name', null, firstName, firstNameError),
-
-    inputLastName: formInputObject('lastName', 'govuk-input--width-20', 'Last name', null, lastName, lastNameError),
-
     inputBusinessName: formInputObject('businessName', 'govuk-input--width-20', 'Business name', null, businessName, businessNameError),
-
-    inputEmail: formInputObject('email', 'govuk-input--width-20', 'Email address', 'We will use this to send you a confirmation', email, emailError),
-
-    inputMobile: formInputObject('mobile', 'govuk-input--width-20', 'Mobile number', null, mobile, mobileError),
-
-    inputLandline: formInputObject('landline', 'govuk-input--width-20', 'Landline number', null, landline, landlineError),
-
-    inputAddress1: formInputObject('address1', 'govuk-input--width-20', 'Address 1', null, address1, address1Error),
-
-    inputAddress2: formInputObject('address2', 'govuk-input--width-20', 'Address 2', null, address2, null),
-
+    inputLastName: formInputObject('lastName', 'govuk-input--width-20', 'Last name', null, lastName, lastNameError),
+    inputFirstName: formInputObject('firstName', 'govuk-input--width-20', 'First name', null, firstName, firstNameError),
     inputTown: formInputObject('town', 'govuk-input--width-10', 'Town', null, town, townError),
-
+    inputAddress2: formInputObject('address2', 'govuk-input--width-20', 'Address 2', null, address2, null),
+    inputAddress1: formInputObject('address1', 'govuk-input--width-20', 'Address 1', null, address1, address1Error),
+    inputLandline: formInputObject('landline', 'govuk-input--width-20', 'Landline number', null, landline, landlineError),
+    inputMobile: formInputObject('mobile', 'govuk-input--width-20', 'Mobile number', null, mobile, mobileError),
+    inputEmail: formInputObject('email', 'govuk-input--width-20', 'Email address', 'We will use this to send you a confirmation', email, emailError),
+    inputPostcode: formInputObject('postcode', 'govuk-input--width-5', 'Postcode', null, postcode, postcodeError),
     selectCounty: {
-      id: 'county',
-      name: 'county',
-      classes: 'govuk-input--width-10',
-      label: {
-        text: 'County'
-      },
       items: setLabelData(county, [
         { text: 'Select an option', value: null },
         ...LIST_COUNTIES
       ]),
+      label: { text: 'County' },
+      classes: 'govuk-input--width-10',
+      name: 'county',
+      id: 'county',
       ...(countyError ? { errorMessage: { text: countyError } } : {})
-    },
-    inputPostcode: formInputObject('postcode', 'govuk-input--width-5', 'Postcode', null, postcode, postcodeError)
+    }
   }
 }
 
@@ -114,18 +103,18 @@ module.exports = [
       validate: {
         options: { abortEarly: false },
         payload: Joi.object({
-          firstName: Joi.string().regex(NAME_REGEX).required(),
           lastName: Joi.string().regex(NAME_REGEX).required(),
           businessName: Joi.string().regex(BUSINESSNAME_REGEX).max(100).required(),
-          email: Joi.string().email().required(),
-          mobile: Joi.string().regex(PHONE_REGEX).min(10).allow(''),
-          landline: Joi.string().regex(PHONE_REGEX).min(10).allow(''),
-          address1: Joi.string().required(),
-          address2: Joi.string().allow(''),
-          town: Joi.string().required(),
-          county: Joi.string().required(),
+          firstName: Joi.string().regex(NAME_REGEX).required(),
+          results: Joi.any(),
           postcode: Joi.string().replace(DELETE_POSTCODE_CHARS_REGEX, '').regex(POSTCODE_REGEX).trim().required(),
-          results: Joi.any()
+          county: Joi.string().required(),
+          town: Joi.string().required(),
+          address2: Joi.string().allow(''),
+          address1: Joi.string().required(),
+          landline: Joi.string().regex(PHONE_REGEX).min(10).allow(''),
+          mobile: Joi.string().regex(PHONE_REGEX).min(10).allow(''),
+          email: Joi.string().email().required()
         }),
         failAction: (request, h, err) => {
           const [
