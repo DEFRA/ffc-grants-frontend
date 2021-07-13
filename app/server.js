@@ -26,6 +26,8 @@ async function createServer () {
 
   if (authConfig.enabled) {
     console.log('[LOGIN REQUIRED][ENABLING AUTHORISATION PLUGIN]')
+    console.log(process.env.AUTH_PASSWORD_HASH, 'PASSSSSSSSSS')
+    console.log(process.env.AUTH_USERNAME,'PASSSSSSSSSS')
     await server.register(require('./plugins/auth'))
   }
 

@@ -1,5 +1,6 @@
 const cookie = require('@hapi/cookie')
 const authConfig = require('../config/auth')
+const urlPrefix = require('../config/server').urlPrefix
 
 module.exports = {
   plugin: {
@@ -9,7 +10,7 @@ module.exports = {
 
       server.auth.strategy('session-auth', 'cookie', {
         cookie: authConfig.cookie,
-        redirectTo: '/login',
+        redirectTo: `${urlPrefix}/login`,
         validateFunc: (request, session) => session.authenticated
           ? { valid: true, credentials: authConfig.credentials }
           : { valid: false }

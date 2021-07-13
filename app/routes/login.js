@@ -2,10 +2,16 @@ const Joi = require('joi')
 const authConfig = require('../config/auth')
 const bcrypt = require('bcrypt')
 
+const { urlPrefix, startPageUrl } = require('../config/server')
+const viewTemplate = 'login'
+const currentPath = `${urlPrefix}/${viewTemplate}`
+const nextPath = startPageUrl
+
 const errorText = 'Enter the username and password you\'ve been given'
 
 function createModel (errorMessage) {
   return {
+    formActionPage: currentPath,
     usernameInput: {
       label: {
         text: 'Username'
@@ -30,18 +36,18 @@ function createModel (errorMessage) {
 module.exports = [
   {
     method: 'GET',
-    path: '/login',
+    path: currentPath,
     options: {
       auth: false
     },
     handler: (request, h) => {
       request.yar.reset()
-      return h.view('login', createModel(null))
+      return h.view(viewTemplate, createModel(null))
     }
   },
   {
     method: 'POST',
-    path: '/login',
+    path: currentPath,
     options: {
       auth: false,
       validate: {
@@ -57,12 +63,12 @@ module.exports = [
         }),
         failAction: (request, h, err) => {
           console.log('Authentication failed')
-          return h.view('login', createModel(errorText)).takeover()
+          return h.view(viewTemplate, createModel(errorText)).takeover()
         }
       },
       handler: (request, h) => {
         request.cookieAuth.set({ authenticated: true })
-        return h.redirect('./start')
+        return h.redirect(nextPath)
       }
     }
   }
