@@ -2,6 +2,7 @@ const Joi = require('joi')
 const { setYarValue, getYarValue } = require('../helpers/session')
 const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
 const urlPrefix = require('../config/server').urlPrefix
+const gapiService = require('../services/gapi-service')
 
 const viewTemplate = 'tenancy'
 const currentPath = `${urlPrefix}/${viewTemplate}`
@@ -49,6 +50,7 @@ module.exports = [
           landOwnership: Joi.string().required()
         }),
         failAction: (request, h, err) => {
+          gapiService.sendValidationDimension(request)
           const errorObject = errorExtractor(err)
           const errorMessage = getErrorMessage(errorObject)
           return h.view(viewTemplate, createModel(errorMessage)).takeover()

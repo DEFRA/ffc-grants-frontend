@@ -6,7 +6,7 @@
 {% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
 
 {% block pageTitle %}
-  You cannot apply for grant - {{siteTitle}}
+ {{refTitle}} - You cannot apply for grant - {{siteTitle}}
 {% endblock %}
 {% block beforeContent %}
   {{ govukBackLink({
@@ -33,7 +33,7 @@
         {{ govukWarningText(warning) }}
       {% endif %}
       {% if messageLink %}
-        <p class="govuk-body"><a href="{{messageLink.url}}" class="govuk-link">{{messageLink.title}}</a></p>
+        <p class="govuk-body"><a class="govuk-link" href="{{messageLink.url}}" class="govuk-link">{{messageLink.title}}</a></p>
       {% endif %}
     </div>
   </div>

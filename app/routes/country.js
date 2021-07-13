@@ -46,6 +46,7 @@ function createModel (errorMessage, data, postcodeHtml) {
 
 function createModelNotEligible () {
   return {
+    refTitle: 'Project location',
     backLink: currentPath,
     insertText: {
       text: 'Scotland, Wales and Northern Ireland have other grants available.'
@@ -76,7 +77,7 @@ module.exports = [
           projectPostcode: Joi.string().replace(DELETE_POSTCODE_CHARS_REGEX, '').regex(POSTCODE_REGEX).trim().allow('')
         }),
         failAction: (request, h, err) => {
-          gapiService.sendDimensionOrMetric(request, { dimensionOrMetric: gapiService.dimensions.VALIDATION, value: true })
+          gapiService.sendValidationDimension(request)
           const { inEngland, projectPostcode } = request.payload
           const errorObject = errorExtractor(err)
           const errorMessage = getErrorMessage(errorObject)

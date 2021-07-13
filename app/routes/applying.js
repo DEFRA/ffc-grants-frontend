@@ -50,7 +50,7 @@ module.exports = [
           applying: Joi.string().required()
         }),
         failAction: (request, h) => {
-          gapiService.sendDimensionOrMetric(request, { dimensionOrMetric: gapiService.dimensions.VALIDATION, value: true })
+          gapiService.sendValidationDimension(request)
           return h.view(viewTemplate, createModel('Select who is applying for this grant', null)).takeover()
         }
       },

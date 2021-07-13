@@ -52,7 +52,6 @@ const sendEvent = async (request, category, action) => {
     appInsights.logException(request, { error: err })
   }
 }
-
 const sendDimensionOrMetric = async (request, { dimensionOrMetric, value }) => {
   try {
     const dmetrics = {}
@@ -62,6 +61,9 @@ const sendDimensionOrMetric = async (request, { dimensionOrMetric, value }) => {
   } catch (err) {
     appInsights.logException(request, { error: err })
   }
+}
+const sendValidationDimension = async (request) => {
+  sendDimensionOrMetric(request, { dimensionOrMetric: dimensions.VALIDATION, value: true })
 }
 const sendDimensionOrMetrics = async (request, dimenisons) => {
   try {
@@ -117,5 +119,6 @@ module.exports = {
   actions,
   sendJourneyTime,
   sendDimensionOrMetrics,
-  isBlockDefaultPageView
+  isBlockDefaultPageView,
+  sendValidationDimension
 }

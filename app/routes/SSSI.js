@@ -49,7 +49,7 @@ module.exports = [
           sSSI: Joi.string().required()
         }),
         failAction: (request, h, err) => {
-          gapiService.sendDimensionOrMetric(request, { dimensionOrMetric: gapiService.dimensions.VALIDATION, value: true })
+          gapiService.sendValidationDimension(request)
           const errorObject = errorExtractor(err)
           const errorMessage = getErrorMessage(errorObject)
           return h.view(viewTemplate, createModel(errorMessage)).takeover()

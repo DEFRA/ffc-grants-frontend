@@ -40,11 +40,10 @@ function createModel (errorMessageList, businessDetails, hasDetails) {
       classes: '',
       label: {
         text: 'Project name',
-        classes: 'govuk-label',
-        isPageHeading: true
+        classes: 'govuk-label'
       },
       hint: {
-        html: 'For example, Brown Hill Farm reservoir'
+        text: 'For example, Brown Hill Farm reservoir'
       },
       ...(projectName ? { value: projectName } : {}),
       ...(projectNameError ? { errorMessage: { text: projectNameError } } : {})
@@ -55,11 +54,10 @@ function createModel (errorMessageList, businessDetails, hasDetails) {
       classes: '',
       label: {
         text: 'Business name',
-        classes: 'govuk-label',
-        isPageHeading: true
+        classes: 'govuk-label'
       },
       hint: {
-        html: 'If you’re registered on the Rural Payments system, enter business name as registered'
+        text: 'If you’re registered on the Rural Payments system, enter business name as registered'
       },
       ...(businessName ? { value: businessName } : {}),
       ...(businessNameError ? { errorMessage: { text: businessNameError } } : {})
@@ -70,11 +68,10 @@ function createModel (errorMessageList, businessDetails, hasDetails) {
       classes: 'govuk-input--width-10',
       label: {
         text: 'Number of employees',
-        classes: 'govuk-label',
-        isPageHeading: true
+        classes: 'govuk-label'
       },
       hint: {
-        html: 'Full-time employees, including the owner'
+        text: 'Full-time employees, including the owner'
       },
       ...(numberEmployees ? { value: numberEmployees } : {}),
       ...(numberEmployeesError ? { errorMessage: { text: numberEmployeesError } } : {})
@@ -88,8 +85,7 @@ function createModel (errorMessageList, businessDetails, hasDetails) {
       },
       label: {
         text: 'Business turnover (£)',
-        classes: 'govuk-label',
-        isPageHeading: true
+        classes: 'govuk-label'
       },
       ...(businessTurnover ? { value: businessTurnover } : {}),
       ...(businessTurnoverError ? { errorMessage: { text: businessTurnoverError } } : {})
@@ -100,11 +96,10 @@ function createModel (errorMessageList, businessDetails, hasDetails) {
       classes: 'govuk-input--width-10',
       label: {
         text: 'Single Business Identifier (SBI)',
-        classes: 'govuk-label',
-        isPageHeading: true
+        classes: 'govuk-label'
       },
       hint: {
-        html: 'If you do not have an SBI, leave it blank'
+        text: 'If you do not have an SBI, leave it blank'
       },
       ...(sbi ? { value: sbi } : {}),
       ...(sbiError ? { errorMessage: { text: sbiError } } : {})

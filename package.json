@@ -47,6 +47,7 @@
   },
   "devDependencies": {
     "@hapi/catbox-memory": "^5.0.1",
+    "@pact-foundation/pact": "^9.16.0",
     "clean-webpack-plugin": "^3.0.0",
     "css-loader": "^4.2.2",
     "file-loader": "^6.1.0",
