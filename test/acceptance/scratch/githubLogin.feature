@@ -3,7 +3,7 @@ Feature: Github test
     I want to test if the github.com failed login screen displays an error
 
     Scenario: login with fake credentials
-        Given I open the url "https://github.com/login"
+        Given I open the url "https://github.com/water/login"
         And   I clear the inputfield "#login_field"
         When  I add "marketionist" to the inputfield "#login_field"
         And   I clear the inputfield "#password"

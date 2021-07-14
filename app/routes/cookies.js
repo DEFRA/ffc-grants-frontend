@@ -5,6 +5,7 @@ const gapiService = require('../services/gapi-service')
 
 const viewTemplate = 'cookies/cookie-policy'
 const currentPath = `${urlPrefix}/cookies`
+const authConfig = require('../config/auth')
 
 function createModel (cookiesPolicy = {}, updated = false) {
   return {
@@ -21,7 +22,14 @@ function createModel (cookiesPolicy = {}, updated = false) {
           value: false,
           text: 'Do not use cookies that measure my website use',
           checked: !cookiesPolicy.analytics
-        }
+        },
+        ...(authConfig.enabled
+          ? [[
+              { text: 'session-auth' },
+              { text: 'Saves authentication for your session' },
+              { text: '1 year' }
+            ]]
+          : [])
       ]
     },
     updated
