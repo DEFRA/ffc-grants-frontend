@@ -47,6 +47,7 @@ function createModel (errorMessage, data) {
 
 function createModelNotEligible () {
   return {
+    refTitle: 'Legal status',
     backLink: currentPath,
     messageContent:
       'This is only open to a business with a different legal status.',
@@ -84,6 +85,7 @@ module.exports = [
           legalStatus: Joi.string().required()
         }),
         failAction: (request, h, err) => {
+          gapiService.sendValidationDimension(request)
           const errorObject = errorExtractor(err)
           const errorMessage = getErrorMessage(errorObject)
           return h.view(viewTemplate, createModel(errorMessage)).takeover()

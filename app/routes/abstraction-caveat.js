@@ -7,7 +7,7 @@ const MAYBE_ELIGIBLE = {
   messageContent: `
   Any abstraction licences or variations must be in place by 31 December 2021 (the end of the application window).<br/><br/>
   If you have already applied for an abstraction licence or variation and expect to get it by then, you can submit a full application.<br/><br/>
-  If you have already applied for an abstraction licence or variation but it might not be issued by then, please email <a href="mailto:FTF@rpa.gov.uk">FTF@rpa.gov.uk</a>
+  If you have already applied for an abstraction licence or variation but it might not be issued by then, please email <a class="govuk-link" href="mailto:FTF@rpa.gov.uk">FTF@rpa.gov.uk</a>
   `
 }
 

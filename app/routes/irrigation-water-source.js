@@ -2,6 +2,7 @@ const Joi = require('joi')
 const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
 const { setYarValue, getYarValue } = require('../helpers/session')
 const urlPrefix = require('../config/server').urlPrefix
+const gapiService = require('../services/gapi-service')
 
 const viewTemplate = 'irrigation-water-source'
 const currentPath = `${urlPrefix}/${viewTemplate}`
@@ -31,8 +32,13 @@ function createModel (currentlyIrrigating, errorMessage, errorSummary, currentDa
     waterSourceCurrent: {
       idPrefix: 'waterSourceCurrent',
       name: 'waterSourceCurrent',
+      fieldset: {
+        legend: {
+          text: 'Where does your current irrigation water come from?'
+        }
+      },
       hint: {
-        html: '<span class="govuk-label">Where does your current irrigation water come from?</span>Select one or two options'
+        text: 'Select one or two options'
       },
       items: setLabelData(currentData, ['Peak-flow/winter abstraction', 'Bore hole/aquifer', 'Rain water harvesting', 'Summer water surface abstraction', 'Mains']),
       ...(errorMessage && (!currentData || currentData.length > 2) ? { errorMessage: { text: errorMessage } } : {})
@@ -40,17 +46,16 @@ function createModel (currentlyIrrigating, errorMessage, errorSummary, currentDa
     waterSourcePlanned: {
       idPrefix: 'waterSourcePlanned',
       name: 'waterSourcePlanned',
+      fieldset: {
+        legend: {
+          text: 'Where will the irrigation water come from?'
+        }
+      },
       hint: {
-        html: `
-          ${(currentlyIrrigating === 'Yes' || currentlyIrrigating === 'yes')
-            ? '<span class="govuk-label">Where will the irrigation water come from?</span>'
-            : ''
-          }
-          Select one or two options
-        `
+        text: 'Select one or two options'
       },
       items: setLabelData(plannedData, ['Peak-flow/winter abstraction', 'Bore hole/aquifer', 'Rain water harvesting', 'Summer water surface abstraction', 'Mains']),
-      ...(errorMessage && (!plannedData || plannedData.length > 2) ? { errorMessage: { text: errorMessage } } : {})
+      ...(errorMessage && (!plannedData || plannedData.length > 2) ? { errorMessage: { text: 'Select one or two options to describe your irrigation water will come from' } } : {})
     }
   }
 }
@@ -80,7 +85,7 @@ module.exports = [
         }),
         failAction: (request, h, err) => {
           let { waterSourceCurrent, waterSourcePlanned } = request.payload
-
+          gapiService.sendValidationDimension(request)
           const errorObject = errorExtractor(err)
           const errorMessage = getErrorMessage(errorObject)
 
@@ -106,7 +111,7 @@ module.exports = [
           if (waterSourcePlanned.length > 2) {
             errorList.push({ text: 'Select where your irrigation water will come from', href: '#waterSourcePlanned' })
           }
-          return h.view(viewTemplate, createModel(currentlyIrrigating, 'Select one or two options', errorList, waterSourceCurrent, waterSourcePlanned, getYarValue(request, 'current-score')))
+          return h.view(viewTemplate, createModel(currentlyIrrigating, 'Select one or two options to describe project water source', errorList, waterSourceCurrent, waterSourcePlanned, getYarValue(request, 'current-score')))
         }
 
         setYarValue(request, 'waterSourceCurrent', waterSourceCurrent)

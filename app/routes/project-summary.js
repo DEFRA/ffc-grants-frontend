@@ -3,6 +3,7 @@ const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/he
 const { setYarValue, getYarValue } = require('../helpers/session')
 const { LICENSE_EXPECTED, LICENSE_WILL_NOT_HAVE } = require('../helpers/license-dates')
 const urlPrefix = require('../config/server').urlPrefix
+const gapiService = require('../services/gapi-service')
 
 const viewTemplate = 'project-summary'
 const currentPath = `${urlPrefix}/${viewTemplate}`
@@ -56,6 +57,7 @@ module.exports = [
         failAction: (request, h, err) => {
           const errorObject = errorExtractor(err)
           const errorMessage = getErrorMessage(errorObject)
+          gapiService.sendValidationDimension(request)
           return h.view(viewTemplate, createModel(errorMessage, null, null, getBackLink(request), getYarValue(request, 'current-score'))).takeover()
         }
       },
@@ -72,7 +74,7 @@ module.exports = [
 
         if (project.length > 2) {
           errorList.push({ text: 'Select one or two options to describe the project impact', href: '#project' })
-          return h.view(viewTemplate, createModel('Select one or two options', errorList, project, getBackLink(request), hasScore))
+          return h.view(viewTemplate, createModel('Select one or two options to describe your project impact', errorList, project, getBackLink(request), hasScore))
         }
 
         setYarValue(request, 'project', project)
