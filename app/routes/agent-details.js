@@ -48,16 +48,36 @@ function createModel (errorMessageList, agentDetails, hasDetails) {
     pageId: 'Agent',
     pageHeader: 'Agent\'s details',
     checkDetail: hasDetails,
-    inputBusinessName: formInputObject('businessName', 'govuk-input--width-20', 'Business name', null, businessName, businessNameError),
-    inputLastName: formInputObject('lastName', 'govuk-input--width-20', 'Last name', null, lastName, lastNameError),
-    inputFirstName: formInputObject('firstName', 'govuk-input--width-20', 'First name', null, firstName, firstNameError),
-    inputTown: formInputObject('town', 'govuk-input--width-10', 'Town', null, town, townError),
-    inputAddress2: formInputObject('address2', 'govuk-input--width-20', 'Address 2', null, address2, null),
-    inputAddress1: formInputObject('address1', 'govuk-input--width-20', 'Address 1', null, address1, address1Error),
-    inputLandline: formInputObject('landline', 'govuk-input--width-20', 'Landline number', null, landline, landlineError),
-    inputMobile: formInputObject('mobile', 'govuk-input--width-20', 'Mobile number', null, mobile, mobileError),
-    inputEmail: formInputObject('email', 'govuk-input--width-20', 'Email address', 'We will use this to send you a confirmation', email, emailError),
-    inputPostcode: formInputObject('postcode', 'govuk-input--width-5', 'Postcode', null, postcode, postcodeError),
+    inputBusinessName: formInputObject(
+      'businessName', 'govuk-input--width-20', 'Business name', null, { fieldName: businessName, fieldError: businessNameError, inputType: 'text', autocomplete: 'organization' }
+    ),
+    inputLastName: formInputObject(
+      'lastName', 'govuk-input--width-20', 'Last name', null, { fieldName: lastName, fieldError: lastNameError, inputType: 'text', autocomplete: 'family-name' }
+    ),
+    inputFirstName: formInputObject(
+      'firstName', 'govuk-input--width-20', 'First name', null, { fieldName: firstName, fieldError: firstNameError, inputType: 'text', autocomplete: 'given-name' }
+    ),
+    inputTown: formInputObject(
+      'town', 'govuk-input--width-10', 'Town', null, { fieldName: town, fieldError: townError, inputType: 'text', autocomplete: 'address-level1' }
+    ),
+    inputAddress2: formInputObject(
+      'address2', 'govuk-input--width-20', 'Address 2', null, { fieldName: address2, fieldError: null, inputType: 'text', autocomplete: 'on' }
+    ),
+    inputAddress1: formInputObject(
+      'address1', 'govuk-input--width-20', 'Address 1', null, { fieldName: address1, fieldError: address1Error, inputType: 'text', autocomplete: 'street-address' }
+    ),
+    inputLandline: formInputObject(
+      'landline', 'govuk-input--width-20', 'Landline number', null, { fieldName: landline, fieldError: landlineError, inputType: 'tel', autocomplete: 'home tel' }
+    ),
+    inputMobile: formInputObject(
+      'mobile', 'govuk-input--width-20', 'Mobile number', null, { fieldName: mobile, fieldError: mobileError, inputType: 'tel', autocomplete: 'mobile tel' }
+    ),
+    inputEmail: formInputObject(
+      'email', 'govuk-input--width-20', 'Email address', 'We will use this to send you a confirmation', { fieldName: email, fieldError: emailError, inputType: 'email', autocomplete: 'email' }
+    ),
+    inputPostcode: formInputObject(
+      'postcode', 'govuk-input--width-5', 'Postcode', null, { fieldName: postcode, fieldError: postcodeError, inputType: 'text', autocomplete: 'postal-code' }
+    ),
     selectCounty: {
       items: setLabelData(county, [
         { text: 'Select an option', value: null },

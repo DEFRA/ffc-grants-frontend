@@ -46,14 +46,30 @@ function createModel (errorMessageList, farmerDetails, backLink, hasDetails) {
     formActionPage: currentPath,
     pageHeader: 'Farmer\'s details',
     checkDetail: hasDetails,
-    inputFirstName: formInputObject('firstName', 'govuk-input--width-20', 'First name', null, firstName, firstNameError),
-    inputLastName: formInputObject('lastName', 'govuk-input--width-20', 'Last name', null, lastName, lastNameError),
-    inputEmail: formInputObject('email', 'govuk-input--width-20', 'Email address', 'We will use this to send you a confirmation', email, emailError),
-    inputMobile: formInputObject('mobile', 'govuk-input--width-20', 'Mobile number', null, mobile, mobileError),
-    inputLandline: formInputObject('landline', 'govuk-input--width-20', 'Landline number', null, landline, landlineError),
-    inputAddress1: formInputObject('address1', 'govuk-input--width-20', 'Address 1', null, address1, address1Error),
-    inputAddress2: formInputObject('address2', 'govuk-input--width-20', 'Address 2', null, address2, null),
-    inputTown: formInputObject('town', 'govuk-input--width-10', 'Town', null, town, townError),
+    inputFirstName: formInputObject(
+      'firstName', 'govuk-input--width-20', 'First name', null, { fieldName: firstName, fieldError: firstNameError, inputType: 'text', autocomplete: 'given-name' }
+    ),
+    inputLastName: formInputObject(
+      'lastName', 'govuk-input--width-20', 'Last name', null, { fieldName: lastName, fieldError: lastNameError, inputType: 'text', autocomplete: 'family-name' }
+    ),
+    inputEmail: formInputObject(
+      'email', 'govuk-input--width-20', 'Email address', 'We will use this to send you a confirmation', { fieldName: email, fieldError: emailError, inputType: 'email', autocomplete: 'email' }
+    ),
+    inputMobile: formInputObject(
+      'mobile', 'govuk-input--width-20', 'Mobile number', null, { fieldName: mobile, fieldError: mobileError, inputType: 'tel', autocomplete: 'mobile tel' }
+    ),
+    inputLandline: formInputObject(
+      'landline', 'govuk-input--width-20', 'Landline number', null, { fieldName: landline, fieldError: landlineError, inputType: 'tel', autocomplete: 'home tel' }
+    ),
+    inputAddress1: formInputObject(
+      'address1', 'govuk-input--width-20', 'Address 1', null, { fieldName: address1, fieldError: address1Error, inputType: 'text', autocomplete: 'street-address' }
+    ),
+    inputAddress2: formInputObject(
+      'address2', 'govuk-input--width-20', 'Address 2', null, { fieldName: address2, fieldError: null, inputType: 'text', autocomplete: 'on' }
+    ),
+    inputTown: formInputObject(
+      'town', 'govuk-input--width-10', 'Town', null, { fieldName: town, fieldError: townError, inputType: 'text', autocomplete: 'address-level1' }
+    ),
 
     selectCounty: {
       id: 'county',
@@ -68,7 +84,9 @@ function createModel (errorMessageList, farmerDetails, backLink, hasDetails) {
       ]),
       ...(countyError ? { errorMessage: { text: countyError } } : {})
     },
-    inputPostcode: formInputObject('postcode', 'govuk-input--width-5', 'Postcode', null, postcode, postcodeError)
+    inputPostcode: formInputObject(
+      'postcode', 'govuk-input--width-5', 'Postcode', null, { fieldName: postcode, fieldError: postcodeError, inputType: 'text', autocomplete: 'postal-code' }
+    )
   }
 }
 

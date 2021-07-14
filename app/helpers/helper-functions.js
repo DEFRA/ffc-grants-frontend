@@ -30,18 +30,21 @@ function setLabelData (data, labelData) {
   })
 }
 
-function formInputObject (name, classes, text, hint, fieldName, fieldError, value) {
+function formInputObject (name, classes, text, hint, inputInfo, value) {
+  const { fieldName, fieldError, inputType, autocomplete } = inputInfo
+
   return {
     id: name,
-    name: name,
-    classes: classes,
+    name,
+    classes,
+    autocomplete: autocomplete || 'on',
     label: {
       text: text
     },
     hint: {
       text: hint
     },
-    ...(value ? { type: 'hidden' } : {}),
+    ...(value ? { type: 'hidden' } : { type: inputType }),
     ...(value ? { value: value } : {}),
     ...(fieldName ? { value: fieldName } : {}),
     ...(fieldError ? { errorMessage: { text: fieldError } } : {})
