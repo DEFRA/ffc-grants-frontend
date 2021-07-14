@@ -46,7 +46,7 @@ container:
   projectDetailsQueueAddress: project-details
   contactDetailsQueueAddress: contact-details
   cookiePassword: thisisnotarealpasswordthisisnotarealpassword
-  loginRequired: true
+  loginRequired: false
   authUsername: grants
   authPasswordHash: dummy
   backendPollingHost: http://ffc-grants-eligibility
