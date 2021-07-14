@@ -9,7 +9,7 @@ services:
     environment:
       NODE_ENV: production
       SITE_URL: localhost:3000
-      LOGIN_REQUIRED: ${LOGIN_REQUIRED:-true}
+      LOGIN_REQUIRED: ${LOGIN_REQUIRED:-false}
       AUTH_USERNAME: ${AUTH_USERNAME:-grants}
       AUTH_PASSWORD_HASH: ${AUTH_PASSWORD_HASH:-grants}
       GOOGLE_TAG_MANAGER_KEY: 'GTM-WJ5C78H'
