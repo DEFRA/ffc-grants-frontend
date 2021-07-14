@@ -2,6 +2,7 @@ const Joi = require('joi')
 const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
 const { setYarValue, getYarValue } = require('../helpers/session')
 const urlPrefix = require('../config/server').urlPrefix
+const gapiService = require('../services/gapi-service')
 
 const viewTemplate = 'irrigation-systems'
 const currentPath = `${urlPrefix}/${viewTemplate}`
@@ -31,8 +32,13 @@ function createModel (currentlyIrrigating, errorMessage, errorSummary, currentDa
     irrigationCurrent: {
       idPrefix: 'irrigationCurrent',
       name: 'irrigationCurrent',
+      fieldset: {
+        legend: {
+          text: 'What systems are currently used to irrigate?'
+        }
+      },
       hint: {
-        html: '<span class="govuk-label">What systems are currently used to irrigate?</span>Select one or two options'
+        text: 'Select one or two options'
       },
       items: setLabelData(currentData,
         ['Boom', 'Capillary bed', 'Ebb and flow', 'Mist', 'Rain gun', 'Sprinklers', 'Trickle']),
@@ -41,17 +47,16 @@ function createModel (currentlyIrrigating, errorMessage, errorSummary, currentDa
     irrigationPlanned: {
       idPrefix: 'irrigationPlanned',
       name: 'irrigationPlanned',
-      hint: {
-        html: `
-        ${(currentlyIrrigating === 'Yes' || currentlyIrrigating === 'yes')
-          ? '<span class="govuk-label">What systems will be used to irrigate?</span>'
-          : ''
+      fieldset: {
+        legend: {
+          text: 'What systems will be used to irrigate?'
         }
-        Select one or two options
-      `
+      },
+      hint: {
+        text: 'Select one or two options'
       },
       items: setLabelData(plannedData, ['Boom', 'Capillary bed', 'Ebb and flow', 'Mist', 'Rain gun', 'Sprinklers', 'Trickle']),
-      ...(errorMessage && (!plannedData || plannedData.length > 2) ? { errorMessage: { text: errorMessage } } : {})
+      ...(errorMessage && (!plannedData || plannedData.length > 2) ? { errorMessage: { text: 'Select one or two options to describe irrigation systems that will be used to irrigate' } } : {})
     }
   }
 }
@@ -82,7 +87,7 @@ module.exports = [
           let { irrigationCurrent, irrigationPlanned } = request.payload
           const errorObject = errorExtractor(err)
           const errorMessage = getErrorMessage(errorObject)
-
+          gapiService.sendValidationDimension(request)
           irrigationCurrent = irrigationCurrent ? [irrigationCurrent].flat() : irrigationCurrent
           irrigationPlanned = irrigationPlanned ? [irrigationPlanned].flat() : irrigationPlanned
 
@@ -106,7 +111,7 @@ module.exports = [
           }
           return h.view(
             viewTemplate,
-            createModel(currentlyIrrigating, 'Select one or two options', errorList, irrigationCurrent, irrigationPlanned, getYarValue(request, 'current-score'))
+            createModel(currentlyIrrigating, 'Select one or two options to describe your irrigation systems', errorList, irrigationCurrent, irrigationPlanned, getYarValue(request, 'current-score'))
           )
         }
 

@@ -38,6 +38,7 @@ module.exports = [
           currentlyIrrigating: Joi.string().required()
         }),
         failAction: (request, h, err) => {
+          gapiService.sendValidationDimension(request)
           const errorObject = errorExtractor(err)
           const errorMessage = getErrorMessage(errorObject)
           return h.view(viewTemplate, createModelTwoRadios(...prefixModelParams, errorMessage)).takeover()

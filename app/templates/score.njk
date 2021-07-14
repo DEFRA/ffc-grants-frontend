@@ -4,7 +4,7 @@
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "./components/macro.njk" import crumbToken %}
 {% block pageTitle %}
-  {{siteTitle}} - Score
+  Score - {{siteTitle}}
 {% endblock %}
 {% block beforeContent %}
   {{ govukBackLink({
@@ -70,7 +70,7 @@
             <th scope="col" class="govuk-table__header govuk-!-width-one-third">Answers</th>
             <th scope="col" class="govuk-table__header ">Score</th>
             <th scope="col" class="govuk-table__header govuk-!-width-one-third">Funding priorities</th>
-            <th scope="col" class="govuk-table__header"> </th>
+            <th scope="col" class="govuk-table__header">Change Answers</th>
           </tr>
         </thead>
 
@@ -95,8 +95,8 @@
         {{question.fundingPriorities | safe}}
       </td>
       <td class="govuk-table__cell">
-          <a class="govuk-link" href="{{question.url}}">
-            Change<span class="govuk-visually-hidden"> project summary</span>
+          <a class="govuk-link" href="{{question.url}}" title="Change {{question.answers[0].title}}">
+            Change
           </a>
       </td>
     </tr>

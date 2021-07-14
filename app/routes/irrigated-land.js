@@ -3,6 +3,7 @@ const { fetchListObjectItems, findErrorList } = require('../helpers/helper-funct
 const { IRRIGATED_LAND_REGEX, ONLY_ZEROES_REGEX } = require('../helpers/regex-validation')
 const { setYarValue, getYarValue } = require('../helpers/session')
 const urlPrefix = require('../config/server').urlPrefix
+const gapiService = require('../services/gapi-service')
 
 const viewTemplate = 'irrigated-land'
 const currentPath = `${urlPrefix}/${viewTemplate}`
@@ -37,11 +38,15 @@ function createModel (currentlyIrrigating, irrigatedLandCurrent, irrigatedLandTa
       classes: 'govuk-input--width-4',
       id: 'irrigatedLandCurrent',
       name: 'irrigatedLandCurrent',
+      type: 'number',
       suffix: {
         text: 'ha'
       },
+      label: {
+        text: 'How much land is currently irrigated per year?'
+      },
       hint: {
-        html: '<span class="govuk-label">How much land is currently irrigated per year? </span>Enter figure in hectares, for example 543.5'
+        text: 'Enter figure in hectares, for example 543.5'
       },
       ...(irrigatedLandCurrent ? { value: irrigatedLandCurrent } : {}),
       ...(irrigatedLandCurrentError ? { errorMessage: { text: irrigatedLandCurrentError } } : {})
@@ -50,15 +55,13 @@ function createModel (currentlyIrrigating, irrigatedLandCurrent, irrigatedLandTa
       classes: 'govuk-input--width-4',
       id: 'irrigatedLandTarget',
       name: 'irrigatedLandTarget',
-      hint: {
-        html: `
-        ${(currentlyIrrigating === 'Yes' || currentlyIrrigating === 'yes')
-          ? '<span class="govuk-label">How much land will be irrigated per year after the project?</span>'
-          : ''
-        }
-        Enter figure in hectares, for example 543.5
-      `
+      label: {
+        text: 'How much land will be irrigated per year after the project?'
       },
+      hint: {
+        text: 'Enter figure in hectares, for example 543.5'
+      },
+      type: 'number',
       suffix: {
         text: 'ha'
       },
@@ -94,6 +97,7 @@ module.exports = [
           results: Joi.any()
         }),
         failAction: (request, h, err) => {
+          gapiService.sendValidationDimension(request)
           let [
             irrigatedLandCurrentError, irrigatedLandTargetError
           ] = findErrorList(err, ['irrigatedLandCurrent', 'irrigatedLandTarget'])

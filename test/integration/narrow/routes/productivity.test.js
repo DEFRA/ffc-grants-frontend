@@ -64,7 +64,7 @@ describe('Project details page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Select one or two options')
+    expect(postResponse.payload).toContain('Select one or two options to describe your project will improve productivity')
   })
 
   it('should store user response and redirects to collaboration page', async () => {
