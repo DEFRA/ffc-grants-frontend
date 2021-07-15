@@ -61,10 +61,10 @@ function createModel (errorMessageList, agentDetails, hasDetails) {
       'town', 'govuk-input--width-10', 'Town', null, { fieldName: town, fieldError: townError, inputType: 'text', autocomplete: 'address-level2' }
     ),
     inputAddress2: formInputObject(
-      'address2', 'govuk-input--width-20', 'Address 2', null, { fieldName: address2, fieldError: null, inputType: 'text', autocomplete: 'address-line2' }
+      'address-line2', 'govuk-input--width-20', null, null, { fieldName: address2, fieldError: null, inputType: 'text', autocomplete: 'address-line2' }
     ),
     inputAddress1: formInputObject(
-      'address1', 'govuk-input--width-20', 'Address 1', null, { fieldName: address1, fieldError: address1Error, inputType: 'text', autocomplete: 'address-line1' }
+      'address-line1', 'govuk-input--width-20', 'Building and street', null, { fieldName: address1, fieldError: address1Error, inputType: 'text', autocomplete: 'address-line1' }
     ),
     inputLandline: formInputObject(
       'landline', 'govuk-input--width-20', 'Landline number', null, { fieldName: landline, fieldError: landlineError, inputType: 'tel', autocomplete: 'home tel' }

@@ -38,9 +38,7 @@ function formInputObject (name, classes, text, hint, inputInfo, value) {
     name,
     classes,
     autocomplete: autocomplete || 'on',
-    label: {
-      text: text
-    },
+    ...(text ? { label: { text: text } } : {}),
     hint: {
       text: hint
     },
