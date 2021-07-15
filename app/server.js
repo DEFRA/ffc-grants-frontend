@@ -25,7 +25,6 @@ async function createServer () {
   })
 
   if (authConfig.enabled) {
-    console.log('[LOGIN REQUIRED][ENABLING AUTHORISATION PLUGIN]')
     await server.register(require('./plugins/auth'))
   }
 
