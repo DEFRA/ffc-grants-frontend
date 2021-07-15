@@ -62,19 +62,20 @@ function createModel (errorMessageList, farmerDetails, backLink, hasDetails) {
       'landline', 'govuk-input--width-20', 'Landline number', null, { fieldName: landline, fieldError: landlineError, inputType: 'tel', autocomplete: 'home tel' }
     ),
     inputAddress1: formInputObject(
-      'address1', 'govuk-input--width-20', 'Address 1', null, { fieldName: address1, fieldError: address1Error, inputType: 'text', autocomplete: 'street-address' }
+      'address1', 'govuk-input--width-20', 'Address 1', null, { fieldName: address1, fieldError: address1Error, inputType: 'text', autocomplete: 'address-line1' }
     ),
     inputAddress2: formInputObject(
-      'address2', 'govuk-input--width-20', 'Address 2', null, { fieldName: address2, fieldError: null, inputType: 'text', autocomplete: 'on' }
+      'address2', 'govuk-input--width-20', 'Address 2', null, { fieldName: address2, fieldError: null, inputType: 'text', autocomplete: 'address-line2' }
     ),
     inputTown: formInputObject(
-      'town', 'govuk-input--width-10', 'Town', null, { fieldName: town, fieldError: townError, inputType: 'text', autocomplete: 'address-level1' }
+      'town', 'govuk-input--width-10', 'Town (optional)', null, { fieldName: town, fieldError: townError, inputType: 'text', autocomplete: 'address-level2' }
     ),
 
     selectCounty: {
       id: 'county',
       name: 'county',
       classes: 'govuk-input--width-10',
+      autocomplete: 'address-level1',
       label: {
         text: 'County'
       },

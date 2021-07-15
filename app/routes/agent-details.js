@@ -58,13 +58,13 @@ function createModel (errorMessageList, agentDetails, hasDetails) {
       'firstName', 'govuk-input--width-20', 'First name', null, { fieldName: firstName, fieldError: firstNameError, inputType: 'text', autocomplete: 'given-name' }
     ),
     inputTown: formInputObject(
-      'town', 'govuk-input--width-10', 'Town', null, { fieldName: town, fieldError: townError, inputType: 'text', autocomplete: 'address-level1' }
+      'town', 'govuk-input--width-10', 'Town', null, { fieldName: town, fieldError: townError, inputType: 'text', autocomplete: 'address-level2' }
     ),
     inputAddress2: formInputObject(
-      'address2', 'govuk-input--width-20', 'Address 2', null, { fieldName: address2, fieldError: null, inputType: 'text', autocomplete: 'on' }
+      'address2', 'govuk-input--width-20', 'Address 2', null, { fieldName: address2, fieldError: null, inputType: 'text', autocomplete: 'address-line2' }
     ),
     inputAddress1: formInputObject(
-      'address1', 'govuk-input--width-20', 'Address 1', null, { fieldName: address1, fieldError: address1Error, inputType: 'text', autocomplete: 'street-address' }
+      'address1', 'govuk-input--width-20', 'Address 1', null, { fieldName: address1, fieldError: address1Error, inputType: 'text', autocomplete: 'address-line1' }
     ),
     inputLandline: formInputObject(
       'landline', 'govuk-input--width-20', 'Landline number', null, { fieldName: landline, fieldError: landlineError, inputType: 'tel', autocomplete: 'home tel' }
@@ -83,6 +83,7 @@ function createModel (errorMessageList, agentDetails, hasDetails) {
         { text: 'Select an option', value: null },
         ...LIST_COUNTIES
       ]),
+      autocomplete: 'address-level1',
       label: { text: 'County' },
       classes: 'govuk-input--width-10',
       name: 'county',
