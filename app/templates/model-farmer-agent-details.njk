@@ -22,9 +22,9 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
     <h1 class="govuk-heading-l">{{pageHeader}}</h1>
-      <form method="POST" action="{{formActionPage}}" autocomplete="off" novalidate>
+      <form method="POST" action="{{formActionPage}}" autocomplete="on" novalidate>
         <input type="hidden" name="crumb" value="{{crumb}}" />
-        <h1 class="govuk-heading-m">Name</h1><br/>
+        <h2 class="govuk-heading-m">Name</h2><br/>
         {{ govukInput(inputFirstName) }}
         {{ govukInput(inputLastName) }}
         
@@ -38,11 +38,11 @@
 
 
 
-        <h1 class="govuk-heading-m">Contact details</h1><br/>
+        <h2 class="govuk-heading-m">Contact details</h2><br/>
         {{ govukInput(inputEmail) }}
         {{ govukInput(inputMobile) }}
         {{ govukInput(inputLandline) }}
-        <h1 class="govuk-heading-m">Address</h1><br/>
+        <h2 class="govuk-heading-m">Address</h2><br/>
         {{ govukInput(inputAddress1) }}
         {{ govukInput(inputAddress2) }}
         {{ govukInput(inputTown) }}

@@ -32,12 +32,13 @@ function createModel (errorMessageList, farmerDetails, backLink, hasDetails) {
     mobileError,
     landlineError,
     address1Error,
+    address2Error,
     townError,
     countyError,
     postcodeError
   ] = fetchListObjectItems(
     errorMessageList,
-    ['firstNameError', 'lastNameError', 'emailError', 'mobileError', 'landlineError', 'address1Error', 'townError', 'countyError', 'postcodeError']
+    ['firstNameError', 'lastNameError', 'emailError', 'mobileError', 'landlineError', 'address1Error', 'address2Error', 'townError', 'countyError', 'postcodeError']
   )
 
   return {
@@ -46,19 +47,36 @@ function createModel (errorMessageList, farmerDetails, backLink, hasDetails) {
     formActionPage: currentPath,
     pageHeader: 'Farmer\'s details',
     checkDetail: hasDetails,
-    inputFirstName: formInputObject('firstName', 'govuk-input--width-20', 'First name', null, firstName, firstNameError),
-    inputLastName: formInputObject('lastName', 'govuk-input--width-20', 'Last name', null, lastName, lastNameError),
-    inputEmail: formInputObject('email', 'govuk-input--width-20', 'Email address', 'We will use this to send you a confirmation', email, emailError),
-    inputMobile: formInputObject('mobile', 'govuk-input--width-20', 'Mobile number', null, mobile, mobileError),
-    inputLandline: formInputObject('landline', 'govuk-input--width-20', 'Landline number', null, landline, landlineError),
-    inputAddress1: formInputObject('address1', 'govuk-input--width-20', 'Address 1', null, address1, address1Error),
-    inputAddress2: formInputObject('address2', 'govuk-input--width-20', 'Address 2', null, address2, null),
-    inputTown: formInputObject('town', 'govuk-input--width-10', 'Town', null, town, townError),
+    inputFirstName: formInputObject(
+      'firstName', 'govuk-input--width-20', 'First name', null, { fieldName: firstName, fieldError: firstNameError, inputType: 'text', autocomplete: 'given-name' }
+    ),
+    inputLastName: formInputObject(
+      'lastName', 'govuk-input--width-20', 'Last name', null, { fieldName: lastName, fieldError: lastNameError, inputType: 'text', autocomplete: 'family-name' }
+    ),
+    inputEmail: formInputObject(
+      'email', 'govuk-input--width-20', 'Email address', 'We will use this to send you a confirmation', { fieldName: email, fieldError: emailError, inputType: 'email', autocomplete: 'email' }
+    ),
+    inputMobile: formInputObject(
+      'mobile', 'govuk-input--width-20', 'Mobile number', null, { fieldName: mobile, fieldError: mobileError, inputType: 'tel', autocomplete: 'mobile tel' }
+    ),
+    inputLandline: formInputObject(
+      'landline', 'govuk-input--width-20', 'Landline number', null, { fieldName: landline, fieldError: landlineError, inputType: 'tel', autocomplete: 'home tel' }
+    ),
+    inputAddress1: formInputObject(
+      'address1', 'govuk-input--width-20', 'Building and street', null, { fieldName: address1, fieldError: address1Error, inputType: 'text', autocomplete: 'address-line1' }
+    ),
+    inputAddress2: formInputObject(
+      'address2', 'govuk-input--width-20', null, null, { fieldName: address2, fieldError: address2Error, inputType: 'text', autocomplete: 'address-line2' }
+    ),
+    inputTown: formInputObject(
+      'town', 'govuk-input--width-10', 'Town (optional)', null, { fieldName: town, fieldError: townError, inputType: 'text', autocomplete: 'address-level2' }
+    ),
 
     selectCounty: {
       id: 'county',
       name: 'county',
       classes: 'govuk-input--width-10',
+      autocomplete: 'address-level1',
       label: {
         text: 'County'
       },
@@ -68,7 +86,9 @@ function createModel (errorMessageList, farmerDetails, backLink, hasDetails) {
       ]),
       ...(countyError ? { errorMessage: { text: countyError } } : {})
     },
-    inputPostcode: formInputObject('postcode', 'govuk-input--width-5', 'Postcode', null, postcode, postcodeError)
+    inputPostcode: formInputObject(
+      'postcode', 'govuk-input--width-5', 'Postcode', null, { fieldName: postcode, fieldError: postcodeError, inputType: 'text', autocomplete: 'postal-code' }
+    )
   }
 }
 
@@ -111,8 +131,8 @@ module.exports = [
           mobile: Joi.string().regex(PHONE_REGEX).min(10).allow(''),
           landline: Joi.string().regex(PHONE_REGEX).min(10).allow(''),
           address1: Joi.string().required(),
-          address2: Joi.string().allow(''),
-          town: Joi.string().required(),
+          address2: Joi.string().required(),
+          town: Joi.string().allow(''),
           county: Joi.string().required(),
           postcode: Joi.string().replace(DELETE_POSTCODE_CHARS_REGEX, '').regex(POSTCODE_REGEX).trim().required(),
           results: Joi.any()
@@ -125,13 +145,14 @@ module.exports = [
             mobileError,
             landlineError,
             address1Error,
+            address2Error,
             townError,
             countyError,
             postcodeError
-          ] = findErrorList(err, ['firstName', 'lastName', 'email', 'mobile', 'landline', 'address1', 'town', 'county', 'postcode'])
+          ] = findErrorList(err, ['firstName', 'lastName', 'email', 'mobile', 'landline', 'address1', 'address2', 'town', 'county', 'postcode'])
 
           const errorMessageList = {
-            firstNameError, lastNameError, emailError, mobileError, landlineError, address1Error, townError, countyError, postcodeError
+            firstNameError, lastNameError, emailError, mobileError, landlineError, address1Error, address2Error, townError, countyError, postcodeError
           }
 
           if (request.payload.landline === '' && request.payload.mobile === '') {

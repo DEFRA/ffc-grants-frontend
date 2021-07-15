@@ -25,7 +25,7 @@ describe('Agent details page', () => {
     expect(postResponse.payload).toContain('Enter a business name')
     expect(postResponse.payload).toContain('Enter your email address')
     expect(postResponse.payload).toContain('Enter line 1 of your address')
-    expect(postResponse.payload).toContain('Enter your town')
+    expect(postResponse.payload).toContain('Enter line 2 of your address')
     expect(postResponse.payload).toContain('Select your county')
     expect(postResponse.payload).toContain('Enter your postcode, like AA1 1AA')
   })
