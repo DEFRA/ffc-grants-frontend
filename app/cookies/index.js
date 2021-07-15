@@ -44,6 +44,7 @@ module.exports = {
     `${urlPrefix}/farming-type`,
     `${urlPrefix}/assets`,
     '/healthy',
-    '/healthz'
+    '/healthz',
+    `${urlPrefix}/login`
   ]
 }

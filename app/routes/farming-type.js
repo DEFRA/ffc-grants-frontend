@@ -32,9 +32,10 @@ function createModel (errorMessage, data) {
 
 function createModelNotEligible () {
   return {
+    refTitle: 'Farming type',
     backLink: currentPath,
     messageContent:
-      'This grant is only available to<ul class="govuk-list govuk-list--bullet"><li> arable and horticultural farming businesses that supply the food industry</li><li>nurseries growing ornamentals</li><li>forestry nurseries</li></ul><p class="govuk-body"> <a href=\'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments\'>See other grants you may be eligible for.</a></p>'
+      'This grant is only available to:<ul class="govuk-list govuk-list--bullet"><li> arable and horticultural farming businesses that supply the food industry</li><li>nurseries growing ornamentals</li><li>forestry nurseries</li></ul><p class="govuk-body"> <a class="govuk-link" href=\'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments\'>See other grants you may be eligible for.</a></p>'
   }
 }
 
@@ -58,6 +59,7 @@ module.exports = [
           farmingType: Joi.string().required()
         }),
         failAction: (request, h, err) => {
+          gapiService.sendValidationDimension(request)
           const errorObject = errorExtractor(err)
           const errorMessage = getErrorMessage(errorObject)
           return h.view(viewTemplate, createModel(errorMessage)).takeover()

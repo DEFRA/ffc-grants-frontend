@@ -6,7 +6,7 @@
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "./components/macro.njk" import crumbToken, sideBar, conditionalButtons %}
 {% block pageTitle %}
-  {{siteTitle}} - Project summary
+  Project summary - {{siteTitle}}
 {% endblock %}
 
 {% block beforeContent %}
@@ -17,6 +17,7 @@
 	  attributes: {id: 'linkBack'}
     }) }}
   {% endif %}
+  
   {% if errorList %}
     {{govukErrorSummary ({
   "titleText": "There is a problem",

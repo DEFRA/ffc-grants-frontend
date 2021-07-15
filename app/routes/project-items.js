@@ -2,6 +2,7 @@ const Joi = require('joi')
 const { setYarValue, getYarValue } = require('../helpers/session')
 const { setLabelData } = require('../helpers/helper-functions')
 const urlPrefix = require('../config/server').urlPrefix
+const gapiService = require('../services/gapi-service')
 
 const viewTemplate = 'project-items'
 const currentPath = `${urlPrefix}/${viewTemplate}`
@@ -40,7 +41,7 @@ function createModel (errorMessage, backLink, projectInfrastucture, projectEquip
           'Water meter'
         ]
       ),
-      ...(errorMessage ? { errorMessage: { text: errorMessage } } : {})
+      ...(errorMessage ? { errorMessage: { text: errorMessage.replace('##', 'irrigation infrastructures') } } : {})
     },
     checkboxesEquipment: {
       idPrefix: 'projectEquipment',
@@ -62,7 +63,7 @@ function createModel (errorMessage, backLink, projectInfrastucture, projectEquip
           'Mist'
         ]
       ),
-      ...(errorMessage ? { errorMessage: { text: errorMessage } } : {})
+      ...(errorMessage ? { errorMessage: { text: errorMessage.replace('##', 'irrigation equipment') } } : {})
     },
     checkboxesTechnology: {
       idPrefix: 'projectTechnology',
@@ -80,7 +81,7 @@ function createModel (errorMessage, backLink, projectInfrastucture, projectEquip
           'Software and sensors to optimise water application'
         ]
       ),
-      ...(errorMessage ? { errorMessage: { text: errorMessage } } : {})
+      ...(errorMessage ? { errorMessage: { text: errorMessage.replace('##', 'irrigation technology') } } : {})
     }
   }
 }
@@ -113,8 +114,8 @@ module.exports = [
         failAction: (request, h) => {
           const landOwnership = getYarValue(request, 'landOwnership') || null
           const backUrl = landOwnership === 'No' ? tenancyLengthPath : tenancyPath
-
-          return h.view(viewTemplate, createModel('Please select an option', backUrl, null)).takeover()
+          gapiService.sendValidationDimension(request)
+          return h.view(viewTemplate, createModel('Select all the ## items your project needs', backUrl, null)).takeover()
         }
       },
       handler: (request, h) => {
@@ -131,7 +132,7 @@ module.exports = [
           return h.view(
             viewTemplate,
             createModel(
-              'Select all the items your project needs',
+              'Select all the ## items your project needs',
               backUrl,
               projectInfrastucture,
               projectEquipment,

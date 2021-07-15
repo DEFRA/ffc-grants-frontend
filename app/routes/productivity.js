@@ -2,6 +2,7 @@ const Joi = require('joi')
 const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
 const { setYarValue, getYarValue } = require('../helpers/session')
 const urlPrefix = require('../config/server').urlPrefix
+const gapiService = require('../services/gapi-service')
 
 const viewTemplate = 'productivity'
 const currentPath = `${urlPrefix}/${viewTemplate}`
@@ -54,6 +55,7 @@ module.exports = [
           results: Joi.any()
         }),
         failAction: (request, h, err) => {
+          gapiService.sendValidationDimension(request)
           const errorObject = errorExtractor(err)
           const errorMessage = getErrorMessage(errorObject)
           return h.view(viewTemplate, createModel(errorMessage, null, null, getYarValue(request, 'current-score'))).takeover()
@@ -64,7 +66,7 @@ module.exports = [
         let { productivity, results } = request.payload
         productivity = [productivity].flat()
         if (productivity.length > 2) {
-          return h.view(viewTemplate, createModel('Select one or two options', 'Select how the project will improve productivity', productivity, hasScore))
+          return h.view(viewTemplate, createModel('Select one or two options to describe your project will improve productivity', 'Select how the project will improve productivity', productivity, hasScore))
         }
         setYarValue(request, 'productivity', productivity)
         return results ? h.redirect(scorePath) : h.redirect(nextPath)

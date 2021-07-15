@@ -32,6 +32,7 @@ function createModel (errorMessage, data) {
 }
 
 const NOT_ELIGIBLE = {
+  refTitle: 'Planning permission',
   backLink: currentPath,
   messageContent: 'Any planning permission must be in place by 31 December 2021 (the end of the application window).',
   messageLink: {
@@ -58,6 +59,7 @@ module.exports = [
           planningPermission: Joi.string().required()
         }),
         failAction: (request, h, err) => {
+          gapiService.sendValidationDimension(request)
           const errorObject = errorExtractor(err)
           const errorMessage = getErrorMessage(errorObject)
           return h.view(viewTemplate, createModel(errorMessage)).takeover()

@@ -1,9 +1,9 @@
 const Analytics = require('@defra/hapi-gapi/lib/analytics')
-const { getYarValue, setYarValue } = require('../helpers/session')
+const gapiService = require('../services/gapi-service')
 exports.plugin = {
   name: 'Gapi',
   /**
-     * Initialise the hapi-gapi plugin
+     * Initialise the hapi-gapi plugin & send default page view to google analytics.
      *
      * @param server the hapi server instance
      * @param options the hapi-gapi configuration settings
@@ -17,14 +17,13 @@ exports.plugin = {
       try {
         const response = request.response
         const statusFamily = Math.floor(response.statusCode / 100)
-        if (statusFamily === 2 && response.variety === 'view' && (getYarValue(request, 'GA-Sent') ?? false) === false) {
+        if (statusFamily === 2 && response.variety === 'view' && !gapiService.isBlockDefaultPageView(request.url)) {
           console.log('Sending analytics page-view for %s', request.route.path)
-          await request.ga.pageView()
+          await gapiService.sendDimensionOrMetric(request, { dimensionOrMetric: gapiService.dimensions.PRIMARY, value: true })
         } else if (statusFamily === 5) {
           console.log('Sending exception event for route %s with with status code %s', request.route.path, response.statusCode)
           await request.ga.event({ category: 'Exception', action: request.route.path, label: response.statusCode })
         }
-        setYarValue(request, 'GA-Sent', false)
       } catch {
         // ignore any error
       }

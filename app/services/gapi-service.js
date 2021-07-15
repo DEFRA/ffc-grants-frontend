@@ -1,12 +1,23 @@
 const appInsights = require('./app-insights')
-const { getYarValue, setYarValue } = require('../helpers/session')
+const { getYarValue } = require('../helpers/session')
+const blockDefaultPageViews = [
+  'applying', 'confirmation', 'sssi', 'remaining-costs',
+  'project-cost', 'project-start', 'planning-permission', 'score',
+  'country', 'legal-status', 'farming-type'
+]
+const isBlockDefaultPageView = (url) => {
+  const currentUrl = url.pathname.split('/').pop().toString().toLowerCase()
+  return blockDefaultPageViews.indexOf(currentUrl) >= 0
+}
 const dimensions = {
   SCORE: 'cd1',
   FINALSCORE: 'cd2',
   CONFIRMATION: 'cd5',
   ELIMINATION: 'cd6',
   AGENTFORMER: 'cd3',
-  ANALYTICS: 'cd4'
+  ANALYTICS: 'cd4',
+  PRIMARY: 'cd7',
+  VALIDATION: 'cd8'
 }
 const metrics = {
   SCORE: 'cm3',
@@ -41,16 +52,18 @@ const sendEvent = async (request, category, action) => {
     appInsights.logException(request, { error: err })
   }
 }
-
 const sendDimensionOrMetric = async (request, { dimensionOrMetric, value }) => {
   try {
     const dmetrics = {}
     dmetrics[dimensionOrMetric] = value
     await request.ga.pageView(dmetrics)
-    setYarValue(request, 'GA-Sent', true)
+    console.log('Metric Sending analytics page-view for %s', request.route.path)
   } catch (err) {
     appInsights.logException(request, { error: err })
   }
+}
+const sendValidationDimension = async (request) => {
+  sendDimensionOrMetric(request, { dimensionOrMetric: dimensions.VALIDATION, value: true })
 }
 const sendDimensionOrMetrics = async (request, dimenisons) => {
   try {
@@ -62,7 +75,7 @@ const sendDimensionOrMetrics = async (request, dimenisons) => {
       dmetrics[item.dimensionOrMetric] = item.value
     })
     await request.ga.pageView(dmetrics)
-    setYarValue(request, 'GA-Sent', true)
+    console.log('Metrics Sending analytics page-view for %s', request.route.path)
   } catch (err) {
     appInsights.logException(request, { error: err })
   }
@@ -96,4 +109,16 @@ const getTimeofJourneySinceStart = (request) => {
   }
   return 0
 }
-module.exports = { sendEvent, sendDimensionOrMetric, sendEligibilityEvent, dimensions, categories, metrics, actions, sendJourneyTime, sendDimensionOrMetrics }
+module.exports = {
+  sendEvent,
+  sendDimensionOrMetric,
+  sendEligibilityEvent,
+  dimensions,
+  categories,
+  metrics,
+  actions,
+  sendJourneyTime,
+  sendDimensionOrMetrics,
+  isBlockDefaultPageView,
+  sendValidationDimension
+}

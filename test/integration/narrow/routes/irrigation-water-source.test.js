@@ -58,7 +58,7 @@ describe('Irrigation water source page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Select one or two options for each question')
+    expect(postResponse.payload).toContain('Select one or two options to describe your irrigation water will come from')
   })
 
   it('should store user response and redirects to irrigated crops page', async () => {

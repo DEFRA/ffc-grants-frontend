@@ -5,7 +5,7 @@
 {% from "./components/macro.njk" import crumbToken %}
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 {% block pageTitle %}
-  {{siteTitle}} - Check your details
+  Check your details - {{siteTitle}}
 {% endblock %}
 {% block beforeContent %}
   {{ govukBackLink({
@@ -25,7 +25,8 @@
       {% if businessDetails %}
 
       <div>
-        <h2 class="govuk-heading-m check-detail-heading">Business details</h2><a class="check-detail-change" href="{{businessDetailsLink}}">Change</a>
+        <h2 class="govuk-heading-m check-detail-heading">Business details</h2>
+        <a class="check-detail-change" title="Change business details" href="{{businessDetailsLink}}">Change</a>
         <hr/>
       </div>
       
@@ -79,7 +80,8 @@
   
       {% if agentDetails %}
       <div>
-        <h2 class="govuk-heading-m check-detail-heading">Agent's details</h2><a class="check-detail-change" href="{{agentDetailsLink}}">Change</a>
+        <h2 class="govuk-heading-m check-detail-heading">Agent's details</h2>
+        <a title="Change agent's details" class="check-detail-change" href="{{agentDetailsLink}}">Change</a>
         <hr/>
       </div>
       {{ govukSummaryList({
@@ -148,7 +150,8 @@
           }
         ] %}
 <div>
-    <h2 class="govuk-heading-m check-detail-heading">Farmer's details</h2><a class="check-detail-change" href="{{farmerDetailsLink}}">Change</a>
+    <h2 class="govuk-heading-m check-detail-heading">Farmer's details</h2>
+    <a title="Change farmer's details" class="check-detail-change" href="{{farmerDetailsLink}}">Change</a>
     <hr/>
 </div>
       {{ govukSummaryList({ rows: farmerSummaryItems }) }}
