@@ -11,7 +11,7 @@ const currentPath = `${urlPrefix}/${viewTemplate}`
 const previousPath = `${urlPrefix}/project-items`
 const nextPath = `${urlPrefix}/potential-amount`
 
-function createModel (errorMessage, projectCost, projectItemsList) {
+function createModel(errorMessage, projectCost, projectItemsList) {
   return {
     backLink: previousPath,
     formActionPage: currentPath,
@@ -40,12 +40,13 @@ function createModel (errorMessage, projectCost, projectItemsList) {
   }
 }
 
-function createModelNotEligible () {
+function createModelNotEligible() {
   return {
+    refTitle: 'Project cost',
     backLink: currentPath,
     messageContent:
       `You can only apply for a grant of up to <span class="govuk-!-font-weight-bold">40%</span> of the estimated costs.<br/><br/>
-      The minimum grant you can apply for is £35,000 (40% of £87,500). The maximum grant is £1 million.`,
+      The minimum grant you can apply for is £35,000 (40% of £87,500). The maximum grant is £500,000.`,
     messageLink: {
       url: 'https://www.gov.uk/government/collections/rural-payments-and-grants',
       title: 'See other grants you may be eligible for.'
@@ -74,7 +75,7 @@ module.exports = [
         }),
         failAction: (request, h, err) => {
           const projectItemsList = getYarValue(request, 'projectItemsList') || null
-
+          gapiService.sendValidationDimension(request)
           const errorObject = errorExtractor(err)
           const errorMessage = getErrorMessage(errorObject)
           return h.view(viewTemplate, createModel(errorMessage, null, projectItemsList)).takeover()

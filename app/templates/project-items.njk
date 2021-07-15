@@ -1,14 +1,12 @@
 {% extends '.layout.njk' %}
-
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "./components/macro.njk" import crumbToken %}
 {% block pageTitle %}
-  {{siteTitle}} - Project items
+  Project items - {{ siteTitle }}
 {% endblock %}
-
 {% block beforeContent %}
   {{ govukBackLink({
     text: "Back",
@@ -16,16 +14,15 @@
 	  attributes: {id: 'linkBack'}
   }) }}
 {% endblock %}
-
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-l">Which eligible items does your project need?</h1>
-    <span id="project-items-hint" class="govuk-hint">
-      The minimum grant you can apply for is £35,000 (40% of £87,500).<br/>The maximum grant is £1 million.
-    </span>
+      <h1 class="govuk-heading-l">Which eligible items does your project need?</h1>
+      <span id="project-items-hint" class="govuk-hint">
+        The minimum grant you can apply for is £35,000 (40% of £87,500).<br/>The maximum grant is £500,000.
+      </span>
       <form method="POST" action="{{ formActionPage }}" autocomplete="off" novalidate>
-        {{ crumbToken(crumb)}}
+        {{ crumbToken(crumb) }}
         {{ govukCheckboxes(checkboxesInfrastucture) }}
         {{ govukCheckboxes(checkboxesEquipment) }}
         {{ govukCheckboxes(checkboxesTechnology) }}

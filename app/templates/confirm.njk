@@ -5,7 +5,7 @@
 {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
 {% from "./components/macro.njk" import crumbToken %}
 {% block pageTitle %}
-  {{siteTitle}} - Confirm
+  Confirm - {{siteTitle}}
 {% endblock %}
 {% block beforeContent %}
   {{ govukBackLink({
@@ -33,10 +33,12 @@
   <div class="govuk-grid-row govuk-body">
     <div class="govuk-grid-column-two-thirds govuk-body">
       <h1 class="govuk-heading-l">Confirm and send</h1>
-      <p>I confirm that, to the best of my knowledge, the details I have provided are correct.</p>
-      <p>I understand the score was based on the answers I provided.</p>
-      <p>I am aware the information I submit will be checked.</p>
-      <p>I am happy to be contacted by Defra and RPA (or a third-party on their behalf) about the application.</p>
+      <ul>
+        <li>I confirm that, to the best of my knowledge, the details I have provided are correct.</li>
+        <li>I understand the score was based on the answers I provided.</li>
+        <li>I am aware the information I submit will be checked.</li>
+        <li>I am happy to be contacted by Defra and RPA (or a third-party on their behalf) about the application.</li>
+      </ul>
     </div>
 
     <div class="govuk-grid-column-two-thirds">
@@ -55,8 +57,8 @@
     <div class="govuk-grid-column-full">
       <hr/>
       <p>
-        The Department for Environment, Food and Rural Affairs (Defra) is the data controller for personal data you give to RPA. For information on how we handle personal data go to <a href="https://www.gov.uk" target="_blank" rel="noopener noreferrer">GOV.UK (opens in a new tab)</a> and search
-        <a href="https://www.gov.uk/government/organisations/rural-payments-agency/about/personal-information-charter" target="_blank" rel="noopener noreferrer">Rural Payments Agency personal information charter (opens in a new tab).</a>
+        The Department for Environment, Food and Rural Affairs (Defra) is the data controller for personal data you give to RPA. For information on how we handle personal data go to <a class="govuk-link" href="https://www.gov.uk" target="_blank" rel="noopener noreferrer">GOV.UK (opens in a new tab)</a> and search
+        <a class="govuk-link" href="https://www.gov.uk/government/organisations/rural-payments-agency/about/personal-information-charter" target="_blank" rel="noopener noreferrer">Rural Payments Agency personal information charter (opens in a new tab).</a>
       </p>
     </div>
   </div>

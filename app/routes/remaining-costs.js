@@ -32,6 +32,7 @@ function createModel (errorMessage, data, formattedRemainingCost) {
 
 function createModelNotEligible () {
   return {
+    refTitle: 'Remaining costs',
     backLink: currentPath,
     messageContent:
       'You cannot use public money (for example, grant funding from government or local authorities) towards the project costs.',
@@ -69,6 +70,7 @@ module.exports = [
           payRemainingCosts: Joi.string().required()
         }),
         failAction: (request, h, err) => {
+          gapiService.sendValidationDimension(request)
           const errorObject = errorExtractor(err)
           const errorMessage = getErrorMessage(errorObject)
           const remainingCost = getYarValue(request, 'remainingCost') || null
