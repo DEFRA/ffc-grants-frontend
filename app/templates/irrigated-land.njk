@@ -3,15 +3,26 @@
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "./components/macro.njk" import crumbToken, sideBar, conditionalButtons %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+
 {% block pageTitle %}
   Irrigated land - {{siteTitle}}
 {% endblock %}
+
 {% block beforeContent %}
   {{ govukBackLink({
     text: "Back",
     href: backLink,
 	  attributes: {id: 'linkBack'}
   }) }}
+
+  {% if errorList %}
+    {{govukErrorSummary ({
+    "titleText": "There is a problem",
+    "errorList": errorList
+    }) }}
+  {% endif %}
+
 {% endblock %}
 
 {% block content %}

@@ -5,8 +5,8 @@
 {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "./components/macro.njk" import crumbToken, sideBar  %}
-
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+
 {% block pageTitle %}
   Project cost - {{siteTitle}}
 {% endblock %}7
@@ -17,6 +17,14 @@
     href: backLink,
 	  attributes: {id: 'linkBack'}
   }) }}
+
+  {% if errorList %}
+    {{govukErrorSummary ({
+    "titleText": "There is a problem",
+    "errorList": errorList
+    }) }}
+  {% endif %}
+
 {% endblock %}
 
 {% block content %}
