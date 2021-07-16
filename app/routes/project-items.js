@@ -10,10 +10,11 @@ const nextPath = `${urlPrefix}/project-cost`
 const tenancyLengthPath = `${urlPrefix}/tenancy-length`
 const tenancyPath = `${urlPrefix}/tenancy`
 
-function createModel (errorMessage, backLink, projectInfrastucture, projectEquipment, projectTechnology) {
+function createModel (errorList, backLink, projectInfrastucture, projectEquipment, projectTechnology) {
   return {
     backLink,
     formActionLink: currentPath,
+    ...errorList ? { errorList } : {},
     checkboxesInfrastucture: {
       idPrefix: 'projectInfrastucture',
       name: 'projectInfrastucture',
@@ -41,7 +42,7 @@ function createModel (errorMessage, backLink, projectInfrastucture, projectEquip
           'Water meter'
         ]
       ),
-      ...(errorMessage ? { errorMessage: { text: errorMessage.replace('##', 'irrigation infrastructures') } } : {})
+      ...(errorList ? { errorMessage: { text: errorList[0].text } } : {})
     },
     checkboxesEquipment: {
       idPrefix: 'projectEquipment',
@@ -63,7 +64,7 @@ function createModel (errorMessage, backLink, projectInfrastucture, projectEquip
           'Mist'
         ]
       ),
-      ...(errorMessage ? { errorMessage: { text: errorMessage.replace('##', 'irrigation equipment') } } : {})
+      ...(errorList ? { errorMessage: { text: errorList[1].text } } : {})
     },
     checkboxesTechnology: {
       idPrefix: 'projectTechnology',
@@ -81,7 +82,7 @@ function createModel (errorMessage, backLink, projectInfrastucture, projectEquip
           'Software and sensors to optimise water application'
         ]
       ),
-      ...(errorMessage ? { errorMessage: { text: errorMessage.replace('##', 'irrigation technology') } } : {})
+      ...(errorList ? { errorMessage: { text: errorList[2].text } } : {})
     }
   }
 }
@@ -115,12 +116,18 @@ module.exports = [
           const landOwnership = getYarValue(request, 'landOwnership') || null
           const backUrl = landOwnership === 'No' ? tenancyLengthPath : tenancyPath
           gapiService.sendValidationDimension(request)
-          return h.view(viewTemplate, createModel('Select all the ## items your project needs', backUrl, null)).takeover()
+          const errorList = [{ text: 'Select all the items your project needs', href: '#projectInfrastucture' }]
+          return h.view(viewTemplate, createModel(errorList, backUrl, null)).takeover()
         }
       },
       handler: (request, h) => {
         const landOwnership = getYarValue(request, 'landOwnership') || null
         const backUrl = landOwnership === 'No' ? tenancyLengthPath : tenancyPath
+        const errorList = [
+          { text: 'Select all the irrigation infrastructures items your project needs', href: '#projectInfrastucture' },
+          { text: 'Select all the irrigation equipment items your project needs', href: '#projectEquipment' },
+          { text: 'Select all the technology items your project needs', href: '#projectTechnology' }
+        ]
 
         let {
           projectInfrastucture,
@@ -132,7 +139,7 @@ module.exports = [
           return h.view(
             viewTemplate,
             createModel(
-              'Select all the ## items your project needs',
+              errorList,
               backUrl,
               projectInfrastucture,
               projectEquipment,

@@ -63,8 +63,7 @@ module.exports = [
           gapiService.sendValidationDimension(request)
           const errorList = []
           const errorObject = errorExtractor(err)
-          const errorMessage = getErrorMessage(errorObject)
-          errorList.push({ text: errorMessage, href: '#farmingType' })
+          errorList.push({ text: getErrorMessage(errorObject), href: '#farmingType' })
           return h.view(viewTemplate, createModel(errorList)).takeover()
         }
       },

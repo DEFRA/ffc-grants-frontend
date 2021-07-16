@@ -1,10 +1,11 @@
 const { setLabelData } = require('../helpers/helper-functions')
 
 const createModelTwoRadios = (
-  previousPath, currentPath, values, name, text, errorMessage, data
+  previousPath, currentPath, values, name, text, errorList, data
 ) => ({
   backLink: previousPath,
   formActionPage: currentPath,
+  ...errorList ? { errorList } : {},
   radios: {
     classes: 'govuk-radios--inline',
     idPrefix: name,
@@ -17,7 +18,7 @@ const createModelTwoRadios = (
       }
     },
     items: setLabelData(data, [values.valueOne, values.valueTwo]),
-    ...(errorMessage ? { errorMessage: { text: errorMessage } } : {})
+    ...(errorList ? { errorMessage: { text: errorList[0].text } } : {})
   }
 })
 
