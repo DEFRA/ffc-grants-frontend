@@ -10,10 +10,12 @@ const currentPath = `${urlPrefix}/${viewTemplate}`
 const previousPath = `${urlPrefix}/legal-status`
 const nextPath = `${urlPrefix}/planning-permission`
 
-function createModel (errorMessage, data, postcodeHtml) {
+function createModel (errorList, data, postcodeHtml) {
   return {
     backLink: previousPath,
     formActionPage: currentPath,
+    ...errorList ? { errorList } : {},
+
     radios: {
       idPrefix: 'inEngland',
       name: 'inEngland',
@@ -39,7 +41,7 @@ function createModel (errorMessage, data, postcodeHtml) {
           checked: isChecked(data, 'No')
         }
       ],
-      ...(errorMessage ? { errorMessage: { text: errorMessage } } : {})
+      ...(errorList && !postcodeHtml.includes('Error:') ? { errorMessage: { text: errorList[0].text } } : {})
     }
   }
 }
@@ -78,27 +80,23 @@ module.exports = [
         }),
         failAction: (request, h, err) => {
           gapiService.sendValidationDimension(request)
+          const errorList = []
           const { inEngland, projectPostcode } = request.payload
           const errorObject = errorExtractor(err)
-          const errorMessage = getErrorMessage(errorObject)
-          const postcodeHtml = getPostCodeHtml(projectPostcode.toUpperCase(), inEngland ? errorMessage : null)
+          errorList.push({ text: getErrorMessage(errorObject), href: '#inEngland' })
+          const postcodeHtml = getPostCodeHtml(projectPostcode.toUpperCase(), inEngland ? errorList : null)
 
-          return h.view(
-            viewTemplate,
-            createModel(
-              !inEngland ? errorMessage : null,
-              inEngland,
-              postcodeHtml
-            )
-          ).takeover()
+          return h.view(viewTemplate, createModel(!inEngland ? errorList : null, inEngland, postcodeHtml)).takeover()
         }
       },
       handler: async (request, h) => {
+        const errorList = []
         const { inEngland, projectPostcode } = request.payload
+        errorList.push({ text: 'Enter a postcode, like AA1 1AA', href: '#projectPostcode' })
 
         if (inEngland === 'Yes' && projectPostcode.trim() === '') {
-          const postcodeHtml = getPostCodeHtml(projectPostcode.toUpperCase(), 'Enter a postcode, like AA1 1AA')
-          return h.view(viewTemplate, createModel(null, inEngland, postcodeHtml))
+          const postcodeHtml = getPostCodeHtml(projectPostcode.toUpperCase(), errorList)
+          return h.view(viewTemplate, createModel(errorList, inEngland, postcodeHtml))
         }
 
         setYarValue(request, 'inEngland', inEngland)
