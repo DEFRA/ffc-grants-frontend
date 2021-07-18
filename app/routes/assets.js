@@ -1,5 +1,5 @@
 const urlPrefix = require('../config/server').urlPrefix
-
+const expiresIn = require('../config/cache').expiresIn
 module.exports = {
   method: 'GET',
   path: `${urlPrefix}/assets/{path*}`,
@@ -10,6 +10,7 @@ module.exports = {
       }
     },
     cache: {
+      expiresIn: expiresIn,
       privacy: 'private'
     },
     auth: false
