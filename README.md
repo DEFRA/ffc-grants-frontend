@@ -74,7 +74,7 @@ overridden by build and release pipelines.
 
 Running the integration tests locally requires access to ASB, this can be
 achieved by setting the following environment variables:
-`MESSAGE_QUEUE_HOST`, `MESSAGE_QUEUE_PASSWORD`, `MESSAGE_QUEUE_USER`.
+`SERVICE_BUS_HOST`, `SERVICE_BUS_USER`, `SERVICE_BUS_PASSWORD`.
 `PROJECT_DETAILS_QUEUE_ADDRESS`, `CONTACT_DETAILS_QUEUE_ADDRESS` must be set to a valid, developer specific queue that is
 available on ASB e.g. `ffc-grants-fronend-<initials>` where `<initials>` are the
 initials of the developer.
