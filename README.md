@@ -28,9 +28,9 @@ container is started. When deployed into an appropriately configured AKS
 cluster (where [AAD Pod Identity](https://github.com/Azure/aad-pod-identity) is
 configured) the micro-service will use AAD Pod Identity through the manifests
 for
-[azure-identity](./helm/ffc-demo-claim-service/templates/azure-identity.yaml)
+[azure-identity](./helm/ffc-grants-claim-service/templates/azure-identity.yaml)
 and
-[azure-identity-binding](./helm/ffc-demo-claim-service/templates/azure-identity-binding.yaml).
+[azure-identity-binding](./helm/ffc-grants-claim-service/templates/azure-identity-binding.yaml).
 
 | Name                   | Description                                                                                |
 | ----                   | -----------                                                                                |
@@ -75,7 +75,7 @@ overridden by build and release pipelines.
 Running the integration tests locally requires access to ASB, this can be
 achieved by setting the following environment variables:
 `MESSAGE_QUEUE_HOST`, `MESSAGE_QUEUE_PASSWORD`, `MESSAGE_QUEUE_USER`.
-`CLAIM_QUEUE_ADDRESS` must be set to a valid, developer specific queue that is
+`PROJECT_DETAILS_QUEUE_ADDRESS`, `CONTACT_DETAILS_QUEUE_ADDRESS` must be set to a valid, developer specific queue that is
 available on ASB e.g. `ffc-grants-fronend-<initials>` where `<initials>` are the
 initials of the developer.
 
@@ -172,7 +172,7 @@ Alternatively, a local port may be forwarded to the pod:
 
 ```bash
 # Forward local port to the Kubernetes deployment
-kubectl port-forward --namespace=ffc-demo deployment/ffc-demo-web 3000:3000
+kubectl port-forward --namespace=ffc-grants deployment/ffc-grants-fronend 3000:3000
 ```
 
 Once the port is forwarded or an ingress controller is installed, the service
