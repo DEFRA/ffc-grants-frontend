@@ -4,16 +4,17 @@
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "./components/macro.njk" import crumbToken %}
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+
 {% block pageTitle %}
   Check your details - {{siteTitle}}
 {% endblock %}
+
 {% block beforeContent %}
   {{ govukBackLink({
     text: "Back",
     href: backLink,
 	  attributes: {id: 'linkBack'}
   }) }}
-
 {% endblock %}
 
 {% block content %}

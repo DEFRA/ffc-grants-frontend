@@ -16,6 +16,14 @@
     href: backLink,
 	  attributes: {id: 'linkBack'}
   }) }}
+
+  {% if errorList %}
+    {{govukErrorSummary ({
+    "titleText": "There is a problem",
+    "errorList": errorList
+    }) }}
+  {% endif %}
+  
 {% endblock %}
 
 {% block content %}

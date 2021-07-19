@@ -11,10 +11,12 @@ const previousPath = `${urlPrefix}/country`
 const nextPath = `${urlPrefix}/project-start`
 const caveatPath = `${urlPrefix}/planning-required-condition`
 
-function createModel (errorMessage, data) {
+function createModel (errorList, data) {
   return {
     backLink: previousPath,
     formActionPage: currentPath,
+    ...errorList ? { errorList } : {},
+
     radios: {
       idPrefix: 'planningPermission',
       name: 'planningPermission',
@@ -26,7 +28,7 @@ function createModel (errorMessage, data) {
         }
       },
       items: setLabelData(data, [LICENSE_NOT_NEEDED, LICENSE_SECURED, LICENSE_EXPECTED, LICENSE_WILL_NOT_HAVE]),
-      ...(errorMessage ? { errorMessage: { text: errorMessage } } : {})
+      ...(errorList ? { errorMessage: { text: errorList[0].text } } : {})
     }
   }
 }
@@ -60,9 +62,10 @@ module.exports = [
         }),
         failAction: (request, h, err) => {
           gapiService.sendValidationDimension(request)
+          const errorList = []
           const errorObject = errorExtractor(err)
-          const errorMessage = getErrorMessage(errorObject)
-          return h.view(viewTemplate, createModel(errorMessage)).takeover()
+          errorList.push({ text: getErrorMessage(errorObject), href: '#planningPermission' })
+          return h.view(viewTemplate, createModel(errorList)).takeover()
         }
       },
       handler: async (request, h) => {

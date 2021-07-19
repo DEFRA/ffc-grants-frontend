@@ -11,10 +11,11 @@ const nextPath = `${urlPrefix}/tenancy`
 const planningPath = `${urlPrefix}/planning-permission`
 const planningCaveatPath = `${urlPrefix}/planning-required-condition`
 
-function createModel (errorMessage, data, backLink) {
+function createModel (errorList, data, backLink) {
   return {
     backLink: backLink,
     formActionPage: currentPath,
+    ...errorList ? { errorList } : {},
     radios: {
       classes: 'govuk-radios--inline',
       idPrefix: 'projectStarted',
@@ -44,7 +45,7 @@ function createModel (errorMessage, data, backLink) {
           },
           'No, we have not done any work on this project yet'
         ]),
-      ...(errorMessage ? { errorMessage: { text: errorMessage } } : {})
+      ...(errorList ? { errorMessage: { text: errorList[0].text } } : {})
     }
   }
 }
@@ -91,8 +92,9 @@ module.exports = [
         failAction: (request, h, err) => {
           gapiService.sendValidationDimension(request)
           const errorObject = errorExtractor(err)
-          const errorMessage = getErrorMessage(errorObject)
-          return h.view(viewTemplate, createModel(errorMessage, null, getBackLink(request))).takeover()
+          const errorList = []
+          errorList.push({ text: getErrorMessage(errorObject), href: '#projectStarted' })
+          return h.view(viewTemplate, createModel(errorList, null, getBackLink(request))).takeover()
         }
       },
       handler: async (request, h) => {

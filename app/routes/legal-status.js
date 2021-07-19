@@ -9,10 +9,11 @@ const currentPath = `${urlPrefix}/${viewTemplate}`
 const previousPath = `${urlPrefix}/farming-type`
 const nextPath = `${urlPrefix}/country`
 
-function createModel (errorMessage, data) {
+function createModel (errorList, data) {
   return {
     backLink: previousPath,
     formActionPage: currentPath,
+    ...errorList ? { errorList } : {},
     radios: {
       classes: '',
       idPrefix: 'legalStatus',
@@ -40,7 +41,7 @@ function createModel (errorMessage, data) {
           'divider',
           'None of the above'
         ]),
-      ...(errorMessage ? { errorMessage: { text: errorMessage } } : {})
+      ...(errorList ? { errorMessage: { text: errorList[0].text } } : {})
     }
   }
 }
@@ -86,9 +87,10 @@ module.exports = [
         }),
         failAction: (request, h, err) => {
           gapiService.sendValidationDimension(request)
+          const errorList = []
           const errorObject = errorExtractor(err)
-          const errorMessage = getErrorMessage(errorObject)
-          return h.view(viewTemplate, createModel(errorMessage)).takeover()
+          errorList.push({ text: getErrorMessage(errorObject), href: '#legalStatus' })
+          return h.view(viewTemplate, createModel(errorList)).takeover()
         }
       },
       handler: async (request, h) => {

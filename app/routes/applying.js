@@ -1,6 +1,7 @@
 const Joi = require('joi')
 const { setYarValue, getYarValue } = require('../helpers/session')
 const { createModelTwoRadios } = require('../helpers/modelTwoRadios')
+const { errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
 const gapiService = require('../services/gapi-service')
 const urlPrefix = require('../config/server').urlPrefix
 
@@ -33,9 +34,12 @@ module.exports = [
         payload: Joi.object({
           applying: Joi.string().required()
         }),
-        failAction: async (request, h) => {
+        failAction: async (request, h, err) => {
           await gapiService.sendValidationDimension(request)
-          return h.view(viewTemplate, createModelTwoRadios(...prefixModelParams, 'Select who is applying for this grant', null)).takeover()
+          const errorObject = errorExtractor(err)
+          const errorList = []
+          errorList.push({ text: getErrorMessage(errorObject), href: '#applying' })
+          return h.view(viewTemplate, createModelTwoRadios(...prefixModelParams, errorList, null)).takeover()
         }
       },
       handler: async (request, h) => {

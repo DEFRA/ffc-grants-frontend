@@ -40,8 +40,9 @@ module.exports = [
         failAction: (request, h, err) => {
           gapiService.sendValidationDimension(request)
           const errorObject = errorExtractor(err)
-          const errorMessage = getErrorMessage(errorObject)
-          return h.view(viewTemplate, createModelTwoRadios(...prefixModelParams, errorMessage)).takeover()
+          const errorList = []
+          errorList.push({ text: getErrorMessage(errorObject), href: '#currentlyIrrigating' })
+          return h.view(viewTemplate, createModelTwoRadios(...prefixModelParams, errorList)).takeover()
         }
       },
       handler: async (request, h) => {
