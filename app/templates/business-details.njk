@@ -5,6 +5,7 @@
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "./components/macro.njk" import crumbToken %}
+
 {% block pageTitle %}
   Business details - {{siteTitle}}
 {% endblock %}
@@ -14,6 +15,14 @@
     href: backLink,
 	  attributes: {id: 'linkBack'}
   }) }}
+
+  {% if errorList %}
+    {{govukErrorSummary ({
+    "titleText": "There is a problem",
+    "errorList": errorList
+    }) }}
+  {% endif %}
+
 {% endblock %}
 
 {% block content %}

@@ -14,6 +14,20 @@ beforeEach(async () => {
   jest.mock('../app/services/gapi-service.js')
   jest.mock('../app/services/app-insights.js')
   jest.mock('../app/services/protective-monitoring-service.js')
+  jest.mock('../app/config/auth', () => {
+    return {
+      credentials: {
+        username: '',
+        passwordHash: ''
+      },
+      cookie: {
+        name: 'session-auth',
+        password: '',
+        isSecure: false
+      },
+      enabled: false
+    }
+  })
 
   const server = await createServer()
   global.__SERVER__ = server

@@ -76,7 +76,8 @@ const errors = {
   'error.sSSI.any.required': 'Select yes if the project directly impacts a Site of Special Scientific Interest',
   'error.consentMain.string.empty': 'Please confirm you are happy to be contacted about your application.',
   'error.consentMain.any.required': 'Please confirm you are happy to be contacted about your application.',
-  'error.currentlyIrrigating.any.required': 'Select yes if you are currently irrigating'
+  'error.currentlyIrrigating.any.required': 'Select yes if you are currently irrigating',
+  'error.applying.any.required': 'Select who is applying for this grant'
 }
 const lookupErrorText = (key) => {
   return errors[key] || key

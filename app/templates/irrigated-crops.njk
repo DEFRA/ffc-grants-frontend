@@ -5,6 +5,7 @@
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "./components/macro.njk" import crumbToken, sideBar, conditionalButtons %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 
 {% block pageTitle %}
   Irrigated crops - {{siteTitle}}
@@ -16,6 +17,14 @@
     href: backLink,
 	  attributes: {id: 'linkBack'}
   }) }}
+
+  {% if errorList %}
+    {{govukErrorSummary ({
+    "titleText": "There is a problem",
+    "errorList": errorList
+    }) }}
+  {% endif %}
+
 {% endblock %}
 
 {% block content %}
