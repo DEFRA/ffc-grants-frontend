@@ -1,5 +1,5 @@
 const Joi = require('joi')
-const { fetchListObjectItems, findErrorList } = require('../helpers/helper-functions')
+const { findErrorList } = require('../helpers/helper-functions')
 const { IRRIGATED_LAND_REGEX, ONLY_ZEROES_REGEX } = require('../helpers/regex-validation')
 const { setYarValue, getYarValue } = require('../helpers/session')
 const urlPrefix = require('../config/server').urlPrefix
@@ -11,18 +11,12 @@ const previousPath = `${urlPrefix}/irrigation-status`
 const nextPath = `${urlPrefix}/irrigation-water-source`
 const scorePath = `${urlPrefix}/score`
 
-function createModel (currentlyIrrigating, irrigatedLandCurrent, irrigatedLandTarget, errorMessageList, hasScore) {
-  const [
-    irrigatedLandCurrentError,
-    irrigatedLandTargetError
-  ] = fetchListObjectItems(
-    errorMessageList,
-    ['irrigatedLandCurrentError', 'irrigatedLandTargetError']
-  )
+function createModel (currentlyIrrigating, irrigatedLandCurrent, irrigatedLandTarget, errorList, hasScore) {
   return {
     backLink: hasScore ? `${urlPrefix}/irrigated-crops` : previousPath,
     formActionPage: currentPath,
     hasScore: hasScore,
+    ...errorList ? { errorList } : {},
     currentlyIrrigating: (currentlyIrrigating === 'Yes' || currentlyIrrigating === 'yes'),
     pageTitle: (currentlyIrrigating === 'Yes' || currentlyIrrigating === 'yes'
       ? 'Will the area of irrigated land change?'
@@ -49,7 +43,7 @@ function createModel (currentlyIrrigating, irrigatedLandCurrent, irrigatedLandTa
         text: 'Enter figure in hectares, for example 543.5'
       },
       ...(irrigatedLandCurrent ? { value: irrigatedLandCurrent } : {}),
-      ...(irrigatedLandCurrentError ? { errorMessage: { text: irrigatedLandCurrentError } } : {})
+      ...(errorList && errorList[0].href === '#irrigatedLandCurrent' ? { errorMessage: { text: errorList[0].text } } : {})
     },
     targetInput: {
       classes: 'govuk-input--width-4',
@@ -66,7 +60,7 @@ function createModel (currentlyIrrigating, irrigatedLandCurrent, irrigatedLandTa
         text: 'ha'
       },
       ...(irrigatedLandTarget ? { value: irrigatedLandTarget } : {}),
-      ...(irrigatedLandTargetError ? { errorMessage: { text: irrigatedLandTargetError } } : {})
+      ...(errorList && errorList[errorList.length - 1].href === '#irrigatedLandTarget' ? { errorMessage: { text: errorList[errorList.length - 1].text } } : {})
     }
   }
 }
@@ -98,6 +92,7 @@ module.exports = [
         }),
         failAction: (request, h, err) => {
           gapiService.sendValidationDimension(request)
+          const errorList = []
           let [
             irrigatedLandCurrentError, irrigatedLandTargetError
           ] = findErrorList(err, ['irrigatedLandCurrent', 'irrigatedLandTarget'])
@@ -106,14 +101,24 @@ module.exports = [
             irrigatedLandTargetError = 'Figure must be higher than 0'
           }
 
-          const errorMessageList = {
-            irrigatedLandCurrentError, irrigatedLandTargetError
+          if (irrigatedLandCurrentError) {
+            errorList.push({
+              text: irrigatedLandCurrentError,
+              href: '#irrigatedLandCurrent'
+            })
+          }
+
+          if (irrigatedLandTargetError) {
+            errorList.push({
+              text: irrigatedLandTargetError,
+              href: '#irrigatedLandTarget'
+            })
           }
 
           const { irrigatedLandCurrent, irrigatedLandTarget } = request.payload
           const currentlyIrrigating = getYarValue(request, 'currentlyIrrigating') || null
 
-          return h.view(viewTemplate, createModel(currentlyIrrigating, irrigatedLandCurrent, irrigatedLandTarget, errorMessageList, getYarValue(request, 'current-score'))).takeover()
+          return h.view(viewTemplate, createModel(currentlyIrrigating, irrigatedLandCurrent, irrigatedLandTarget, errorList, getYarValue(request, 'current-score'))).takeover()
         }
       },
       handler: (request, h) => {
@@ -129,12 +134,17 @@ module.exports = [
             ? 'Figure must be higher than 0'
             : 'Figure must be equal to or higher than current hectares'
 
-          const errorMessageList = {
-            irrigatedLandCurrentError,
-            irrigatedLandTargetError
+          const errorList = [{
+            text: irrigatedLandCurrentError,
+            href: '#irrigatedLandCurrent'
+          },
+          {
+            text: irrigatedLandTargetError,
+            href: '#irrigatedLandTarget'
           }
+          ]
 
-          return h.view(viewTemplate, createModel(currentlyIrrigating, irrigatedLandCurrent, irrigatedLandTarget, errorMessageList, hasScore))
+          return h.view(viewTemplate, createModel(currentlyIrrigating, irrigatedLandCurrent, irrigatedLandTarget, errorList, hasScore))
         }
 
         setYarValue(request, 'irrigatedLandCurrent', irrigatedLandCurrent)

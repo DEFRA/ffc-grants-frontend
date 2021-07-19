@@ -9,10 +9,11 @@ const currentPath = `${urlPrefix}/${viewTemplate}`
 const previousPath = `${urlPrefix}/potential-amount`
 const nextPath = `${urlPrefix}/SSSI`
 
-function createModel (errorMessage, data, formattedRemainingCost) {
+function createModel (errorList, data, formattedRemainingCost) {
   return {
     backLink: previousPath,
     formActionPage: currentPath,
+    ...errorList ? { errorList } : {},
     radios: {
       classes: 'govuk-radios--inline',
       idPrefix: 'payRemainingCosts',
@@ -25,7 +26,7 @@ function createModel (errorMessage, data, formattedRemainingCost) {
         }
       },
       items: setLabelData(data, ['Yes', 'No']),
-      ...(errorMessage ? { errorMessage: { text: errorMessage } } : {})
+      ...(errorList ? { errorMessage: { text: errorList[0].text } } : {})
     }
   }
 }
@@ -71,12 +72,13 @@ module.exports = [
         }),
         failAction: (request, h, err) => {
           gapiService.sendValidationDimension(request)
+          const errorList = []
           const errorObject = errorExtractor(err)
-          const errorMessage = getErrorMessage(errorObject)
           const remainingCost = getYarValue(request, 'remainingCost') || null
-
           const formattedRemainingCost = formatUKCurrency(remainingCost)
-          return h.view(viewTemplate, createModel(errorMessage, null, formattedRemainingCost)).takeover()
+
+          errorList.push({ text: getErrorMessage(errorObject), href: '#payRemainingCosts' })
+          return h.view(viewTemplate, createModel(errorList, null, formattedRemainingCost)).takeover()
         }
       },
       handler: async (request, h) => {
