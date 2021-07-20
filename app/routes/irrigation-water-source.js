@@ -11,7 +11,6 @@ const nextPath = `${urlPrefix}/irrigation-systems`
 const scorePath = `${urlPrefix}/score`
 
 function createModel (currentlyIrrigating, errorList, currentData, plannedData, hasScore) {
-  console.log(errorList)
   return {
     backLink: previousPath,
     formActionPage: currentPath,
@@ -125,7 +124,7 @@ module.exports = [
 
         if (waterSourceCurrent.length > 2 || waterSourcePlanned.length > 2) {
           if (waterSourceCurrent.length > 2) {
-            errorList.push({ text: 'Select one or two options to describe current irrigation water comes from', href: '#waterSourceCurrent' })
+            errorList.push({ text: 'Select one or two options to describe your current irrigation water comes from', href: '#waterSourceCurrent' })
           }
           if (waterSourcePlanned.length > 2) {
             errorList.push({ text: 'Select one or two options to describe your irrigation water will come from', href: '#waterSourcePlanned' })
