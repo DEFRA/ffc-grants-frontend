@@ -195,7 +195,7 @@ module.exports = [
           projectName, businessName, numberEmployees, businessTurnover, sbi, results, inSbi
         } = request.payload
         sbi = inSbi === 'Yes' ? sbi : ''
-        if (inSbi === 'Yes') {
+        if (inSbi === 'Yes' && sbi) {
           const sbiError = { sbiError: sbi.trim() === '' ? 'Enter an SBI number, like 011115678' : 'SBI number must have 9 characters, like 011115678', href: '#sbi' }
           if (!(sbi.trim() !== '' && sbi.match(NUMBER_REGEX) && sbi.length === 9)) {
             return h.view(viewTemplate, createModel(sbiError, request.payload, getYarValue(request, 'checkDetails')))
