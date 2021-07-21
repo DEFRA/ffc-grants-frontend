@@ -30,8 +30,6 @@ function createModel (errorMessageList, businessDetails, hasDetails) {
     errorMessageList,
     ['projectNameError', 'businessNameError', 'numberEmployeesError', 'businessTurnoverError', 'sbiError', 'inSbiError']
   )
-  console.log(errorMessageList, 'Error messages')
-  console.log(inSbiError, 'Error messages')
   const sbiHtml = getSbiHtml(sbi, sbiError)
   return {
     backLink: previousPath,
