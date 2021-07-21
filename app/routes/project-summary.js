@@ -55,7 +55,7 @@ module.exports = [
           results: Joi.any()
         }),
         failAction: (request, h, err) => {
-          const errorList =[]
+          const errorList = []
           const errorObject = errorExtractor(err)
           errorList.push({ text: getErrorMessage(errorObject), href: '#project' })
           gapiService.sendValidationDimension(request)

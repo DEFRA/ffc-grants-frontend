@@ -14,17 +14,13 @@
 	  attributes: {id: 'linkBack'}
   }) }}
   
-  {% if errorText %}
+ {% if errorList %}
     {{govukErrorSummary ({
-  "titleText": "There is a problem",
-  "errorList": [
-    {
-      "text": errorText,
-      "href": "#productivity"
-    }
-  ]
-}) }}
+    "titleText": "There is a problem",
+    "errorList": errorList
+    }) }}
   {% endif %}
+  
 {% endblock %}
 
 {% block content %}
