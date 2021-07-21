@@ -12,12 +12,12 @@ const nextPath = `${urlPrefix}/irrigated-crops`
 const scorePath = `${urlPrefix}/score`
 const caveatPath = `${urlPrefix}/abstraction-required-condition`
 
-function createModel (errorMessage, errorSummary, data, backLink, hasScore) {
+function createModel (errorList, data, backLink, hasScore) {
   return {
     backLink: backLink,
     formActionPage: currentPath,
     hasScore: hasScore,
-    ...errorSummary ? { errorList: errorSummary } : {},
+    ...errorList ? { errorList } : {},
     checkboxes: {
       idPrefix: 'project',
       name: 'project',
@@ -25,7 +25,7 @@ function createModel (errorMessage, errorSummary, data, backLink, hasScore) {
         text: 'Select one or two options'
       },
       items: setLabelData(data, ['Change water source', 'Improve irrigation efficiency', 'Increase irrigation', 'Introduce irrigation', 'None of the above']),
-      ...(errorMessage ? { errorMessage: { text: errorMessage } } : {})
+      ...(errorList ? { errorMessage: { text: errorList[0].text } } : {})
     }
   }
 }
@@ -42,7 +42,7 @@ module.exports = [
     handler: (request, h) => {
       const project = getYarValue(request, 'project')
       const data = project || null
-      return h.view(viewTemplate, createModel(null, null, data, getBackLink(request), getYarValue(request, 'current-score')))
+      return h.view(viewTemplate, createModel(null, data, getBackLink(request), getYarValue(request, 'current-score')))
     }
   },
   {
@@ -55,10 +55,11 @@ module.exports = [
           results: Joi.any()
         }),
         failAction: (request, h, err) => {
+          const errorList =[]
           const errorObject = errorExtractor(err)
-          const errorMessage = getErrorMessage(errorObject)
+          errorList.push({ text: getErrorMessage(errorObject), href: '#project' })
           gapiService.sendValidationDimension(request)
-          return h.view(viewTemplate, createModel(errorMessage, null, null, getBackLink(request), getYarValue(request, 'current-score'))).takeover()
+          return h.view(viewTemplate, createModel(errorList, null, getBackLink(request), getYarValue(request, 'current-score'))).takeover()
         }
       },
       handler: (request, h) => {
@@ -68,13 +69,13 @@ module.exports = [
         project = [project].flat()
 
         if (project.filter(option => option === 'None of the above').length > 0 && project.length > 1) {
-          errorList.push({ text: 'Select one or two options to describe the project impact', href: '#project' })
-          return h.view(viewTemplate, createModel('If you select \'None of the above\', you cannot select another option', errorList, project, getBackLink(request), hasScore))
+          errorList.push({ text: 'If you select \'None of the above\', you cannot select another option', href: '#project' })
+          return h.view(viewTemplate, createModel(errorList, project, getBackLink(request), hasScore))
         }
 
         if (project.length > 2) {
           errorList.push({ text: 'Select one or two options to describe the project impact', href: '#project' })
-          return h.view(viewTemplate, createModel('Select one or two options to describe your project impact', errorList, project, getBackLink(request), hasScore))
+          return h.view(viewTemplate, createModel(errorList, project, getBackLink(request), hasScore))
         }
 
         setYarValue(request, 'project', project)

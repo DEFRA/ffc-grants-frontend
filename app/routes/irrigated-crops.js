@@ -9,10 +9,11 @@ const currentPath = `${urlPrefix}/${viewTemplate}`
 const previousPath = `${urlPrefix}/project-summary`
 const scorePath = `${urlPrefix}/score`
 
-const createModel = (errorMessage, data, hasScore) => ({
+const createModel = (errorList, data, hasScore) => ({
   backLink: previousPath,
   formActionPage: currentPath,
   hasScore: hasScore,
+  ...errorList ? { errorList } : {},
   radios: {
     classes: '',
     idPrefix: 'irrigatedCrops',
@@ -30,7 +31,7 @@ const createModel = (errorMessage, data, hasScore) => ({
       { text: 'Fruit (for example, top fruit, bush fruit)', value: 'Fruit' }
     ]),
 
-    ...(errorMessage ? { errorMessage: { text: errorMessage } } : {})
+    ...(errorList ? { errorMessage: { text: errorList[0].text } } : {})
   }
 
 })
@@ -58,9 +59,11 @@ module.exports = [
         }),
         failAction: (request, h, err) => {
           gapiService.sendValidationDimension(request)
+          const errorList = []
           const errorObject = errorExtractor(err)
-          const errorMessage = getErrorMessage(errorObject)
-          return h.view(viewTemplate, createModel(errorMessage, null, getYarValue(request, 'current-score'))).takeover()
+          errorList.push({ text: getErrorMessage(errorObject), href: '#irrigatedCrops' })
+
+          return h.view(viewTemplate, createModel(errorList, null, getYarValue(request, 'current-score'))).takeover()
         }
       },
       handler: (request, h) => {

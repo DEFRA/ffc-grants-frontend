@@ -11,10 +11,11 @@ const currentPath = `${urlPrefix}/${viewTemplate}`
 const previousPath = `${urlPrefix}/project-items`
 const nextPath = `${urlPrefix}/potential-amount`
 
-function createModel(errorMessage, projectCost, projectItemsList) {
+function createModel (errorList, projectCost, projectItemsList) {
   return {
     backLink: previousPath,
     formActionPage: currentPath,
+    ...errorList ? { errorList } : {},
     inputProjectCost: {
       id: 'projectCost',
       name: 'projectCost',
@@ -34,13 +35,13 @@ function createModel(errorMessage, projectCost, projectItemsList) {
           <br/><br/>Enter amount, for example 95000`
       },
       value: projectCost,
-      ...(errorMessage ? { errorMessage: { text: errorMessage } } : {})
+      ...(errorList ? { errorMessage: { text: errorList[0].text } } : {})
     },
     projectItemsList
   }
 }
 
-function createModelNotEligible() {
+function createModelNotEligible () {
   return {
     refTitle: 'Project cost',
     backLink: currentPath,
@@ -74,11 +75,12 @@ module.exports = [
           projectCost: Joi.string().regex(PROJECT_COST_REGEX).max(7).required()
         }),
         failAction: (request, h, err) => {
+          const errorList = []
           const projectItemsList = getYarValue(request, 'projectItemsList') || null
           gapiService.sendValidationDimension(request)
           const errorObject = errorExtractor(err)
-          const errorMessage = getErrorMessage(errorObject)
-          return h.view(viewTemplate, createModel(errorMessage, null, projectItemsList)).takeover()
+          errorList.push({ text: getErrorMessage(errorObject), href: '#projectCost' })
+          return h.view(viewTemplate, createModel(errorList, null, projectItemsList)).takeover()
         }
       },
       handler: async (request, h) => {

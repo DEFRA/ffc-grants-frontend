@@ -93,6 +93,6 @@ describe('Project summary page', () => {
     }
 
     const postResponse = await global.__SERVER__.inject(postOptions)
-    expect(postResponse.payload).toContain('Select one or two options to describe the project impact')
+    expect(postResponse.payload).toContain('If you select &#39;None of the above&#39;, you cannot select another option')
   })
 })

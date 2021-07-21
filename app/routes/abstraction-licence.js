@@ -10,10 +10,11 @@ const previousPath = `${urlPrefix}/SSSI`
 const nextPath = `${urlPrefix}/project-summary`
 const caveatPath = `${urlPrefix}/abstraction-required-condition`
 
-function createModel (errorMessage, data) {
+function createModel (errorList, data) {
   return {
     backLink: previousPath,
     formActionPage: currentPath,
+    ...errorList ? { errorList } : {},
     radios: {
       classes: '',
       idPrefix: 'abstractionLicence',
@@ -29,7 +30,7 @@ function createModel (errorMessage, data) {
         data,
         [LICENSE_NOT_NEEDED, LICENSE_SECURED, LICENSE_EXPECTED, LICENSE_WILL_NOT_HAVE]
       ),
-      ...(errorMessage ? { errorMessage: { text: errorMessage } } : {})
+      ...(errorList ? { errorMessage: { text: errorList[0].text } } : {})
     }
   }
 }
@@ -53,9 +54,11 @@ module.exports = [
           abstractionLicence: Joi.string().required()
         }),
         failAction: (request, h, err) => {
+          const errorList = []
           const errorObject = errorExtractor(err)
-          const errorMessage = getErrorMessage(errorObject)
-          return h.view(viewTemplate, createModel(errorMessage)).takeover()
+
+          errorList.push({ text: getErrorMessage(errorObject), href: '#abstractionLicence' })
+          return h.view(viewTemplate, createModel(errorList)).takeover()
         }
       },
       handler: (request, h) => {
