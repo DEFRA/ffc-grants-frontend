@@ -6,8 +6,7 @@ const sharepoint = require('../services/sharepoint')
 module.exports = async function (msg, fileCreatedReceiver) {
   try {
     const { body } = msg
-    console.log('Received message:')
-    console.log(body)
+    console.log('Received message:', body)
 
     const filename = body.filename
     const { buffer, blockBlobClient } = await blobStorage.downloadFile(filename)
