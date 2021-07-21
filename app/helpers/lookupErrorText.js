@@ -4,12 +4,12 @@ const errors = {
   'error.projectPostcode.string.empty': 'Enter a postcode, like AA1 1AA',
   'error.irrigatedCrops.any.required': 'Select the main crop you will be irrigating',
   'error.farmingType.any.required': 'Select the crops you are growing',
-  'error.waterSourceCurrent.any.required': 'Select where your current irrigation water comes from',
-  'error.waterSourcePlanned.any.required': 'Select where your irrigation water will come from',
+  'error.waterSourceCurrent.any.required': 'Select one or two options where your current irrigation water comes from',
+  'error.waterSourcePlanned.any.required': 'Select one or two options where your current irrigation water will come from',
   'error.projectStarted.any.required': 'Select the option that applies to your project',
   'error.landOwnership.any.required': 'Select yes if the planned project is on land the farm business owns',
-  'error.irrigationPlanned.any.required': 'Select one or two options to describe irrigation systems that will be used to irrigate',
-  'error.irrigationCurrent.any.required': 'Select one or two options to describe irrigation systems currently used to irrigate',
+  'error.irrigationPlanned.any.required': 'Select one or two systems that will be used to irrigate',
+  'error.irrigationCurrent.any.required': 'Select one or two systems currently used to irrigate',
   'error.tenancyLength.any.required': 'Select yes if the land has a tenancy agreement in place until 2026 or after',
   'error.planningPermission.any.required': 'Select when the project will have planning permission',
   'error.payRemainingCosts.any.required': 'Select yes if you can pay the remaining costs without using any other grant money',
@@ -77,7 +77,8 @@ const errors = {
   'error.consentMain.string.empty': 'Please confirm you are happy to be contacted about your application.',
   'error.consentMain.any.required': 'Please confirm you are happy to be contacted about your application.',
   'error.currentlyIrrigating.any.required': 'Select yes if you are currently irrigating',
-  'error.applying.any.required': 'Select who is applying for this grant'
+  'error.applying.any.required': 'Select who is applying for this grant',
+  'error.productivity.max': 'Select one or two options to describe your project will improve productivity'
 }
 const lookupErrorText = (key) => {
   return errors[key] || key

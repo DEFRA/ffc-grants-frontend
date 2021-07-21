@@ -8,10 +8,11 @@ const currentPath = `${urlPrefix}/${viewTemplate}`
 const previousPath = `${urlPrefix}/productivity`
 const nextPath = `${urlPrefix}/score`
 
-function createModel (errorMessage, data) {
+function createModel (errorList, data) {
   return {
     backLink: previousPath,
     formActionPage: currentPath,
+    ...errorList ? { errorList } : {},
     radios: {
       classes: 'govuk-radios--inline',
       idPrefix: 'collaboration',
@@ -28,7 +29,7 @@ function createModel (errorMessage, data) {
           'If you intend to supply water via a water sharing agreement as a result of this project.'
       },
       items: setLabelData(data, ['Yes', 'No']),
-      ...(errorMessage ? { errorMessage: { text: errorMessage } } : {})
+      ...(errorList ? { errorMessage: { text: errorList[0].text } } : {})
     }
   }
 }
@@ -52,9 +53,10 @@ module.exports = [
           collaboration: Joi.string().required()
         }),
         failAction: (request, h, err) => {
+          const errorList = []
           const errorObject = errorExtractor(err)
-          const errorMessage = getErrorMessage(errorObject)
-          return h.view(viewTemplate, createModel(errorMessage)).takeover()
+          errorList.push({ text: getErrorMessage(errorObject), href: '#collaboration' })
+          return h.view(viewTemplate, createModel(errorList)).takeover()
         }
       },
       handler: (request, h) => {
