@@ -49,11 +49,11 @@ describe('Irrigation syatems page', () => {
     expect(response.statusCode).toBe(200)
   })
 
-  it('should returns error message if no planned water system option is selected', async () => {
+  it('should returns error message if no water system option is selected', async () => {
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/irrigation-systems`,
-      payload: { irrigationCurrent, crumb: crumbToken },
+      payload: { crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
       }
@@ -61,7 +61,8 @@ describe('Irrigation syatems page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Select one or two options to describe irrigation systems that will be used to')
+    expect(postResponse.payload).toContain('Select one or two systems currently used to irrigate')
+    expect(postResponse.payload).toContain('Select one or two systems that will be used to irrigate')
   })
 
   it('should store user response and redirects to productivity page', async () => {
@@ -95,7 +96,7 @@ describe('Irrigation syatems page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.payload).toContain('There is a problem')
-    expect(postResponse.payload).toContain('Select the systems currently used to irrigate')
-    expect(postResponse.payload).toContain('Select the systems that will be used to irrigate')
+    expect(postResponse.payload).toContain('Select a maximum of two systems currently used to irrigate')
+    expect(postResponse.payload).toContain('Select a maximum of two systems that will be used to irrigate')
   })
 })

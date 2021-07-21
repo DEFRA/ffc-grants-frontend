@@ -8,10 +8,11 @@ const currentPath = `${urlPrefix}/${viewTemplate}`
 const previousPath = `${urlPrefix}/tenancy`
 const nextPath = `${urlPrefix}/project-items`
 
-function createModel (errorMessage, data) {
+function createModel (errorList, data) {
   return {
     backLink: previousPath,
     formActionPage: currentPath,
+    ...errorList ? { errorList } : {},
     radios: {
       classes: 'govuk-radios--inline',
       idPrefix: 'tenancyLength',
@@ -24,7 +25,7 @@ function createModel (errorMessage, data) {
         }
       },
       items: setLabelData(data, ['Yes', 'No']),
-      ...(errorMessage ? { errorMessage: { text: errorMessage } } : {})
+      ...(errorList ? { errorMessage: { text: errorList[0].text } } : {})
     }
   }
 }
@@ -56,9 +57,10 @@ module.exports = [
         }),
         failAction: (request, h, err) => {
           gapiService.sendValidationDimension(request)
+          const errorList = []
           const errorObject = errorExtractor(err)
-          const errorMessage = getErrorMessage(errorObject)
-          return h.view(viewTemplate, createModel(errorMessage)).takeover()
+          errorList.push({ text: getErrorMessage(errorObject), href: '#tenancyLength' })
+          return h.view(viewTemplate, createModel(errorList)).takeover()
         }
       },
       handler: (request, h) => {

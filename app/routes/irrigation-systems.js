@@ -122,10 +122,10 @@ module.exports = [
 
         if (irrigationCurrent.length > 2 || irrigationPlanned.length > 2) {
           if (irrigationCurrent.length > 2) {
-            errorList.push({ text: 'Select the systems currently used to irrigate', href: '#irrigationCurrent' })
+            errorList.push({ text: 'Select a maximum of two systems currently used to irrigate', href: '#irrigationCurrent' })
           }
           if (irrigationPlanned.length > 2) {
-            errorList.push({ text: 'Select the systems that will be used to irrigate', href: '#irrigationPlanned' })
+            errorList.push({ text: 'Select a maximum of two systems that will be used to irrigate', href: '#irrigationPlanned' })
           }
           return h.view(
             viewTemplate,
