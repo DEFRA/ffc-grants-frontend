@@ -105,10 +105,6 @@ TimeoutWarning.prototype.openDialog = function () {
     this.$module.showModal()
 
     this.startUiCountdown()
-
-    // if (window.history.pushState) {
-    //   window.history.pushState('', '') // This updates the History API to enable state to be "popped" to detect browser navigation for disableBackButtonWhenOpen
-    // }
   }
 }
 
@@ -145,9 +141,10 @@ TimeoutWarning.prototype.startUiCountdown = function () {
       atMinutesNumberAsText = minutesLeft
       atSecondsNumberAsText = secondsLeft
     }
-
-    const atMinutesText = minutesLeft > 0 ? atMinutesNumberAsText + ' minute' + (minutesLeft > 1 ? 's' : '') + '' : ''
-    const atSecondsText = secondsLeft >= 1 ? ' ' + atSecondsNumberAsText + ' second' + (secondsLeft > 1 ? 's' : '') + '' : ''
+    const minLeftText = (minutesLeft > 1 ? 's' : '')
+    const secLeftText = (secondsLeft > 1 ? 's' : '')
+    const atMinutesText = minutesLeft > 0 ? atMinutesNumberAsText + ' minute' + minLeftText + '' : ''
+    const atSecondsText = secondsLeft >= 1 ? ' ' + atSecondsNumberAsText + ' second' + secLeftText + '' : ''
 
     // Below string will get read out by screen readers every time the timeout refreshes (every 15 secs. See below).
     // Please add additional information in the modal body content or in below extraText which will get announced to AT the first time the time out opens
@@ -260,8 +257,8 @@ TimeoutWarning.prototype.closeDialog = function () {
 
 // Clears modal timer
 TimeoutWarning.prototype.clearTimers = function () {
-  for (let i = 0; i < this.timers.length; i++) {
-    clearTimeout(this.timers[i])
+  for (const timer of this.timers) {
+    clearTimeout(timer)
   }
 }
 
