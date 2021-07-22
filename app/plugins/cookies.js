@@ -1,5 +1,6 @@
 const config = require('../config/server').cookieOptions
 const { getCurrentPolicy, validSession, sessionIgnorePaths } = require('../cookies')
+const cacheConfig = require('../config/cache')
 
 module.exports = {
   plugin: {
@@ -18,6 +19,7 @@ module.exports = {
         if (request.response.variety === 'view' && statusCode !== 404 && statusCode !== 500 && request.response.source.manager._context) {
           const cookiesPolicy = getCurrentPolicy(request, h)
           request.response.source.manager._context.cookiesPolicy = cookiesPolicy
+          request.response.source.manager._context.sessionTimeoutInMin = ((cacheConfig.expiresIn * 60) / (3600 * 1000)) - 10
         }
 
         return h.continue
