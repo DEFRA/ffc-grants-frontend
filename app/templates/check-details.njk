@@ -27,7 +27,7 @@
 
       <div>
         <h2 class="govuk-heading-m check-detail-heading">Business details</h2>
-        <a class="check-detail-change" title="Change business details" href="{{businessDetailsLink}}">Change</a>
+        <a class="govuk-link check-detail-change" title="Change business details" href="{{businessDetailsLink}}">Change</a>
         <hr/>
       </div>
       
@@ -82,7 +82,7 @@
       {% if agentDetails %}
       <div>
         <h2 class="govuk-heading-m check-detail-heading">Agent's details</h2>
-        <a title="Change agent's details" class="check-detail-change" href="{{agentDetailsLink}}">Change</a>
+        <a title="Change agent's details" class="govuk-link check-detail-change" href="{{agentDetailsLink}}">Change</a>
         <hr/>
       </div>
       {{ govukSummaryList({
@@ -152,7 +152,7 @@
         ] %}
 <div>
     <h2 class="govuk-heading-m check-detail-heading">Farmer's details</h2>
-    <a title="Change farmer's details" class="check-detail-change" href="{{farmerDetailsLink}}">Change</a>
+    <a title="Change farmer's details" class="govuk-link check-detail-change" href="{{farmerDetailsLink}}">Change</a>
     <hr/>
 </div>
       {{ govukSummaryList({ rows: farmerSummaryItems }) }}

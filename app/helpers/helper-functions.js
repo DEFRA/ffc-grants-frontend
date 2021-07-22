@@ -72,7 +72,29 @@ function getPostCodeHtml (postcodeData, error) {
         <input class="govuk-input govuk-!-width-one-third govuk-input--error" autocomplete="off" id="projectPostcode" name="projectPostcode" value="${postcode}">
       </div>`
 }
+function getSbiHtml (sbiData, error) {
+  const sbi = sbiData || ''
 
+  return !error
+    ? `<div>
+        <label class="govuk-label" for="sbi">
+        SBI Number
+        </label>
+        <input class="govuk-input govuk-!-width-one-third" id="sbi" name="sbi" value="${sbi}">
+      </div>`
+    : `<div class="govuk-form-group--error">
+        <label class="govuk-label" for="sbi">
+        SBI Number
+        </label>
+        <span id="post-code-error" class="govuk-error-message">
+          <span class="govuk-visually-hidden">
+            Error:
+          </span>
+          ${error}
+        </span>
+        <input class="govuk-input govuk-!-width-one-third govuk-input--error" autocomplete="off" id="sbi" name="sbi" value="${sbi}">
+      </div>`
+}
 function errorExtractor (data) {
   const { details } = data
   const errorObject = {}
@@ -174,5 +196,6 @@ module.exports = {
   fetchListObjectItems,
   findErrorList,
   formatApplicationCode,
-  isURL
+  isURL,
+  getSbiHtml
 }

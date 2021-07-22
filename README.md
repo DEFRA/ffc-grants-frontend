@@ -34,9 +34,9 @@ and
 
 | Name                   | Description                                                                                |
 | ----                   | -----------                                                                                |
-| MESSAGE_QUEUE_HOST     | Azure Service Bus hostname, e.g. `myservicebus.servicebus.windows.net`                     |
-| MESSAGE_QUEUE_PASSWORD | Azure Service Bus SAS policy key                                                           |
-| MESSAGE_QUEUE_USER     | Azure Service Bus SAS policy name, e.g. `RootManageSharedAccessKey`                        |
+| SERVICE_BUS_HOST       | Azure Service Bus hostname, e.g. `myservicebus.servicebus.windows.net`                     |
+| SERVICE_BUS_PASSWORD   | Azure Service Bus SAS policy key                                                           |
+| SERVICE_BUS_USER       | Azure Service Bus SAS policy name, e.g. `RootManageSharedAccessKey`                        |
 
 ## Environment variables
 
@@ -62,7 +62,7 @@ overridden by build and release pipelines.
 | GOOGLE_TAG_MANAGER_SERVER_KEY  | server side google analytic key           | no        | GA123456           |                             |                                                                                   |
 | PROTECTIVE_MONITORING_URL      | protective monitoring url                 | no        | url                |                             |                                                                                   |
 | START_PAGE_URL                 | start page url                            | no        | url                |                             |                                                                                   |
-| COOKIE_TTL_IN_MILLIS           | cookie timeout                            | no        | 54000 (15 minutes) |                             |                                                                                   |
+| COOKIE_TTL_IN_MILLIS           | cookie timeout                            | no        | 31,536,000,000 (1 year) |                             |                                                                                   |
 | AUTH_USERNAME                  | auth username                             | no        | username           |                             |                                                                                   |
 | AUTH_PASSWORD_HASH             | auth password hash (bycrpt)               | no        | hash password      |                             |                                                                                   |
 | LOGIN_REQUIRED                 | is login required                         | no        | true/false         |                             |                                                                                   |
