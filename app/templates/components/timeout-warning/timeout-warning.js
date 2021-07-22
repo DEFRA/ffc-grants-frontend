@@ -1,6 +1,4 @@
-import '../vendor/polyfills/Function/prototype/bind'
-import '../vendor/polyfills/Element/prototype/classList'
-
+import dialogPolyfill from 'dialog-polyfill'
 function TimeoutWarning ($module) {
   this.$module = $module
   this.$lastFocusedEl = null
@@ -50,7 +48,7 @@ TimeoutWarning.prototype.dialogSupported = function () {
   } else {
     // Native dialog is not supported by browser so use polyfill
     try {
-      window.dialogPolyfill.registerDialog(this.$module)
+      dialogPolyfill.registerDialog(this.$module)
       return true
     } catch (error) {
       // Doesn't support polyfill (IE8) - display fallback element

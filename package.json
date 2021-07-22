@@ -38,6 +38,7 @@
     "@hapi/yar": "^10.1.0",
     "applicationinsights": "^1.8.10",
     "bcrypt": "^5.0.1",
+    "dialog-polyfill": "^0.5.6",
     "ffc-messaging": "^2.1.1",
     "ffc-protective-monitoring": "^1.0.0",
     "govuk-frontend": "^3.11.0",
@@ -62,7 +63,7 @@
     "standard": "^16.0.3",
     "string-replace-loader": "^3.0.2",
     "style-loader": "^1.2.1",
-    "webpack": "^4.44.1",
+    "webpack": "^5.46.0",
     "webpack-cli": "^3.3.12"
   },
   "standard": {
