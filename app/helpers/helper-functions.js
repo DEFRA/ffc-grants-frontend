@@ -72,7 +72,29 @@ function getPostCodeHtml (postcodeData, error) {
         <input class="govuk-input govuk-!-width-one-third govuk-input--error" autocomplete="off" id="projectPostcode" name="projectPostcode" value="${postcode}">
       </div>`
 }
+function getSbiHtml (sbiData, error) {
+  const sbi = sbiData || ''
 
+  return !error
+    ? `<div>
+        <label class="govuk-label" for="sbi">
+        SBI Number
+        </label>
+        <input class="govuk-input govuk-!-width-one-third" id="sbi" name="sbi" value="${sbi}">
+      </div>`
+    : `<div class="govuk-form-group--error">
+        <label class="govuk-label" for="sbi">
+        SBI Number
+        </label>
+        <span id="post-code-error" class="govuk-error-message">
+          <span class="govuk-visually-hidden">
+            Error:
+          </span>
+          ${error.text}
+        </span>
+        <input class="govuk-input govuk-!-width-one-third govuk-input--error" autocomplete="off" id="sbi" name="sbi" value="${sbi}">
+      </div>`
+}
 function errorExtractor (data) {
   const { details } = data
   const errorObject = {}
@@ -160,6 +182,19 @@ const URL_REGEX = /^(?:\w+:)?\/\/([^\s.]+\.\S{2}|localhost[:?\d]*)\S*$/
 function isURL (str) {
   return URL_REGEX.test(str)
 }
+
+const getErrorList = (fields, err) => {
+  const errorList = []
+
+  fields.forEach(field => {
+    const fieldError = findErrorList(err, [field])[0]
+    if (fieldError) {
+      errorList.push({ text: fieldError, href: `#${field}` })
+    }
+  })
+  return errorList
+}
+
 module.exports = {
   isChecked,
   setLabelData,
@@ -174,5 +209,7 @@ module.exports = {
   fetchListObjectItems,
   findErrorList,
   formatApplicationCode,
-  isURL
+  isURL,
+  getSbiHtml,
+  getErrorList
 }

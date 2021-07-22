@@ -1,6 +1,6 @@
 const Joi = require('joi')
 const { setYarValue, getYarValue } = require('../helpers/session')
-const { setLabelData, fetchListObjectItems, findErrorList, formInputObject } = require('../helpers/helper-functions')
+const { setLabelData, formInputObject, getErrorList } = require('../helpers/helper-functions')
 const { NAME_REGEX, PHONE_REGEX, POSTCODE_REGEX, DELETE_POSTCODE_CHARS_REGEX } = require('../helpers/regex-validation')
 const { LIST_COUNTIES } = require('../helpers/all-counties')
 const urlPrefix = require('../config/server').urlPrefix
@@ -11,7 +11,7 @@ const nextPath = `${urlPrefix}/check-details`
 const agentDetailsPath = `${urlPrefix}/agent-details`
 const applyingPath = `${urlPrefix}/applying`
 
-function createModel (errorMessageList, farmerDetails, backLink, hasDetails) {
+function createModel (errorList, farmerDetails, backLink, hasDetails) {
   const {
     firstName,
     lastName,
@@ -25,51 +25,76 @@ function createModel (errorMessageList, farmerDetails, backLink, hasDetails) {
     postcode
   } = farmerDetails
 
-  const [
-    firstNameError,
-    lastNameError,
-    emailError,
-    mobileError,
-    landlineError,
-    address1Error,
-    address2Error,
-    townError,
-    countyError,
-    postcodeError
-  ] = fetchListObjectItems(
-    errorMessageList,
-    ['firstNameError', 'lastNameError', 'emailError', 'mobileError', 'landlineError', 'address1Error', 'address2Error', 'townError', 'countyError', 'postcodeError']
-  )
-
   return {
     backLink,
     pageId: 'Farmer',
     formActionPage: currentPath,
     pageHeader: 'Farmer\'s details',
     checkDetail: hasDetails,
+    ...errorList ? { errorList } : {},
     inputFirstName: formInputObject(
-      'firstName', 'govuk-input--width-20', 'First name', null, { fieldName: firstName, fieldError: firstNameError, inputType: 'text', autocomplete: 'given-name' }
+      'firstName', 'govuk-input--width-20', 'First name', null, {
+        fieldName: firstName,
+        fieldError: errorList && errorList.some(err => err.href === '#firstName') ? errorList.find(err => err.href === '#firstName').text : null,
+        inputType: 'text',
+        autocomplete: 'given-name'
+      }
     ),
     inputLastName: formInputObject(
-      'lastName', 'govuk-input--width-20', 'Last name', null, { fieldName: lastName, fieldError: lastNameError, inputType: 'text', autocomplete: 'family-name' }
+      'lastName', 'govuk-input--width-20', 'Last name', null, {
+        fieldName: lastName,
+        fieldError: errorList && errorList.some(err => err.href === '#lastName') ? errorList.find(err => err.href === '#lastName').text : null,
+        inputType: 'text',
+        autocomplete: 'family-name'
+      }
     ),
     inputEmail: formInputObject(
-      'email', 'govuk-input--width-20', 'Email address', 'We will use this to send you a confirmation', { fieldName: email, fieldError: emailError, inputType: 'email', autocomplete: 'email' }
+      'email', 'govuk-input--width-20', 'Email address', 'We will use this to send you a confirmation', {
+        fieldName: email,
+        fieldError: errorList && errorList.some(err => err.href === '#email') ? errorList.find(err => err.href === '#email').text : null,
+        inputType: 'email',
+        autocomplete: 'email'
+      }
     ),
     inputMobile: formInputObject(
-      'mobile', 'govuk-input--width-20', 'Mobile number', null, { fieldName: mobile, fieldError: mobileError, inputType: 'tel', autocomplete: 'mobile tel' }
+      'mobile', 'govuk-input--width-20', 'Mobile number', null, {
+        fieldName: mobile,
+        fieldError: errorList && errorList.some(err => err.href === '#mobile') ? errorList.find(err => err.href === '#mobile').text : null,
+        inputType: 'tel',
+        autocomplete: 'mobile tel'
+      }
     ),
     inputLandline: formInputObject(
-      'landline', 'govuk-input--width-20', 'Landline number', null, { fieldName: landline, fieldError: landlineError, inputType: 'tel', autocomplete: 'home tel' }
+      'landline', 'govuk-input--width-20', 'Landline number', null, {
+        fieldName: landline,
+        fieldError: errorList && errorList.some(err => err.href === '#landline') ? errorList.find(err => err.href === '#landline').text : null,
+        inputType: 'tel',
+        autocomplete: 'home tel'
+      }
     ),
     inputAddress1: formInputObject(
-      'address1', 'govuk-input--width-20', 'Building and street', null, { fieldName: address1, fieldError: address1Error, inputType: 'text', autocomplete: 'address-line1' }
+      'address1', 'govuk-input--width-20', 'Building and street', null, {
+        fieldName: address1,
+        fieldError: errorList && errorList.some(err => err.href === '#address1') ? errorList.find(err => err.href === '#address1').text : null,
+        inputType: 'text',
+        autocomplete: 'address-line1'
+      }
     ),
     inputAddress2: formInputObject(
-      'address2', 'govuk-input--width-20', null, null, { fieldName: address2, fieldError: address2Error, inputType: 'text', autocomplete: 'address-line2' }
+      'address2', 'govuk-input--width-20', null, null, {
+        fieldName: address2,
+        fieldError: errorList && errorList.some(err => err.href === '#address2') ? errorList.find(err => err.href === '#address2').text : null,
+        inputType: 'text',
+        autocomplete: 'address-line2'
+      }
     ),
     inputTown: formInputObject(
-      'town', 'govuk-input--width-10', 'Town (optional)', null, { fieldName: town, fieldError: townError, inputType: 'text', autocomplete: 'address-level2' }
+      'town', 'govuk-input--width-10', 'Town (optional)', null, {
+        fieldName: town,
+        fieldError: errorList && errorList.some(err => err.href === '#town') ? errorList.find(err => err.href === '#town').text : null,
+        inputType: 'text',
+        autocomplete: 'address-level2'
+      }
     ),
 
     selectCounty: {
@@ -84,10 +109,15 @@ function createModel (errorMessageList, farmerDetails, backLink, hasDetails) {
         { text: 'Select an option', value: null },
         ...LIST_COUNTIES
       ]),
-      ...(countyError ? { errorMessage: { text: countyError } } : {})
+      ...(errorList && errorList.some(err => err.href === '#county') ? { errorMessage: { text: errorList.find(err => err.href === '#county').text } } : {})
     },
     inputPostcode: formInputObject(
-      'postcode', 'govuk-input--width-5', 'Postcode', null, { fieldName: postcode, fieldError: postcodeError, inputType: 'text', autocomplete: 'postal-code' }
+      'postcode', 'govuk-input--width-5', 'Postcode', null, {
+        fieldName: postcode,
+        fieldError: errorList && errorList.some(err => err.href === '#postcode') ? errorList.find(err => err.href === '#postcode').text : null,
+        inputType: 'text',
+        autocomplete: 'postal-code'
+      }
     )
   }
 }
@@ -138,26 +168,11 @@ module.exports = [
           results: Joi.any()
         }),
         failAction: (request, h, err) => {
-          const [
-            firstNameError,
-            lastNameError,
-            emailError,
-            mobileError,
-            landlineError,
-            address1Error,
-            address2Error,
-            townError,
-            countyError,
-            postcodeError
-          ] = findErrorList(err, ['firstName', 'lastName', 'email', 'mobile', 'landline', 'address1', 'address2', 'town', 'county', 'postcode'])
-
-          const errorMessageList = {
-            firstNameError, lastNameError, emailError, mobileError, landlineError, address1Error, address2Error, townError, countyError, postcodeError
-          }
+          const errorList = getErrorList(['firstName', 'lastName', 'email', 'mobile', 'landline', 'address1', 'address2', 'town', 'county', 'postcode'], err)
 
           if (request.payload.landline === '' && request.payload.mobile === '') {
-            errorMessageList.mobileError = 'Enter your mobile number'
-            errorMessageList.landlineError = 'Enter your landline number'
+            errorList.push({ text: 'Enter your mobile number', href: '#mobile' })
+            errorList.push({ text: 'Enter your landline number', href: '#landline' })
           }
 
           const { firstName, lastName, email, mobile, landline, address1, address2, town, county, postcode } = request.payload
@@ -166,7 +181,7 @@ module.exports = [
           const applying = getYarValue(request, 'applying')
           const backLink = applying === 'Agent' ? agentDetailsPath : applyingPath
 
-          return h.view(viewTemplate, createModel(errorMessageList, farmerDetails, backLink, getYarValue(request, 'checkDetails'))).takeover()
+          return h.view(viewTemplate, createModel(errorList, farmerDetails, backLink, getYarValue(request, 'checkDetails'))).takeover()
         }
       },
       handler: (request, h) => {
@@ -174,12 +189,10 @@ module.exports = [
           firstName, lastName, email, mobile, landline, address1, address2, town, county, postcode
         } = request.payload
 
-        const phoneErrors = {
-
-          mobileError: 'Enter your mobile number',
-          landlineError: 'Enter your landline number'
-
-        }
+        const phoneErrors = [
+          { text: 'Enter your mobile number', href: '#mobile' },
+          { text: 'Enter your landline number', href: '#landline' }
+        ]
 
         if (!landline && !mobile) {
           return h.view(viewTemplate, createModel(phoneErrors, {
