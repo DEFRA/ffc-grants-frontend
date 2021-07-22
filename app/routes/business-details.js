@@ -1,6 +1,6 @@
 const Joi = require('joi')
 const { setYarValue, getYarValue } = require('../helpers/session')
-const { fetchListObjectItems, findErrorList } = require('../helpers/helper-functions')
+const { isChecked, getSbiHtml, fetchListObjectItems, findErrorList } = require('../helpers/helper-functions')
 const { NUMBER_REGEX } = require('../helpers/regex-validation')
 const urlPrefix = require('../config/server').urlPrefix
 
@@ -16,7 +16,8 @@ function createModel (errorMessageList, businessDetails, hasDetails) {
     businessName,
     numberEmployees,
     businessTurnover,
-    sbi
+    sbi,
+    inSbi
   } = businessDetails
 
   const [
@@ -24,12 +25,12 @@ function createModel (errorMessageList, businessDetails, hasDetails) {
     businessNameError,
     numberEmployeesError,
     businessTurnoverError,
-    sbiError
+    sbiError, inSbiError
   ] = fetchListObjectItems(
     errorMessageList,
-    ['projectNameError', 'businessNameError', 'numberEmployeesError', 'businessTurnoverError', 'sbiError']
+    ['projectNameError', 'businessNameError', 'numberEmployeesError', 'businessTurnoverError', 'sbiError', 'inSbiError']
   )
-
+  const sbiHtml = getSbiHtml(sbi, sbiError)
   return {
     backLink: previousPath,
     checkDetail: hasDetails,
@@ -103,6 +104,36 @@ function createModel (errorMessageList, businessDetails, hasDetails) {
       },
       ...(sbi ? { value: sbi } : {}),
       ...(sbiError ? { errorMessage: { text: sbiError } } : {})
+    },
+    radios: {
+      idPrefix: 'inSbi',
+      name: 'inSbi',
+      hint: {
+        text: 'Select one option'
+      },
+      fieldset: {
+        legend: {
+          text: 'Single Business Identifier (SBI)',
+          isPageHeading: false,
+          classes: 'govuk-fieldset__legend--m'
+        }
+      },
+      items: [
+        {
+          value: 'Yes',
+          text: 'Yes',
+          conditional: {
+            html: sbiHtml
+          },
+          checked: isChecked(inSbi, 'Yes')
+        },
+        {
+          value: 'No',
+          text: 'No',
+          checked: isChecked(inSbi, 'No')
+        }
+      ],
+      ...(inSbiError ? { errorMessage: { text: inSbiError } } : {})
     }
   }
 }
@@ -120,7 +151,8 @@ module.exports = [
           businessName: null,
           numberEmployees: null,
           businessTurnover: null,
-          sbi: null
+          sbi: null,
+          inSbi: false
         }
       }
 
@@ -138,31 +170,37 @@ module.exports = [
           businessName: Joi.string().max(100).required(),
           numberEmployees: Joi.string().regex(NUMBER_REGEX).max(7).required(),
           businessTurnover: Joi.string().regex(NUMBER_REGEX).max(9).required(),
-          sbi: Joi.string().regex(NUMBER_REGEX).min(9).max(9).allow(''),
+          sbi: Joi.string().allow(''),
+          inSbi: Joi.string().required(),
           results: Joi.any()
         }),
         failAction: (request, h, err) => {
           const [
-            projectNameError, businessNameError, numberEmployeesError, businessTurnoverError, sbiError
-          ] = findErrorList(err, ['projectName', 'businessName', 'numberEmployees', 'businessTurnover', 'sbi'])
+            projectNameError, businessNameError, numberEmployeesError, businessTurnoverError, sbiError, inSbiError
+          ] = findErrorList(err, ['projectName', 'businessName', 'numberEmployees', 'businessTurnover', 'sbi', 'inSbi'])
 
           const errorMessageList = {
-            projectNameError, businessNameError, numberEmployeesError, businessTurnoverError, sbiError
+            projectNameError, businessNameError, numberEmployeesError, businessTurnoverError, sbiError, inSbiError
           }
-
-          const { projectName, businessName, numberEmployees, businessTurnover, sbi } = request.payload
-          const businessDetails = { projectName, businessName, numberEmployees, businessTurnover, sbi }
+          const { projectName, businessName, numberEmployees, businessTurnover, sbi, inSbi } = request.payload
+          const businessDetails = { projectName, businessName, numberEmployees, businessTurnover, sbi, inSbi }
 
           return h.view(viewTemplate, createModel(errorMessageList, businessDetails, getYarValue(request, 'checkDetails'))).takeover()
         }
       },
       handler: (request, h) => {
-        const {
-          projectName, businessName, numberEmployees, businessTurnover, sbi, results
+        let {
+          projectName, businessName, numberEmployees, businessTurnover, sbi, results, inSbi
         } = request.payload
-
+        sbi = inSbi === 'Yes' ? sbi : ''
+        if (inSbi === 'Yes' && sbi) {
+          const sbiError = { sbiError: sbi.trim() === '' ? 'Enter an SBI number, like 011115678' : 'SBI number must have 9 characters, like 011115678', href: '#sbi' }
+          if (!(sbi.trim() !== '' && sbi.match(NUMBER_REGEX) && sbi.length === 9)) {
+            return h.view(viewTemplate, createModel(sbiError, request.payload, getYarValue(request, 'checkDetails')))
+          }
+        }
         setYarValue(request, 'businessDetails', {
-          projectName, businessName, numberEmployees, businessTurnover, sbi
+          projectName, businessName, numberEmployees, businessTurnover, sbi, inSbi
         })
 
         return results ? h.redirect(detailsPath) : h.redirect(nextPath)
