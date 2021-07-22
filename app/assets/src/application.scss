@@ -1,6 +1,6 @@
 $govuk-assets-path: "~govuk-frontend/govuk/assets/";
 @import "~govuk-frontend/govuk/all";
-
+@import "../../templates/components/timeout-warning/timeout-warning";
 .nojs-hidden {
   display: none;
 }
