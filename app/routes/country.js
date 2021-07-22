@@ -84,6 +84,7 @@ module.exports = [
           const { inEngland, projectPostcode } = request.payload
           const errorObject = errorExtractor(err)
           errorList.push({ text: getErrorMessage(errorObject), href: '#inEngland' })
+
           const postcodeHtml = getPostCodeHtml(projectPostcode.toUpperCase(), inEngland ? errorList : null)
 
           return h.view(viewTemplate, createModel(!inEngland ? errorList : null, inEngland, postcodeHtml)).takeover()

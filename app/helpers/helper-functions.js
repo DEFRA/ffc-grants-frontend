@@ -90,7 +90,7 @@ function getSbiHtml (sbiData, error) {
           <span class="govuk-visually-hidden">
             Error:
           </span>
-          ${error}
+          ${error.text}
         </span>
         <input class="govuk-input govuk-!-width-one-third govuk-input--error" autocomplete="off" id="sbi" name="sbi" value="${sbi}">
       </div>`
@@ -182,6 +182,19 @@ const URL_REGEX = /^(?:\w+:)?\/\/([^\s.]+\.\S{2}|localhost[:?\d]*)\S*$/
 function isURL (str) {
   return URL_REGEX.test(str)
 }
+
+const getErrorList = (fields, err) => {
+  const errorList = []
+
+  fields.forEach(field => {
+    const fieldError = findErrorList(err, [field])[0]
+    if (fieldError) {
+      errorList.push({ text: fieldError, href: `#${field}` })
+    }
+  })
+  return errorList
+}
+
 module.exports = {
   isChecked,
   setLabelData,
@@ -197,5 +210,6 @@ module.exports = {
   findErrorList,
   formatApplicationCode,
   isURL,
-  getSbiHtml
+  getSbiHtml,
+  getErrorList
 }

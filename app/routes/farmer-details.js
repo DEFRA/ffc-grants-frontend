@@ -1,6 +1,6 @@
 const Joi = require('joi')
 const { setYarValue, getYarValue } = require('../helpers/session')
-const { setLabelData, findErrorList, formInputObject } = require('../helpers/helper-functions')
+const { setLabelData, formInputObject, getErrorList } = require('../helpers/helper-functions')
 const { NAME_REGEX, PHONE_REGEX, POSTCODE_REGEX, DELETE_POSTCODE_CHARS_REGEX } = require('../helpers/regex-validation')
 const { LIST_COUNTIES } = require('../helpers/all-counties')
 const urlPrefix = require('../config/server').urlPrefix
@@ -168,18 +168,7 @@ module.exports = [
           results: Joi.any()
         }),
         failAction: (request, h, err) => {
-          const errorList = []
-          const fields = ['firstName', 'lastName', 'email', 'mobile', 'landline', 'address1', 'address2', 'town', 'county', 'postcode']
-
-          fields.forEach(field => {
-            const fieldError = findErrorList(err, [field])[0]
-            if (fieldError) {
-              errorList.push({
-                text: fieldError,
-                href: `#${field}`
-              })
-            }
-          })
+          const errorList = getErrorList(['firstName', 'lastName', 'email', 'mobile', 'landline', 'address1', 'address2', 'town', 'county', 'postcode'], err)
 
           if (request.payload.landline === '' && request.payload.mobile === '') {
             errorList.push({ text: 'Enter your mobile number', href: '#mobile' })
