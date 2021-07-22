@@ -168,8 +168,8 @@ TimeoutWarning.prototype.startUiCountdown = function () {
       // GET last interactive time from server before timing out user
       // to ensure that user hasn’t interacted with site in another tab
 
-      $countdown.innerHTML = 'You are about to be redirected'
-      $accessibleCountdown.innerHTML = 'You are about to be redirected'
+      $countdown.innerHTML = 'You are about to be redirected.'
+      $accessibleCountdown.innerHTML = 'You are about to be redirected.'
 
       setTimeout($module.redirect.bind($module), 4000)
     } else {
@@ -299,7 +299,6 @@ TimeoutWarning.prototype.checkIfShouldHaveTimedOut = function () {
 
     // TO DO: use both idlemin and timemodalvisible
     if (seconds > this.idleMinutesBeforeTimeOut * 60) {
-      // if (seconds > 60) {
       this.redirect.bind(this)
     }
   }
@@ -309,15 +308,7 @@ TimeoutWarning.prototype.redirect = function () {
 }
 // Example function for sending last active time of user to server
 TimeoutWarning.prototype.setLastActiveTimeOnServer = function () {
-  //   var xhttp = new XMLHttpRequest()
-  //   xhttp.onreadystatechange = function () {
-  //     if (this.readyState === 4 && this.status === 200) {
-  //       var timeUserLastInteractedWithPage = new Date()
-  //     }
-  //   }
-  //
-  //   xhttp.open('POST', 'update-time-user-interacted-with-page.rb', true)
-  //   xhttp.send()
+  return 0
 }
 
 TimeoutWarning.prototype.numberToWords = function (n) {
