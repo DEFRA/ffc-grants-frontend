@@ -128,9 +128,10 @@ TimeoutWarning.prototype.startUiCountdown = function () {
     const minutesLeft = parseInt(seconds / 60, 10)
     const secondsLeft = parseInt(seconds % 60, 10)
     const timerExpired = minutesLeft < 1 && secondsLeft < 1
-
-    const minutesText = minutesLeft > 0 ? '<span class="tabular-numbers">' + minutesLeft + '</span> minute' + (minutesLeft > 1 ? 's' : '') + '' : ' '
-    const secondsText = secondsLeft >= 1 ? ' <span class="tabular-numbers">' + secondsLeft + '</span> second' + (secondsLeft > 1 ? 's' : '') + '' : ''
+    const minLeftText = (minutesLeft > 1 ? 's' : '')
+    const secLeftText = (secondsLeft > 1 ? 's' : '')
+    const minutesText = minutesLeft > 0 ? '<span class="tabular-numbers">' + minutesLeft + '</span> minute' + minLeftText + '' : ' '
+    const secondsText = secondsLeft >= 1 ? ' <span class="tabular-numbers">' + secondsLeft + '</span> second' + secLeftText + '' : ''
     let atMinutesNumberAsText = ''
     let atSecondsNumberAsText = ''
 
@@ -141,8 +142,6 @@ TimeoutWarning.prototype.startUiCountdown = function () {
       atMinutesNumberAsText = minutesLeft
       atSecondsNumberAsText = secondsLeft
     }
-    const minLeftText = (minutesLeft > 1 ? 's' : '')
-    const secLeftText = (secondsLeft > 1 ? 's' : '')
     const atMinutesText = minutesLeft > 0 ? atMinutesNumberAsText + ' minute' + minLeftText + '' : ''
     const atSecondsText = secondsLeft >= 1 ? ' ' + atSecondsNumberAsText + ' second' + secLeftText + '' : ''
 
@@ -334,7 +333,8 @@ TimeoutWarning.prototype.numberToWords = function (n) {
   const chunks = []
   while (start > 0) {
     end = start
-    chunks.push(string.slice((start = Math.max(0, start - 3)), end))
+    start = Math.max(0, start - 3)
+    chunks.push(string.slice(start, end))
   }
 
   /* Check if function has enough scale words to be able to stringify the user argument */
