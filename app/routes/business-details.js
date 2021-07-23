@@ -133,7 +133,7 @@ module.exports = [
       }
       const inSbi = businessDetails.inSbi ?? null
       const sbiData = inSbi !== null ? businessDetails.sbi : null
-      const sbiHtml = getSbiHtml(sbiData, null)
+      const sbiHtml = getSbiHtml(sbiData)
 
       return h.view(viewTemplate, createModel(null, businessDetails, sbiHtml, getYarValue(request, 'checkDetails')))
     }
@@ -155,7 +155,7 @@ module.exports = [
         }),
         failAction: (request, h, err) => {
           const errorList = []
-          let sbiError = {}
+          let sbiError
           const fields = ['projectName', 'businessName', 'numberEmployees', 'businessTurnover', 'inSbi', 'sbi']
           fields.forEach(field => {
             const fieldError = findErrorList(err, [field])[0]
