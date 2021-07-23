@@ -66,7 +66,7 @@ const errors = {
   'error.postcode.any.required': 'Enter your postcode, like AA1 1AA',
   'error.postcode.string.pattern.base': 'Enter a postcode, like AA1 1AA',
   'error.abstractionLicence.any.required': 'Select when the project will have an abstraction licence or variation',
-  'error.productivity.any.required': 'Select one or two options to describe your project will improve productivity',
+  'error.productivity.any.required': 'Select one or two options to describe how your project will improve productivity',
   'error.collaboration.any.required': 'Select yes if water will be supplied to other farms',
   'error.collaboration.string.base': 'Select yes if water will be supplied to other farms',
   'error.irrigatedLandCurrent.string.empty': 'Enter how many hectares are irrigated currently',
@@ -80,7 +80,7 @@ const errors = {
   'error.consentMain.any.required': 'Please confirm you are happy to be contacted about your application.',
   'error.currentlyIrrigating.any.required': 'Select yes if you are currently irrigating',
   'error.applying.any.required': 'Select who is applying for this grant',
-  'error.productivity.max': 'Select one or two options to describe your project will improve productivity'
+  'error.productivity.max': 'Select a maximum of two options to describe how your project will improve productivity'
 }
 const lookupErrorText = (key) => {
   return errors[key] || key
