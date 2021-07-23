@@ -48,7 +48,7 @@ function createModel (errorList, data) {
 
 function createModelNotEligible () {
   return {
-    refTitle: 'Legal status',
+    refTitle: 'What is the legal status of the business?',
     backLink: currentPath,
     messageContent:
       'This is only open to a business with a different legal status.',

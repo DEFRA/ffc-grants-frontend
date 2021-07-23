@@ -43,7 +43,7 @@ function createModel (errorList, projectCost, projectItemsList) {
 
 function createModelNotEligible () {
   return {
-    refTitle: 'Project cost',
+    refTitle: 'What is the estimated cost of the items?',
     backLink: currentPath,
     messageContent:
       `You can only apply for a grant of up to <span class="govuk-!-font-weight-bold">40%</span> of the estimated costs.<br/><br/>
