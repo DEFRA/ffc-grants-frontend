@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+  You’ll have to start again
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <h1 class="govuk-heading-l" role="status">
+      Your session has ended due to inactivity
+    </h1>
+
+    <p role="status">Your session has ended, because you haven’t done anything for over an hour. </p>
+    <div class="govuk-inset-text">
+      We have deleted all the answers you’ve entered to protect your security
+    </div>
+    <p>
+      <a class="govuk-button" draggable="false" href="/" role="button" data-module="govuk-button">Start again</a>
+    </p>
+  </div>
+</div>
+
+{% endblock %}

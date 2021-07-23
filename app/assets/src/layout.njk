@@ -1,9 +1,11 @@
 {% extends "govuk/template.njk" %}
 {% from "govuk/components/header/macro.njk" import govukHeader %}
 {% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
+{% from "../../templates/components/timeout-warning/macro.njk" import govukTimeoutWarning %}
 
 {% set urlPrefix = "<%= htmlWebpackPlugin.options.metadata.urlPrefix %>" %}
 {% set assetPath = urlPrefix + "/assets" %}
+{% set timeoutPath = urlPrefix + "/session-timeout" %}
 {% set siteTitle = "Check if you can apply for a Farming Transformation Fund water grant - gov.uk" %}
 {% block pageTitle %}
   {{siteTitle}}
@@ -37,6 +39,10 @@
   {% if not cookiesPolicy.confirmed %}
     {% include "cookies/cookie-banner.njk" %}
   {% endif %}
+  {% if cookiesPolicy.analytics %}
+    {% include "tag-manager/body-content.njk" %}
+  {% endif %}
+  
   {% if cookiesPolicy.analytics %}
     {% include "tag-manager/body-content.njk" %}
   {% endif %}
@@ -75,5 +81,11 @@
 {% endblock %}
 
 {% block bodyEnd %}
+  
+  {{govukTimeoutWarning({
+    "modalIdleTime":sessionTimeoutInMin,
+    "modalVisibleTime":10,
+    "redirectUrl":timeoutPath
+  })}}
   <%= htmlWebpackPlugin.tags.bodyTags %>
 {% endblock %}
