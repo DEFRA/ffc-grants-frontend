@@ -30,9 +30,8 @@ function setLabelData (data, labelData) {
   })
 }
 
-function formInputObject (name, classes, text, hint, inputInfo, value) {
+function formInputObject (name, classes, text, hint = null, inputInfo, value) {
   const { fieldName, fieldError, inputType, autocomplete } = inputInfo
-
   return {
     id: name,
     name,
