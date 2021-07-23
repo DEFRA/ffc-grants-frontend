@@ -8,7 +8,9 @@
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 
 {% block pageTitle %}
-  What is the estimated cost of the items? - {{siteTitle}}
+  {% if errorList %}
+    Error: 
+  {% endif %} What is the estimated cost of the items? - {{siteTitle}}
 {% endblock %}7
 
 {% block beforeContent %}

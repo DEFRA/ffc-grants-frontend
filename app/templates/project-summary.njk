@@ -7,7 +7,9 @@
 {% from "./components/macro.njk" import crumbToken, sideBar, conditionalButtons %}
 
 {% block pageTitle %}
-  What impact will the project have? - {{siteTitle}}
+  {% if errorList %}
+    Error: 
+  {% endif %} What impact will the project have? - {{siteTitle}}
 {% endblock %}
 
 {% block beforeContent %}

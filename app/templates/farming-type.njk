@@ -7,7 +7,9 @@
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 
 {% block pageTitle %}
-  What crops are you growing? - {{siteTitle}}
+  {% if errorList %}
+    Error: 
+  {% endif %} What crops are you growing? - {{siteTitle}}
 {% endblock %}
 
 {% block beforeContent %}

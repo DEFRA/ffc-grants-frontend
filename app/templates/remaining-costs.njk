@@ -8,7 +8,9 @@
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 
 {% block pageTitle %}
-  Can you pay the remaining costs? - {{siteTitle}}
+  {% if errorList %}
+    Error: 
+  {% endif %} Can you pay the remaining costs? - {{siteTitle}}
 {% endblock %}
 
 {% block beforeContent %}
