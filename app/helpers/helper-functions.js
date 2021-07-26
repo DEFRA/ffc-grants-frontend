@@ -182,11 +182,14 @@ function isURL (str) {
   return URL_REGEX.test(str)
 }
 
-const getErrorList = (fields, err) => {
+const getErrorList = (fields, err, phoneErrors) => {
   const errorList = []
 
   fields.forEach(field => {
     const fieldError = findErrorList(err, [field])[0]
+    if (field === 'mobile' && phoneErrors) {
+      errorList.push(...phoneErrors)
+    }
     if (fieldError) {
       errorList.push({ text: fieldError, href: `#${field}` })
     }
