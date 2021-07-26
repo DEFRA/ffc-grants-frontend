@@ -171,7 +171,7 @@ module.exports = {
     {
       key: 'Q16',
       order: 16,
-      title: 'How much land is currently irrigated per year?',
+      title: 'How much land is currently irrigated per year, in hectares?',
       pageTitle: 'Irrigated land',
       desc: 'Enter figure in hectares',
       fundingPriorities: 'Improve productivity',
@@ -184,7 +184,7 @@ module.exports = {
     {
       key: 'Q16a',
       order: 16.1,
-      title: 'How much land will be irrigated after the project?',
+      title: 'How much land will be irrigated after the project, in hectares?',
       pageTitle: 'Irrigated land',
       desc: 'Enter figure in hectares',
       fundingPriorities: 'Improve productivity',
