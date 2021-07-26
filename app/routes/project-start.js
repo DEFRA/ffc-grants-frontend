@@ -57,7 +57,7 @@ const getBackLink = (request) => {
 
 function createModelNotEligible () {
   return {
-    refTitle: 'Project start',
+    refTitle: 'Have you already started work on the project?',
     backLink: currentPath,
     messageContent:
       'You cannot apply for a grant if you have already started work on the project.',

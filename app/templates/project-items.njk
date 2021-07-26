@@ -6,7 +6,9 @@
 {% from "./components/macro.njk" import crumbToken %}
 
 {% block pageTitle %}
-  Project items - {{ siteTitle }}
+  {% if errorList %}
+    Error: 
+  {% endif %} Which eligible items does your project need? - {{ siteTitle }}
 {% endblock %}
 
 {% block beforeContent %}

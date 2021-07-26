@@ -35,7 +35,7 @@ const getDetailsInput = (detailsData, errorList) => {
     ),
 
     inputAddress2: formInputObject(
-      'address2', 'govuk-input--width-20', null, null, {
+      'address2', 'govuk-input--width-20', '<span class="govuk-visually-hidden">Building and street line 2 of 2</span>', null, {
         fieldName: detailsData.address2,
         fieldError: errorList && errorList.some(err => err.href === '#address2') ? errorList.find(err => err.href === '#address2').text : null,
         inputType: 'text',
@@ -44,7 +44,7 @@ const getDetailsInput = (detailsData, errorList) => {
     ),
 
     inputAddress1: formInputObject(
-      'address1', 'govuk-input--width-20', 'Building and street', null, {
+      'address1', 'govuk-input--width-20', 'Building and street <span class="govuk-visually-hidden">line 1 of 2</span>', null, {
         fieldName: detailsData.address1,
         fieldError: errorList && errorList.some(err => err.href === '#address1') ? errorList.find(err => err.href === '#address1').text : null,
         inputType: 'text',

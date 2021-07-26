@@ -33,7 +33,7 @@ function createModel (errorList, data, formattedRemainingCost) {
 
 function createModelNotEligible () {
   return {
-    refTitle: 'Remaining costs',
+    refTitle: 'Can you pay the remaining costs?',
     backLink: currentPath,
     messageContent:
       'You cannot use public money (for example, grant funding from government or local authorities) towards the project costs.',

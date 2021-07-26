@@ -33,7 +33,7 @@ function createModel (errorList, data) {
 
 function createModelNotEligible () {
   return {
-    refTitle: 'Farming type',
+    refTitle: 'What crops are you growing?',
     backLink: currentPath,
     messageContent:
       'This grant is only available to:<ul class="govuk-list govuk-list--bullet"><li> arable and horticultural farming businesses that supply the food industry</li><li>nurseries growing ornamentals</li><li>forestry nurseries</li></ul><p class="govuk-body"> <a class="govuk-link" href=\'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments\'>See other grants you may be eligible for.</a></p>'

@@ -7,7 +7,9 @@
 {% from "./components/macro.njk" import crumbToken, sideBar,multiSideBar, conditionalButtons%}
 
 {% block pageTitle %}
-  Irrigation water - {{siteTitle}}
+  {% if errorList %}
+    Error: 
+  {% endif %} Will your water source change? - {{siteTitle}}
 {% endblock %}
 
 {% block beforeContent %}
