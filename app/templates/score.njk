@@ -4,7 +4,7 @@
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "./components/macro.njk" import crumbToken %}
 {% block pageTitle %}
-  Score - {{siteTitle}}
+  Scoring results - {{siteTitle}}
 {% endblock %}
 {% block beforeContent %}
   {{ govukBackLink({
@@ -96,7 +96,7 @@
       </td>
       <td class="govuk-table__cell">
           <a class="govuk-link" href="{{question.url}}" title="Change {{question.answers[0].title}}">
-            Change
+            Change <span class="govuk-visually-hidden">{{question.answers[0].title}}</span>
           </a>
       </td>
     </tr>

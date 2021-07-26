@@ -8,7 +8,9 @@
 {% from "./components/macro.njk" import crumbToken %}
 
 {% block pageTitle %}
-  Business details - {{siteTitle}}
+  {% if errorList %}
+    Error: 
+  {% endif %} Business details - {{siteTitle}}
 {% endblock %}
 {% block beforeContent %}
   {{ govukBackLink({

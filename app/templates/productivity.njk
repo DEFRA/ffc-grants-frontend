@@ -5,7 +5,9 @@
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "./components/macro.njk" import crumbToken, sideBar, conditionalButtons %}
 {% block pageTitle %}
-  Productivity - {{siteTitle}}
+  {% if errorList %}
+    Error: 
+  {% endif %} How will the project improve productivity? - {{siteTitle}}
 {% endblock %}
 {% block beforeContent %}
   {{ govukBackLink({

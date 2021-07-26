@@ -7,7 +7,9 @@
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 
 {% block pageTitle %}
-  Irrigation status - {{siteTitle}}
+  {% if errorList %}
+    Error: 
+  {% endif %} Are you currently irrigating? - {{siteTitle}}
 {% endblock %}
 
 {% block beforeContent %}

@@ -48,7 +48,7 @@ function createModel (errorList, data, postcodeHtml) {
 
 function createModelNotEligible () {
   return {
-    refTitle: 'Project location',
+    refTitle: 'Is the planned project in England?',
     backLink: currentPath,
     insertText: {
       text: 'Scotland, Wales and Northern Ireland have other grants available.'
