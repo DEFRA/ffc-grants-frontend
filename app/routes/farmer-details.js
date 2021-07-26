@@ -70,16 +70,15 @@ module.exports = [
           results: Joi.any()
         }),
         failAction: (request, h, err) => {
-          const errorList = getErrorList(['firstName', 'lastName', 'email', 'mobile', 'landline', 'address1', 'address2', 'town', 'county', 'postcode'], err)
-
+          const phoneErrors = []
           if (request.payload.landline === '' && request.payload.mobile === '') {
-            errorList.push({ text: 'Enter your mobile number', href: '#mobile' })
-            errorList.push({ text: 'Enter your landline number', href: '#landline' })
+            phoneErrors.push({ text: 'Enter your mobile number', href: '#mobile' })
+            phoneErrors.push({ text: 'Enter your landline number', href: '#landline' })
           }
 
+          const errorList = getErrorList(['firstName', 'lastName', 'email', 'mobile', 'landline', 'address1', 'address2', 'town', 'county', 'postcode'], err, phoneErrors)
           const { firstName, lastName, email, mobile, landline, address1, address2, town, county, postcode } = request.payload
           const farmerDetails = { firstName, lastName, email, mobile, landline, address1, address2, town, county, postcode }
-
           const applying = getYarValue(request, 'applying')
           const backLink = applying === 'Agent' ? agentDetailsPath : applyingPath
 
