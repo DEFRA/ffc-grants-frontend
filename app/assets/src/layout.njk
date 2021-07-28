@@ -33,6 +33,12 @@
     html: 'This is a new service – your <a class="govuk-link" href=" https://defragroup.eu.qualtrics.com/jfe/form/SV_26sUm6qNA26AoK2" target="_blank" rel="noopener noreferrer">feedback</a> will help us to improve it.'
     }) }}
   </div>
+  
+  {{govukTimeoutWarning({
+    "modalIdleTime":0.2,
+    "modalVisibleTime":10,
+    "redirectUrl":0.5
+  })}}
 {% endblock %}
 
 {% block bodyStart %}
@@ -81,11 +87,5 @@
 {% endblock %}
 
 {% block bodyEnd %}
-  
-  {{govukTimeoutWarning({
-    "modalIdleTime":sessionTimeoutInMin,
-    "modalVisibleTime":10,
-    "redirectUrl":timeoutPath
-  })}}
   <%= htmlWebpackPlugin.tags.bodyTags %>
 {% endblock %}

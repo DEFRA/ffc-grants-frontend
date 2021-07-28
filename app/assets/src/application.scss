@@ -122,3 +122,14 @@ $govuk-assets-path: "~govuk-frontend/govuk/assets/";
     @extend %govuk-section-break--xl;
   }
 }
+.timeoutDiv {
+  opacity: 0;  
+  animation: fadeIn 600s;
+  animation-delay: 3000s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
