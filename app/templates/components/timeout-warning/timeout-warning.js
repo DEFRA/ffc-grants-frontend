@@ -138,7 +138,7 @@ function getSpanForNumber (time, isMinute) {
 function getAtText (minLeftText, secondsLeft, secLeftText, minutesLeft) {
   const atMinutesText = minutesLeft > 0 ? minutesLeft + ' minute' + minLeftText + '' : ''
   const atSecondsText = secondsLeft >= 1 ? ' ' + secondsLeft + ' second' + secLeftText + '' : ''
-  let atText = 'We will reset your application if you do not respond in ' + atMinutesText
+  let atText = 'We will reset your answers if you do not respond in ' + atMinutesText
   if (atSecondsText) {
     if (minutesLeft > 0) {
       atText += ' and'
@@ -159,7 +159,7 @@ function runTimer (seconds, timers, iOS, timerRunOnce, $accessibleCountdown, $mo
   const secondsText = getSpanForNumber(secondsLeft, false)
   // Below string will get read out by screen readers every time the timeout refreshes (every 15 secs. See below).
   // Please add additional information in the modal body content or in below extraText which will get announced to AT the first time the time out opens
-  const text = `We will reset your application if you do not respond in ${minutesText} ${secondsText}.`
+  const text = `We will reset your answers if you do not respond in ${minutesText} ${secondsText}.`
   const atText = getAtText(minLeftText, secondsLeft, secLeftText, minutesLeft)
 
   if (timerExpired) {
