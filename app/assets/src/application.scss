@@ -127,6 +127,7 @@ $govuk-assets-path: "~govuk-frontend/govuk/assets/";
   animation: fadeIn 600s;
   animation-delay: 3000s;
   animation-fill-mode: forwards;
+  height: 0px;
 }
 
 @keyframes fadeIn {
