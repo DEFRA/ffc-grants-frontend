@@ -33,21 +33,19 @@
     html: 'This is a new service – your <a class="govuk-link" href=" https://defragroup.eu.qualtrics.com/jfe/form/SV_26sUm6qNA26AoK2" target="_blank" rel="noopener noreferrer">feedback</a> will help us to improve it.'
     }) }}
   </div>
-  {{govukTimeoutWarning({
-    "modalIdleTime":sessionTimeoutInMin,
-    "modalVisibleTime":10,
-    "redirectUrl":timeoutPath
-  })}}
+  {% if showTimeout %}  
+    {{govukTimeoutWarning({
+      "modalIdleTime":sessionTimeoutInMin,
+      "modalVisibleTime":10,
+      "redirectUrl":timeoutPath
+    })}}
+  {% endif %}
 {% endblock %}
 
 {% block bodyStart %}
   {% if not cookiesPolicy.confirmed %}
     {% include "cookies/cookie-banner.njk" %}
   {% endif %}
-  {% if cookiesPolicy.analytics %}
-    {% include "tag-manager/body-content.njk" %}
-  {% endif %}
-  
   {% if cookiesPolicy.analytics %}
     {% include "tag-manager/body-content.njk" %}
   {% endif %}
