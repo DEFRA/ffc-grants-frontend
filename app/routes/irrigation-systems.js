@@ -11,13 +11,14 @@ const nextPath = `${urlPrefix}/productivity`
 const scorePath = `${urlPrefix}/score`
 
 function createModel (currentlyIrrigating, errorList, currentData, plannedData, hasScore) {
+  currentlyIrrigating = currentlyIrrigating.toLowerCase()
   return {
     backLink: previousPath,
     formActionPage: currentPath,
     hasScore,
     ...errorList ? { errorList } : {},
-    currentlyIrrigating: (currentlyIrrigating === 'Yes' || currentlyIrrigating === 'yes'),
-    pageTitle: (currentlyIrrigating === 'Yes' || currentlyIrrigating === 'yes'
+    currentlyIrrigating: (currentlyIrrigating === 'yes'),
+    pageTitle: (currentlyIrrigating === 'yes'
       ? 'Will your irrigation system change?'
       : 'What systems will be used to irrigate?'
     ),
@@ -49,7 +50,7 @@ function createModel (currentlyIrrigating, errorList, currentData, plannedData, 
       name: 'irrigationPlanned',
       fieldset: {
         legend: {
-          text: 'What systems will be used to irrigate?'
+          text: currentlyIrrigating === 'yes' ? 'What systems will be used to irrigate?' : ''
         }
       },
       hint: {

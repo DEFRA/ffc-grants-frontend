@@ -27,7 +27,7 @@ function createModel (errorList, data) {
           classes: 'govuk-fieldset__legend--l'
         }
       },
-      items: setLabelData(data, [LICENSE_NOT_NEEDED, LICENSE_SECURED, LICENSE_EXPECTED, LICENSE_WILL_NOT_HAVE]),
+      items: setLabelData(data, [LICENSE_NOT_NEEDED, LICENSE_SECURED, 'Should be in place by 31 May 2022', 'Will not be in place by 31 May 2022']),
       ...(errorList ? { errorMessage: { text: errorList[0].text } } : {})
     }
   }
@@ -36,7 +36,7 @@ function createModel (errorList, data) {
 const NOT_ELIGIBLE = {
   refTitle: 'Planning permission',
   backLink: currentPath,
-  messageContent: 'Any planning permission must be in place by 31 December 2021 (the end of the application window).',
+  messageContent: 'Any planning permission must be in place by 31 May 2022.',
   messageLink: {
     url: 'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments',
     title: 'See other grants you may be eligible for.'
