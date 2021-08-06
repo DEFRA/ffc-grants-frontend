@@ -22,7 +22,6 @@ const varListTemplate = {
   waterSourceCurrent: ['some source 1'],
   waterSourcePlanned: ['some source 2', 'another source'],
   'current-score': ''
-
 }
 
 let varList
