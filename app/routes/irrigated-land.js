@@ -12,13 +12,14 @@ const nextPath = `${urlPrefix}/irrigation-water-source`
 const scorePath = `${urlPrefix}/score`
 
 function createModel (currentlyIrrigating, irrigatedLandCurrent, irrigatedLandTarget, errorList, hasScore) {
+  currentlyIrrigating = currentlyIrrigating.toLowerCase()
   return {
     backLink: hasScore ? `${urlPrefix}/irrigated-crops` : previousPath,
     formActionPage: currentPath,
     hasScore: hasScore,
     ...errorList ? { errorList } : {},
-    currentlyIrrigating: (currentlyIrrigating === 'Yes' || currentlyIrrigating === 'yes'),
-    pageTitle: (currentlyIrrigating === 'Yes' || currentlyIrrigating === 'yes'
+    currentlyIrrigating: (currentlyIrrigating === 'yes'),
+    pageTitle: (currentlyIrrigating === 'yes'
       ? 'Will the area of irrigated land change, in hectares?'
       : 'How much land will be irrigated per year after the project, in hectares?'
     ),
@@ -50,7 +51,7 @@ function createModel (currentlyIrrigating, irrigatedLandCurrent, irrigatedLandTa
       id: 'irrigatedLandTarget',
       name: 'irrigatedLandTarget',
       label: {
-        text: 'How much land will be irrigated per year after the project, in hectares?'
+        text: currentlyIrrigating === 'yes' ? 'How much land will be irrigated per year after the project, in hectares?' : ''
       },
       hint: {
         text: 'Enter figure in hectares, for example 543.5'

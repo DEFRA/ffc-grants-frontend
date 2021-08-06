@@ -1,38 +1,49 @@
 const { crumbToken } = require('./test-helper')
+const varListTemplate = {
+  farmingType: 'some fake crop',
+  legalStatus: 'fale status',
+  inEngland: 'Yes',
+  planningPermission: 'some data',
+  projectStarted: 'No',
+  landOwnership: 'Yes',
+  projectItemsList: {
+    projectEquipment: ['Boom', 'Trickle']
+  },
+  projectCost: '12345678',
+  remainingCost: 14082.00,
+  payRemainingCosts: 'Yes',
+  sSSI: 'yes',
+  abstractionLicence: 'Not needed',
+  project: ['some fake project'],
+  irrigatedCrops: 'some crop',
+  currentlyIrrigating: 'yes',
+  irrigatedLandCurrent: '123',
+  irrigatedLandTarget: '456',
+  waterSourceCurrent: ['some source 1'],
+  waterSourcePlanned: ['some source 2', 'another source'],
+  'current-score': ''
+}
+
+let varList
+const mockSession = {
+  setYarValue: (request, key, value) => null,
+  getYarValue: (request, key) => {
+    if (Object.keys(varList).includes(key)) return varList[key]
+    else return 'Error'
+  }
+}
+
+jest.mock('../../../../app/helpers/session', () => mockSession)
 
 describe('Irrigation water source page', () => {
-  const project = ['some fake project']
-  const irrigatedCrops = 'some fake crop'
-  const irrigatedLandCurrent = '123'
-  const irrigatedLandTarget = '456'
-  const waterSourceCurrent = ['some source 1']
-  const waterSourcePlanned = ['some source 2', 'another source']
-
-  jest.mock('../../../../app/helpers/session', () => ({
-    setYarValue: (request, key, value) => null,
-    getYarValue: (request, key) => {
-      switch (key) {
-        case 'project':
-          return [project]
-        case 'irrigatedCrops':
-          return irrigatedCrops
-        case 'irrigatedLandCurrent':
-          return irrigatedLandCurrent
-        case 'irrigatedLandTarget':
-          return irrigatedLandTarget
-        case 'waterSourceCurrent':
-          return [waterSourceCurrent]
-        case 'waterSourcePlanned':
-          return [waterSourcePlanned]
-        default:
-          return 'Error'
-      }
-    }
-  }))
-
-  afterEach(() => {
-    jest.clearAllMocks()
+  beforeEach(() => {
+    varList = { ...varListTemplate }
   })
+
+  afterAll(() => {
+    jest.resetAllMocks()
+  })
+
   it('should load page successfully', async () => {
     const options = {
       method: 'GET',
@@ -66,7 +77,7 @@ describe('Irrigation water source page', () => {
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/irrigation-water-source`,
-      payload: { waterSourceCurrent, waterSourcePlanned, crumb: crumbToken },
+      payload: { waterSourceCurrent: 'some option-1', waterSourcePlanned: 'another-option-1', crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
       }
@@ -95,5 +106,37 @@ describe('Irrigation water source page', () => {
     expect(postResponse.payload).toContain('There is a problem')
     expect(postResponse.payload).toContain('Select a maximum of two options where your current irrigation water comes from')
     expect(postResponse.payload).toContain('Select a maximum of two options where your current irrigation water will come from')
+  })
+
+  it('should display the current water source question if the user selected YES for currently irrigating', async () => {
+    const options = {
+      method: 'GET',
+      url: `${global.__URLPREFIX__}/irrigation-water-source`,
+      headers: {
+        cookie: 'crumb=' + crumbToken
+      }
+    }
+
+    const response = await global.__SERVER__.inject(options)
+    expect(response.statusCode).toBe(200)
+    expect(response.payload).toContain('<h1 class="govuk-heading-l">Will your water source change?</h1>')
+    expect(response.payload).toContain('Where does your current irrigation water come from?')
+    expect(response.payload).toContain('Where will the irrigation water come from?')
+  })
+
+  it('should NOT display the current water source question if the user selected NO for currently irrigating', async () => {
+    varList.currentlyIrrigating = 'No'
+    const options = {
+      method: 'GET',
+      url: `${global.__URLPREFIX__}/irrigation-water-source`,
+      headers: {
+        cookie: 'crumb=' + crumbToken
+      }
+    }
+
+    const response = await global.__SERVER__.inject(options)
+    expect(response.statusCode).toBe(200)
+    expect(response.payload).not.toContain('<h1 class="govuk-heading-l">Will your water source change?</h1>')
+    expect(response.payload).toContain('Where will the irrigation water come from?')
   })
 })

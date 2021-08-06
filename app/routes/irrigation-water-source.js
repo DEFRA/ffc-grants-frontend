@@ -11,14 +11,15 @@ const nextPath = `${urlPrefix}/irrigation-systems`
 const scorePath = `${urlPrefix}/score`
 
 function createModel (currentlyIrrigating, errorList, currentData, plannedData, hasScore) {
+  currentlyIrrigating = currentlyIrrigating.toLowerCase()
   return {
     backLink: previousPath,
     formActionPage: currentPath,
     hasScore,
     ...errorList ? { errorList } : {},
 
-    currentlyIrrigating: (currentlyIrrigating === 'Yes' || currentlyIrrigating === 'yes'),
-    pageTitle: (currentlyIrrigating === 'Yes' || currentlyIrrigating === 'yes'
+    currentlyIrrigating: (currentlyIrrigating === 'yes'),
+    pageTitle: (currentlyIrrigating === 'yes'
       ? 'Will your water source change?'
       : 'Where will the irrigation water come from?'
     ),
@@ -49,7 +50,7 @@ function createModel (currentlyIrrigating, errorList, currentData, plannedData, 
       name: 'waterSourcePlanned',
       fieldset: {
         legend: {
-          text: 'Where will the irrigation water come from?'
+          text: currentlyIrrigating === 'yes' ? 'Where will the irrigation water come from?' : ''
         }
       },
       hint: {
