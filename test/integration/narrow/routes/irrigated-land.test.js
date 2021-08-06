@@ -253,4 +253,36 @@ describe('Irrigated Land page', () => {
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.payload).toContain('<input class="govuk-input" id="irrigatedLandCurrent" name="irrigatedLandCurrent" type="hidden" value="0">')
   })
+
+  it('should display the current irrigated land question if the user selected YES for currently irrigating', async () => {
+    const options = {
+      method: 'GET',
+      url: `${global.__URLPREFIX__}/irrigated-land`,
+      headers: {
+        cookie: 'crumb=' + crumbToken
+      }
+    }
+
+    const response = await global.__SERVER__.inject(options)
+    expect(response.statusCode).toBe(200)
+    expect(response.payload).toContain('<h1 class="govuk-heading-l">Will the area of irrigated land change, in hectares?</h1>')
+    expect(response.payload).toContain('How much land is currently irrigated per year, in hectares?')
+    expect(response.payload).toContain('How much land will be irrigated per year after the project, in hectares?')
+  })
+
+  it('should not display the current irrigated land question if the user selected NO for currently irrigating', async () => {
+    varList.currentlyIrrigating = 'No'
+    const options = {
+      method: 'GET',
+      url: `${global.__URLPREFIX__}/irrigated-land`,
+      headers: {
+        cookie: 'crumb=' + crumbToken
+      }
+    }
+
+    const response = await global.__SERVER__.inject(options)
+    expect(response.statusCode).toBe(200)
+    expect(response.payload).not.toContain('<h1 class="govuk-heading-l">Will the area of irrigated land change, in hectares?</h1>')
+    expect(response.payload).toContain('How much land will be irrigated per year after the project, in hectares?')
+  })
 })
