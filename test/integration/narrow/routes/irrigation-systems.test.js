@@ -67,8 +67,8 @@ describe('Irrigation syatems page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Select one or two systems currently used to irrigate')
-    expect(postResponse.payload).toContain('Select one or two systems that will be used to irrigate')
+    expect(postResponse.payload).toContain('Select up to 2 systems currently used to irrigate')
+    expect(postResponse.payload).toContain('Select up to 2 systems that will be used to irrigate')
   })
 
   it('should store user response and redirects to productivity page', async () => {
@@ -102,8 +102,8 @@ describe('Irrigation syatems page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.payload).toContain('There is a problem')
-    expect(postResponse.payload).toContain('Select a maximum of two systems currently used to irrigate')
-    expect(postResponse.payload).toContain('Select a maximum of two systems that will be used to irrigate')
+    expect(postResponse.payload).toContain('Select up to 2 systems currently used to irrigate')
+    expect(postResponse.payload).toContain('Select up to 2 systems that will be used to irrigate')
   })
 
   it('should display the current irrrigation systems question if the user selected YES for currently irrigating', async () => {

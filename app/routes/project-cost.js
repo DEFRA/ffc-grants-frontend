@@ -32,7 +32,7 @@ function createModel (errorList, projectCost, projectItemsList) {
         html: `
           You can only apply for a grant of up to 40% of the estimated costs.
           <br/>Do not include VAT.
-          <br/><br/>Enter amount, for example 95000`
+          <br/><br/>Enter amount, for example 95,000`
       },
       value: projectCost,
       ...(errorList ? { errorMessage: { text: errorList[0].text } } : {})
