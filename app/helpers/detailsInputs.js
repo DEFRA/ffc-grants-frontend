@@ -23,7 +23,7 @@ const getDetailsInput = (detailsData, errorList) => {
       }
     ),
 
-    ...(detailsData.hasOwnProperty('businessName') ? { inputBusinessName: formInputObject('businessName', 'govuk-input--width-20', 'Business name', null, { fieldName: detailsData.businessName, fieldError: getFieldError(errorList, '#businessName'), inputType: 'text', autocomplete: 'organization' }) } : null),
+    ...(Object.prototype.hasOwnProperty.call(detailsData, 'businessName') ? { inputBusinessName: formInputObject('businessName', 'govuk-input--width-20', 'Business name', null, { fieldName: detailsData.businessName, fieldError: getFieldError(errorList, '#businessName'), inputType: 'text', autocomplete: 'organization' }) } : null),
 
     inputTown: formInputObject(
       'town', 'govuk-input--width-10', 'Town (optional)', null, {
