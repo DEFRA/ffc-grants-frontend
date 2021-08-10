@@ -125,10 +125,10 @@ module.exports = [
 
         if (waterSourceCurrent.length > 2 || waterSourcePlanned.length > 2) {
           if (waterSourceCurrent.length > 2) {
-            errorList.push({ text: 'Select up to 2 options where your current irrigation water comes from', href: '#waterSourceCurrent' })
+            errorList.push({ text: 'Select up to 2 options for where your current irrigation water comes from', href: '#waterSourceCurrent' })
           }
           if (waterSourcePlanned.length > 2) {
-            errorList.push({ text: 'Select up to 2 options where your current irrigation water will come from', href: '#waterSourcePlanned' })
+            errorList.push({ text: 'Select up to 2 options for where your irrigation water will come from', href: '#waterSourcePlanned' })
           }
           return h.view(viewTemplate, createModel(currentlyIrrigating, errorList, waterSourceCurrent, waterSourcePlanned, getYarValue(request, 'current-score')))
         }
