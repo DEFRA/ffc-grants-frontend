@@ -265,9 +265,9 @@ describe('Irrigated Land page', () => {
 
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
-    expect(response.payload).toContain('<h1 class="govuk-heading-l">Will the area of irrigated land change, in hectares?</h1>')
-    expect(response.payload).toContain('How much land is currently irrigated per year, in hectares?')
-    expect(response.payload).toContain('How much land will be irrigated per year after the project, in hectares?')
+    expect(response.payload).toContain('<h1 class="govuk-heading-l">Will the area of irrigated land change?</h1>')
+    expect(response.payload).toContain('How much land is currently irrigated per year?')
+    expect(response.payload).toContain('How much land will be irrigated per year after the project?')
   })
 
   it('should not display the current irrigated land question if the user selected NO for currently irrigating', async () => {
@@ -282,7 +282,7 @@ describe('Irrigated Land page', () => {
 
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
-    expect(response.payload).not.toContain('<h1 class="govuk-heading-l">Will the area of irrigated land change, in hectares?</h1>')
-    expect(response.payload).toContain('How much land will be irrigated per year after the project, in hectares?')
+    expect(response.payload).not.toContain('<h1 class="govuk-heading-l">Will the area of irrigated land change?</h1>')
+    expect(response.payload).toContain('How much land will be irrigated per year after the project?')
   })
 })

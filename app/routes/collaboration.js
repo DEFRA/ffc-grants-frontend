@@ -26,7 +26,7 @@ function createModel (errorList, data) {
       },
       hint: {
         text:
-          'If you intend to supply water via a water sharing agreement as a result of this project.'
+          'For example, if you intend to supply water via a water sharing agreement as a result of this project.'
       },
       items: setLabelData(data, ['Yes', 'No']),
       ...(errorList ? { errorMessage: { text: errorList[0].text } } : {})

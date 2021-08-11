@@ -32,7 +32,7 @@ function createModel (errorList, projectCost, projectItemsList) {
         html: `
           You can only apply for a grant of up to 40% of the estimated costs.
           <br/>Do not include VAT.
-          <br/><br/>Enter amount, for example 95000`
+          <br/><br/>Enter amount, for example 95,000`
       },
       value: projectCost,
       ...(errorList ? { errorMessage: { text: errorList[0].text } } : {})
@@ -46,7 +46,7 @@ function createModelNotEligible () {
     refTitle: 'What is the estimated cost of the items?',
     backLink: currentPath,
     messageContent:
-      `You can only apply for a grant of up to <span class="govuk-!-font-weight-bold">40%</span> of the estimated costs.<br/><br/>
+      `You can only apply for a grant of up to 40% of the estimated costs.<br/><br/>
       The minimum grant you can apply for is £35,000 (40% of £87,500). The maximum grant is £500,000.`,
     messageLink: {
       url: 'https://www.gov.uk/government/collections/rural-payments-and-grants',

@@ -22,7 +22,7 @@ function createModel (errorList, data, backLink, hasScore) {
       idPrefix: 'project',
       name: 'project',
       hint: {
-        text: 'Select one or two options'
+        text: 'Select up to 2 options'
       },
       items: setLabelData(data, ['Change water source', 'Improve irrigation efficiency', 'Increase irrigation', 'Introduce irrigation', 'None of the above']),
       ...(errorList ? { errorMessage: { text: errorList[0].text } } : {})
@@ -74,7 +74,7 @@ module.exports = [
         }
 
         if (project.length > 2) {
-          errorList.push({ text: 'Select one or two options to describe the project impact', href: '#project' })
+          errorList.push({ text: 'Select up to 2 options to describe your project’s impact', href: '#project' })
           return h.view(viewTemplate, createModel(errorList, project, getBackLink(request), hasScore))
         }
 

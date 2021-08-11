@@ -23,7 +23,7 @@ const getDetailsInput = (detailsData, errorList) => {
       }
     ),
 
-    ...(detailsData.hasOwnProperty('businessName') ? { inputBusinessName: formInputObject('businessName', 'govuk-input--width-20', 'Business name', null, { fieldName: detailsData.businessName, fieldError: getFieldError(errorList, '#businessName'), inputType: 'text', autocomplete: 'organization' }) } : null),
+    ...(Object.prototype.hasOwnProperty.call(detailsData, 'businessName') ? { inputBusinessName: formInputObject('businessName', 'govuk-input--width-20', 'Business name', null, { fieldName: detailsData.businessName, fieldError: getFieldError(errorList, '#businessName'), inputType: 'text', autocomplete: 'organization' }) } : null),
 
     inputTown: formInputObject(
       'town', 'govuk-input--width-10', 'Town (optional)', null, {
@@ -52,7 +52,7 @@ const getDetailsInput = (detailsData, errorList) => {
       }
     ),
     inputLandline: formInputObject(
-      'landline', 'govuk-input--width-20', 'Landline number', null, {
+      'landline', 'govuk-input--width-20', 'Landline number', 'We will only use this to contact you about your application', {
         fieldName: detailsData.landline,
         fieldError: getFieldError(errorList, '#landline'),
         inputType: 'tel',
@@ -60,7 +60,7 @@ const getDetailsInput = (detailsData, errorList) => {
       }
     ),
     inputMobile: formInputObject(
-      'mobile', 'govuk-input--width-20', 'Mobile number', null, {
+      'mobile', 'govuk-input--width-20', 'Mobile number', 'We will only use this to contact you about your application', {
         fieldName: detailsData.mobile,
         fieldError: getFieldError(errorList, '#mobile'),
         inputType: 'tel',
