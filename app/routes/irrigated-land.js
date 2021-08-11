@@ -20,8 +20,8 @@ function createModel (currentlyIrrigating, irrigatedLandCurrent, irrigatedLandTa
     ...errorList ? { errorList } : {},
     currentlyIrrigating: (currentlyIrrigating === 'yes'),
     pageTitle: (currentlyIrrigating === 'yes'
-      ? 'Will the area of irrigated land change, in hectares?'
-      : 'How much land will be irrigated per year after the project, in hectares?'
+      ? 'Will the area of irrigated land change?'
+      : 'How much land will be irrigated per year after the project?'
     ),
     hiddenInput: {
       id: 'irrigatedLandCurrent',
@@ -38,10 +38,10 @@ function createModel (currentlyIrrigating, irrigatedLandCurrent, irrigatedLandTa
         text: 'ha'
       },
       label: {
-        text: 'How much land is currently irrigated per year, in hectares?'
+        text: 'How much land is currently irrigated per year?'
       },
       hint: {
-        text: 'Enter figure in hectares, for example 543.5'
+        text: 'Enter figure in hectares (ha), for example 543.5'
       },
       ...(irrigatedLandCurrent ? { value: irrigatedLandCurrent } : {}),
       ...(errorList && errorList[0].href === '#irrigatedLandCurrent' ? { errorMessage: { text: errorList[0].text } } : {})
@@ -51,10 +51,10 @@ function createModel (currentlyIrrigating, irrigatedLandCurrent, irrigatedLandTa
       id: 'irrigatedLandTarget',
       name: 'irrigatedLandTarget',
       label: {
-        text: currentlyIrrigating === 'yes' ? 'How much land will be irrigated per year after the project, in hectares?' : ''
+        text: currentlyIrrigating === 'yes' ? 'How much land will be irrigated per year after the project?' : ''
       },
       hint: {
-        text: 'Enter figure in hectares, for example 543.5'
+        text: 'Enter figure in hectares (ha), for example 543.5'
       },
       type: 'number',
       suffix: {

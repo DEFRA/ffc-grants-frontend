@@ -1,10 +1,11 @@
 const Joi = require('joi')
 const { setYarValue, getYarValue } = require('../helpers/session')
 const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
-const { LICENSE_NOT_NEEDED, LICENSE_SECURED, LICENSE_EXPECTED, LICENSE_WILL_NOT_HAVE } = require('../helpers/license-dates')
+const { LICENSE_NOT_NEEDED, LICENSE_SECURED } = require('../helpers/license-dates')
 const urlPrefix = require('../config/server').urlPrefix
 const gapiService = require('../services/gapi-service')
-
+const LICENSE_WILL_NOT_HAVE = 'Will not be in place by 31 May 2022'
+const LICENSE_EXPECTED = 'Should be in place by 31 May 2022'
 const viewTemplate = 'planning-permission'
 const currentPath = `${urlPrefix}/${viewTemplate}`
 const previousPath = `${urlPrefix}/country`
@@ -27,7 +28,7 @@ function createModel (errorList, data) {
           classes: 'govuk-fieldset__legend--l'
         }
       },
-      items: setLabelData(data, [LICENSE_NOT_NEEDED, LICENSE_SECURED, 'Should be in place by 31 May 2022', 'Will not be in place by 31 May 2022']),
+      items: setLabelData(data, [LICENSE_NOT_NEEDED, LICENSE_SECURED, LICENSE_EXPECTED, LICENSE_WILL_NOT_HAVE]),
       ...(errorList ? { errorMessage: { text: errorList[0].text } } : {})
     }
   }

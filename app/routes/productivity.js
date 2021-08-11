@@ -27,7 +27,7 @@ function createModel (errorList, data, hasScore) {
         }
       },
       hint: {
-        html: 'Productivity is about how much is produced relative to inputs (for example, increased yield for the same inputs or the same yield with lower inputs).<br/><br/><br/> Select one or two options'
+        html: 'Productivity is about how much is produced relative to inputs (for example, increased yield for the same inputs or the same yield with lower inputs).<br/><br/><br/> Select up to 2 options'
       },
       items: setLabelData(data, ['Introduce or expand high-value crops', 'Introduce or expand protected crops', 'Increased yield per hectare', 'Improved quality', 'Maintain productivity']),
       ...(errorList ? { errorMessage: { text: errorList[0].text } } : {})

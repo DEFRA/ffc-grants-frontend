@@ -34,7 +34,7 @@ function createModel (errorList, backLink, projectInfrastucture, projectEquipmen
           'Engineer fees (construction engineers only)',
           'Fencing for synthetically lined reservoir',
           'Filtration equipment',
-          'Irrigation pump(s) and controls',
+          'Irrigation pumps and controls',
           'Pipework to fill the reservoir',
           'Pumphouse',
           'Underground water distribution main and hydrants',
