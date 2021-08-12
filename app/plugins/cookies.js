@@ -11,8 +11,8 @@ module.exports = {
       server.ext('onPreResponse', (request, h) => {
         let showTimeout = false
         if (!sessionIgnorePaths.find(path => request.path.startsWith(path)) && request.path !== '/') {
-          showTimeout = true
-          if (!validSession(request)) {
+          showTimeout = !validSession(request) && server.table().filter(route => request.path.toLowerCase() === route.path.toLowerCase()).length > 0
+          if (showTimeout) {
             return h.redirect('session-timeout')
           }
         }
