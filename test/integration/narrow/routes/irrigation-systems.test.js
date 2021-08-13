@@ -1,44 +1,50 @@
 const { crumbToken } = require('./test-helper')
+const varListTemplate = {
+  farmingType: 'some fake crop',
+  legalStatus: 'fale status',
+  inEngland: 'Yes',
+  planningPermission: 'some data',
+  projectStarted: 'No',
+  landOwnership: 'Yes',
+  projectItemsList: {
+    projectEquipment: ['Boom', 'Trickle']
+  },
+  projectCost: '12345678',
+  remainingCost: 14082.00,
+  payRemainingCosts: 'Yes',
+  sSSI: 'yes',
+  abstractionLicence: 'Not needed',
+  project: ['some fake project'],
+  irrigatedCrops: 'some crop',
+  currentlyIrrigating: 'yes',
+  irrigatedLandCurrent: '123',
+  irrigatedLandTarget: '456',
+  waterSourceCurrent: ['some source 1'],
+  waterSourcePlanned: ['some source 2', 'another source'],
+  irrigationCurrent: ['some source 2', 'another source'],
+  irrigationPlanned: ['some souce 2'],
+  'current-score': ''
+}
 
+let varList
+const mockSession = {
+  setYarValue: (request, key, value) => null,
+  getYarValue: (request, key) => {
+    if (Object.keys(varList).includes(key)) return varList[key]
+    else return 'Error'
+  }
+}
+
+jest.mock('../../../../app/helpers/session', () => mockSession)
 describe('Irrigation syatems page', () => {
-  const project = ['some fake project']
-  const irrigatedCrops = 'some fake crop'
-  const irrigatedLandCurrent = '123'
-  const irrigatedLandTarget = '456'
-  const waterSourceCurrent = ['some source 1']
-  const waterSourcePlanned = ['some source 2', 'another source']
-  const irrigationCurrent = ['some source 2', 'another source']
-  const irrigationPlanned = ['some souce 2']
-
-  jest.mock('../../../../app/helpers/session', () => ({
-    setYarValue: (request, key, value) => null,
-    getYarValue: (request, key) => {
-      switch (key) {
-        case 'project':
-          return [project]
-        case 'irrigatedCrops':
-          return irrigatedCrops
-        case 'irrigatedLandCurrent':
-          return irrigatedLandCurrent
-        case 'irrigatedLandTarget':
-          return irrigatedLandTarget
-        case 'waterSourceCurrent':
-          return [waterSourceCurrent]
-        case 'waterSourcePlanned':
-          return [waterSourcePlanned]
-        case 'irrigationCurrent':
-          return [irrigationCurrent]
-        case 'irrigationPlanned':
-          return [irrigationPlanned]
-        default:
-          return 'Error'
-      }
-    }
-  }))
-
-  afterEach(() => {
-    jest.clearAllMocks()
+  beforeEach(() => {
+    varList = { ...varListTemplate }
   })
+
+  afterAll(() => {
+    jest.resetAllMocks()
+  })
+
   it('should load page successfully', async () => {
     const options = {
       method: 'GET',
@@ -61,15 +67,15 @@ describe('Irrigation syatems page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Select one or two systems currently used to irrigate')
-    expect(postResponse.payload).toContain('Select one or two systems that will be used to irrigate')
+    expect(postResponse.payload).toContain('Select up to 2 systems currently used to irrigate')
+    expect(postResponse.payload).toContain('Select up to 2 systems that will be used to irrigate')
   })
 
   it('should store user response and redirects to productivity page', async () => {
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/irrigation-systems`,
-      payload: { irrigationCurrent, irrigationPlanned, crumb: crumbToken },
+      payload: { irrigationCurrent: 'fake current system', irrigationPlanned: 'fake new system', crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
       }
@@ -96,7 +102,39 @@ describe('Irrigation syatems page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.payload).toContain('There is a problem')
-    expect(postResponse.payload).toContain('Select a maximum of two systems currently used to irrigate')
-    expect(postResponse.payload).toContain('Select a maximum of two systems that will be used to irrigate')
+    expect(postResponse.payload).toContain('Select up to 2 systems currently used to irrigate')
+    expect(postResponse.payload).toContain('Select up to 2 systems that will be used to irrigate')
+  })
+
+  it('should display the current irrrigation systems question if the user selected YES for currently irrigating', async () => {
+    const options = {
+      method: 'GET',
+      url: `${global.__URLPREFIX__}/irrigation-systems`,
+      headers: {
+        cookie: 'crumb=' + crumbToken
+      }
+    }
+
+    const response = await global.__SERVER__.inject(options)
+    expect(response.statusCode).toBe(200)
+    expect(response.payload).toContain('<h1 class="govuk-heading-l">Will your irrigation system change?</h1>')
+    expect(response.payload).toContain('What systems are currently used to irrigate?')
+    expect(response.payload).toContain('What systems will be used to irrigate?')
+  })
+
+  it('should NOT display the current irrigation systems question if the user selected NO for currently irrigating', async () => {
+    varList.currentlyIrrigating = 'No'
+    const options = {
+      method: 'GET',
+      url: `${global.__URLPREFIX__}/irrigation-systems`,
+      headers: {
+        cookie: 'crumb=' + crumbToken
+      }
+    }
+
+    const response = await global.__SERVER__.inject(options)
+    expect(response.statusCode).toBe(200)
+    expect(response.payload).not.toContain('<h1 class="govuk-heading-l">Will your irrigation system change?</h1>')
+    expect(response.payload).toContain('What systems will be used to irrigate?')
   })
 })

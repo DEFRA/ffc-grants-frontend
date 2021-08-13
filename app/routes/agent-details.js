@@ -68,12 +68,13 @@ module.exports = [
           email: Joi.string().email().required()
         }),
         failAction: (request, h, err) => {
-          const errorList = getErrorList(['firstName', 'lastName', 'businessName', 'email', 'mobile', 'landline', 'address1', 'address2', 'town', 'county', 'postcode'], err)
-
+          const phoneErrors = []
           if (request.payload.landline === '' && request.payload.mobile === '') {
-            errorList.push({ text: 'Enter a contact number', href: '#mobile' })
-            errorList.push({ text: 'Enter a contact number', href: '#landline' })
+            phoneErrors.push({ text: 'Enter your mobile number', href: '#mobile' })
+            phoneErrors.push({ text: 'Enter your landline number', href: '#landline' })
           }
+
+          const errorList = getErrorList(['firstName', 'lastName', 'businessName', 'email', 'mobile', 'landline', 'address1', 'address2', 'town', 'county', 'postcode'], err, phoneErrors)
 
           const { firstName, lastName, businessName, email, mobile, landline, address1, address2, town, county, postcode } = request.payload
           const agentDetails = { firstName, lastName, businessName, email, mobile, landline, address1, address2, town, county, postcode }
@@ -86,8 +87,8 @@ module.exports = [
         } = request.payload
 
         const phoneErrors = [
-          { text: 'Enter a contact number', href: '#mobile' },
-          { text: 'Enter a contact number', href: '#landline' }
+          { text: 'Enter your mobile number', href: '#mobile' },
+          { text: 'Enter your landline number', href: '#landline' }
         ]
 
         if (!landline && !mobile) {

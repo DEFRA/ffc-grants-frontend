@@ -11,13 +11,14 @@ const nextPath = `${urlPrefix}/productivity`
 const scorePath = `${urlPrefix}/score`
 
 function createModel (currentlyIrrigating, errorList, currentData, plannedData, hasScore) {
+  currentlyIrrigating = currentlyIrrigating.toLowerCase()
   return {
     backLink: previousPath,
     formActionPage: currentPath,
     hasScore,
     ...errorList ? { errorList } : {},
-    currentlyIrrigating: (currentlyIrrigating === 'Yes' || currentlyIrrigating === 'yes'),
-    pageTitle: (currentlyIrrigating === 'Yes' || currentlyIrrigating === 'yes'
+    currentlyIrrigating: (currentlyIrrigating === 'yes'),
+    pageTitle: (currentlyIrrigating === 'yes'
       ? 'Will your irrigation system change?'
       : 'What systems will be used to irrigate?'
     ),
@@ -38,7 +39,7 @@ function createModel (currentlyIrrigating, errorList, currentData, plannedData, 
         }
       },
       hint: {
-        text: 'Select one or two options'
+        text: 'Select up to 2 options'
       },
       items: setLabelData(currentData,
         ['Boom', 'Capillary bed', 'Ebb and flow', 'Mist', 'Rain gun', 'Sprinklers', 'Trickle']),
@@ -49,11 +50,11 @@ function createModel (currentlyIrrigating, errorList, currentData, plannedData, 
       name: 'irrigationPlanned',
       fieldset: {
         legend: {
-          text: 'What systems will be used to irrigate?'
+          text: currentlyIrrigating === 'yes' ? 'What systems will be used to irrigate?' : ''
         }
       },
       hint: {
-        text: 'Select one or two options'
+        text: 'Select up to 2 options'
       },
       items: setLabelData(plannedData, ['Boom', 'Capillary bed', 'Ebb and flow', 'Mist', 'Rain gun', 'Sprinklers', 'Trickle']),
       ...(errorList && errorList[errorList.length - 1].href === '#irrigationPlanned' ? { errorMessage: { text: errorList[errorList.length - 1].text } } : {})
@@ -122,10 +123,10 @@ module.exports = [
 
         if (irrigationCurrent.length > 2 || irrigationPlanned.length > 2) {
           if (irrigationCurrent.length > 2) {
-            errorList.push({ text: 'Select a maximum of two systems currently used to irrigate', href: '#irrigationCurrent' })
+            errorList.push({ text: 'Select up to 2 systems currently used to irrigate', href: '#irrigationCurrent' })
           }
           if (irrigationPlanned.length > 2) {
-            errorList.push({ text: 'Select a maximum of two systems that will be used to irrigate', href: '#irrigationPlanned' })
+            errorList.push({ text: 'Select up to 2 systems that will be used to irrigate', href: '#irrigationPlanned' })
           }
           return h.view(
             viewTemplate,

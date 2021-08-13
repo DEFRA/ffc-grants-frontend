@@ -4,12 +4,12 @@ const errors = {
   'error.projectPostcode.string.empty': 'Enter a postcode, like AA1 1AA',
   'error.irrigatedCrops.any.required': 'Select the main crop you will be irrigating',
   'error.farmingType.any.required': 'Select the crops you are growing',
-  'error.waterSourceCurrent.any.required': 'Select one or two options where your current irrigation water comes from',
-  'error.waterSourcePlanned.any.required': 'Select one or two options where your current irrigation water will come from',
-  'error.projectStarted.any.required': 'Select the option that applies to your project',
+  'error.waterSourceCurrent.any.required': 'Select up to 2 options for where your current irrigation water comes from',
+  'error.waterSourcePlanned.any.required': 'Select up to 2 options for where your irrigation water will come from',
+  'error.projectStarted.any.required': 'Select whether you have started work on the project',
   'error.landOwnership.any.required': 'Select yes if the planned project is on land the farm business owns',
-  'error.irrigationPlanned.any.required': 'Select one or two systems that will be used to irrigate',
-  'error.irrigationCurrent.any.required': 'Select one or two systems currently used to irrigate',
+  'error.irrigationPlanned.any.required': 'Select up to 2 systems that will be used to irrigate',
+  'error.irrigationCurrent.any.required': 'Select up to 2 systems currently used to irrigate',
   'error.tenancyLength.any.required': 'Select yes if the land has a tenancy agreement in place until 2026 or after',
   'error.planningPermission.any.required': 'Select when the project will have planning permission',
   'error.payRemainingCosts.any.required': 'Select yes if you can pay the remaining costs without using any other grant money',
@@ -17,7 +17,7 @@ const errors = {
   'error.projectCost.string.empty': 'Enter the estimated cost for the items',
   'error.projectCost.string.pattern.base': 'Enter a whole number with a maximum of 7 digits',
   'error.projectCost.string.max': 'Enter a whole number with a maximum of 7 digits',
-  'error.project.any.required': 'Select one or two options to describe your project impact',
+  'error.project.any.required': 'Select up to 2 options to describe your project’s impact',
   'error.legalStatus.any.required': 'Select the legal status of the farm business',
   'error.legalStatus.string.base': 'Select the legal status of the farm business',
   'error.projectName.any.required': 'Enter a project name',
@@ -66,7 +66,7 @@ const errors = {
   'error.postcode.any.required': 'Enter your postcode, like AA1 1AA',
   'error.postcode.string.pattern.base': 'Enter a postcode, like AA1 1AA',
   'error.abstractionLicence.any.required': 'Select when the project will have an abstraction licence or variation',
-  'error.productivity.any.required': 'Select one or two options to describe how your project will improve productivity',
+  'error.productivity.any.required': 'Select up to 2 options to describe how your project will improve productivity',
   'error.collaboration.any.required': 'Select yes if water will be supplied to other farms',
   'error.collaboration.string.base': 'Select yes if water will be supplied to other farms',
   'error.irrigatedLandCurrent.string.empty': 'Enter how many hectares are irrigated currently',
@@ -80,7 +80,7 @@ const errors = {
   'error.consentMain.any.required': 'Please confirm you are happy to be contacted about your application.',
   'error.currentlyIrrigating.any.required': 'Select yes if you are currently irrigating',
   'error.applying.any.required': 'Select who is applying for this grant',
-  'error.productivity.max': 'Select a maximum of two options to describe how your project will improve productivity'
+  'error.productivity.max': 'Select up to 2 options to describe how your project will improve productivity'
 }
 const lookupErrorText = (key) => {
   return errors[key] || key

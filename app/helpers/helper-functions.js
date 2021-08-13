@@ -38,9 +38,7 @@ function formInputObject (name, classes, text, hint, inputInfo, value) {
     classes,
     autocomplete: autocomplete || 'on',
     ...(text ? { label: { html: text } } : {}),
-    hint: {
-      text: hint
-    },
+    ...(hint ? { hint: { text: hint } } : {}),
     ...(value ? { type: 'hidden' } : { type: inputType }),
     ...(value ? { value: value } : {}),
     ...(fieldName ? { value: fieldName } : {}),
@@ -182,11 +180,14 @@ function isURL (str) {
   return URL_REGEX.test(str)
 }
 
-const getErrorList = (fields, err) => {
+const getErrorList = (fields, err, phoneErrors) => {
   const errorList = []
 
   fields.forEach(field => {
     const fieldError = findErrorList(err, [field])[0]
+    if (field === 'mobile' && phoneErrors) {
+      errorList.push(...phoneErrors)
+    }
     if (fieldError) {
       errorList.push({ text: fieldError, href: `#${field}` })
     }

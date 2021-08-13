@@ -55,7 +55,7 @@ module.exports = {
     {
       key: 'Q7',
       order: 7,
-      title: 'Which eligible items does your project need?',
+      title: 'Which eligible items do you need for your project?',
       pageTitle: '',
       url: 'project-items',
       yarKey: 'projectItemsList'
@@ -171,9 +171,9 @@ module.exports = {
     {
       key: 'Q16',
       order: 16,
-      title: 'How much land is currently irrigated per year, in hectares?',
+      title: 'How much land is currently irrigated per year?',
       pageTitle: 'Irrigated land',
-      desc: 'Enter figure in hectares',
+      desc: 'Enter figure in hectares (ha)',
       fundingPriorities: 'Improve productivity',
       group: 'Q16',
       type: 'number',
@@ -184,9 +184,9 @@ module.exports = {
     {
       key: 'Q16a',
       order: 16.1,
-      title: 'How much land will be irrigated after the project, in hectares?',
+      title: 'How much land will be irrigated after the project?',
       pageTitle: 'Irrigated land',
-      desc: 'Enter figure in hectares',
+      desc: 'Enter figure in hectares (ha)',
       fundingPriorities: 'Improve productivity',
       group: 'Q16',
       type: 'number',

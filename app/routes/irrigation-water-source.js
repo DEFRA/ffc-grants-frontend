@@ -11,14 +11,15 @@ const nextPath = `${urlPrefix}/irrigation-systems`
 const scorePath = `${urlPrefix}/score`
 
 function createModel (currentlyIrrigating, errorList, currentData, plannedData, hasScore) {
+  currentlyIrrigating = currentlyIrrigating.toLowerCase()
   return {
     backLink: previousPath,
     formActionPage: currentPath,
     hasScore,
     ...errorList ? { errorList } : {},
 
-    currentlyIrrigating: (currentlyIrrigating === 'Yes' || currentlyIrrigating === 'yes'),
-    pageTitle: (currentlyIrrigating === 'Yes' || currentlyIrrigating === 'yes'
+    currentlyIrrigating: (currentlyIrrigating === 'yes'),
+    pageTitle: (currentlyIrrigating === 'yes'
       ? 'Will your water source change?'
       : 'Where will the irrigation water come from?'
     ),
@@ -39,7 +40,7 @@ function createModel (currentlyIrrigating, errorList, currentData, plannedData, 
         }
       },
       hint: {
-        text: 'Select one or two options'
+        text: 'Select up to 2 options'
       },
       items: setLabelData(currentData, ['Peak-flow/winter abstraction', 'Bore hole/aquifer', 'Rain water harvesting', 'Summer water surface abstraction', 'Mains']),
       ...(errorList && errorList[0].href === '#waterSourceCurrent' ? { errorMessage: { text: errorList[0].text } } : {})
@@ -49,11 +50,11 @@ function createModel (currentlyIrrigating, errorList, currentData, plannedData, 
       name: 'waterSourcePlanned',
       fieldset: {
         legend: {
-          text: 'Where will the irrigation water come from?'
+          text: currentlyIrrigating === 'yes' ? 'Where will the irrigation water come from?' : ''
         }
       },
       hint: {
-        text: 'Select one or two options'
+        text: 'Select up to 2 options'
       },
       items: setLabelData(plannedData, ['Peak-flow/winter abstraction', 'Bore hole/aquifer', 'Rain water harvesting', 'Summer water surface abstraction', 'Mains']),
       ...(errorList && errorList[errorList.length - 1].href === '#waterSourcePlanned' ? { errorMessage: { text: errorList[errorList.length - 1].text } } : {})
@@ -124,10 +125,10 @@ module.exports = [
 
         if (waterSourceCurrent.length > 2 || waterSourcePlanned.length > 2) {
           if (waterSourceCurrent.length > 2) {
-            errorList.push({ text: 'Select a maximum of two options where your current irrigation water comes from', href: '#waterSourceCurrent' })
+            errorList.push({ text: 'Select up to 2 options for where your current irrigation water comes from', href: '#waterSourceCurrent' })
           }
           if (waterSourcePlanned.length > 2) {
-            errorList.push({ text: 'Select a maximum of two options where your current irrigation water will come from', href: '#waterSourcePlanned' })
+            errorList.push({ text: 'Select up to 2 options for where your irrigation water will come from', href: '#waterSourcePlanned' })
           }
           return h.view(viewTemplate, createModel(currentlyIrrigating, errorList, waterSourceCurrent, waterSourcePlanned, getYarValue(request, 'current-score')))
         }
