@@ -1,0 +1,4 @@
+version: '3.7'
+services:
+  wdio-cucumber:
+    command: npm run test:debug
