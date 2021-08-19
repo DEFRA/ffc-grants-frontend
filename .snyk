@@ -1,10 +1,9 @@
 # Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
 version: v1.22.0
-ignore: 
+# ignores vulnerabilities until expiry date; change duration by modifying expiry date
+ignore:
   SNYK-CC-K8S-6:
     - ffc-grants-productivity-web > helm/templates/deployment.yaml:
         reason: no direct upgrade or patch available
         expires: '2022-03-21T11:23:27.474Z'
-  SNYK-JS-IOREDIS-1567196:
-    - 
 patch: {}
