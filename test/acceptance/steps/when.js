@@ -33,6 +33,8 @@ import IrrigationStatus from '../pageobjects/ffc-grant-irrigation-status'
 import WaterSource from '../pageobjects/ffc-grant-irrigation-water-source'
 import IrrigationSystem from '../pageobjects/ffc-grant-irrigation-systems'
 import Productivity from '../pageobjects/ffc-grant-productivity'
+import AgentDetails from '../pageobjects/ffc-grant-agent-details'
+import Applying from '../pageobjects/ffc-grant-applying'
 // import Collaboration from '../pageobjects/ffc-grant-collaboration'
 // import Propertytype from '../pageobjects/ffc-demo-property-type'
 // import ClaimName from '../pageobjects/ffc-demo-claimname'
@@ -455,6 +457,14 @@ When(/^I click on project improve "([^"]*)?" button$/, function (productivity) {
     Productivity.clickOnproductivity5()
     Productivity.clickOnproductivity1()
   }
+})
+
+When(/^I click on the agent button$/, function () {
+  Applying.clickOnAgentRadioBtn()
+})
+
+When(/^I select county name in the dropdown menu$/, function () {
+  AgentDetails.clickOnCountyDropMenu()
 })
 
 // When(/^I click on irrigation status button$/, function () {
