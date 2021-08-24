@@ -127,6 +127,7 @@
         And I pause for 500ms
         Then I expect that the url contains "/planning-permission"
         When I click on "<permission>" button
+        #When I click on the button "#btnContinue"
         And I click on Continue button 
         And I pause for 500ms 
         Then I expect that the url contains "/project-start"
@@ -217,13 +218,13 @@
         And I pause for 700ms
         Then I expect that the url contains "/score"
         Then I expect that element "//tr[7]/th/ul/li" contains the text "Yes"
-        Then I expect that element "//main/div/div/div/div/h2" contains the text "Average"
-        Then I expect that element "//main[@id='main-content']/div/div[2]/div/table/tbody/tr/td" contains the text "Average"
-        Then I expect that element "//tr[3]/td " contains the text "Strong"
-        Then I expect that element "//tr[4]/td " contains the text "Average"
-        Then I expect that element "//tr[5]/td " contains the text "Average"
-        Then I expect that element "//tr[6]/td " contains the text "Average"
-        Then I expect that element "//tr[7]/td " contains the text "Strong"
+        Then I expect that element "//main/div/div/div/div/h2" contains the text "<overllscore>"
+        Then I expect that element "//main[@id='main-content']/div/div[2]/div/table/tbody/tr/td" contains the text "<productImpact>"
+        Then I expect that element "//tr[3]/td " contains the text "<currentLandIrrig>"  
+        Then I expect that element "//tr[4]/td " contains the text "<currentWaterSource>"
+        Then I expect that element "//tr[5]/td " contains the text "<currentIrrigSystems>"
+        Then I expect that element "//tr[6]/td " contains the text "<productivityScore>"
+        Then I expect that element "//tr[7]/td " contains the text "<waterSharing>"
         And I click on Continue button
         And I pause for 500ms
         Then I expect that the url contains "/business-details"
@@ -278,6 +279,8 @@
         Then I expect that the url contains "/confirmation"
         # consentOptional
         Examples:
-        |cropType      |trades        |permission         |preparatoryWork |projectItems     |SSSI  |licence   |projectSummary            |cropsIrrigated    |hectare_1|hectare_2|waterSource_Current  |waterSource_Target   |irrigationSystem_Current   |irrigationSystem_Target|productivity                        |    
-        |#farmingType  |trust         |notNeededPermission|yesPrepWork     |engrFees         | yes  |secured   |improveAndIntroIrrigation |croppingIrrigation|  101    | 200     |RainWater&MainsWaterC|Peakflow&SummerWaterP|currentTrickleAndRain      |plannedMistAndBoom     |maintainProductivity&high-valueCrops|         
+        |cropType      |trades        |permission         |preparatoryWork |projectItems     |SSSI  |licence   |projectSummary            |cropsIrrigated    |hectare_1|hectare_2|waterSource_Current  |waterSource_Target   |irrigationSystem_Current   |irrigationSystem_Target|productivity                        |overllscore|productImpact|currentLandIrrig|currentWaterSource|currentIrrigSystems|productivityScore|waterSharing|
+     #  |#farmingType  |trust         |notNeededPermission|yesPrepWork     |engrFees         | yes  |secured   |improveAndIntroIrrigation |croppingIrrigation|  101    | 200     |RainWater&MainsWaterC|Peakflow&SummerWaterP|currentTrickleAndRain      |plannedMistAndBoom     |maintainProductivity&high-valueCrops|Average    |Average      |Strong          |Average           |Average            |Average          |Strong      |
+        |#farmingType  |sole          |notNeededPermission|yesPrepWork     |construction     | yes  |notNeeded |changeWater&IncreaseIrrig |cropIrrigation    |  100    | 101     |PeakFlow&MainsWaterC |RainWater&BoreHoleP  |currentMist&Rain           |plannedEbbAndCapillary |increasedYield&improvedQuality      | Average   | Strong      | Strong         | Average          | Average           | Average         | Strong     |
     
+        
