@@ -72,7 +72,6 @@ module.exports = [
       handler: async (request, h) => {
         const { planningPermission } = request.payload
         setYarValue(request, 'planningPermission', planningPermission)
-        await gapiService.sendEligibilityEvent(request, planningPermission === LICENSE_WILL_NOT_HAVE)
 
         if (planningPermission === LICENSE_WILL_NOT_HAVE) {
           return h.view('not-eligible', NOT_ELIGIBLE)
