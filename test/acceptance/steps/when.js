@@ -85,6 +85,8 @@ When(/^I clicks on the "([^"]*)?" button$/, function (trades) {
     LegalStatus.clickOnCooperativeSociety()
   } else if (trades === 'BenCom') {
     LegalStatus.clickOnCommunityBenefitSociety()
+  } else if (trades === 'NoneOfTheAbove') {
+    LegalStatus.clickOnNoneOfTheAbove()
   }
 })
 
