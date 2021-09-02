@@ -26,8 +26,6 @@ Feature: Legal Status
              |coopSociety   |
              |BenCom        |
 
-
-
              Scenario Outline: Choosing differents types of legal status
              Given I open the url "/water/farming-type"
              And I pause for 500ms
