@@ -52,36 +52,4 @@ Feature: Legal Status
    
 
    
-    #   Scenario: Choosing limited company legal status
-    #       Given I open the url "/water/farming-type"   http://localhost:3000/water/legal-status
-    #       And I pause for 500ms
-    #       Then I expect that the url contains "/farming-type" 
-    #       When I click on the element "#farmingType-3"  
-    #       When I click on the button "#btnContinue"
-    #       And I pause for 500ms
-    #       When I click on the limited company button  
-    #       When I click on the button "#btnContinue"
-    #       And I pause for 500ms
-    #       Then I expect that the url contains "/country"
-    #       Then I expect that element "h1" contains the text "Is the planned project in England?"
-      
-    #  Scenario: Choosing Charity legal status
-    #    Scenario: Choosing sole trader legal status
-    #       Given I open the url "/water/legal-status"
-    #       And I pause for 500ms
-    #       Then I expect that the url contains "/legal-status" 
-        #   When I click on the element "#farmingType"  
-        #   When I click on the button "#btnContinue"
-        #   And I pause for 500ms
-        #   When I click on the element "#legalStatus"  
-        #   When I click on the button "#btnContinue"
-        #   And I pause for 500ms
-        #   Then I expect that the url contains "/country"
-         # Then I expect that element "h1" contains the text "Is the planned project in England?"
     
-   
-
-    
-    
-          
-   
