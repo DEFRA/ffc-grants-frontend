@@ -98,6 +98,10 @@ When(/^I click on CountryYes button$/, function () {
   Country.clickOnCtyYesButton()
 })
 
+When(/^I click on CountryNo button$/, function () {
+  Country.clickOnCtyNoButton()
+})
+
 When(/^I click on secured button$/, function () {
   PermissionPlanning.clickOnSecured()
 })
