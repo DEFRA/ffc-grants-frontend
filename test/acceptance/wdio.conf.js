@@ -29,16 +29,17 @@ exports.config = {
       'goog:chromeOptions': {
         args: chromeArgs
       }
-    },
-    {
-      os: 'Windows',
-      osVersion: '10',
-      browserName: 'Firefox',
-      browserVersion: 'latest',
-      'browserstack.local': true,
-      acceptInsecureCerts: true,
-      acceptSslCerts: true
     }
+    // ,
+    // {
+    //   os: 'Windows',
+    //   osVersion: '10',
+    //   browserName: 'Firefox',
+    //   browserVersion: 'latest',
+    //   'browserstack.local': true,
+    //   acceptInsecureCerts: true,
+    //   acceptSslCerts: true
+    // }
 
     // {
     //   // Windows Edge 86

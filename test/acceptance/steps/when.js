@@ -14,6 +14,7 @@ import selectOptionByIndex from '../support/action/selectOptionByIndex'
 import setCookie from '../support/action/setCookie'
 import setInputField from '../support/action/setInputField'
 import setPromptText from '../support/action/setPromptText'
+import Start from '../pageobjects/ffc-grant-start'
 import FarmingType from '../pageobjects/ffc-grant-farmingtype'
 import LegalStatus from '../pageobjects/ffc-grant-legal-status'
 import Country from '../pageobjects/ffc-grant-country'
@@ -42,6 +43,10 @@ import Applying from '../pageobjects/ffc-grant-applying'
 // import PropertyMineType from '../pageobjects/ffc-demo-mine-type'
 
 const { When } = require('cucumber')
+
+When(/^I click on the reject cookies$/, function () {
+  Start.clickOnRejectCookies()
+})
 
 When(
   /^I (click|doubleclick) on the (link|button|element) "([^"]*)?"$/,
@@ -191,6 +196,15 @@ When(/^I click on remaining cost buttons$/, function () {
   RemainingCosts.clickOnYesRemainingCost()
 })
 
+When(/^I click the "([^"]*)?" buttons$/, function (remainingCost) {
+  if (remainingCost === 'yes') {
+    RemainingCosts.clickOnYesRemainingCost()
+    console.log(remainingCost)
+  } else if (remainingCost === 'no') {
+    RemainingCosts.clickOnNoRemainingCost()
+  }
+})
+
 When(/^I click on SSSI button$/, function () {
   SSSI.clickOnYesSSSI()
 })
@@ -214,6 +228,10 @@ When(/^I click on abstraction "([^"]*)?" button$/, function (licence) {
     console.log(licence)
   } else if (licence === 'secured') {
     Licence.clickOnSecured()
+  } else if (licence === 'expectToHaveLicence') {
+    Licence.clickOnExpectToHaveLicence()
+  } else if (licence === 'notHaveLicence') {
+    Licence.clickOnWillNotHaveLicence()
   }
 })
 
@@ -246,6 +264,12 @@ When(/^I click on project "([^"]*)?" button$/, function (projectSummary) {
   } else if (projectSummary === 'improve&IncreaseIrrigation') {
     ProjectSummary.clickOnImproveIrrigation()
     ProjectSummary.clickOnIncreaseIrrigation()
+  } else if (projectSummary === 'changeWater&IncreaseIrrig&IntroIrrigation') {
+    ProjectSummary.clickOnChangeWater()
+    ProjectSummary.clickOnIncreaseIrrigation()
+    ProjectSummary.clickOnIntroduceIrrigation()
+  } else if (projectSummary === 'noneOfTheAbove') {
+    ProjectSummary.clickOnNoneIrrigation()
   }
 })
 

@@ -24,7 +24,7 @@ class RemainingCost extends Page {
 
   clickOnNoRemainingCost () {
     const element = $('#payRemainingCosts-2')
-    browser.execute('arguments[1].click();', element)
+    browser.execute('arguments[0].click();', element)
   }
 }
 export default new RemainingCost()

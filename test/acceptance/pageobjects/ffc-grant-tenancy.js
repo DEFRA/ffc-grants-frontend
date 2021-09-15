@@ -26,7 +26,7 @@ class Tenancy extends Page {
 
   clickOnNoLandOwnership () {
     const element = $('#landOwnership-2')
-    browser.execute('arguments[1].click();', element)
+    browser.execute('arguments[0].click();', element)
   }
 }
 export default new Tenancy()
