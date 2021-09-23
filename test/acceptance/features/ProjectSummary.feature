@@ -56,7 +56,7 @@
 #              |projectItems |SSSI|licence  |projectSummary                           |remainingCost|
 #              |construction |yes |secured  |changeWater&IncreaseIrrig&IntroIrrigation| yes         |
                                 
-#              Scenario Outline: Choosing more that 2 project impact
+#              Scenario Outline: Choosing project is non impact (None of the above)
 #              Given I open the url "/water/farming-type"
 #              And I pause for 500ms
 #              When I click on the element "#farmingType"  

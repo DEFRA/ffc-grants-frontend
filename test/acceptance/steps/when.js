@@ -36,7 +36,9 @@ import IrrigationSystem from '../pageobjects/ffc-grant-irrigation-systems'
 import Productivity from '../pageobjects/ffc-grant-productivity'
 import AgentDetails from '../pageobjects/ffc-grant-agent-details'
 import Applying from '../pageobjects/ffc-grant-applying'
-// import Collaboration from '../pageobjects/ffc-grant-collaboration'
+import Collaboration from '../pageobjects/ffc-grant-collaboration'
+import CheckDetails from '../pageobjects/ffc-grant-check-details'
+
 // import Propertytype from '../pageobjects/ffc-demo-property-type'
 // import ClaimName from '../pageobjects/ffc-demo-claimname'
 // import PropertyAccessible from '../pageobjects/ffc-demo-property-accessible'
@@ -292,6 +294,19 @@ When(/^I click on irrigation status button$/, function () {
   IrrigationStatus.clickOnYesIrrigationStatus()
 })
 
+When(/^I click on the irrigation "([^"]*)?" button$/, function (status) {
+  if (status === 'yes') {
+    IrrigationStatus.clickOnYesIrrigationStatus()
+    console.log(status)
+  } else if (status === 'no') {
+    IrrigationStatus.clickOnNoIrrigationStatus()
+  }
+})
+
+// When(/^I click on irrigation status button$/, function () {
+//   IrrigationStatus.clickOnYesIrrigationStatus()
+// })
+
 When(/^I click on irrigation water source button$/, function () {
   WaterSource.clickOnCurrentPeakFlow()
 })
@@ -480,12 +495,19 @@ When(/^I click on project improve "([^"]*)?" button$/, function (productivity) {
   } else if (productivity === 'improvedQuality&maintainProductivity') {
     Productivity.clickOnproductivity4()
     Productivity.clickOnproductivity5()
-  } else if (productivity === '') {
-    Productivity.clickOnproductivity5()
+  } else if (productivity === 'select3Productivity') {
     Productivity.clickOnproductivity1()
-  } else if (productivity === '') {
-    Productivity.clickOnproductivity5()
-    Productivity.clickOnproductivity1()
+    Productivity.clickOnproductivity2()
+    Productivity.clickOnproductivity3()
+  }
+})
+
+When(/^I click on the water supply "([^"]*)?" button$/, function (waterSharing) {
+  if (waterSharing === 'yes') {
+    Collaboration.clickOnYesCollaboration()
+    console.log(waterSharing)
+  } else if (waterSharing === 'no') {
+    Collaboration.clickOnNoCollaboration()
   }
 })
 
@@ -496,6 +518,14 @@ When(/^I click on the agent button$/, function () {
 When(/^I select county name in the dropdown menu$/, function () {
   AgentDetails.clickOnCountyDropMenu()
 })
+
+When(/^I click on the business-details link$/, async () => {
+  CheckDetails.clickOnBusinessDetailsLink()
+})
+
+// When(/^I click on Continue button$/, async () => {
+//   FarmingType.clickOnSaveandContinueButton2()
+// })
 
 // When(/^I click on irrigation status button$/, function () {
 //   IrrigationStatus.clickOnYesIrrigationStatus()
