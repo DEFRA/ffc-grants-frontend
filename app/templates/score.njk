@@ -4,7 +4,7 @@
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "./components/macro.njk" import crumbToken %}
 {% block pageTitle %}
-  Scoring results - {{siteTitle}}
+  Score results - {{siteTitle}}
 {% endblock %}
 {% block beforeContent %}
   {{ govukBackLink({
@@ -20,7 +20,7 @@
   <div class="govuk-body">
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
-        <h1 class="govuk-heading-xl">Scoring results</h1>
+        <h1 class="govuk-heading-xl">Score results</h1>
         <p class="govuk-!-font-size-24">Based on your answers, your project’s score is:</p>
         <div class="govuk-inset-text">
           <h2 class="govuk-heading-m">{{scoreData.desirability.overallRating.band}}</h2>

@@ -14,6 +14,7 @@ describe('Score page', () => {
     jest.mock('../../../../app/messaging/senders')
     jest.mock('ffc-messaging')
     senders.sendProjectDetails = jest.fn(async function (message, id) {
+      return null
     })
     createMsg.getDesirabilityAnswers = jest.fn((request) => {
       return ''
@@ -160,7 +161,7 @@ describe('Score page', () => {
     expect(header.length).toBe(2)
     crumCookie = getCrumbCookie(response)
     expect(response.result).toContain(crumCookie[1])
-    const responseScoreMessage = 'This means your project seems likely to be successful.'
+    const responseScoreMessage = 'This means your project is likely to be successful.'
     expect(response.payload).toContain(responseScoreMessage)
   })
   it('should load page with success Average', async () => {
@@ -216,7 +217,7 @@ describe('Score page', () => {
     expect(header.length).toBe(2)
     crumCookie = getCrumbCookie(response)
     expect(response.result).toContain(crumCookie[1])
-    const responseScoreMessage = 'This means your project seems unlikely to be successful.'
+    const responseScoreMessage = 'This means your project is unlikely to be successful.'
     expect(response.payload).toContain(responseScoreMessage)
   })
   it('redirects to project business details page', async () => {
