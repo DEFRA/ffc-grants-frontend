@@ -1,6 +1,6 @@
 {
   "name": "ffc-grants-frontend",
-  "version": "1.97.2",
+  "version": "1.97.3",
   "description": "Frontend Grants microservice.",
   "main": "app/index.js",
   "scripts": {
@@ -39,7 +39,7 @@
     "applicationinsights": "^1.8.10",
     "bcrypt": "^5.0.1",
     "dialog-polyfill": "^0.5.6",
-    "ffc-messaging": "^2.1.1",
+    "ffc-messaging": "^2.3.0",
     "ffc-protective-monitoring": "^1.0.0",
     "govuk-frontend": "^3.13.0",
     "joi": "^17.2.1",

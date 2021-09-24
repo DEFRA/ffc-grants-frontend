@@ -20,9 +20,10 @@ module.exports = [
   {
     method: 'GET',
     path: currentPath,
-    handler: (request, h) => {
+    handler: async (request, h) => {
       const sSSI = getYarValue(request, 'sSSI')
       const data = sSSI || null
+      await gapiService.sendJourneyTime(request, gapiService.metrics.ELIGIBILITY)
       return h.view(viewTemplate, createModelTwoRadios(...prefixModelParams, null, data))
     }
   },
@@ -35,7 +36,6 @@ module.exports = [
           sSSI: Joi.string().required()
         }),
         failAction: (request, h, err) => {
-          gapiService.sendValidationDimension(request)
           const errorObject = errorExtractor(err)
           const errorList = []
           errorList.push({ text: getErrorMessage(errorObject), href: '#sSSI' })
@@ -44,7 +44,6 @@ module.exports = [
       },
       handler: async (request, h) => {
         setYarValue(request, 'sSSI', request.payload.sSSI)
-        await gapiService.sendJourneyTime(request, gapiService.metrics.ELIGIBILITY)
         return h.redirect(nextPath)
       }
     }
