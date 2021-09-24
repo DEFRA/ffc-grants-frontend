@@ -1,8 +1,3 @@
 {{- include "ffc-helm-library.azure-ingress" (list . "ffc-grants-frontend.ingress") -}}
 {{- define "ffc-grants-frontend.ingress" -}}
-{{- if not .Values.pr -}}
-metadata:
-  annotations:
-    nginx.org/mergeable-ingress-type: minion
-{{- end -}}
 {{- end -}}
