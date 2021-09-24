@@ -82,7 +82,7 @@ service:
   port: 80
 
 ingress:
-  type: minion
+  type: master 
   class: nginx
   endpoint: ffc-grants-frontend
   server: example.com
