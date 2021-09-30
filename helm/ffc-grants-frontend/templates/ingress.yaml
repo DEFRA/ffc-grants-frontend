@@ -12,8 +12,11 @@ spec:
     http:
       paths:
       - path: {{ .Values.ingress.path | default "/" | quote }}
+        pathType: Prefix
         backend:
-          serviceName: {{ .Values.name | quote }}
-          servicePort: {{ .Values.service.port }}
+          service:
+            name: {{ .Values.name | quote }}
+            port:
+              number: {{ .Values.service.port }}
 {{- end -}}
 {{- end -}}
