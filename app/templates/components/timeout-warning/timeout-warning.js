@@ -67,7 +67,7 @@ TimeoutWarning.prototype.dialogSupported = function () {
 TimeoutWarning.prototype.countIdleTime = function () {
   let idleTime
   const milliSecondsBeforeTimeOut = this.idleMinutesBeforeTimeOut * 60000
-
+  console.log(milliSecondsBeforeTimeOut, 'milliSecondsBeforeTimeOut')
   // As user interacts with the page, keep resetting the timer
   window.onload = resetIdleTime.bind(this)
   window.onmousemove = resetIdleTime.bind(this)
@@ -152,6 +152,7 @@ function getAtText (minLeftText, secondsLeft, secLeftText, minutesLeft) {
 function runTimer (seconds, timers, iOS, timerRunOnce, $accessibleCountdown, $module, $countdown) {
   const minutesLeft = parseInt(seconds / 60, 10)
   const secondsLeft = parseInt(seconds % 60, 10)
+  console.log(minutesLeft, 'minutesLeft', secondsLeft, 'secondsLeft')
   const timerExpired = minutesLeft < 1 && secondsLeft < 1
   const minLeftText = (minutesLeft > 1 ? 's' : '')
   const secLeftText = (secondsLeft > 1 ? 's' : '')
@@ -273,6 +274,7 @@ TimeoutWarning.prototype.checkIfShouldHaveTimedOut = function () {
 
     const seconds = Math.abs((timeUserLastInteractedWithPage - new Date()) / 1000)
 
+    console.log(seconds, 'Is time out seconds', this.idleMinutesBeforeTimeOut * 60, 'idleMinutesBeforeTimeOut')
     // TO DO: use both idlemin and timemodalvisible
     if (seconds > this.idleMinutesBeforeTimeOut * 60) {
       this.redirect.bind(this)
