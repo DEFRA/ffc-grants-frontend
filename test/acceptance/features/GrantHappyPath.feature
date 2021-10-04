@@ -113,7 +113,7 @@ Feature: Grant
     Scenario Outline: Submittion of grant application
         Given I open the url "/start"
         And I pause for 500ms
-        Then I expect that element "h1" contains the text "Check if you can apply for a Farming Transformation Fund water management grant"
+        #Then I expect that element "h1" contains the text "Check if you can apply for a Farming Transformation Fund water management grant"
         When I click on the link "Start now"
         Then I expect that the url contains "/farming-type"
         When I click on the element "<cropType>"  
