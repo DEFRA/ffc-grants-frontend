@@ -1,0 +1,26 @@
+version: "3.7"
+services:
+  wdio-cucumber:
+    environment:
+      MAX_INSTANCES: 1
+      CHROME_ARGS: "--verbose"
+    volumes:
+      - ./features/:/home/node/features/
+      - ./pageobjects/:/home/node/pageobjects/
+      - ./scratch/:/home/node/scratch/
+      - ./steps/:/home/node/steps/
+      - ./support/:/home/node/support/
+      - ./babel.config.js:/home/node/babel.config.js
+      - ./wdio.conf:/home/node/wdio.conf
+      - ./package.json:/home/node/package.json
+      - ./html-reports/:/home/node/html-reports/
+    ports:
+      - "9228:9229"
+
+  selenium:
+    ports:
+      - "5900:5900"
+
+  hub:
+    ports:
+      - "4444:4444"
