@@ -40,7 +40,7 @@ TimeoutWarning.prototype.init = function () {
 
   // Debugging tip: This event doesn't kick in in Chrome if you have Inspector panel open and have clicked on it
   // as it is now the active element. Click on the window to make it active before moving to another tab.
-  window.addEventListener('focus', this.checkIfShouldHaveTimedOut.bind(this))
+  window.addEventListener('load', this.checkIfShouldHaveTimedOut.bind(this))
 }
 
 // Check if browser supports native dialog element or can use polyfill
@@ -67,7 +67,6 @@ TimeoutWarning.prototype.dialogSupported = function () {
 TimeoutWarning.prototype.countIdleTime = function () {
   let idleTime
   const milliSecondsBeforeTimeOut = this.idleMinutesBeforeTimeOut * 60000
-
   // As user interacts with the page, keep resetting the timer
   window.onload = resetIdleTime.bind(this)
   window.onmousemove = resetIdleTime.bind(this)

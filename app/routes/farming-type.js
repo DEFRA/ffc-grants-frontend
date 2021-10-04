@@ -1,7 +1,6 @@
 const Joi = require('joi')
 const { setYarValue, getYarValue } = require('../helpers/session')
 const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
-const gapiService = require('../services/gapi-service')
 const { urlPrefix, startPageUrl } = require('../config/server')
 
 const viewTemplate = 'farming-type'
@@ -60,7 +59,6 @@ module.exports = [
           farmingType: Joi.string().required()
         }),
         failAction: (request, h, err) => {
-          gapiService.sendValidationDimension(request)
           const errorList = []
           const errorObject = errorExtractor(err)
           errorList.push({ text: getErrorMessage(errorObject), href: '#farmingType' })
@@ -69,12 +67,9 @@ module.exports = [
       },
       handler: async (request, h) => {
         setYarValue(request, 'farmingType', request.payload.farmingType)
-        await gapiService.sendEligibilityEvent(request, request.payload.farmingType !== 'Something else')
-
         if (request.payload.farmingType !== 'Something else') {
           return h.redirect(nextPath)
         }
-
         return h.view('not-eligible', createModelNotEligible())
       }
     }

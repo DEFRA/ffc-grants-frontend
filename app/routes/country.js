@@ -2,7 +2,6 @@ const Joi = require('joi')
 const { setYarValue, getYarValue } = require('../helpers/session')
 const { isChecked, getPostCodeHtml, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
 const { POSTCODE_REGEX, DELETE_POSTCODE_CHARS_REGEX } = require('../helpers/regex-validation')
-const gapiService = require('../services/gapi-service')
 const urlPrefix = require('../config/server').urlPrefix
 
 const viewTemplate = 'country'
@@ -65,7 +64,6 @@ module.exports = [
       const inEngland = getYarValue(request, 'inEngland') || null
       const postcodeData = inEngland !== null ? getYarValue(request, 'projectPostcode') : null
       const postcodeHtml = getPostCodeHtml(postcodeData)
-
       return h.view(viewTemplate, createModel(null, inEngland, postcodeHtml))
     }
   },
@@ -79,14 +77,12 @@ module.exports = [
           projectPostcode: Joi.string().replace(DELETE_POSTCODE_CHARS_REGEX, '').regex(POSTCODE_REGEX).trim().allow('')
         }),
         failAction: (request, h, err) => {
-          gapiService.sendValidationDimension(request)
           const errorList = []
           const { inEngland, projectPostcode } = request.payload
           const errorObject = errorExtractor(err)
           errorList.push({ text: getErrorMessage(errorObject), href: '#inEngland' })
 
           const postcodeHtml = getPostCodeHtml(projectPostcode.toUpperCase(), inEngland ? errorList : null)
-
           return h.view(viewTemplate, createModel(!inEngland ? errorList : null, inEngland, postcodeHtml)).takeover()
         }
       },
@@ -102,12 +98,10 @@ module.exports = [
 
         setYarValue(request, 'inEngland', inEngland)
         setYarValue(request, 'projectPostcode', projectPostcode.split(/(?=.{3}$)/).join(' ').toUpperCase())
-        await gapiService.sendEligibilityEvent(request, inEngland === 'yes')
 
         if (inEngland === 'Yes') {
           return h.redirect(nextPath)
         }
-
         return h.view('not-eligible', createModelNotEligible())
       }
     }
