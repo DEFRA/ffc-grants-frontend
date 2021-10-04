@@ -12,7 +12,7 @@ describe('Project summary page', () => {
     projectCost: '12345678',
     remainingCost: 14082.00,
     payRemainingCosts: 'Yes',
-    planningPermission: 'Will not be in place by 31 December 2021',
+    planningPermission: 'Will not be in place by 31 December 2022',
     abstractionLicence: 'Not needed',
     sSSI: 'Yes'
   }

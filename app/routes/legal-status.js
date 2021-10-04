@@ -95,7 +95,6 @@ module.exports = [
       },
       handler: async (request, h) => {
         setYarValue(request, 'legalStatus', request.payload.legalStatus)
-        await gapiService.sendEligibilityEvent(request, request.payload.legalStatus !== 'None of the above')
         if (request.payload.legalStatus === 'None of the above') {
           return h.view('not-eligible', createModelNotEligible())
         }
