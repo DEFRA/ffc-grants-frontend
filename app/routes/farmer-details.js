@@ -3,6 +3,7 @@ const { setYarValue, getYarValue } = require('../helpers/session')
 const { getErrorList } = require('../helpers/helper-functions')
 const { NAME_REGEX, PHONE_REGEX, POSTCODE_REGEX, DELETE_POSTCODE_CHARS_REGEX } = require('../helpers/regex-validation')
 const { getDetailsInput } = require('../helpers/detailsInputs')
+const gapiService = require('../services/gapi-service')
 
 const urlPrefix = require('../config/server').urlPrefix
 
@@ -46,6 +47,10 @@ module.exports = [
       }
 
       const applying = getYarValue(request, 'applying')
+      await gapiService.sendDimensionOrMetric(request, {
+        dimensionOrMetric: gapiService.dimensions.AGENTFORMER,
+        value: applying
+      })
       const backLink = applying === 'Agent' ? agentDetailsPath : applyingPath
       return h.view(viewTemplate, createModel(null, farmerDetails, backLink, getYarValue(request, 'checkDetails')))
     }
@@ -69,7 +74,7 @@ module.exports = [
           postcode: Joi.string().replace(DELETE_POSTCODE_CHARS_REGEX, '').regex(POSTCODE_REGEX).trim().required(),
           results: Joi.any()
         }),
-        failAction: (request, h, err) => {
+        failAction: async (request, h, err) => {
           const phoneErrors = []
           if (request.payload.landline === '' && request.payload.mobile === '') {
             phoneErrors.push({ text: 'Enter your mobile number', href: '#mobile' })
@@ -81,11 +86,12 @@ module.exports = [
           const farmerDetails = { firstName, lastName, email, mobile, landline, address1, address2, town, county, postcode }
           const applying = getYarValue(request, 'applying')
           const backLink = applying === 'Agent' ? agentDetailsPath : applyingPath
+          await request.ga.pageView()
 
           return h.view(viewTemplate, createModel(errorList, farmerDetails, backLink, getYarValue(request, 'checkDetails'))).takeover()
         }
       },
-      handler: (request, h) => {
+      handler: async (request, h) => {
         const {
           firstName, lastName, email, mobile, landline, address1, address2, town, county, postcode
         } = request.payload
@@ -96,6 +102,7 @@ module.exports = [
         ]
 
         if (!landline && !mobile) {
+          await request.ga.pageView()
           return h.view(viewTemplate, createModel(phoneErrors, {
             firstName, lastName, email, mobile, landline, address1, address2, town, county, postcode
           }, getYarValue(request, 'checkDetails'))).takeover()

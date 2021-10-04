@@ -2,7 +2,6 @@ const Joi = require('joi')
 const { setYarValue, getYarValue } = require('../helpers/session')
 const { createModelTwoRadios } = require('../helpers/modelTwoRadios')
 const { errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
-const gapiService = require('../services/gapi-service')
 const urlPrefix = require('../config/server').urlPrefix
 
 const viewTemplate = 'applying'
@@ -35,7 +34,6 @@ module.exports = [
           applying: Joi.string().required()
         }),
         failAction: async (request, h, err) => {
-          await gapiService.sendValidationDimension(request)
           const errorObject = errorExtractor(err)
           const errorList = []
           errorList.push({ text: getErrorMessage(errorObject), href: '#applying' })
@@ -45,11 +43,6 @@ module.exports = [
       handler: async (request, h) => {
         const { applying } = request.payload
         setYarValue(request, 'applying', applying)
-
-        await gapiService.sendDimensionOrMetric(request, {
-          dimensionOrMetric: gapiService.dimensions.AGENTFORMER,
-          value: applying
-        })
         if (applying === 'Agent') {
           return h.redirect(nextPathAgent)
         } else {

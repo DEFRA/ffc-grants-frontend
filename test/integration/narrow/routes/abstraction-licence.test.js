@@ -12,7 +12,7 @@ const varListTemplate = {
   projectCost: '12345678',
   remainingCost: 14082.00,
   payRemainingCosts: 'Yes',
-  planningPermission: 'Will not be in place by 31 December 2021',
+  planningPermission: 'Will not be in place by 31 December 2022',
   abstractionLicence: 'Not needed',
   'current-score': ''
 }
@@ -72,11 +72,11 @@ describe('Abstraction licence page', () => {
     expect(postResponse.payload).toContain('Select when the project will have an abstraction licence or variation')
   })
 
-  it('if value = \'Should be in place by 31 December 2021\' ==> store and redirect to abstraction-required-condition page', async () => {
+  it('if value = \'Should be in place by 31 December 2022\' ==> store and redirect to abstraction-required-condition page', async () => {
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/abstraction-licence`,
-      payload: { abstractionLicence: 'Should be in place by 31 December 2021', crumb: crumbToken },
+      payload: { abstractionLicence: 'Should be in place by 31 December 2022', crumb: crumbToken },
       headers: { cookie: 'crumb=' + crumbToken }
     }
 
@@ -85,11 +85,11 @@ describe('Abstraction licence page', () => {
     expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/abstraction-required-condition`)
   })
 
-  it('if value = \'Will not be in place by 31 December 2021\' ==> store and redirect to abstraction-required-condition page', async () => {
+  it('if value = \'Will not be in place by 31 December 2022\' ==> store and redirect to abstraction-required-condition page', async () => {
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/abstraction-licence`,
-      payload: { abstractionLicence: 'Will not be in place by 31 December 2021', crumb: crumbToken },
+      payload: { abstractionLicence: 'Will not be in place by 31 December 2022', crumb: crumbToken },
       headers: { cookie: 'crumb=' + crumbToken }
     }
 

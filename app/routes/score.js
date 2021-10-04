@@ -94,13 +94,13 @@ module.exports = [{
         let scoreChance
         switch (msgData.desirability.overallRating.band.toLowerCase()) {
           case 'strong':
-            scoreChance = 'seems likely to'
+            scoreChance = 'is likely to'
             break
           case 'average':
             scoreChance = 'might'
             break
           default:
-            scoreChance = 'seems unlikely to'
+            scoreChance = 'is unlikely to'
             break
         }
         setYarValue(request, 'current-score', msgData.desirability.overallRating.band)
