@@ -108,7 +108,7 @@ Feature: Grant
     #     Then I expect that element "h1" contains the text "Check if you can apply for a Farming Transformation Fund water management grant"
     #     When I click on the element "//button[2]"
     #     When I click on the link "Start now"
-    ##    Then I expect that the url contains "/farming-type"
+    #    Then I expect that the url contains "/farming-type"
   
     Scenario Outline: Submittion of grant application
         Given I open the url "/start"
