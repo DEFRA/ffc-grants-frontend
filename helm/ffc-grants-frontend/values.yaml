@@ -61,6 +61,7 @@ container:
   googleTagManagerKey: dummy
   googleTagManagerServerKey: dummy
   startPageUrl: dummy
+  surveyLink: dummy
 
 livenessProbe:
   path: /healthz
