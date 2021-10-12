@@ -6,7 +6,9 @@
 {% from "./components/macro.njk" import crumbToken %}
 
 {% block pageTitle %}
-  Project items - {{ siteTitle }}
+  {% if errorList %}
+    Error: 
+  {% endif %} Which eligible items do you need for your project? - {{ siteTitle }}
 {% endblock %}
 
 {% block beforeContent %}
@@ -28,7 +30,7 @@
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <h1 class="govuk-heading-l">Which eligible items does your project need?</h1>
+      <h1 class="govuk-heading-l">Which eligible items do you need for your project?</h1>
       <span id="project-items-hint" class="govuk-hint">
         The minimum grant you can apply for is £35,000 (40% of £87,500).<br/>The maximum grant is £500,000.
       </span>

@@ -1,8 +1,10 @@
 const Joi = require('joi')
 const { setYarValue, getYarValue } = require('../helpers/session')
-const { setLabelData, fetchListObjectItems, findErrorList, formInputObject } = require('../helpers/helper-functions')
+const { getErrorList } = require('../helpers/helper-functions')
 const { NAME_REGEX, PHONE_REGEX, POSTCODE_REGEX, DELETE_POSTCODE_CHARS_REGEX } = require('../helpers/regex-validation')
-const { LIST_COUNTIES } = require('../helpers/all-counties')
+const { getDetailsInput } = require('../helpers/detailsInputs')
+const gapiService = require('../services/gapi-service')
+
 const urlPrefix = require('../config/server').urlPrefix
 
 const viewTemplate = 'model-farmer-agent-details'
@@ -11,84 +13,15 @@ const nextPath = `${urlPrefix}/check-details`
 const agentDetailsPath = `${urlPrefix}/agent-details`
 const applyingPath = `${urlPrefix}/applying`
 
-function createModel (errorMessageList, farmerDetails, backLink, hasDetails) {
-  const {
-    firstName,
-    lastName,
-    email,
-    mobile,
-    landline,
-    address1,
-    address2,
-    town,
-    county,
-    postcode
-  } = farmerDetails
-
-  const [
-    firstNameError,
-    lastNameError,
-    emailError,
-    mobileError,
-    landlineError,
-    address1Error,
-    address2Error,
-    townError,
-    countyError,
-    postcodeError
-  ] = fetchListObjectItems(
-    errorMessageList,
-    ['firstNameError', 'lastNameError', 'emailError', 'mobileError', 'landlineError', 'address1Error', 'address2Error', 'townError', 'countyError', 'postcodeError']
-  )
-
+function createModel (errorList, farmerDetails, backLink, hasDetails) {
   return {
     backLink,
     pageId: 'Farmer',
     formActionPage: currentPath,
     pageHeader: 'Farmer\'s details',
     checkDetail: hasDetails,
-    inputFirstName: formInputObject(
-      'firstName', 'govuk-input--width-20', 'First name', null, { fieldName: firstName, fieldError: firstNameError, inputType: 'text', autocomplete: 'given-name' }
-    ),
-    inputLastName: formInputObject(
-      'lastName', 'govuk-input--width-20', 'Last name', null, { fieldName: lastName, fieldError: lastNameError, inputType: 'text', autocomplete: 'family-name' }
-    ),
-    inputEmail: formInputObject(
-      'email', 'govuk-input--width-20', 'Email address', 'We will use this to send you a confirmation', { fieldName: email, fieldError: emailError, inputType: 'email', autocomplete: 'email' }
-    ),
-    inputMobile: formInputObject(
-      'mobile', 'govuk-input--width-20', 'Mobile number', null, { fieldName: mobile, fieldError: mobileError, inputType: 'tel', autocomplete: 'mobile tel' }
-    ),
-    inputLandline: formInputObject(
-      'landline', 'govuk-input--width-20', 'Landline number', null, { fieldName: landline, fieldError: landlineError, inputType: 'tel', autocomplete: 'home tel' }
-    ),
-    inputAddress1: formInputObject(
-      'address1', 'govuk-input--width-20', 'Building and street', null, { fieldName: address1, fieldError: address1Error, inputType: 'text', autocomplete: 'address-line1' }
-    ),
-    inputAddress2: formInputObject(
-      'address2', 'govuk-input--width-20', null, null, { fieldName: address2, fieldError: address2Error, inputType: 'text', autocomplete: 'address-line2' }
-    ),
-    inputTown: formInputObject(
-      'town', 'govuk-input--width-10', 'Town (optional)', null, { fieldName: town, fieldError: townError, inputType: 'text', autocomplete: 'address-level2' }
-    ),
-
-    selectCounty: {
-      id: 'county',
-      name: 'county',
-      classes: 'govuk-input--width-10',
-      autocomplete: 'address-level1',
-      label: {
-        text: 'County'
-      },
-      items: setLabelData(county, [
-        { text: 'Select an option', value: null },
-        ...LIST_COUNTIES
-      ]),
-      ...(countyError ? { errorMessage: { text: countyError } } : {})
-    },
-    inputPostcode: formInputObject(
-      'postcode', 'govuk-input--width-5', 'Postcode', null, { fieldName: postcode, fieldError: postcodeError, inputType: 'text', autocomplete: 'postal-code' }
-    )
+    ...errorList ? { errorList } : {},
+    ...getDetailsInput(farmerDetails, errorList)
   }
 }
 
@@ -114,6 +47,10 @@ module.exports = [
       }
 
       const applying = getYarValue(request, 'applying')
+      await gapiService.sendDimensionOrMetric(request, {
+        dimensionOrMetric: gapiService.dimensions.AGENTFORMER,
+        value: applying
+      })
       const backLink = applying === 'Agent' ? agentDetailsPath : applyingPath
       return h.view(viewTemplate, createModel(null, farmerDetails, backLink, getYarValue(request, 'checkDetails')))
     }
@@ -137,51 +74,35 @@ module.exports = [
           postcode: Joi.string().replace(DELETE_POSTCODE_CHARS_REGEX, '').regex(POSTCODE_REGEX).trim().required(),
           results: Joi.any()
         }),
-        failAction: (request, h, err) => {
-          const [
-            firstNameError,
-            lastNameError,
-            emailError,
-            mobileError,
-            landlineError,
-            address1Error,
-            address2Error,
-            townError,
-            countyError,
-            postcodeError
-          ] = findErrorList(err, ['firstName', 'lastName', 'email', 'mobile', 'landline', 'address1', 'address2', 'town', 'county', 'postcode'])
-
-          const errorMessageList = {
-            firstNameError, lastNameError, emailError, mobileError, landlineError, address1Error, address2Error, townError, countyError, postcodeError
-          }
-
+        failAction: async (request, h, err) => {
+          const phoneErrors = []
           if (request.payload.landline === '' && request.payload.mobile === '') {
-            errorMessageList.mobileError = 'Enter your mobile number'
-            errorMessageList.landlineError = 'Enter your landline number'
+            phoneErrors.push({ text: 'Enter your mobile number', href: '#mobile' })
+            phoneErrors.push({ text: 'Enter your landline number', href: '#landline' })
           }
 
+          const errorList = getErrorList(['firstName', 'lastName', 'email', 'mobile', 'landline', 'address1', 'address2', 'town', 'county', 'postcode'], err, phoneErrors)
           const { firstName, lastName, email, mobile, landline, address1, address2, town, county, postcode } = request.payload
           const farmerDetails = { firstName, lastName, email, mobile, landline, address1, address2, town, county, postcode }
-
           const applying = getYarValue(request, 'applying')
           const backLink = applying === 'Agent' ? agentDetailsPath : applyingPath
+          await request.ga.pageView()
 
-          return h.view(viewTemplate, createModel(errorMessageList, farmerDetails, backLink, getYarValue(request, 'checkDetails'))).takeover()
+          return h.view(viewTemplate, createModel(errorList, farmerDetails, backLink, getYarValue(request, 'checkDetails'))).takeover()
         }
       },
-      handler: (request, h) => {
+      handler: async (request, h) => {
         const {
           firstName, lastName, email, mobile, landline, address1, address2, town, county, postcode
         } = request.payload
 
-        const phoneErrors = {
-
-          mobileError: 'Enter your mobile number',
-          landlineError: 'Enter your landline number'
-
-        }
+        const phoneErrors = [
+          { text: 'Enter your mobile number', href: '#mobile' },
+          { text: 'Enter your landline number', href: '#landline' }
+        ]
 
         if (!landline && !mobile) {
+          await request.ga.pageView()
           return h.view(viewTemplate, createModel(phoneErrors, {
             firstName, lastName, email, mobile, landline, address1, address2, town, county, postcode
           }, getYarValue(request, 'checkDetails'))).takeover()

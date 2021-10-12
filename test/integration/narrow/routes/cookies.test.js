@@ -16,7 +16,7 @@ describe('cookies route', () => {
     expect(result.result).toContain(crumCookie[1])
   })
 
-  it('should redirect to timeout page when session expire', async () => {
+  it('should redirect to start page when session valid', async () => {
     global.__VALIDSESSION__ = false
     const options = {
       method: 'GET',
@@ -29,7 +29,7 @@ describe('cookies route', () => {
 
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(302)
-    expect(response.headers.location).toBe('session-timeout')
+    expect(response.headers.location).toBe('/water/start')
   })
 
   it('POST /cookies returns 302 if not async', async () => {

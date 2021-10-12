@@ -12,7 +12,7 @@ describe('Project summary page', () => {
     projectCost: '12345678',
     remainingCost: 14082.00,
     payRemainingCosts: 'Yes',
-    planningPermission: 'Will not have by 31 December 2021',
+    planningPermission: 'Will not be in place by 31 December 2022',
     abstractionLicence: 'Not needed',
     sSSI: 'Yes'
   }
@@ -50,7 +50,7 @@ describe('Project summary page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Select one or two options')
+    expect(postResponse.payload).toContain('Select up to 2 options')
   })
 
   it('should store user response and redirects to irrigated crops page', async () => {
@@ -93,6 +93,6 @@ describe('Project summary page', () => {
     }
 
     const postResponse = await global.__SERVER__.inject(postOptions)
-    expect(postResponse.payload).toContain('Select one or two options to describe the project impact')
+    expect(postResponse.payload).toContain('If you select &#39;None of the above&#39;, you cannot select another option')
   })
 })

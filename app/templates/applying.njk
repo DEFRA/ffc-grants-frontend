@@ -7,7 +7,9 @@
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 
 {% block pageTitle %}
-  Who is applying - {{siteTitle}}
+  {% if errorList %}
+    Error: 
+  {% endif %} Who is applying for this grant? - {{siteTitle}}
 {% endblock %}
 
 {% block beforeContent %}

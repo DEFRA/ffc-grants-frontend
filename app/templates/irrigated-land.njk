@@ -6,7 +6,9 @@
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 
 {% block pageTitle %}
-  Irrigated land - {{siteTitle}}
+  {% if errorList %}
+    Error: 
+  {% endif %} {{pageTitle}} - {{siteTitle}}
 {% endblock %}
 
 {% block beforeContent %}
@@ -32,10 +34,10 @@
       <form method="POST" action="{{ formActionPage }}" autocomplete="off" novalidate="novalidate">
         {{ crumbToken(crumb)}}
         {% if currentlyIrrigating %}
-        {{ govukInput(currentInput) }}
+          {{ govukInput(currentInput) }}
         {% else %}
-              {{ govukInput(hiddenInput) }}
-          {% endif %}
+          {{ govukInput(hiddenInput) }}
+        {% endif %}
         
         {{ govukInput(targetInput) }}
         {{ conditionalButtons(hasScore) }}

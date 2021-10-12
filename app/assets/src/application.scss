@@ -1,6 +1,6 @@
 $govuk-assets-path: "~govuk-frontend/govuk/assets/";
 @import "~govuk-frontend/govuk/all";
-
+@import "../../templates/components/timeout-warning/timeout-warning";
 .nojs-hidden {
   display: none;
 }
@@ -121,4 +121,16 @@ $govuk-assets-path: "~govuk-frontend/govuk/assets/";
     @extend %govuk-section-break--visible;
     @extend %govuk-section-break--xl;
   }
+}
+.timeoutDiv {
+  opacity: 0;  
+  animation: fadeIn 600s;
+  animation-delay: 3000s;
+  animation-fill-mode: forwards;
+  height: 0px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; height: 280px;}
 }

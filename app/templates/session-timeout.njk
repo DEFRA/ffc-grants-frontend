@@ -2,7 +2,7 @@
 {% from "govuk/components/button/macro.njk" import govukButton %}
 
 {% block pageTitle %}
-  Problem with service - {{siteTitle}}
+  Your session has ended due to inactivity - {{siteTitle}}
 {% endblock %}
 
 {% block content %}
@@ -10,13 +10,11 @@
     <div class="govuk-main-wrapper--auto-spacing">
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds govuk-body">
-          <h1 class="govuk-heading-xl">This session is closed</h1>
-          <p>This session has been closed as it was inactive for over an hour. </p>
-          <p>For your security, we have deleted your answers.</p>
+          <h1 class="govuk-heading-xl">Your session has ended due to inactivity</h1>
+          <p>Your session has ended because you haven’t done anything for over 20 mins.</p>
+          <p class="govuk-inset-text">We have deleted all the answers you’ve entered to protect your security.</p>
           {{ govukButton({
-            classes: "govuk-!-margin-top-2 govuk-!-margin-bottom-8",
             href: startLink,
-            isStartButton: true,
             text: 'Start again'
           }) }}
         </div>

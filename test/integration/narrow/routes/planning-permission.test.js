@@ -12,7 +12,7 @@ const varListTemplate = {
   projectCost: '12345678',
   remainingCost: 14082.00,
   payRemainingCosts: 'Yes',
-  planningPermission: 'Will not have by 31 December 2021',
+  planningPermission: 'Will not be in place by 31 December 2022',
   'current-score': ''
 }
 
@@ -71,11 +71,11 @@ describe('Planning permission page', () => {
     expect(postResponse.payload).toContain('Select when the project will have planning permission')
   })
 
-  it('if value = \'Will not have by 31 December 2021\' ==> disqualify user', async () => {
+  it('if value = \'Will not be in place by 31 December 2022\' ==> disqualify user', async () => {
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/planning-permission`,
-      payload: { planningPermission: 'Will not have by 31 December 2021', crumb: crumbToken },
+      payload: { planningPermission: 'Will not be in place by 31 December 2022', crumb: crumbToken },
       headers: { cookie: 'crumb=' + crumbToken }
     }
 
@@ -84,11 +84,11 @@ describe('Planning permission page', () => {
     expect(postResponse.payload).toContain('You cannot apply for a grant from this scheme')
   })
 
-  it('if value = \'Expected to have by 31 December 2021\' ==> store and redirect to planning-required-condition page', async () => {
+  it('if value = \'Should be in place by 31 December 2022\' ==> store and redirect to planning-required-condition page', async () => {
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/planning-permission`,
-      payload: { planningPermission: 'Expected to have by 31 December 2021', crumb: crumbToken },
+      payload: { planningPermission: 'Should be in place by 31 December 2022', crumb: crumbToken },
       headers: { cookie: 'crumb=' + crumbToken }
     }
 

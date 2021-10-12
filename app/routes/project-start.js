@@ -57,7 +57,7 @@ const getBackLink = (request) => {
 
 function createModelNotEligible () {
   return {
-    refTitle: 'Project start',
+    refTitle: 'Have you already started work on the project?',
     backLink: currentPath,
     messageContent:
       'You cannot apply for a grant if you have already started work on the project.',
@@ -99,12 +99,10 @@ module.exports = [
       },
       handler: async (request, h) => {
         setYarValue(request, 'projectStarted', request.payload.projectStarted)
-        await gapiService.sendEligibilityEvent(request, request.payload.projectStarted === 'Yes, we have begun project work')
 
         if (request.payload.projectStarted !== 'Yes, we have begun project work') {
           return h.redirect(nextPath)
         }
-
         return h.view('not-eligible', createModelNotEligible())
       }
     }

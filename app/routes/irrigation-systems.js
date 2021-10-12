@@ -1,5 +1,5 @@
 const Joi = require('joi')
-const { setLabelData, errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
+const { setLabelData, findErrorList } = require('../helpers/helper-functions')
 const { setYarValue, getYarValue } = require('../helpers/session')
 const urlPrefix = require('../config/server').urlPrefix
 const gapiService = require('../services/gapi-service')
@@ -10,13 +10,15 @@ const previousPath = `${urlPrefix}/irrigation-water-source`
 const nextPath = `${urlPrefix}/productivity`
 const scorePath = `${urlPrefix}/score`
 
-function createModel (currentlyIrrigating, errorMessage, errorSummary, currentData, plannedData, hasScore) {
+function createModel (currentlyIrrigating, errorList, currentData, plannedData, hasScore) {
+  currentlyIrrigating = currentlyIrrigating.toLowerCase()
   return {
     backLink: previousPath,
     formActionPage: currentPath,
     hasScore,
-    currentlyIrrigating: (currentlyIrrigating === 'Yes' || currentlyIrrigating === 'yes'),
-    pageTitle: (currentlyIrrigating === 'Yes' || currentlyIrrigating === 'yes'
+    ...errorList ? { errorList } : {},
+    currentlyIrrigating: (currentlyIrrigating === 'yes'),
+    pageTitle: (currentlyIrrigating === 'yes'
       ? 'Will your irrigation system change?'
       : 'What systems will be used to irrigate?'
     ),
@@ -28,7 +30,6 @@ function createModel (currentlyIrrigating, errorMessage, errorSummary, currentDa
       type: 'hidden'
     },
 
-    ...errorSummary ? { errorList: errorSummary } : {},
     irrigationCurrent: {
       idPrefix: 'irrigationCurrent',
       name: 'irrigationCurrent',
@@ -38,25 +39,25 @@ function createModel (currentlyIrrigating, errorMessage, errorSummary, currentDa
         }
       },
       hint: {
-        text: 'Select one or two options'
+        text: 'Select up to 2 options'
       },
       items: setLabelData(currentData,
         ['Boom', 'Capillary bed', 'Ebb and flow', 'Mist', 'Rain gun', 'Sprinklers', 'Trickle']),
-      ...(errorMessage && (!currentData || currentData.length > 2) ? { errorMessage: { text: errorMessage } } : {})
+      ...(errorList && errorList[0].href === '#irrigationCurrent' ? { errorMessage: { text: errorList[0].text } } : {})
     },
     irrigationPlanned: {
       idPrefix: 'irrigationPlanned',
       name: 'irrigationPlanned',
       fieldset: {
         legend: {
-          text: 'What systems will be used to irrigate?'
+          text: currentlyIrrigating === 'yes' ? 'What systems will be used to irrigate?' : ''
         }
       },
       hint: {
-        text: 'Select one or two options'
+        text: 'Select up to 2 options'
       },
       items: setLabelData(plannedData, ['Boom', 'Capillary bed', 'Ebb and flow', 'Mist', 'Rain gun', 'Sprinklers', 'Trickle']),
-      ...(errorMessage && (!plannedData || plannedData.length > 2) ? { errorMessage: { text: 'Select one or two options to describe irrigation systems that will be used to irrigate' } } : {})
+      ...(errorList && errorList[errorList.length - 1].href === '#irrigationPlanned' ? { errorMessage: { text: errorList[errorList.length - 1].text } } : {})
     }
   }
 }
@@ -70,7 +71,7 @@ module.exports = [
       const plannedData = getYarValue(request, 'irrigationPlanned') || null
 
       const currentlyIrrigating = getYarValue(request, 'currentlyIrrigating') || null
-      return h.view(viewTemplate, createModel(currentlyIrrigating, null, null, currentData, plannedData, getYarValue(request, 'current-score')))
+      return h.view(viewTemplate, createModel(currentlyIrrigating, null, currentData, plannedData, getYarValue(request, 'current-score')))
     }
   },
   {
@@ -78,21 +79,39 @@ module.exports = [
     path: currentPath,
     options: {
       validate: {
+        options: { abortEarly: false },
         payload: Joi.object({
           irrigationCurrent: Joi.any().required(),
           irrigationPlanned: Joi.any().required(),
           results: Joi.any()
         }),
         failAction: (request, h, err) => {
-          let { irrigationCurrent, irrigationPlanned } = request.payload
-          const errorObject = errorExtractor(err)
-          const errorMessage = getErrorMessage(errorObject)
           gapiService.sendValidationDimension(request)
+          let { irrigationCurrent, irrigationPlanned } = request.payload
+          const currentlyIrrigating = getYarValue(request, 'currentlyIrrigating') || null
+          const errorList = []
+          const [
+            irrigationCurrentError, irrigationPlannedError
+          ] = findErrorList(err, ['irrigationCurrent', 'irrigationPlanned'])
+
+          if (irrigationCurrentError) {
+            errorList.push({
+              text: irrigationCurrentError,
+              href: '#irrigationCurrent'
+            })
+          }
+
+          if (irrigationPlannedError) {
+            errorList.push({
+              text: irrigationPlannedError,
+              href: '#irrigationPlanned'
+            })
+          }
+
           irrigationCurrent = irrigationCurrent ? [irrigationCurrent].flat() : irrigationCurrent
           irrigationPlanned = irrigationPlanned ? [irrigationPlanned].flat() : irrigationPlanned
 
-          const currentlyIrrigating = getYarValue(request, 'currentlyIrrigating') || null
-          return h.view(viewTemplate, createModel(currentlyIrrigating, errorMessage, null, irrigationCurrent, irrigationPlanned, getYarValue(request, 'current-score'))).takeover()
+          return h.view(viewTemplate, createModel(currentlyIrrigating, errorList, irrigationCurrent, irrigationPlanned, getYarValue(request, 'current-score'))).takeover()
         }
       },
       handler: (request, h) => {
@@ -104,14 +123,14 @@ module.exports = [
 
         if (irrigationCurrent.length > 2 || irrigationPlanned.length > 2) {
           if (irrigationCurrent.length > 2) {
-            errorList.push({ text: 'Select the systems currently used to irrigate', href: '#irrigationCurrent' })
+            errorList.push({ text: 'Select up to 2 systems currently used to irrigate', href: '#irrigationCurrent' })
           }
           if (irrigationPlanned.length > 2) {
-            errorList.push({ text: 'Select the systems that will be used to irrigate', href: '#irrigationPlanned' })
+            errorList.push({ text: 'Select up to 2 systems that will be used to irrigate', href: '#irrigationPlanned' })
           }
           return h.view(
             viewTemplate,
-            createModel(currentlyIrrigating, 'Select one or two options to describe your irrigation systems', errorList, irrigationCurrent, irrigationPlanned, getYarValue(request, 'current-score'))
+            createModel(currentlyIrrigating, errorList, irrigationCurrent, irrigationPlanned, getYarValue(request, 'current-score'))
           )
         }
 

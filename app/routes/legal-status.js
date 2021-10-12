@@ -48,7 +48,7 @@ function createModel (errorList, data) {
 
 function createModelNotEligible () {
   return {
-    refTitle: 'Legal status',
+    refTitle: 'What is the legal status of the business?',
     backLink: currentPath,
     messageContent:
       'This is only open to a business with a different legal status.',
@@ -95,7 +95,6 @@ module.exports = [
       },
       handler: async (request, h) => {
         setYarValue(request, 'legalStatus', request.payload.legalStatus)
-        await gapiService.sendEligibilityEvent(request, request.payload.legalStatus !== 'None of the above')
         if (request.payload.legalStatus === 'None of the above') {
           return h.view('not-eligible', createModelNotEligible())
         }

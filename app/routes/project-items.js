@@ -34,7 +34,7 @@ function createModel (errorList, backLink, projectInfrastucture, projectEquipmen
           'Engineer fees (construction engineers only)',
           'Fencing for synthetically lined reservoir',
           'Filtration equipment',
-          'Irrigation pump(s) and controls',
+          'Irrigation pumps and controls',
           'Pipework to fill the reservoir',
           'Pumphouse',
           'Underground water distribution main and hydrants',
@@ -64,7 +64,7 @@ function createModel (errorList, backLink, projectInfrastucture, projectEquipmen
           'Mist'
         ]
       ),
-      ...(errorList ? { errorMessage: { text: errorList[1].text } } : {})
+      ...(errorList ? { errorMessage: { text: null } } : {})
     },
     checkboxesTechnology: {
       idPrefix: 'projectTechnology',
@@ -82,7 +82,7 @@ function createModel (errorList, backLink, projectInfrastucture, projectEquipmen
           'Software and sensors to optimise water application'
         ]
       ),
-      ...(errorList ? { errorMessage: { text: errorList[2].text } } : {})
+      ...(errorList ? { errorMessage: { text: null } } : {})
     }
   }
 }
@@ -123,12 +123,7 @@ module.exports = [
       handler: (request, h) => {
         const landOwnership = getYarValue(request, 'landOwnership') || null
         const backUrl = landOwnership === 'No' ? tenancyLengthPath : tenancyPath
-        const errorList = [
-          { text: 'Select all the irrigation infrastructures items your project needs', href: '#projectInfrastucture' },
-          { text: 'Select all the irrigation equipment items your project needs', href: '#projectEquipment' },
-          { text: 'Select all the technology items your project needs', href: '#projectTechnology' }
-        ]
-
+        const errorList = [{ text: 'Select all the items your project needs', href: '#projectInfrastucture' }]
         let {
           projectInfrastucture,
           projectEquipment,

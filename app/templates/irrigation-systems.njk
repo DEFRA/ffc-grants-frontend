@@ -7,7 +7,9 @@
 {% from "./components/macro.njk" import crumbToken, sideBar, conditionalButtons%}
 
 {% block pageTitle %}
-  Irrigation systems - {{siteTitle}}
+  {% if errorList %}
+    Error: 
+  {% endif %} Will your irrigation system change? - {{siteTitle}}
 {% endblock %}
 
 {% block beforeContent %}

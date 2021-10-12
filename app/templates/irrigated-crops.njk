@@ -8,7 +8,9 @@
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 
 {% block pageTitle %}
-  Irrigated crops - {{siteTitle}}
+  {% if errorList %}
+    Error: 
+  {% endif %} What main crops will be irrigated? - {{siteTitle}}
 {% endblock %}
 
 {% block beforeContent %}

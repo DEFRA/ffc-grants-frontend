@@ -10,12 +10,12 @@ const previousPath = `${urlPrefix}/irrigation-systems`
 const nextPath = `${urlPrefix}/collaboration`
 const scorePath = `${urlPrefix}/score`
 
-function createModel (errorMessage, errorSummary, data, hasScore) {
+function createModel (errorList, data, hasScore) {
   return {
     backLink: previousPath,
     formActionPage: currentPath,
     hasScore: hasScore,
-    ...(errorSummary ? { errorText: errorSummary } : {}),
+    ...errorList ? { errorList } : {},
     checkboxes: {
       idPrefix: 'productivity',
       name: 'productivity',
@@ -27,10 +27,10 @@ function createModel (errorMessage, errorSummary, data, hasScore) {
         }
       },
       hint: {
-        html: 'Productivity is about how much is produced relative to inputs (for example, increased yield for the same inputs or the same yield with lower inputs).<br/><br/><br/> Select one or two options'
+        html: 'Productivity is about how much is produced relative to inputs (for example, increased yield for the same inputs or the same yield with lower inputs).<br/><br/><br/> Select up to 2 options'
       },
       items: setLabelData(data, ['Introduce or expand high-value crops', 'Introduce or expand protected crops', 'Increased yield per hectare', 'Improved quality', 'Maintain productivity']),
-      ...(errorMessage ? { errorMessage: { text: errorMessage } } : {})
+      ...(errorList ? { errorMessage: { text: errorList[0].text } } : {})
     }
   }
 }
@@ -42,7 +42,7 @@ module.exports = [
     handler: (request, h) => {
       const productivity = getYarValue(request, 'productivity')
       const data = productivity || null
-      return h.view(viewTemplate, createModel(null, null, data, getYarValue(request, 'current-score')))
+      return h.view(viewTemplate, createModel(null, data, getYarValue(request, 'current-score')))
     }
   },
   {
@@ -56,17 +56,20 @@ module.exports = [
         }),
         failAction: (request, h, err) => {
           gapiService.sendValidationDimension(request)
+          const errorList = []
           const errorObject = errorExtractor(err)
-          const errorMessage = getErrorMessage(errorObject)
-          return h.view(viewTemplate, createModel(errorMessage, null, null, getYarValue(request, 'current-score'))).takeover()
+          errorList.push({ text: getErrorMessage(errorObject), href: '#productivity' })
+          return h.view(viewTemplate, createModel(errorList, null, getYarValue(request, 'current-score'))).takeover()
         }
       },
       handler: (request, h) => {
         const hasScore = getYarValue(request, 'current-score')
+        const errorList = []
         let { productivity, results } = request.payload
         productivity = [productivity].flat()
         if (productivity.length > 2) {
-          return h.view(viewTemplate, createModel('Select one or two options to describe your project will improve productivity', 'Select how the project will improve productivity', productivity, hasScore))
+          errorList.push({ text: getErrorMessage({ key: 'error.productivity.max' }), href: '#productivity' })
+          return h.view(viewTemplate, createModel(errorList, productivity, hasScore))
         }
         setYarValue(request, 'productivity', productivity)
         return results ? h.redirect(scorePath) : h.redirect(nextPath)

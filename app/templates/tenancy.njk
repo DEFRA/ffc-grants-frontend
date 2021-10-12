@@ -8,7 +8,9 @@
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 
 {% block pageTitle %}
-  Tenancy - {{siteTitle}}
+  {% if errorList %}
+    Error: 
+  {% endif %} Is the planned project on land the farm business owns? - {{siteTitle}}
 {% endblock %}
 
 {% block beforeContent %}
@@ -39,6 +41,6 @@
         }) }}
       </form>
     </div>
-    {{ sideBar("Eligibility","The land must be owned or have a tenancy in place until 2026 before starting the project.",[]) }}
+    {{ sideBar("Eligibility","The land must be owned or have a tenancy in place until 2027 before starting the project.",[]) }}
   </div>
 {% endblock %}

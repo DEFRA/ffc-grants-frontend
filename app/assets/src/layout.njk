@@ -1,10 +1,12 @@
 {% extends "govuk/template.njk" %}
 {% from "govuk/components/header/macro.njk" import govukHeader %}
 {% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
+{% from "../../templates/components/timeout-warning/macro.njk" import govukTimeoutWarning %}
 
 {% set urlPrefix = "<%= htmlWebpackPlugin.options.metadata.urlPrefix %>" %}
 {% set assetPath = urlPrefix + "/assets" %}
-{% set siteTitle = "Check if you can apply for a Farming Transformation Fund water grant - gov.uk" %}
+{% set timeoutPath = urlPrefix + "/session-timeout" %}
+{% set siteTitle = "Check if you can apply for a Farming Transformation Fund water grant - GOV.UK" %}
 {% block pageTitle %}
   {{siteTitle}}
 {% endblock %}
@@ -31,6 +33,13 @@
     html: 'This is a new service – your <a class="govuk-link" href="<%= htmlWebpackPlugin.options.metadata.surveyLink %>" target="_blank" rel="noopener noreferrer">feedback</a> will help us to improve it.'
     }) }}
   </div>
+  {% if showTimeout %}  
+    {{govukTimeoutWarning({
+      "modalIdleTime":sessionTimeoutInMin,
+      "modalVisibleTime":10,
+      "redirectUrl":timeoutPath
+    })}}
+  {% endif %}
 {% endblock %}
 
 {% block bodyStart %}

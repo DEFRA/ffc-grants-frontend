@@ -1,8 +1,8 @@
 const Joi = require('joi')
 const { setYarValue, getYarValue } = require('../helpers/session')
-const { setLabelData, fetchListObjectItems, findErrorList, formInputObject } = require('../helpers/helper-functions')
+const { getErrorList } = require('../helpers/helper-functions')
 const { NAME_REGEX, BUSINESSNAME_REGEX, PHONE_REGEX, POSTCODE_REGEX, DELETE_POSTCODE_CHARS_REGEX } = require('../helpers/regex-validation')
-const { LIST_COUNTIES } = require('../helpers/all-counties')
+const { getDetailsInput } = require('../helpers/detailsInputs')
 const urlPrefix = require('../config/server').urlPrefix
 
 const viewTemplate = 'model-farmer-agent-details'
@@ -11,86 +11,15 @@ const previousPath = `${urlPrefix}/applying`
 const nextPath = `${urlPrefix}/farmer-details`
 const detailsPath = `${urlPrefix}/check-details`
 
-function createModel (errorMessageList, agentDetails, hasDetails) {
-  const {
-    firstName,
-    lastName,
-    businessName,
-    email,
-    mobile,
-    landline,
-    address1,
-    address2,
-    town,
-    county,
-    postcode
-  } = agentDetails
-
-  const [
-    firstNameError,
-    lastNameError,
-    businessNameError,
-    emailError,
-    mobileError,
-    landlineError,
-    address2Error,
-    address1Error,
-    townError,
-    countyError,
-    postcodeError
-  ] = fetchListObjectItems(
-    errorMessageList,
-    ['firstNameError', 'lastNameError', 'businessNameError', 'emailError', 'mobileError', 'landlineError', 'address2Error', 'address1Error', 'townError', 'countyError', 'postcodeError']
-  )
-
+function createModel (errorList, agentDetails, hasDetails) {
   return {
     backLink: previousPath,
     formActionPage: currentPath,
     pageId: 'Agent',
     pageHeader: 'Agent\'s details',
     checkDetail: hasDetails,
-    inputBusinessName: formInputObject(
-      'businessName', 'govuk-input--width-20', 'Business name', null, { fieldName: businessName, fieldError: businessNameError, inputType: 'text', autocomplete: 'organization' }
-    ),
-    inputLastName: formInputObject(
-      'lastName', 'govuk-input--width-20', 'Last name', null, { fieldName: lastName, fieldError: lastNameError, inputType: 'text', autocomplete: 'family-name' }
-    ),
-    inputFirstName: formInputObject(
-      'firstName', 'govuk-input--width-20', 'First name', null, { fieldName: firstName, fieldError: firstNameError, inputType: 'text', autocomplete: 'given-name' }
-    ),
-    inputTown: formInputObject(
-      'town', 'govuk-input--width-10', 'Town (optional)', null, { fieldName: town, fieldError: townError, inputType: 'text', autocomplete: 'address-level2' }
-    ),
-    inputAddress2: formInputObject(
-      'address2', 'govuk-input--width-20', null, null, { fieldName: address2, fieldError: address2Error, inputType: 'text', autocomplete: 'address-line2' }
-    ),
-    inputAddress1: formInputObject(
-      'address1', 'govuk-input--width-20', 'Building and street', null, { fieldName: address1, fieldError: address1Error, inputType: 'text', autocomplete: 'address-line1' }
-    ),
-    inputLandline: formInputObject(
-      'landline', 'govuk-input--width-20', 'Landline number', null, { fieldName: landline, fieldError: landlineError, inputType: 'tel', autocomplete: 'home tel' }
-    ),
-    inputMobile: formInputObject(
-      'mobile', 'govuk-input--width-20', 'Mobile number', null, { fieldName: mobile, fieldError: mobileError, inputType: 'tel', autocomplete: 'mobile tel' }
-    ),
-    inputEmail: formInputObject(
-      'email', 'govuk-input--width-20', 'Email address', 'We will use this to send you a confirmation', { fieldName: email, fieldError: emailError, inputType: 'email', autocomplete: 'email' }
-    ),
-    inputPostcode: formInputObject(
-      'postcode', 'govuk-input--width-5', 'Postcode', null, { fieldName: postcode, fieldError: postcodeError, inputType: 'text', autocomplete: 'postal-code' }
-    ),
-    selectCounty: {
-      items: setLabelData(county, [
-        { text: 'Select an option', value: null },
-        ...LIST_COUNTIES
-      ]),
-      autocomplete: 'address-level1',
-      label: { text: 'County' },
-      classes: 'govuk-input--width-10',
-      name: 'county',
-      id: 'county',
-      ...(countyError ? { errorMessage: { text: countyError } } : {})
-    }
+    ...errorList ? { errorList } : {},
+    ...getDetailsInput(agentDetails, errorList)
   }
 }
 
@@ -132,39 +61,24 @@ module.exports = [
           postcode: Joi.string().replace(DELETE_POSTCODE_CHARS_REGEX, '').regex(POSTCODE_REGEX).trim().required(),
           county: Joi.string().required(),
           town: Joi.string().allow(''),
-          address2: Joi.string().required(),
           address1: Joi.string().required(),
+          address2: Joi.string().required(),
           landline: Joi.string().regex(PHONE_REGEX).min(10).allow(''),
           mobile: Joi.string().regex(PHONE_REGEX).min(10).allow(''),
           email: Joi.string().email().required()
         }),
         failAction: (request, h, err) => {
-          const [
-            firstNameError,
-            lastNameError,
-            businessNameError,
-            emailError,
-            mobileError,
-            landlineError,
-            address2Error,
-            address1Error,
-            townError,
-            countyError,
-            postcodeError
-          ] = findErrorList(err, ['firstName', 'lastName', 'businessName', 'email', 'mobile', 'landline', 'address2', 'address1', 'town', 'county', 'postcode'])
-
-          const errorMessageList = {
-            firstNameError, lastNameError, businessNameError, emailError, mobileError, landlineError, address2Error, address1Error, townError, countyError, postcodeError
-          }
-
+          const phoneErrors = []
           if (request.payload.landline === '' && request.payload.mobile === '') {
-            errorMessageList.mobileError = 'Enter a contact number'
-            errorMessageList.landlineError = 'Enter a contact number'
+            phoneErrors.push({ text: 'Enter your mobile number', href: '#mobile' })
+            phoneErrors.push({ text: 'Enter your landline number', href: '#landline' })
           }
+
+          const errorList = getErrorList(['firstName', 'lastName', 'businessName', 'email', 'mobile', 'landline', 'address1', 'address2', 'town', 'county', 'postcode'], err, phoneErrors)
 
           const { firstName, lastName, businessName, email, mobile, landline, address1, address2, town, county, postcode } = request.payload
           const agentDetails = { firstName, lastName, businessName, email, mobile, landline, address1, address2, town, county, postcode }
-          return h.view(viewTemplate, createModel(errorMessageList, agentDetails, getYarValue(request, 'checkDetails'))).takeover()
+          return h.view(viewTemplate, createModel(errorList, agentDetails, getYarValue(request, 'checkDetails'))).takeover()
         }
       },
       handler: (request, h) => {
@@ -172,10 +86,10 @@ module.exports = [
           firstName, lastName, businessName, email, mobile, landline, address1, address2, town, county, postcode, results
         } = request.payload
 
-        const phoneErrors = {
-          mobileError: 'Enter a contact number',
-          landlineError: 'Enter a contact number'
-        }
+        const phoneErrors = [
+          { text: 'Enter your mobile number', href: '#mobile' },
+          { text: 'Enter your landline number', href: '#landline' }
+        ]
 
         if (!landline && !mobile) {
           return h.view(viewTemplate, createModel(phoneErrors, {

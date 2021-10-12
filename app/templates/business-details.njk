@@ -4,10 +4,13 @@
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
 {% from "./components/macro.njk" import crumbToken %}
 
 {% block pageTitle %}
-  Business details - {{siteTitle}}
+  {% if errorList %}
+    Error: 
+  {% endif %} Business details - {{siteTitle}}
 {% endblock %}
 {% block beforeContent %}
   {{ govukBackLink({
@@ -35,7 +38,7 @@
         {{ govukInput(inputBusinessName) }}
         {{ govukInput(inputNumberEmployees) }}
         {{ govukInput(inputBusinessTurnover) }}
-        {{ govukInput(inputSbi) }}
+        {{ govukRadios(radios) }}
         {{ conditionalButtons(checkDetail,'Back to details') }}
 
       </form>

@@ -8,7 +8,9 @@
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 
 {% block pageTitle %}
-  Planning permission - {{siteTitle}}
+  {% if errorList %}
+    Error: 
+  {% endif %} Does the project need planning permission? - {{siteTitle}}
 {% endblock %}
 
 {% block beforeContent %}
@@ -39,7 +41,7 @@
         }) }}
       </form>
     </div>
-    {{ sideBar("Eligibility","Any planning permission must be in place by 31 December 2021 (the end of the application window).",
+    {{ sideBar("Eligibility","You must have applied for planning permission before you submit a full application.<br/> Any planning permission must be in place by 31 December 2022.",
     []) }}
   </div>
 {% endblock %}

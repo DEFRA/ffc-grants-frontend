@@ -1,0 +1,42 @@
+<!--[if !IE 8]><!-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dialog-polyfill/0.5.0/dialog-polyfill.js"></script>
+<!--<![endif]-->
+
+<div class="timeoutDiv govuk-timeout-warning-fallback govuk-grid-row govuk-width-container govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+  <div class="govuk-notification-banner__header">
+    <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+      Important
+    </h2>
+  </div>
+  <div class="govuk-notification-banner__content">
+    <p class="govuk-notification-banner__heading">
+      Your session will time out soon
+    </p>    
+    <p>We will reset your answers if you do not respond in 10 minutes.</p>
+    <p>We do this to keep your information secure.</p>
+    <form method="GET" action="" autocomplete="off" novalidate="novalidate">
+    <button class="govuk-button" type="submit" data-module="govuk-button" id="btnContinueSession">
+      Continue session
+    </button>
+    </form>
+  </div>
+</div>
+
+<dialog class="govuk-timeout-warning dialog" data-module="govuk-timeout-warning"
+id="js-timeout-warning"
+data-minutes-idle-timeout="{{ params['modalIdleTime'] or '0.1'}}"
+data-minutes-modal-visible="{{ params['modalVisibleTime'] or '0.2'}}"
+data-url-redirect="{{ params['redirectUrl'] }}"
+role="dialog"
+aria-live="polite"
+aria-labelledby="dialog-title"
+aria-describedby="at-timer">
+  <h1 id="dialog-title" class="govuk-heading-l">
+    Your session will time out soon
+  </h1>  
+   <div class="govuk-body">
+    <div class="timer" aria-hidden="true" aria-relevant="additions"></div>
+    <div class="at-timer govuk-visually-hidden" role="status" id="at-timer"></div>
+  </div>
+  <button class="govuk-button dialog-button js-dialog-close" data-module="govuk-button">Continue application</button>
+</dialog>

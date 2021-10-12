@@ -8,7 +8,9 @@
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
 
 {% block pageTitle %}
-  {{ pageHeader }} - {{siteTitle}}
+  {% if errorList %}
+    Error: 
+  {% endif %} {{ pageHeader }} - {{siteTitle}}
 {% endblock %}
 {% block beforeContent %}
   {{ govukBackLink({

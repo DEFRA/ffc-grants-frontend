@@ -18,10 +18,12 @@ exports.plugin = {
         const response = request.response
         const statusFamily = Math.floor(response.statusCode / 100)
         if (statusFamily === 2 && response.variety === 'view' && !gapiService.isBlockDefaultPageView(request.url)) {
-          console.log('Sending analytics page-view for %s', request.route.path)
-          await gapiService.sendDimensionOrMetric(request, { dimensionOrMetric: gapiService.dimensions.PRIMARY, value: true })
+          if (response.source.template === 'not-eligible') {
+            await gapiService.sendEligibilityEvent(request, true)
+          } else {
+            await gapiService.sendDimensionOrMetric(request, { dimensionOrMetric: gapiService.dimensions.PRIMARY, value: true })
+          }
         } else if (statusFamily === 5) {
-          console.log('Sending exception event for route %s with with status code %s', request.route.path, response.statusCode)
           await request.ga.event({ category: 'Exception', action: request.route.path, label: response.statusCode })
         }
       } catch {

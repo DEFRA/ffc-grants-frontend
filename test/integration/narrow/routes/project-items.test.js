@@ -65,7 +65,7 @@ describe('Irrigation water source page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Select all the irrigation infrastructures items your project needs')
+    expect(postResponse.payload).toContain('Select all the items your project needs')
   })
 
   it('should store user response from column: "projectInfrastucture" and redirect to project cost page', async () => {
