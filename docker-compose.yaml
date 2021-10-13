@@ -31,3 +31,4 @@ services:
       REDIS_PASSWORD: ""
       SESSION_CACHE_TTL: 1200000
       START_PAGE_URL: ${START_PAGE_URL:-/water/start}
+      SURVEY_LINK: https://defragroup.eu.qualtrics.com/jfe/preview/SV_e9fFpJ6tySfdHYa?Q_CHL=preview&Q_SurveyVersionID=current

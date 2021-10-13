@@ -30,7 +30,7 @@
       tag: {
       text: "beta"
     },
-    html: 'This is a new service – your <a class="govuk-link" href=" https://defragroup.eu.qualtrics.com/jfe/form/SV_26sUm6qNA26AoK2" target="_blank" rel="noopener noreferrer">feedback</a> will help us to improve it.'
+    html: 'This is a new service – your <a class="govuk-link" href="<%= htmlWebpackPlugin.options.metadata.surveyLink %>" target="_blank" rel="noopener noreferrer">feedback</a> will help us to improve it.'
     }) }}
   </div>
   {% if showTimeout %}  
@@ -68,7 +68,7 @@
               </a>
             </li>
               <li class="govuk-footer__inline-list-item">
-              <a class="govuk-footer__link" href="https://defragroup.eu.qualtrics.com/jfe/form/SV_26sUm6qNA26AoK2" target="_blank" rel="noopener noreferrer">
+              <a class="govuk-footer__link" href="<%= htmlWebpackPlugin.options.metadata.surveyLink %>" target="_blank" rel="noopener noreferrer">
                 Feedback
               </a>
             </li>
