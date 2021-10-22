@@ -78,7 +78,10 @@ module.exports = {
       inject: false,
       filename: '.layout.njk',
       template: 'app/assets/src/layout.njk',
-      metadata: { urlPrefix }
+      metadata: {
+        urlPrefix,
+        surveyLink: process.env.SURVEY_LINK
+      }
     }),
     new MiniCssExtractPlugin({
       filename: 'css/application.[hash].css'

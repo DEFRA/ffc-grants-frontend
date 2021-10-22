@@ -57,10 +57,11 @@ container:
   redisPassword: redis
   redisPort: 6379
   redisPartition: ffc-grants-frontend
-  sessionCacheTTL: 3600000
+  sessionCacheTTL: 1200000
   googleTagManagerKey: dummy
   googleTagManagerServerKey: dummy
   startPageUrl: dummy
+  surveyLink: dummy
 
 livenessProbe:
   path: /healthz

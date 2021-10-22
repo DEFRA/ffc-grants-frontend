@@ -2,7 +2,6 @@ const Joi = require('joi')
 const { setYarValue, getYarValue } = require('../helpers/session')
 const { errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
 const { createModelTwoRadios } = require('../helpers/modelTwoRadios')
-const gapiService = require('../services/gapi-service')
 const urlPrefix = require('../config/server').urlPrefix
 
 const viewTemplate = 'irrigation-status'
@@ -19,13 +18,12 @@ module.exports = [
   {
     method: 'GET',
     path: currentPath,
-    handler: (request, h) => {
+    handler: async (request, h) => {
       const currentlyIrrigating = getYarValue(request, 'currentlyIrrigating') || null
 
       if (getYarValue(request, 'current-score')) {
         return h.redirect(`${urlPrefix}/irrigated-crops`)
       }
-
       return h.view(viewTemplate, createModelTwoRadios(...prefixModelParams, null, currentlyIrrigating))
     }
   },
@@ -38,7 +36,6 @@ module.exports = [
           currentlyIrrigating: Joi.string().required()
         }),
         failAction: (request, h, err) => {
-          gapiService.sendValidationDimension(request)
           const errorObject = errorExtractor(err)
           const errorList = []
           errorList.push({ text: getErrorMessage(errorObject), href: '#currentlyIrrigating' })
@@ -48,8 +45,6 @@ module.exports = [
       handler: async (request, h) => {
         const { currentlyIrrigating } = request.payload
         setYarValue(request, 'currentlyIrrigating', currentlyIrrigating)
-
-        await gapiService.sendJourneyTime(request, gapiService.metrics.ELIGIBILITY)
         return h.redirect(nextPath)
       }
     }
