@@ -16,11 +16,3 @@ services:
       - ./html-reports/:/home/node/html-reports/
     ports:
       - "9228:9229"
-
-  selenium:
-    ports:
-      - "5900:5900"
-
-  hub:
-    ports:
-      - "4444:4444"

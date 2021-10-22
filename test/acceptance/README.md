@@ -1,8 +1,8 @@
 # Acceptance Tests
 
-> Future Farming and Countryside Programme - Grants Frontend Acceptance Tests
+> Future Farming and Countryside Programme - Demo Web Acceptance Tests
 
-This folder contains the acceptance tests for the FFC Grants service components.
+This folder contains the acceptance tests for the FFC SFI Map Web service components as can be operated through the 'customer facing' `ffc-sfi-map-web` front end microservice.
 
 The framework is (Cucumber)[https://cucumber.io/] and (webdriver.io)[https://webdriver.io/] based, containerised, expandable and based on the actively maintained webdriver.io Cucumber boilerplate project.
 
@@ -23,7 +23,10 @@ Docker is used to create a container for each of selenium-hub, chrome-browser an
 
 1. Set the root URL for the environment in the environment variable `TEST_ENVIRONMENT_ROOT_URL`
 
-2. If running against localhost, then no need to set `TEST_ENVIRONMENT_ROOT_URL` as it will default to `docker.host.internal:3000`.  Instead make sure the application container is running with `docker-compose up --build` in the root folder of this repository
+| BROWSERSTACK_USERNAME   | User             |                          |                         |Browserstack user |
+| BROWSERSTACK_ACCESS_KEY | Key              |                           |                         |Browserstack key  |
+
+2. If running against localhost, then no need to set `TEST_ENVIRONMENT_ROOT_URL` as it will default to `docker.host.internal:3004`.  Instead make sure the application container is running with `docker-compose up --build` in the root folder of this repository
 
 3. From the directory containing the dockerfile run `docker-compose run --rm wdio-cucumber`. This will run an acceptance test against the FFC-Demo web service.
 
@@ -59,6 +62,53 @@ Scenario: Another test
 
 This test opens the browser and navigates them to google.com to check if the title contains the search
 query after doing a search. As you can see, it is pretty simple and understandable for everyone.
+
+# Configurations
+
+To configure your tests, checkout the [`wdio.conf.js`](https://github.com/webdriverio/cucumber-boilerplate/blob/master/wdio.conf.js) file in your test directory. It comes with a bunch of documented options you can choose from.
+
+## Environment-specific configurations
+
+You can setup multiple configs for specific environments. Let's say you want to have a different `baseUrl` for
+your local and pre-deploy tests. Use the `wdio.conf.js` to set all general configs (like mochaOpts) that don't change.
+They act as default values. For each different environment you can create a new config with the following name
+scheme:
+
+```txt
+wdio.<ENVIRONMENT>.conf.js
+```
+
+Now you can create a specific config for your pre-deploy tests:
+
+__wdio.STAGING.conf.js__
+```js
+var config = require('./wdio.conf.js').config;
+
+config.baseUrl = 'http://staging.example.com'
+
+exports.config = config;
+```
+
+Your environment-specific config file will get merged into the default config file and overwrites the values you set.
+To run a test in a specific environment just add the desired configuration file as the first parameter:
+
+```sh
+$ npx run wdio wdio.STAGING.conf.js
+```
+
+# Running Browserstack
+
+```sh
+$ BROWSERSTACK_ACCESS_KEY=userkeynumber npx wdio
+```
+
+# Running single feature
+Sometimes it's useful to only execute a single feature file, to do so use the following command:
+
+```sh
+$ npx wdio wdio.conf.js --spec ./test/features/select.feature
+```
+
 
 # Using tags
 

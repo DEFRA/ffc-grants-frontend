@@ -2,8 +2,34 @@
 version: v1.22.0
 # ignores vulnerabilities until expiry date; change duration by modifying expiry date
 ignore:
+  SNYK-CC-K8S-6:
+    - ffc-grants-frontend > helm/templates/deployment.yaml:
+        reason: no direct upgrade or patch available
+        expires: '2022-03-21T11:23:27.474Z'
   SNYK-JS-AXIOS-1579269:
+    - ffc-messaging > @azure/identity > axios:
+        reason: no update available
+        expires: '2021-10-02T10:22:20.985Z'
     - ffc-messaging > @azure/identity > @azure/msal-node > axios:
-        reason: No upgrade available
-        expires: '2021-10-24T16:03:48.621Z'
+        reason: no update available
+        expires: '2021-10-02T10:22:20.986Z'
+  SNYK-JS-ANSIREGEX-1583908:
+    - bcrypt > @mapbox/node-pre-gyp > npmlog > gauge > strip-ansi > ansi-regex:
+        reason: No update available
+        expires: '2021-10-13T14:15:24.862Z'
+      bcrypt > @mapbox/node-pre-gyp > npmlog > gauge > wide-align > string-width > strip-ansi > ansi-regex:
+        reason: No update available
+        expires: '2021-10-13T14:38:55.243Z'
+    - bcrypt > @mapbox/node-pre-gyp > npmlog > gauge > string-width > strip-ansi > ansi-regex:
+        reason: No update available
+        expires: '2021-10-13T14:15:24.862Z'
+      ffc-messaging > @azure/identity > keytar > prebuild-install > npmlog > gauge > strip-ansi > ansi-regex:
+        reason: No update available
+        expires: '2021-10-13T14:38:55.244Z'
+    - ffc-messaging > @azure/identity > keytar > prebuild-install > npmlog > gauge > string-width > strip-ansi > ansi-regex:
+        reason: No Update available
+        expires: '2021-10-13T14:38:55.245Z'
+    - ffc-messaging > @azure/identity > keytar > prebuild-install > npmlog > gauge > wide-align > string-width > strip-ansi > ansi-regex:
+        reason: No Updated available
+        expires: '2021-10-13T14:38:55.245Z'
 patch: {}
