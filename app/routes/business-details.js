@@ -85,7 +85,7 @@ function createModel (errorList, businessDetails, sbiHtml, hasDetails) {
       idPrefix: 'inSbi',
       name: 'inSbi',
       hint: {
-        text: 'Select one option'
+        text: 'If you do not have an SBI, you will need to get one for full application'
       },
       fieldset: {
         legend: {

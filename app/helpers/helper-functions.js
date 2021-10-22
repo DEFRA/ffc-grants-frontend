@@ -77,18 +77,12 @@ function getSbiHtml (sbiData, error) {
         <label class="govuk-label" for="sbi">
         SBI Number
         </label>
-        <div id="sbi-hint" class="govuk-hint">
-          If you do not have an SBI, you will need to get one for full application
-        </div>
         <input class="govuk-input govuk-!-width-one-third" id="sbi" name="sbi" value="${sbi}">
       </div>`
     : `<div class="govuk-form-group--error">
         <label class="govuk-label" for="sbi">
         SBI Number
         </label>
-        <div id="sbi-hint" class="govuk-hint">
-          If you do not have an SBI, you will need to get one for full application
-        </div>
         <span id="post-code-error" class="govuk-error-message">
           <span class="govuk-visually-hidden">
             Error:
