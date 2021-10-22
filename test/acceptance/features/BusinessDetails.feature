@@ -1,12 +1,12 @@
-Feature: Business details
+# Feature: Business details
 
-#       Scenario: Reject Cookies
-#         Given I open the url "/start"
-#         And I pause for 500ms
-#         Then I expect that element "h1" contains the text "Check if you can apply for a Farming Transformation Fund water management grant"
-#         When I click on the element "//button[2]"
-#         When I click on the link "Start now"
-#         Then I expect that the url contains "/farming-type"
+# #       Scenario: Reject Cookies
+# #         Given I open the url "/start"
+# #         And I pause for 500ms
+# #         Then I expect that element "h1" contains the text "Check if you can apply for a Farming Transformation Fund water management grant"
+# #         When I click on the element "//button[2]"
+# #         When I click on the link "Start now"
+# #         Then I expect that the url contains "/farming-type"
 
 #       Scenario Outline: validate error page in the Business details
 #              Given I open the url "/water/farming-type"
