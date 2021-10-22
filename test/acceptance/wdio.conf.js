@@ -5,6 +5,7 @@ const logger = log4js.getLogger('default')
 // const envRoot = (process.env.TEST_ENVIRONMENT_ROOT_URL || 'https://ffc-grants-frontend.ffc.snd.azure.defra.cloud/water/start')
 // const envRoot = (process.env.TEST_ENVIRONMENT_ROOT_URL || 'https://ffc-grants-frontend-test.azure.defra.cloud/water')
 const envRoot = (process.env.TEST_ENVIRONMENT_ROOT_URL || 'http://host.docker.internal:3000')
+// const envRoot = 'http://host.docker.internal:3000'
 const chromeArgs = process.env.CHROME_ARGS ? process.env.CHROME_ARGS.split(' ') : []
 const maxInstances = process.env.MAX_INSTANCES ? Number(process.env.MAX_INSTANCES) : 5
 const user = process.env.BROWSERSTACK_USERNAME
@@ -29,16 +30,17 @@ exports.config = {
       'goog:chromeOptions': {
         args: chromeArgs
       }
-    },
-    {
-      os: 'Windows',
-      osVersion: '10',
-      browserName: 'Firefox',
-      browserVersion: 'latest',
-      'browserstack.local': true,
-      acceptInsecureCerts: true,
-      acceptSslCerts: true
     }
+    // ,
+    // {
+    //   os: 'Windows',
+    //   osVersion: '10',
+    //   browserName: 'Firefox',
+    //   browserVersion: 'latest',
+    //   'browserstack.local': true,
+    //   acceptInsecureCerts: true,
+    //   acceptSslCerts: true
+    // }
 
     // {
     //   // Windows Edge 86

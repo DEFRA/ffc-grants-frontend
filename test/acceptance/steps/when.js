@@ -14,6 +14,7 @@ import selectOptionByIndex from '../support/action/selectOptionByIndex'
 import setCookie from '../support/action/setCookie'
 import setInputField from '../support/action/setInputField'
 import setPromptText from '../support/action/setPromptText'
+import Start from '../pageobjects/ffc-grant-start'
 import FarmingType from '../pageobjects/ffc-grant-farmingtype'
 import LegalStatus from '../pageobjects/ffc-grant-legal-status'
 import Country from '../pageobjects/ffc-grant-country'
@@ -33,13 +34,21 @@ import IrrigationStatus from '../pageobjects/ffc-grant-irrigation-status'
 import WaterSource from '../pageobjects/ffc-grant-irrigation-water-source'
 import IrrigationSystem from '../pageobjects/ffc-grant-irrigation-systems'
 import Productivity from '../pageobjects/ffc-grant-productivity'
-// import Collaboration from '../pageobjects/ffc-grant-collaboration'
+import AgentDetails from '../pageobjects/ffc-grant-agent-details'
+import Applying from '../pageobjects/ffc-grant-applying'
+import Collaboration from '../pageobjects/ffc-grant-collaboration'
+import CheckDetails from '../pageobjects/ffc-grant-check-details'
+
 // import Propertytype from '../pageobjects/ffc-demo-property-type'
 // import ClaimName from '../pageobjects/ffc-demo-claimname'
 // import PropertyAccessible from '../pageobjects/ffc-demo-property-accessible'
 // import PropertyMineType from '../pageobjects/ffc-demo-mine-type'
 
 const { When } = require('cucumber')
+
+When(/^I click on the reject cookies$/, function () {
+  Start.clickOnRejectCookies()
+})
 
 When(
   /^I (click|doubleclick) on the (link|button|element) "([^"]*)?"$/,
@@ -83,6 +92,8 @@ When(/^I clicks on the "([^"]*)?" button$/, function (trades) {
     LegalStatus.clickOnCooperativeSociety()
   } else if (trades === 'BenCom') {
     LegalStatus.clickOnCommunityBenefitSociety()
+  } else if (trades === 'NoneOfTheAbove') {
+    LegalStatus.clickOnNoneOfTheAbove()
   }
 })
 
@@ -92,6 +103,10 @@ When(/^I click on the limited company button$/, function () {
 
 When(/^I click on CountryYes button$/, function () {
   Country.clickOnCtyYesButton()
+})
+
+When(/^I click on CountryNo button$/, function () {
+  Country.clickOnCtyNoButton()
 })
 
 When(/^I click on secured button$/, function () {
@@ -183,6 +198,15 @@ When(/^I click on remaining cost buttons$/, function () {
   RemainingCosts.clickOnYesRemainingCost()
 })
 
+When(/^I click the "([^"]*)?" buttons$/, function (remainingCost) {
+  if (remainingCost === 'yes') {
+    RemainingCosts.clickOnYesRemainingCost()
+    console.log(remainingCost)
+  } else if (remainingCost === 'no') {
+    RemainingCosts.clickOnNoRemainingCost()
+  }
+})
+
 When(/^I click on SSSI button$/, function () {
   SSSI.clickOnYesSSSI()
 })
@@ -206,6 +230,10 @@ When(/^I click on abstraction "([^"]*)?" button$/, function (licence) {
     console.log(licence)
   } else if (licence === 'secured') {
     Licence.clickOnSecured()
+  } else if (licence === 'expectToHaveLicence') {
+    Licence.clickOnExpectToHaveLicence()
+  } else if (licence === 'notHaveLicence') {
+    Licence.clickOnWillNotHaveLicence()
   }
 })
 
@@ -238,6 +266,12 @@ When(/^I click on project "([^"]*)?" button$/, function (projectSummary) {
   } else if (projectSummary === 'improve&IncreaseIrrigation') {
     ProjectSummary.clickOnImproveIrrigation()
     ProjectSummary.clickOnIncreaseIrrigation()
+  } else if (projectSummary === 'changeWater&IncreaseIrrig&IntroIrrigation') {
+    ProjectSummary.clickOnChangeWater()
+    ProjectSummary.clickOnIncreaseIrrigation()
+    ProjectSummary.clickOnIntroduceIrrigation()
+  } else if (projectSummary === 'noneOfTheAbove') {
+    ProjectSummary.clickOnNoneIrrigation()
   }
 })
 
@@ -259,6 +293,19 @@ When(/^I click on crops "([^"]*)?" button$/, function (cropsIrrigated) {
 When(/^I click on irrigation status button$/, function () {
   IrrigationStatus.clickOnYesIrrigationStatus()
 })
+
+When(/^I click on the irrigation "([^"]*)?" button$/, function (status) {
+  if (status === 'yes') {
+    IrrigationStatus.clickOnYesIrrigationStatus()
+    console.log(status)
+  } else if (status === 'no') {
+    IrrigationStatus.clickOnNoIrrigationStatus()
+  }
+})
+
+// When(/^I click on irrigation status button$/, function () {
+//   IrrigationStatus.clickOnYesIrrigationStatus()
+// })
 
 When(/^I click on irrigation water source button$/, function () {
   WaterSource.clickOnCurrentPeakFlow()
@@ -448,14 +495,37 @@ When(/^I click on project improve "([^"]*)?" button$/, function (productivity) {
   } else if (productivity === 'improvedQuality&maintainProductivity') {
     Productivity.clickOnproductivity4()
     Productivity.clickOnproductivity5()
-  } else if (productivity === '') {
-    Productivity.clickOnproductivity5()
+  } else if (productivity === 'select3Productivity') {
     Productivity.clickOnproductivity1()
-  } else if (productivity === '') {
-    Productivity.clickOnproductivity5()
-    Productivity.clickOnproductivity1()
+    Productivity.clickOnproductivity2()
+    Productivity.clickOnproductivity3()
   }
 })
+
+When(/^I click on the water supply "([^"]*)?" button$/, function (waterSharing) {
+  if (waterSharing === 'yes') {
+    Collaboration.clickOnYesCollaboration()
+    console.log(waterSharing)
+  } else if (waterSharing === 'no') {
+    Collaboration.clickOnNoCollaboration()
+  }
+})
+
+When(/^I click on the agent button$/, function () {
+  Applying.clickOnAgentRadioBtn()
+})
+
+When(/^I select county name in the dropdown menu$/, function () {
+  AgentDetails.clickOnCountyDropMenu()
+})
+
+When(/^I click on the business-details link$/, async () => {
+  CheckDetails.clickOnBusinessDetailsLink()
+})
+
+// When(/^I click on Continue button$/, async () => {
+//   FarmingType.clickOnSaveandContinueButton2()
+// })
 
 // When(/^I click on irrigation status button$/, function () {
 //   IrrigationStatus.clickOnYesIrrigationStatus()

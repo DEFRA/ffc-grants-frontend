@@ -26,7 +26,7 @@ class IrrigationStatus extends Page {
 
   clickOnNoIrrigationStatus () {
     const element = $('#currentlyIrrigating-2')
-    browser.execute('arguments[1].click();', element)
+    browser.execute('arguments[0].click();', element)
   }
 }
 export default new IrrigationStatus()

@@ -7,7 +7,8 @@ class FarmingType extends Page {
 
   get cropFarmingType () { return $('input#farmingType.govuk-radios__input') }
   get saveAndContinueButton () { return $('.govuk-button') }
-  get saveAndContinueBut () { return $('//form/button') }
+  // get saveAndContinueBut () { return $('//form/button') }
+  get saveAndContinueBut () { return $('#btnContinue') }
   get savAndContinueBut () { return $('button.govuk-button::before') }
 
   // css=form &gt; button.govuk-button    xpath=

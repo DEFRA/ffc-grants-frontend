@@ -1,12 +1,12 @@
 import Page from './page'
 
-class Tenancy extends Page {
+class Applying extends Page {
   /**
       * define elements
       */
 
-  get yesLandOwner () { return $('#landOwnership') }
-  get noLandOwner () { return $('#landOwnership-2') }
+  get agentRadioBtn () { return $('#applying-2') }
+  get farmerRadioBtb () { return $('#applying') }
 
   /**
        * define or overwrite page methods
@@ -19,14 +19,14 @@ class Tenancy extends Page {
        * your page specific methods
        */
 
-  clickOnYesLandOwnership () {
-    const element = $('#landOwnership')
+  clickOnAgentRadioBtn () {
+    const element = $('#applying-2')
     browser.execute('arguments[0].click();', element)
   }
 
-  clickOnNoLandOwnership () {
-    const element = $('#landOwnership-2')
+  clickOnFarmerRadioBtn () {
+    const element = $('#applying')
     browser.execute('arguments[0].click();', element)
   }
 }
-export default new Tenancy()
+export default new Applying()

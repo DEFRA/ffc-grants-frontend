@@ -34,12 +34,12 @@ class Licence extends Page {
 
   clickOnExpectToHaveLicence () {
     const element = $('#abstractionLicence-3')
-    browser.execute('arguments[2].click();', element)
+    browser.execute('arguments[0].click();', element)
   }
 
   clickOnWillNotHaveLicence () {
     const element = $('#abstractionLicence-4')
-    browser.execute('arguments[3].click();', element)
+    browser.execute('arguments[0].click();', element)
   }
 }
 export default new Licence()
