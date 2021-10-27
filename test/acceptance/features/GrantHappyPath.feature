@@ -163,7 +163,7 @@ Feature: Grant
         And I click on Continue button
         And I pause for 500ms
         Then I expect that the url contains "/SSSI"
-        And I pause for 500ms
+        And I pause for 600ms
         When I click the "<SSSI>" button
         And I click on Continue button
         And I pause for 500ms
@@ -174,7 +174,7 @@ Feature: Grant
         Then I expect that the url contains "/project-summary"
         When I click on project "<projectSummary>" button
         And I click on Continue button
-        And I pause for 500ms
+        And I pause for 600ms
         Then I expect that the url contains "/irrigated-crops" 
         When I click on crops "<cropsIrrigated>" button
         And I click on Continue button
