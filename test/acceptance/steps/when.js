@@ -547,6 +547,11 @@ When(/^I click on Continue button$/, async () => {
   FarmingType.clickOnSaveandContinueButton2()
 })
 
+When(/^I delete the cookies$/, async () => {
+  Start.clickOnDeleteCookies()
+  // FarmingType.clickOnSaveandContinueButton2()
+})
+
 // When(/^I click on the search link$/, async () => {
 //   Parcel.clickOnSearchLink()
 // });

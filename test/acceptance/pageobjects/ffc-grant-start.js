@@ -19,6 +19,15 @@ class Start extends Page {
        * your page specific methods
        */
 
+  clickOnDeleteCookies () {
+    // const element = $('#button.govuk-button.js-cookies-button-accept')
+    // browser.getCookies()
+    // let cookies = browser.getCookies()
+    // console.log(cookies)
+
+    browser.deleteCookies()
+  }
+
   clickOnRejectCookies () {
     this.rejectCookies.click()
   }
