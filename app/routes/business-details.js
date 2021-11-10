@@ -3,6 +3,7 @@ const { setYarValue, getYarValue } = require('../helpers/session')
 const { isChecked, getSbiHtml, findErrorList } = require('../helpers/helper-functions')
 const { NUMBER_REGEX } = require('../helpers/regex-validation')
 const urlPrefix = require('../config/server').urlPrefix
+const gapiService = require('../services/gapi-service')
 
 const viewTemplate = 'business-details'
 const currentPath = `${urlPrefix}/${viewTemplate}`
@@ -118,9 +119,16 @@ module.exports = [
   {
     method: 'GET',
     path: currentPath,
-    handler: (request, h) => {
+    handler: async (request, h) => {
       let businessDetails = getYarValue(request, 'businessDetails') || null
-
+      await gapiService.sendDimensionOrMetrics(request, [{
+        dimensionOrMetric: gapiService.dimensions.SCORE,
+        value: getYarValue(request, 'current-score')
+      },
+      {
+        dimensionOrMetric: gapiService.metrics.SCORE,
+        value: 'TIME'
+      }])
       if (!businessDetails) {
         businessDetails = {
           projectName: null,
