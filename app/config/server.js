@@ -1,9 +1,13 @@
 const Joi = require('joi')
 const urlPrefix = '/water'
 const startPageUrl = '/start'
+const serviceEndDate = '2022/01/12'
+const serviceEndTime = '23:59:58'
 // Define config schema
 const schema = Joi.object({
   urlPrefix: Joi.string().default(urlPrefix),
+  serviceEndDate: Joi.string().default(serviceEndDate),
+  serviceEndTime: Joi.string().default(serviceEndTime),
   surveyLink: Joi.string().default('https://defragroup.eu.qualtrics.com/jfe/preview/SV_e9fFpJ6tySfdHYa?Q_CHL=preview&Q_SurveyVersionID=current'),
   cookiePassword: Joi.string().default('dummycookiepassworddummycookiepassword'),
   googleTagManagerKey: Joi.string().default('GTM-WJ5C78H'),
@@ -34,6 +38,8 @@ const config = {
   googleTagManagerServerKey: process.env.GOOGLE_TAG_MANAGER_SERVER_KEY,
   protectiveMonitoringUrl: process.env.PROTECTIVE_MONITORING_URL,
   startPageUrl: process.env.START_PAGE_URL,
+  serviceEndDate: process.env.SERVICE_END_DATE,
+  serviceEndTime: process.env.SERVICE_END_TIME,
   cookieOptions: {
     ttl: process.env.COOKIE_TTL_IN_MILLIS,
     encoding: 'base64json',

@@ -61,6 +61,8 @@ container:
   googleTagManagerKey: dummy
   googleTagManagerServerKey: dummy
   startPageUrl: dummy
+  serviceEndDate: dummy
+  serviceEndTime: dummy
   surveyLink: dummy
 
 livenessProbe:
