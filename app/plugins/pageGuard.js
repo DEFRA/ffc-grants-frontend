@@ -18,6 +18,10 @@ module.exports = {
         const time = new Date().toLocaleTimeString()
         const dateExpired = +today >= +decomissionServiceDate
         const serviceDecommissioned = dateExpired && (time > serviceEndTime)
+
+        console.log(dateExpired, '-> Date time->', (time > serviceEndTime))
+        console.log(request.url.pathname,'->path start page->', startPageUrl)
+
         if (request.response.variety === 'view' && questionBank.questions.filter(question => question.url === currentUrl).length > 0) {
           const currentQuestionNumber = questionBank.questions.filter(question => question.url === currentUrl)[0].order
           score = (getYarValue(request, 'current-score') && currentQuestionNumber < 14)
