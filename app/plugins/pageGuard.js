@@ -3,7 +3,7 @@
 */
 const questionBank = require('../config/question-bank')
 const { getYarValue } = require('../helpers/session')
-const { urlPrefix, startPageUrl } = require('../config/server')
+const { urlPrefix, startPageUrl, serviceEndDate, serviceEndTime } = require('../config/server')
 
 module.exports = {
   plugin: {
@@ -13,7 +13,11 @@ module.exports = {
         const currentUrl = request.url.pathname.split('/').pop()
         let result
         let score
-
+        const today = new Date(new Date().toDateString())
+        const decomissionServiceDate = new Date(serviceEndDate)
+        const time = new Date().toLocaleTimeString()
+        const dateExpired = +today >= +decomissionServiceDate
+        const serviceDecommissioned = dateExpired && (time > serviceEndTime)
         if (request.response.variety === 'view' && questionBank.questions.filter(question => question.url === currentUrl).length > 0) {
           const currentQuestionNumber = questionBank.questions.filter(question => question.url === currentUrl)[0].order
           score = (getYarValue(request, 'current-score') && currentQuestionNumber < 14)
@@ -28,6 +32,7 @@ module.exports = {
             })
           }
         }
+        if (request.response.variety === 'view' && request.url.pathname !== startPageUrl && currentUrl !== 'login' && serviceDecommissioned) return h.redirect(startPageUrl)
         if (result) return h.redirect(startPageUrl)
         if (score) return h.redirect(`${urlPrefix}/project-summary`).takeover()
         return h.continue
