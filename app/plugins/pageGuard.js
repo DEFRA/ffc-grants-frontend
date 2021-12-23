@@ -36,14 +36,9 @@ module.exports = {
             })
           }
         }
-        if (request.response.variety === 'view' && request.url.pathname !== startPageUrl && currentUrl !== 'login' && serviceDecommissioned) {
-          console.log('In time expired check')
-          return h.redirect(startPageUrl)
-        }
-        if (result) {
-          console.log('I am in the result if condition')
-          return h.redirect(startPageUrl)
-        }
+        if (request.response.variety === 'view' && request.url.pathname !== startPageUrl && currentUrl !== 'login' && serviceDecommissioned) return h.redirect(startPageUrl)
+
+        if (result) return h.redirect(startPageUrl)
         if (score) return h.redirect(`${urlPrefix}/project-summary`).takeover()
         return h.continue
       })
