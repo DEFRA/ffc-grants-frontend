@@ -19,8 +19,8 @@ module.exports = {
         const dateExpired = +today >= +decomissionServiceDate
         const serviceDecommissioned = dateExpired && (time > serviceEndTime)
 
-        console.log(dateExpired, '-> Date time->', (time > serviceEndTime))
-        console.log(request.url.pathname,'->path start page->', startPageUrl)
+        console.log(dateExpired, '---- Date time --', (time > serviceEndTime))
+        console.log(currentUrl,'--- path start page ---', startPageUrl)
 
         if (request.response.variety === 'view' && questionBank.questions.filter(question => question.url === currentUrl).length > 0) {
           const currentQuestionNumber = questionBank.questions.filter(question => question.url === currentUrl)[0].order
@@ -36,8 +36,14 @@ module.exports = {
             })
           }
         }
-        if (request.response.variety === 'view' && request.url.pathname !== startPageUrl && currentUrl !== 'login' && serviceDecommissioned) return h.redirect(startPageUrl)
-        if (result) return h.redirect(startPageUrl)
+        if (request.response.variety === 'view' && currentUrl !== startPageUrl && currentUrl !== 'login' && serviceDecommissioned) {
+          console.log('In time expired check')
+          return h.redirect(startPageUrl)
+        }
+        if (result) {
+          console.log('I am in the result if condition')
+          return h.redirect(startPageUrl)
+        }
         if (score) return h.redirect(`${urlPrefix}/project-summary`).takeover()
         return h.continue
       })
