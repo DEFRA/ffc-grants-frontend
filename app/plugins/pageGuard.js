@@ -19,6 +19,8 @@ module.exports = {
         const dateExpired = +today >= +decomissionServiceDate
         const serviceDecommissioned = dateExpired && (time > serviceEndTime)
 
+        console.log(today, '---- today---- expiry date --', decomissionServiceDate)
+
         console.log(dateExpired, '---- Date time --', (time > serviceEndTime),'------ service', serviceEndTime )
         console.log(request.url.pathname,'--- path start page ---', startPageUrl)
 
