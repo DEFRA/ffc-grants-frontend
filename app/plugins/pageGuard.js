@@ -16,10 +16,10 @@ module.exports = {
         const today = new Date(new Date().toDateString())
         const decomissionServiceDate = new Date(serviceEndDate)
         const time = new Date().toLocaleTimeString()
-        const dateExpired = +today >= +decomissionServiceDate
+        const dateExpired = +today > +decomissionServiceDate
         const serviceDecommissioned = dateExpired && (time > serviceEndTime)
 
-        console.log(dateExpired, '---- Date time --', (time > serviceEndTime))
+        console.log(dateExpired, '---- Date time --', (time > serviceEndTime),'------ service', serviceEndTime )
         console.log(currentUrl,'--- path start page ---', startPageUrl)
 
         if (request.response.variety === 'view' && questionBank.questions.filter(question => question.url === currentUrl).length > 0) {
@@ -36,7 +36,7 @@ module.exports = {
             })
           }
         }
-        if (request.response.variety === 'view' && currentUrl !== startPageUrl && currentUrl !== 'login' && serviceDecommissioned) {
+        if (request.response.variety === 'view' && request.url.pathname !== startPageUrl && currentUrl !== 'login' && serviceDecommissioned) {
           console.log('In time expired check')
           return h.redirect(startPageUrl)
         }
