@@ -16,7 +16,7 @@ module.exports = {
         const today = new Date(new Date().toDateString())
         const decomissionServiceDate = new Date(serviceEndDate)
         const time = new Date().toLocaleTimeString()
-        const dateExpired = +today > +decomissionServiceDate
+        const dateExpired = +today >= +decomissionServiceDate
         const serviceDecommissioned = dateExpired && (time > serviceEndTime)
 
         console.log(dateExpired, '---- Date time --', (time > serviceEndTime),'------ service', serviceEndTime )
