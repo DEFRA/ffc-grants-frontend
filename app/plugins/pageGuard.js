@@ -21,7 +21,7 @@ module.exports = {
 
         console.log(today, '---- today---- expiry date --', decomissionServiceDate)
 
-        console.log(dateExpired, '---- Date time --', (time > serviceEndTime),'------ service', serviceEndTime )
+        console.log(dateExpired, '---- Date time --', (time < serviceEndTime),'------ service', serviceEndTime )
         console.log(request.url.pathname,'--- path start page ---', startPageUrl)
 
         if (request.response.variety === 'view' && questionBank.questions.filter(question => question.url === currentUrl).length > 0) {
