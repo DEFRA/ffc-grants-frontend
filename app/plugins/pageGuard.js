@@ -15,7 +15,7 @@ module.exports = {
         let score
         const today = new Date(new Date().toDateString())
         const decomissionServiceDate = new Date(serviceEndDate)
-        const time = new Date().toLocaleTimeString()
+        const time = new Date().toLocaleTimeString('it-IT')
         const dateExpired = +today >= +decomissionServiceDate
         const serviceDecommissioned = dateExpired && (time > serviceEndTime)
         if (request.response.variety === 'view' && questionBank.questions.filter(question => question.url === currentUrl).length > 0) {
