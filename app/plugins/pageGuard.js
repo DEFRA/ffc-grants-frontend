@@ -16,8 +16,10 @@ module.exports = {
         const today = new Date(new Date().toDateString())
         const decomissionServiceDate = new Date(serviceEndDate)
         const time = new Date().toLocaleTimeString('it-IT')
-        const dateExpired = +today >= +decomissionServiceDate
-        const serviceDecommissioned = dateExpired && (time > serviceEndTime)
+        const dateExpired = +today > +decomissionServiceDate
+        const expiringToday = (+today === +decomissionServiceDate) && (time > serviceEndTime)
+        const serviceDecommissioned = expiringToday || dateExpired
+
         if (request.response.variety === 'view' && questionBank.questions.filter(question => question.url === currentUrl).length > 0) {
           const currentQuestionNumber = questionBank.questions.filter(question => question.url === currentUrl)[0].order
           score = (getYarValue(request, 'current-score') && currentQuestionNumber < 14)
