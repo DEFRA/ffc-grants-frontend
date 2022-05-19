@@ -1,6 +1,6 @@
 {
   "name": "ffc-grants-file-sender",
-  "version": "1.7.0",
+  "version": "1.7.1",
   "description": "FFC Grants file sender microservice",
   "homepage": "https://github.com/DEFRA/ffc-grants-file-sender",
   "main": "app/index.js",
