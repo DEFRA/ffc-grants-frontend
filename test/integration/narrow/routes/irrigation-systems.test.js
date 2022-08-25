@@ -112,7 +112,7 @@ describe('Irrigation syatems page', () => {
       url: `${global.__URLPREFIX__}/irrigation-systems`,
       payload: {
         irrigationCurrent: ['some option-1', 'some option-2', 'some option-3'],
-        irrigationPlanned:[],
+        irrigationPlanned: [],
         crumb: crumbToken
       },
       headers: {

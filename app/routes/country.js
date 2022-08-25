@@ -73,7 +73,7 @@ module.exports = [
     options: {
       validate: {
         payload: Joi.object({
-          inEngland: Joi.string().required(),
+          inEngland: Joi.string().required()
         }),
         failAction: (request, h, err) => {
           const errorList = []

@@ -1,5 +1,7 @@
 const Joi = require('joi')
 
+require('dotenv').config()
+
 const sharedConfigSchema = {
   appInsights: Joi.object(),
   host: Joi.string().default('localhost'),

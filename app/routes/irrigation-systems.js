@@ -122,12 +122,13 @@ module.exports = [
         const currentlyIrrigating = getYarValue(request, 'currentlyIrrigating') || null
 
         if (irrigationCurrent.length > 2 || irrigationPlanned.length > 2) {
-          if (irrigationCurrent.length > 2) {
+          if (irrigationCurrent.length > 2 || irrigationCurrent.length == 0) {
             errorList.push({ text: 'Select up to 2 systems currently used to irrigate', href: '#irrigationCurrent' })
           }
-          if (irrigationPlanned.length > 2) {
+          if (irrigationPlanned.length > 2 || irrigationPlanned.length == 0) {
             errorList.push({ text: 'Select up to 2 systems that will be used to irrigate', href: '#irrigationPlanned' })
           }
+
           return h.view(
             viewTemplate,
             createModel(currentlyIrrigating, errorList, irrigationCurrent, irrigationPlanned, getYarValue(request, 'current-score'))
