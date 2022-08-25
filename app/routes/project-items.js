@@ -39,8 +39,7 @@ function createModel (errorList, backLink, projectInfrastucture, projectEquipmen
           'Pumphouse',
           'Underground water distribution main and hydrants',
           'Electricity installation for pumphouse',
-          'Water meter',
-          'Water storage tanks'
+          'Water meter'
         ]
       ),
       ...(errorList ? { errorMessage: { text: errorList[0].text } } : {})
