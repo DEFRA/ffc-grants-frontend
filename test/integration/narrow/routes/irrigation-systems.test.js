@@ -106,6 +106,25 @@ describe('Irrigation syatems page', () => {
     expect(postResponse.payload).toContain('Select up to 2 systems that will be used to irrigate')
   })
 
+  it('should display the error summary if more than two options are selected in irrigation current and none in irrigation planned', async () => {
+    const postOptions = {
+      method: 'POST',
+      url: `${global.__URLPREFIX__}/irrigation-systems`,
+      payload: {
+        irrigationCurrent: ['some option-1', 'some option-2', 'some option-3'],
+        irrigationPlanned:[],
+        crumb: crumbToken
+      },
+      headers: {
+        cookie: 'crumb=' + crumbToken
+      }
+    }
+
+    const postResponse = await global.__SERVER__.inject(postOptions)
+    expect(postResponse.payload).toContain('There is a problem')
+    expect(postResponse.payload).toContain('Select up to 2 systems currently used to irrigate')
+    expect(postResponse.payload).toContain('Select up to 2 systems that will be used to irrigate')
+  })
   it('should display the current irrrigation systems question if the user selected YES for currently irrigating', async () => {
     const options = {
       method: 'GET',
