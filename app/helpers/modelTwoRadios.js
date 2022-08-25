@@ -17,6 +17,9 @@ const createModelTwoRadios = (
         classes: 'govuk-fieldset__legend--l'
       }
     },
+    hint: {
+      text: 'The location of the project'
+    },
     items: setLabelData(data, [values.valueOne, values.valueTwo]),
     ...(errorList ? { errorMessage: { text: errorList[0].text } } : {})
   }
