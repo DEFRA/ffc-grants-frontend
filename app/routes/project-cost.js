@@ -24,14 +24,16 @@ function createModel (errorList, projectCost, projectItemsList) {
         text: '£'
       },
       label: {
-        text: 'What is the estimated cost of the items?',
+        text: 'What is the total estimated cost of the items?',
         classes: 'govuk-label--l',
         isPageHeading: true
       },
       hint: {
         html: `
-          You can only apply for a grant of up to 40% of the estimated costs.
-          <br/>Do not include VAT.
+          You can only apply for a grant of up to 40% of the estimated costs. 
+          <br/>The minimum grant you can apply for this project is £35,000 (40% of £87,500).
+          <br/>The maximum grant is £500,000.
+          <br/><br/>Do not include VAT.
           <br/><br/>Enter amount, for example 95,000`
       },
       value: projectCost,
