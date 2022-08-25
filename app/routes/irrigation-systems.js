@@ -81,8 +81,8 @@ module.exports = [
       validate: {
         options: { abortEarly: false },
         payload: Joi.object({
-          irrigationCurrent: Joi.any().required(),
-          irrigationPlanned: Joi.any().required(),
+          irrigationCurrent: Joi.array().max(2).single().required(),
+          irrigationPlanned: Joi.array().max(2).single().required(),
           results: Joi.any()
         }),
         failAction: (request, h, err) => {
@@ -122,10 +122,10 @@ module.exports = [
         const currentlyIrrigating = getYarValue(request, 'currentlyIrrigating') || null
 
         if (irrigationCurrent.length > 2 || irrigationPlanned.length > 2) {
-          if (irrigationCurrent.length > 2 || irrigationCurrent.length == 0) {
+          if (irrigationCurrent.length > 2) {
             errorList.push({ text: 'Select up to 2 systems currently used to irrigate', href: '#irrigationCurrent' })
           }
-          if (irrigationPlanned.length > 2 || irrigationPlanned.length == 0) {
+          if (irrigationPlanned.length > 2) {
             errorList.push({ text: 'Select up to 2 systems that will be used to irrigate', href: '#irrigationPlanned' })
           }
 
