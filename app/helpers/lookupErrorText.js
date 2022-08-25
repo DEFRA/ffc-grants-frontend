@@ -7,7 +7,7 @@ const errors = {
   'error.waterSourceCurrent.any.required': 'Select up to 2 options for where your current irrigation water comes from',
   'error.waterSourcePlanned.any.required': 'Select up to 2 options for where your irrigation water will come from',
   'error.projectStarted.any.required': 'Select whether you have started work on the project',
-  'error.landOwnership.any.required': 'Select yes if the planned project is on land the farm business owns',
+  'error.landOwnership.any.required': 'Select yes if the land will have a tenancy agreement in place for 5 years after the final grant payment',
   'error.irrigationPlanned.any.required': 'Select up to 2 systems that will be used to irrigate',
   'error.irrigationCurrent.any.required': 'Select up to 2 systems currently used to irrigate',
   'error.tenancyLength.any.required': 'Select yes if the land has a tenancy agreement in place until 2026 or after',
