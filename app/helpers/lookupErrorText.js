@@ -26,6 +26,7 @@ const errors = {
   'error.legalStatus.string.base': 'Select the legal status of the farm business',
   'error.projectName.any.required': 'Enter a project name',
   'error.projectName.string.empty': 'Enter a project name',
+  'error.projectName.string.max': 'Name must be 100 characters or fewer',
   'error.numberEmployees.any.required': 'Enter the number of employees',
   'error.numberEmployees.string.empty': 'Enter the number of employees',
   'error.numberEmployees.string.pattern.base': 'Number of employees must be a whole number, like 305',
