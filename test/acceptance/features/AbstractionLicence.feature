@@ -9,6 +9,7 @@
 #              And I click on Continue button
 #              And I pause for 500ms
 #              And I click on CountryYes button
+#              And I click on Continue button 
 #              And I pause for 500ms
 #              When I click on the element "#planningPermission"   
 #              And I click on Continue button 

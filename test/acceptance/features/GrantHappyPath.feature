@@ -127,6 +127,7 @@ Feature: Grant
         And I pause for 500ms
         Then I expect that the url contains "/country"
         When I click on CountryYes button
+        And I click on Continue button
         And I pause for 500ms
         Then I expect that the url contains "/planning-permission"
         When I click on "<permission>" button
