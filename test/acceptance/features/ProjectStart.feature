@@ -10,10 +10,6 @@ Feature: ProjectStart
 #              And I pause for 500ms
 #              And I click on CountryYes button
 #              And I pause for 500ms
-#              And I clear the inputfield "#projectPostcode"
-#              And I add "m24 4au" to the inputfield "#projectPostcode"
-#              And I click on Continue button
-#              And I pause for 500ms
 #              And I click on "<permission>" button
 #              And I click on Continue button 
 #              And I pause for 500ms 
@@ -37,10 +33,6 @@ Feature: ProjectStart
 #              And I click on Continue button
 #              And I pause for 500ms
 #              And I click on CountryYes button
-#              And I pause for 500ms
-#              And I clear the inputfield "#projectPostcode"
-#              And I add "m24 4au" to the inputfield "#projectPostcode"
-#              And I click on Continue button
 #              And I pause for 500ms
 #              And I click on the element "#planningPermission" 
 #              And I click on Continue button 
