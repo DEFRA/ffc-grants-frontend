@@ -90,7 +90,7 @@
 #             #  And I click on Continue button
 #             #  And I pause for 500ms
 #             #  Then I expect that the url contains "/SSSI"
-#             #  When I click the "<SSSI>" button
+#             #  When I click the "<sSSI>" button
 #             #  And I click on Continue button
 #             #  And I pause for 500ms
 #             #  Then I expect that the url contains "/abstraction-licence"
