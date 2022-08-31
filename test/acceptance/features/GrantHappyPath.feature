@@ -206,7 +206,12 @@ Feature: Grant
         When I click on the button "#btnGetScore"
         And I pause for 700ms
         Then I expect that the url contains "/score"
-        And I pause for 500ms
+        Then I expect that element "//main[@id='main-content']/div/div[2]/div/table/tbody/tr/td" contains the text "<productImpact>"
+        Then I expect that element "//tr[3]/td " contains the text "<currentLandIrrig>"  
+        Then I expect that element "//tr[4]/td " contains the text "<currentWaterSource>"
+        Then I expect that element "//tr[5]/td " contains the text "<currentIrrigSystems>"
+        Then I expect that element "//tr[6]/td " contains the text "<productivityScore>"
+        Then I expect that element "//tr[7]/td " contains the text "<waterSharing>"
         And I click on Continue button
         And I pause for 500ms
         Then I expect that the url contains "/business-details"
