@@ -100,7 +100,7 @@ Feature: Grant
     #     When I click on the button "#btnGetScore"
     #     And I pause for 700ms
     #     Then I expect that the url contains "/score"
-
+    
 
     # Scenario: Reject Cookies
     #     Given I open the url "/start"
@@ -113,8 +113,9 @@ Feature: Grant
     Scenario Outline: Submittion of grant application
         Given I open the url "/water/start"
         And I pause for 500ms
+        And I delete the cookies
         Then I expect that element "h1" contains the text "Check if you can apply for a Farming Transformation Fund water management grant" 
-        #Then I expect that element "#h1.govuk-heading-l" contains the text "Check if you can apply for a Farming Transformation Fund water management grant"
+        ##Then I expect that element "#h1.govuk-heading-l" contains the text "Check if you can apply for a Farming Transformation Fund water management grant"
         When I click on the link "Start now"
         Then I expect that the url contains "/farming-type"
         When I click on the element "<cropType>"  
@@ -163,7 +164,7 @@ Feature: Grant
         And I click on Continue button
         And I pause for 500ms
         Then I expect that the url contains "/SSSI"
-        And I pause for 500ms
+        And I pause for 600ms
         When I click the "<SSSI>" button
         And I click on Continue button
         And I pause for 500ms
@@ -174,7 +175,7 @@ Feature: Grant
         Then I expect that the url contains "/project-summary"
         When I click on project "<projectSummary>" button
         And I click on Continue button
-        And I pause for 500ms
+        And I pause for 600ms
         Then I expect that the url contains "/irrigated-crops" 
         When I click on crops "<cropsIrrigated>" button
         And I click on Continue button
@@ -271,9 +272,9 @@ Feature: Grant
         Then I expect that the url contains "/confirmation"                                
         Examples:
         |cropType      |trades        |permission         |preparatoryWork |projectItems     |SSSI  |licence   |projectSummary            |cropsIrrigated    |hectare_1|hectare_2|waterSource_Current  |waterSource_Target   |irrigationSystem_Current   |irrigationSystem_Target|productivity                        |overllscore|productImpact|currentLandIrrig|currentWaterSource|currentIrrigSystems|productivityScore|waterSharing|
-      #  |#farmingType  |trust         |notNeededPermission|yesPrepWork     |engrFees         | yes  |secured   |improveAndIntroIrrigation |croppingIrrigation|  101    | 200     |RainWater&MainsWaterC|Peakflow&SummerWaterP|currentTrickleAndRain      |plannedMistAndBoom     |maintainProductivity&high-valueCrops|Average    |Average      |Strong          |Average           |Average            |Average          | Strong     |
+        |#farmingType  |trust         |notNeededPermission|yesPrepWork     |engrFees         | yes  |secured   |improveAndIntroIrrigation |croppingIrrigation|  101    | 200     |RainWater&MainsWaterC|Peakflow&SummerWaterP|currentTrickleAndRain      |plannedMistAndBoom     |maintainProductivity&high-valueCrops|Average    |Average      |Strong          |Average           |Average            |Average          | Strong     |
         |#farmingType  |sole          |notNeededPermission|yesPrepWork     |construction     | yes  |notNeeded |changeWater&IncreaseIrrig |cropIrrigation    |  100    | 101     |PeakFlow&MainsWaterC |RainWater&BoreHoleP  |currentMist&Rain           |plannedEbbAndCapillary |increasedYield&improvedQuality      | Average   | Strong      | Strong         | Average          | Average           | Average         | Strong     |
-      # |#farmingType-2|partnership   |secured            |noWorkDoneYet   |overFlow         | no   |secured   |changeWater&ImproveIrrig  |croppingIrrigation|  50     | 50      |PeakFlow&RainWaterC  |SummerWater&BoreHoleP|currentTrickle&Mist        |plannedMistAndEbb      |high-valueCrops&ImprovedQuality     | Weak      | Strong      | Strong         | Weak             | Average           | Average         | Strong     |
+     #   |#farmingType-2|partnership   |secured            |noWorkDoneYet   |overFlow         | no   |secured   |changeWater&ImproveIrrig  |croppingIrrigation|  50     | 50      |PeakFlow&RainWaterC  |SummerWater&BoreHoleP|currentTrickle&Mist        |plannedMistAndEbb      |high-valueCrops&ImprovedQuality     | Weak      | Strong      | Strong         | Weak             | Average           | Average         | Strong     |
      #   |#farmingType-2|charity       |secured            |noWorkDoneYet   |abstractonPump   | no   |notNeeded |improve&IntroIrrigation   |cropIrrigation    |  40     | 41      |PeakFlow&RainWaterC  |BoreHole&MainP       |currentMist&Ebb            |plannedEbbAndSprinklers|high-valueCrops&protectedCrops      | Weak      | Average     | Strong         | Weak             | Average           | Strong          | Weak       |     
     #   |#farmingType  |limitedCompany|notNeededPermission|yesPrepWork     |syntheticliner   | yes  |secured   |intro&increaseIrrigation  |fruitIrrigation   |  30     | 70      |PeakFlow&RainWaterC  |SummerWater&MainP    |currentEbbAndSprinklers    |plannedSprinklers&Capi |maintainProductivity&high-valueCrops| Weak      | Weak        | Strong         | Weak             | Average           | Average         | Strong     |
     #   |#farmingType-2|liaPartnership|secured            |noWorkDoneYet   |synLinedReservoir| no   |secured   |improve&IncreaseIrrigation|fruitIrrigation   |  30     | 40      |RainWater&BoreHoleC  |SummerWater&BoreHoleP|currentSprinklers&Capillary|plannedBoom&Capillary  |improvedQuality&maintainProductivity| Weak      | Average     | Strong         | Weak             | Average           | Weak            | Weak       |
