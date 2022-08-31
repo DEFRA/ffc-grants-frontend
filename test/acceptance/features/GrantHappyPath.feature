@@ -206,7 +206,7 @@ Feature: Grant
         When I click on the button "#btnGetScore"
         And I pause for 700ms
         Then I expect that the url contains "/score"
-        Then I expect that element "//tr[7]/th/ul/li" contains the text "Yes"
+        Then I expect that element "//tr[6]/th/ul/li" contains the text "Yes"
         Then I expect that element "//main/div/div/div/div/h2" contains the text "<overllscore>"
         Then I expect that element "//main[@id='main-content']/div/div[2]/div/table/tbody/tr/td" contains the text "<productImpact>"
         Then I expect that element "//tr[3]/td " contains the text "<currentLandIrrig>"  
