@@ -206,7 +206,8 @@ Feature: Grant
         When I click on the button "#btnGetScore"
         And I pause for 700ms
         Then I expect that the url contains "/score"
-        When I click on Continue button
+        And I pause for 500ms
+        And I click on Continue button
         And I pause for 500ms
         Then I expect that the url contains "/business-details"
         When I clear the inputfield "#projectName"
