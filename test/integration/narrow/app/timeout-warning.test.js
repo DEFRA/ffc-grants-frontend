@@ -9,8 +9,8 @@ jest.mock('dialog-polyfill', () => ({
     querySelector: jest.fn((param) => (`mqs_${param}`)),
     getAttribute: jest.fn((param) => null)
   }
-  const origMockModule = mockModule
-  
+const origMockModule = mockModule
+
   // mock document & window - DOM global values
   const { JSDOM } = require('jsdom')
   const dom = new JSDOM()
