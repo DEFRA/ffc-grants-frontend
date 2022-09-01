@@ -9,10 +9,7 @@
 #              And I click on Continue button
 #              And I pause for 500ms
 #              And I click on CountryYes button
-#              And I pause for 500ms
-#              And I clear the inputfield "#projectPostcode"
-#              And I add "m24 4au" to the inputfield "#projectPostcode"
-#              And I click on Continue button
+#              And I click on Continue button 
 #              And I pause for 500ms
 #              When I click on the element "#planningPermission"   
 #              And I click on Continue button 
@@ -93,7 +90,7 @@
 #             #  And I click on Continue button
 #             #  And I pause for 500ms
 #             #  Then I expect that the url contains "/SSSI"
-#             #  When I click the "<SSSI>" button
+#             #  When I click the "<sSSI>" button
 #             #  And I click on Continue button
 #             #  And I pause for 500ms
 #             #  Then I expect that the url contains "/abstraction-licence"

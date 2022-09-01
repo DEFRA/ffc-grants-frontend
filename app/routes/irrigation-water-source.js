@@ -81,8 +81,8 @@ module.exports = [
       validate: {
         options: { abortEarly: false },
         payload: Joi.object({
-          waterSourceCurrent: Joi.any().required(),
-          waterSourcePlanned: Joi.any().required(),
+          waterSourceCurrent: Joi.array().max(2).single().required(),
+          waterSourcePlanned: Joi.array().max(2).single().required(), 
           results: Joi.any()
 
         }),

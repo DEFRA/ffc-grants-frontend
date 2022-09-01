@@ -12,6 +12,8 @@ const cacheConfig = require('./config/cache')
 const authConfig = require('./config/auth')
 const catbox = cacheConfig.useRedis ? require('@hapi/catbox-redis') : require('@hapi/catbox-memory')
 
+require('dotenv').config()
+
 async function createServer () {
   const server = hapi.server({
     port: process.env.PORT,

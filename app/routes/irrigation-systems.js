@@ -81,8 +81,8 @@ module.exports = [
       validate: {
         options: { abortEarly: false },
         payload: Joi.object({
-          irrigationCurrent: Joi.any().required(),
-          irrigationPlanned: Joi.any().required(),
+          irrigationCurrent: Joi.array().max(2).single().required(),
+          irrigationPlanned: Joi.array().max(2).single().required(),
           results: Joi.any()
         }),
         failAction: (request, h, err) => {
@@ -128,6 +128,7 @@ module.exports = [
           if (irrigationPlanned.length > 2) {
             errorList.push({ text: 'Select up to 2 systems that will be used to irrigate', href: '#irrigationPlanned' })
           }
+
           return h.view(
             viewTemplate,
             createModel(currentlyIrrigating, errorList, irrigationCurrent, irrigationPlanned, getYarValue(request, 'current-score'))

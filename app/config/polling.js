@@ -1,4 +1,7 @@
 const Joi = require('joi')
+
+require('dotenv').config()
+
 // Define config schema
 const schema = Joi.object({
   interval: Joi.number().default(60),
