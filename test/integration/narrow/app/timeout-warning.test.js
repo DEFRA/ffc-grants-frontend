@@ -24,16 +24,12 @@ const TimeoutWarning = require('../../../../app/templates/components/timeout-war
 
 describe('Timeout Warning', () => {
 
-  beforeEach(() => {
-    jest.resetAllMocks();
-  });
-
   afterAll(() => {
     jest.resetAllMocks()
     TimeoutWarning.close()
   })
   
-  xit('test TimeoutWarning constructor', () => {
+  it('test TimeoutWarning constructor', () => {
     expect(TimeoutWarning).toBeDefined()
 
     jest.spyOn(document, 'querySelector').mockImplementation((param) => (`dqs_${param}`))
@@ -111,7 +107,7 @@ describe('Timeout Warning', () => {
     mockModule = origMockModule
   })
 
-  it('test TimeoutWarning.countIdleTime()', () => {
+  xit('test TimeoutWarning.countIdleTime()', () => {
     expect(new TimeoutWarning(mockModule).countIdleTime()).toBe(undefined)
   })
 
@@ -189,7 +185,7 @@ describe('Timeout Warning', () => {
     mockModule = origMockModule
   })
 
-  it('test TimeoutWarning.saveLastFocusedEl()', () => {
+  xit('test TimeoutWarning.saveLastFocusedEl()', () => {
     jest.spyOn(document, 'querySelector').mockImplementation((param) => ('mock-dqs'))
 
     let result = new TimeoutWarning(mockModule)
@@ -202,7 +198,7 @@ describe('Timeout Warning', () => {
     expect(result.$lastFocusedEl).toBe(null)
   })
 
-  it('test TimeoutWarning.makePageContentInert()', () => {
+  xit('test TimeoutWarning.makePageContentInert()', () => {
     jest.spyOn(document, 'querySelector').mockImplementation((param) => null)
     expect(new TimeoutWarning(mockModule).makePageContentInert()).toBe(undefined)
 
@@ -212,7 +208,7 @@ describe('Timeout Warning', () => {
     expect(new TimeoutWarning(mockModule).makePageContentInert()).toBe(undefined)
   })
 
-  it('test TimeoutWarning.removeInertFromPageContent()', () => {
+  xit('test TimeoutWarning.removeInertFromPageContent()', () => {
     jest.spyOn(document, 'querySelector').mockImplementation((param) => null)
     expect(new TimeoutWarning(mockModule).removeInertFromPageContent()).toBe(undefined)
 
@@ -222,11 +218,11 @@ describe('Timeout Warning', () => {
     expect(new TimeoutWarning(mockModule).removeInertFromPageContent()).toBe(undefined)
   })
 
-  it('test TimeoutWarning.isDialogOpen()', () => {
+  xit('test TimeoutWarning.isDialogOpen()', () => {
     expect(new TimeoutWarning(mockModule).isDialogOpen()).toBe(undefined)
   })
 
-  it('test TimeoutWarning.closeDialog()', () => {
+  xit('test TimeoutWarning.closeDialog()', () => {
     mockModule = origMockModule
     expect(new TimeoutWarning(mockModule).closeDialog()).toBe(undefined)
 
@@ -245,11 +241,11 @@ describe('Timeout Warning', () => {
     expect(new TimeoutWarning(mockModule).closeDialog()).toBe(undefined)
   })
 
-  it('test TimeoutWarning.clearTimers', () => {
+  xit('test TimeoutWarning.clearTimers', () => {
     expect(new TimeoutWarning(mockModule).clearTimers()).toBe(undefined)
   })
 
-  it('test TimeoutWarning.disableBackButtonWhenOpen()', () => {
+  xit('test TimeoutWarning.disableBackButtonWhenOpen()', () => {
     mockModule = origMockModule
     expect(new TimeoutWarning(mockModule).disableBackButtonWhenOpen()).toBe(undefined)
 
@@ -274,7 +270,7 @@ describe('Timeout Warning', () => {
     expect(new TimeoutWarning(mockModule).escClose(param)).toBe(undefined)
   })
 
-  it('test TimeoutWarning.setLastActiveTimeOnServer()', () => {
+  xit('test TimeoutWarning.setLastActiveTimeOnServer()', () => {
     const result = new TimeoutWarning(mockModule)
     expect(result).toBeDefined()
     expect(result.setLastActiveTimeOnServer()).toBe(0)
