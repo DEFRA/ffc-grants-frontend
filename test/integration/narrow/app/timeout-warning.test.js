@@ -30,6 +30,7 @@ describe('Timeout Warning', () => {
 
   afterAll(() => {
     jest.resetAllMocks()
+    TimeoutWarning.close()
   })
   
   xit('test TimeoutWarning constructor', () => {
