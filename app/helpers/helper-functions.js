@@ -175,10 +175,7 @@ function findErrorList ({ details }, inputFields) {
   ))
 }
 
-const URL_REGEX = /^(?:\w+:)?\/\/([^\s.]+\.\S{2}|localhost[:?\d]*)\S*$/
-function isURL (str) {
-  return URL_REGEX.test(str)
-}
+
 
 const getErrorList = (fields, err, phoneErrors) => {
   const errorList = []
@@ -209,7 +206,6 @@ module.exports = {
   fetchListObjectItems,
   findErrorList,
   formatApplicationCode,
-  isURL,
   getSbiHtml,
   getErrorList
 }

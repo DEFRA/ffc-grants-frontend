@@ -6,7 +6,7 @@ require('dotenv').config()
 const schema = Joi.object({
   interval: Joi.number().default(60),
   retries: Joi.number().default(10),
-  host: Joi.string().default('http://host.docker.internal:3001')
+  host: Joi.string().default('https://host.docker.internal:3001')
 
 })
 
