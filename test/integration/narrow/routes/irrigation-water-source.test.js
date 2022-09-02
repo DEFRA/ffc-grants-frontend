@@ -40,8 +40,8 @@ describe('Irrigation water source page', () => {
     varList = { ...varListTemplate }
   })
 
-  afterAll(() => {
-    jest.resetAllMocks()
+  afterEach(() => {
+    jest.clearAllMocks()
   })
 
   it('should load page successfully', async () => {
