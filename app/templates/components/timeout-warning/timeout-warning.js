@@ -1,4 +1,4 @@
-import dialogPolyfill from 'dialog-polyfill'
+const dialogPolyfill = require('dialog-polyfill')
 const REDIRECT_MESSAGE = 'You are about to be redirected.'
 const EXTRA_TEXT = ' We do this to keep your information secure.'
 
@@ -286,4 +286,4 @@ TimeoutWarning.prototype.setLastActiveTimeOnServer = function () {
   return 0
 }
 
-export default TimeoutWarning
+module.exports = TimeoutWarning
