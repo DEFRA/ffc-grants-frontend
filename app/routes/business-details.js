@@ -29,7 +29,7 @@ function createModel (errorList, businessDetails, sbiHtml, hasDetails) {
     inputProjectName: {
       id: 'projectName',
       name: 'projectName',
-      classes: '',
+      classes: 'govuk-input--width-20',
       label: {
         text: 'Project name',
         classes: 'govuk-label'
@@ -43,7 +43,7 @@ function createModel (errorList, businessDetails, sbiHtml, hasDetails) {
     inputBusinessName: {
       id: 'businessName',
       name: 'businessName',
-      classes: '',
+      classes: 'govuk-input--width-20',
       label: {
         text: 'Business name',
         classes: 'govuk-label'
@@ -90,7 +90,7 @@ function createModel (errorList, businessDetails, sbiHtml, hasDetails) {
       },
       fieldset: {
         legend: {
-          text: 'Single Business Identifier (SBI)',
+          text: 'Single Business Identifier (SBI) (Optional)',
           isPageHeading: false,
           classes: 'govuk-fieldset__legend--m'
         }
@@ -153,7 +153,7 @@ module.exports = [
       validate: {
         options: { abortEarly: false },
         payload: Joi.object({
-          projectName: Joi.string().required(),
+          projectName: Joi.string().max(100).required(),
           businessName: Joi.string().max(100).required(),
           numberEmployees: Joi.string().regex(NUMBER_REGEX).max(7).required(),
           businessTurnover: Joi.string().regex(NUMBER_REGEX).max(9).required(),

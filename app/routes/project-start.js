@@ -33,7 +33,7 @@ function createModel (errorList, data, backLink) {
             text: 'Yes, preparatory work',
             value: 'Yes, preparatory work',
             hint: {
-              text: 'For example, quotes from suppliers, applying for planning permission'
+              html: '<div class="govuk-hint govuk-radios__hint" id="projectStarted-2-item-hint" >For example, quotes from suppliers, applying for planning permission</div>'
             }
           },
           {

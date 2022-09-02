@@ -19,10 +19,13 @@ function createModel (errorList, data) {
       name: 'tenancyLength',
       fieldset: {
         legend: {
-          text: 'Do you have a tenancy agreement until 2027 or after?',
+          text: 'Do you a tenancy agreement for 5 years after the final grant payment?',
           isPageHeading: true,
           classes: 'govuk-fieldset__legend--l'
         }
+      },
+      hint: {
+        text: 'The location of the project'
       },
       items: setLabelData(data, ['Yes', 'No']),
       ...(errorList ? { errorMessage: { text: errorList[0].text } } : {})
