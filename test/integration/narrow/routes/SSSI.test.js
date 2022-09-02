@@ -48,6 +48,34 @@ describe('SSSI page', () => {
     expect(response.statusCode).toBe(200)
   })
 
+  it('should load page successfully if sssi missing', async () => {
+    varList = {
+      farmingType: 'some fake crop',
+      legalStatus: 'fale status',
+      inEngland: 'Yes',
+      projectStarted: 'No',
+      landOwnership: 'Yes',
+      projectItemsList: {
+        projectEquipment: ['Boom', 'Trickle']
+      },
+      projectCost: '12345678',
+      remainingCost: 14082.00,
+      payRemainingCosts: 'Yes',
+      planningPermission: 'Will not be in place by 31 December 2022',
+      abstractionLicence: 'Not needed',
+      sSSI: undefined,
+      'current-score': ''
+
+    }
+    const options = {
+      method: 'GET',
+      url: `${global.__URLPREFIX__}/SSSI`
+    }
+
+    const response = await global.__SERVER__.inject(options)
+    expect(response.statusCode).toBe(200)
+  })
+
   it('should redirect to project summary page when theres score', async () => {
     varList['current-score'] = true
     const options = {
