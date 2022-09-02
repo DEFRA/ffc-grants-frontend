@@ -87,7 +87,19 @@ describe('Irrigation syatems page', () => {
     expect(postResponse.statusCode).toBe(302)
     expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/productivity`)
   })
+  it('redirects to irrigation-systems if user irrigationCurrent, irrigationPlanned and currentlyIrrigating has not been saved', async () => {
+    const postOptions = {
+      method: 'POST',
+      url: `${global.__URLPREFIX__}/irrigation-systems`,
+      payload: { irrigationCurrent: undefined, irrigationPlanned: undefined, currentlyIrrigating: undefined, crumb: crumbToken },
+      headers: {
+        cookie: 'crumb=' + crumbToken
+      }
+    }
 
+    const postResponse = await global.__SERVER__.inject(postOptions)
+    expect(postResponse.statusCode).toBe(200)
+  })
   it('should display the error summary if more than two options are selected', async () => {
     const postOptions = {
       method: 'POST',
