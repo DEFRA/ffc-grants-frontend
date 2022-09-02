@@ -88,6 +88,20 @@ describe('Irrigation water source page', () => {
     expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/irrigation-systems`)
   })
 
+  it('redirects to irrigation-water-source if user waterSourceCurrent and waterSourcePlanned have not been saved', async () => {
+    const postOptions = {
+      method: 'POST',
+      url: `${global.__URLPREFIX__}/irrigation-water-source`,
+      payload: { waterSourceCurrent: undefined, waterSourcePlanned: undefined, crumb: crumbToken },
+      headers: {
+        cookie: 'crumb=' + crumbToken
+      }
+    }
+
+    const postResponse = await global.__SERVER__.inject(postOptions)
+    expect(postResponse.statusCode).toBe(200)
+  })
+
   it('should display the error summary if more than two options are selected for each question', async () => {
     const postOptions = {
       method: 'POST',
