@@ -1,4 +1,3 @@
-const { crumbToken } = require('./test-helper')
 const varListTemplate = {
   farmingType: 'some fake crop',
   legalStatus: 'fale status',
@@ -37,12 +36,15 @@ const mockSession = {
 
 jest.mock('../../../../app/helpers/session', () => mockSession)
 describe('Irrigation syatems page', () => {
+
+  const { crumbToken } = require('./test-helper')
+
   beforeEach(() => {
     varList = { ...varListTemplate }
   })
 
-  afterAll(() => {
-    jest.resetAllMocks()
+  afterEach(() => {
+    jest.clearAllMocks()
   })
 
   it('should load page successfully', async () => {
