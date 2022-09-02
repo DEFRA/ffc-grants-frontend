@@ -1,6 +1,6 @@
 const { formatUKCurrency } = require('../helpers/helper-functions')
 const urlPrefix = require('../config/server').urlPrefix
-
+const { getYarValue } = require('../helpers/session')
 const viewTemplate = 'potential-amount'
 const currentPath = `${urlPrefix}/${viewTemplate}`
 const previousPath = `${urlPrefix}/project-cost`
@@ -20,9 +20,8 @@ module.exports = [
     method: 'GET',
     path: currentPath,
     handler: (request, h) => {
-      const calculatedGrant = request.yar.get('calculatedGrant') || null
-      const projectCost = request.yar.get('projectCost') || null
-
+      const calculatedGrant = getYarValue(request, 'calculatedGrant') || null
+      const projectCost =  getYarValue(request, 'projectCost') || null
       if (!calculatedGrant || !projectCost) {
         return h.redirect(previousPath)
       }
