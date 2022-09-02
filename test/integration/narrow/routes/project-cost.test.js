@@ -42,6 +42,30 @@ describe('Project cost page', () => {
     expect(response.statusCode).toBe(200)
   })
 
+  it('should load page successfully if no projectCost', async () => {
+
+    varList = {
+      farmingType: 'some fake crop',
+      legalStatus: 'fale status',
+      inEngland: 'Yes',
+      projectStarted: 'No',
+      landOwnership: 'Yes',
+      projectItemsList: {
+        projectEquipment: ['Boom', 'Trickle']
+      },
+      projectCost: undefined,
+      'current-score': ''
+    }
+
+    const options = {
+      method: 'GET',
+      url: `${global.__URLPREFIX__}/project-cost`
+    }
+
+    const response = await global.__SERVER__.inject(options)
+    expect(response.statusCode).toBe(200)
+  })
+
   it('should redirect to project summary page if theres score', async () => {
     varList['current-score'] = true
     const options = {
@@ -65,6 +89,28 @@ describe('Project cost page', () => {
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
     expect(postResponse.payload).toContain('Enter the estimated cost for the items')
+  })
+
+  it('should return an error message if no option is selected and no projectItemsList', async () => {
+    varList = {
+      farmingType: 'some fake crop',
+      legalStatus: 'fale status',
+      inEngland: 'Yes',
+      projectStarted: 'No',
+      landOwnership: 'Yes',
+      projectItemsList: undefined,
+      projectCost: '1111',
+      'current-score': ''
+    }
+    const postOptions = {
+      method: 'POST',
+      url: `${global.__URLPREFIX__}/project-cost`,
+      payload: { projectCost: '', crumb: crumbToken },
+      headers: { cookie: 'crumb=' + crumbToken }
+    }
+
+    const postResponse = await global.__SERVER__.inject(postOptions)
+    expect(postResponse.statusCode).toBe(302)
   })
 
   it('should return an error message if a string is typed in', async () => {
