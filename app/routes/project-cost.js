@@ -62,7 +62,7 @@ module.exports = [
     method: 'GET',
     path: currentPath,
     handler: (request, h) => {
-      const projectCost = getYarValue(request, 'projectCost') || null
+      const projectCost =  getYarValue(request, 'projectCost') || null
       const projectItemsList = getYarValue(request, 'projectItemsList')
 
       return h.view(viewTemplate, createModel(null, projectCost, projectItemsList))
