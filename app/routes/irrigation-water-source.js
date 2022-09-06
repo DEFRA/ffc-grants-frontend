@@ -123,16 +123,6 @@ module.exports = [
         waterSourcePlanned = [waterSourcePlanned].flat()
         const currentlyIrrigating = getYarValue(request, 'currentlyIrrigating') || null
 
-        if (waterSourceCurrent.length > 2 || waterSourcePlanned.length > 2) {
-          if (waterSourceCurrent.length > 2) {
-            errorList.push({ text: 'Select up to 2 options for where your current irrigation water comes from', href: '#waterSourceCurrent' })
-          }
-          if (waterSourcePlanned.length > 2) {
-            errorList.push({ text: 'Select up to 2 options for where your irrigation water will come from', href: '#waterSourcePlanned' })
-          }
-          return h.view(viewTemplate, createModel(currentlyIrrigating, errorList, waterSourceCurrent, waterSourcePlanned, getYarValue(request, 'current-score')))
-        }
-
         setYarValue(request, 'waterSourceCurrent', waterSourceCurrent)
         setYarValue(request, 'waterSourcePlanned', waterSourcePlanned)
         return results ? h.redirect(scorePath) : h.redirect(nextPath)
