@@ -14,7 +14,7 @@ const errors = {
   'error.irrigationPlanned.array.max': 'Select up to 2 systems that will be used to irrigate',
   'error.irrigationCurrent.any.required': 'Select up to 2 systems currently used to irrigate',
   'error.irrigationCurrent.array.max': 'Select up to 2 systems currently used to irrigate',
-  'error.tenancyLength.any.required': 'Select yes if the land has a tenancy agreement in place until 2026 or after',
+  'error.tenancyLength.any.required': 'Select yes if the land will have a tenancy agreement in place for 5 years after the final grant payment.',
   'error.planningPermission.any.required': 'Select when the project will have planning permission',
   'error.payRemainingCosts.any.required': 'Select yes if you can pay the remaining costs without using any other grant money',
   'error.projectCost.any.required': 'Enter the estimated cost for the items',
