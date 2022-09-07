@@ -1,6 +1,6 @@
 {
   "name": "ffc-grants-frontend",
-  "version": "1.99.9",
+  "version": "2.0.0",
   "description": "Frontend Grants microservice.",
   "main": "app/index.js",
   "scripts": {
@@ -8,7 +8,7 @@
     "build:watch": "webpack --watch",
     "lint": "standard",
     "lint-fix": "standard --fix",
-    "test": "jest --runInBand",
+    "test": "jest --runInBand --detectOpenHandles --forceExit",
     "test:watch": "jest --watch",
     "start:watch": "npm-run-all --parallel build:watch start:nodemon",
     "start:nodemon": "nodemon --verbose --inspect=0.0.0.0 --ext js,njk --legacy-watch app/index.js"
