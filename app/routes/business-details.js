@@ -143,7 +143,6 @@ module.exports = [
         }),
         failAction: (request, h, err) => {
           const errorList = []
-          let sbiError
           const fields = ['projectName', 'businessName', 'numberEmployees', 'businessTurnover', 'sbi']
           fields.forEach(field => {
             const fieldError = findErrorList(err, [field])[0]
