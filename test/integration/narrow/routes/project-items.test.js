@@ -31,6 +31,27 @@ describe('Irrigation water source page', () => {
     jest.clearAllMocks()
   })
 
+  it('redirects to project-items if user landOwnership has not been saved', async () => {
+    varList = {
+      farmingType: 'some fake crop',
+      legalStatus: 'fale status',
+      inEngland: 'Yes',
+      projectStarted: 'No',
+      landOwnership: undefined,
+      projectItemsList: {
+        projectEquipment: ['Boom', 'Trickle']
+      },
+      'current-score': ''
+    }
+
+    const options = {
+      method: 'GET',
+      url: `${global.__URLPREFIX__}/potential-amount`
+    }
+
+    const response = await global.__SERVER__.inject(options)
+    expect(response.statusCode).toBe(200)
+  })
   it('should load page successfully', async () => {
     const options = {
       method: 'GET',
@@ -67,7 +88,23 @@ describe('Irrigation water source page', () => {
     expect(postResponse.statusCode).toBe(200)
     expect(postResponse.payload).toContain('Select all the items your project needs')
   })
+  it('redirects to project-summary if user projectInfrastucture or projectEquipment or projectTechnology has not been saved', async () => {
+    varList = {
+      projectInfrastucture: undefined,
+      projectEquipment : undefined,
+      projectTechnology : undefined
+    }
 
+    const options = {
+      method: 'GET',
+      url: `${global.__URLPREFIX__}/project-items`
+    }
+
+    const response = await global.__SERVER__.inject(options)
+    expect(response.statusCode).toBe(302)
+    expect(response.headers.location).toBe(`${global.__URLPREFIX__}/project-summary`)
+
+  })
   it('should store user response from column: "projectInfrastucture" and redirect to project cost page', async () => {
     const postOptions = {
       method: 'POST',
