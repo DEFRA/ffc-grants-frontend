@@ -175,8 +175,6 @@ function findErrorList ({ details }, inputFields) {
   ))
 }
 
-
-
 const getErrorList = (fields, err, phoneErrors) => {
   const errorList = []
 
