@@ -24,8 +24,9 @@ const TimeoutWarning = require('../../../../app/templates/components/timeout-war
 
 describe('Timeout Warning', () => {
   afterAll(() => {
-    jest.resetAllMocks()
     TimeoutWarning.close()
+    jest.resetAllMocks()
+   
   })
 
   it('test TimeoutWarning constructor', () => {
