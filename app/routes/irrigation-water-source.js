@@ -11,7 +11,6 @@ const nextPath = `${urlPrefix}/irrigation-systems`
 const scorePath = `${urlPrefix}/score`
 
 function createModel (currentlyIrrigating, errorList, currentData, plannedData, hasScore) {
-  currentlyIrrigating = currentlyIrrigating.toLowerCase()
   return {
     backLink: previousPath,
     formActionPage: currentPath,
@@ -89,7 +88,6 @@ module.exports = [
         failAction: (request, h, err) => {
           gapiService.sendValidationDimension(request)
           let { waterSourceCurrent, waterSourcePlanned } = request.payload
-          const currentlyIrrigating = getYarValue(request, 'currentlyIrrigating') || null
           const errorList = []
           const [
             waterSourceCurrentError, waterSourcePlannedError
@@ -112,7 +110,7 @@ module.exports = [
           waterSourceCurrent = waterSourceCurrent ? [waterSourceCurrent].flat() : waterSourceCurrent
           waterSourcePlanned = waterSourcePlanned ? [waterSourcePlanned].flat() : waterSourcePlanned
 
-          return h.view(viewTemplate, createModel(currentlyIrrigating, errorList, waterSourceCurrent, waterSourcePlanned, getYarValue(request, 'current-score'))).takeover()
+          return h.view(viewTemplate, createModel(!!getYarValue(request, 'currentlyIrrigating'), errorList, waterSourceCurrent, waterSourcePlanned, getYarValue(request, 'current-score'))).takeover()
         }
       },
       handler: (request, h) => {
@@ -121,7 +119,6 @@ module.exports = [
 
         waterSourceCurrent = [waterSourceCurrent].flat()
         waterSourcePlanned = [waterSourcePlanned].flat()
-        const currentlyIrrigating = getYarValue(request, 'currentlyIrrigating') || null
 
         if (waterSourceCurrent.length > 2 || waterSourcePlanned.length > 2) {
           if (waterSourceCurrent.length > 2) {
@@ -130,7 +127,7 @@ module.exports = [
           if (waterSourcePlanned.length > 2) {
             errorList.push({ text: 'Select up to 2 options for where your irrigation water will come from', href: '#waterSourcePlanned' })
           }
-          return h.view(viewTemplate, createModel(currentlyIrrigating, errorList, waterSourceCurrent, waterSourcePlanned, getYarValue(request, 'current-score')))
+          return h.view(viewTemplate, createModel(!!getYarValue(request, 'currentlyIrrigating'), errorList, waterSourceCurrent, waterSourcePlanned, getYarValue(request, 'current-score')))
         }
 
         setYarValue(request, 'waterSourceCurrent', waterSourceCurrent)
