@@ -16,7 +16,7 @@ const varListTemplate = {
   abstractionLicence: 'Not needed',
   project: ['some fake project'],
   irrigatedCrops: 'some crop',
-  currentlyIrrigating: 'yes',
+  currentlyIrrigating: 'Yes',
   irrigatedLandCurrent: '123',
   irrigatedLandTarget: '456',
   waterSourceCurrent: ['some source 1'],
