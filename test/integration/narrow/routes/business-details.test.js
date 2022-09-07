@@ -270,7 +270,6 @@ describe('Project and business details page', () => {
         businessName: 'Business Name',
         numberEmployees: '1234',
         businessTurnover: '5678',
-        inSbi: 'No',
         crumb: crumbToken
       },
       headers: {
@@ -292,7 +291,6 @@ describe('Project and business details page', () => {
         businessName: 'Business Name',
         numberEmployees: '1234',
         businessTurnover: '5678',
-        inSbi: 'Yes',
         sbi: '012345678',
         crumb: crumbToken
       },
