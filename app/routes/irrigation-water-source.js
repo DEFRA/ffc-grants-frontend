@@ -127,7 +127,7 @@ module.exports = [
           if (waterSourcePlanned.length > 2) {
             errorList.push({ text: 'Select up to 2 options for where your irrigation water will come from', href: '#waterSourcePlanned' })
           }
-          return h.view(viewTemplate, createModel(currentlyIrrigating, errorList, waterSourceCurrent, waterSourcePlanned, getYarValue(request, 'current-score')))
+          return h.view(viewTemplate, createModel(!!getYarValue(request, 'currentlyIrrigating'), errorList, waterSourceCurrent, waterSourcePlanned, getYarValue(request, 'current-score')))
         }
 
         setYarValue(request, 'waterSourceCurrent', waterSourceCurrent)
