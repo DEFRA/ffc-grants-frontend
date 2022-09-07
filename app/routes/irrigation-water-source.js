@@ -10,15 +10,15 @@ const previousPath = `${urlPrefix}/irrigated-land`
 const nextPath = `${urlPrefix}/irrigation-systems`
 const scorePath = `${urlPrefix}/score`
 
-function createModel (currentlyIrrigating, errorList, currentData, plannedData, hasScore) {
+function createModel(currentlyIrrigating, errorList, currentData, plannedData, hasScore) {
   return {
     backLink: previousPath,
     formActionPage: currentPath,
     hasScore,
     ...errorList ? { errorList } : {},
 
-    currentlyIrrigating: (currentlyIrrigating === 'yes'),
-    pageTitle: (currentlyIrrigating === 'yes'
+    currentlyIrrigating: (currentlyIrrigating === 'Yes'),
+    pageTitle: (currentlyIrrigating === 'Yes'
       ? 'Will your water source change?'
       : 'Where will the irrigation water come from?'
     ),
@@ -49,7 +49,7 @@ function createModel (currentlyIrrigating, errorList, currentData, plannedData, 
       name: 'waterSourcePlanned',
       fieldset: {
         legend: {
-          text: currentlyIrrigating === 'yes' ? 'Where will the irrigation water come from?' : ''
+          text: currentlyIrrigating === 'Yes' ? 'Where will the irrigation water come from?' : ''
         }
       },
       hint: {
@@ -69,8 +69,7 @@ module.exports = [
       const currentData = getYarValue(request, 'waterSourceCurrent') || null
       const plannedData = getYarValue(request, 'waterSourcePlanned') || null
 
-      const currentlyIrrigating = getYarValue(request, 'currentlyIrrigating') || null
-      return h.view(viewTemplate, createModel(currentlyIrrigating, null, currentData, plannedData, getYarValue(request, 'current-score')))
+      return h.view(viewTemplate, createModel(getYarValue(request, 'currentlyIrrigating'), null, currentData, plannedData, getYarValue(request, 'current-score')))
     }
   },
   {
@@ -81,7 +80,7 @@ module.exports = [
         options: { abortEarly: false },
         payload: Joi.object({
           waterSourceCurrent: Joi.array().max(2).single().required(),
-          waterSourcePlanned: Joi.array().max(2).single().required(), 
+          waterSourcePlanned: Joi.array().max(2).single().required(),
           results: Joi.any()
 
         }),
@@ -110,25 +109,14 @@ module.exports = [
           waterSourceCurrent = waterSourceCurrent ? [waterSourceCurrent].flat() : waterSourceCurrent
           waterSourcePlanned = waterSourcePlanned ? [waterSourcePlanned].flat() : waterSourcePlanned
 
-          return h.view(viewTemplate, createModel(!!getYarValue(request, 'currentlyIrrigating'), errorList, waterSourceCurrent, waterSourcePlanned, getYarValue(request, 'current-score'))).takeover()
+          return h.view(viewTemplate, createModel(getYarValue(request, 'currentlyIrrigating'), errorList, waterSourceCurrent, waterSourcePlanned, getYarValue(request, 'current-score'))).takeover()
         }
       },
       handler: (request, h) => {
-        const errorList = []
         let { waterSourceCurrent, waterSourcePlanned, results } = request.payload
 
         waterSourceCurrent = [waterSourceCurrent].flat()
         waterSourcePlanned = [waterSourcePlanned].flat()
-
-        if (waterSourceCurrent.length > 2 || waterSourcePlanned.length > 2) {
-          if (waterSourceCurrent.length > 2) {
-            errorList.push({ text: 'Select up to 2 options for where your current irrigation water comes from', href: '#waterSourceCurrent' })
-          }
-          if (waterSourcePlanned.length > 2) {
-            errorList.push({ text: 'Select up to 2 options for where your irrigation water will come from', href: '#waterSourcePlanned' })
-          }
-          return h.view(viewTemplate, createModel(!!getYarValue(request, 'currentlyIrrigating'), errorList, waterSourceCurrent, waterSourcePlanned, getYarValue(request, 'current-score')))
-        }
 
         setYarValue(request, 'waterSourceCurrent', waterSourceCurrent)
         setYarValue(request, 'waterSourcePlanned', waterSourcePlanned)
