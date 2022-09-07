@@ -148,9 +148,6 @@ module.exports = [
           fields.forEach(field => {
             const fieldError = findErrorList(err, [field])[0]
             if (fieldError) {
-              if (field === 'sbi') {
-                sbiError = { text: fieldError, href: `#${field}` }
-              }
               errorList.push({
                 text: fieldError,
                 href: `#${field}`
