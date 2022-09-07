@@ -27,7 +27,7 @@ describe('Water tenancy length page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Select yes if the land has a tenancy agreement in place until 2026 or after')
+    expect(postResponse.payload).toContain('Select yes if the land will have a tenancy agreement in place for 5 years after the final grant payment.')
   })
 
   it('should display info message when user selects "No"', async () => {
