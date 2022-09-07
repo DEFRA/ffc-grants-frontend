@@ -27,7 +27,7 @@ function createModel (errorList, backLink, projectInfrastucture, projectEquipmen
       },
       items: setLabelData(
         projectInfrastucture,
-        ['Construction of dam walls',
+        ['Construction of reservoir walls',
           'Overflow/spillway',
           'Synthetic liner',
           'Abstraction point including pump',
