@@ -19,7 +19,7 @@ describe('Applicant page', () => {
     businessDetails: {
       projectName: 'Project Name',
       businessName: 'Business Name',
-      applying: 'Farmer'
+      applying: 'Applicant'
     }
   }
 
@@ -74,11 +74,11 @@ describe('Applicant page', () => {
     expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/agent-details`)
   })
 
-  it('if applicant: FARMER, should store user response and redirect to farmer details page', async () => {
+  it('if applicant: APPLICANT, should store user response and redirect to farmer details page', async () => {
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/applying`,
-      payload: { applying: 'Farmer', crumb: crumbToken },
+      payload: { applying: 'Applicant', crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
       }
