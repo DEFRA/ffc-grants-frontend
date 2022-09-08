@@ -230,6 +230,7 @@ describe('Farmer details page', () => {
         town: 'MyTown',
         county: 'Devon',
         postcode: 'AA1 1AA',
+        projectPostcode: 'AA1 1AA',
         crumb: crumbToken
       },
       headers: { cookie: 'crumb=' + crumbToken }
@@ -255,6 +256,7 @@ describe('Farmer details page', () => {
         town: 'MyTown',
         county: 'Devon',
         postcode: 'AA1 1AA',
+        projectPostcode: 'AA1 1AA',
         crumb: crumbToken
       },
       headers: { cookie: 'crumb=' + crumbToken }
@@ -280,6 +282,7 @@ describe('Farmer details page', () => {
         town: 'MyTown',
         county: 'Devon',
         postcode: 'AA1 1AA',
+        projectPostcode: 'AA1 1AA',
         crumb: crumbToken
       },
       headers: { cookie: 'crumb=' + crumbToken }
@@ -304,6 +307,7 @@ describe('Farmer details page', () => {
         town: 'MyTown',
         county: 'Devon',
         postcode: 'AA1 1AA',
+        projectPostcode: 'AA1 1AA',
         crumb: crumbToken
       },
       headers: { cookie: 'crumb=' + crumbToken }
@@ -329,6 +333,7 @@ describe('Farmer details page', () => {
         town: 'MyTown',
         county: 'Devon',
         postcode: 'AA1 1AA',
+        projectPostcode: 'AA1 1AA',
         crumb: crumbToken
       },
       headers: { cookie: 'crumb=' + crumbToken }
@@ -352,6 +357,7 @@ describe('Farmer details page', () => {
         town: 'MyTown',
         county: 'Devon',
         postcode: 'AA1 1AA',
+        projectPostcode: 'AA1 1AA',
         crumb: crumbToken
       },
       headers: { cookie: 'crumb=' + crumbToken }
