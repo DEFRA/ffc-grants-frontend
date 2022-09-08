@@ -1,34 +1,34 @@
 // mock dialog-polyfill
 jest.mock('dialog-polyfill', () => ({
-    registerDialog: jest.fn((param) => null)
+  registerDialog: jest.fn((param) => null)
 }))
 const dialogPolyfill = require('dialog-polyfill')
-  
-  // mock module object - parameter of constructor TimeoutWarning
+
+// mock module object - parameter of constructor TimeoutWarning
 let mockModule = {
   querySelector: jest.fn((param) => (`mqs_${param}`)),
   getAttribute: jest.fn((param) => null)
 }
 const origMockModule = mockModule
 
-  // mock document & window - DOM global values
+// mock document & window - DOM global values
 const { JSDOM } = require('jsdom')
 const dom = new JSDOM()
 global.document = dom.window.document
 global.window = dom.window
 global.HTMLDialogElement = dom.window.HTMLDialogElement
 global.navigator = dom.window.navigator
-  
-  // import TimeoutWarning
+
+// import TimeoutWarning
 const TimeoutWarning = require('../../../../app/templates/components/timeout-warning/timeout-warning')
 
 describe('Timeout Warning', () => {
-
   afterAll(() => {
-    jest.resetAllMocks()
     TimeoutWarning.close()
+    jest.resetAllMocks()
+   
   })
-  
+
   it('test TimeoutWarning constructor', () => {
     expect(TimeoutWarning).toBeDefined()
 
@@ -90,7 +90,7 @@ describe('Timeout Warning', () => {
     expect(new TimeoutWarning(mockModule).dialogSupported()).toBe(false)
   })
 
-  xit('test TimeoutWarning.init()', () => {
+  it('test TimeoutWarning.init()', () => {
     dialogPolyfill.registerDialog.mockImplementation((param) => { throw Error('mock-error') })
     expect(new TimeoutWarning(mockModule).init()).toBe(undefined)
 
@@ -107,11 +107,11 @@ describe('Timeout Warning', () => {
     mockModule = origMockModule
   })
 
-  xit('test TimeoutWarning.countIdleTime()', () => {
+  it('test TimeoutWarning.countIdleTime()', () => {
     expect(new TimeoutWarning(mockModule).countIdleTime()).toBe(undefined)
   })
 
-  xit('test TimeoutWarning.openDialog()', () => {
+  it('test TimeoutWarning.openDialog()', () => {
     mockModule = {
       ...mockModule,
       open: 'mock-module-open'
@@ -137,7 +137,7 @@ describe('Timeout Warning', () => {
     result.clearTimers()
   })
 
-  xit('test TimeoutWarning.startUiCountdown()', () => {
+  it('test TimeoutWarning.startUiCountdown()', () => {
     global.navigator.userAgent = ''
 
     let result
@@ -185,7 +185,7 @@ describe('Timeout Warning', () => {
     mockModule = origMockModule
   })
 
-  xit('test TimeoutWarning.saveLastFocusedEl()', () => {
+  it('test TimeoutWarning.saveLastFocusedEl()', () => {
     jest.spyOn(document, 'querySelector').mockImplementation((param) => ('mock-dqs'))
 
     let result = new TimeoutWarning(mockModule)
@@ -198,7 +198,7 @@ describe('Timeout Warning', () => {
     expect(result.$lastFocusedEl).toBe(null)
   })
 
-  xit('test TimeoutWarning.makePageContentInert()', () => {
+  it('test TimeoutWarning.makePageContentInert()', () => {
     jest.spyOn(document, 'querySelector').mockImplementation((param) => null)
     expect(new TimeoutWarning(mockModule).makePageContentInert()).toBe(undefined)
 
@@ -208,7 +208,7 @@ describe('Timeout Warning', () => {
     expect(new TimeoutWarning(mockModule).makePageContentInert()).toBe(undefined)
   })
 
-  xit('test TimeoutWarning.removeInertFromPageContent()', () => {
+  it('test TimeoutWarning.removeInertFromPageContent()', () => {
     jest.spyOn(document, 'querySelector').mockImplementation((param) => null)
     expect(new TimeoutWarning(mockModule).removeInertFromPageContent()).toBe(undefined)
 
@@ -218,11 +218,11 @@ describe('Timeout Warning', () => {
     expect(new TimeoutWarning(mockModule).removeInertFromPageContent()).toBe(undefined)
   })
 
-  xit('test TimeoutWarning.isDialogOpen()', () => {
+  it('test TimeoutWarning.isDialogOpen()', () => {
     expect(new TimeoutWarning(mockModule).isDialogOpen()).toBe(undefined)
   })
 
-  xit('test TimeoutWarning.closeDialog()', () => {
+  it('test TimeoutWarning.closeDialog()', () => {
     mockModule = origMockModule
     expect(new TimeoutWarning(mockModule).closeDialog()).toBe(undefined)
 
@@ -241,11 +241,11 @@ describe('Timeout Warning', () => {
     expect(new TimeoutWarning(mockModule).closeDialog()).toBe(undefined)
   })
 
-  xit('test TimeoutWarning.clearTimers', () => {
+  it('test TimeoutWarning.clearTimers', () => {
     expect(new TimeoutWarning(mockModule).clearTimers()).toBe(undefined)
   })
 
-  xit('test TimeoutWarning.disableBackButtonWhenOpen()', () => {
+  it('test TimeoutWarning.disableBackButtonWhenOpen()', () => {
     mockModule = origMockModule
     expect(new TimeoutWarning(mockModule).disableBackButtonWhenOpen()).toBe(undefined)
 
@@ -256,7 +256,7 @@ describe('Timeout Warning', () => {
     expect(new TimeoutWarning(mockModule).disableBackButtonWhenOpen()).toBe(undefined)
   })
 
-  xit('test TimeoutWarning.escClose()', () => {
+  it('test TimeoutWarning.escClose()', () => {
     const param = {}
     mockModule = origMockModule
     expect(new TimeoutWarning(mockModule).escClose(param)).toBe(undefined)
@@ -270,10 +270,9 @@ describe('Timeout Warning', () => {
     expect(new TimeoutWarning(mockModule).escClose(param)).toBe(undefined)
   })
 
-  xit('test TimeoutWarning.setLastActiveTimeOnServer()', () => {
+  it('test TimeoutWarning.setLastActiveTimeOnServer()', () => {
     const result = new TimeoutWarning(mockModule)
     expect(result).toBeDefined()
     expect(result.setLastActiveTimeOnServer()).toBe(0)
   })
 })
-  

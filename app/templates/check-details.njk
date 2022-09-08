@@ -113,7 +113,7 @@
           },
           {
             key: {
-              text: "Address"
+              text: "Business address"
             },
             value: {
               html: agentAddressDetails
@@ -143,15 +143,23 @@
           },
           {
             key: {
-              text: "Address"
+              text: "Business address"
             },
             value: {
               html: farmerAddressDetails
             }
+          },
+          {
+            key: {
+              text: "Project postcode"
+            },
+            value: {
+              html: farmerProjectPostcode
+            }
           }
         ] %}
 <div>
-    <h2 class="govuk-heading-m check-detail-heading">Farmer's details</h2>
+    <h2 class="govuk-heading-m check-detail-heading">Applicant details</h2>
     <a title="Change farmer's details" class="govuk-link check-detail-change" href="{{farmerDetailsLink}}">Change <span class="govuk-visually-hidden"> farmer's details</span></a>
     <hr/>
 </div>

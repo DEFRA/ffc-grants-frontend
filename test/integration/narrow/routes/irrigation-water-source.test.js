@@ -16,7 +16,7 @@ const varListTemplate = {
   abstractionLicence: 'Not needed',
   project: ['some fake project'],
   irrigatedCrops: 'some crop',
-  currentlyIrrigating: 'yes',
+  currentlyIrrigating: 'Yes',
   irrigatedLandCurrent: '123',
   irrigatedLandTarget: '456',
   waterSourceCurrent: ['some source 1'],
@@ -40,8 +40,8 @@ describe('Irrigation water source page', () => {
     varList = { ...varListTemplate }
   })
 
-  afterAll(() => {
-    jest.resetAllMocks()
+  afterEach(() => {
+    jest.clearAllMocks()
   })
 
   it('should load page successfully', async () => {
@@ -86,6 +86,20 @@ describe('Irrigation water source page', () => {
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
     expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/irrigation-systems`)
+  })
+
+  it('redirects to irrigation-water-source if user waterSourceCurrent and waterSourcePlanned have not been saved', async () => {
+    const postOptions = {
+      method: 'POST',
+      url: `${global.__URLPREFIX__}/irrigation-water-source`,
+      payload: { waterSourceCurrent: undefined, waterSourcePlanned: undefined, crumb: crumbToken },
+      headers: {
+        cookie: 'crumb=' + crumbToken
+      }
+    }
+
+    const postResponse = await global.__SERVER__.inject(postOptions)
+    expect(postResponse.statusCode).toBe(200)
   })
 
   it('should display the error summary if more than two options are selected for each question', async () => {
