@@ -84,7 +84,7 @@ const getDetailsInput = (detailsData, errorList) => {
       }
     ),
     inputPostcode: formInputObject(
-      'postcode', 'govuk-input--width-5', 'Business Postcode', null, {
+      'postcode', 'govuk-input--width-5', 'Business postcode', null, {
         fieldName: detailsData.postcode,
         fieldError: getFieldError(errorList, '#postcode'),
         inputType: 'text',
@@ -92,7 +92,7 @@ const getDetailsInput = (detailsData, errorList) => {
       }
     ),
     inputProjectPostcode: formInputObject(
-      'projectPostcode', 'govuk-input--width-5', 'Project Postcode', null, {
+      'projectPostcode', 'govuk-input--width-5', 'Project postcode', null, {
         fieldName: detailsData.projectPostcode,
         fieldError: getFieldError(errorList, '#projectPostcode'),
         inputType: 'text',
