@@ -50,6 +50,7 @@
 
         <h2 class="govuk-heading-m">Contact details</h2><br/>
         {{ govukInput(inputEmail) }}
+        {{ govukInput(inputEmailConfirmation) }}
         {{ govukInput(inputMobile) }}
         {{ govukInput(inputLandline) }}
         <h2 class="govuk-heading-m">Address</h2><br/>
@@ -57,7 +58,8 @@
         {{ govukInput(inputAddress2) }}
         {{ govukInput(inputTown) }}
         {{ govukSelect(selectCounty) }}
-        {{ govukInput(inputPostcode) }}
+        {{ govukInput(inputBusinessPostcode) }}
+        {{ govukInput(inputProjectPostcode) }}
         {{ conditionalButtons(checkDetail, 'Back to details') }}
 
       </form>

@@ -52,7 +52,7 @@ const getDetailsInput = (detailsData, errorList) => {
       }
     ),
     inputLandline: formInputObject(
-      'landline', 'govuk-input--width-20', 'Landline number', 'We will only use this to contact you about your application', {
+      'landline', 'govuk-input--width-10', 'Landline number', 'We will only use this to contact you about your application', {
         fieldName: detailsData.landline,
         fieldError: getFieldError(errorList, '#landline'),
         inputType: 'tel',
@@ -60,7 +60,7 @@ const getDetailsInput = (detailsData, errorList) => {
       }
     ),
     inputMobile: formInputObject(
-      'mobile', 'govuk-input--width-20', 'Mobile number', 'We will only use this to contact you about your application', {
+      'mobile', 'govuk-input--width-10', 'Mobile number', 'We will only use this to contact you about your application', {
         fieldName: detailsData.mobile,
         fieldError: getFieldError(errorList, '#mobile'),
         inputType: 'tel',
@@ -75,12 +75,28 @@ const getDetailsInput = (detailsData, errorList) => {
         autocomplete: 'email'
       }
     ),
-    inputPostcode: formInputObject(
-      'postcode', 'govuk-input--width-5', 'Postcode', null, {
-        fieldName: detailsData.postcode,
-        fieldError: getFieldError(errorList, '#postcode'),
+    inputEmailConfirmation: formInputObject(
+      'emailConfirm', 'govuk-input--width-20', 'Confirm Email address', null, {
+        fieldName: detailsData.emailConfirmation,
+        fieldError: getFieldError(errorList, '#emailConfirm'),
+        inputType: 'email',
+        autocomplete: 'email'
+      }
+    ),
+    inputBusinessPostcode: formInputObject(
+      'businessPostcode', 'govuk-input--width-5', 'Business Postcode', null, {
+        fieldName: detailsData.businessPostcode,
+        fieldError: getFieldError(errorList, '#businessPostcode'),
         inputType: 'text',
         autocomplete: 'postal-code'
+      }
+    ),
+    inputProjectPostcode: formInputObject(
+      'projectPostcode', 'govuk-input--width-5', 'Project Postcode', null, {
+        fieldName: detailsData.projectPostcode,
+        fieldError: getFieldError(errorList, '#projectPostcode'),
+        inputType: 'text',
+        autocomplete: 'project-postal-code'
       }
     ),
     selectCounty: {
