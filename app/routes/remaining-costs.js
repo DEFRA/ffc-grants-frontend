@@ -36,10 +36,17 @@ function createModelNotEligible () {
     refTitle: 'Can you pay the remaining costs?',
     backLink: currentPath,
     messageContent:
-      'You cannot use public money (for example, grant funding from government or local authorities) towards the project costs.',
-    insertText: {
-      text: 'You can use loans, overdrafts and certain other grants, such as the Basic Payment Scheme or agri-environment schemes such as the Countryside Stewardship Scheme.'
-    },
+    `You cannot use public money (for example, grant funding from government or local authorities) towards the project costs.
+    <div class="govuk-inset-text">
+      You can use:
+      <ul class="govuk-list govuk-list--bullet">
+        <li>loans</li>
+        <li>overdrafts</li>
+        <li>the Basic Payment Scheme</li>
+        <li>agri-environment schemes such as the Countryside Stewardship Scheme</li>
+      </ul>
+    </div>
+    `,
     messageLink: {
       url: 'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments',
       title: 'See other grants you may be eligible for.'

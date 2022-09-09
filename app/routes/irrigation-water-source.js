@@ -10,7 +10,7 @@ const previousPath = `${urlPrefix}/irrigated-land`
 const nextPath = `${urlPrefix}/irrigation-systems`
 const scorePath = `${urlPrefix}/score`
 
-function createModel(currentlyIrrigating, errorList, currentData, plannedData, hasScore) {
+function createModel (currentlyIrrigating, errorList, currentData, plannedData, hasScore) {
   return {
     backLink: previousPath,
     formActionPage: currentPath,
@@ -18,11 +18,7 @@ function createModel(currentlyIrrigating, errorList, currentData, plannedData, h
     ...errorList ? { errorList } : {},
 
     currentlyIrrigating: (currentlyIrrigating === 'Yes'),
-    pageTitle: (currentlyIrrigating === 'Yes'
-      ? 'Will your water source change?'
-      : 'Where will the irrigation water come from?'
-    ),
-
+    pageTitle: 'Water source',
     mockCheckbox: {
       id: 'waterSourceCurrent',
       name: 'waterSourceCurrent',
@@ -35,7 +31,7 @@ function createModel(currentlyIrrigating, errorList, currentData, plannedData, h
       name: 'waterSourceCurrent',
       fieldset: {
         legend: {
-          text: 'Where does your current irrigation water come from?'
+          html: '<h2>Where does your current irrigation water come from?</h2>'
         }
       },
       hint: {
@@ -49,7 +45,7 @@ function createModel(currentlyIrrigating, errorList, currentData, plannedData, h
       name: 'waterSourcePlanned',
       fieldset: {
         legend: {
-          text: currentlyIrrigating === 'Yes' ? 'Where will the irrigation water come from?' : ''
+          html: '<h2>Where will the irrigation water come from?</h2>'
         }
       },
       hint: {

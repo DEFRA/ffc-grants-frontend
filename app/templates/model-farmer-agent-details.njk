@@ -59,7 +59,9 @@
         {{ govukInput(inputTown) }}
         {{ govukSelect(selectCounty) }}
         {{ govukInput(inputPostcode) }}
-        {{ govukInput(inputProjectPostcode) }}
+        {% if inputProjPostcode %}
+          {{ govukInput(inputProjPostcode) }}
+        {% endif %}
         {{ conditionalButtons(checkDetail, 'Back to details') }}
 
       </form>

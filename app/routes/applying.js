@@ -10,7 +10,7 @@ const previousPath = `${urlPrefix}/business-details`
 const nextPathAgent = `${urlPrefix}/agent-details`
 const nextPathFarmer = `${urlPrefix}/farmer-details`
 
-const values = { valueOne: 'Farmer', valueTwo: 'Agent' }
+const values = { valueOne: 'Applicant', valueTwo: 'Agent' }
 const prefixModelParams = [
   previousPath, currentPath, values, 'applying', 'Who is applying for this grant?'
 ]

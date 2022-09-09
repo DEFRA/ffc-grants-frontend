@@ -91,14 +91,7 @@ const getDetailsInput = (detailsData, errorList) => {
         autocomplete: 'postal-code'
       }
     ),
-    inputProjectPostcode: formInputObject(
-      'projectPostcode', 'govuk-input--width-5', 'Project postcode', null, {
-        fieldName: detailsData.projectPostcode,
-        fieldError: getFieldError(errorList, '#projectPostcode'),
-        inputType: 'text',
-        autocomplete: 'project-postal-code'
-      }
-    ),
+    ...(Object.prototype.hasOwnProperty.call(detailsData, 'projectPostcode') ? { inputProjPostcode: formInputObject('projectPostcode', 'govuk-input--width-5', 'Project postcode', null, { fieldName: detailsData.projectPostcode, fieldError: getFieldError(errorList, '#projectPostcode'), inputType: 'text', autocomplete: 'organization' }) } : {}),
     selectCounty: {
       items: setLabelData(detailsData.county, [
         { text: 'Select an option', value: null },
