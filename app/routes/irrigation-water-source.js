@@ -35,7 +35,7 @@ function createModel(currentlyIrrigating, errorList, currentData, plannedData, h
       name: 'waterSourceCurrent',
       fieldset: {
         legend: {
-          text: 'Where does your current irrigation water come from?'
+          html: '<h2>Where does your current irrigation water come from?</h2>'
         }
       },
       hint: {
@@ -49,7 +49,7 @@ function createModel(currentlyIrrigating, errorList, currentData, plannedData, h
       name: 'waterSourcePlanned',
       fieldset: {
         legend: {
-          text: currentlyIrrigating === 'Yes' ? 'Where will the irrigation water come from?' : ''
+          html: currentlyIrrigating === 'Yes' ? '<h2>Where will the irrigation water come from?</h2>' : ''
         }
       },
       hint: {
