@@ -36,7 +36,7 @@ function createModelNotEligible () {
     refTitle: 'Can you pay the remaining costs?',
     backLink: currentPath,
     messageContent:
-    `You cannot use public money (for example, grant funding from government or local authorities) towards the project costs.
+      `You cannot use public money (for example, grant funding from government or local authorities) towards the project costs.
     <div class="govuk-inset-text">
       You can use:
       <ul class="govuk-list govuk-list--bullet">
@@ -48,7 +48,7 @@ function createModelNotEligible () {
     </div>
     `,
     messageLink: {
-      url: 'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments',
+      url: 'https://www.gov.uk/government/collections/rural-payments-and-grants',
       title: 'See other grants you may be eligible for.'
     }
   }

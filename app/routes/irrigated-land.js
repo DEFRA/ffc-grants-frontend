@@ -34,7 +34,7 @@ function createModel (currentlyIrrigating, irrigatedLandCurrent, irrigatedLandTa
       suffix: {
         text: 'ha'
       },
-      label: {
+      label: { 
         html: '<h2>How much land is currently irrigated per year?</h2>'
       },
       hint: {
@@ -125,7 +125,7 @@ module.exports = [
         const currentlyIrrigating = getYarValue(request, 'currentlyIrrigating') || null
 
         if (Number(irrigatedLandTarget) === 0 ||
-          (Number(irrigatedLandTarget) < Number(irrigatedLandCurrent))
+        (Number(irrigatedLandTarget) < Number(irrigatedLandCurrent))
         ) {
           const irrigatedLandCurrentError = null
           const irrigatedLandTargetError = (Number(irrigatedLandTarget) === 0)

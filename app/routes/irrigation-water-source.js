@@ -10,7 +10,7 @@ const previousPath = `${urlPrefix}/irrigated-land`
 const nextPath = `${urlPrefix}/irrigation-systems`
 const scorePath = `${urlPrefix}/score`
 
-function createModel (currentlyIrrigating, errorList, currentData, plannedData, hasScore) {
+function createModel(currentlyIrrigating, errorList, currentData, plannedData, hasScore) {
   return {
     backLink: previousPath,
     formActionPage: currentPath,
