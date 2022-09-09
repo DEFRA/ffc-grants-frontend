@@ -83,10 +83,10 @@ const getDetailsInput = (detailsData, errorList) => {
         autocomplete: 'email'
       }
     ),
-    inputBusinessPostcode: formInputObject(
-      'businessPostcode', 'govuk-input--width-5', 'Business Postcode', null, {
-        fieldName: detailsData.businessPostcode,
-        fieldError: getFieldError(errorList, '#businessPostcode'),
+    inputPostcode: formInputObject(
+      'postcode', 'govuk-input--width-5', 'Business Postcode', null, {
+        fieldName: detailsData.postcode,
+        fieldError: getFieldError(errorList, '#postcode'),
         inputType: 'text',
         autocomplete: 'postal-code'
       }

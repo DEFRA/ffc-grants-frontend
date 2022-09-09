@@ -43,7 +43,7 @@ module.exports = [
           address2: null,
           town: null,
           county: null,
-          businessPostcode: null,
+          postcode: null,
           projectPostcode: null
         }
       }
@@ -74,7 +74,7 @@ module.exports = [
           address2: Joi.string().required(),
           town: Joi.string().allow(''),
           county: Joi.string().required(),
-          businessPostcode: Joi.string().replace(DELETE_POSTCODE_CHARS_REGEX, '').regex(POSTCODE_REGEX).trim().required(),
+          postcode: Joi.string().replace(DELETE_POSTCODE_CHARS_REGEX, '').regex(POSTCODE_REGEX).trim().required(),
           projectPostcode: Joi.string().replace(DELETE_POSTCODE_CHARS_REGEX, '').regex(POSTCODE_REGEX).trim().required(),
           results: Joi.any()
         }),
@@ -85,9 +85,9 @@ module.exports = [
             phoneErrors.push({ text: 'Enter your landline number', href: '#landline' })
           }
 
-          const errorList = getErrorList(['firstName', 'lastName', 'email', 'emailConfirm', 'mobile', 'landline', 'address1', 'address2', 'town', 'county', 'businessPostcode', 'projectPostcode'], err, phoneErrors)
-          const { firstName, lastName, email, emailConfirm, mobile, landline, address1, address2, town, county, businessPostcode, projectPostcode } = request.payload
-          const farmerDetails = { firstName, lastName, email, emailConfirm, mobile, landline, address1, address2, town, county, businessPostcode, projectPostcode }
+          const errorList = getErrorList(['firstName', 'lastName', 'email', 'emailConfirm', 'mobile', 'landline', 'address1', 'address2', 'town', 'county', 'postcode', 'projectPostcode'], err, phoneErrors)
+          const { firstName, lastName, email, emailConfirm, mobile, landline, address1, address2, town, county, postcode, projectPostcode } = request.payload
+          const farmerDetails = { firstName, lastName, email, emailConfirm, mobile, landline, address1, address2, town, county, postcode, projectPostcode }
           const applying = getYarValue(request, 'applying')
           const backLink = applying === 'Agent' ? agentDetailsPath : applyingPath
           await request.ga.pageView()
@@ -97,7 +97,7 @@ module.exports = [
       },
       handler: async (request, h) => {
         const {
-          firstName, lastName, email, mobile, landline, address1, address2, town, county, businessPostcode, projectPostcode
+          firstName, lastName, email, mobile, landline, address1, address2, town, county, postcode, projectPostcode
         } = request.payload
 
         const phoneErrors = [
@@ -108,12 +108,12 @@ module.exports = [
         if (!landline && !mobile) {
           await request.ga.pageView()
           return h.view(viewTemplate, createModel(phoneErrors, {
-            firstName, lastName, email, mobile, landline, address1, address2, town, county, businessPostcode, projectPostcode
+            firstName, lastName, email, mobile, landline, address1, address2, town, county, postcode, projectPostcode
           }, getYarValue(request, 'checkDetails'))).takeover()
         }
 
         setYarValue(request, 'farmerDetails', {
-          firstName, lastName, email, mobile, landline, address1, address2, town, county, businessPostcode: businessPostcode.split(/(?=.{3}$)/).join(' ').toUpperCase(), projectPostcode: projectPostcode.split(/(?=.{3}$)/).join(' ').toUpperCase()
+          firstName, lastName, email, mobile, landline, address1, address2, town, county, postcode: postcode.split(/(?=.{3}$)/).join(' ').toUpperCase(), projectPostcode: projectPostcode.split(/(?=.{3}$)/).join(' ').toUpperCase()
         })
 
         return h.redirect(nextPath)
