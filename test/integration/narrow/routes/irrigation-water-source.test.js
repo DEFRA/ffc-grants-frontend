@@ -133,7 +133,7 @@ describe('Irrigation water source page', () => {
 
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
-    expect(response.payload).toContain('<h1 class="govuk-heading-l">Will your water source change?</h1>')
+    expect(response.payload).toContain('<h1 class="govuk-heading-l">Water source</h1>')
     expect(response.payload).toContain('Where does your current irrigation water come from?')
     expect(response.payload).toContain('Where will the irrigation water come from?')
   })
@@ -150,7 +150,7 @@ describe('Irrigation water source page', () => {
 
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
-    expect(response.payload).not.toContain('<h1 class="govuk-heading-l">Will your water source change?</h1>')
+    expect(response.payload).not.toContain('<h1 class="govuk-heading-l">Water source</h1>')
     expect(response.payload).toContain('Where will the irrigation water come from?')
   })
 })
