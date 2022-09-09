@@ -282,7 +282,7 @@ describe('Irrigated Land page', () => {
 
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
-    expect(response.payload).not.toContain('<h1 class="govuk-heading-l">Irrigated land</h1>')
+    expect(response.payload).toContain('<h1 class="govuk-heading-l">Irrigated land</h1>')
     expect(response.payload).toContain('How much land will be irrigated per year after the project?')
   })
 })
