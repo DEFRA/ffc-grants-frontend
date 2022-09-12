@@ -18,10 +18,7 @@ function createModel (currentlyIrrigating, errorList, currentData, plannedData, 
     hasScore,
     ...errorList ? { errorList } : {},
     currentlyIrrigating: (currentlyIrrigating === 'yes'),
-    pageTitle: (currentlyIrrigating === 'yes'
-      ? 'Will your irrigation system change?'
-      : 'What systems will be used to irrigate?'
-    ),
+    pageTitle: 'Irrigation system',
 
     mockCheckbox: {
       id: 'irrigationCurrent',
@@ -35,7 +32,7 @@ function createModel (currentlyIrrigating, errorList, currentData, plannedData, 
       name: 'irrigationCurrent',
       fieldset: {
         legend: {
-          text: 'What systems are currently used to irrigate?'
+          html: '<h2 class="govuk-heading-m">What systems are currently used to irrigate?</h2>'
         }
       },
       hint: {
@@ -50,7 +47,7 @@ function createModel (currentlyIrrigating, errorList, currentData, plannedData, 
       name: 'irrigationPlanned',
       fieldset: {
         legend: {
-          text: currentlyIrrigating === 'yes' ? 'What systems will be used to irrigate?' : ''
+          html: currentlyIrrigating === 'yes' ? '<h2 class="govuk-heading-m">What systems will be used to irrigate?</h2>' : ''
         }
       },
       hint: {
