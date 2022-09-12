@@ -31,6 +31,7 @@ module.exports = [
     path: currentPath,
     handler: async (request, h) => {
       let farmerDetails = getYarValue(request, 'farmerDetails') || null
+
       if (!farmerDetails) {
         farmerDetails = {
           firstName: null,
@@ -67,7 +68,7 @@ module.exports = [
           firstName: Joi.string().regex(NAME_REGEX).required(),
           lastName: Joi.string().regex(NAME_REGEX).required(),
           email: Joi.string().email().required(),
-          emailConfirm: Joi.string().required().valid(Joi.ref('email')),
+          emailConfirm: Joi.string().email().required(),
           mobile: Joi.string().regex(PHONE_REGEX).min(10).allow(''),
           landline: Joi.string().regex(PHONE_REGEX).min(10).allow(''),
           address1: Joi.string().required(),
@@ -97,7 +98,7 @@ module.exports = [
       },
       handler: async (request, h) => {
         const {
-          firstName, lastName, email, mobile, landline, address1, address2, town, county, postcode, projectPostcode
+          firstName, lastName, email, emailConfirm, mobile, landline, address1, address2, town, county, postcode, projectPostcode
         } = request.payload
 
         const phoneErrors = [
@@ -108,12 +109,20 @@ module.exports = [
         if (!landline && !mobile) {
           await request.ga.pageView()
           return h.view(viewTemplate, createModel(phoneErrors, {
-            firstName, lastName, email, mobile, landline, address1, address2, town, county, postcode, projectPostcode
+            firstName, lastName, email, emailConfirm, mobile, landline, address1, address2, town, county, postcode, projectPostcode
+          }, getYarValue(request, 'checkDetails'))).takeover()
+        }
+
+        if (emailConfirm !== email) {
+          await request.ga.pageView()
+          const emailError = [{ text: 'Email and email confirmation must match', href: '#emailConfirm' }]
+          return h.view(viewTemplate, createModel(emailError, {
+            firstName, lastName, email, emailConfirm, mobile, landline, address1, address2, town, county, postcode, projectPostcode
           }, getYarValue(request, 'checkDetails'))).takeover()
         }
 
         setYarValue(request, 'farmerDetails', {
-          firstName, lastName, email, mobile, landline, address1, address2, town, county, postcode: postcode.split(/(?=.{3}$)/).join(' ').toUpperCase(), projectPostcode: projectPostcode.split(/(?=.{3}$)/).join(' ').toUpperCase()
+          firstName, lastName, email, emailConfirm, mobile, landline, address1, address2, town, county, postcode: postcode.split(/(?=.{3}$)/).join(' ').toUpperCase(), projectPostcode: projectPostcode.split(/(?=.{3}$)/).join(' ').toUpperCase()
         })
 
         return h.redirect(nextPath)
