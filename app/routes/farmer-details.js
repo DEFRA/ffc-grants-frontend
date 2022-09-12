@@ -65,12 +65,12 @@ module.exports = [
         payload: Joi.object({
           firstName: Joi.string().regex(NAME_REGEX).required(),
           lastName: Joi.string().regex(NAME_REGEX).required(),
-          email: Joi.string().email().required(),
+          email: Joi.string().email().required(), // add confirm email + check
           mobile: Joi.string().regex(PHONE_REGEX).min(10).allow(''),
           landline: Joi.string().regex(PHONE_REGEX).min(10).allow(''),
           address1: Joi.string().required(),
           address2: Joi.string().required(),
-          town: Joi.string().allow(''),
+          town: Joi.string().allow(''), // text only, no num/symbol + error
           county: Joi.string().required(),
           postcode: Joi.string().replace(DELETE_POSTCODE_CHARS_REGEX, '').regex(POSTCODE_REGEX).trim().required(),
           projectPostcode: Joi.string().replace(DELETE_POSTCODE_CHARS_REGEX, '').regex(POSTCODE_REGEX).trim().required(),
@@ -79,8 +79,8 @@ module.exports = [
         failAction: async (request, h, err) => {
           const phoneErrors = []
           if (request.payload.landline === '' && request.payload.mobile === '') {
-            phoneErrors.push({ text: 'Enter your mobile number', href: '#mobile' })
-            phoneErrors.push({ text: 'Enter your landline number', href: '#landline' })
+            phoneErrors.push({ text: 'Enter a mobile number (If you do not have a mobile, enter your landline number)', href: '#mobile' })
+            phoneErrors.push({ text: 'Enter a landline number (If you do not have a landline, enter your mobile number)', href: '#landline' })
           }
 
           const errorList = getErrorList(['firstName', 'lastName', 'email', 'mobile', 'landline', 'address1', 'address2', 'town', 'county', 'postcode', 'projectPostcode'], err, phoneErrors)

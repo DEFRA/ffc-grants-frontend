@@ -1,7 +1,7 @@
 const errors = {
   'error.inEngland.any.required': 'Select yes if the project is in England',
-  'error.projectPostcode.string.pattern.base': 'Enter a postcode, like AA1 1AA',
-  'error.projectPostcode.string.empty': 'Enter a postcode, like AA1 1AA',
+  'error.projectPostcode.string.pattern.base': 'Enter your postcode, like AA1 1AA',
+  'error.projectPostcode.string.empty': 'Enter your postcode, like AA1 1AA',
   'error.irrigatedCrops.any.required': 'Select the main crop you will be irrigating',
   'error.farmingType.any.required': 'Select the crops you are growing',
   'error.waterSourceCurrent.any.required': 'Select up to 2 options for where your current irrigation water comes from',
@@ -60,7 +60,7 @@ const errors = {
   'error.landline.string.empty': 'Enter your landline number',
   'error.landline.string.min': 'Your landline number must have at least 10 characters',
   'error.landline.any.required': 'Enter your landline number',
-  'error.landline.string.pattern.base': 'Enter a landline number, like 01632 960 001, 07700 900 982 or +44 0808 157 0192',
+  'error.landline.string.pattern.base': 'Enter a telephone number, like 01632 960 001, 07700 900 982 or +44 0808 157 0192',
   'error.address1.string.empty': 'Enter line 1 of your address',
   'error.address1.any.required': 'Enter line 1 of your address',
   'error.address2.string.empty': 'Enter line 2 of your address',
