@@ -131,24 +131,8 @@ describe('Irrigation syatems page', () => {
 
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
-    expect(response.payload).toContain('<h1 class="govuk-heading-l">Will your irrigation system change?</h1>')
+    expect(response.payload).toContain('<h1 class="govuk-heading-l">Irrigation system</h1>')
     expect(response.payload).toContain('What systems are currently used to irrigate?')
-    expect(response.payload).toContain('What systems will be used to irrigate?')
-  })
-
-  it('should NOT display the current irrigation systems question if the user selected NO for currently irrigating', async () => {
-    varList.currentlyIrrigating = 'No'
-    const options = {
-      method: 'GET',
-      url: `${global.__URLPREFIX__}/irrigation-systems`,
-      headers: {
-        cookie: 'crumb=' + crumbToken
-      }
-    }
-
-    const response = await global.__SERVER__.inject(options)
-    expect(response.statusCode).toBe(200)
-    expect(response.payload).not.toContain('<h1 class="govuk-heading-l">Will your irrigation system change?</h1>')
     expect(response.payload).toContain('What systems will be used to irrigate?')
   })
 })
