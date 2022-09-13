@@ -53,6 +53,38 @@ describe('Farmer details page', () => {
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
   })
+  
+  it('should load page if getYarValues not found', async () => {
+
+    varList = {
+      farmingType: 'some fake crop',
+      legalStatus: 'fale status',
+      inEngland: 'Yes',
+      projectStarted: 'No',
+      landOwnership: 'Yes',
+      projectItemsList: {
+        projectEquipment: ['Boom', 'Trickle']
+      },
+      projectCost: '12345678',
+      remainingCost: 14082.00,
+      payRemainingCosts: 'Yes',
+      planningPermission: 'Will not be in place by 31 December 2022',
+      abstractionLicence: 'Not needed',
+      sSSI: 'Yes',
+      businessDetails: {
+        projectName: 'Project Name',
+        businessName: 'Business Name'
+      }
+    }
+    const options = {
+      method: 'GET',
+      url: `${global.__URLPREFIX__}/farmer-details`
+    }
+
+    const response = await global.__SERVER__.inject(options)
+    expect(response.statusCode).toBe(200)
+  })
+  
 
   it('should return various error messages if no data is entered', async () => {
     const postOptions = {
@@ -428,18 +460,8 @@ describe('Farmer details page', () => {
       method: 'POST',
       url: `${global.__URLPREFIX__}/farmer-details`,
       payload: {
-        firstName: 'Farmer First Name',
-        lastName: 'Farmer Last Name',
-        email: 'my@name.com',
-        emailConfirm: 'my@name.com',
         mobile: '',
         landline: '',
-        address1: 'Address 1',
-        address2: 'Address 2',
-        town: 'MyTown',
-        county: 'Devon',
-        postcode: 'AA1 1AA',
-        projectPostcode: 'AA1 1AA',
         crumb: crumbToken
       },
       headers: { cookie: 'crumb=' + crumbToken }
