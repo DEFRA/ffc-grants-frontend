@@ -215,7 +215,7 @@ describe('Farmer details page', () => {
     expect(postResponse.payload).toContain('Enter a postcode, like AA1 1AA')
   })
 
-  it('should store user response and redirects to check details page, landline is optional', async () => {//fix
+  it('should store user response and redirects to check details page, landline is optional', async () => {
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/farmer-details`,
@@ -241,7 +241,7 @@ describe('Farmer details page', () => {
     expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/check-details`)
   })
 
-  it('should store user response incase Agent is applying redirects to check details page, landline is optional', async () => {//fix
+  it('should store user response incase Agent is applying redirects to check details page, landline is optional', async () => {
     varList.applying = 'Agent'
     const postOptions = {
       method: 'POST',
@@ -268,7 +268,7 @@ describe('Farmer details page', () => {
     expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/check-details`)
   })
 
-  it('should store user response incase Agent is applying redirects to check details page, mobile is optional', async () => {//fix
+  it('should store user response incase Agent is applying redirects to check details page, mobile is optional', async () => {
     varList.applying = 'Agent'
     const postOptions = {
       method: 'POST',
