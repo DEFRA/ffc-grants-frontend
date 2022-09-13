@@ -67,6 +67,7 @@ describe('Farmer details page', () => {
     expect(postResponse.payload).toContain('Enter your first name')
     expect(postResponse.payload).toContain('Enter your last name')
     expect(postResponse.payload).toContain('Enter your email address')
+    expect(postResponse.payload).toContain('Enter an email address that matches')
     expect(postResponse.payload).toContain('Enter your building and street details')
     expect(postResponse.payload).toContain('Select your county')
     expect(postResponse.payload).toContain('Enter your postcode, like AA1 1AA')
@@ -119,6 +120,33 @@ describe('Farmer details page', () => {
     expect(postResponse.statusCode).toBe(200)
     expect(postResponse.payload).toContain('Enter an email address in the correct format, like name@example.com')
   })
+
+  it('should validate email - confirmation mismatch', async () => {
+    const postOptions = {
+      method: 'POST',
+      url: `${global.__URLPREFIX__}/farmer-details`,
+      payload: {
+        firstName: 'First Name',
+        lastName: 'Last Name',
+        email: 'my@name.com',
+        emailConfirm: 'another@name.com',
+        mobile: '07700 900 982',
+        address1: 'Address 1',
+        address2: 'Address 2',
+        town: 'MyTown',
+        county: 'Devon',
+        postcode: 'AA1 1AA',
+        projectPostcode: 'AA1 1AA',
+        crumb: crumbToken
+      },
+      headers: { cookie: 'crumb=' + crumbToken }
+    }
+
+    const postResponse = await global.__SERVER__.inject(postOptions)
+    expect(postResponse.statusCode).toBe(200)
+    expect(postResponse.payload).toContain('Enter an email address that matches')
+  })
+
   it('should validate mobile - if typed in special characters', async () => {
     const postOptions = {
       method: 'POST',
