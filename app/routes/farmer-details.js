@@ -78,10 +78,7 @@ module.exports = [
         }),
         failAction: async (request, h, err) => {
           const phoneErrors = []
-          if (request.payload.landline === '' && request.payload.mobile === '') {
-            phoneErrors.push({ text: 'Enter a mobile number (If you do not have a mobile, enter your landline number)', href: '#mobile' })
-            phoneErrors.push({ text: 'Enter a landline number (If you do not have a landline, enter your mobile number)', href: '#landline' })
-          }
+
 
           const errorList = getErrorList(['firstName', 'lastName', 'email', 'mobile', 'landline', 'address1', 'address2', 'town', 'county', 'postcode', 'projectPostcode'], err, phoneErrors)
           const { firstName, lastName, email, mobile, landline, address1, address2, town, county, postcode, projectPostcode } = request.payload
