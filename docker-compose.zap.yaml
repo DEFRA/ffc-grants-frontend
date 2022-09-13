@@ -13,7 +13,7 @@ services:
 
   zap-baseline-scan:
     image: owasp/zap2docker-stable:2.9.0
-    command: zap-baseline.py -t http://ffc-grants-frontend:${PORT:-3000} -c config/zap.conf -r test-output/zap-report.html -a -d -I
+    command: zap-baseline.py -t http://3ddba90a3280:${PORT:-3000} -c config/zap.conf -r test-output/zap-report.html -a -d -I
     depends_on:
       - ffc-grants-frontend
     volumes:
