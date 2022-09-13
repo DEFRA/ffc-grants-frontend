@@ -76,7 +76,7 @@ const getDetailsInput = (detailsData, errorList) => {
       }
     ),
 
-    ...(Object.prototype.hasOwnProperty.call(detailsData, 'emailConfirm') ? { inputProjPostcode: formInputObject('emailConfirm', 'govuk-input--width-20', 'Confirm Email address', null, { fieldName: detailsData.emailConfirm, fieldError: getFieldError(errorList, '#emailConfirm'), inputType: 'email', autocomplete: 'email' }) } : {}),
+    ...(Object.prototype.hasOwnProperty.call(detailsData, 'emailConfirm') ? { inputEmailConfirm: formInputObject('emailConfirm', 'govuk-input--width-20', 'Confirm Email address', null, { fieldName: detailsData.emailConfirm, fieldError: getFieldError(errorList, '#emailConfirm'), inputType: 'email', autocomplete: 'email' }) } : {}),
 
     inputPostcode: formInputObject(
       'postcode', 'govuk-input--width-5', 'Business postcode', null, {
