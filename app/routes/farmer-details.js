@@ -112,7 +112,7 @@ module.exports = [
 
         if (emailConfirm !== email) {
           await request.ga.pageView()
-          const emailError = [{ text: 'Email and email confirmation must match', href: '#emailConfirm' }]
+          const emailError = [{ text: 'Enter an email address that matches', href: '#emailConfirm' }]
           return h.view(viewTemplate, createModel(emailError, {
             firstName, lastName, email, emailConfirm, mobile, landline, address1, address2, town, county, postcode, projectPostcode
           }, getYarValue(request, 'checkDetails'))).takeover()
