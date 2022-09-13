@@ -67,8 +67,7 @@ describe('Farmer details page', () => {
     expect(postResponse.payload).toContain('Enter your first name')
     expect(postResponse.payload).toContain('Enter your last name')
     expect(postResponse.payload).toContain('Enter your email address')
-    expect(postResponse.payload).toContain('Enter line 1 of your address')
-    expect(postResponse.payload).toContain('Enter line 2 of your address')
+    expect(postResponse.payload).toContain('Enter your building and street details')
     expect(postResponse.payload).toContain('Select your county')
     expect(postResponse.payload).toContain('Enter your postcode, like AA1 1AA')
   })
@@ -165,7 +164,7 @@ describe('Farmer details page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Enter a landline number, like 01632 960 001, 07700 900 982 or +44 0808 157 0192')
+    expect(postResponse.payload).toContain('Enter a telephone number, like 01632 960 001, 07700 900 982 or +44 0808 157 0192')
   })
 
   it('should validate landline - if typed in special characters', async () => {
@@ -181,7 +180,7 @@ describe('Farmer details page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Enter a landline number, like 01632 960 001, 07700 900 982 or +44 0808 157 0192')
+    expect(postResponse.payload).toContain('Enter a telephone number, like 01632 960 001, 07700 900 982 or +44 0808 157 0192')
   })
 
   it('should validate landline- less than 10 digits', async () => {
@@ -314,8 +313,8 @@ describe('Farmer details page', () => {
     }
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Enter your mobile number')
-    expect(postResponse.payload).toContain('Enter your landline number')
+    expect(postResponse.payload).toContain('Enter a mobile number (If you do not have a mobile, enter your landline number)')
+    expect(postResponse.payload).toContain('Enter a landline number (If you do not have a landline, enter your mobile number)')
   })
 
   it('should store user response and redirects to details page', async () => {
@@ -365,7 +364,59 @@ describe('Farmer details page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Enter your mobile number')
-    expect(postResponse.payload).toContain('Enter your landline number')
+    expect(postResponse.payload).toContain('Enter a mobile number (If you do not have a mobile, enter your landline number)')
+    expect(postResponse.payload).toContain('Enter a landline number (If you do not have a landline, enter your mobile number)')
   })
+
+  it('should validate town - not empty', async () => {
+    const postOptions = {
+      method: 'POST',
+      url: `${global.__URLPREFIX__}/farmer-details`,
+      payload: {
+        firstName: 'Farmer First Name',
+        lastName: 'Farmer Last Name',
+        email: 'my@name.com',
+        landline: '+44 0808 157 0192',
+        mobile: '07700 900 982',
+        address1: 'Address 1',
+        address2: 'Address 2',
+        county: 'Devon',
+        postcode: 'AA1 1AA',
+        projectPostcode: 'AA1 1AA',
+        crumb: crumbToken
+      },
+      headers: { cookie: 'crumb=' + crumbToken }
+    }
+
+    const postResponse = await global.__SERVER__.inject(postOptions)
+    expect(postResponse.statusCode).toBe(200)
+    expect(postResponse.payload).toContain('Enter your town')
+  })
+
+  it('should validate town - invalid characters', async () => {
+    const postOptions = {
+      method: 'POST',
+      url: `${global.__URLPREFIX__}/farmer-details`,
+      payload: {
+        firstName: 'Farmer First Name',
+        lastName: 'Farmer Last Name',
+        email: 'my@name.com',
+        landline: '+44 0808 157 0192',
+        mobile: '07700 900 982',
+        address1: 'Address 1',
+        address2: 'Address 2',
+        town: '12345',
+        county: 'Devon',
+        postcode: 'AA1 1AA',
+        projectPostcode: 'AA1 1AA',
+        crumb: crumbToken
+      },
+      headers: { cookie: 'crumb=' + crumbToken }
+    }
+
+    const postResponse = await global.__SERVER__.inject(postOptions)
+    expect(postResponse.statusCode).toBe(200)
+    expect(postResponse.payload).toContain('Town must only include letters, hyphens and spaces')
+  })
+
 })
