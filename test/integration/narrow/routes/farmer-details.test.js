@@ -402,7 +402,28 @@ describe('Farmer details page', () => {
     expect(postResponse.payload).toContain('Enter a landline number (If you do not have a landline, enter your mobile number)')
   })
 
-  it('should validate - if both mobile and landline are mempty', async () => {
+  it('should validate - if both mobile and landline are empty', async () => {
+    varList = {
+      farmingType: 'some fake crop',
+      legalStatus: 'fale status',
+      inEngland: 'Yes',
+      projectStarted: 'No',
+      landOwnership: 'Yes',
+      projectItemsList: {
+        projectEquipment: ['Boom', 'Trickle']
+      },
+      projectCost: '12345678',
+      remainingCost: 14082.00,
+      payRemainingCosts: 'Yes',
+      planningPermission: 'Will not be in place by 31 December 2022',
+      abstractionLicence: 'Not needed',
+      sSSI: 'Yes',
+      businessDetails: {
+        projectName: 'Project Name',
+        businessName: 'Business Name'
+      }
+    }
+
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/farmer-details`,
