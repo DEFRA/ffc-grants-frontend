@@ -18,7 +18,11 @@ function createModel(currentlyIrrigating, errorList, currentData, plannedData, h
     ...errorList ? { errorList } : {},
 
     currentlyIrrigating: (currentlyIrrigating === 'Yes'),
-    pageTitle: 'Water source',
+    pageTitle: (currentlyIrrigating === 'Yes'
+      ? 'Water source'
+      : 'Where will the irrigation water come from?'
+    ),
+
     mockCheckbox: {
       id: 'waterSourceCurrent',
       name: 'waterSourceCurrent',
@@ -45,7 +49,7 @@ function createModel(currentlyIrrigating, errorList, currentData, plannedData, h
       name: 'waterSourcePlanned',
       fieldset: {
         legend: {
-          html: '<h2>Where will the irrigation water come from?</h2>'
+          html: currentlyIrrigating === 'Yes' ? '<h2>Where will the irrigation water come from?</h2>' : ''
         }
       },
       hint: {
