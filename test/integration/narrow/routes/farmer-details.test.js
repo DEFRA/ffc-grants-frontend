@@ -216,7 +216,7 @@ describe('Farmer details page', () => {
     expect(postResponse.payload).toContain('Enter a postcode, like AA1 1AA')
   })
 
-  it('should store user response and redirects to check details page, landline is optional', async () => {
+  it('should store user response and redirects to check details page, landline is optional', async () => {//fix
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/farmer-details`,
@@ -224,12 +224,14 @@ describe('Farmer details page', () => {
         firstName: 'First Name',
         lastName: 'Last Name',
         email: 'my@name.com',
+        emailConfirm: 'my@name.com',
         mobile: '07700 900 982',
         address1: 'Address 1',
         address2: 'Address 2',
         town: 'MyTown',
         county: 'Devon',
         postcode: 'AA1 1AA',
+        projectPostcode: 'AA1 1AA',
         crumb: crumbToken
       },
       headers: { cookie: 'crumb=' + crumbToken }
@@ -240,7 +242,7 @@ describe('Farmer details page', () => {
     expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/check-details`)
   })
 
-  it('should store user response incase Agent is applying redirects to check details page, landline is optional', async () => {
+  it('should store user response incase Agent is applying redirects to check details page, landline is optional', async () => {//fix
     varList.applying = 'Agent'
     const postOptions = {
       method: 'POST',
@@ -249,12 +251,14 @@ describe('Farmer details page', () => {
         firstName: 'First Name',
         lastName: 'Last Name',
         email: 'my@name.com',
+        emailConfirm: 'my@name.com',
         mobile: '07700 900 982',
         address1: 'Address 1',
         address2: 'Address 2',
         town: 'MyTown',
         county: 'Devon',
         postcode: 'AA1 1AA',
+        projectPostcode: 'AA1 1AA',
         crumb: crumbToken
       },
       headers: { cookie: 'crumb=' + crumbToken }
@@ -265,7 +269,7 @@ describe('Farmer details page', () => {
     expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/check-details`)
   })
 
-  it('should store user response incase Agent is applying redirects to check details page, mobile is optional', async () => {
+  it('should store user response incase Agent is applying redirects to check details page, mobile is optional', async () => {//fix
     varList.applying = 'Agent'
     const postOptions = {
       method: 'POST',
@@ -274,12 +278,14 @@ describe('Farmer details page', () => {
         firstName: 'First Name',
         lastName: 'Last Name',
         email: 'my@name.com',
+        emailConfirm: 'my@name.com',
         landline: '07700 900 982',
         address1: 'Address 1',
         address2: 'Address 2',
         town: 'MyTown',
         county: 'Devon',
         postcode: 'AA1 1AA',
+        projectPostcode: 'AA1 1AA',
         crumb: crumbToken
       },
       headers: { cookie: 'crumb=' + crumbToken }
@@ -299,11 +305,13 @@ describe('Farmer details page', () => {
         firstName: 'First Name',
         lastName: 'Last Name',
         email: 'my@name.com',
+        emailConfirm: 'my@name.com',
         address1: 'Address 1',
         address2: 'Address 2',
         town: 'MyTown',
         county: 'Devon',
         postcode: 'AA1 1AA',
+        projectPostcode: 'AA1 1AA',
         crumb: crumbToken
       },
       headers: { cookie: 'crumb=' + crumbToken }
@@ -314,7 +322,7 @@ describe('Farmer details page', () => {
     expect(postResponse.payload).toContain('Enter your landline number')
   })
 
-  it('should store user response and redirects to details page', async () => {
+  it('should store user response and redirects to details page', async () => {//todo fix this
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/farmer-details`,
@@ -322,6 +330,7 @@ describe('Farmer details page', () => {
         firstName: 'First Name',
         lastName: 'Last Name',
         email: 'my@name.com',
+        emailConfirm: 'my@name.com',
         landline: '+44 0808 157 0192',
         mobile: '07700 900 982',
         address1: 'Address 1',
@@ -329,6 +338,7 @@ describe('Farmer details page', () => {
         town: 'MyTown',
         county: 'Devon',
         postcode: 'AA1 1AA',
+        projectPostcode: 'AA1 1AA',
         crumb: crumbToken
       },
       headers: { cookie: 'crumb=' + crumbToken }
@@ -347,11 +357,13 @@ describe('Farmer details page', () => {
         firstName: 'Farmer First Name',
         lastName: 'Farmer Last Name',
         email: 'my@name.com',
+        emailConfirm: 'my@name.com',
         address1: 'Address 1',
         address2: 'Address 2',
         town: 'MyTown',
         county: 'Devon',
         postcode: 'AA1 1AA',
+        projectPostcode: 'AA1 1AA',
         crumb: crumbToken
       },
       headers: { cookie: 'crumb=' + crumbToken }
