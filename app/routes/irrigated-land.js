@@ -128,7 +128,7 @@ module.exports = [
         const currentlyIrrigating = getYarValue(request, 'currentlyIrrigating') || null
 
         if (Number(irrigatedLandTarget) === 0 ||
-            (Number(irrigatedLandTarget) < Number(irrigatedLandCurrent))
+        (Number(irrigatedLandTarget) < Number(irrigatedLandCurrent))
         ) {
           const irrigatedLandCurrentError = null
           const irrigatedLandTargetError = (Number(irrigatedLandTarget) === 0)

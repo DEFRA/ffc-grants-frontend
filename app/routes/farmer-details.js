@@ -18,7 +18,7 @@ function createModel (errorList, farmerDetails, backLink, hasDetails) {
     backLink,
     pageId: 'Farmer',
     formActionPage: currentPath,
-    pageHeader: 'Applicant’s  details',
+    pageHeader: 'Applicant’s details',
     checkDetail: hasDetails,
     ...errorList ? { errorList } : {},
     ...getDetailsInput(farmerDetails, errorList)
@@ -31,11 +31,13 @@ module.exports = [
     path: currentPath,
     handler: async (request, h) => {
       let farmerDetails = getYarValue(request, 'farmerDetails') || null
+
       if (!farmerDetails) {
         farmerDetails = {
           firstName: null,
           lastName: null,
           email: null,
+          emailConfirm: null,
           mobile: null,
           landline: null,
           address1: null,
@@ -66,6 +68,7 @@ module.exports = [
           firstName: Joi.string().regex(NAME_REGEX).required(),
           lastName: Joi.string().regex(NAME_REGEX).required(),
           email: Joi.string().email().required(),
+          emailConfirm: Joi.string().email().required(),
           mobile: Joi.string().regex(PHONE_REGEX).min(10).allow(''),
           landline: Joi.string().regex(PHONE_REGEX).min(10).allow(''),
           address1: Joi.string().required(),
@@ -80,9 +83,9 @@ module.exports = [
           const phoneErrors = []
 
 
-          const errorList = getErrorList(['firstName', 'lastName', 'email', 'mobile', 'landline', 'address1', 'address2', 'town', 'county', 'postcode', 'projectPostcode'], err, phoneErrors)
-          const { firstName, lastName, email, mobile, landline, address1, address2, town, county, postcode, projectPostcode } = request.payload
-          const farmerDetails = { firstName, lastName, email, mobile, landline, address1, address2, town, county, postcode, projectPostcode }
+          const errorList = getErrorList(['firstName', 'lastName', 'email', 'emailConfirm', 'mobile', 'landline', 'address1', 'address2', 'town', 'county', 'postcode', 'projectPostcode'], err, phoneErrors)
+          const { firstName, lastName, email, emailConfirm, mobile, landline, address1, address2, town, county, postcode, projectPostcode } = request.payload
+          const farmerDetails = { firstName, lastName, email, emailConfirm, mobile, landline, address1, address2, town, county, postcode, projectPostcode }
           const applying = getYarValue(request, 'applying')
           const backLink = applying === 'Agent' ? agentDetailsPath : applyingPath
           await request.ga.pageView()
@@ -92,7 +95,7 @@ module.exports = [
       },
       handler: async (request, h) => {
         const {
-          firstName, lastName, email, mobile, landline, address1, address2, town, county, postcode, projectPostcode
+          firstName, lastName, email, emailConfirm, mobile, landline, address1, address2, town, county, postcode, projectPostcode
         } = request.payload
 
         const phoneErrors = [
@@ -103,12 +106,20 @@ module.exports = [
         if (!landline && !mobile) {
           await request.ga.pageView()
           return h.view(viewTemplate, createModel(phoneErrors, {
-            firstName, lastName, email, mobile, landline, address1, address2, town, county, postcode, projectPostcode
+            firstName, lastName, email, emailConfirm, mobile, landline, address1, address2, town, county, postcode, projectPostcode
+          }, getYarValue(request, 'checkDetails'))).takeover()
+        }
+
+        if (emailConfirm !== email) {
+          await request.ga.pageView()
+          const emailError = [{ text: 'Enter an email address that matches', href: '#emailConfirm' }]
+          return h.view(viewTemplate, createModel(emailError, {
+            firstName, lastName, email, emailConfirm, mobile, landline, address1, address2, town, county, postcode, projectPostcode
           }, getYarValue(request, 'checkDetails'))).takeover()
         }
 
         setYarValue(request, 'farmerDetails', {
-          firstName, lastName, email, mobile, landline, address1, address2, town, county, postcode: postcode.split(/(?=.{3}$)/).join(' ').toUpperCase(), projectPostcode: projectPostcode.split(/(?=.{3}$)/).join(' ').toUpperCase()
+          firstName, lastName, email, emailConfirm, mobile, landline, address1, address2, town, county, postcode: postcode.split(/(?=.{3}$)/).join(' ').toUpperCase(), projectPostcode: projectPostcode.split(/(?=.{3}$)/).join(' ').toUpperCase()
         })
 
         return h.redirect(nextPath)

@@ -11,7 +11,7 @@ const businessDetailsPath = `${urlPrefix}/business-details`
 const agentDetailsPath = `${urlPrefix}/agent-details`
 const farmerDetailsPath = previousPath
 
-function createModel(data) {
+function createModel (data) {
   const model = {
     businessDetailsLink: businessDetailsPath,
     farmerDetailsLink: farmerDetailsPath,

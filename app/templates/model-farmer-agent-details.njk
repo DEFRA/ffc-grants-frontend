@@ -50,6 +50,9 @@
 
         <h2 class="govuk-heading-m">Contact details</h2><br/>
         {{ govukInput(inputEmail) }}
+        {% if inputEmailConfirm %}
+          {{ govukInput(inputEmailConfirm) }}
+        {% endif %}
         {{ govukInput(inputMobile) }}
         {{ govukInput(inputLandline) }}
         <h2 class="govuk-heading-m">Business address</h2><br/>
