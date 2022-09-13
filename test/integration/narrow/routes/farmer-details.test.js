@@ -402,6 +402,34 @@ describe('Farmer details page', () => {
     expect(postResponse.payload).toContain('Enter a landline number (If you do not have a landline, enter your mobile number)')
   })
 
+  it('should validate - if both mobile and landline are mempty', async () => {
+    const postOptions = {
+      method: 'POST',
+      url: `${global.__URLPREFIX__}/farmer-details`,
+      payload: {
+        firstName: 'Farmer First Name',
+        lastName: 'Farmer Last Name',
+        email: 'my@name.com',
+        emailConfirm: 'my@name.com',
+        mobile: '',
+        landline: '',
+        address1: 'Address 1',
+        address2: 'Address 2',
+        town: 'MyTown',
+        county: 'Devon',
+        postcode: 'AA1 1AA',
+        projectPostcode: 'AA1 1AA',
+        crumb: crumbToken
+      },
+      headers: { cookie: 'crumb=' + crumbToken }
+    }
+
+    const postResponse = await global.__SERVER__.inject(postOptions)
+    expect(postResponse.statusCode).toBe(200)
+    expect(postResponse.payload).toContain('Enter a mobile number (If you do not have a mobile, enter your landline number)')
+    expect(postResponse.payload).toContain('Enter a landline number (If you do not have a landline, enter your mobile number)')
+  })
+
   it('should validate town - not empty', async () => {
     const postOptions = {
       method: 'POST',
