@@ -26,7 +26,7 @@ const getDetailsInput = (detailsData, errorList) => {
     ...(Object.prototype.hasOwnProperty.call(detailsData, 'businessName') ? { inputBusinessName: formInputObject('businessName', 'govuk-input--width-20', 'Business name', null, { fieldName: detailsData.businessName, fieldError: getFieldError(errorList, '#businessName'), inputType: 'text', autocomplete: 'organization' }) } : null),
 
     inputTown: formInputObject(
-      'town', 'govuk-input--width-10', 'Town (optional)', null, {
+      'town', 'govuk-input--width-10', 'Town', null, {
         fieldName: detailsData.town,
         fieldError: getFieldError(errorList, '#town'),
         inputType: 'text',
@@ -35,7 +35,7 @@ const getDetailsInput = (detailsData, errorList) => {
     ),
 
     inputAddress2: formInputObject(
-      'address2', 'govuk-input--width-20', '<span class="govuk-visually-hidden">Building and street line 2 of 2</span>', null, {
+      'address2', 'govuk-input--width-20', 'Address line 2 (optional)', null, {
         fieldName: detailsData.address2,
         fieldError: getFieldError(errorList, '#address2'),
         inputType: 'text',
@@ -44,7 +44,7 @@ const getDetailsInput = (detailsData, errorList) => {
     ),
 
     inputAddress1: formInputObject(
-      'address1', 'govuk-input--width-20', 'Building and street <span class="govuk-visually-hidden">line 1 of 2</span>', null, {
+      'address1', 'govuk-input--width-20', 'Address line 1', null, {
         fieldName: detailsData.address1,
         fieldError: getFieldError(errorList, '#address1'),
         inputType: 'text',
