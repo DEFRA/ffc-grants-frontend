@@ -8,8 +8,10 @@
 
 {% block pageTitle %}
   {% if errorList %}
-    Error: 
-  {% endif %} Will your irrigation system change? - {{siteTitle}}
+    Error:
+  {% endif %}
+  Will your irrigation system change? -
+  {{siteTitle}}
 {% endblock %}
 
 {% block beforeContent %}
@@ -20,12 +22,12 @@
   }) }}
 
   {% if errorList %}
-  {{govukErrorSummary ({
+    {{govukErrorSummary ({
   "titleText": "There is a problem",
   "errorList": errorList
 }) }}
   {% endif %}
-  
+
 {% endblock %}
 
 {% block content %}
