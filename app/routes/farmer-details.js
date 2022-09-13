@@ -1,7 +1,7 @@
 const Joi = require('joi')
 const { setYarValue, getYarValue } = require('../helpers/session')
 const { getErrorList } = require('../helpers/helper-functions')
-const { NAME_REGEX, PHONE_REGEX, POSTCODE_REGEX, DELETE_POSTCODE_CHARS_REGEX } = require('../helpers/regex-validation')
+const { NAME_REGEX, PHONE_REGEX, POSTCODE_REGEX, DELETE_POSTCODE_CHARS_REGEX, TOWN_REGEX } = require('../helpers/regex-validation')
 const { getDetailsInput } = require('../helpers/detailsInputs')
 const gapiService = require('../services/gapi-service')
 
@@ -72,8 +72,8 @@ module.exports = [
           mobile: Joi.string().regex(PHONE_REGEX).min(10).allow(''),
           landline: Joi.string().regex(PHONE_REGEX).min(10).allow(''),
           address1: Joi.string().required(),
-          address2: Joi.string().required(),
-          town: Joi.string().allow(''),
+          address2: Joi.string().allow(''),
+          town: Joi.string().regex(TOWN_REGEX).required(),
           county: Joi.string().required(),
           postcode: Joi.string().replace(DELETE_POSTCODE_CHARS_REGEX, '').regex(POSTCODE_REGEX).trim().required(),
           projectPostcode: Joi.string().replace(DELETE_POSTCODE_CHARS_REGEX, '').regex(POSTCODE_REGEX).trim().required(),
@@ -81,10 +81,7 @@ module.exports = [
         }),
         failAction: async (request, h, err) => {
           const phoneErrors = []
-          if (request.payload.landline === '' && request.payload.mobile === '') {
-            phoneErrors.push({ text: 'Enter your mobile number', href: '#mobile' })
-            phoneErrors.push({ text: 'Enter your landline number', href: '#landline' })
-          }
+
 
           const errorList = getErrorList(['firstName', 'lastName', 'email', 'emailConfirm', 'mobile', 'landline', 'address1', 'address2', 'town', 'county', 'postcode', 'projectPostcode'], err, phoneErrors)
           const { firstName, lastName, email, emailConfirm, mobile, landline, address1, address2, town, county, postcode, projectPostcode } = request.payload
@@ -102,8 +99,8 @@ module.exports = [
         } = request.payload
 
         const phoneErrors = [
-          { text: 'Enter your mobile number', href: '#mobile' },
-          { text: 'Enter your landline number', href: '#landline' }
+          { text: 'Enter a mobile number (If you do not have a mobile, enter your landline number)', href: '#mobile' },
+          { text: 'Enter a landline number (If you do not have a landline, enter your mobile number)', href: '#landline' }
         ]
 
         if (!landline && !mobile) {
