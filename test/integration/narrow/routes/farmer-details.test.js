@@ -53,6 +53,38 @@ describe('Farmer details page', () => {
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
   })
+  
+  it('should load page if getYarValues not found', async () => {
+
+    varList = {
+      farmingType: 'some fake crop',
+      legalStatus: 'fale status',
+      inEngland: 'Yes',
+      projectStarted: 'No',
+      landOwnership: 'Yes',
+      projectItemsList: {
+        projectEquipment: ['Boom', 'Trickle']
+      },
+      projectCost: '12345678',
+      remainingCost: 14082.00,
+      payRemainingCosts: 'Yes',
+      planningPermission: 'Will not be in place by 31 December 2022',
+      abstractionLicence: 'Not needed',
+      sSSI: 'Yes',
+      businessDetails: {
+        projectName: 'Project Name',
+        businessName: 'Business Name'
+      }
+    }
+    const options = {
+      method: 'GET',
+      url: `${global.__URLPREFIX__}/farmer-details`
+    }
+
+    const response = await global.__SERVER__.inject(options)
+    expect(response.statusCode).toBe(200)
+  })
+  
 
   it('should return various error messages if no data is entered', async () => {
     const postOptions = {
@@ -391,6 +423,45 @@ describe('Farmer details page', () => {
         county: 'Devon',
         postcode: 'AA1 1AA',
         projectPostcode: 'AA1 1AA',
+        crumb: crumbToken
+      },
+      headers: { cookie: 'crumb=' + crumbToken }
+    }
+
+    const postResponse = await global.__SERVER__.inject(postOptions)
+    expect(postResponse.statusCode).toBe(200)
+    expect(postResponse.payload).toContain('Enter a mobile number (If you do not have a mobile, enter your landline number)')
+    expect(postResponse.payload).toContain('Enter a landline number (If you do not have a landline, enter your mobile number)')
+  })
+
+  it('should validate - if both mobile and landline are empty', async () => {
+    varList = {
+      farmingType: 'some fake crop',
+      legalStatus: 'fale status',
+      inEngland: 'Yes',
+      projectStarted: 'No',
+      landOwnership: 'Yes',
+      projectItemsList: {
+        projectEquipment: ['Boom', 'Trickle']
+      },
+      projectCost: '12345678',
+      remainingCost: 14082.00,
+      payRemainingCosts: 'Yes',
+      planningPermission: 'Will not be in place by 31 December 2022',
+      abstractionLicence: 'Not needed',
+      sSSI: 'Yes',
+      businessDetails: {
+        projectName: 'Project Name',
+        businessName: 'Business Name'
+      }
+    }
+
+    const postOptions = {
+      method: 'POST',
+      url: `${global.__URLPREFIX__}/farmer-details`,
+      payload: {
+        mobile: '',
+        landline: '',
         crumb: crumbToken
       },
       headers: { cookie: 'crumb=' + crumbToken }
