@@ -12,7 +12,7 @@ services:
       - ./test-output/:/home/node/test-output/
 
   zap-baseline-scan:
-    image: owasp/zap2docker-stable:2.9.0
+    image: owasp/zap2docker-stable:2.11.1
     command: zap-baseline.py -t http://ffc-grants-frontend:${PORT:-3000} -c config/zap.conf -r test-output/zap-report.html -a -d -I
     depends_on:
       - ffc-grants-frontend

@@ -51,9 +51,7 @@ module.exports = [
     method: 'GET',
     path: currentPath,
     handler: (request, h) => {
-      const refererURL = request?.headers?.referer?.split('/').pop()
-
-      if (!getYarValue(request, 'farmerDetails') || refererURL !== 'check-details') {
+      if (!getYarValue(request, 'farmerDetails') || !getYarValue(request, 'checkDetails')) {
         return h.redirect(startPath)
       }
       const consentOptional = (getYarValue(request, 'consentOptional') && CONSENT_OPTIONAL) || ''

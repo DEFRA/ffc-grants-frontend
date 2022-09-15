@@ -24,9 +24,7 @@ const TimeoutWarning = require('../../../../app/templates/components/timeout-war
 
 describe('Timeout Warning', () => {
   afterAll(() => {
-    TimeoutWarning.close()
     jest.resetAllMocks()
-   
   })
 
   it('test TimeoutWarning constructor', () => {
@@ -73,7 +71,7 @@ describe('Timeout Warning', () => {
   })
 
   it('test TimeoutWarning.dialogSupported()', () => {
-    global.HTMLDialogElement = jest.fn(() => {})
+    global.HTMLDialogElement = jest.fn(() => { })
 
     jest.spyOn(document, 'querySelector').mockImplementation((param) => ({
       classList: {
@@ -94,13 +92,13 @@ describe('Timeout Warning', () => {
     dialogPolyfill.registerDialog.mockImplementation((param) => { throw Error('mock-error') })
     expect(new TimeoutWarning(mockModule).init()).toBe(undefined)
 
-    global.HTMLDialogElement = jest.fn(() => {})
+    global.HTMLDialogElement = jest.fn(() => { })
     mockModule = {
       ...mockModule,
       querySelector: jest.fn((paramA) => ({
-        addEventListener: jest.fn((paramB) => {})
+        addEventListener: jest.fn((paramB) => { })
       })),
-      addEventListener: jest.fn((paramC) => {})
+      addEventListener: jest.fn((paramC) => { })
     }
     expect(new TimeoutWarning(mockModule).init()).toBe(undefined)
 
@@ -124,12 +122,12 @@ describe('Timeout Warning', () => {
       classList: {
         add: (addParam) => null
       },
-      setAttribute: (paramA, paramB) => {}
+      setAttribute: (paramA, paramB) => { }
     }))
 
     mockModule = {
       ...mockModule,
-      showModal: jest.fn(() => {})
+      showModal: jest.fn(() => { })
     }
 
     const result = new TimeoutWarning(mockModule)
@@ -153,7 +151,7 @@ describe('Timeout Warning', () => {
     mockModule = {
       ...mockModule,
       querySelector: jest.fn((paramA) => ({
-        setAttribute: jest.fn((paramB, paramC) => {})
+        setAttribute: jest.fn((paramB, paramC) => { })
       })),
       getAttribute: jest.fn((param) => 0)
     }
@@ -203,7 +201,7 @@ describe('Timeout Warning', () => {
     expect(new TimeoutWarning(mockModule).makePageContentInert()).toBe(undefined)
 
     jest.spyOn(document, 'querySelector').mockImplementation((param) => ({
-      setAttribute: (paramA, paramB) => {}
+      setAttribute: (paramA, paramB) => { }
     }))
     expect(new TimeoutWarning(mockModule).makePageContentInert()).toBe(undefined)
   })
@@ -213,7 +211,7 @@ describe('Timeout Warning', () => {
     expect(new TimeoutWarning(mockModule).removeInertFromPageContent()).toBe(undefined)
 
     jest.spyOn(document, 'querySelector').mockImplementation((param) => ({
-      setAttribute: (paramA, paramB) => {}
+      setAttribute: (paramA, paramB) => { }
     }))
     expect(new TimeoutWarning(mockModule).removeInertFromPageContent()).toBe(undefined)
   })
@@ -229,11 +227,11 @@ describe('Timeout Warning', () => {
     mockModule = {
       ...mockModule,
       open: 'mock-module-open',
-      close: jest.fn(() => {})
+      close: jest.fn(() => { })
     }
 
     jest.spyOn(document, 'querySelector').mockImplementation((param) => ({
-      setAttribute: (paramA, paramB) => {},
+      setAttribute: (paramA, paramB) => { },
       classList: {
         remove: (addParam) => null
       }
@@ -264,7 +262,7 @@ describe('Timeout Warning', () => {
     mockModule = {
       ...mockModule,
       open: 'mock-module-open',
-      close: jest.fn(() => {})
+      close: jest.fn(() => { })
     }
     param.keyCode = 27
     expect(new TimeoutWarning(mockModule).escClose(param)).toBe(undefined)
