@@ -2,7 +2,7 @@ version: "3.7"
 services:
   wdio-cucumber:
     build: .
-    image: wdio-cucumber
+    image: ffc-grants-water-service-acceptance
     container_name: webdriver-cuke
     environment:
       TEST_ENVIRONMENT_ROOT_URL: ${TEST_ENVIRONMENT_ROOT_URL}

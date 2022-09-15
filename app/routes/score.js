@@ -62,9 +62,7 @@ module.exports = [{
     }
   },
   handler: async (request, h, err) => {
-    const refererURL = request?.headers?.referer?.split('/').pop()
-
-    if (!getYarValue(request, 'current-score') && refererURL !== 'collaboration') {
+    if (!getYarValue(request, 'current-score') && !getYarValue(request, 'collaboration')) {
       return h.redirect(startPath)
     }
     try {

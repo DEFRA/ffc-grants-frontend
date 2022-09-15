@@ -4,7 +4,8 @@ const varListTemplate = {
   farmerDetails: {
     firstName: 'some fake farmer',
     lastName: 'surname'
-  }
+  },
+  checkDetails: 'wer'
 }
 
 let varList
@@ -31,8 +32,7 @@ describe('Confirm page', () => {
       method: 'GET',
       url: `${global.__URLPREFIX__}/confirm`,
       headers: {
-        cookie: 'crumb=' + crumbToken,
-        referer: 'localhost/check-details'
+        cookie: 'crumb=' + crumbToken
       }
     }
 
@@ -40,23 +40,9 @@ describe('Confirm page', () => {
     expect(response.statusCode).toBe(200)
   })
 
-  it('should redirect to /start page if the referer URL is NOT check-details', async () => {
-    const options = {
-      method: 'GET',
-      url: `${global.__URLPREFIX__}/confirm`,
-      headers: {
-        cookie: 'crumb=' + crumbToken,
-        referer: 'localhost/project-summary'
-      }
-    }
-
-    const response = await global.__SERVER__.inject(options)
-    expect(response.statusCode).toBe(302)
-    expect(response.headers.location).toBe(`${global.__URLPREFIX__}/start`)
-  })
 
   it('should redirect to /start page if farmerAddressDetails are missing', async () => {
-    varList.farmerAddressDetails = null
+    varList.farmerDetails = null
     const options = {
       method: 'GET',
       url: `${global.__URLPREFIX__}/confirm`,
@@ -67,6 +53,20 @@ describe('Confirm page', () => {
     expect(response.statusCode).toBe(302)
     expect(response.headers.location).toBe(`${global.__URLPREFIX__}/start`)
   })
+
+  it('should redirect to /start page if checkDetails are missing', async () => {
+    varList.checkDetails = null
+    const options = {
+      method: 'GET',
+      url: `${global.__URLPREFIX__}/confirm`,
+      headers: { cookie: 'crumb=' + crumbToken }
+    }
+
+    const response = await global.__SERVER__.inject(options)
+    expect(response.statusCode).toBe(302)
+    expect(response.headers.location).toBe(`${global.__URLPREFIX__}/start`)
+  })
+
 
   it('should store user response and redirects to confirmation page', async () => {
     const postOptions = {

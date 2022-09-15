@@ -26,7 +26,7 @@ const requestError = {
 afterEach(() => {
   jest.resetAllMocks()
 })
-describe('get gapiService setup', async () => {
+describe('get gapiService setup', () => {
   test('Should be defined', () => {
     expect(gapiService).toBeDefined()
   })
