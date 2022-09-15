@@ -1,6 +1,6 @@
 const Joi = require('joi')
 const { setYarValue, getYarValue } = require('../helpers/session')
-const { createModelTwoRadios } = require('../helpers/modelTwoRadios')
+const { createModelTwoRadiosApplying } = require('../helpers/modelTwoRadios')
 const { errorExtractor, getErrorMessage } = require('../helpers/helper-functions')
 const urlPrefix = require('../config/server').urlPrefix
 
@@ -22,7 +22,7 @@ module.exports = [
     handler: (request, h) => {
       const applying = getYarValue(request, 'applying')
       const data = applying || null
-      return h.view(viewTemplate, createModelTwoRadios(...prefixModelParams, null, data))
+      return h.view(viewTemplate, createModelTwoRadiosApplying(...prefixModelParams, null, data))
     }
   },
   {
@@ -37,7 +37,7 @@ module.exports = [
           const errorObject = errorExtractor(err)
           const errorList = []
           errorList.push({ text: getErrorMessage(errorObject), href: '#applying' })
-          return h.view(viewTemplate, createModelTwoRadios(...prefixModelParams, errorList, null)).takeover()
+          return h.view(viewTemplate, createModelTwoRadiosApplying(...prefixModelParams, errorList, null)).takeover()
         }
       },
       handler: async (request, h) => {
