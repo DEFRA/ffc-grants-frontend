@@ -7,20 +7,6 @@
 {% block pageTitle %}
   Start - {{siteTitle}}
 {% endblock %}
-{% block beforeContent %}
-  {{ govukBreadcrumbs({
-    items: [
-      {
-        text: "Home",
-        href: startLink
-      },
-      {
-        text: "Check if you can apply for a Farming Transformation Fund water management grant",
-        href: startLink
-      }
-    ]
-  }) }}
-{% endblock %}
 
 {% block content %}
   <div class="govuk-grid-row">
