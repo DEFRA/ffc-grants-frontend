@@ -16,6 +16,10 @@ const prefixModelParams = [
   'Does the project directly impact a Site of Special Scientific Interest?'
 ]
 
+const hint = {
+  text: 'The location of the project'
+}
+
 module.exports = [
   {
     method: 'GET',
@@ -23,8 +27,9 @@ module.exports = [
     handler: async (request, h) => {
       const sSSI = getYarValue(request, 'sSSI')
       const data = sSSI || null
+
       await gapiService.sendJourneyTime(request, gapiService.metrics.ELIGIBILITY)
-      return h.view(viewTemplate, createModelTwoRadios(...prefixModelParams, null, data))
+      return h.view(viewTemplate, createModelTwoRadios(...prefixModelParams, null, data, hint))
     }
   },
   {
@@ -38,8 +43,9 @@ module.exports = [
         failAction: (request, h, err) => {
           const errorObject = errorExtractor(err)
           const errorList = []
+          
           errorList.push({ text: getErrorMessage(errorObject), href: '#sSSI' })
-          return h.view(viewTemplate, createModelTwoRadios(...prefixModelParams, errorList)).takeover()
+          return h.view(viewTemplate, createModelTwoRadios(...prefixModelParams, errorList, null, hint)).takeover()
         }
       },
       handler: async (request, h) => {
