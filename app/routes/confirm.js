@@ -51,8 +51,6 @@ module.exports = [
     method: 'GET',
     path: currentPath,
     handler: (request, h) => {
-      const refererURL = request?.headers?.referer?.split('/').pop()
-
       if (!getYarValue(request, 'farmerDetails') || !getYarValue(request, 'checkDetails')) {
         return h.redirect(startPath)
       }
