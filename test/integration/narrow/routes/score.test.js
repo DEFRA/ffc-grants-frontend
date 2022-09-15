@@ -1,4 +1,16 @@
 const scoreData = require('../../../data/score-data')
+const varList = {
+  collaboration: 'wer',
+  'current-score': 'wer'
+}
+
+jest.mock('../../../../app/helpers/session', () => ({
+  setYarValue: (request, key, value) => null,
+  getYarValue: (request, key) => {
+    if (Object.keys(varList).includes(key)) return varList[key]
+    else return 'Error'
+  }
+}))
 
 describe('Score page', () => {
   let crumCookie
@@ -26,10 +38,7 @@ describe('Score page', () => {
     jest.mock('@hapi/wreck')
     const options = {
       method: 'GET',
-      url: `${global.__URLPREFIX__}/score`,
-      headers: {
-        referer: 'localhost/collaboration'
-      }
+      url: `${global.__URLPREFIX__}/score`
     }
     const wreckResponse = {
       payload: null,
@@ -52,10 +61,7 @@ describe('Score page', () => {
     jest.mock('@hapi/wreck')
     const options = {
       method: 'GET',
-      url: `${global.__URLPREFIX__}/score`,
-      headers: {
-        referer: 'localhost/collaboration'
-      }
+      url: `${global.__URLPREFIX__}/score`
     }
     const wreckResponse = {
       payload: null,
@@ -78,10 +84,7 @@ describe('Score page', () => {
     jest.mock('@hapi/wreck')
     const options = {
       method: 'GET',
-      url: `${global.__URLPREFIX__}/score`,
-      headers: {
-        referer: 'localhost/collaboration'
-      }
+      url: `${global.__URLPREFIX__}/score`
     }
     const wreckResponse = {
       payload: { desirability: null },
@@ -103,10 +106,7 @@ describe('Score page', () => {
     jest.mock('@hapi/wreck')
     const options = {
       method: 'GET',
-      url: `${global.__URLPREFIX__}/score`,
-      headers: {
-        referer: 'localhost/collaboration'
-      }
+      url: `${global.__URLPREFIX__}/score`
     }
     Wreck.get = jest.fn(async function (url, type) {
       throw new Error('can\'t reach')
@@ -122,10 +122,7 @@ describe('Score page', () => {
     jest.mock('@hapi/wreck')
     const options = {
       method: 'GET',
-      url: `${global.__URLPREFIX__}/score`,
-      headers: {
-        referer: 'localhost/collaboration'
-      }
+      url: `${global.__URLPREFIX__}/score`
     }
     Wreck.get = jest.fn(async function (url, type) {
       return null
@@ -141,10 +138,7 @@ describe('Score page', () => {
     jest.mock('@hapi/wreck')
     const options = {
       method: 'GET',
-      url: `${global.__URLPREFIX__}/score`,
-      headers: {
-        referer: 'localhost/collaboration'
-      }
+      url: `${global.__URLPREFIX__}/score`
     }
     const wreckResponse = {
       payload: scoreData,
@@ -168,10 +162,7 @@ describe('Score page', () => {
     jest.mock('@hapi/wreck')
     const options = {
       method: 'GET',
-      url: `${global.__URLPREFIX__}/score`,
-      headers: {
-        referer: 'localhost/collaboration'
-      }
+      url: `${global.__URLPREFIX__}/score`
     }
     scoreData.desirability.overallRating.band = 'Average'
     const wreckResponse = {
@@ -196,10 +187,7 @@ describe('Score page', () => {
     jest.mock('@hapi/wreck')
     const options = {
       method: 'GET',
-      url: `${global.__URLPREFIX__}/score`,
-      headers: {
-        referer: 'localhost/collaboration'
-      }
+      url: `${global.__URLPREFIX__}/score`
     }
     scoreData.desirability.overallRating.band = 'Weak'
     const wreckResponse = {
@@ -233,6 +221,20 @@ describe('Score page', () => {
     const postResponse = await server.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
     expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/business-details`)
+  })
+
+  it('redirects to start if no current score or collaboration', async () => {
+    varList['current-score'] = null
+    varList.collaboration = null
+
+    const postOptions = {
+      method: 'GET',
+      url: `${global.__URLPREFIX__}/score`
+    }
+
+    const postResponse = await server.inject(postOptions)
+    expect(postResponse.statusCode).toBe(302)
+    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/start`)
   })
 
   afterEach(async () => {
