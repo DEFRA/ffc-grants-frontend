@@ -13,7 +13,7 @@ const copyprovider = (key) => {
     6: "You can apply if you:",
     7: "grow crops for the food industry, are a nursery growing ornamentals or are a forestry nursery",
     8: "will do the grant-funded work in England",
-    9: "aestimate the project costs will be over £87,50",
+    9: "estimate the project costs will be over £87,500",
     10: "If your project is eligible, you can submit your answers to the Rural Payments Agency (RPA) to request the full application form.",
     11: "Start now",
     12: "Before you start",
