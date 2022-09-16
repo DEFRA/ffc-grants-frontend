@@ -22,7 +22,8 @@ module.exports = [
     handler: (request, h) => {
       const applying = getYarValue(request, 'applying')
       const data = applying || null
-      return h.view(viewTemplate, createModelTwoRadios(...prefixModelParams, null, data))
+      const extraDetails = { errorList: null, data }
+      return h.view(viewTemplate, createModelTwoRadios(...prefixModelParams, extraDetails))
     }
   },
   {
@@ -37,7 +38,9 @@ module.exports = [
           const errorObject = errorExtractor(err)
           const errorList = []
           errorList.push({ text: getErrorMessage(errorObject), href: '#applying' })
-          return h.view(viewTemplate, createModelTwoRadios(...prefixModelParams, errorList, null)).takeover()
+          const extraDetails = { errorList, data: null }
+
+          return h.view(viewTemplate, createModelTwoRadios(...prefixModelParams, extraDetails)).takeover()
         }
       },
       handler: async (request, h) => {

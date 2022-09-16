@@ -1,11 +1,11 @@
 const { setLabelData } = require('../helpers/helper-functions')
 
 const createModelTwoRadios = (
-  previousPath, currentPath, values, name, text, errorList, data
+  previousPath, currentPath, values, name, text, extraDetails
 ) => ({
   backLink: previousPath,
   formActionPage: currentPath,
-  ...errorList ? { errorList } : {},
+  ...extraDetails.errorList ? { errorList: extraDetails.errorList } : {},
   radios: {
     classes: 'govuk-radios--inline',
     idPrefix: name,
@@ -17,11 +17,9 @@ const createModelTwoRadios = (
         classes: 'govuk-fieldset__legend--l'
       }
     },
-    hint: {
-      text: 'The location of the project'
-    },
-    items: setLabelData(data, [values.valueOne, values.valueTwo]),
-    ...(errorList ? { errorMessage: { text: errorList[0].text } } : {})
+    ...extraDetails.hint ? { hint: extraDetails.hint } : {},
+    items: setLabelData(extraDetails.data, [values.valueOne, values.valueTwo]),
+    ...(extraDetails.errorList ? { errorMessage: { text: extraDetails.errorList[0].text } } : {})
   }
 })
 

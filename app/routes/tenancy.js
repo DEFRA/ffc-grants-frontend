@@ -17,6 +17,10 @@ const prefixModelParams = [
   'Is the planned project on land the farm business owns?'
 ]
 
+const hint = {
+  text: 'The location of the project'
+}
+
 module.exports = [
   {
     method: 'GET',
@@ -24,7 +28,11 @@ module.exports = [
     handler: (request, h) => {
       const landOwnership = getYarValue(request, 'landOwnership')
       const data = landOwnership || null
-      return h.view(viewTemplate, createModelTwoRadios(...prefixModelParams, null, data))
+
+      const extraDetails = { errorList: null, data, hint }
+
+      
+      return h.view(viewTemplate, createModelTwoRadios(...prefixModelParams, extraDetails))
     }
   },
   {
@@ -39,8 +47,11 @@ module.exports = [
           gapiService.sendValidationDimension(request)
           const errorObject = errorExtractor(err)
           const errorList = []
+
           errorList.push({ text: getErrorMessage(errorObject), href: '#landOwnership' })
-          return h.view(viewTemplate, createModelTwoRadios(...prefixModelParams, errorList)).takeover()
+          const extraDetails = { errorList, data: null, hint }
+
+          return h.view(viewTemplate, createModelTwoRadios(...prefixModelParams, extraDetails)).takeover()
         }
       },
       handler: (request, h) => {
