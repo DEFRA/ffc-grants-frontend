@@ -35,6 +35,7 @@ module.exports = [
           lastName: null,
           businessName: null,
           email: null,
+          emailConfirm: null,
           mobile: null,
           landline: null,
           address1: null,
@@ -55,6 +56,8 @@ module.exports = [
         options: { abortEarly: false },
         payload: Joi.object({
           lastName: Joi.string().regex(NAME_REGEX).required(),
+          email: Joi.string().email().required(),
+          emailConfirm: Joi.string().email().required(),
           businessName: Joi.string().regex(BUSINESSNAME_REGEX).max(100).required(),
           firstName: Joi.string().regex(NAME_REGEX).required(),
           results: Joi.any(),
@@ -65,7 +68,6 @@ module.exports = [
           address2: Joi.string().required(),
           landline: Joi.string().regex(PHONE_REGEX).min(10).allow(''),
           mobile: Joi.string().regex(PHONE_REGEX).min(10).allow(''),
-          email: Joi.string().email().required()
         }),
         failAction: (request, h, err) => {
           const phoneErrors = []
@@ -74,16 +76,16 @@ module.exports = [
             phoneErrors.push({ text: 'Enter your landline number', href: '#landline' })
           }
 
-          const errorList = getErrorList(['firstName', 'lastName', 'businessName', 'email', 'mobile', 'landline', 'address1', 'address2', 'town', 'county', 'postcode'], err, phoneErrors)
+          const errorList = getErrorList([ 'firstName', 'lastName', 'businessName', 'email', 'emailConfirm', 'mobile', 'landline', 'address1', 'address2', 'town', 'county', 'postcode'], err, phoneErrors)
 
-          const { firstName, lastName, businessName, email, mobile, landline, address1, address2, town, county, postcode } = request.payload
-          const agentDetails = { firstName, lastName, businessName, email, mobile, landline, address1, address2, town, county, postcode }
+          const { firstName, lastName, businessName, email, emailConfirm, mobile, landline, address1, address2, town, county, postcode } = request.payload
+          const agentDetails = { firstName, lastName, businessName, email, emailConfirm, mobile, landline, address1, address2, town, county, postcode }
           return h.view(viewTemplate, createModel(errorList, agentDetails, getYarValue(request, 'checkDetails'))).takeover()
         }
       },
       handler: (request, h) => {
         const {
-          firstName, lastName, businessName, email, mobile, landline, address1, address2, town, county, postcode, results
+          firstName, lastName, businessName, email, mobile, emailConfirm, landline, address1, address2, town, county, postcode, results
         } = request.payload
 
         const phoneErrors = [
@@ -93,12 +95,12 @@ module.exports = [
 
         if (!landline && !mobile) {
           return h.view(viewTemplate, createModel(phoneErrors, {
-            firstName, lastName, businessName, email, mobile, landline, address1, address2, town, county, postcode
+            firstName, lastName, businessName, email, confirmEmail, mobile, landline, address1, address2, town, county, postcode
           }, getYarValue(request, 'checkDetails'))).takeover()
         }
 
         setYarValue(request, 'agentDetails', {
-          firstName, lastName, businessName, email, mobile, landline, address1, address2, town, county, postcode: postcode.split(/(?=.{3}$)/).join(' ').toUpperCase()
+          firstName, lastName, businessName, email, confirmEmail, mobile, landline, address1, address2, town, county, postcode: postcode.split(/(?=.{3}$)/).join(' ').toUpperCase()
         })
 
         return results ? h.redirect(detailsPath) : h.redirect(nextPath)
