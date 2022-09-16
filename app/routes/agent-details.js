@@ -95,12 +95,12 @@ module.exports = [
 
         if (!landline && !mobile) {
           return h.view(viewTemplate, createModel(phoneErrors, {
-            firstName, lastName, businessName, email, confirmEmail, mobile, landline, address1, address2, town, county, postcode
+            firstName, lastName, businessName, email, emailConfirm, mobile, landline, address1, address2, town, county, postcode
           }, getYarValue(request, 'checkDetails'))).takeover()
         }
 
         setYarValue(request, 'agentDetails', {
-          firstName, lastName, businessName, email, confirmEmail, mobile, landline, address1, address2, town, county, postcode: postcode.split(/(?=.{3}$)/).join(' ').toUpperCase()
+          firstName, lastName, businessName, email, emailConfirm, mobile, landline, address1, address2, town, county, postcode: postcode.split(/(?=.{3}$)/).join(' ').toUpperCase()
         })
 
         return results ? h.redirect(detailsPath) : h.redirect(nextPath)
