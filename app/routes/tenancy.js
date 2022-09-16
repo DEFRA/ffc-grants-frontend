@@ -28,8 +28,11 @@ module.exports = [
     handler: (request, h) => {
       const landOwnership = getYarValue(request, 'landOwnership')
       const data = landOwnership || null
+
+      const extraDetails = { errorList: null, data, hint }
+
       
-      return h.view(viewTemplate, createModelTwoRadios(...prefixModelParams, null, data, hint))
+      return h.view(viewTemplate, createModelTwoRadios(...prefixModelParams, extraDetails))
     }
   },
   {
@@ -46,7 +49,9 @@ module.exports = [
           const errorList = []
 
           errorList.push({ text: getErrorMessage(errorObject), href: '#landOwnership' })
-          return h.view(viewTemplate, createModelTwoRadios(...prefixModelParams, errorList, null, hint)).takeover()
+          const extraDetails = { errorList, data: null, hint }
+
+          return h.view(viewTemplate, createModelTwoRadios(...prefixModelParams, extraDetails)).takeover()
         }
       },
       handler: (request, h) => {

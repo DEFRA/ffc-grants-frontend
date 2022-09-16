@@ -27,8 +27,10 @@ module.exports = [
       if (getYarValue(request, 'current-score')) {
         return h.redirect(`${urlPrefix}/irrigated-crops`)
       }
+      const extraDetails = { errorList: null, data: currentlyIrrigating, hint }
 
-      return h.view(viewTemplate, createModelTwoRadios(...prefixModelParams, null, currentlyIrrigating, hint))
+
+      return h.view(viewTemplate, createModelTwoRadios(...prefixModelParams, extraDetails))
     }
   },
   {
@@ -44,7 +46,10 @@ module.exports = [
           const errorList = []
 
           errorList.push({ text: getErrorMessage(errorObject), href: '#currentlyIrrigating' })
-          return h.view(viewTemplate, createModelTwoRadios(...prefixModelParams, errorList, null, hint)).takeover()
+
+          const extraDetails = { errorList, data: null, hint }
+
+          return h.view(viewTemplate, createModelTwoRadios(...prefixModelParams, extraDetails)).takeover()
         }
       },
       handler: async (request, h) => {

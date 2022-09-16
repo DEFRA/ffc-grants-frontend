@@ -29,7 +29,10 @@ module.exports = [
       const data = sSSI || null
 
       await gapiService.sendJourneyTime(request, gapiService.metrics.ELIGIBILITY)
-      return h.view(viewTemplate, createModelTwoRadios(...prefixModelParams, null, data, hint))
+
+      const extraDetails = { errorList: null, data, hint }
+
+      return h.view(viewTemplate, createModelTwoRadios(...prefixModelParams, extraDetails))
     }
   },
   {
@@ -45,7 +48,10 @@ module.exports = [
           const errorList = []
           
           errorList.push({ text: getErrorMessage(errorObject), href: '#sSSI' })
-          return h.view(viewTemplate, createModelTwoRadios(...prefixModelParams, errorList, null, hint)).takeover()
+
+          const extraDetails = { errorList, data: null, hint }
+
+          return h.view(viewTemplate, createModelTwoRadios(...prefixModelParams, extraDetails)).takeover()
         }
       },
       handler: async (request, h) => {
