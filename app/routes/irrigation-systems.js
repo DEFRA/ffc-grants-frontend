@@ -67,7 +67,7 @@ module.exports = [
       const currentData = getYarValue(request, 'irrigationCurrent') || null
       const plannedData = getYarValue(request, 'irrigationPlanned') || null
 
-      const currentlyIrrigating = getYarValue(request, 'currentlyIrrigating') || null
+      const currentlyIrrigating = getYarValue(request, 'currentlyIrrigating')
       return h.view(viewTemplate, createModel(currentlyIrrigating, null, currentData, plannedData, getYarValue(request, 'current-score')))
     }
   },
@@ -85,7 +85,7 @@ module.exports = [
         failAction: (request, h, err) => {
           gapiService.sendValidationDimension(request)
           let { irrigationCurrent, irrigationPlanned } = request.payload
-          const currentlyIrrigating = getYarValue(request, 'currentlyIrrigating') || null
+          const currentlyIrrigating = getYarValue(request, 'currentlyIrrigating')
           const errorList = []
           const [
             irrigationCurrentError, irrigationPlannedError
