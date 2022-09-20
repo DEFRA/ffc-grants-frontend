@@ -54,6 +54,23 @@ describe('Irrigated Land page', () => {
     expect(response.statusCode).toBe(200)
   })
 
+  it('should load page if no yar values successfully', async () => {
+    varList = {
+      irrigatedLandCurrent: null,
+      irrigatedLandTarget: null
+    }
+    const options = {
+      method: 'GET',
+      url: `${global.__URLPREFIX__}/irrigated-land`,
+      headers: {
+        cookie: 'crumb=' + crumbToken
+      }
+    }
+
+    const response = await global.__SERVER__.inject(options)
+    expect(response.statusCode).toBe(200)
+  })
+
   it('should shows error messages if no data is entered', async () => {
     const postOptions = {
       method: 'POST',
@@ -195,7 +212,7 @@ describe('Irrigated Land page', () => {
       method: 'POST',
       url: `${global.__URLPREFIX__}/irrigated-land`,
       payload: {
-        irrigatedLandCurrent: '0',
+        irrigatedLandCurrent: '-1',
         irrigatedLandTarget: '0',
         crumb: crumbToken
       },
@@ -237,6 +254,21 @@ describe('Irrigated Land page', () => {
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
     expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/irrigation-water-source`)
+  })
+
+  it('should store user response and redirects to score page', async () => {
+    const postOptions = {
+      method: 'POST',
+      url: `${global.__URLPREFIX__}/irrigated-land`,
+      payload: { irrigatedLandCurrent: '123.4', irrigatedLandTarget: '567.8', results: 'result', crumb: crumbToken },
+      headers: {
+        cookie: 'crumb=' + crumbToken
+      }
+    }
+
+    const postResponse = await global.__SERVER__.inject(postOptions)
+    expect(postResponse.statusCode).toBe(302)
+    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/score`)
   })
 
   it('should store default 0 for irrigatedLandCurrent if user select currently Irrigating NO', async () => {
