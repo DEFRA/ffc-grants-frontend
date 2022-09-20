@@ -52,7 +52,9 @@ describe('Applicant page', () => {
   })
 
   it('should load page wiht no yar successfully', async () => {
-    varList = {}
+    varList = {
+      applying: null
+    }
     const options = {
       method: 'GET',
       url: `${global.__URLPREFIX__}/applying`

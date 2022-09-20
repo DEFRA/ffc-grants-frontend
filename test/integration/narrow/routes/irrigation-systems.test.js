@@ -58,7 +58,11 @@ describe('Irrigation syatems page', () => {
   })
 
   it('should load page with no yarValues successfully', async () => {
-    varList = {}
+    varList = {
+      currentlyIrrigating: null,
+      irrigationCurrent: null,
+      irrigationPlanned: null
+    }
     const options = {
       method: 'GET',
       url: `${global.__URLPREFIX__}/irrigation-systems`
@@ -115,7 +119,11 @@ describe('Irrigation syatems page', () => {
   })
 
   it('should store user response if no yar value and redirects to productivity page', async () => {
-    varList = {}
+    varList = {
+      currentlyIrrigating: null,
+      irrigationCurrent: null,
+      irrigationPlanned: null
+    }
     
     const postOptions = {
       method: 'POST',
@@ -165,7 +173,11 @@ describe('Irrigation syatems page', () => {
   })
 
   it('should display the error summary if irrigationCurrent has 3 options selected', async () => {
-    varList = {}
+    varList = {
+      currentlyIrrigating: null,
+      irrigationCurrent: null,
+      irrigationPlanned: null
+    }
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/irrigation-systems`,
@@ -185,7 +197,11 @@ describe('Irrigation syatems page', () => {
   })
 
   it('should display the error summary if irrigationPlanned has 3 options selected', async () => {
-    varList = {}
+    varList = {
+      currentlyIrrigating: null,
+      irrigationCurrent: null,
+      irrigationPlanned: null
+    }    
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/irrigation-systems`,
