@@ -6,7 +6,7 @@ const BUSINESSNAME_REGEX = /^[a-zA-Z0-9' -,’-]+$/
 const NUMBER_REGEX = /^\d+$/
 const PROJECT_COST_REGEX = /^[1-9][0-9]*$/
 const IRRIGATED_LAND_REGEX = /^(\d+([.]\d?)?|[.]\d)$/
-const ONLY_ZEROES_REGEX = /^[0]+$/
+const ONLY_ZEROES_REGEX = /^0+$/
 const TOWN_REGEX = /^[a-zA-Z -]+$/
 
 module.exports = {
