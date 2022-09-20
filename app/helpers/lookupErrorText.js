@@ -54,7 +54,7 @@ const errors = {
   'error.email.any.required': 'Enter your email address',
   'error.email.string.email': 'Enter an email address in the correct format, like name@example.com',
   'error.emailConfirm.string.email': 'Enter an email address in the correct format, like name@example.com',
-  'error.emailConfirm.string.empty': 'Enter an email address that matches',
+  'error.emailConfirm.string.empty': 'Confirm your email address',
   'error.emailConfirm.any.required': 'Enter an email address that matches',
   'error.mobile.string.empty': 'Enter a mobile number (If you do not have a mobile, enter your landline number)',
   'error.mobile.any.required': 'Enter a mobile number (If you do not have a mobile, enter your landline number)',
