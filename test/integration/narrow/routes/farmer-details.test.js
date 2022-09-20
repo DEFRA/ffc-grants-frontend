@@ -58,9 +58,7 @@ describe('Farmer details page', () => {
 
     varList = {
       farmerDetails: null,
-      businessDetails: {
-        applying: 'Agent'
-      }
+      applying: 'Agent'
     }
     const options = {
       method: 'GET',
@@ -423,9 +421,7 @@ describe('Farmer details page', () => {
   it('should validate - if both mobile and landline are empty', async () => {
     varList = {
       farmerDetails: null,
-      businessDetails: {
-        applying: 'Agent'
-      }
+      applying: 'Agent'
     }
 
     const postOptions = {
