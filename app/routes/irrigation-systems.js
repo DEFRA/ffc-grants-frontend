@@ -113,10 +113,8 @@ module.exports = [
       },
       handler: (request, h) => {
         let { irrigationCurrent, irrigationPlanned, results } = request.payload
-        const errorList = []
         irrigationCurrent = [irrigationCurrent].flat()
         irrigationPlanned = [irrigationPlanned].flat()
-        const currentlyIrrigating = getYarValue(request, 'currentlyIrrigating') || null
 
         setYarValue(request, 'irrigationCurrent', irrigationCurrent)
         setYarValue(request, 'irrigationPlanned', irrigationPlanned)
