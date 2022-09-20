@@ -241,6 +241,23 @@ describe('Irrigated Land page', () => {
     expect(postResponse.payload).toContain('Figure must be equal to or higher than current hectares')
   })
 
+  it('value of target irrigated land will show 0 error if value lower and equals 0', async () => {
+    const postOptions = {
+      method: 'POST',
+      url: `${global.__URLPREFIX__}/irrigated-land`,
+      payload: {
+        irrigatedLandCurrent: '2',
+        irrigatedLandTarget: '0',
+        crumb: crumbToken
+      },
+      headers: { cookie: 'crumb=' + crumbToken }
+    }
+
+    const postResponse = await global.__SERVER__.inject(postOptions)
+    expect(postResponse.statusCode).toBe(200)
+    expect(postResponse.payload).toContain('Figure must be higher than 0')
+  })
+
   it('should store user response and redirects to water source page', async () => {
     const postOptions = {
       method: 'POST',

@@ -117,7 +117,7 @@ module.exports = [
           }
 
           const { irrigatedLandCurrent, irrigatedLandTarget } = request.payload
-          const currentlyIrrigating = getYarValue(request, 'currentlyIrrigating') || null
+          const currentlyIrrigating = getYarValue(request, 'currentlyIrrigating')
 
           return h.view(viewTemplate, createModel(currentlyIrrigating, irrigatedLandCurrent, irrigatedLandTarget, errorList, getYarValue(request, 'current-score'))).takeover()
         }
