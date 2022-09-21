@@ -22,7 +22,8 @@ const varListTemplate = {
       firstName: 'First Name',
       lastName: 'Last Name'
     }
-  }
+  },
+  agentDetails: 'testing'
 }
 
 let varList
@@ -57,7 +58,7 @@ describe('Agent details page', () => {
 
   it('should load page with no yar successfully', async () => {
     varList = {
-      agentdetails: null
+      agentDetails: null
     }
     
     const options = {
