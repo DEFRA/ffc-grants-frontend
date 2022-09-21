@@ -93,6 +93,7 @@ module.exports = [
           { text: 'Enter your landline number', href: '#landline' }
         ]
 
+        console.log('for testing code coverage')
         if (!landline && !mobile) {
           return h.view(viewTemplate, createModel(phoneErrors, {
             firstName, lastName, businessName, email, emailConfirm, mobile, landline, address1, address2, town, county, postcode
