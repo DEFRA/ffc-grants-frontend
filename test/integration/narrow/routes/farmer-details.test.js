@@ -365,7 +365,7 @@ describe('Farmer details page', () => {
     expect(postResponse.payload).toContain('Enter a landline number (If you do not have a landline, enter your mobile number)')
   })
 
-  it('should store user response and redirects to details page', async () => {//todo fix this
+  it('should store user response and redirects to details page', async () => {
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/farmer-details`,
