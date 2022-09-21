@@ -1,40 +1,60 @@
 const { crumbToken } = require('./test-helper')
 
-describe('Applicant page', () => {
-  const varList = {
-    farmingType: 'some fake crop',
-    legalStatus: 'fale status',
-    inEngland: 'Yes',
-    projectStarted: 'No',
-    landOwnership: 'Yes',
-    projectItemsList: {
-      projectEquipment: ['Boom', 'Trickle']
-    },
-    projectCost: '12345678',
-    remainingCost: 14082.00,
-    payRemainingCosts: 'Yes',
-    planningPermission: 'Will not be in place by 31 December 2022',
-    abstractionLicence: 'Not needed',
-    sSSI: 'Yes',
-    businessDetails: {
-      projectName: 'Project Name',
-      businessName: 'Business Name',
-      applying: 'Applicant'
-    }
+const varListTemplate = {
+  farmingType: 'some fake crop',
+  legalStatus: 'fale status',
+  inEngland: 'Yes',
+  projectStarted: 'No',
+  landOwnership: 'Yes',
+  projectItemsList: {
+    projectEquipment: ['Boom', 'Trickle']
+  },
+  projectCost: '12345678',
+  remainingCost: 14082.00,
+  payRemainingCosts: 'Yes',
+  planningPermission: 'Will not be in place by 31 December 2022',
+  abstractionLicence: 'Not needed',
+  sSSI: 'Yes',
+  businessDetails: {
+    projectName: 'Project Name',
+    businessName: 'Business Name',
+    applying: 'Applicant'
   }
+}
 
-  jest.mock('../../../../app/helpers/session', () => ({
-    setYarValue: (request, key, value) => null,
-    getYarValue: (request, key) => {
-      if (Object.keys(varList).includes(key)) return varList[key]
-      else return 'Error'
-    }
-  }))
+const mockSession = {
+  setYarValue: (request, key, value) => null,
+  getYarValue: (request, key) => {
+    if (Object.keys(varList).includes(key)) return varList[key]
+    else return 'Error'
+  }
+}
+jest.mock('../../../../app/helpers/session', () => mockSession)
+
+
+describe('Applicant page', () => {
+
+  beforeEach(() => {
+    varList = { ...varListTemplate }
+  })
 
   afterEach(() => {
     jest.resetAllMocks()
   })
   it('should load page successfully', async () => {
+    const options = {
+      method: 'GET',
+      url: `${global.__URLPREFIX__}/applying`
+    }
+
+    const response = await global.__SERVER__.inject(options)
+    expect(response.statusCode).toBe(200)
+  })
+
+  it('should load page wiht no yar successfully', async () => {
+    varList = {
+      applying: null
+    }
     const options = {
       method: 'GET',
       url: `${global.__URLPREFIX__}/applying`

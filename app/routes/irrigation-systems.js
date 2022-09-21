@@ -67,7 +67,7 @@ module.exports = [
       const currentData = getYarValue(request, 'irrigationCurrent') || null
       const plannedData = getYarValue(request, 'irrigationPlanned') || null
 
-      const currentlyIrrigating = getYarValue(request, 'currentlyIrrigating') || null
+      const currentlyIrrigating = getYarValue(request, 'currentlyIrrigating')
       return h.view(viewTemplate, createModel(currentlyIrrigating, null, currentData, plannedData, getYarValue(request, 'current-score')))
     }
   },
@@ -85,7 +85,7 @@ module.exports = [
         failAction: (request, h, err) => {
           gapiService.sendValidationDimension(request)
           let { irrigationCurrent, irrigationPlanned } = request.payload
-          const currentlyIrrigating = getYarValue(request, 'currentlyIrrigating') || null
+          const currentlyIrrigating = getYarValue(request, 'currentlyIrrigating')
           const errorList = []
           const [
             irrigationCurrentError, irrigationPlannedError
@@ -113,24 +113,8 @@ module.exports = [
       },
       handler: (request, h) => {
         let { irrigationCurrent, irrigationPlanned, results } = request.payload
-        const errorList = []
         irrigationCurrent = [irrigationCurrent].flat()
         irrigationPlanned = [irrigationPlanned].flat()
-        const currentlyIrrigating = getYarValue(request, 'currentlyIrrigating') || null
-
-        if (irrigationCurrent.length > 2 || irrigationPlanned.length > 2) {
-          if (irrigationCurrent.length > 2) {
-            errorList.push({ text: 'Select up to 2 systems currently used to irrigate', href: '#irrigationCurrent' })
-          }
-          if (irrigationPlanned.length > 2) {
-            errorList.push({ text: 'Select up to 2 systems that will be used to irrigate', href: '#irrigationPlanned' })
-          }
-
-          return h.view(
-            viewTemplate,
-            createModel(currentlyIrrigating, errorList, irrigationCurrent, irrigationPlanned, getYarValue(request, 'current-score'))
-          )
-        }
 
         setYarValue(request, 'irrigationCurrent', irrigationCurrent)
         setYarValue(request, 'irrigationPlanned', irrigationPlanned)

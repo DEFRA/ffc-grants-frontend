@@ -32,7 +32,7 @@ module.exports = [
     handler: async (request, h) => {
       let farmerDetails = getYarValue(request, 'farmerDetails') || null
 
-      if (!farmerDetails) {
+      if (farmerDetails == null) {
         farmerDetails = {
           firstName: null,
           lastName: null,
