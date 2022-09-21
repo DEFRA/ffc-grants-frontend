@@ -73,7 +73,6 @@ TimeoutWarning.prototype.countIdleTime = function () {
   window.onmousedown = resetIdleTime.bind(this) // Catches touchscreen presses
   window.onclick = resetIdleTime.bind(this) // Catches touchpad clicks
   window.onscroll = resetIdleTime.bind(this) // Catches scrolling with arrow keys
-  window.onkeypress = resetIdleTime.bind(this)
   window.onkeyup = resetIdleTime.bind(this) // Catches Android keypad presses
 
   function resetIdleTime () {

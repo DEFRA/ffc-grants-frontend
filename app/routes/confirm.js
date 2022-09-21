@@ -12,7 +12,7 @@ const copyprovider = (key) => {
   const copy = {
     1: "Confirm and send",
     2: "I confirm that, to the best of my knowledge, the details I have provided are correct.",
-    3: "I understand the project’s eligibility and score is basedon the answers I provided.",
+    3: "I understand the project’s eligibility and score is based on the answers I provided.",
     4: "I am aware that the information I submit will be:",
     5: "checked by the RPA",
     6: "shared with the Environment Agency so that they can check the details of my planned project",
@@ -39,7 +39,7 @@ function createModel (consentOptional, errorMessage) {
         consentOptional,
         [{
           value: CONSENT_OPTIONAL,
-          text: '(Optional) So that we can continue to improve our services and schemes, we may wish to contact you in the future. Please confirm if you are happy for us, or a third-party working for us, to contact you.'
+          text: copyprovider(9),
         }]
       )
     }

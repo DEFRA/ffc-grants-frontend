@@ -38,6 +38,19 @@ describe('Country Page', () => {
     expect(response.statusCode).toBe(200)
   })
 
+  it('should load country page with no yar value sucessfully', async () => {
+    varList = {
+      inEngland: null
+    }
+    const options = {
+      method: 'GET',
+      url: `${global.__URLPREFIX__}/country`
+    }
+
+    const response = await global.__SERVER__.inject(options)
+    expect(response.statusCode).toBe(302)
+  })
+
   it('should redirect to project summary page when theres score ', async () => {
     varList['current-score'] = true
     const options = {
