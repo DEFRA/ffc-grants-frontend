@@ -10,13 +10,3 @@ services:
       NODE_ENV: test
     volumes:
       - ./test-output/:/home/node/test-output/
-
-  pa11y:
-    image: defradigital/ffc-pa11y
-    depends_on:
-      - ffc-grants-frontend
-    command: sh -c "scripts/wait ffc-grants-frontend:3000 -- pa11y-ci -c pa11y.json"
-    volumes:
-      - ./pa11y.json:/home/node/pa11y.json
-      - ./test-output/:/home/node/test-output/
-      - ./scripts/:/home/node/scripts
