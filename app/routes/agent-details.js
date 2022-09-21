@@ -29,7 +29,7 @@ module.exports = [
     path: currentPath,
     handler: async (request, h) => {
       let agentDetails = getYarValue(request, 'agentDetails') || null
-      if (!agentDetails) {
+      if (agentDetails == null) {
         agentDetails = {
           firstName: null,
           lastName: null,
