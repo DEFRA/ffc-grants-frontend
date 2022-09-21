@@ -65,7 +65,7 @@ module.exports = [
           county: Joi.string().required(),
           town: Joi.string().allow(''),
           address1: Joi.string().required(),
-          address2: Joi.string().required(),
+          address2: Joi.string().allow(''),
           landline: Joi.string().regex(PHONE_REGEX).min(10).allow(''),
           mobile: Joi.string().regex(PHONE_REGEX).min(10).allow(''),
         }),
