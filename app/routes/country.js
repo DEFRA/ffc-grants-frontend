@@ -80,11 +80,10 @@ module.exports = [
           const { inEngland } = request.payload
           const errorObject = errorExtractor(err)
           errorList.push({ text: getErrorMessage(errorObject), href: '#inEngland' })
-          return h.view(viewTemplate, createModel(!inEngland ? errorList : null, inEngland)).takeover()
+          return h.view(viewTemplate, createModel(errorList, inEngland)).takeover()
         }
       },
       handler: async (request, h) => {
-        const errorList = []
         const { inEngland } = request.payload
 
         setYarValue(request, 'inEngland', inEngland)

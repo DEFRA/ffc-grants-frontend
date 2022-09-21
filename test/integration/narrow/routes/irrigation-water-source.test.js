@@ -57,6 +57,23 @@ describe('Irrigation water source page', () => {
     expect(response.statusCode).toBe(200)
   })
 
+  it('should load page with no yars successfully', async () => {
+    varList = {
+      waterSourceCurrent: null,
+      waterSourcePlanned: null
+    }
+
+    const options = {
+      method: 'GET',
+      url: `${global.__URLPREFIX__}/irrigation-water-source`,
+      headers: {
+        cookie: 'crumb=' + crumbToken
+      }
+    }
+
+    const response = await global.__SERVER__.inject(options)
+    expect(response.statusCode).toBe(200)
+  })
   it('should returns error message if no water source option is selected', async () => {
     const postOptions = {
       method: 'POST',
@@ -86,6 +103,21 @@ describe('Irrigation water source page', () => {
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
     expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/irrigation-systems`)
+  })
+
+  it('should store user response and redirects to scores page', async () => {
+    const postOptions = {
+      method: 'POST',
+      url: `${global.__URLPREFIX__}/irrigation-water-source`,
+      payload: { waterSourceCurrent: 'some option-1', waterSourcePlanned: 'another-option-1', results: 'result', crumb: crumbToken },
+      headers: {
+        cookie: 'crumb=' + crumbToken
+      }
+    }
+
+    const postResponse = await global.__SERVER__.inject(postOptions)
+    expect(postResponse.statusCode).toBe(302)
+    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/score`)
   })
 
   it('redirects to irrigation-water-source if user waterSourceCurrent and waterSourcePlanned have not been saved', async () => {
@@ -121,6 +153,46 @@ describe('Irrigation water source page', () => {
     expect(postResponse.payload).toContain('Select up to 2 options for where your current irrigation water comes from')
     expect(postResponse.payload).toContain('Select up to 2 options for where your irrigation water will come from')
   })
+
+  it('should display the error summary if more than two options are selected for current', async () => {
+    const postOptions = {
+      method: 'POST',
+      url: `${global.__URLPREFIX__}/irrigation-water-source`,
+      payload: {
+        waterSourceCurrent: ['some option-1', 'some option-2', 'some option-3'],
+        waterSourcePlanned: ['another-option-1', 'another-option-2'],
+        crumb: crumbToken
+      },
+      headers: {
+        cookie: 'crumb=' + crumbToken
+      }
+    }
+
+    const postResponse = await global.__SERVER__.inject(postOptions)
+    expect(postResponse.payload).toContain('There is a problem')
+    expect(postResponse.payload).toContain('Select up to 2 options for where your current irrigation water comes from')
+  })
+
+  it('should display the error summary if more than two options are selected for planned', async () => {
+    const postOptions = {
+      method: 'POST',
+      url: `${global.__URLPREFIX__}/irrigation-water-source`,
+      payload: {
+        waterSourceCurrent: ['some option-1', 'some option-2'],
+        waterSourcePlanned: ['another-option-1', 'another-option-2', 'another-option-3'],
+        crumb: crumbToken
+      },
+      headers: {
+        cookie: 'crumb=' + crumbToken
+      }
+    }
+
+    const postResponse = await global.__SERVER__.inject(postOptions)
+    expect(postResponse.payload).toContain('There is a problem')
+    expect(postResponse.payload).toContain('Select up to 2 options for where your irrigation water will come from')
+  })
+
+
 
   it('should display the current water source question if the user selected YES for currently irrigating', async () => {
     const options = {

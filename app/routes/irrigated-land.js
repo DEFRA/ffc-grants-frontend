@@ -75,7 +75,7 @@ module.exports = [
       const irrigatedLandTarget = getYarValue(request, 'irrigatedLandTarget')
       const currentData = irrigatedLandCurrent || null
       const TargetData = irrigatedLandTarget || null
-      const currentlyIrrigating = getYarValue(request, 'currentlyIrrigating') || null
+      const currentlyIrrigating = getYarValue(request, 'currentlyIrrigating')
 
       return h.view(viewTemplate, createModel(currentlyIrrigating, currentData, TargetData, null, getYarValue(request, 'current-score')))
     }
@@ -98,7 +98,7 @@ module.exports = [
             irrigatedLandCurrentError, irrigatedLandTargetError
           ] = findErrorList(err, ['irrigatedLandCurrent', 'irrigatedLandTarget'])
 
-          if (!irrigatedLandTargetError && ONLY_ZEROES_REGEX.test(request.payload.irrigatedLandTarget)) {
+          if (irrigatedLandTargetError == null && ONLY_ZEROES_REGEX.test(request.payload.irrigatedLandTarget)) {
             irrigatedLandTargetError = 'Figure must be higher than 0'
           }
 
@@ -117,7 +117,7 @@ module.exports = [
           }
 
           const { irrigatedLandCurrent, irrigatedLandTarget } = request.payload
-          const currentlyIrrigating = getYarValue(request, 'currentlyIrrigating') || null
+          const currentlyIrrigating = getYarValue(request, 'currentlyIrrigating')
 
           return h.view(viewTemplate, createModel(currentlyIrrigating, irrigatedLandCurrent, irrigatedLandTarget, errorList, getYarValue(request, 'current-score'))).takeover()
         }
@@ -125,7 +125,7 @@ module.exports = [
       handler: (request, h) => {
         const { irrigatedLandCurrent, irrigatedLandTarget, results } = request.payload
         const hasScore = getYarValue(request, 'current-score')
-        const currentlyIrrigating = getYarValue(request, 'currentlyIrrigating') || null
+        const currentlyIrrigating = getYarValue(request, 'currentlyIrrigating')
 
         if (Number(irrigatedLandTarget) === 0 ||
         (Number(irrigatedLandTarget) < Number(irrigatedLandCurrent))
