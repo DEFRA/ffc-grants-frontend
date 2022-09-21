@@ -1,24 +1,43 @@
 const { crumbToken } = require('./test-helper')
 describe('Irrigated crops page', () => {
-  const project = 'some fake data'
-  const irrigatedCrops = 'some crop'
 
-  jest.mock('../../../../app/helpers/session', () => ({
-    setYarValue: () => null,
+  const varListTemplate = {
+    project: 'some fake data',
+    irrigatedCrops: 'some crop'
+  }
+
+  let varList
+  const mockSession = {
+    setYarValue: (request, key, value) => null,
     getYarValue: (request, key) => {
-      switch (key) {
-        case 'project':
-          return [project]
-        default:
-          return 'Error'
-      }
+      if (Object.keys(varList).includes(key)) return varList[key]
+      else return 'Error'
     }
-  }))
+  }
+
+  jest.mock('../../../../app/helpers/session', () => mockSession)
 
   beforeEach(() => {
     jest.resetAllMocks()
+    varList = { ...varListTemplate }
   })
   it('should load page successfully', async () => {
+    const options = {
+      method: 'GET',
+      url: `${global.__URLPREFIX__}/irrigated-crops`,
+      headers: {
+        cookie: 'crumb=' + crumbToken
+      }
+    }
+
+    const response = await global.__SERVER__.inject(options)
+    expect(response.statusCode).toBe(200)
+  })
+
+  it('should load page with no yar successfully', async () => {
+    varList = {
+      irrigatedCrops: null
+    }
     const options = {
       method: 'GET',
       url: `${global.__URLPREFIX__}/irrigated-crops`,
@@ -50,7 +69,7 @@ describe('Irrigated crops page', () => {
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/irrigated-crops`,
-      payload: { irrigatedCrops, crumb: crumbToken },
+      payload: { irrigatedCrops: 'some fake data', crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
       }
@@ -59,5 +78,35 @@ describe('Irrigated crops page', () => {
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
     expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/irrigation-status`)
+  })
+
+  it('should store user response and redirects to score', async () => {
+    const postOptions = {
+      method: 'POST',
+      url: `${global.__URLPREFIX__}/irrigated-crops`,
+      payload: { irrigatedCrops: 'some fake data', results: 'result', crumb: crumbToken },
+      headers: {
+        cookie: 'crumb=' + crumbToken
+      }
+    }
+
+    const postResponse = await global.__SERVER__.inject(postOptions)
+    expect(postResponse.statusCode).toBe(302)
+    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/score`)
+  })
+
+  it('should store user response and redirects to irrigated-land', async () => {
+    const postOptions = {
+      method: 'POST',
+      url: `${global.__URLPREFIX__}/irrigated-crops`,
+      payload: { irrigatedCrops: 'some fake data', score: 'result', crumb: crumbToken },
+      headers: {
+        cookie: 'crumb=' + crumbToken
+      }
+    }
+
+    const postResponse = await global.__SERVER__.inject(postOptions)
+    expect(postResponse.statusCode).toBe(302)
+    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/irrigated-land`)
   })
 })

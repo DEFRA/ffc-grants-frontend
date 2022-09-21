@@ -70,6 +70,7 @@ module.exports = [
         const results = request.payload.results
         const hasScore = request.payload.score
         const nextPath = hasScore ? `${urlPrefix}/irrigated-land` : `${urlPrefix}/irrigation-status`
+        
         setYarValue(request, 'irrigatedCrops', request.payload.irrigatedCrops)
         return results ? h.redirect(scorePath) : h.redirect(nextPath)
       }

@@ -57,24 +57,8 @@ describe('Farmer details page', () => {
   it('should load page if getYarValues not found', async () => {
 
     varList = {
-      farmingType: 'some fake crop',
-      legalStatus: 'fale status',
-      inEngland: 'Yes',
-      projectStarted: 'No',
-      landOwnership: 'Yes',
-      projectItemsList: {
-        projectEquipment: ['Boom', 'Trickle']
-      },
-      projectCost: '12345678',
-      remainingCost: 14082.00,
-      payRemainingCosts: 'Yes',
-      planningPermission: 'Will not be in place by 31 December 2022',
-      abstractionLicence: 'Not needed',
-      sSSI: 'Yes',
-      businessDetails: {
-        projectName: 'Project Name',
-        businessName: 'Business Name'
-      }
+      farmerDetails: null,
+      applying: 'Agent'
     }
     const options = {
       method: 'GET',
@@ -436,24 +420,8 @@ describe('Farmer details page', () => {
 
   it('should validate - if both mobile and landline are empty', async () => {
     varList = {
-      farmingType: 'some fake crop',
-      legalStatus: 'fale status',
-      inEngland: 'Yes',
-      projectStarted: 'No',
-      landOwnership: 'Yes',
-      projectItemsList: {
-        projectEquipment: ['Boom', 'Trickle']
-      },
-      projectCost: '12345678',
-      remainingCost: 14082.00,
-      payRemainingCosts: 'Yes',
-      planningPermission: 'Will not be in place by 31 December 2022',
-      abstractionLicence: 'Not needed',
-      sSSI: 'Yes',
-      businessDetails: {
-        projectName: 'Project Name',
-        businessName: 'Business Name'
-      }
+      farmerDetails: null,
+      applying: 'Agent'
     }
 
     const postOptions = {
