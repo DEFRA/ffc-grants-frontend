@@ -84,7 +84,6 @@ module.exports = [
         }
       },
       handler: async (request, h) => {
-        const errorList = []
         const { inEngland } = request.payload
 
         setYarValue(request, 'inEngland', inEngland)
