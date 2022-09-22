@@ -33,7 +33,7 @@
       <h1 class="govuk-heading-l">What eligible items do you need for your project?</h1>
       <span id="project-items-hint" class="govuk-hint">
         Select all the items your project needs
-      </span>
+      </span><br/><br/>
       <form method="POST" action="{{ formActionPage }}" autocomplete="off" novalidate>
         {{ crumbToken(crumb) }}
         {{ govukCheckboxes(checkboxesInfrastucture) }}
