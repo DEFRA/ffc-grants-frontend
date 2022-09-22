@@ -15,7 +15,7 @@ const varListTemplate = {
   abstractionLicence: 'Not needed',
   project: ['some fake project'],
   irrigatedCrops: 'some crop',
-  currentlyIrrigating: 'yes',
+  currentlyIrrigating: 'Yes',
   irrigatedLandCurrent: '123',
   irrigatedLandTarget: '456',
   waterSourceCurrent: ['some source 1'],
@@ -36,7 +36,6 @@ const mockSession = {
 
 jest.mock('../../../../app/helpers/session', () => mockSession)
 describe('Irrigation syatems page', () => {
-
   const { crumbToken } = require('./test-helper')
 
   beforeEach(() => {
@@ -245,7 +244,8 @@ describe('Irrigation syatems page', () => {
 
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
-    expect(response.payload).not.toContain('<h1 class="govuk-heading-l">What systems will be used to irrigate?</h1>')
+    expect(response.payload).not.toContain('<h1 class="govuk-heading-l">Irrigation system</h1>')
+    expect(response.payload).toContain('What systems will be used to irrigate?')
     expect(response.payload).not.toContain('What systems are currently used to irrigate?')
   })
 })
