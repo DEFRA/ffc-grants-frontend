@@ -76,14 +76,14 @@ describe('Irrigation water source page', () => {
 
   it('should load page if land ownership is null', async () => {
 
-    varList.landOwnership = null
+    varList.landOwnership = undefined
     const options = {
       method: 'GET',
       url: `${global.__URLPREFIX__}/project-items`
     }
 
     const response = await global.__SERVER__.inject(options)
-    expect(response.statusCode).toBe(200)
+    expect(response.statusCode).toBe(302)
   })
 
   it('should redirect to project summary page if theres score', async () => {
