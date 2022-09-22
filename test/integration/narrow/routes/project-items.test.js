@@ -62,6 +62,18 @@ describe('Irrigation water source page', () => {
     expect(response.statusCode).toBe(200)
   })
 
+  it('should load page if land ownership is no', async () => {
+
+    varList.landOwnership = 'No'
+    const options = {
+      method: 'GET',
+      url: `${global.__URLPREFIX__}/project-items`
+    }
+
+    const response = await global.__SERVER__.inject(options)
+    expect(response.statusCode).toBe(200)
+  })
+
   it('should redirect to project summary page if theres score', async () => {
     varList['current-score'] = true
     const options = {
@@ -92,7 +104,8 @@ describe('Irrigation water source page', () => {
     varList = {
       projectInfrastucture: undefined,
       projectEquipment : undefined,
-      projectTechnology : undefined
+      projectTechnology : undefined,
+      landOwnership: 'No'
     }
 
     const options = {

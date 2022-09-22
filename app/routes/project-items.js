@@ -111,14 +111,7 @@ module.exports = [
           projectInfrastucture: Joi.any(),
           projectEquipment: Joi.any(),
           projectTechnology: Joi.any()
-        }),
-        failAction: (request, h) => {
-          const landOwnership = getYarValue(request, 'landOwnership') || null
-          const backUrl = landOwnership === 'No' ? tenancyLengthPath : tenancyPath
-          gapiService.sendValidationDimension(request)
-          const errorList = [{ text: 'Select all the items your project needs', href: '#projectInfrastucture' }]
-          return h.view(viewTemplate, createModel(errorList, backUrl, null)).takeover()
-        }
+        })
       },
       handler: (request, h) => {
         const landOwnership = getYarValue(request, 'landOwnership') || null
