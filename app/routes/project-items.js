@@ -99,8 +99,6 @@ module.exports = [
       const projectEquipment = getYarValue(request, 'projectEquipment') || null
       const projectTechnology = getYarValue(request, 'projectTechnology') || null
 
-      console.log('check')
-
       return h.view(viewTemplate, createModel(null, backUrl, projectInfrastucture, projectEquipment, projectTechnology))
     }
   },
