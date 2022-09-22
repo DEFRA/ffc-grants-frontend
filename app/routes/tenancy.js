@@ -31,7 +31,6 @@ module.exports = [
 
       const extraDetails = { errorList: null, data, hint }
 
-      
       return h.view(viewTemplate, createModelTwoRadios(...prefixModelParams, extraDetails))
     }
   },
