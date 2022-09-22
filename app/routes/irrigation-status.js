@@ -13,9 +13,6 @@ const values = { valueOne: 'Yes', valueTwo: 'No' }
 const prefixModelParams = [
   previousPath, currentPath, values, 'currentlyIrrigating', 'Are you currently irrigating?'
 ]
-const hint = {
-  text: 'The location of the project'
-}
 
 module.exports = [
   {
@@ -27,7 +24,7 @@ module.exports = [
       if (getYarValue(request, 'current-score')) {
         return h.redirect(`${urlPrefix}/irrigated-crops`)
       }
-      const extraDetails = { errorList: null, data: currentlyIrrigating, hint }
+      const extraDetails = { errorList: null, data: currentlyIrrigating }
 
 
       return h.view(viewTemplate, createModelTwoRadios(...prefixModelParams, extraDetails))
@@ -47,7 +44,7 @@ module.exports = [
 
           errorList.push({ text: getErrorMessage(errorObject), href: '#currentlyIrrigating' })
 
-          const extraDetails = { errorList, data: null, hint }
+          const extraDetails = { errorList, data: null }
 
           return h.view(viewTemplate, createModelTwoRadios(...prefixModelParams, extraDetails)).takeover()
         }
