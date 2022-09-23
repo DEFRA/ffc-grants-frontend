@@ -11,14 +11,13 @@ const nextPath = `${urlPrefix}/productivity`
 const scorePath = `${urlPrefix}/score`
 
 function createModel (currentlyIrrigating, errorList, currentData, plannedData, hasScore) {
-  currentlyIrrigating = currentlyIrrigating.toLowerCase()
   return {
     backLink: previousPath,
     formActionPage: currentPath,
     hasScore,
     ...errorList ? { errorList } : {},
-    currentlyIrrigating: (currentlyIrrigating === 'yes'),
-    pageTitle: 'Irrigation system',
+    currentlyIrrigating: (currentlyIrrigating === 'Yes'),
+    pageTitle: (currentlyIrrigating === 'Yes' ? 'Irrigation system' : 'What systems will be used to irrigate?'),
 
     mockCheckbox: {
       id: 'irrigationCurrent',
@@ -47,7 +46,7 @@ function createModel (currentlyIrrigating, errorList, currentData, plannedData, 
       name: 'irrigationPlanned',
       fieldset: {
         legend: {
-          html: currentlyIrrigating === 'yes' ? '<h2 class="govuk-heading-m">What systems will be used to irrigate?</h2>' : ''
+          html: currentlyIrrigating === 'Yes' ? '<h2 class="govuk-heading-m">What systems will be used to irrigate?</h2>' : ''
         }
       },
       hint: {
