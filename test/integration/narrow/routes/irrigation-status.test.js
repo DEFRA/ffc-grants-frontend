@@ -48,6 +48,22 @@ describe('Irrigation status page', () => {
     expect(response.statusCode).toBe(200)
   })
 
+  it('should redirect page with to irrigated-crops if current-score exists', async () => {
+    varList = {
+      currentlyIrrigating: null,
+      'current-score': 'value'
+    }
+
+    const options = {
+      method: 'GET',
+      url: `${global.__URLPREFIX__}/irrigation-status`
+    }
+
+    const response = await global.__SERVER__.inject(options)
+    expect(response.statusCode).toBe(302)
+    expect(response.headers.location).toBe(`${global.__URLPREFIX__}/irrigated-crops`)
+  })
+
   it('should return an error message if no option is selected', async () => {
     const postOptions = {
       method: 'POST',

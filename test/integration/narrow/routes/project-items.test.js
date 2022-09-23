@@ -62,6 +62,30 @@ describe('Irrigation water source page', () => {
     expect(response.statusCode).toBe(200)
   })
 
+  it('should load page if land ownership is no', async () => {
+
+    varList.landOwnership = 'No'
+    const options = {
+      method: 'GET',
+      url: `${global.__URLPREFIX__}/project-items`
+    }
+
+    const response = await global.__SERVER__.inject(options)
+    expect(response.statusCode).toBe(200)
+  })
+
+  it('should load page if land ownership is null', async () => {
+
+    varList.landOwnership = undefined
+    const options = {
+      method: 'GET',
+      url: `${global.__URLPREFIX__}/project-items`
+    }
+
+    const response = await global.__SERVER__.inject(options)
+    expect(response.statusCode).toBe(302)
+  })
+
   it('should redirect to project summary page if theres score', async () => {
     varList['current-score'] = true
     const options = {
@@ -106,6 +130,40 @@ describe('Irrigation water source page', () => {
 
   })
   it('should store user response from column: "projectInfrastucture" and redirect to project cost page', async () => {
+    const postOptions = {
+      method: 'POST',
+      url: `${global.__URLPREFIX__}/project-items`,
+      payload: { projectInfrastucture: 'Synthetic liner', crumb: crumbToken },
+      headers: {
+        cookie: 'crumb=' + crumbToken
+      }
+    }
+
+    const postResponse = await global.__SERVER__.inject(postOptions)
+    expect(postResponse.statusCode).toBe(302)
+    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/project-cost`)
+  })
+
+  it('should store user response if landOwnership is no and redirect to project cost page', async () => {
+
+    varList.landOwnership = 'No'
+    const postOptions = {
+      method: 'POST',
+      url: `${global.__URLPREFIX__}/project-items`,
+      payload: { projectInfrastucture: 'Synthetic liner', crumb: crumbToken },
+      headers: {
+        cookie: 'crumb=' + crumbToken
+      }
+    }
+
+    const postResponse = await global.__SERVER__.inject(postOptions)
+    expect(postResponse.statusCode).toBe(302)
+    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/project-cost`)
+  })
+
+  it('should store user response if landOwnership is null and redirect to project cost page', async () => {
+
+    varList.landOwnership = null
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/project-items`,
