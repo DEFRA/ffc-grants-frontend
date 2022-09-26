@@ -68,7 +68,7 @@ const getDetailsInput = (detailsData, errorList) => {
     }
     ),
     inputEmail: formInputObject(
-      'email', 'govuk-input--width-20', 'Email address', 'We will use this to send you confirmation', {
+      'email', 'govuk-input--width-20', 'Email address', 'We will only use this to send you confirmation', {
       fieldName: detailsData.email,
       fieldError: getFieldError(errorList, '#email'),
       inputType: 'email',
