@@ -23,6 +23,7 @@
     "@babel/plugin-proposal-export-default-from": "^7.5.2",
     "@babel/preset-env": "^7.4.2",
     "@babel/register": "^7.4.0",
+    "@rpii/wdio-report-events": "^0.2.0",
     "@types/cucumber": "^4.0.5",
     "@wdio/browserstack-service": "^5.0.0",
     "@wdio/cli": "^5.11.0",
