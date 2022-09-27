@@ -169,6 +169,32 @@ describe('Agent details page', () => {
     expect(postResponse.payload).toContain('Enter an email address that matches')
   })
 
+  it('should validate email - confirmation mismatch', async () => {
+    const postOptions = {
+      method: 'POST',
+      url: `${global.__URLPREFIX__}/agent-details`,
+      payload: {
+        firstName: 'First Name',
+        lastName: 'Last Name',
+        businessName: 'hello',
+        email: 'my@name.com',
+        emailConfirm: 'another@name.com',
+        mobile: '07700 900 982',
+        address1: 'Address 1',
+        address2: 'Address 2',
+        town: 'MyTown',
+        county: 'Devon',
+        postcode: 'AA1 1AA',
+        crumb: crumbToken
+      },
+      headers: { cookie: 'crumb=' + crumbToken }
+    }
+
+    const postResponse = await global.__SERVER__.inject(postOptions)
+    expect(postResponse.statusCode).toBe(200)
+    expect(postResponse.payload).toContain('Enter an email address that matches')
+  })
+
   it('should validate email in fail handler', async () => {
     const postOptions = {
       method: 'POST',
