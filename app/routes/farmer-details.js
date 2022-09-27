@@ -1,7 +1,7 @@
 const Joi = require('joi')
 const { setYarValue, getYarValue } = require('../helpers/session')
 const { getErrorList } = require('../helpers/helper-functions')
-const { NAME_REGEX, PHONE_REGEX, POSTCODE_REGEX, DELETE_POSTCODE_CHARS_REGEX, TOWN_REGEX } = require('../helpers/regex-validation')
+const { NAME_REGEX, PHONE_REGEX, POSTCODE_REGEX, DELETE_POSTCODE_CHARS_REGEX, TOWN_REGEX, ADDRESS_REGEX } = require('../helpers/regex-validation')
 const { getDetailsInput } = require('../helpers/detailsInputs')
 const gapiService = require('../services/gapi-service')
 
@@ -69,10 +69,10 @@ module.exports = [
           lastName: Joi.string().regex(NAME_REGEX).required(),
           email: Joi.string().email().required(),
           emailConfirm: Joi.string().email().required(),
-          mobile: Joi.string().regex(PHONE_REGEX).min(10).allow(''),
-          landline: Joi.string().regex(PHONE_REGEX).min(10).allow(''),
-          address1: Joi.string().required(),
-          address2: Joi.string().allow(''),
+          mobile: Joi.string().regex(PHONE_REGEX).replace(/\s/g, '').min(10).allow(''),
+          landline: Joi.string().regex(PHONE_REGEX).replace(/\s/g, '').min(10).allow(''),
+          address1: Joi.string().regex(ADDRESS_REGEX).required(),
+          address2: Joi.string().regex(ADDRESS_REGEX).allow(''),
           town: Joi.string().regex(TOWN_REGEX).required(),
           county: Joi.string().required(),
           postcode: Joi.string().replace(DELETE_POSTCODE_CHARS_REGEX, '').regex(POSTCODE_REGEX).trim().required(),
@@ -80,14 +80,17 @@ module.exports = [
           results: Joi.any()
         }),
         failAction: async (request, h, err) => {
-          const phoneErrors = []
+          const comparisonErrors = []
           if (request.payload.landline === '' && request.payload.mobile === '') {
-            phoneErrors.push({ text: 'Enter a mobile number (If you do not have a mobile, enter your landline number)', href: '#mobile' })
-            phoneErrors.push({ text: 'Enter a landline number (If you do not have a landline, enter your mobile number)', href: '#landline' })
+            comparisonErrors.push({ text: 'Enter a mobile number (If you do not have a mobile, enter your landline number)', href: '#mobile' })
+            comparisonErrors.push({ text: 'Enter a landline number (If you do not have a landline, enter your mobile number)', href: '#landline' })
           }
 
+          if (request.payload.emailConfirm !== request.payload.email) {
+            comparisonErrors.push({ text: 'Enter an email address that matches', href: '#emailConfirm' })
+          }
 
-          const errorList = getErrorList(['firstName', 'lastName', 'email', 'emailConfirm', 'mobile', 'landline', 'address1', 'address2', 'town', 'county', 'postcode', 'projectPostcode'], err, phoneErrors)
+          const errorList = getErrorList(['firstName', 'lastName', 'email', 'emailConfirm', 'mobile', 'landline', 'address1', 'address2', 'town', 'county', 'postcode', 'projectPostcode'], err, comparisonErrors)
           const { firstName, lastName, email, emailConfirm, mobile, landline, address1, address2, town, county, postcode, projectPostcode } = request.payload
           const farmerDetails = { firstName, lastName, email, emailConfirm, mobile, landline, address1, address2, town, county, postcode, projectPostcode }
           const applying = getYarValue(request, 'applying')
@@ -115,8 +118,8 @@ module.exports = [
         }
 
         if (emailConfirm !== email) {
-          await request.ga.pageView()
           const emailError = [{ text: 'Enter an email address that matches', href: '#emailConfirm' }]
+          await request.ga.pageView()
           return h.view(viewTemplate, createModel(emailError, {
             firstName, lastName, email, emailConfirm, mobile, landline, address1, address2, town, county, postcode, projectPostcode
           }, getYarValue(request, 'checkDetails'))).takeover()

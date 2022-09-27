@@ -7,6 +7,7 @@ const NUMBER_REGEX = /^\d+$/
 const PROJECT_COST_REGEX = /^[1-9]\d*$/
 const IRRIGATED_LAND_REGEX = /^(\d+([.]\d?)?|[.]\d)$/
 const ONLY_ZEROES_REGEX = /^0+$/
+const ADDRESS_REGEX = /^[a-zA-Z0-9' -]*$/
 const TOWN_REGEX = /^[a-zA-Z -]+$/
 
 module.exports = {
@@ -19,5 +20,6 @@ module.exports = {
   PROJECT_COST_REGEX,
   IRRIGATED_LAND_REGEX,
   ONLY_ZEROES_REGEX,
-  TOWN_REGEX
+  TOWN_REGEX,
+  ADDRESS_REGEX
 }
