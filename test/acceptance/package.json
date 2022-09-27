@@ -43,7 +43,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.4.0",
-    "@rpii/wdio-html-reporter": "^6.0.6",
+    "@rpii/wdio-html-reporter": "^7.0.0",
     "@wdio/cucumber-framework": "^5.23.0",
     "@wdio/local-runner": "^5.23.0",
     "@wdio/spec-reporter": "^5.23.0",
