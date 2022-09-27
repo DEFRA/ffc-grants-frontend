@@ -4,7 +4,7 @@ const { setYarValue } = require('../helpers/session')
 
 const viewTemplate = 'check-details'
 const currentPath = `${urlPrefix}/${viewTemplate}`
-const previousPath = `${urlPrefix}/farmer-details`
+const previousPath = `${urlPrefix}/applicant-details`
 const nextPath = `${urlPrefix}/confirm`
 const startPath = startPageUrl
 const businessDetailsPath = `${urlPrefix}/business-details`

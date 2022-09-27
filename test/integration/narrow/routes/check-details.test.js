@@ -86,7 +86,7 @@ describe('Check Details page', () => {
     const response = await global.__SERVER__.inject(options)
     console.log(response.headers.location, 'Redirect Location')
     expect(response.statusCode).toBe(200)
-    expect(response.payload).toContain(`${global.__URLPREFIX__}/farmer-details`)
+    expect(response.payload).toContain(`${global.__URLPREFIX__}/applicant-details`)
   })
 
   it('should have continue button to redirect to confirm page ', async () => {

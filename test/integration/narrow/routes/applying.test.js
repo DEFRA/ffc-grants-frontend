@@ -106,6 +106,6 @@ describe('Applicant page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/farmer-details`)
+    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/applicant-details`)
   })
 })

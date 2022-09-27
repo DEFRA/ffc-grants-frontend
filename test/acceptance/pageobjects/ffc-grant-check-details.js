@@ -7,7 +7,7 @@ class CheckDetails extends Page {
 
   get businessDetailsLink () { return $("//*[normalize-space(text())and normalize-space(.)='Check your details'][1]/following::a[1]") }
   //                                      //*[normalize-space(text())and normalize-space(.)='Check your details'][1]/following::a[1]
-  get farmerDetailsLink () { return $('//a[contains(@href, "/water/farmer-details")]') }
+  get farmerDetailsLink() { return $('//a[contains(@href, "/water/applicant-details")]') }
 
   /**
        * define or overwrite page methods
