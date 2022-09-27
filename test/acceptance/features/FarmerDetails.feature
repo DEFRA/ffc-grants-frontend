@@ -1,4 +1,4 @@
-Feature: Farmer details
+Feature: Applicant details
 
       # Scenario: Reject Cookies
       #   Given I open the url "/start"
