@@ -72,8 +72,8 @@ module.exports = [
         failAction: (request, h, err) => {
           const phoneErrors = []
           if (request.payload.landline === '' && request.payload.mobile === '') {
-            phoneErrors.push({ text: 'Enter your mobile number', href: '#mobile' })
-            phoneErrors.push({ text: 'Enter your landline number', href: '#landline' })
+            phoneErrors.push({ text: 'Enter a mobile number (If you do not have a mobile, enter your landline number)', href: '#mobile' })
+            phoneErrors.push({ text: 'Enter a landline number (If you do not have a landline, enter your mobile number)', href: '#landline' })
           }
 
           const errorList = getErrorList([ 'firstName', 'lastName', 'businessName', 'email', 'emailConfirm', 'mobile', 'landline', 'address1', 'address2', 'town', 'county', 'postcode'], err, phoneErrors)
@@ -89,8 +89,8 @@ module.exports = [
         } = request.payload
 
         const phoneErrors = [
-          { text: 'Enter your mobile number', href: '#mobile' },
-          { text: 'Enter your landline number', href: '#landline' }
+          { text: 'Enter a mobile number (If you do not have a mobile, enter your landline number)', href: '#mobile' },
+          { text: 'Enter a landline number (If you do not have a landline, enter your mobile number)', href: '#landline' }
         ]
 
         if (!landline && !mobile) {
