@@ -66,6 +66,8 @@ const errors = {
   'error.landline.string.pattern.base': 'Enter a telephone number, like 01632 960 001, 07700 900 982 or +44 0808 157 0192',
   'error.address1.string.empty': 'Enter your building and street details',
   'error.address1.any.required': 'Enter your building and street details',
+  'error.address1.string.pattern.base': 'Address must only include letters, numbers, hyphens and apostrophes',
+  'error.address2.string.pattern.base': 'Address must only include letters, numbers, hyphens and apostrophes',
   'error.address2.string.empty': 'Enter line 2 of your address',
   'error.address2.any.required': 'Enter line 2 of your address',
   'error.town.string.pattern.base': 'Town must only include letters, hyphens and spaces',

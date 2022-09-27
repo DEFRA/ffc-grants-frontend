@@ -169,6 +169,49 @@ describe('Agent details page', () => {
     expect(postResponse.payload).toContain('Enter an email address that matches')
   })
 
+  it('should validate email - confirmation mismatch', async () => {
+    const postOptions = {
+      method: 'POST',
+      url: `${global.__URLPREFIX__}/agent-details`,
+      payload: {
+        firstName: 'First Name',
+        lastName: 'Last Name',
+        businessName: 'hello',
+        email: 'my@name.com',
+        emailConfirm: 'another@name.com',
+        mobile: '07700 900 982',
+        address1: 'Address 1',
+        address2: 'Address 2',
+        town: 'MyTown',
+        county: 'Devon',
+        postcode: 'AA1 1AA',
+        crumb: crumbToken
+      },
+      headers: { cookie: 'crumb=' + crumbToken }
+    }
+
+    const postResponse = await global.__SERVER__.inject(postOptions)
+    expect(postResponse.statusCode).toBe(200)
+    expect(postResponse.payload).toContain('Enter an email address that matches')
+  })
+
+  it('should validate email in fail handler', async () => {
+    const postOptions = {
+      method: 'POST',
+      url: `${global.__URLPREFIX__}/agent-details`,
+      payload: {
+        firstName: '',
+        email: 'my@name.com',
+        crumb: crumbToken
+      },
+      headers: { cookie: 'crumb=' + crumbToken }
+    }
+
+    const postResponse = await global.__SERVER__.inject(postOptions)
+    expect(postResponse.statusCode).toBe(200)
+    expect(postResponse.payload).toContain('Enter an email address that matches')
+  })
+
   it('should validate landline - if typed in', async () => {
     const postOptions = {
       method: 'POST',
@@ -239,8 +282,8 @@ describe('Agent details page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Enter your mobile number')
-    expect(postResponse.payload).toContain('Enter your landline number')
+    expect(postResponse.payload).toContain('Enter a mobile number (If you do not have a mobile, enter your landline number)')
+    expect(postResponse.payload).toContain('Enter a landline number (If you do not have a landline, enter your mobile number)')
   })
 
   it('should validate - if both mobile and landline are empty', async () => {
@@ -262,8 +305,8 @@ describe('Agent details page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Enter your mobile number')
-    expect(postResponse.payload).toContain('Enter your landline number')
+    expect(postResponse.payload).toContain('Enter a mobile number (If you do not have a mobile, enter your landline number)')
+    expect(postResponse.payload).toContain('Enter a landline number (If you do not have a landline, enter your mobile number)')
   })
   
   it('should validate - if both mobile and landline are added', async () => {
@@ -287,6 +330,85 @@ describe('Agent details page', () => {
     expect(postResponse.statusCode).toBe(200)
   })
 
+  it('should validate mobile - if typed in special characters', async () => {
+    const postOptions = {
+      method: 'POST',
+      url: `${global.__URLPREFIX__}/agent-details`,
+      payload: {
+        mobile: '(123):456789010',
+        crumb: crumbToken
+      },
+      headers: { cookie: 'crumb=' + crumbToken }
+    }
+
+    const postResponse = await global.__SERVER__.inject(postOptions)
+    expect(postResponse.statusCode).toBe(200)
+    expect(postResponse.payload).toContain('Enter a telephone number, like 01632 960 001, 07700 900 982 or +44 0808 157 0192')
+  })
+
+  it('should validate mobile - less than 10 digits', async () => {
+    const postOptions = {
+      method: 'POST',
+      url: `${global.__URLPREFIX__}/agent-details`,
+      payload: {
+        mobile: '2345',
+        crumb: crumbToken
+      },
+      headers: { cookie: 'crumb=' + crumbToken }
+    }
+
+    const postResponse = await global.__SERVER__.inject(postOptions)
+    expect(postResponse.statusCode).toBe(200)
+    expect(postResponse.payload).toContain('Your mobile number must have at least 10 characters')
+  })
+
+  it('should validate landline - if typed in alphabet', async () => {
+    const postOptions = {
+      method: 'POST',
+      url: `${global.__URLPREFIX__}/agent-details`,
+      payload: {
+        landline: '1234567a90',
+        crumb: crumbToken
+      },
+      headers: { cookie: 'crumb=' + crumbToken }
+    }
+
+    const postResponse = await global.__SERVER__.inject(postOptions)
+    expect(postResponse.statusCode).toBe(200)
+    expect(postResponse.payload).toContain('Enter a telephone number, like 01632 960 001, 07700 900 982 or +44 0808 157 0192')
+  })
+
+  it('should validate landline - if typed in special characters', async () => {
+    const postOptions = {
+      method: 'POST',
+      url: `${global.__URLPREFIX__}/agent-details`,
+      payload: {
+        landline: '(123):456789010',
+        crumb: crumbToken
+      },
+      headers: { cookie: 'crumb=' + crumbToken }
+    }
+
+    const postResponse = await global.__SERVER__.inject(postOptions)
+    expect(postResponse.statusCode).toBe(200)
+    expect(postResponse.payload).toContain('Enter a telephone number, like 01632 960 001, 07700 900 982 or +44 0808 157 0192')
+  })
+
+  it('should validate landline - less than 10 digits', async () => {
+    const postOptions = {
+      method: 'POST',
+      url: `${global.__URLPREFIX__}/agent-details`,
+      payload: {
+        landline: '1234',
+        crumb: crumbToken
+      },
+      headers: { cookie: 'crumb=' + crumbToken }
+    }
+
+    const postResponse = await global.__SERVER__.inject(postOptions)
+    expect(postResponse.statusCode).toBe(200)
+    expect(postResponse.payload).toContain('Your landline number must have at least 10 characters')
+  })
 
   it('should validate postcode - raise error when postcode is invalid', async () => {
     const postOptions = {
@@ -359,5 +481,56 @@ describe('Agent details page', () => {
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
     expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/check-details`)
+  })
+
+  it('should validate town - not empty', async () => {
+    const postOptions = {
+      method: 'POST',
+      url: `${global.__URLPREFIX__}/agent-details`,
+      payload: {
+        firstName: 'Farmer First Name',
+        lastName: 'Farmer Last Name',
+        businessName: 'hello',
+        email: 'my@name.com',
+        landline: '+44 0808 157 0192',
+        mobile: '07700 900 982',
+        address1: 'Address 1',
+        address2: 'Address 2',
+        county: 'Devon',
+        postcode: 'AA1 1AA',
+        crumb: crumbToken
+      },
+      headers: { cookie: 'crumb=' + crumbToken }
+    }
+
+    const postResponse = await global.__SERVER__.inject(postOptions)
+    expect(postResponse.statusCode).toBe(200)
+    expect(postResponse.payload).toContain('Enter your town')
+  })
+
+  it('should validate town - invalid characters', async () => {
+    const postOptions = {
+      method: 'POST',
+      url: `${global.__URLPREFIX__}/agent-details`,
+      payload: {
+        firstName: 'Farmer First Name',
+        lastName: 'Farmer Last Name',
+        businessName: 'hello',
+        email: 'my@name.com',
+        landline: '+44 0808 157 0192',
+        mobile: '07700 900 982',
+        address1: 'Address 1',
+        address2: 'Address 2',
+        town: '12345',
+        county: 'Devon',
+        postcode: 'AA1 1AA',
+        crumb: crumbToken
+      },
+      headers: { cookie: 'crumb=' + crumbToken }
+    }
+
+    const postResponse = await global.__SERVER__.inject(postOptions)
+    expect(postResponse.statusCode).toBe(200)
+    expect(postResponse.payload).toContain('Town must only include letters, hyphens and spaces')
   })
 })
