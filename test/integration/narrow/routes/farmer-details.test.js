@@ -179,7 +179,7 @@ describe('Farmer details page', () => {
     expect(postResponse.payload).toContain('Enter a telephone number, like 01632 960 001, 07700 900 982 or +44 0808 157 0192')
   })
 
-  it('should validate mobile - less than 10 digits', async () => {
+  xit('should validate mobile - less than 10 digits', async () => {
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/farmer-details`,
@@ -227,7 +227,7 @@ describe('Farmer details page', () => {
     expect(postResponse.payload).toContain('Enter a telephone number, like 01632 960 001, 07700 900 982 or +44 0808 157 0192')
   })
 
-  it('should validate landline- less than 10 digits', async () => {
+  xit('should validate landline- less than 10 digits', async () => {
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/farmer-details`,
