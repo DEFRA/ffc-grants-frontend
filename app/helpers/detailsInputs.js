@@ -79,7 +79,7 @@ const getDetailsInput = (detailsData, errorList) => {
     ...(Object.prototype.hasOwnProperty.call(detailsData, 'emailConfirm') ?
       {
         inputEmailConfirm: formInputObject(
-          'emailConfirm', 'govuk-input--width-20', 'Confirm Email address', null, {
+          'emailConfirm', 'govuk-input--width-20', 'Confirm email address', null, {
           fieldName: detailsData.emailConfirm,
           fieldError: getFieldError(errorList, '#emailConfirm'),
           inputType: 'email',
