@@ -8,7 +8,7 @@ const viewTemplate = 'applying'
 const currentPath = `${urlPrefix}/${viewTemplate}`
 const previousPath = `${urlPrefix}/business-details`
 const nextPathAgent = `${urlPrefix}/agent-details`
-const nextPathFarmer = `${urlPrefix}/farmer-details`
+const nextPathFarmer = `${urlPrefix}/applicant-details`
 
 const values = { valueOne: 'Applicant', valueTwo: 'Agent' }
 const prefixModelParams = [

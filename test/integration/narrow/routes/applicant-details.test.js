@@ -36,7 +36,7 @@ const mockSession = {
 
 jest.mock('../../../../app/helpers/session', () => mockSession)
 
-describe('Farmer details page', () => {
+describe('Applicant details page', () => {
   beforeEach(() => {
     varList = { ...varListTemplate }
   })
@@ -47,7 +47,7 @@ describe('Farmer details page', () => {
   it('should load page successfully', async () => {
     const options = {
       method: 'GET',
-      url: `${global.__URLPREFIX__}/farmer-details`
+      url: `${global.__URLPREFIX__}/applicant-details`
     }
 
     const response = await global.__SERVER__.inject(options)
@@ -62,7 +62,7 @@ describe('Farmer details page', () => {
     }
     const options = {
       method: 'GET',
-      url: `${global.__URLPREFIX__}/farmer-details`
+      url: `${global.__URLPREFIX__}/applicant-details`
     }
 
     const response = await global.__SERVER__.inject(options)
@@ -73,7 +73,7 @@ describe('Farmer details page', () => {
   it('should return various error messages if no data is entered', async () => {
     const postOptions = {
       method: 'POST',
-      url: `${global.__URLPREFIX__}/farmer-details`,
+      url: `${global.__URLPREFIX__}/applicant-details`,
       payload: { crumb: crumbToken },
       headers: { cookie: 'crumb=' + crumbToken }
     }
@@ -92,7 +92,7 @@ describe('Farmer details page', () => {
   it('should validate first name - no digits', async () => {
     const postOptions = {
       method: 'POST',
-      url: `${global.__URLPREFIX__}/farmer-details`,
+      url: `${global.__URLPREFIX__}/applicant-details`,
       payload: {
         firstName: '123',
         crumb: crumbToken
@@ -108,7 +108,7 @@ describe('Farmer details page', () => {
   it('should validate last name - no digits', async () => {
     const postOptions = {
       method: 'POST',
-      url: `${global.__URLPREFIX__}/farmer-details`,
+      url: `${global.__URLPREFIX__}/applicant-details`,
       payload: {
         lastName: '123',
         crumb: crumbToken
@@ -124,7 +124,7 @@ describe('Farmer details page', () => {
   it('should validate email - wrong email format', async () => {
     const postOptions = {
       method: 'POST',
-      url: `${global.__URLPREFIX__}/farmer-details`,
+      url: `${global.__URLPREFIX__}/applicant-details`,
       payload: {
         email: 'my@@name.com',
         crumb: crumbToken
@@ -140,7 +140,7 @@ describe('Farmer details page', () => {
   it('should validate email - confirmation mismatch', async () => {
     const postOptions = {
       method: 'POST',
-      url: `${global.__URLPREFIX__}/farmer-details`,
+      url: `${global.__URLPREFIX__}/applicant-details`,
       payload: {
         firstName: 'First Name',
         lastName: 'Last Name',
@@ -166,7 +166,7 @@ describe('Farmer details page', () => {
   it('should validate mobile - if typed in special characters', async () => {
     const postOptions = {
       method: 'POST',
-      url: `${global.__URLPREFIX__}/farmer-details`,
+      url: `${global.__URLPREFIX__}/applicant-details`,
       payload: {
         mobile: '(123):456789010',
         crumb: crumbToken
@@ -182,7 +182,7 @@ describe('Farmer details page', () => {
   it('should validate mobile - less than 10 digits', async () => {
     const postOptions = {
       method: 'POST',
-      url: `${global.__URLPREFIX__}/farmer-details`,
+      url: `${global.__URLPREFIX__}/applicant-details`,
       payload: {
         mobile: '2345',
         crumb: crumbToken
@@ -198,7 +198,7 @@ describe('Farmer details page', () => {
   it('should validate landline - if typed in alphabet', async () => {
     const postOptions = {
       method: 'POST',
-      url: `${global.__URLPREFIX__}/farmer-details`,
+      url: `${global.__URLPREFIX__}/applicant-details`,
       payload: {
         landline: '1234567a90',
         crumb: crumbToken
@@ -214,7 +214,7 @@ describe('Farmer details page', () => {
   it('should validate landline - if typed in special characters', async () => {
     const postOptions = {
       method: 'POST',
-      url: `${global.__URLPREFIX__}/farmer-details`,
+      url: `${global.__URLPREFIX__}/applicant-details`,
       payload: {
         landline: '(123):456789010',
         crumb: crumbToken
@@ -230,7 +230,7 @@ describe('Farmer details page', () => {
   it('should validate landline- less than 10 digits', async () => {
     const postOptions = {
       method: 'POST',
-      url: `${global.__URLPREFIX__}/farmer-details`,
+      url: `${global.__URLPREFIX__}/applicant-details`,
       payload: {
         landline: '1234',
         crumb: crumbToken
@@ -246,7 +246,7 @@ describe('Farmer details page', () => {
   it('should validate postcode - raise error when postcode is invalid', async () => {
     const postOptions = {
       method: 'POST',
-      url: `${global.__URLPREFIX__}/farmer-details`,
+      url: `${global.__URLPREFIX__}/applicant-details`,
       payload: {
         postcode: 'aa1aa',
         crumb: crumbToken
@@ -262,7 +262,7 @@ describe('Farmer details page', () => {
   it('should store user response and redirects to check details page, landline is optional', async () => {
     const postOptions = {
       method: 'POST',
-      url: `${global.__URLPREFIX__}/farmer-details`,
+      url: `${global.__URLPREFIX__}/applicant-details`,
       payload: {
         firstName: 'First Name',
         lastName: 'Last Name',
@@ -289,7 +289,7 @@ describe('Farmer details page', () => {
     varList.applying = 'Agent'
     const postOptions = {
       method: 'POST',
-      url: `${global.__URLPREFIX__}/farmer-details`,
+      url: `${global.__URLPREFIX__}/applicant-details`,
       payload: {
         firstName: 'First Name',
         lastName: 'Last Name',
@@ -316,7 +316,7 @@ describe('Farmer details page', () => {
     varList.applying = 'Agent'
     const postOptions = {
       method: 'POST',
-      url: `${global.__URLPREFIX__}/farmer-details`,
+      url: `${global.__URLPREFIX__}/applicant-details`,
       payload: {
         firstName: 'First Name',
         lastName: 'Last Name',
@@ -343,7 +343,7 @@ describe('Farmer details page', () => {
     varList.applying = 'Agent'
     const postOptions = {
       method: 'POST',
-      url: `${global.__URLPREFIX__}/farmer-details`,
+      url: `${global.__URLPREFIX__}/applicant-details`,
       payload: {
         firstName: 'First Name',
         lastName: 'Last Name',
@@ -368,7 +368,7 @@ describe('Farmer details page', () => {
   it('should store user response and redirects to details page', async () => {
     const postOptions = {
       method: 'POST',
-      url: `${global.__URLPREFIX__}/farmer-details`,
+      url: `${global.__URLPREFIX__}/applicant-details`,
       payload: {
         firstName: 'First Name',
         lastName: 'Last Name',
@@ -395,7 +395,7 @@ describe('Farmer details page', () => {
   it('should validate - if both mobile and landline are missing', async () => {
     const postOptions = {
       method: 'POST',
-      url: `${global.__URLPREFIX__}/farmer-details`,
+      url: `${global.__URLPREFIX__}/applicant-details`,
       payload: {
         firstName: 'Farmer First Name',
         lastName: 'Farmer Last Name',
@@ -426,7 +426,7 @@ describe('Farmer details page', () => {
 
     const postOptions = {
       method: 'POST',
-      url: `${global.__URLPREFIX__}/farmer-details`,
+      url: `${global.__URLPREFIX__}/applicant-details`,
       payload: {
         mobile: '',
         landline: '',
@@ -444,7 +444,7 @@ describe('Farmer details page', () => {
   it('should validate town - not empty', async () => {
     const postOptions = {
       method: 'POST',
-      url: `${global.__URLPREFIX__}/farmer-details`,
+      url: `${global.__URLPREFIX__}/applicant-details`,
       payload: {
         firstName: 'Farmer First Name',
         lastName: 'Farmer Last Name',
@@ -469,7 +469,7 @@ describe('Farmer details page', () => {
   it('should validate town - invalid characters', async () => {
     const postOptions = {
       method: 'POST',
-      url: `${global.__URLPREFIX__}/farmer-details`,
+      url: `${global.__URLPREFIX__}/applicant-details`,
       payload: {
         firstName: 'Farmer First Name',
         lastName: 'Farmer Last Name',

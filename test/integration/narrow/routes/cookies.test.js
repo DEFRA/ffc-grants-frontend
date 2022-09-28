@@ -23,7 +23,7 @@ describe('cookies route', () => {
       url: '/project-summary',
       headers: {
         cookie: 'crumb=' + crumbToken,
-        referer: 'localhost/farmer-details'
+        referer: 'localhost/applicant-details'
       }
     }
 

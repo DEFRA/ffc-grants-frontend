@@ -103,7 +103,7 @@ Feature: Check details
       #        And I click on the button "#applying"
       #        And I click on Continue button 
       #        And I pause for 500ms
-      #        Then I expect that the url contains "/farmer-details"
+      #        Then I expect that the url contains "/applicant-details"
       #        When I clear the inputfield "#firstName"
       #        When I add "kaz" to the inputfield "#firstName"
       #        And I add "ola" to the inputfield "#lastName"
