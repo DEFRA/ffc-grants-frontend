@@ -94,7 +94,7 @@ describe('Applicant page', () => {
     expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/agent-details`)
   })
 
-  it('if applicant: APPLICANT, should store user response and redirect to farmer details page', async () => {
+  it('if applicant: APPLICANT, should store user response and redirect to applicant details page', async () => {
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/applying`,
@@ -106,6 +106,6 @@ describe('Applicant page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/farmer-details`)
+    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/applicant-details`)
   })
 })

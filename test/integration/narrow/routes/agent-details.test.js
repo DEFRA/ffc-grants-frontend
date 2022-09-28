@@ -426,7 +426,7 @@ describe('Agent details page', () => {
     expect(postResponse.payload).toContain('Enter a postcode, like AA1 1AA')
   })
 
-  it('should store user responseand redircet to farmer-details', async () => {
+  it('should store user responseand redircet to applicant-details', async () => {
     varList.applying = 'Agent'
     const postOptions = {
       method: 'POST',
@@ -451,7 +451,7 @@ describe('Agent details page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/farmer-details`)
+    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/applicant-details`)
   })
 
   it('should store user responseand redircet to check-details', async () => {

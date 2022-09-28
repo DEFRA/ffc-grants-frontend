@@ -8,7 +8,7 @@ const urlPrefix = require('../config/server').urlPrefix
 const viewTemplate = 'model-farmer-agent-details'
 const currentPath = `${urlPrefix}/agent-details`
 const previousPath = `${urlPrefix}/applying`
-const nextPath = `${urlPrefix}/farmer-details`
+const nextPath = `${urlPrefix}/applicant-details`
 const detailsPath = `${urlPrefix}/check-details`
 
 function createModel (errorList, agentDetails, hasDetails) {

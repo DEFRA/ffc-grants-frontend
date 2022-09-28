@@ -1,4 +1,4 @@
-Feature: Farmer details
+Feature: Applicant details
 
       # Scenario: Reject Cookies
       #   Given I open the url "/start"
@@ -104,7 +104,7 @@ Feature: Farmer details
       #        #And I click on the agent button
       #        And I click on Continue button 
       #        And I pause for 500ms
-      #        Then I expect that the url contains "/farmer-details"
+      #        Then I expect that the url contains "/applicant-details"
       #        When I add "3334" to the inputfield "#firstName"
       #        And I add "ola434" to the inputfield "#lastName"
       #        And I add "kaz.iyiola@@dev.gov.uk" to the inputfield "#email"

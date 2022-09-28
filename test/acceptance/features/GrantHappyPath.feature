@@ -245,7 +245,7 @@ Feature: Grant
     #    And I add "M24 4AU" to the inputfield "#postcode"
     #    And I click on Continue button 
     #    And I pause for 500ms
-    #    Then I expect that the url contains "/farmer-details"
+    #    Then I expect that the url contains "/applicant-details"
     #    And I add "Ola" to the inputfield "#firstName"
     #    And I add "Olakaz" to the inputfield "#lastName"
     #    And I add "kaz.iyiola@dev.gov.uk" to the inputfield "#email"
