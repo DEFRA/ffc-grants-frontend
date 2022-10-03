@@ -38,7 +38,7 @@ function createModel (currentlyIrrigating, irrigatedLandCurrent, irrigatedLandTa
         text: 'ha'
       },
       label: {
-        html: '<h2>How much land is currently irrigated per year?</h2>'
+        html: '<h2 class="govuk-heading-m">How much land is currently irrigated per year?</h2>'
       },
       hint: {
         text: 'Enter figure in hectares (ha), for example 543.5'
@@ -51,7 +51,7 @@ function createModel (currentlyIrrigating, irrigatedLandCurrent, irrigatedLandTa
       id: 'irrigatedLandTarget',
       name: 'irrigatedLandTarget',
       label: {
-        html: currentlyIrrigating === 'yes' ? '<h2>How much land will be irrigated per year after the project?</h2>' : ''
+        html: currentlyIrrigating === 'yes' ? '<h2 class="govuk-heading-m">How much land will be irrigated per year after the project?</h2>' : ''
       },
       hint: {
         text: 'Enter figure in hectares (ha), for example 543.5'
