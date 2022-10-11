@@ -1,6 +1,6 @@
 {
   "name": "ffc-grants-frontend",
-  "version": "2.4.12",
+  "version": "2.4.13",
   "description": "Frontend Grants microservice.",
   "main": "app/index.js",
   "scripts": {
