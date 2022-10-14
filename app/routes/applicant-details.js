@@ -7,7 +7,7 @@ const gapiService = require('../services/gapi-service')
 
 const urlPrefix = require('../config/server').urlPrefix
 
-const viewTemplate = 'applicant-details'
+const viewTemplate = 'model-farmer-agent-details'
 const currentPath = `${urlPrefix}/applicant-details`
 const nextPath = `${urlPrefix}/check-details`
 const agentDetailsPath = `${urlPrefix}/agent-details`
@@ -21,7 +21,12 @@ function createModel (errorList, farmerDetails, backLink, hasDetails) {
     pageHeader: 'Applicant’s details',
     checkDetail: hasDetails,
     ...errorList ? { errorList } : {},
-    ...getDetailsInput(farmerDetails, errorList)
+    ...getDetailsInput(farmerDetails, errorList),
+    input: {
+      hint: {
+        text: ' Enter the farmer and farm business details'
+      }
+    }
   }
 }
 
