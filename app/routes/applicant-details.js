@@ -7,7 +7,7 @@ const gapiService = require('../services/gapi-service')
 
 const urlPrefix = require('../config/server').urlPrefix
 
-const viewTemplate = 'model-farmer-agent-details'
+const viewTemplate = 'applicant-details'
 const currentPath = `${urlPrefix}/applicant-details`
 const nextPath = `${urlPrefix}/check-details`
 const agentDetailsPath = `${urlPrefix}/agent-details`

@@ -5,7 +5,7 @@ const { NAME_REGEX, BUSINESSNAME_REGEX, PHONE_REGEX, POSTCODE_REGEX, DELETE_POST
 const { getDetailsInput } = require('../helpers/detailsInputs')
 const urlPrefix = require('../config/server').urlPrefix
 
-const viewTemplate = 'model-farmer-agent-details'
+const viewTemplate = 'agent-details'
 const currentPath = `${urlPrefix}/agent-details`
 const previousPath = `${urlPrefix}/applying`
 const nextPath = `${urlPrefix}/applicant-details`
