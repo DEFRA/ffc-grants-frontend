@@ -23,7 +23,7 @@ function createModel (errorList, data) {
       name: 'planningPermission',
       fieldset: {
         legend: {
-          text: 'Does the project will have planning permission?',
+          text: 'Does the project have planning permission?',
           isPageHeading: true,
           classes: 'govuk-fieldset__legend--l'
         }
