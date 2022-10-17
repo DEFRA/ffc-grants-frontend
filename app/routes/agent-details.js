@@ -116,6 +116,7 @@ module.exports = [
         setYarValue(request, 'agentDetails', {
           firstName, lastName, businessName, email, emailConfirm, mobile, landline, address1, address2, town, county, postcode: postcode.split(/(?=.{3}$)/).join(' ').toUpperCase()
         })
+        
         return results ? h.redirect(detailsPath) : h.redirect(nextPath)
       }
     }

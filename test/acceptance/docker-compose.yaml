@@ -3,7 +3,7 @@ services:
   wdio-cucumber:
     build: .
     image: ffc-grants-water-service-acceptance
-    container_name: webdriver-cuke
+    container_name: webdriver-cuke-water
     environment:
       TEST_ENVIRONMENT_ROOT_URL: ${TEST_ENVIRONMENT_ROOT_URL}
       CHROME_ARGS: "--headless --ignore-certificate-errors"
