@@ -19,7 +19,8 @@ function createModel (errorList, agentDetails, hasDetails) {
     pageHeader: 'Agent\'s details',
     checkDetail: hasDetails,
     ...errorList ? { errorList } : {},
-    ...getDetailsInput(agentDetails, errorList)
+    ...getDetailsInput(agentDetails, errorList),
+    hintText: 'Enter agent and agent business details'
   }
 }
 
@@ -115,7 +116,7 @@ module.exports = [
         setYarValue(request, 'agentDetails', {
           firstName, lastName, businessName, email, emailConfirm, mobile, landline, address1, address2, town, county, postcode: postcode.split(/(?=.{3}$)/).join(' ').toUpperCase()
         })
-
+        
         return results ? h.redirect(detailsPath) : h.redirect(nextPath)
       }
     }

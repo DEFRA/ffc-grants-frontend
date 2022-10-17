@@ -31,7 +31,6 @@ function createModel (errorList, backLink, projectInfrastucture, projectEquipmen
           'Overflow/spillway',
           'Synthetic liner',
           'Abstraction point including pump',
-          'Engineer fees (construction engineers only)',
           'Fencing for synthetically lined reservoir',
           'Filtration equipment',
           'Irrigation pumps and controls',
@@ -78,8 +77,8 @@ function createModel (errorList, backLink, projectInfrastucture, projectEquipmen
       },
       items: setLabelData(
         projectTechnology,
-        ['Software to monitor soil moisture levels and schedule irrigation',
-          'Software and sensors to optimise water application'
+        ['Equipment to monitor soil moisture levels and schedule irrigation ',
+          'Equipment to control and optimise water application'
         ]
       ),
       ...(errorList ? { errorMessage: { text: null } } : {})

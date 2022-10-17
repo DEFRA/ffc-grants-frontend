@@ -42,7 +42,7 @@
         Then I expect that element "h1" contains the text "You cannot apply for a grant from this scheme"
         When I click on the link "See other grants you may be eligible for."
         And I pause for 500ms
-        Then I expect that element "h1" contains the text "Rural grants and payments: detailed information"
+        Then I expect that element "h1" contains the text "Funding for farmers and land managers"
 
         Scenario: Navigate through back link
         Given I open the url "/water/farming-type"

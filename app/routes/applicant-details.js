@@ -21,7 +21,8 @@ function createModel (errorList, farmerDetails, backLink, hasDetails) {
     pageHeader: 'Applicant’s details',
     checkDetail: hasDetails,
     ...errorList ? { errorList } : {},
-    ...getDetailsInput(farmerDetails, errorList)
+    ...getDetailsInput(farmerDetails, errorList),
+    hintText: 'Enter the farmer and farm business details'
   }
 }
 

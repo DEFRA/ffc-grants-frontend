@@ -31,7 +31,7 @@ module.exports = {
     {
       key: 'Q4',
       order: 4,
-      title: 'Does the project need planning permission?',
+      title: 'Does the project have planning permission?',
       pageTitle: '',
       url: 'planning-permission',
       yarKey: 'planningPermission'
