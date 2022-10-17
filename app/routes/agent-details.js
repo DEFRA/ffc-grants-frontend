@@ -20,9 +20,7 @@ function createModel (errorList, agentDetails, hasDetails) {
     checkDetail: hasDetails,
     ...errorList ? { errorList } : {},
     ...getDetailsInput(agentDetails, errorList),
-    hint: {
-        text: 'Enter agent and agent business details'
-      }
+    hintText: 'Enter agent and agent business details'
   }
 }
 

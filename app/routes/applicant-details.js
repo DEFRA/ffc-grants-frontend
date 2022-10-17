@@ -22,9 +22,7 @@ function createModel (errorList, farmerDetails, backLink, hasDetails) {
     checkDetail: hasDetails,
     ...errorList ? { errorList } : {},
     ...getDetailsInput(farmerDetails, errorList),
-      hint: {
-        text: ' Enter the farmer and farm business details'
-      }
+    hintText: 'Enter the farmer and farm business details'
   }
 }
 
