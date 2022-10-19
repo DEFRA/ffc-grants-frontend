@@ -244,22 +244,6 @@ describe('Applicant details page', () => {
     expect(postResponse.payload).toContain('Your landline number must have at least 10 characters')
   })
 
-  it('should validate postcode - raise error when postcode is invalid', async () => {
-    const postOptions = {
-      method: 'POST',
-      url: `${global.__URLPREFIX__}/applicant-details`,
-      payload: {
-        postcode: 'aa1aa',
-        crumb: crumbToken
-      },
-      headers: { cookie: 'crumb=' + crumbToken }
-    }
-
-    const postResponse = await global.__SERVER__.inject(postOptions)
-    expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Enter a postcode, like AA1 1AA')
-  })
-
   it('should store user response and redirects to check details page, landline is optional', async () => {
     const postOptions = {
       method: 'POST',
