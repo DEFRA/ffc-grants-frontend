@@ -90,16 +90,10 @@ const getDetailsInput = (detailsData, errorList) => {
       {}
     ),
 
-    inputPostcode: formInputObject(
-      'postcode', 'govuk-input--width-5', 'Postcode', null, {
-      fieldName: detailsData.postcode,
-      fieldError: getFieldError(errorList, '#postcode'),
-      inputType: 'text',
-      autocomplete: 'postal-code'
-    }
-    ),
-
     ...(Object.prototype.hasOwnProperty.call(detailsData, 'projectPostcode') ? { inputProjPostcode: formInputObject('projectPostcode', 'govuk-input--width-5', 'Project postcode', 'The site postcode where the work will happen', { fieldName: detailsData.projectPostcode, fieldError: getFieldError(errorList, '#projectPostcode'), inputType: 'text', autocomplete: 'organization' }) } : {}),
+    ...(Object.prototype.hasOwnProperty.call(detailsData, 'businessPostcode') ? { inputBusPostcode: formInputObject('businessPostcode', 'govuk-input--width-5', 'Business postcode', '', { fieldName: detailsData.businessPostcode, fieldError: getFieldError(errorList, '#businessPostcode'), inputType: 'text', autocomplete: 'organization' }) } : {}),
+    ...(Object.prototype.hasOwnProperty.call(detailsData, 'postcode') ? { inputPostcode: formInputObject('postcode', 'govuk-input--width-5', 'postcode', '', { fieldName: detailsData.postcode, fieldError: getFieldError(errorList, '#postcode'), inputType: 'text', autocomplete: 'organization' }) } : {}),
+
     selectCounty: {
       items: setLabelData(detailsData.county, [
         { text: 'Select an option', value: null },

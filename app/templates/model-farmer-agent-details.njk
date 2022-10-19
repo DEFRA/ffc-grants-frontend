@@ -61,7 +61,12 @@
         {{ govukInput(inputAddress2) }}
         {{ govukInput(inputTown) }}
         {{ govukSelect(selectCounty) }}
-        {{ govukInput(inputPostcode) }}
+        {% if inputPostcode %}
+          {{ govukInput(inputPostcode) }}
+        {% endif %}
+        {% if inputBusPostcode %}
+          {{ govukInput(inputBusPostcode) }}
+        {% endif %}
         {% if inputProjPostcode %}
           {{ govukInput(inputProjPostcode) }}
         {% endif %}
