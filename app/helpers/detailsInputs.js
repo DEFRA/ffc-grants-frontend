@@ -91,7 +91,7 @@ const getDetailsInput = (detailsData, errorList) => {
     ),
 
     inputPostcode: formInputObject(
-      'postcode', 'govuk-input--width-5', 'Business postcode', null, {
+      'postcode', 'govuk-input--width-5', 'Postcode', null, {
       fieldName: detailsData.postcode,
       fieldError: getFieldError(errorList, '#postcode'),
       inputType: 'text',
