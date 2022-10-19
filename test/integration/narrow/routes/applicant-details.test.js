@@ -86,7 +86,8 @@ describe('Applicant details page', () => {
     expect(postResponse.payload).toContain('Enter an email address that matches')
     expect(postResponse.payload).toContain('Enter your building and street details')
     expect(postResponse.payload).toContain('Select your county')
-    expect(postResponse.payload).toContain('Enter your postcode, like AA1 1AA')
+    expect(postResponse.payload).toContain('Enter a business postcode, like AA1 1AA')
+    expect(postResponse.payload).toContain('Enter a project postcode, like AA1 1AA')
   })
 
   it('should validate first name - no digits', async () => {
@@ -151,8 +152,8 @@ describe('Applicant details page', () => {
         address2: 'Address 2',
         town: 'MyTown',
         county: 'Devon',
-        postcode: 'AA1 1AA',
         projectPostcode: 'AA1 1AA',
+        businessPostcode:'AA1 1AA',
         crumb: crumbToken
       },
       headers: { cookie: 'crumb=' + crumbToken }
@@ -243,22 +244,6 @@ describe('Applicant details page', () => {
     expect(postResponse.payload).toContain('Your landline number must have at least 10 characters')
   })
 
-  it('should validate postcode - raise error when postcode is invalid', async () => {
-    const postOptions = {
-      method: 'POST',
-      url: `${global.__URLPREFIX__}/applicant-details`,
-      payload: {
-        postcode: 'aa1aa',
-        crumb: crumbToken
-      },
-      headers: { cookie: 'crumb=' + crumbToken }
-    }
-
-    const postResponse = await global.__SERVER__.inject(postOptions)
-    expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Enter a postcode, like AA1 1AA')
-  })
-
   it('should store user response and redirects to check details page, landline is optional', async () => {
     const postOptions = {
       method: 'POST',
@@ -273,7 +258,7 @@ describe('Applicant details page', () => {
         address2: 'Address 2',
         town: 'MyTown',
         county: 'Devon',
-        postcode: 'AA1 1AA',
+        businessPostcode:'AA1 1AA',
         projectPostcode: 'AA1 1AA',
         crumb: crumbToken
       },
@@ -300,7 +285,7 @@ describe('Applicant details page', () => {
         address2: 'Address 2',
         town: 'MyTown',
         county: 'Devon',
-        postcode: 'AA1 1AA',
+        businessPostcode:'AA1 1AA',
         projectPostcode: 'AA1 1AA',
         crumb: crumbToken
       },
@@ -327,7 +312,7 @@ describe('Applicant details page', () => {
         address2: 'Address 2',
         town: 'MyTown',
         county: 'Devon',
-        postcode: 'AA1 1AA',
+        businessPostcode:'AA1 1AA',
         projectPostcode: 'AA1 1AA',
         crumb: crumbToken
       },
@@ -353,7 +338,7 @@ describe('Applicant details page', () => {
         address2: 'Address 2',
         town: 'MyTown',
         county: 'Devon',
-        postcode: 'AA1 1AA',
+        businessPostcode:'AA1 1AA',
         projectPostcode: 'AA1 1AA',
         crumb: crumbToken
       },
@@ -380,7 +365,7 @@ describe('Applicant details page', () => {
         address2: 'Address 2',
         town: 'MyTown',
         county: 'Devon',
-        postcode: 'AA1 1AA',
+        businessPostcode:'AA1 1AA',
         projectPostcode: 'AA1 1AA',
         crumb: crumbToken
       },
@@ -405,7 +390,7 @@ describe('Applicant details page', () => {
         address2: 'Address 2',
         town: 'MyTown',
         county: 'Devon',
-        postcode: 'AA1 1AA',
+        businessPostcode:'AA1 1AA',
         projectPostcode: 'AA1 1AA',
         crumb: crumbToken
       },
@@ -454,7 +439,7 @@ describe('Applicant details page', () => {
         address1: 'Address 1',
         address2: 'Address 2',
         county: 'Devon',
-        postcode: 'AA1 1AA',
+        businessPostcode:'AA1 1AA',
         projectPostcode: 'AA1 1AA',
         crumb: crumbToken
       },
@@ -480,7 +465,7 @@ describe('Applicant details page', () => {
         address2: 'Address 2',
         town: '12345',
         county: 'Devon',
-        postcode: 'AA1 1AA',
+        businessPostcode:'AA1 1AA',
         projectPostcode: 'AA1 1AA',
         crumb: crumbToken
       },
