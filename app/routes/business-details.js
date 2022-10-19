@@ -88,7 +88,7 @@ function createModel (errorList, businessDetails, hasDetails) {
       name: 'sbi',
       classes: 'govuk-input--width-10',
       label: {
-        text: 'Single Business Identifier (SBI) (Optional)',
+        text: 'Single Business Identifier (SBI) - optional ',
         classes: 'govuk-label'
       },
       hint: {
