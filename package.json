@@ -40,7 +40,7 @@
     "applicationinsights": "^2.3.4",
     "bcrypt": "^5.0.1",
     "dialog-polyfill": "^0.5.6",
-    "dotenv": "^16.0.1",
+    "dotenv": "^16.0.3",
     "ffc-messaging": "^2.5.1",
     "ffc-protective-monitoring": "^1.0.3",
     "govuk-frontend": "^4.3.1",
