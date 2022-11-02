@@ -93,7 +93,7 @@ module.exports = [
         setYarValue(request, 'remainingCost', remainingCost)
 
         await gapiService.sendEligibilityEvent(request, (calculatedGrant >= MIN_GRANT) && (calculatedGrant <= MAX_GRANT))
-        if ((calculatedGrant < MIN_GRANT) || (calculatedGrant > MAX_GRANT)) {
+        if (calculatedGrant < MIN_GRANT) {
           return h.view('not-eligible', createModelNotEligible())
         }
         return h.redirect(nextPath)
