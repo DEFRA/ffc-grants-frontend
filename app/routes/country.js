@@ -51,7 +51,7 @@ function createModelNotEligible () {
   return {
     refTitle: 'Is the planned project in England?',
     backLink: currentPath,
-    insertText: {
+    insetText: {
       text: 'Scotland, Wales and Northern Ireland have other grants available.'
     },
     messageContent: 'This grant is only for projects in England.'

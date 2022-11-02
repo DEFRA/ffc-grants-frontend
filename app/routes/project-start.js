@@ -61,7 +61,7 @@ function createModelNotEligible () {
     backLink: currentPath,
     messageContent:
       'You cannot apply for a grant if you have already started work on the project.',
-    insertText: {
+    insetText: {
       text: 'Starting the project or committing to any costs (such as placing orders) before you receive a funding agreement invalidates your application.'
     },
     messageLink: {
