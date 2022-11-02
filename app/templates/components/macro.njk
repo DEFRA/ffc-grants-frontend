@@ -8,9 +8,9 @@
 {% macro sideBar(heading, para, items) %}
   <div class="govuk-grid-column-one-third  govuk-!-padding-top-4 govuk-body">
   <hr class="sideBarColor"/>
-    <h3 class="govuk-heading-s" id="subsection-title">
+    <h2 class="govuk-heading-s" id="subsection-title">
       {{ heading }}
-    </h3>        
+    </h2>        
     <p>{{para  | striptags(true) | escape | nl2br }}</p>
     <ul class="govuk-list govuk-list--bullet">
       {% for item in items %}
@@ -25,9 +25,9 @@
     <hr class="sideBarColor"/>
 
     {% for sidebar in sideBars %}
-      <h3 class="govuk-heading-s" id="subsection-title">
+      <h2 class="govuk-heading-s" id="subsection-title">
         {{ sidebar.heading }}
-      </h3>
+      </h2>
 
       {% for content in sidebar.content %}
         <p>{{content.para  | striptags(true) | escape | nl2br }}</p>
