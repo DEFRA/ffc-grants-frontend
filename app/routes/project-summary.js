@@ -24,7 +24,7 @@ function createModel (errorList, data, backLink, hasScore) {
       hint: {
         text: 'Select up to 2 options'
       },
-      items: setLabelData(data, ['Change water source', 'Improve irrigation efficiency', 'Increase irrigation', 'Introduce irrigation', 'None of the above']),
+      items: setLabelData(data, ['Change water source', 'Improve irrigation efficiency', 'Increase irrigation', 'Introduce irrigation','divider', 'None of the above']),
       ...(errorList ? { errorMessage: { text: errorList[0].text } } : {})
     }
   }
