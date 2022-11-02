@@ -120,6 +120,9 @@ module.exports = {
           value: 'Increase Irrigation'
         },
         {
+          value: 'divider'
+        },
+        {
           key: 'Q14-A5',
           value: 'None of the above'
         }
