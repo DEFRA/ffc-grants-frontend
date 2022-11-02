@@ -11,7 +11,7 @@ const currentPath = `${urlPrefix}/${viewTemplate}`
 const previousPath = `${urlPrefix}/project-items`
 const nextPath = `${urlPrefix}/potential-amount`
 
-function createModel (errorList, projectCost, projectItemsList) {
+function createModel(errorList, projectCost, projectItemsList) {
   return {
     backLink: previousPath,
     formActionPage: currentPath,
@@ -37,19 +37,19 @@ function createModel (errorList, projectCost, projectItemsList) {
           `
       },
       value: projectCost,
-      ...(errorList ? { errorMessage: { text: errorList[0].text } } : {})
+      ...(errorList ? { errorMessage: { text: errorList[ 0 ].text } } : {})
     },
     projectItemsList
   }
 }
 
-function createModelNotEligible () {
+function createModelNotEligible() {
   return {
     refTitle: 'What is the estimated cost of the items?',
     backLink: currentPath,
-    messageContent:
-      `You can only apply for a grant of up to 40% of the estimated costs.<br/><br/>
-      The minimum grant you can apply for is £35,000 (40% of £87,500). The maximum grant is £500,000.`,
+    messageContent: 'You can only apply for a grant of up to 40% of the estimated costs. ',
+    insetText: 
+      { text: 'The minimum grant you can apply for is £35,000 (40% of £87,500). The maximum grant is £500,000.' },
     messageLink: {
       url: 'https://www.gov.uk/government/collections/rural-payments-and-grants',
       title: 'See other grants you may be eligible for.'
@@ -62,7 +62,7 @@ module.exports = [
     method: 'GET',
     path: currentPath,
     handler: (request, h) => {
-      const projectCost =  getYarValue(request, 'projectCost') || null
+      const projectCost = getYarValue(request, 'projectCost') || null
       const projectItemsList = getYarValue(request, 'projectItemsList')
 
       return h.view(viewTemplate, createModel(null, projectCost, projectItemsList))
