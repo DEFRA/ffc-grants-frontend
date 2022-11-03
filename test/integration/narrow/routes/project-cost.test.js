@@ -191,7 +191,7 @@ describe('Project cost page', () => {
     expect(postResponse.payload).toContain('You cannot apply for a grant from this scheme')
   })
 
-  it('should eliminate user if the cost entered is too high', async () => {
+  it('should redirected to the Potential funding page if the cost entered is too high', async () => {
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/project-cost`,
@@ -200,8 +200,8 @@ describe('Project cost page', () => {
     }
 
     const postResponse = await global.__SERVER__.inject(postOptions)
-    expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('You cannot apply for a grant from this scheme')
+    expect(postResponse.statusCode).toBe(302)
+    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/potential-amount`)
   })
 
   it('should store valid user input and redirect to project grant page', async () => {

@@ -5,7 +5,7 @@ const viewTemplate = 'potential-amount'
 const currentPath = `${urlPrefix}/${viewTemplate}`
 const previousPath = `${urlPrefix}/project-cost`
 const nextPath = `${urlPrefix}/remaining-costs`
-
+const { MAX_GRANT } = require('../helpers/grant-details')
 function createModel (calculatedGrant, projectCost) {
   return {
     backLink: previousPath,
@@ -26,7 +26,8 @@ module.exports = [
         return h.redirect(previousPath)
       }
 
-      const formattedGrant = formatUKCurrency(calculatedGrant)
+      const formattedGrant = calculatedGrant > MAX_GRANT ?
+        formatUKCurrency(MAX_GRANT) : formatUKCurrency(calculatedGrant);
       const formattedProjectCost = formatUKCurrency(projectCost)
 
       return h.view(viewTemplate, createModel(formattedGrant, formattedProjectCost))

@@ -5,12 +5,19 @@
     value="{{ crumb }}"  autocomplete="off" />
 {% endmacro %}
 
-{% macro sideBar(heading, para, items) %}
+{% macro sideBar(heading, para, items, heading_tag="h3") %}
   <div class="govuk-grid-column-one-third  govuk-!-padding-top-4 govuk-body">
   <hr class="sideBarColor"/>
-    <h2 class="govuk-heading-s" id="subsection-title">
-      {{ heading }}
-    </h2>        
+    {% if heading_tag === "h3" %}
+      <h3 class="govuk-heading-s" id="subsection-title">
+        {{ heading }}
+      </h3>
+    {% elseif heading_tag === 'h2' %}
+      <h2 class="govuk-heading-s" id="subsection-title">
+        {{ heading }}
+      </h2>
+    {% endif %}
+
     <p>{{para  | striptags(true) | escape | nl2br }}</p>
     <ul class="govuk-list govuk-list--bullet">
       {% for item in items %}

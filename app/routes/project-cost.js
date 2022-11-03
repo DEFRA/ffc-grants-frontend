@@ -29,11 +29,12 @@ function createModel(errorList, projectCost, projectItemsList) {
         isPageHeading: true
       },
       hint: {
-        html: `
-          You can only apply for a grant of up to 40% of the estimated costs. 
-          <br/>The minimum grant you can apply for this project is £35,000 (40% of £87,500).
-          <br/>The maximum grant is £500,000. Do not include VAT.
-          <br/><br/>Enter amount, for example 95,000`
+        html:
+          `
+          <p>You can only apply for a grant of up to 40% of the estimated costs. The minimum grant you can apply for this project is £35,000 (40% of £87,500). The maximum grant is £500,000.<p/>
+          <p>Do not include VAT.<p/>
+          <p>Enter amount, for example 95,000<p/>
+          `
       },
       value: projectCost,
       ...(errorList ? { errorMessage: { text: errorList[ 0 ].text } } : {})
@@ -92,7 +93,7 @@ module.exports = [
         setYarValue(request, 'remainingCost', remainingCost)
 
         await gapiService.sendEligibilityEvent(request, (calculatedGrant >= MIN_GRANT) && (calculatedGrant <= MAX_GRANT))
-        if ((calculatedGrant < MIN_GRANT) || (calculatedGrant > MAX_GRANT)) {
+        if (calculatedGrant < MIN_GRANT) {
           return h.view('not-eligible', createModelNotEligible())
         }
         return h.redirect(nextPath)
