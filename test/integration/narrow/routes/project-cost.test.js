@@ -201,7 +201,6 @@ describe('Project cost page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    console.log('here: ', postResponse);
     expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/potential-amount`)
   })
 
