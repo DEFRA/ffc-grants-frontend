@@ -63,7 +63,7 @@
     "resolve-url-loader": "^5.0.0",
     "sass": "^1.54.7",
     "sass-loader": "^13.0.2",
-    "snyk": "^1.994.0",
+    "snyk": "^1.1051.0",
     "standard": "^16.0.4",
     "string-replace-loader": "^3.1.0",
     "style-loader": "^3.3.1",
