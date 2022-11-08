@@ -14,7 +14,8 @@ describe('Check Details page', () => {
         address2: '12 Henley Wood Road',
         town: 'Reading',
         county: 'Berkshire',
-        postcode: 'RG6 7EE',
+        projectPostcode: 'RG6 7EE',
+        businessPostcode: 'N3 4RR',
         email: 's@s.com',
         landline: '',
         mobile: '012346789'
