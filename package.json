@@ -1,6 +1,6 @@
 {
   "name": "ffc-grants-file-sender",
-  "version": "1.7.2",
+  "version": "1.8.0",
   "description": "FFC Grants file sender microservice",
   "homepage": "https://github.com/DEFRA/ffc-grants-file-sender",
   "main": "app/index.js",
@@ -13,14 +13,14 @@
   "contributors": [],
   "license": "OGL-UK-3.0",
   "dependencies": {
-    "@azure/identity": "^2.0.4",
-    "@azure/storage-blob": "^12.9.0",
+    "@azure/identity": "^3.0.0",
+    "@azure/storage-blob": "^12.12.0",
     "@hapi/hapi": "^20.2.2",
     "@hapi/wreck": "^17.1.0",
     "@pnp/nodejs-commonjs": "^2.13.0",
     "applicationinsights": "^1.8.10",
-    "ffc-messaging": "^2.4.0",
-    "ffc-protective-monitoring": "^1.0.0",
+    "ffc-messaging": "^2.5.2",
+    "ffc-protective-monitoring": "^1.0.3",
     "joi": "^17.4.3"
   },
   "overrides": {

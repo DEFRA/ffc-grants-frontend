@@ -20,8 +20,8 @@ describe('Upload to sharepoint tests', () => {
     }
   })
   const fileCreatedReceiver = {
-    completeMessage: jest.fn(async (message) => { return null }),
-    abandonMessage: jest.fn(async (message) => { return null })
+    completeMessage: jest.fn(async (message) => { return 'completed' }),
+    abandonMessage: jest.fn(async (message) => { return 'its an error' })
   }
   test('Should be defined', () => {
     const uploadToSharepoint = require('../../../../../app/messaging/upload-to-sharepoint')
@@ -33,7 +33,7 @@ describe('Upload to sharepoint tests', () => {
   })
   test('Should throw error', async () => {
     const uploadToSharepoint = require('../../../../../app/messaging/upload-to-sharepoint')
-    await expect(uploadToSharepoint('', null)).rejected
+    await expect(uploadToSharepoint('', fileCreatedReceiver)).rejected
     expect(appInsights.logException).toHaveBeenCalledTimes(1)
   })
 })
