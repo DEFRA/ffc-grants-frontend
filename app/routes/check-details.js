@@ -18,7 +18,6 @@ function createModel (data) {
     businessDetails: data.businessDetails,
     farmerDetails: data.farmerDetails.firstName + ' ' + data.farmerDetails.lastName,
     farmerAddressDetails: `${data.farmerDetails.address1}${(data.farmerDetails.address2 ?? '').length > 0 ? '<br/>' : ''}${data.farmerDetails.address2}<br/>${data.farmerDetails.town}<br/>${data.farmerDetails.county}<br/>${data.farmerDetails.businessPostcode}`,
-    farmerPostcode: data.farmerDetails.postcode,
     farmerProjectPostcode: data.farmerDetails.projectPostcode,
     farmerBusinessPostcode: data.farmerDetails.businessPostcode,
     farmerContactDetails: `${data.farmerDetails.email}${(data.farmerDetails.landline ?? '').length > 0 ? '<br/>' : ''}${data.farmerDetails.landline}<br/>${data.farmerDetails.mobile}`
