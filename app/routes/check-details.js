@@ -17,10 +17,9 @@ function createModel (data) {
     farmerDetailsLink: farmerDetailsPath,
     businessDetails: data.businessDetails,
     farmerDetails: data.farmerDetails.firstName + ' ' + data.farmerDetails.lastName,
-    farmerAddressDetails: `${data.farmerDetails.address1}${(data.farmerDetails.address2 ?? '').length > 0 ? '<br/>' : ''}${data.farmerDetails.address2}<br/>${data.farmerDetails.town}<br/>${data.farmerDetails.county}<br/>${data.farmerDetails.postcode}`,
-    farmerPostcode: data.farmerDetails.Postcode,
+    farmerAddressDetails: `${data.farmerDetails.address1}${(data.farmerDetails.address2 ?? '').length > 0 ? '<br/>' : ''}${data.farmerDetails.address2}<br/>${data.farmerDetails.town}<br/>${data.farmerDetails.county}<br/>${data.farmerDetails.businessPostcode}`,
     farmerProjectPostcode: data.farmerDetails.projectPostcode,
-    farmerBusinessPostcode: data.farmerDetails.BusinessPostcode,
+    farmerBusinessPostcode: data.farmerDetails.businessPostcode,
     farmerContactDetails: `${data.farmerDetails.email}${(data.farmerDetails.landline ?? '').length > 0 ? '<br/>' : ''}${data.farmerDetails.landline}<br/>${data.farmerDetails.mobile}`
   }
   if (data.agentDetails) {
