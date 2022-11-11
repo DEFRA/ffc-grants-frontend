@@ -113,7 +113,7 @@ function getErrorMessage (object) {
 }
 
 function getGrantValues (projectCost) {
-  const calculatedGrant = Number(GRANT_PERCENTAGE * projectCost / 100).toFixed(2)
+  const calculatedGrant = Math.trunc(Number(GRANT_PERCENTAGE * projectCost / 100));
   const remainingCost = Number(projectCost - calculatedGrant).toFixed(2)
 
   return { calculatedGrant, remainingCost }
