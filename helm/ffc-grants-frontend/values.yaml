@@ -62,8 +62,8 @@ container:
   serviceEndDate: dummy
   serviceEndTime: dummy
   surveyLink: dummy
-  scoreRequestQueueAddress: ffc-grants-water-desirability-scoring-req
-  scoreResponseQueueAddress: ffc-grants-water-desirability-scoring-res
+  scoreRequestWaterQueueAddress: ffc-grants-water-desirability-scoring-req
+  scoreResponseWaterQueueAddress: ffc-grants-water-desirability-scoring-res
 livenessProbe:
   path: /healthz
   port: 3000
