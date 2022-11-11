@@ -33,9 +33,9 @@ async function sendMsg (sender, msgData, msgType, correlationId) {
 }
 
 module.exports = {
-  sendProjectDetails: async function (projectDetailsData, correlationId) {
-    await sendMsg(projectDetailsSender, projectDetailsData, msgCfg.projectDetailsMsgType, correlationId)
-  },
+  // sendProjectDetails: async function (projectDetailsData, correlationId) {
+  //   await sendMsg(projectDetailsSender, projectDetailsData, msgCfg.projectDetailsMsgType, correlationId)
+  // },
   sendContactDetails: async function (contactDetailsData, correlationId) {
     await sendMsg(contactDetailsSender, contactDetailsData, msgCfg.contactDetailsMsgType, correlationId)
   }

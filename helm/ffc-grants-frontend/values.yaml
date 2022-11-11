@@ -62,6 +62,8 @@ container:
   serviceEndDate: dummy
   serviceEndTime: dummy
   surveyLink: dummy
+  scoreRequestQueueAddress: ffc-grants-desirability-scoring-req
+  scoreResponseQueueAddress: ffc-grants-desirability-scoring-res
 
 livenessProbe:
   path: /healthz
