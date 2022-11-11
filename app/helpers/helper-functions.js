@@ -113,7 +113,7 @@ function getErrorMessage (object) {
 }
 
 function getGrantValues (projectCost) {
-  const calculatedGrant = Math.trunc(Number(GRANT_PERCENTAGE * projectCost / 100));
+  const calculatedGrant = Number(GRANT_PERCENTAGE * projectCost / 100).toFixed(2)
   const remainingCost = Number(projectCost - calculatedGrant).toFixed(2)
 
   return { calculatedGrant, remainingCost }
@@ -130,7 +130,7 @@ function isInteger (number) {
 function formatUKCurrency (costPounds) {
   return (isInteger(costPounds))
     ? Number(costPounds).toLocaleString('en-GB')
-    : Number(costPounds).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+    : Number(costPounds).toLocaleString('en-GB', { minimumFractionDigits: 0, maximumFractionDigits: 0 })
 }
 
 function formatApplicationCode (guid) {
