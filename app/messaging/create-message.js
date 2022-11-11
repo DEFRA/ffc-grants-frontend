@@ -2,9 +2,9 @@ const createMessage = (body, type, options) => {
   return {
     body,
     type,
-    source: 'ffc-grants-cattle-housing-web',
+    source: 'ffc-grants-frontend',
     ...options
   }
 }
 
-module.exports = createMessages
+module.exports = createMessage

@@ -6,6 +6,7 @@ const pollingConfig = require('../config/polling')
 const gapiService = require('../services/gapi-service')
 const { setYarValue, getYarValue } = require('../helpers/session')
 const { addSummaryRow } = require('../helpers/score-helpers')
+const { getWaterScoring } = require('../messaging/application')
 
 const urlPrefix = require('../config/server').urlPrefix
 
@@ -68,8 +69,8 @@ module.exports = [{
     try {
       const msgDataToSend = createMsg.getDesirabilityAnswers(request)
       // Always re-calculate our score before rendering this page
-      await senders.sendProjectDetails(msgDataToSend, request.yar.id)
 
+      await getWaterScoring(request.yar.id)
       // Poll for backend for results from scoring algorithm
       // If msgData is null then 500 page will be triggered when trying to access object below
       const msgData = await getResult(request.yar.id)
