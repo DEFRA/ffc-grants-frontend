@@ -14,7 +14,8 @@ describe('Check Details page', () => {
         address2: '12 Henley Wood Road',
         town: 'Reading',
         county: 'Berkshire',
-        postcode: 'RG6 7EE',
+        projectPostcode: 'RG6 7EE',
+        businessPostcode: 'N3 4RR',
         email: 's@s.com',
         landline: '',
         mobile: '012346789'
@@ -73,7 +74,7 @@ describe('Check Details page', () => {
     expect(response.payload).toContain('Check your details')
   })
 
-  it('should have back link to formers-details', async () => {
+  it('should have back link to farmers-details', async () => {
     const options = {
       method: 'GET',
       url: `${global.__URLPREFIX__}/check-details`,
@@ -87,6 +88,22 @@ describe('Check Details page', () => {
     console.log(response.headers.location, 'Redirect Location')
     expect(response.statusCode).toBe(200)
     expect(response.payload).toContain(`${global.__URLPREFIX__}/applicant-details`)
+  })
+
+  it('should have farmers-details rendered in rows', async () => {
+    const options = {
+      method: 'GET',
+      url: `${global.__URLPREFIX__}/check-details`,
+      payload: { crumb: crumbToken },
+      headers: {
+        cookie: 'crumb=' + crumbToken
+      }
+    }
+
+    const response = await global.__SERVER__.inject(options)
+    // console.log('here: ', response.payload);
+    expect(response.statusCode).toBe(200)
+    expect(response.payload).toContain(`12 Henley Wood Road<br/>12 Henley Wood Road<br/>Reading<br/>Berkshire<br/>N3 4RR`)
   })
 
   it('should have continue button to redirect to confirm page ', async () => {
