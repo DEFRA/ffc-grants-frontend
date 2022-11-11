@@ -1,12 +1,12 @@
 const { sendMessage, receiveMessage } = require('../')
-const { scoreRequestQueue, fetchScoreRequestMsgType, scoreResponseQueue } = require('../../config/messaging.js')
+const { scoreRequestQueue, fetchWaterScoreRequestMsgType, waterScoreResponseQueue } = require('../../config/messaging.js')
 
 async function getWaterScoring(sessionId) {
 	console.log('[MADE IT TO MESSAGE]', sessionId)
-	await sendMessage({}, fetchScoreRequestMsgType, scoreRequestQueue, { sessionId })
+	await sendMessage({}, fetchWaterScoreRequestMsgType, scoreRequestQueue, { sessionId })
 
 	console.log('[FINISHED SENDING MESSAGE MOVING TO RECEIVING]')
-	return receiveMessage(sessionId, scoreResponseQueue)
+	return receiveMessage(sessionId, waterScoreResponseQueue)
 }
 
 module.exports = {

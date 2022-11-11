@@ -32,7 +32,8 @@ const messageConfigSchema = Joi.object({
     ...sharedConfigSchema
   },
   eligibilityAnswersMsgType: Joi.string(),
-  fetchScoreRequestMsgType: Joi.string(),
+  // fetchScoreRequestMsgType: Joi.string(),
+  fetchWaterScoreRequestMsgType: Joi.string(),
   projectDetailsMsgType: Joi.string(),
   contactDetailsMsgType: Joi.string(),
   msgSrc: Joi.string(),
@@ -72,7 +73,8 @@ const config = {
   eligibilityAnswersMsgType: `${msgTypePrefix}.eligibility.details`,
   projectDetailsMsgType: `${msgTypePrefix}.project.details`,
   contactDetailsMsgType: `${msgTypePrefix}.contact.details`,
-  fetchScoreRequestMsgType: `${msgTypePrefix}.fetch.score.request`,
+  // fetchScoreRequestMsgType: `${msgTypePrefix}.fetch.score.request`,
+  fetchWaterScoreRequestMsgType: `${msgTypePrefix}.fetch.water.score.request`,
   msgSrc: 'ffc-grants-frontend'
 }
 
