@@ -1,0 +1,113 @@
+{
+  "Q14": [
+    {
+      "key": "Q14",
+      "title": "Project impact",
+      "answers": {
+        "Q14-A1": "Change water source",
+        "Q14-A2": "Improve irrigation efficiency",
+        "Q14-A3": "Introduce irrigation",
+        "Q14-A4": "Increase irrigation",
+        "Q14-A5": "None of the above"
+      }
+    }
+  ],
+  "Q15": [
+    {
+      "key": "Q15",
+      "title": "Main crops",
+      "answers": {
+        "Q15-A1": "Protected cropping",
+        "Q15-A2": "Fruit",
+        "Q15-A3": "Field-scale crops"
+      }
+    }
+  ],
+  "Q16": [
+    {
+      "key": "Q16a",
+      "title": "Current land irrigated"
+    },
+    {
+      "key": "Q16b",
+      "title": "Future land irrigated"
+    }
+  ],
+  "Q17": [
+    {
+      "key": "Q17a",
+      "title": "Current water source",
+      "answers": {
+        "Q17a-A1": "Peak-flow/winter abstraction",
+        "Q17a-A2": "Rain water harvesting",
+        "Q17a-A3": "Bore hole/aquifer",
+        "Q17a-A4": "Summer water surface abstraction",
+        "Q17a-A5": "Mains",
+        "Q17a-A6": "Not currently irrigating"
+      }
+    },
+    {
+      "key": "Q17b",
+      "title": "Future water source",
+      "answers": {
+        "Q17b-A1": "Peak-flow/winter abstraction",
+        "Q17b-A2": "Rain water harvesting",
+        "Q17b-A3": "Bore hole/aquifer",
+        "Q17b-A4": "Summer water surface abstraction",
+        "Q17b-A5": "Mains"
+      }
+    }
+  ],
+  "Q18": [
+    {
+      "key": "Q18a",
+      "title": "Current irrigation systems",
+      "answers": {
+        "Q18a-A1": "Trickle",
+        "Q18a-A2": "Mist",
+        "Q18a-A3": "Ebb and flow",
+        "Q18a-A4": "Sprinklers",
+        "Q18a-A5": "Capillary bed",
+        "Q18a-A6": "Boom",
+        "Q18a-A7": "Rain gun",
+        "Q18a-A8": "Not currently irrigating"
+      }
+    },
+    {
+      "key": "Q18b",
+      "title": "Future irrigation systems",
+      "answers": {
+        "Q18b-A1": "Trickle",
+        "Q18b-A2": "Mist",
+        "Q18b-A3": "Ebb and flow",
+        "Q18b-A4": "Sprinklers",
+        "Q18b-A5": "Capillary bed",
+        "Q18b-A6": "Boom",
+        "Q18b-A7": "Rain gun"
+      }
+    }
+  ],
+  "Q19": [
+    {
+      "key": "Q19",
+      "title": "Productivity",
+      "answers": {
+        "Q19-A1": "Introduce or expand high-value crops",
+        "Q19-A2": "Introduce or expand protected crops",
+        "Q19-A3": "Increased yield per hectare",
+        "Q19-A4": "Improved quality",
+        "Q19-A5": "Maintain productivity"
+      }
+    }
+  ],
+  "Q20": [
+    {
+      "key": "Q20",
+      "title": "Water sharing",
+      "answers": {
+        "Q20-A1": "Yes",
+        "Q20-A2": "No"
+      }
+    }
+  ]
+}
