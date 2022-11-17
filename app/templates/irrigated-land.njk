@@ -39,13 +39,22 @@
           {{ govukInput(hiddenInput) }}
         {% endif %}
         
-        {{ govukInput(targetInput) }}
+        {{ govukInput(irrigatedLandTarget) }}
         {{ conditionalButtons(hasScore) }}
       </form>
     </div>
-    {{ sideBar("Funding priorities","RPA wants to fund projects that:",
-    [
-      "improve productivity"
-    ]) }}
+    {% if currentlyIrrigating %}
+      {{ sideBar("Funding priorities","RPA wants to fund projects that:",
+      [
+        "improve productivity"
+      ], 'h3') }}
+    {% else %}
+      {{ sideBar("Funding priorities","RPA wants to fund projects that:",
+      [
+        "improve productivity"
+      ], 'h2') }}
+
+    {% endif %}
+    
   </div>
 {% endblock %}

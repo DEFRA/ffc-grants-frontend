@@ -46,7 +46,7 @@ function createModel (currentlyIrrigating, irrigatedLandCurrent, irrigatedLandTa
       ...(irrigatedLandCurrent ? { value: irrigatedLandCurrent } : {}),
       ...(errorList && errorList[0].href === '#irrigatedLandCurrent' ? { errorMessage: { text: errorList[0].text } } : {})
     },
-    targetInput: {
+    irrigatedLandTarget: {
       classes: 'govuk-input--width-4',
       id: 'irrigatedLandTarget',
       name: 'irrigatedLandTarget',
