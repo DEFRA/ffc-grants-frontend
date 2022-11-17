@@ -27,14 +27,20 @@
   </div>
 {% endmacro %}
 
-{% macro multiSideBar(sideBars) %}
+{% macro multiSideBar(sideBars, heading_tag='h3') %}
   <div class="govuk-grid-column-one-third  govuk-!-padding-top-4 govuk-body">
     <hr class="sideBarColor"/>
 
     {% for sidebar in sideBars %}
+    {% if heading_tag === "h3" %}
       <h3 class="govuk-heading-s" id="subsection-title">
         {{ sidebar.heading }}
       </h3>
+    {% elseif heading_tag === 'h2' %}
+      <h2 class="govuk-heading-s" id="subsection-title">
+        {{ sidebar.heading }}
+      </h2>
+    {% endif %}
 
       {% for content in sidebar.content %}
         <p>{{content.para  | striptags(true) | escape | nl2br }}</p>

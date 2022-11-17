@@ -49,13 +49,26 @@
       </form>
     </div>
 
-    {{ 
-      sideBar(
-        "Funding priorities","RPA wants to fund projects that:",
-        [
-          "improve the environment","improve water sustainability"
-        ]
-      )
-    }}
+    {% if currentlyIrrigating %}
+          {{ 
+            sideBar(
+              "Funding priorities","RPA wants to fund projects that:",
+              [
+                "improve the environment","improve water sustainability"
+              ], 'h3'
+            )
+          }}
+
+        {% else %}
+          {{ 
+            sideBar(
+              "Funding priorities","RPA wants to fund projects that:",
+              [
+                "improve the environment","improve water sustainability"
+              ], 'h2'
+            )
+          }}
+
+        {% endif %}
   </div>
 {% endblock %}
