@@ -18,60 +18,34 @@ describe('Score page', () => {
   const { getCookieHeader, getCrumbCookie, crumbToken } = require('./test-helper')
   const createServer = require('../../../../app/server')
   const Wreck = require('@hapi/wreck')
-  const senders = require('../../../../app/messaging/senders')
+  const newSender = require('../../../../app/messaging/application')
   const createMsg = require('../../../../app/messaging/create-msg')
+  const getDesirabilityAnswersSpy = jest.spyOn(createMsg, 'getDesirabilityAnswers').mockImplementation(() => {
+    return '';
+  })
+  const getWaterScoringSpy = jest.spyOn(newSender, 'getWaterScoring').mockImplementation(() => {
+    return scoreData;
+  })
   beforeEach(async () => {
     global.__SERVER__.stop()
     jest.mock('../../../../app/messaging')
     jest.mock('../../../../app/messaging/senders')
     jest.mock('ffc-messaging')
-    senders.sendProjectDetails = jest.fn(async function (message, id) {
-      return null
-    })
-    createMsg.getDesirabilityAnswers = jest.fn((request) => {
-      return ''
-    })
+
     server = await createServer()
     await server.start()
   })
-  it('should load page with error score not received after polling scroing service', async () => {
-    jest.mock('@hapi/wreck')
-    const options = {
-      method: 'GET',
-      url: `${global.__URLPREFIX__}/score`
-    }
-    const wreckResponse = {
-      payload: null,
-      res: {
-        statusCode: 202
-      }
-    }
-    Wreck.get = jest.fn(async function (url, type) {
-      return wreckResponse
-    })
-    const response = await server.inject(options)
-    expect(response.statusCode).toBe(200)
-    const header = getCookieHeader(response)
-    expect(header.length).toBe(2)
-    crumCookie = getCrumbCookie(response)
-    expect(response.result).toContain(crumCookie[1])
+  afterEach(async () => {
+    await server.stop()
+    jest.clearAllMocks()
   })
 
   it('should load page with error unhandled response from scoring service', async () => {
-    jest.mock('@hapi/wreck')
     const options = {
       method: 'GET',
       url: `${global.__URLPREFIX__}/score`
     }
-    const wreckResponse = {
-      payload: null,
-      res: {
-        statusCode: 500
-      }
-    }
-    Wreck.get = jest.fn(async function (url, type) {
-      return wreckResponse
-    })
+
     const response = await server.inject(options)
     expect(response.statusCode).toBe(200)
     const header = getCookieHeader(response)
@@ -149,6 +123,7 @@ describe('Score page', () => {
     Wreck.get = jest.fn(async function (url, type) {
       return wreckResponse
     })
+
     const response = await server.inject(options)
     expect(response.statusCode).toBe(200)
     const header = getCookieHeader(response)
@@ -157,6 +132,8 @@ describe('Score page', () => {
     expect(response.result).toContain(crumCookie[1])
     const responseScoreMessage = 'This means your project is likely to be successful.'
     expect(response.payload).toContain(responseScoreMessage)
+    expect(getDesirabilityAnswersSpy).toHaveBeenCalledTimes(1)
+    expect(getWaterScoringSpy).toHaveBeenCalledTimes(1)
   })
   it('should load page with success Average', async () => {
     jest.mock('@hapi/wreck')
@@ -182,6 +159,8 @@ describe('Score page', () => {
     expect(response.result).toContain(crumCookie[1])
     const responseScoreMessage = 'This means your project might be successful.'
     expect(response.payload).toContain(responseScoreMessage)
+    expect(getDesirabilityAnswersSpy).toHaveBeenCalledTimes(1)
+    expect(getWaterScoringSpy).toHaveBeenCalledTimes(1)
   })
   it('should load page with sucess Weak', async () => {
     jest.mock('@hapi/wreck')
@@ -207,6 +186,8 @@ describe('Score page', () => {
     expect(response.result).toContain(crumCookie[1])
     const responseScoreMessage = 'This means your project is unlikely to be successful.'
     expect(response.payload).toContain(responseScoreMessage)
+    expect(getDesirabilityAnswersSpy).toHaveBeenCalledTimes(1)
+    expect(getWaterScoringSpy).toHaveBeenCalledTimes(1)
   })
   it('redirects to project business details page', async () => {
     const postOptions = {
