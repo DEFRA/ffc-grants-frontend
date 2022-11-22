@@ -1,6 +1,7 @@
 const { formatApplicationCode } = require('../helpers/helper-functions')
 const senders = require('../messaging/senders')
 const createMsg = require('../messaging/create-msg')
+const emailFormatting = require('./../messaging/email/process-submission')
 const protectiveMonitoringServiceSendEvent = require('../services/protective-monitoring-service')
 const { getYarValue } = require('../helpers/session')
 const gapiService = require('../services/gapi-service')
@@ -21,7 +22,10 @@ module.exports = {
     const confirmationId = formatApplicationCode(request.yar.id)
 
     try {
-      await senders.sendContactDetails(createMsg.getAllDetails(request, confirmationId), request.yar.id)
+      const overAllScore = getYarValue(request, 'overAllScore');
+      const emailData = await emailFormatting({ body: createMsg.getAllDetails(request, confirmationId), overAllScore, corelationId: request.yar.id })
+      await senders.sendDesirabilitySubmitted(emailData, request.yar.id) // replace with sendDesirabilitySubmitted, and replace first param with call to function in process-submission
+
 
       await protectiveMonitoringServiceSendEvent(request, request.yar.id, 'FTF-JOURNEY-COMPLETED', '0706')
       const score = getYarValue(request, 'current-score')

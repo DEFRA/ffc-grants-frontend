@@ -64,6 +64,16 @@ container:
   surveyLink: dummy
   scoreRequestWaterQueueAddress: ffc-grants-water-desirability-scoring-req
   scoreResponseWaterQueueAddress: ffc-grants-water-desirability-scoring-res
+  desirabilitySubmittedTopicAddress: desirability-submitted
+  notifyEmailTemplate: dummy-template
+  worksheetProtectPassword: dummy-pwd
+  worksheetProtectEnabled: false
+  sendEmailToRpa: false
+  rpaEmail: FTF@rpa.gov.uk
+  worksheetHideEmptyRows: false
+  protectiveMonitoringUrl:
+  excelUploadEnvironment: dummy
+
 livenessProbe:
   path: /healthz
   port: 3000

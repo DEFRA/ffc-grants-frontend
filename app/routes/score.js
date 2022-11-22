@@ -1,7 +1,5 @@
 const { getDesirabilityAnswers } = require('../messaging/create-msg')
-const Wreck = require('@hapi/wreck')
 const questionBank = require('../config/question-bank')
-const pollingConfig = require('../config/polling')
 const gapiService = require('../services/gapi-service')
 const { setYarValue, getYarValue } = require('../helpers/session')
 const { addSummaryRow } = require('../helpers/score-helpers')
@@ -45,7 +43,9 @@ module.exports = [{
       // call session queue to send score data
       const formatAnswersForScoring = createMsg(msgDataToSend)
       const msgData = await getWaterScoring(formatAnswersForScoring, request.yar.id)
-      
+      setYarValue(request, 'overAllScore', msgData)
+      console.log('msgData from Score: ', msgData);
+      console.log('getYar overAllScore: ', getYarValue(request, 'overAllScore'));
       const crop = questionBank.questions.find(question => question.key === 'Q15')
       const cropObject = addSummaryRow(crop, request)
       if (msgData) {
