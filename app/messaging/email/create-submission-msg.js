@@ -180,8 +180,6 @@ function getScoreChance(rating) {
 
 function getEmailDetails(submission, desirabilityScore, notifyTemplate, agentApplying, rpaEmail) {
   const email = agentApplying ? submission.agentDetails.email : submission.farmerDetails.email
-  console.log('email: ', email);
-  console.log('rpaEmail: ', rpaEmail);
   return {
     notifyTemplate: emailConfig.notifyTemplate,
     emailAddress: rpaEmail ? rpaEmail : email,
@@ -255,7 +253,6 @@ function getRPAEmailDetails(submission, desirabilityScore) {
 }
 
 module.exports = function (submission, desirabilityScore) {
-  console.log('submission: ', submission);
   return {
     applicantEmail: getApplicantEmailDetails(submission, desirabilityScore),
     agentEmail: getAgentEmailDetails(submission, desirabilityScore),
