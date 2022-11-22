@@ -1,0 +1,85 @@
+{
+  "confirmationId": "WM-CE7-201",
+  "abstractionLicence": "Expected to have by 31st December 2021",
+  "agentDetails": null,
+  "applying": "Farmer",
+  "isArable": null,
+  "businessDetails": {
+    "projectName": "Farm reservoir",
+    "businessName": "My Farm",
+    "numberEmployees": "30",
+    "businessTurnover": "5000000",
+    "sbi": ""
+  },
+  "businessName": null,
+  "collaboration": "Yes",
+  "consentMain": true,
+  "consentOptional": false,
+  "emailAddress": null,
+  "inEngland": "Yes",
+  "projectPostcode": "AB12 4QQ",
+  "farmerDetails": {
+    "title": "Mr",
+    "firstName": "Geoff",
+    "lastName": "Hopkin",
+    "email": "me@me.com",
+    "landline": "",
+    "mobile": "08871 554024",
+    "address1": "123 Road",
+    "address2": "",
+    "town": "York",
+    "county": "North Yorkshire",
+    "postcode": "YO33 4FF"
+  },
+  "farmingType": "Crops for the food industry",
+  "irrigatedCrops": "Field-scale crops",
+  "irrigatedLandCurrent": "0",
+  "irrigatedLandTarget": "20",
+  "irrigationCurrent": [
+    "Trickle"
+  ],
+  "irrigationPlanned": [
+    "Capillary bed",
+    "Ebb and flow"
+  ],
+  "waterSourceCurrent": [
+    "Mains"
+  ],
+  "waterSourcePlanned": [
+    "Rain water harvesting",
+    "Summer water surface abstraction"
+  ],
+  "legalStatus": "Sole Trader",
+  "planningPermission": "Not needed",
+  "productivity": [
+    "Introduce or expand protected crops"
+  ],
+  "projectCost": 100000,
+  "calculatedGrant": "40000.00",
+  "remainingCost": "60000.00",
+  "project": [
+    "Improve irrigation efficiency"
+  ],
+  "projectInfrastucture": [
+    "Irrigation pump(s) and controls",
+    "Electricity installation for pump house"
+  ],
+  "projectEquipment": [
+    "Ebb and flow"
+  ],
+  "projectTechnology": [
+    "Software and sensors to optimise water application"
+  ],
+  "projectItemsList": [
+    "Irrigation pump(s) and controls",
+    "Electricity installation for pump house",
+    "Ebb and flow",
+    "Software and sensors to optimise water application"
+  ],
+  "projectStarted": "No",
+  "payRemainingCosts": "Yes",
+  "score-calculated": true,
+  "tenancyLength": null,
+  "landOwnership": "Yes",
+  "sSSI": "Yes"
+}
