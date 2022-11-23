@@ -23,11 +23,11 @@ module.exports = {
 
     try {
       const overAllScore = getYarValue(request, 'overAllScore');
-      const emailData = await emailFormatting({ body: createMsg.getAllDetails(request, confirmationId), overAllScore, corelationId: request.yar.id })
+      const emailData = await emailFormatting({ body: createMsg.getAllDetails(request, confirmationId), overAllScore, correlationId: request.yar.id })
+
       await senders.sendDesirabilitySubmitted(emailData, request.yar.id) // replace with sendDesirabilitySubmitted, and replace first param with call to function in process-submission
 
-
-      await protectiveMonitoringServiceSendEvent(request, request.yar.id, 'FTF-JOURNEY-COMPLETED', '0706')
+      // await protectiveMonitoringServiceSendEvent(request, request.yar.id, 'FTF-JOURNEY-COMPLETED', '0706')
       const score = getYarValue(request, 'current-score')
       await gapiService.sendDimensionOrMetrics(request, [{
         dimensionOrMetric: gapiService.dimensions.CONFIRMATION,
