@@ -7,7 +7,7 @@ describe('Confirmation page', () => {
   })
   it('should load page successfully with 500', async () => {
     const senders = require('../../../../app/messaging/senders')
-    senders.sendContactDetails = jest.fn(async function (model, yarId) {
+    senders.sendDesirabilitySubmitted = jest.fn(async function (model, yarId) {
       throw new Error('Some error')
     })
     // setting yar variable needed  for the confirmation page
@@ -49,7 +49,7 @@ describe('Confirmation page', () => {
       url: `${global.__URLPREFIX__}/confirmation`
     }
     const senders = require('../../../../app/messaging/senders')
-    senders.sendContactDetails = jest.fn(async function (model, yarId) {
+    senders.sendDesirabilitySubmitted = jest.fn(async function (model, yarId) {
       return ''
     })
     const response = await global.__SERVER__.inject(options)
