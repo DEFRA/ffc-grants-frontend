@@ -1,0 +1,120 @@
+{% extends '.layout.njk' %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
+{% from "govuk/components/select/macro.njk" import govukSelect %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+{% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+{% from "./components/macro.njk" import crumbToken, multiSideBar, conditionalButtons %}
+
+{% block pageTitle %}
+  {% if errorList %}
+    Error:
+  {% endif %}
+  {{ title }} - {{ siteTitle }}
+{% endblock %}
+
+{% block beforeContent %}
+  {% if backUrl %}
+    {{ govukBackLink({
+      text: "Back",
+      href: backUrl
+    }) }}
+  {% endif %}
+  {% if errorList %}
+    {{ govukErrorSummary ({
+        "titleText": "There is a problem",
+        "errorList": errorList
+      }) }}
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds govuk-!-margin-top-2">
+      <form method="POST" action="{{ url }}" novalidate="novalidate">
+        {{ crumbToken(crumb) }}
+
+        {% if type ==='single-answer' %}
+          {{ govukRadios(items) }}
+        {% endif %}
+
+        {% if type ==='multi-answer' %}
+          {{ govukCheckboxes(items) }}
+        {% endif %}
+
+        {% if type ==='input' %}
+          {{ govukInput(items) }}
+        {% endif %}
+
+        {% if type ==='select' %}
+          {{ govukSelect(items) }}
+        {% endif %}
+
+        {% if type === 'multi-input' %}
+          <h1 class="govuk-heading-l">{{ title }}</h1>
+          <span class="govuk-hint">{{ hint.text }}</span>
+
+          {% for item in items %}
+            {% if item.type ==='sub-heading' %}
+              <fieldset class="govuk-fieldset">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                  <h2 class="govuk-fieldset__heading">{{ item.text }}
+                  </h2>
+                </legend>
+              {% endif %}
+
+              {% if item.type ==='single-answer' %}
+                {{ govukRadios(item) }}
+              {% endif %}
+
+              {% if item.type ==='multi-answer' %}
+                {{ govukCheckboxes(item) }}
+              {% endif %}
+
+              {% if item.type ==='text' or item.type ==='email' or item.type ==='tel' or item.type ==='number' %}
+                {{ govukInput(item) }}
+              {% endif %}
+
+
+              {% if item.type ==='select' %}
+                {{ govukSelect(item) }}
+              {% endif %}
+
+              {% if item.endFieldset %}
+                </fieldset>
+              {% endif %}
+
+            {% endfor %}
+          {% endif %}
+
+          {% if warning %}
+            {{ govukWarningText(warning) }}
+          {% endif %}
+
+          <div class="govuk-!-padding-top-5">
+            {% set buttonText = 'Continue' %}
+            {% set secButtonText = 'Back to score' %}
+
+            {% if key === 'planning-permission' %}
+              {% set diaplaySecondryBtn = false %}
+            {% elif reachedCheckDetails %}
+              {% set diaplaySecondryBtn = true %}
+              {% set secButtonText = 'Back to details' %}
+            {% elif reachedEvidenceSummary %}
+              {% set diaplaySecondryBtn = true %}
+              {% set secButtonText = 'Back to evidence summary' %}
+            {% endif %}
+          </div>
+
+          {{ conditionalButtons(diaplaySecondryBtn, buttonText, secButtonText) }}
+        </form>
+      </div>
+
+      {% if sideBarText %}
+        {{ multiSideBar(sideBarText) }}
+      {% endif %}
+    </div>
+  {% endblock %}

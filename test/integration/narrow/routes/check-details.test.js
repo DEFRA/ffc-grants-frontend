@@ -101,7 +101,6 @@ describe('Check Details page', () => {
     }
 
     const response = await global.__SERVER__.inject(options)
-    // console.log('here: ', response.payload);
     expect(response.statusCode).toBe(200)
     expect(response.payload).toContain(`12 Henley Wood Road<br/>12 Henley Wood Road<br/>Reading<br/>Berkshire<br/>N3 4RR`)
   })
