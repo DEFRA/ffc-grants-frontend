@@ -445,7 +445,37 @@ const questionBank = {
         }
       ],
       yarKey: 'projectItemsList'
-    }
+    },
+    {
+      key: 'project-cost',
+      order: 8,
+      title: 'What is the estimated cost of the items?',
+      pageTitle: '',
+      url: 'project-cost',
+      baseUrl: 'project-cost',
+      backUrl: 'project-items',
+      nextUrl: 'potential-amount',
+      fundingPriorities: "",
+      type: 'single-answer',
+      minAnswerCount: 1,
+      validate: [
+        {
+          type: 'NOT_EMPTY',
+          error: 'Select yes if the land will have a tenancy agreement in place for 5 years after the final grant payment.'
+        }
+      ],
+      answers: [
+        {
+          key: 'project-cost-A1',
+          value: 'Yes',
+        },
+        {
+          key: 'project-cost-A2',
+          value: 'No',
+        }
+      ],
+      yarKey: 'projectCost'
+    },
   ]
 }
 
