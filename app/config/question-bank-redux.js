@@ -164,437 +164,288 @@ const questionBank = {
       ],
       yarKey: 'inEngland'
     },
-
-    // {
-    //   key: 'Q3',
-    //   order: 3,
-    //   title: 'Is the planned project in England?',
-    //   pageTitle: '',
-    // },
-    // {
-    //   key: 'Q4',
-    //   order: 4,
-    //   title: 'Does the project have planning permission?',
-    //   pageTitle: '',
-    //   url: 'planning-permission',
-    //   yarKey: 'planningPermission'
-    // },
-    // {
-    //   key: 'Q5',
-    //   order: 5,
-    //   title: 'Have you already started work on the project?',
-    //   pageTitle: '',
-    //   url: 'project-start',
-    //   yarKey: 'projectStarted'
-    // },
-    // {
-    //   key: 'Q6',
-    //   order: 6,
-    //   title: 'Is the planned project on land the farm business owns?',
-    //   pageTitle: '',
-    //   url: 'tenancy',
-    //   yarKey: 'landOwnership'
-    // },
-    // {
-    //   key: 'Q7',
-    //   order: 7,
-    //   title: 'Which eligible items do you need for your project?',
-    //   pageTitle: '',
-    //   url: 'project-items',
-    //   yarKey: 'projectItemsList'
-    // },
-    // {
-    //   key: 'Q8',
-    //   order: 8,
-    //   title: 'What is the estimated cost of the items?',
-    //   pageTitle: '',
-    //   url: 'project-cost',
-    //   yarKey: 'projectCost'
-    // },
-    // {
-    //   key: 'Q9',
-    //   order: 9,
-    //   title: '',
-    //   pageTitle: 'Can you pay the remaining costs',
-    //   url: 'remaining-costs',
-    //   yarKey: 'payRemainingCosts'
-    // },
-    // {
-    //   key: 'Q10',
-    //   order: 10,
-    //   title: 'Does the project directly impact a Site of Special Scientific Interest?',
-    //   pageTitle: '',
-    //   url: 'SSSI',
-    //   yarKey: 'sSSI'
-    // },
-    // {
-    //   key: 'Q11',
-    //   order: 11,
-    //   title: 'Does the project need an abstraction licence or a variation of one?',
-    //   pageTitle: '',
-    //   url: 'abstraction-licence',
-    //   yarKey: 'abstractionLicence'
-    // },
-    // {
-    //   key: 'Q14',
-    //   order: 14,
-    //   title: 'What impact will the project have?',
-    //   pageTitle: 'Project impact',
-    //   fundingPriorities: 'Improve productivity <br/> Improve the environment <br/> Improving water sustainability',
-    //   type: 'multiple-answer',
-    //   url: 'project-summary',
-    //   yarKey: 'project',
-    //   answerCount: 2,
-    //   answer: [
-    //     {
-    //       key: 'Q14-A1',
-    //       value: 'Change water source'
-    //     },
-    //     {
-    //       key: 'Q14-A2',
-    //       value: 'Improve irrigation efficiency'
-    //     },
-    //     {
-    //       key: 'Q14-A3',
-    //       value: 'Introduce Irrigation'
-    //     },
-    //     {
-    //       key: 'Q14-A4',
-    //       value: 'Increase Irrigation'
-    //     },
-    //     {
-    //       value: 'divider'
-    //     },
-    //     {
-    //       key: 'Q14-A5',
-    //       value: 'None of the above'
-    //     }
-    //   ]
-    // },
-    // {
-    //   key: 'Q15',
-    //   order: 15,
-    //   title: 'What main crops will be irrigated?',
-    //   pageTitle: 'Main crop',
-    //   fundingPriorities: 'Improve productivity',
-    //   type: 'single-answer',
-    //   url: 'irrigated-crops',
-    //   yarKey: 'irrigatedCrops',
-    //   answer: [
-    //     {
-    //       key: 'Q15-A1',
-    //       desc: 'Protected cropping (for example, glass house or poly tunnel)'
-    //     },
-    //     {
-    //       key: 'Q15-A2',
-    //       desc: 'Fruit (for example, top fruit, bush fruit)'
-    //     },
-    //     {
-    //       key: 'Q15-A3',
-    //       desc: 'Field-scale crops (for example, potatoes, onions, carrots)'
-    //     }
-    //   ]
-    // },
-    // {
-    //   key: 'Q15.1',
-    //   order: 15.1,
-    //   title: 'Are you currently irrigating?',
-    //   pageTitle: 'Irrigation status',
-    //   type: 'single-answer',
-    //   url: 'irrigation-status',
-    //   yarKey: 'currentlyIrrigating',
-    //   answer: [
-    //     {
-    //       key: 'Q15.1-A1',
-    //       desc: 'Yes'
-    //     },
-    //     {
-    //       key: 'Q15.1-A2',
-    //       desc: 'No'
-    //     }
-    //   ]
-    // },
-    // {
-    //   key: 'Q16',
-    //   order: 16,
-    //   title: 'How much land is currently irrigated per year?',
-    //   pageTitle: 'Irrigated land',
-    //   desc: 'Enter figure in hectares (ha)',
-    //   fundingPriorities: 'Improve productivity',
-    //   group: 'Q16',
-    //   type: 'number',
-    //   unit: 'hectares',
-    //   url: 'irrigated-land',
-    //   yarKey: 'irrigatedLandCurrent'
-    // },
-    // {
-    //   key: 'Q16a',
-    //   order: 16.1,
-    //   title: 'How much land will be irrigated after the project?',
-    //   pageTitle: 'Irrigated land',
-    //   desc: 'Enter figure in hectares (ha)',
-    //   fundingPriorities: 'Improve productivity',
-    //   group: 'Q16',
-    //   type: 'number',
-    //   unit: 'hectares',
-    //   url: 'irrigated-land',
-    //   yarKey: 'irrigatedLandTarget'
-    // },
-    // {
-    //   key: 'Q17',
-    //   order: 17,
-    //   title: 'Where does your current irrigation water come from?',
-    //   pageTitle: 'Irrigation source',
-    //   url: 'irrigation-water-source',
-    //   yarKey: 'waterSourceCurrent',
-    //   fundingPriorities: 'Improve the environment <br/> Improving water sustainability',
-    //   type: 'multiple-answer',
-    //   answerCount: 2,
-    //   group: 'Q17',
-    //   answer: [
-    //     {
-    //       key: 'Q17a-A1',
-    //       desc: 'Peak-flow/winter abstraction'
-    //     },
-    //     {
-    //       key: 'Q17a-A2',
-    //       desc: 'Rain water harvesting'
-    //     },
-    //     {
-    //       key: 'Q17a-A3',
-    //       desc: 'Bore hole / aquifer'
-    //     },
-    //     {
-    //       key: 'Q17a-A4',
-    //       desc: 'Summer water surface abstraction'
-    //     },
-    //     {
-    //       key: 'Q17a-A5',
-    //       desc: 'Mains'
-    //     },
-    //     {
-    //       key: 'Q17a-A6',
-    //       desc: 'Not currently irrigating'
-    //     }
-    //   ]
-    // },
-    // {
-    //   key: 'Q17b',
-    //   order: 17.1,
-    //   title: 'Where will your irrigation water come from?',
-    //   pageTitle: 'Irrigation source',
-    //   url: 'irrigation-water-source',
-    //   yarKey: 'waterSourcePlanned',
-    //   fundingPriorities: 'Improve the environment <br/> Improving water sustainability',
-    //   type: 'multiple-answer',
-    //   answerCount: 2,
-    //   group: 'Q17',
-    //   answer: [
-    //     {
-    //       key: 'Q17b-A1',
-    //       desc: 'Peak-flow/winter abstraction'
-    //     },
-    //     {
-    //       key: 'Q17b-A2',
-    //       desc: 'Rain water harvesting'
-    //     },
-    //     {
-    //       key: 'Q17b-A3',
-    //       desc: 'Bore hole / aquifer'
-    //     },
-    //     {
-    //       key: 'Q17b-A4',
-    //       desc: 'Summer water surface abstraction'
-    //     },
-    //     {
-    //       key: 'Q17b-A5',
-    //       desc: 'Mains'
-    //     }
-    //   ]
-    // },
-    // {
-    //   key: 'Q18',
-    //   order: 18,
-    //   title: 'What systems are currently used to irrigate?',
-    //   pageTitle: 'Irrigation system',
-    //   fundingPriorities: 'Improve the environment <br/> Improving water sustainability',
-    //   group: 'Q18',
-    //   url: 'irrigation-systems',
-    //   yarKey: 'irrigationCurrent',
-    //   type: 'multiple-answer',
-    //   answerCount: 2,
-    //   answer: [
-    //     {
-    //       key: 'Q18a-A1',
-    //       desc: 'Trickle',
-    //       weight: 6
-    //     },
-    //     {
-    //       key: 'Q18a-A2',
-    //       desc: 'Mist',
-    //       weight: 5
-    //     },
-    //     {
-    //       key: 'Q18a-A3',
-    //       desc: 'Ebb and flow',
-    //       weight: 4
-    //     },
-    //     {
-    //       key: 'Q18a-A4',
-    //       desc: 'Sprinklers',
-    //       weight: 3
-    //     },
-    //     {
-    //       key: 'Q18a-A5',
-    //       desc: 'Capillary Bed',
-    //       weight: 2
-    //     },
-    //     {
-    //       key: 'Q18a-A6',
-    //       desc: 'Boom',
-    //       weight: 1
-    //     },
-    //     {
-    //       key: 'Q18a-A7',
-    //       desc: 'Rain Gun / Not currently irrigating',
-    //       weight: 0
-    //     }
-    //   ]
-    // },
-    // {
-    //   key: 'Q18b',
-    //   order: 18.1,
-    //   title: 'What systems will be used to irrigate?',
-    //   pageTitle: 'Irrigation system',
-    //   group: 'Q18',
-    //   url: 'irrigation-systems',
-    //   yarKey: 'irrigationPlanned',
-    //   type: 'multiple-answer',
-    //   fundingPriorities: 'Reducing environmental imapact <br/> Improving water sustainability',
-    //   answerCount: 2,
-    //   answer: [
-    //     {
-    //       key: 'Q18b-A1',
-    //       desc: 'Trickle',
-    //       weight: 6
-    //     },
-    //     {
-    //       key: 'Q18b-A2',
-    //       desc: 'Mist',
-    //       weight: 5
-    //     },
-    //     {
-    //       key: 'Q18b-A3',
-    //       desc: 'Ebb and flow',
-    //       weight: 4
-    //     },
-    //     {
-    //       key: 'Q18b-A4',
-    //       desc: 'Sprinklers',
-    //       weight: 3
-    //     },
-    //     {
-    //       key: 'Q18b-A5',
-    //       desc: 'Capillary Bed',
-    //       weight: 2
-    //     },
-    //     {
-    //       key: 'Q18b-A6',
-    //       desc: 'Boom',
-    //       weight: 1
-    //     },
-    //     {
-    //       key: 'Q18b-A7',
-    //       desc: 'Rain Gun / Not currently irrigating',
-    //       weight: 0
-    //     }
-    //   ]
-    // },
-    // {
-    //   key: 'Q19',
-    //   order: 19,
-    //   title: 'How will the project improve productivity',
-    //   pageTitle: 'Productivity',
-    //   fundingPriorities: 'Improve productivity',
-    //   help: '',
-    //   desc: 'Productivity is about how much is produced relative to inputs (for example, increased yield for the same inputs or the same yield with lower inputs).',
-    //   url: 'productivity',
-    //   yarKey: 'productivity',
-    //   type: 'multiple-answer',
-    //   answerCount: 2,
-    //   answer: [
-    //     {
-    //       key: 'Q19-A1',
-    //       desc: 'Introduce or expand high Value Crops',
-    //       weight: 3
-    //     },
-    //     {
-    //       key: 'Q19-A2',
-    //       desc: 'Introduce or expand protected Crops',
-    //       weight: 3
-    //     },
-    //     {
-    //       key: 'Q19-A3',
-    //       desc: 'Improved Yield per Ha',
-    //       weight: 1
-    //     },
-    //     {
-    //       key: 'Q19-A4',
-    //       desc: 'Improved Quality',
-    //       weight: 1
-    //     },
-    //     {
-    //       key: 'Q19-A5',
-    //       desc: 'Maintain productivity',
-    //       weight: 0
-    //     }
-    //   ]
-    // },
-    // {
-    //   key: 'Q20',
-    //   order: 20,
-    //   title: 'Will water be supplied to other farms?',
-    //   pageTitle: 'Other farms',
-    //   fundingPriorities: 'Improve water sustainability',
-    //   desc: 'If you intend to supply water via a water sharing agreement as a result of this project.',
-    //   url: 'collaboration',
-    //   yarKey: 'collaboration',
-    //   type: 'single-answer',
-    //   answer: [
-    //     {
-    //       key: 'Q20-A1',
-    //       desc: 'Yes'
-    //     },
-    //     {
-    //       key: 'Q20-A2',
-    //       desc: 'No'
-    //     }
-    //   ]
-    // },
-    // {
-    //   key: 'Q22',
-    //   order: 22,
-    //   title: 'Business details',
-    //   pageTitle: '',
-    //   url: 'business-details',
-    //   yarKey: 'businessDetails'
-    // },
-    // {
-    //   key: 'Q23',
-    //   order: 23,
-    //   title: 'Who is applying for this grant?',
-    //   pageTitle: '',
-    //   url: 'applying',
-    //   yarKey: 'applying'
-    // },
-    // {
-    //   key: 'Q24',
-    //   order: 24,
-    //   title: 'Farmers details',
-    //   pageTitle: '',
-    //   url: 'farmer-details',
-    //   yarKey: 'farmerDetails'
-    // }
+    {
+      key: 'planning-permission',
+      order: 4,
+      title: 'Does the project have planning permission?',
+      pageTitle: '',
+      url: 'planning-permission',
+      baseUrl: 'planning-permission',
+      backUrl: 'country',
+      nextUrl: 'project-start',
+      ineligibleContent: {
+        messageContent: 'Any planning permission must be in place by 31 January 2023 (the end of the application window).',
+        messageLink: {
+          url: 'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments',
+          title: 'See other grants you may be eligible for.'
+        }
+      },
+      fundingPriorities: "",
+      type: 'single-answer',
+      minAnswerCount: 1,
+      sidebar: {
+        values: [
+          {
+            heading: 'Eligibility',
+            content: [
+              {
+                para: `You must have secured planning permission before you submit a full application.
+                \n\nAny planning permission must be in place by 31 January 2023.`,
+                items: []
+              }
+            ]
+          }
+        ]
+      },
+      validate: [
+        {
+          type: 'NOT_EMPTY',
+          error: 'Select when the project will have planning permission'
+        }
+      ],
+      answers: [
+        { key: 'planning-permission-A1', value: 'Not needed' },
+        { key: 'planning-permission-A2', value: 'Secured' },
+        { key: 'planning-permission-A3', value: 'Should be in place by 31 January 2023' },
+        { key: 'planning-permission-A4', value: 'Will not be in place by 31 January 2023' },
+      ],
+      yarKey: 'planningPermission'
+    },
+    {
+      key: 'project-start',
+      order: 5,
+      title: 'Have you already started work on the project?',
+      pageTitle: '',
+      url: 'project-start',
+      baseUrl: 'project-start',
+      backUrl: 'planning-permission',
+      nextUrl: 'tenancy',
+      ineligibleContent: {
+        messageContent:
+          'You cannot apply for a grant if you have already started work on the project.',
+        insetText: {
+          text: 'Starting the project or committing to any costs (such as placing orders) before you receive a funding agreement invalidates your application.'
+        },
+        messageLink: {
+          url: 'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments',
+          title: 'See other grants you may be eligible for.'
+        }
+      },
+      fundingPriorities: "",
+      type: 'single-answer',
+      minAnswerCount: 1,
+      sidebar: {
+        values: [
+          {
+            heading: 'Eligibility',
+            content: [
+              {
+                para: `You will invalidate your application if you start the project or commit to any costs (such as placing orders) before you receive a funding agreement.
+                      \nBefore you start the project, you can:`,
+                items: [
+                  "get quotes from suppliers",
+                  "apply for planning permission or an abstraction licence (these can take a long time)"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      validate: [
+        {
+          type: 'NOT_EMPTY',
+          error: 'Select whether you have started work on the project'
+        }
+      ],
+      answers: [
+        {
+          key: 'project-start-A1',
+          value: 'Yes, preparatory work',
+          hint: {
+            text: 'For example, quotes from suppliers, applying for planning permission'
+          }
+        },
+        {
+          key: 'project-start-A2',
+          value: 'Yes, we have begun project work',
+          hint: {
+            text: 'For example, digging, signing contracts, placing orders'
+          },
+          notEligible: true
+        },
+        {
+          key: 'project-start-A3',
+          value: 'No, we have not started work on the project'
+        }
+      ],
+      yarKey: 'projectStarted'
+    },
+    {
+      key: 'tenancy',
+      order: 6,
+      title: 'Is the planned project on land the farm business owns?',
+      hint: {
+        text: 'The location of the project'
+      },
+      classes: 'govuk-radios--inline govuk-fieldset__legend--l',
+      pageTitle: '',
+      url: 'tenancy',
+      baseUrl: 'tenancy',
+      backUrl: 'project-start',
+      nextUrl: 'project-items',
+      fundingPriorities: "",
+      type: 'single-answer',
+      minAnswerCount: 1,
+      sidebar: {
+        values: [
+          {
+            heading: 'Eligibility',
+            content: [
+              {
+                para: `You must own the land or have a tenancy in place for 5 years after the final grant payment.`,
+                items: []
+              }
+            ]
+          }
+        ]
+      },
+      validate: [
+        {
+          type: 'NOT_EMPTY',
+          error: 'Select yes if the land will have a tenancy agreement in place for 5 years after the final grant payment',
+        }
+      ],
+      answers: [
+        {
+          key: 'tenancy-A1',
+          value: 'Yes',
+          redirectUrl: 'tenancy-length'
+        },
+        {
+          key: 'tenancy-A2',
+          value: 'No',
+          redirectUrl: 'project-items'
+        }
+      ],
+      yarKey: 'tenancy'
+    },
+    {
+      key: 'project-items',
+      order: 7,
+      title: 'Which eligible items do you need for your project?',
+      hint: {
+        text: 'Select all that items your project needs'
+      },
+      pageTitle: '',
+      url: 'project-items',
+      baseUrl: 'project-items',
+      backUrl: 'tenancy',
+      nextUrl: 'project-costs',
+      fundingPriorities: "",
+      type: 'multi-answer',
+      minAnswerCount: 1,
+      validate: [
+        {
+          type: 'NOT_EMPTY',
+          error: 'Select all the items your project needs'
+        }
+      ],
+      answers: [
+        {
+          type: 'sub-heading',
+          text: 'Reservoir construction and infrastructure'
+        },
+        {
+          key: 'project-items-A1',
+          text: 'Construction of reservoir walls'
+        },
+        {
+          key: 'project-items-A2',
+          text: 'Overflow/spillway'
+        },
+        {
+          key: 'project-items-A3',
+          text: 'Synthetic liner'
+        },
+        {
+          key: 'project-items-A4',
+          text: 'Abstraction point including pump'
+        },
+        {
+          key: 'project-items-A5',
+          text: 'Fencing for synthetically lined reservoir'
+        },
+        {
+          key: 'project-items-A6',
+          text: 'Filtration equipment'
+        },
+        {
+          key: 'project-items-A7',
+          text: 'Irrigation pumps and controls'
+        },
+        {
+          key: 'project-items-A8',
+          text: 'Pipework to fill the reservoir'
+        },
+        {
+          key: 'project-items-A9',
+          text: 'Pumphouse'
+        },
+        {
+          key: 'project-items-A10',
+          text: 'Underground water distribution main and hydrants'
+        },
+        {
+          key: 'project-items-A11',
+          text: 'Electricity installation for pumphouse'
+        },
+        {
+          key: 'project-items-A12',
+          text: 'Water meter'
+        },
+        {
+          type: 'sub-heading',
+          text: 'Irrigation equipment'
+        },
+        {
+          key: 'project-items-A13',
+          text: 'Boom'
+        },
+        {
+          key: 'project-items-A14',
+          text: 'Trickle'
+        },
+        {
+          key: 'project-items-A15',
+          text: 'Ebb and flow'
+        },
+        {
+          key: 'project-items-A16',
+          text: 'Capillary bed'
+        },
+        {
+          key: 'project-items-A17',
+          text: 'Sprinkler'
+        },
+        {
+          key: 'project-items-A18',
+          text: 'Mist'
+        },
+        {
+          type: 'sub-heading',
+          text: 'Technology'
+        },
+        {
+          key: 'project-items-A19',
+          text: 'Equipment to monitor soil moisture levels and schedule irrigation'
+        },
+        {
+          key: 'project-items-A20',
+          text: 'Equipment to control and optimise water application'
+        }
+      ],
+      yarKey: 'projectItemsList'
+    }
   ]
 }
 
