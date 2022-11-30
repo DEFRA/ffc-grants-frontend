@@ -462,7 +462,24 @@ const questionBank = {
       answers: [],
       yarKey: 'projectCost'
     },
-  ]
+    {
+      key: 'potential-amount',
+      title: 'Potential grant funding',
+      order: 70,
+      url: 'potential-amount',
+      baseUrl: 'potential-amount',
+      backUrl: 'project-cost',
+      preValidationKeys: [],
+      nextUrl: 'remaining-costs',
+      maybeEligible: true,
+      maybeEligibleContent: {
+        messageHeader: 'You may be able to apply for a grant from this scheme',
+        messageContent: `You may be able to apply for a grant of up to £{{calculatedGrant}},
+        based on the estimated cost of £{{projectCost}}.`
+      },
+      yarKey:'potentialAmount'
+    },
+  ],
 }
 
 const ALL_QUESTIONS = []

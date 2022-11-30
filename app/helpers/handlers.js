@@ -215,11 +215,12 @@ const showPostPage = (currentQuestion, request, h) => {
   } else if (thisAnswer?.redirectUrl) {
     return h.redirect(thisAnswer?.redirectUrl)
   }
-  if (yarKey === 'projectCost') {
-    const { calculatedGrant, remainingCost } = getGrantValues(payload[ Object.keys(payload)[ 0 ] ], currentQuestion.grantInfo)
+  if (yarKey === 'projectCost' || yarKey === 'potentialAmount') {
+    const { calculatedGrant, remainingCost, projectCost } = getGrantValues(payload[ Object.keys(payload)[ 0 ] ], currentQuestion.grantInfo)
     console.log('here: ', calculatedGrant, remainingCost);
     setYarValue(request, 'calculatedGrant', calculatedGrant)
     setYarValue(request, 'remainingCost', remainingCost)
+    setYarValue(request, 'projectCost', projectCost)
   }
   return h.redirect(getUrl(nextUrlObject, nextUrl, request, payload.secBtn, currentQuestion.url))
 }
