@@ -393,7 +393,7 @@ const questionBank = {
       order: 8,
       title: 'What is the estimated cost of the items?',
       pageTitle: '',
-      classes: 'govuk-input-width-10', // input width is not applied
+      classes: 'govuk-input-width-10', // TODO: input width is not applied
       url: 'project-cost',
       baseUrl: 'project-cost',
       backUrl: 'project-items',
