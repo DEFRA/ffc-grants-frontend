@@ -1,99 +1,123 @@
-const { getUrl } = require('../helpers/urls')
-const { getOptions } = require('../helpers/answer-options')
-const { getYarValue, setYarValue } = require('../helpers/session')
-const { getQuestionByKey, allAnswersSelected } = require('../helpers/utils')
+const { getUrl } = require("../helpers/urls");
+const { getOptions } = require("../helpers/answer-options");
+const { getYarValue } = require("../helpers/session");
+const { allAnswersSelected } = require("../helpers/utils");
 
-const getPrefixSufixString = (prefixSufix, selectedValueOfLinkedQuestion) => {
-  if (prefixSufix.linkedPrefix || prefixSufix.linkedSufix) {
-    selectedValueOfLinkedQuestion = prefixSufix.linkedPrefix.concat(selectedValueOfLinkedQuestion)
-  }
-  if (prefixSufix.linkedSufix) {
-    selectedValueOfLinkedQuestion = selectedValueOfLinkedQuestion.concat(prefixSufix.linkedSufix)
-  }
-  return selectedValueOfLinkedQuestion
-}
+// const getPrefixSufixString = (prefixSufix, selectedValueOfLinkedQuestion) => {
+//   if (prefixSufix.linkedPrefix || prefixSufix.linkedSufix) {
+//     selectedValueOfLinkedQuestion = prefixSufix.linkedPrefix.concat(
+//       selectedValueOfLinkedQuestion
+//     );
+//   }
+//   if (prefixSufix.linkedSufix) {
+//     selectedValueOfLinkedQuestion = selectedValueOfLinkedQuestion.concat(
+//       prefixSufix.linkedSufix
+//     );
+//   }
+//   return selectedValueOfLinkedQuestion;
+// };
 
 const getDependentSideBar = (sidebar, request) => {
-  const { values, dependentQuestionKeys } = sidebar
-  dependentQuestionKeys.forEach((dependentQuestionKey, index) => {
-    const yarKey = getQuestionByKey(dependentQuestionKey).yarKey
-    const selectedAnswers = getYarValue(request, yarKey)
+  const { values, dependentQuestionKey } = sidebar;
 
-    if (selectedAnswers) {
-      values[index].content[0].items = [selectedAnswers].flat()
-    } else {
-      values[index].content[0].items = ['Not needed']
-    }
+  // dependentQuestionKeys.forEach((dependentQuestionKey, index) => {
+  // const yarKey = getQuestionByKey(dependentQuestionKey).yarKey
+  const selectedAnswers = getYarValue(request, dependentQuestionKey);
+  // if (selectedAnswers) {
+  values[0].content[0].items = [selectedAnswers].flat();
+  // } else {
+  //   values[index].content[0].items = ['Not needed']
+  // }
 
-    if (sidebar.linkedQuestionkey && index < sidebar.linkedQuestionkey.length) {
-      const yarValueOfLinkedQuestion = getQuestionByKey(sidebar.linkedQuestionkey[index]).yarKey
-      let selectedValueOfLinkedQuestion = getYarValue(request, yarValueOfLinkedQuestion)
+  // if (sidebar.linkedQuestionkey && index < sidebar.linkedQuestionkey.length) {
 
-      if (selectedValueOfLinkedQuestion && sidebar.prefixSufix) {
-        selectedValueOfLinkedQuestion = getPrefixSufixString(sidebar.prefixSufix[index], selectedValueOfLinkedQuestion)
-      }
+  // const yarValueOfLinkedQuestion = getQuestionByKey(sidebar.linkedQuestionkey[index]).yarKey
+  // let selectedValueOfLinkedQuestion = getYarValue(request, yarValueOfLinkedQuestion)
 
-      if (selectedValueOfLinkedQuestion && values[index].content[0].items[0] !== 'Not needed') {
-        values[index].content[0].items.push(selectedValueOfLinkedQuestion)
-      } else {
-        setYarValue(request, 'coverSize', '')
-      }
-    }
-  })
+  // if (selectedValueOfLinkedQuestion && sidebar.prefixSufix) {
+  //   selectedValueOfLinkedQuestion = getPrefixSufixString(sidebar.prefixSufix[index], selectedValueOfLinkedQuestion)
+  // }
+
+  // if (selectedValueOfLinkedQuestion && values[index].content[0].items[0] !== 'Not needed') {
+  //   values[index].content[0].items.push(selectedValueOfLinkedQuestion)
+  // } else {
+  //   setYarValue(request, 'coverSize', '')
+  // }
+  // }
+  // })
   return {
-    ...sidebar
-  }
-}
+    ...sidebar,
+  };
+};
 
 const getBackUrl = (hasScore, backUrlObject, backUrl, request) => {
-  const url = getUrl(backUrlObject, backUrl, request)
-  return hasScore && (url === 'remaining-costs') ? null : url
-}
+  const url = getUrl(backUrlObject, backUrl, request);
+  return hasScore && url === "remaining-costs" ? null : url;
+};
 
 const showBackToDetailsButton = (key, request) => {
   switch (key) {
-    case 'farmer-details':
-    case 'business-details':
-    case 'applicant-details':
-    case 'agent-details':
-    case 'score': {
-      return !!getYarValue(request, 'reachedCheckDetails')
+    case "farmer-details":
+    case "business-details":
+    case "applicant-details":
+    case "agent-details":
+    case "score": {
+      return !!getYarValue(request, "reachedCheckDetails");
     }
     default:
-      return false
+      return false;
   }
-}
+};
 
 const showBackToEvidenceSummaryButton = (key, request) => {
   switch (key) {
-    case 'planning-permission':
-    case 'planning-permission-evidence':
-    case 'grid-reference': {
-      return !!getYarValue(request, 'reachedEvidenceSummary')
+    case "planning-permission":
+    case "planning-permission-evidence":
+    case "grid-reference": {
+      return !!getYarValue(request, "reachedEvidenceSummary");
     }
     default:
-      return false
+      return false;
   }
-}
+};
 
-const getModel = (data, question, request, conditionalHtml = '') => {
-  let { type, backUrl, key, backUrlObject, sidebar, title, hint, score, label, warning, warningCondition } = question
-  const hasScore = !!getYarValue(request, 'current-score')
+const getModel = (data, question, request, conditionalHtml = "") => {
+  let {
+    type,
+    backUrl,
+    key,
+    backUrlObject,
+    sidebar,
+    title,
+    hint,
+    score,
+    label,
+    warning,
+    warningCondition,
+  } = question;
+  const hasScore = !!getYarValue(request, "current-score");
 
-  title = title ?? label?.text
+  title = title ?? label?.text;
 
-  const sideBarText = (sidebar?.dependentQuestionKeys)
+  const sideBarText = sidebar?.dependentQuestionKey
     ? getDependentSideBar(sidebar, request)
-    : sidebar
+    : sidebar;
 
-  let warningDetails
+  let warningDetails;
   if (warningCondition) {
-    const { dependentWarningQuestionKey, dependentWarningAnswerKeysArray } = warningCondition
-    if (allAnswersSelected(request, dependentWarningQuestionKey, dependentWarningAnswerKeysArray)) {
-      warningDetails = warningCondition.warning
+    const { dependentWarningQuestionKey, dependentWarningAnswerKeysArray } =
+      warningCondition;
+    if (
+      allAnswersSelected(
+        request,
+        dependentWarningQuestionKey,
+        dependentWarningAnswerKeysArray
+      )
+    ) {
+      warningDetails = warningCondition.warning;
     }
   } else if (warning) {
-    warningDetails = warning
+    warningDetails = warning;
   }
   return {
     type,
@@ -103,13 +127,13 @@ const getModel = (data, question, request, conditionalHtml = '') => {
     backUrl: getBackUrl(hasScore, backUrlObject, backUrl, request),
     items: getOptions(data, question, conditionalHtml, request),
     sideBarText,
-    ...(warningDetails ? ({ warning: warningDetails }) : {}),
+    ...(warningDetails ? { warning: warningDetails } : {}),
     reachedCheckDetails: showBackToDetailsButton(key, request),
     reachedEvidenceSummary: showBackToEvidenceSummaryButton(key, request),
-    diaplaySecondryBtn: hasScore && score?.isDisplay
-  }
-}
+    diaplaySecondryBtn: hasScore && score?.isDisplay,
+  };
+};
 
 module.exports = {
-  getModel
-}
+  getModel,
+};

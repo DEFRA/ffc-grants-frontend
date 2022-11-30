@@ -452,14 +452,12 @@ const questionBank = {
         values: [
           {
             heading: 'Items selected',
-            content: [
-              {
-                para: '',
-                items: []
-              }
-            ]
-          }
-        ]
+            content: [{
+              para: '',
+              items: []
+            }]
+          }],
+        dependentQuestionKey: 'projectItemsList'
       },
       answers: [],
       yarKey: 'projectCost'
@@ -475,7 +473,7 @@ questionBank.questions.forEach((question) => {
 const ALL_URLS = []
 ALL_QUESTIONS.forEach(item => ALL_URLS.push(item.url))
 
-const YAR_KEYS = ['calculatedGrant', 'remainingCost']
+const YAR_KEYS = ['calculatedGrant', 'remainingCost','projectItemsList']
 ALL_QUESTIONS.forEach(item => YAR_KEYS.push(item.yarKey))
 
 module.exports = {
