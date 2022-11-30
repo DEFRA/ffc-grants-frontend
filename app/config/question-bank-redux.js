@@ -1,3 +1,6 @@
+const { MIN_GRANT, MAX_GRANT, GRANT_PERCENTAGE } = require('../helpers/grant-details')
+const { PROJECT_COST_REGEX } = require('../helpers/regex-validation')
+
 const questionBank = {
   grantScheme: {
     key: 'WM001',
@@ -319,161 +322,146 @@ const questionBank = {
         {
           key: 'tenancy-A1',
           value: 'Yes',
-          redirectUrl: 'tenancy-length'
+          redirectUrl: 'project-items'
         },
         {
           key: 'tenancy-A2',
           value: 'No',
-          redirectUrl: 'project-items'
+          redirectUrl: 'tenancy-length'
         }
       ],
-      yarKey: 'tenancy'
+      yarKey: 'landOwnership'
     },
     {
-      key: 'project-items',
+      key: 'tenancy-length',
       order: 7,
-      title: 'Which eligible items do you need for your project?',
+      title: 'Do you a tenancy agreement for 5 years after the final grant payment?',
       hint: {
-        text: 'Select all that items your project needs'
+        text: 'The location of the project'
       },
+      classes: 'govuk-radios--inline govuk-fieldset__legend--l',
       pageTitle: '',
-      url: 'project-items',
-      baseUrl: 'project-items',
+      url: 'tenancy-length',
+      baseUrl: 'tenancy-length',
       backUrl: 'tenancy',
-      nextUrl: 'project-costs',
+      nextUrl: 'project-items',
       fundingPriorities: "",
-      type: 'multi-answer',
+      type: 'single-answer',
       minAnswerCount: 1,
+      sidebar: {
+        values: [
+          {
+            heading: 'Eligibility',
+            content: [
+              {
+                para: `You must own the land or have a tenancy in place for 5 years after the final grant payment.`,
+                items: []
+              }
+            ]
+          }
+        ]
+      },
       validate: [
         {
           type: 'NOT_EMPTY',
-          error: 'Select all the items your project needs'
+          error: 'Select yes if the land will have a tenancy agreement in place for 5 years after the final grant payment.',
         }
       ],
       answers: [
         {
-          type: 'sub-heading',
-          text: 'Reservoir construction and infrastructure'
+          key: 'tenancy-length-A1',
+          value: 'Yes',
+          redirectUrl: 'project-items'
         },
         {
-          key: 'project-items-A1',
-          text: 'Construction of reservoir walls'
-        },
-        {
-          key: 'project-items-A2',
-          text: 'Overflow/spillway'
-        },
-        {
-          key: 'project-items-A3',
-          text: 'Synthetic liner'
-        },
-        {
-          key: 'project-items-A4',
-          text: 'Abstraction point including pump'
-        },
-        {
-          key: 'project-items-A5',
-          text: 'Fencing for synthetically lined reservoir'
-        },
-        {
-          key: 'project-items-A6',
-          text: 'Filtration equipment'
-        },
-        {
-          key: 'project-items-A7',
-          text: 'Irrigation pumps and controls'
-        },
-        {
-          key: 'project-items-A8',
-          text: 'Pipework to fill the reservoir'
-        },
-        {
-          key: 'project-items-A9',
-          text: 'Pumphouse'
-        },
-        {
-          key: 'project-items-A10',
-          text: 'Underground water distribution main and hydrants'
-        },
-        {
-          key: 'project-items-A11',
-          text: 'Electricity installation for pumphouse'
-        },
-        {
-          key: 'project-items-A12',
-          text: 'Water meter'
-        },
-        {
-          type: 'sub-heading',
-          text: 'Irrigation equipment'
-        },
-        {
-          key: 'project-items-A13',
-          text: 'Boom'
-        },
-        {
-          key: 'project-items-A14',
-          text: 'Trickle'
-        },
-        {
-          key: 'project-items-A15',
-          text: 'Ebb and flow'
-        },
-        {
-          key: 'project-items-A16',
-          text: 'Capillary bed'
-        },
-        {
-          key: 'project-items-A17',
-          text: 'Sprinkler'
-        },
-        {
-          key: 'project-items-A18',
-          text: 'Mist'
-        },
-        {
-          type: 'sub-heading',
-          text: 'Technology'
-        },
-        {
-          key: 'project-items-A19',
-          text: 'Equipment to monitor soil moisture levels and schedule irrigation'
-        },
-        {
-          key: 'project-items-A20',
-          text: 'Equipment to control and optimise water application'
+          key: 'tenancy-length-A2',
+          value: 'No',
+          notEligible: true,
+          alsoMaybeEligible: {
+            maybeEligibleContent: {
+              messageHeader: 'You may be able to apply for a grant from this scheme',
+              messageContent: 'You will need to extend your tenancy agreement before you can complete a full application.'
+            },
+          }
         }
       ],
-      yarKey: 'projectItemsList'
+      yarKey: 'tenancyLength'
     },
+    // Goes to the project items page
     {
       key: 'project-cost',
       order: 8,
       title: 'What is the estimated cost of the items?',
       pageTitle: '',
+      classes: 'govuk-input-width-10', // input width is not applied
       url: 'project-cost',
       baseUrl: 'project-cost',
       backUrl: 'project-items',
       nextUrl: 'potential-amount',
       fundingPriorities: "",
-      type: 'single-answer',
-      minAnswerCount: 1,
+      type: 'input',
+      prefix: {
+        text: '£'
+      },
+      label: {
+        text: 'What is the estimated cost of the items?',
+        classes: 'govuk-label--l',
+        isPageHeading: true
+      },
+      hint: {
+        html:
+          `
+          <p>You can only apply for a grant of up to 40% of the estimated costs. The minimum grant you can apply for this project is £35,000 (40% of £87,500). The maximum grant is £500,000.<p/>
+          <p>Do not include VAT.<p/>
+          <p>Enter amount, for example 95,000<p/>
+          `
+      },
+      grantInfo: {
+        minGrant: MIN_GRANT,
+        maxGrant: MAX_GRANT,
+        grantPercentage: GRANT_PERCENTAGE,
+        cappedGrant: true,
+      },
       validate: [
         {
           type: 'NOT_EMPTY',
-          error: 'Select yes if the land will have a tenancy agreement in place for 5 years after the final grant payment.'
-        }
-      ],
-      answers: [
-        {
-          key: 'project-cost-A1',
-          value: 'Yes',
+          error: 'Enter the estimated cost for the items',
         },
         {
-          key: 'project-cost-A2',
-          value: 'No',
+          type: 'REGEX',
+          regex: PROJECT_COST_REGEX,
+          error: 'Enter a whole number with a maximum of 7 digits'
+        },
+        {
+          type: 'MIN_MAX',
+          min: 1,
+          max: MAX_GRANT,
+          error: 'Enter a whole number with a maximum of 7 digits'
         }
       ],
+      ineligibleContent: {
+        messageContent: 'You can only apply for a grant of up to 40% of the estimated costs. ',
+        insetText:
+          { text: 'The minimum grant you can apply for is £35,000 (40% of £87,500). The maximum grant is £500,000.' },
+        messageLink: {
+          url: 'https://www.gov.uk/government/collections/rural-payments-and-grants',
+          title: 'See other grants you may be eligible for.'
+        }
+      },
+      sidebar: {
+        values: [
+          {
+            heading: 'Items selected',
+            content: [
+              {
+                para: '',
+                items: []
+              }
+            ]
+          }
+        ]
+      },
+      answers: [],
       yarKey: 'projectCost'
     },
   ]
@@ -487,7 +475,7 @@ questionBank.questions.forEach((question) => {
 const ALL_URLS = []
 ALL_QUESTIONS.forEach(item => ALL_URLS.push(item.url))
 
-const YAR_KEYS = []
+const YAR_KEYS = ['calculatedGrant', 'remainingCost']
 ALL_QUESTIONS.forEach(item => YAR_KEYS.push(item.yarKey))
 
 module.exports = {
