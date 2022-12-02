@@ -21,10 +21,28 @@ const messageConfigSchema = Joi.object({
     type: Joi.string(),
     ...sharedConfigSchema
   },
+  scoreRequestQueue: {
+    address: Joi.string().default('scoreRequestQueue'),
+    type: Joi.string(),
+    ...sharedConfigSchema
+  },
+  scoreResponseQueue: {
+    address: Joi.string().default('scoreResponseQueue'),
+    type: Joi.string(),
+    ...sharedConfigSchema
+  },
+  desirabilitySubmittedTopic: {
+    address: Joi.string().default('desirabilitySubmittedTopic'),
+    type: Joi.string(),
+    ...sharedConfigSchema
+  },
+  desirabilitySubmittedMsgType: Joi.string(),
   eligibilityAnswersMsgType: Joi.string(),
+  // fetchScoreRequestMsgType: Joi.string(),
+  fetchWaterScoreRequestMsgType: Joi.string(),
   projectDetailsMsgType: Joi.string(),
   contactDetailsMsgType: Joi.string(),
-  msgSrc: Joi.string()
+  msgSrc: Joi.string(),
 })
 
 const sharedConfig = {
@@ -48,9 +66,27 @@ const config = {
     type: 'queue',
     ...sharedConfig
   },
+  scoreRequestQueue: {
+    address: process.env.SCORE_REQUEST_QUEUE_ADDRESS,
+    type: 'queue',
+    ...sharedConfig
+  },
+  scoreResponseQueue: {
+    address: process.env.SCORE_RESPONSE_QUEUE_ADDRESS,
+    type: 'queue',
+    ...sharedConfig
+  },
+  desirabilitySubmittedTopic: {
+    address: process.env.DESIRABILITY_SUBMITTED_TOPIC_ADDRESS,
+    type: 'topic',
+    ...sharedConfig
+  },
+  desirabilitySubmittedMsgType: `${msgTypePrefix}.desirability.notification`,
   eligibilityAnswersMsgType: `${msgTypePrefix}.eligibility.details`,
   projectDetailsMsgType: `${msgTypePrefix}.project.details`,
   contactDetailsMsgType: `${msgTypePrefix}.contact.details`,
+  // fetchScoreRequestMsgType: `${msgTypePrefix}.fetch.score.request`,
+  fetchWaterScoreRequestMsgType: `${msgTypePrefix}.fetch.water.score.request`,
   msgSrc: 'ffc-grants-frontend'
 }
 

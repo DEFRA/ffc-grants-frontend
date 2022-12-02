@@ -1,0 +1,97 @@
+{
+  "confirmationId": "WM-71A-79E",
+  "abstractionLicence": "Expected to have by 31st December 2021",
+  "agentDetails": {
+    "title": "Mr",
+    "firstName": "Geoff",
+    "lastName": "Hopkin",
+    "businessName": "My Farm Business",
+    "email": "me@me.com",
+    "landline": "",
+    "mobile": "08765 443322",
+    "address1": "88 The Street",
+    "address2": "",
+    "town": "Newcastle",
+    "county": "Tyne And Wear",
+    "postcode": "AB12 7YY"
+  },
+  "applying": "Agent",
+  "isArable": null,
+  "businessDetails": {
+    "projectName": "Bleak Farm reservoir",
+    "businessName": "My Farm",
+    "numberEmployees": "10",
+    "businessTurnover": "1000000",
+    "sbi": "123456789"
+  },
+  "businessName": null,
+  "collaboration": "No",
+  "consentMain": true,
+  "consentOptional": true,
+  "emailAddress": null,
+  "inEngland": "Yes",
+  "projectPostcode": "EC1A 1BB",
+  "farmerDetails": {
+    "title": "Mrs",
+    "firstName": "Mary",
+    "lastName": "Jones",
+    "email": "test@test.com",
+    "landline": "01888 123665",
+    "mobile": "08870 554024",
+    "address1": "123 Road",
+    "address2": "Fulford",
+    "town": "York",
+    "county": "North Yorkshire",
+    "postcode": "YO33 4FF"
+  },
+  "farmingType": "Horticulture (including ornamentals)",
+  "irrigatedCrops": "Fruit",
+  "irrigatedLandCurrent": "0",
+  "irrigatedLandTarget": "2",
+  "irrigationCurrent": [
+    "Not currently irrigating"
+  ],
+  "irrigationPlanned": [
+    "Capillary bed"
+  ],
+  "waterSourceCurrent": [
+    "Not currently irrigating"
+  ],
+  "waterSourcePlanned": [
+    "Rain water harvesting"
+  ],
+  "legalStatus": "Limited Liability Partnership",
+  "planningPermission": "Not needed",
+  "productivity": [
+    "Increased yield per hectare",
+    "Improved quality"
+  ],
+  "projectCost": 100000,
+  "calculatedGrant": "40000.00",
+  "remainingCost": "60000.00",
+  "project": [
+    "Change water source",
+    "Introduce irrigation"
+  ],
+  "projectInfrastucture": [
+    "Construction of reservoir",
+    "Water meter"
+  ],
+  "projectEquipment": [
+    "Ebb and flow"
+  ],
+  "projectTechnology": [
+    null
+  ],
+  "projectItemsList": [
+    "Construction of reservoir",
+    "Water meter",
+    "Ebb and flow"
+  ],
+  "projectStarted": "No",
+  "payRemainingCosts": "Yes",
+  "score-calculated": true,
+  "tenancyLength": null,
+  "landOwnership": "Yes",
+  "sSSI": "No"
+}

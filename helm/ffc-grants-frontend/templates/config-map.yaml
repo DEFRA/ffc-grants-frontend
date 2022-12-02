@@ -26,5 +26,13 @@ data:
   SERVICE_END_DATE : {{ .Values.container.serviceEndDate | quote }}
   SERVICE_END_TIME : {{ .Values.container.serviceEndTime | quote }}
   SURVEY_LINK: {{ .Values.container.surveyLink | quote }}
+  SCORE_REQUEST_QUEUE_ADDRESS: {{ .Values.container.scoreRequestQueueAddress | quote }}
+  SCORE_RESPONSE_QUEUE_ADDRESS: {{ .Values.container.scoreResponseQueueAddress | quote }}
+  DESIRABILITY_SUBMITTED_TOPIC_ADDRESS: {{ quote .Values.container.desirabilitySubmittedTopicAddress }}
+  NOTIFY_EMAIL_TEMPLATE: {{ .Values.container.notifyEmailTemplate | quote }}
+  WORKSHEET_HIDE_EMPTY_ROWS: {{ .Values.container.worksheetHideEmptyRows | quote }}
+  WORKSHEET_PROTECT_ENABLED: {{ .Values.container.worksheetProtectEnabled | quote }}
+  SEND_EMAIL_TO_RPA: {{ .Values.container.sendEmailToRpa | quote }}
+  EXCEL_UPLOAD_ENVIRONMENT: {{ .Values.container.excelUploadEnvironment | quote }}
 
 {{- end -}}
