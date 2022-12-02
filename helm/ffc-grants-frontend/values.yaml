@@ -62,8 +62,8 @@ container:
   serviceEndDate: dummy
   serviceEndTime: dummy
   surveyLink: dummy
-  scoreRequestWaterQueueAddress: ffc-grants-water-desirability-scoring-req
-  scoreResponseWaterQueueAddress: ffc-grants-water-desirability-scoring-res
+  scoreRequestQueueAddress: ffc-grants-desirability-scoring-req
+  scoreResponseQueueAddress: ffc-grants-desirability-scoring-res
   desirabilitySubmittedTopicAddress: desirability-submitted
   notifyEmailTemplate: dummy-template
   worksheetProtectPassword: dummy-pwd
