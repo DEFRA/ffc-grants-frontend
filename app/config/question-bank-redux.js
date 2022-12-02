@@ -474,8 +474,8 @@ const questionBank = {
       maybeEligible: true,
       maybeEligibleContent: {
         messageHeader: 'You may be able to apply for a grant from this scheme',
-        messageContent: `You may be able to apply for a grant of up to £{{calculatedGrant}},
-        based on the estimated cost of £{{projectCost}}.`
+        messageContent: `You may be able to apply for a grant of up to £{{_calculatedGrant_}},
+        based on the estimated cost of £{{_projectCost_}}.`
       },
       yarKey:'potentialAmount'
     },
