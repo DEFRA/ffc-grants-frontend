@@ -1,5 +1,7 @@
 const { MIN_GRANT, MAX_GRANT, GRANT_PERCENTAGE } = require('../helpers/grant-details')
 const { PROJECT_COST_REGEX } = require('../helpers/regex-validation')
+const { LICENSE_NOT_NEEDED, LICENSE_SECURED, LICENSE_EXPECTED, LICENSE_WILL_NOT_HAVE } = require('../helpers/license-dates')
+
 
 const questionBank = {
   grantScheme: {
@@ -452,11 +454,11 @@ const questionBank = {
         values: [
           {
             heading: 'Items selected',
-            content: [{
+            content: [ {
               para: '',
               items: []
-            }]
-          }],
+            } ]
+          } ],
         dependentQuestionKey: 'projectItemsList'
       },
       answers: [],
@@ -465,7 +467,7 @@ const questionBank = {
     {
       key: 'potential-amount',
       title: 'Potential grant funding',
-      order: 70,
+      order: 9,
       url: 'potential-amount',
       baseUrl: 'potential-amount',
       backUrl: 'project-cost',
@@ -477,10 +479,253 @@ const questionBank = {
         messageContent: `You may be able to apply for a grant of up to £{{_calculatedGrant_}},
         based on the estimated cost of £{{_projectCost_}}.`
       },
-      yarKey:'potentialAmount'
+      sidebar: {
+        values: [
+          {
+            heading: 'Items selected',
+            content: [ {
+              para: '',
+              items: []
+            } ]
+          } ],
+        dependentQuestionKey: 'projectItemsList'
+      },
+      yarKey: 'potentialAmount'
     },
-  ],
-}
+    {
+      key: 'remaining-costs',
+      order: 10,
+      title: `Can you pay the remaining costs of £${formattedRemainingCost}?`,
+      pageTitle: '',
+      url: 'remaining-costs',
+      baseUrl: 'remaining-costs',
+      backUrl: 'potential-amount',
+      nextUrl: 'SSSI',
+      fundingPriorities: "",
+      type: 'single-answer',
+      minAnswerCount: 1,
+      ineligibleContent: {
+        messageContent:
+          `You cannot use public money (for example, grant funding from government or local authorities) towards the project costs.
+            <div class="govuk-inset-text">
+              You can use:
+              <ul class="govuk-list govuk-list--bullet">
+                <li>loans</li>
+                <li>overdrafts</li>
+                <li>the Basic Payment Scheme</li>
+                <li>agri-environment schemes such as the Countryside Stewardship Scheme</li>
+              </ul>
+            </div>
+            `,
+        messageLink: {
+          url: 'https://www.gov.uk/government/collections/rural-payments-and-grants',
+          title: 'See other grants you may be eligible for.'
+        }
+      },
+      validate: [
+        {
+          type: 'NOT_EMPTY',
+          error: 'Select yes if you can pay the remaining costs without using any other grant money',
+        }
+      ],
+      answers: [
+        {
+          key: 'remaining-costs-A1',
+          value: 'Yes',
+          redirectUrl: 'SSSI'
+        },
+        {
+          key: 'remaining-costs-A2',
+          value: 'No',
+          notEligible: true,
+        }
+      ],
+      sidebar: {
+        values: [
+          {
+            heading: 'Eligibility',
+            content: [
+              {
+                para: `You cannot use public money (for example grant funding from government or local authorities) towards the project costs.\n\n
+                          You can use:`,
+                items: [
+                  "loans",
+                  "overdrafts",
+                  "the Basic Payment Scheme",
+                  "agri-environment schemes such as the Countryside Stewardship Scheme"
+                ],
+              }
+            ]
+          },
+        ],
+      },
+      yarKey: 'payRemainingCosts'
+    },
+    {
+      key: 'SSSI',
+      order: 11,
+      title: 'Does the project directly impact a Site of Special Scientific Interest?',
+      classes: 'govuk-radios--inline',
+      pageTitle: '',
+      url: 'SSSI',
+      baseUrl: 'SSSI',
+      backUrl: 'remaining-costs',
+      nextUrl: 'abstraction-licence',
+      fundingPriorities: "",
+      type: 'single-answer',
+      minAnswerCount: 1,
+      validate: [
+        {
+          type: 'NOT_EMPTY',
+          error: 'Select yes if the project directly impacts a Site of Special Scientific Interest',
+        }
+      ],
+      answers: [
+        {
+          key: 'SSSI-A1',
+          value: 'Yes',
+          redirectUrl: 'abstraction-licence'
+        },
+        {
+          key: 'SSSI-A2',
+          value: 'No',
+          redirectUrl: 'abstraction-licence'
+        }
+      ],
+      yarKey: 'sSSI'
+    },
+    {
+      key: 'abstraction-licence',
+      order: 12,
+      title: 'Does the project need an abstraction licence or a variation of one?',
+      classes: 'govuk-radios--inline govuk-fieldset__legend--l',
+      pageTitle: '',
+      url: 'abstraction-licence',
+      baseUrl: 'abstraction-licence',
+      backUrl: 'SSSI',
+      nextUrl: 'project-summary',
+      fundingPriorities: "",
+      type: 'single-answer',
+      minAnswerCount: 1,
+      validate: [
+        {
+          type: 'NOT_EMPTY',
+          error: 'Select when the project will have an abstraction licence or variation',
+        }
+      ],
+      answers: [
+        {
+          key: 'abstraction-licence-A1',
+          value: LICENSE_NOT_NEEDED,
+          redirectUrl: 'project-summary'
+        },
+        {
+          key: 'abstraction-licence-A2',
+          value: LICENSE_SECURED,
+          redirectUrl: 'project-summary'
+        },
+        {
+          key: 'abstraction-licence-A3',
+          value: LICENSE_EXPECTED,
+          redirectUrl: 'abstraction-required-condition'
+        },
+        {
+          key: 'abstraction-licence-A4',
+          value: LICENSE_WILL_NOT_HAVE,
+          redirectUrl: 'abstraction-required-condition'
+        }
+      ],
+      sidebar: {
+        values: [
+          {
+            heading: 'Eligibility',
+            content: [
+              {
+                para: `You must have secured abstraction licences or variations before you submit a full application.\n
+                              Any abstraction licences or variations must be in place by 31 January 2023.`,
+                items: [],
+              }
+            ]
+          },
+        ],
+      },
+      yarKey: 'abstractionLicence',
+    },
+    {
+      key: 'project-summary',
+      order: 13,
+      title: 'What impact will the project have?',
+      hint: {
+        text: 'Select up to 2 options'
+      },
+      pageTitle: '',
+      url: 'project-summary',
+      baseUrl: 'project-summary',
+      backUrl: 'abstraction-licence',
+      nextUrl: 'irrigated-crops',
+      fundingPriorities: "",
+      type: 'multiple-answer',
+      minAnswerCount: 2,
+      validate: [
+        {
+          type: 'NOT_EMPTY',
+          error: 'Select up to 2 options to describe your project’s impact'
+        },
+        {
+          type: 'STANDALONE_ANSWER',
+          error: 'If you select \'None of the above\', you cannot select another option',
+          standaloneObject: {
+            questionKey: 'project-summary',
+            answerKey: 'project-summary-A5'
+          }
+        }
+      ],
+      answers: [
+        {
+          key: 'project-summary-A1',
+          value: 'Change water source',
+          redirectUrl: 'irrigated-crops'
+        },
+        {
+          key: 'project-summary-A2',
+          value: 'Improve irrigation efficiency',
+          redirectUrl: 'irrigated-crops'
+        },
+        {
+          key: 'project-summary-A3',
+          value: 'Increase irrigation',
+          redirectUrl: 'irrigated-crops'
+        },
+        {
+          key: 'project-summary-A4',
+          value: 'Introduce irrigation',
+          redirectUrl: 'irrigated-crops'
+        },
+        {
+          value: 'divider'
+        },
+        {
+          key: 'project-summary-A5',
+          value: 'None of the above',
+          redirectUrl: 'irrigated-crops'
+        },
+
+      ],
+      yarKey: 'project',
+    },
+    // {
+    //   key: 'irrigated-crops',
+    //   order: 14,
+    //   title: 'What main crops will be irrigated?',
+    //   pageTitle: 'Main crop',
+    //   url: 'irrigated-crops',
+    //   baseUrl: 'irrigated-crops',
+    //   backUrl: 'project-summary',
+
+
+    // }
+  ]
+};
 
 const ALL_QUESTIONS = []
 
@@ -490,7 +735,7 @@ questionBank.questions.forEach((question) => {
 const ALL_URLS = []
 ALL_QUESTIONS.forEach(item => ALL_URLS.push(item.url))
 
-const YAR_KEYS = ['calculatedGrant', 'remainingCost','projectItemsList']
+const YAR_KEYS = [ 'calculatedGrant', 'remainingCost', 'projectItemsList' ]
 ALL_QUESTIONS.forEach(item => YAR_KEYS.push(item.yarKey))
 
 module.exports = {

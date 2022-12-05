@@ -3,48 +3,12 @@ const { getOptions } = require("../helpers/answer-options");
 const { getYarValue } = require("../helpers/session");
 const { allAnswersSelected } = require("../helpers/utils");
 
-// const getPrefixSufixString = (prefixSufix, selectedValueOfLinkedQuestion) => {
-//   if (prefixSufix.linkedPrefix || prefixSufix.linkedSufix) {
-//     selectedValueOfLinkedQuestion = prefixSufix.linkedPrefix.concat(
-//       selectedValueOfLinkedQuestion
-//     );
-//   }
-//   if (prefixSufix.linkedSufix) {
-//     selectedValueOfLinkedQuestion = selectedValueOfLinkedQuestion.concat(
-//       prefixSufix.linkedSufix
-//     );
-//   }
-//   return selectedValueOfLinkedQuestion;
-// };
-
 const getDependentSideBar = (sidebar, request) => {
   const { values, dependentQuestionKey } = sidebar;
-
-  // dependentQuestionKeys.forEach((dependentQuestionKey, index) => {
-  // const yarKey = getQuestionByKey(dependentQuestionKey).yarKey
   const selectedAnswers = getYarValue(request, dependentQuestionKey);
-  // if (selectedAnswers) {
+
   values[0].content[0].items = [selectedAnswers].flat();
-  // } else {
-  //   values[index].content[0].items = ['Not needed']
-  // }
 
-  // if (sidebar.linkedQuestionkey && index < sidebar.linkedQuestionkey.length) {
-
-  // const yarValueOfLinkedQuestion = getQuestionByKey(sidebar.linkedQuestionkey[index]).yarKey
-  // let selectedValueOfLinkedQuestion = getYarValue(request, yarValueOfLinkedQuestion)
-
-  // if (selectedValueOfLinkedQuestion && sidebar.prefixSufix) {
-  //   selectedValueOfLinkedQuestion = getPrefixSufixString(sidebar.prefixSufix[index], selectedValueOfLinkedQuestion)
-  // }
-
-  // if (selectedValueOfLinkedQuestion && values[index].content[0].items[0] !== 'Not needed') {
-  //   values[index].content[0].items.push(selectedValueOfLinkedQuestion)
-  // } else {
-  //   setYarValue(request, 'coverSize', '')
-  // }
-  // }
-  // })
   return {
     ...sidebar,
   };
