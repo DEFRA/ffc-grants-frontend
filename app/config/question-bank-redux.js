@@ -706,21 +706,216 @@ const questionBank = {
           value: 'None of the above',
           redirectUrl: 'irrigated-crops'
         },
-
       ],
+      sidebar: {
+        values: [
+          {
+            heading: 'Funding priorities',
+            content: [
+              {
+                para: `RPA wants to fund projects that:`,
+                items: [
+                  "improve productivity",
+                  "improve the environment ",
+                  "improve water sustainability"
+                ],
+              }
+            ]
+          },
+        ],
+      },
       yarKey: 'project',
     },
-    // {
-    //   key: 'irrigated-crops',
-    //   order: 14,
-    //   title: 'What main crops will be irrigated?',
-    //   pageTitle: 'Main crop',
-    //   url: 'irrigated-crops',
-    //   baseUrl: 'irrigated-crops',
-    //   backUrl: 'project-summary',
-
-
-    // }
+    {
+      key: 'irrigated-crops',
+      order: 14,
+      title: 'What main crops will be irrigated?',
+      pageTitle: 'Main crop',
+      url: 'irrigated-crops',
+      nextUrl: 'irrigation-status',
+      baseUrl: 'irrigated-crops',
+      backUrl: 'project-summary',
+      type: 'single-answer',
+      validate: [
+        {
+          type: 'NOT_EMPTY',
+          error: 'Select the main crop you will be irrigating'
+        }
+      ],
+      answers: [
+        {
+          key: 'irrigated-crops-A1',
+          value: 'Field-scale crops (for example, potatoes, onions, carrots)',
+        },
+        {
+          key: 'irrigated-crops-A2',
+          value: 'Protected cropping (for example, glasshouse or poly tunnel)',
+        },
+        {
+          key: 'irrigated-crops-A3',
+          value: 'Fruit (for example, top fruit, bush fruit)',
+        }
+      ],
+      sidebar: {
+        values: [
+          {
+            heading: 'Funding priorities',
+            content: [
+              {
+                para: `RPA wants to fund projects that:`,
+                items: [
+                  "improve productivity"
+                ]
+              }
+            ]
+          },
+        ],
+      },
+      yarKey:'irrigatedCrops'
+    },
+    {
+      key: 'irrigation-status',
+      order: 15,
+      title: 'Are you currently irrigating?',
+      classes: 'govuk-radios--inline govuk-fieldset__legend--l',
+      pageTitle: '',
+      url: 'irrigation-status',
+      baseUrl: 'irrigation-status',
+      backUrl: 'irrigated-crops',
+      nextUrl: 'irrigated-land',
+      fundingPriorities: "",
+      type: 'single-answer',
+      minAnswerCount: 1,
+      validate: [
+        {
+          type: 'NOT_EMPTY',
+          error: 'Select yes if you are currently irrigating',
+        }
+      ],
+      answers: [
+        {
+          key: 'currentlyIrrigating-A1',
+          value: 'Yes'
+        },
+        {
+          key: 'currentlyIrrigating-A2',
+          value: 'No'
+        }
+      ],
+      yarKey: 'currentlyIrrigating'
+    },
+    {
+      key: 'productivity',
+      order: 19,
+      title: 'How will the project improve productivity?',
+      hint: {
+        html: 'Productivity is about how much is produced relative to inputs (for example, increased yield for the same inputs or the same yield with lower inputs).<br/><br/> Select up to 2 options'
+      },
+      pageTitle: '',
+      url: 'productivity',
+      baseUrl: 'productivity',
+      backUrl: 'irrigation-systems',
+      nextUrl: 'collaboration',
+      type: 'multi-answer',
+      validate: [
+        {
+          type: 'NOT_EMPTY',
+          error: 'Select up to 2 options to describe how your project will improve productivity'
+        },
+        {
+          type: 'MAX_SELECT',
+          error: 'Select up to 2 options to describe how your project will improve productivity',
+          max: 2,
+        }
+      ],
+      answers: [
+        {
+          key: 'project-summary-A1',
+          value: 'Introduce or expand high-value crops'
+        },
+        {
+          key: 'project-summary-A2',
+          value: 'Introduce or expand protected crops'
+        },
+        {
+          key: 'project-summary-A3',
+          value: 'Increased yield per hectare'
+        },
+        {
+          key: 'project-summary-A4',
+          value: 'Improved quality'
+        },
+        {
+          key: 'project-summary-A5',
+          value: 'Maintain productivity'
+        },
+      ],
+      sidebar: {
+        values: [
+          {
+            heading: 'Funding priorities',
+            content: [
+              {
+                para: `RPA wants to fund projects that:`,
+                items: [
+                  "improve productivity"
+                ],
+              }
+            ]
+          },
+        ],
+      },
+      yarKey: 'productivity',
+    },
+    {
+      key: 'collaboration',
+      order: 20,
+      title: 'Will water be supplied to other farms?',
+      classes: 'govuk-radios--inline govuk-fieldset__legend--l',
+      pageTitle: '',
+      url: 'collaboration',
+      baseUrl: 'collaboration',
+      backUrl: 'productivity',
+      nextUrl: 'score',
+      type: 'single-answer',
+      minAnswerCount: 1,
+      hint: {
+        text:
+          'For example, if you intend to supply water via a water sharing agreement as a result of this project.'
+      },
+      validate: [
+        {
+          type: 'NOT_EMPTY',
+          error: 'Select yes if water will be supplied to other farms',
+        }
+      ],
+      answers: [
+        {
+          key: 'collaboration-A1',
+          value: 'Yes'
+        },
+        {
+          key: 'collaboration-A2',
+          value: 'No'
+        }
+      ],
+      sidebar: {
+        values: [
+          {
+            heading: 'Funding priorities',
+            content: [
+              {
+                para: `RPA wants to fund projects that:`,
+                items: [
+                  "improve productivity"
+                ]
+              }
+            ]
+          },
+        ],
+      },
+      yarKey: 'collaboration'
+    },
   ]
 };
 
