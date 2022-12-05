@@ -206,16 +206,15 @@ const showPostPage = (currentQuestion, request, h) => {
 
       maybeEligibleContent.title = currentQuestion.title
       const { url } = currentQuestion
-      const MAYBE_ELIGIBLE = { ...maybeEligibleContent, url, backLink: baseUrl }
+      const MAYBE_ELIGIBLE = { ...maybeEligibleContent, url, nextUrl, backLink: baseUrl }
       return h.view('maybe-eligible', MAYBE_ELIGIBLE)
-
     }
 
     return h.view('not-eligible', NOT_ELIGIBLE)
   } else if (thisAnswer?.redirectUrl) {
     return h.redirect(thisAnswer?.redirectUrl)
   }
-  if (yarKey === 'projectCost' || yarKey === 'potentialAmount') {
+  if (yarKey === 'projectCost') {
     const { calculatedGrant, remainingCost, projectCost } = getGrantValues(payload[ Object.keys(payload)[ 0 ] ], currentQuestion.grantInfo)
     setYarValue(request, 'calculatedGrant', calculatedGrant)
     setYarValue(request, 'remainingCost', remainingCost)

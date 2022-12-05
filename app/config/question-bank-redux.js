@@ -471,31 +471,24 @@ const questionBank = {
       url: 'potential-amount',
       baseUrl: 'potential-amount',
       backUrl: 'project-cost',
-      preValidationKeys: [],
       nextUrl: 'remaining-costs',
       maybeEligible: true,
       maybeEligibleContent: {
         messageHeader: 'You may be able to apply for a grant from this scheme',
         messageContent: `You may be able to apply for a grant of up to £{{_calculatedGrant_}},
-        based on the estimated cost of £{{_projectCost_}}.`
-      },
-      sidebar: {
-        values: [
-          {
-            heading: 'Items selected',
-            content: [ {
-              para: '',
-              items: []
-            } ]
-          } ],
-        dependentQuestionKey: 'projectItemsList'
+        based on the estimated cost of £{{_projectCost_}}.`,
+        warning: {
+          text: 'There’s no guarantee the project will receive a grant.',
+          iconFallbackText: 'Warning'
+        },
       },
       yarKey: 'potentialAmount'
     },
     {
       key: 'remaining-costs',
       order: 10,
-      title: `Can you pay the remaining costs of £${formattedRemainingCost}?`,
+      title: `Can you pay the remaining costs of £{{_remainingCost_}}?`,
+      classes: 'govuk-radios--inline govuk-fieldset__legend--l',
       pageTitle: '',
       url: 'remaining-costs',
       baseUrl: 'remaining-costs',
@@ -531,8 +524,7 @@ const questionBank = {
       answers: [
         {
           key: 'remaining-costs-A1',
-          value: 'Yes',
-          redirectUrl: 'SSSI'
+          value: 'Yes'
         },
         {
           key: 'remaining-costs-A2',
@@ -565,7 +557,7 @@ const questionBank = {
       key: 'SSSI',
       order: 11,
       title: 'Does the project directly impact a Site of Special Scientific Interest?',
-      classes: 'govuk-radios--inline',
+      classes: 'govuk-radios--inline govuk-fieldset__legend--l',
       pageTitle: '',
       url: 'SSSI',
       baseUrl: 'SSSI',
@@ -598,7 +590,6 @@ const questionBank = {
       key: 'abstraction-licence',
       order: 12,
       title: 'Does the project need an abstraction licence or a variation of one?',
-      classes: 'govuk-radios--inline govuk-fieldset__legend--l',
       pageTitle: '',
       url: 'abstraction-licence',
       baseUrl: 'abstraction-licence',
@@ -664,8 +655,9 @@ const questionBank = {
       backUrl: 'abstraction-licence',
       nextUrl: 'irrigated-crops',
       fundingPriorities: "",
-      type: 'multiple-answer',
-      minAnswerCount: 2,
+      type: 'multi-answer',
+      minAnswerCount: '',
+      maxAnswerCount: '',
       validate: [
         {
           type: 'NOT_EMPTY',
@@ -678,6 +670,11 @@ const questionBank = {
             questionKey: 'project-summary',
             answerKey: 'project-summary-A5'
           }
+        },
+        {
+          type: 'MAX_SELECT',
+          error: 'Select up to 2 options to describe your project’s impact',
+          max: 2,
         }
       ],
       answers: [

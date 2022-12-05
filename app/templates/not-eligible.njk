@@ -1,40 +1,48 @@
 {% extends '.layout.njk' %}
-
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/details/macro.njk" import govukDetails %}
 {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
 {% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
 
 {% block pageTitle %}
- {{refTitle}} - You cannot apply for grant - {{siteTitle}}
+  You cannot apply for a grant from this scheme - {{siteTitle}}
 {% endblock %}
+
 {% block beforeContent %}
-  {{ govukBackLink({
-    text: "Back",
-    href: backLink,
-  	attributes: {id: 'linkBack'}
-  }) }}
+
+{{ govukBackLink({
+  text: "Back",
+  href: backLink,
+  attributes: {id: 'linkBack'}
+}) }}
+
 {% endblock %}
 
 {% block content %}
+
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <h1 class="govuk-heading-l">You cannot apply for a grant from this scheme</h1>
       <p class="govuk-body">
         {{ messageContent | safe}}
       </p>
-      {% if insetText %}  
-        {{ govukInsetText(insetText) }}
+
+      {% if insertText %} 
+        {{ govukInsetText(insertText) }}
       {% endif %}
-      {% if details %}      
+
+      {% if details %} 
         {{ govukDetails(details) }}
       {% endif %}
-      {% if warning %}   
+
+      {% if warning %} 
         {{ govukWarningText(warning) }}
       {% endif %}
+
       {% if messageLink %}
-        <p class="govuk-body"><a class="govuk-link" href="{{messageLink.url}}" class="govuk-link">{{messageLink.title}}</a></p>
+        <p class="govuk-body"><a href="{{messageLink.url}}" class="govuk-link">{{messageLink.title}}</a></p>
       {% endif %}
+      
     </div>
   </div>
 {% endblock %}
