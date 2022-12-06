@@ -23,9 +23,6 @@ const {
 } = require('./pageHelpers')
 
 const getPage = async (question, request, h) => {
-  // if (question.url === 'project-cost') {
-  //   console.log('question: ', question);
-  // }
   const { url, backUrl, nextUrlObject, type, title, yarKey, preValidationKeys, preValidationKeysRule } = question
   const nextUrl = getUrl(nextUrlObject, question.nextUrl, request)
   const isRedirect = guardPage(request, preValidationKeys, preValidationKeysRule)

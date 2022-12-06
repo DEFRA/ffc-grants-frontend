@@ -7,13 +7,17 @@
 {% from "govuk/components/select/macro.njk" import govukSelect %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
-{% from "./components/macro.njk" import crumbToken, multiSideBar, conditionalButtons %}
+{% from "./components/macro.njk" import crumbToken,
+multiSideBar,
+conditionalButtons %}
 
 {% block pageTitle %}
   {% if errorList %}
     Error:
   {% endif %}
-  {{ title }} - {{ siteTitle }}
+  {{ title }}
+  -
+  {{ siteTitle }}
 {% endblock %}
 
 {% block beforeContent %}
@@ -45,11 +49,11 @@
           {{ govukCheckboxes(items) }}
         {% endif %}
 
-        {% if type ==='input' %}
+        {% if type === 'input' %}
           {{ govukInput(items) }}
         {% endif %}
 
-        {% if type ==='select' %}
+        {% if type === 'select' %}
           {{ govukSelect(items) }}
         {% endif %}
 
@@ -74,56 +78,49 @@
                 {{ govukCheckboxes(item) }}
               {% endif %}
 
-              {% if item.type ==='text' or item.type ==='email' or item.type ==='tel' or item.type ==='number' %}
+              {% if item.type === 'text' or item.type === 'email' or item.type === 'tel' or item.type === 'number' %}
                 {{ govukInput(item) }}
               {% endif %}
 
-
-              {% if item.type ==='select' %}
+              {% if item.type === 'select' %}
                 {{ govukSelect(item) }}
               {% endif %}
 
               {% if item.endFieldset %}
-                </fieldset>
-              {% endif %}
-
-            {% endfor %}
-          {% endif %}
-
-          {% if warning %}
-            {{ govukWarningText(warning) }}
-          {% endif %}
-
-          <div class="govuk-!-padding-top-5">
-            {%if key === 'collaboration' %}
-            {{'I am collaboration'}}
-                {% set buttonText = 'Get your score' %}
-                {% set diaplaySecondryBtn = false %}
-              {% elif reachedCheckDetails %}
-                {% set diaplaySecondryBtn = true %}
-                {% set secButtonText = 'Back to details' %}
+              </fieldset>
             {% endif %}
 
-            {% set buttonText = 'Continue' %}
-            {% set secButtonText = 'Back to score' %}
+          {% endfor %}
+        {% endif %}
 
-            {% if key === 'planning-permission' %}
-              {% set diaplaySecondryBtn = false %}
-            {% elif reachedCheckDetails %}
-              {% set diaplaySecondryBtn = true %}
-              {% set secButtonText = 'Back to details' %}
-            {% elif reachedEvidenceSummary %}
-              {% set diaplaySecondryBtn = true %}
-              {% set secButtonText = 'Back to evidence summary' %}
-            {% endif %}
-          </div>
+        {% if warning %}
+          {{ govukWarningText(warning) }}
+        {% endif %}
 
-          {{ conditionalButtons(diaplaySecondryBtn, buttonText, secButtonText) }}
-        </form>
-      </div>
+        <div class="govuk-!-padding-top-5">
+          {% set buttonText = 'Continue' %}
+          {% set secButtonText = 'Back to score' %}
 
-      {% if sideBarText %}
-        {{ multiSideBar(sideBarText) }}
-      {% endif %}
+          {% if key === 'planning-permission' %}
+            {% set diaplaySecondryBtn = false %}
+          {% elif reachedCheckDetails %}
+            {% set diaplaySecondryBtn = true %}
+            {% set secButtonText = 'Back to details' %}
+          {% elif reachedEvidenceSummary %}
+            {% set diaplaySecondryBtn = true %}
+            {% set secButtonText = 'Back to evidence summary' %}
+          {% endif %}
+        </div>
+        {%if key === 'collaboration' %}
+            {% set buttonText = 'Get your score'%}
+            {% set diaplaySecondryBtn = false %}
+        {% endif %}
+        {{ conditionalButtons(diaplaySecondryBtn, buttonText, secButtonText, mainButtonText) }}
+      </form>
     </div>
-  {% endblock %}
+
+    {% if sideBarText %}
+      {{ multiSideBar(sideBarText) }}
+    {% endif %}
+  </div>
+{% endblock %}

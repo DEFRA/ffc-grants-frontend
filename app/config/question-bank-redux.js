@@ -805,7 +805,7 @@ const questionBank = {
       yarKey: 'currentlyIrrigating'
     },
     {
-      key: 'productivity',
+      key: 'Q19',
       order: 19,
       title: 'How will the project improve productivity?',
       hint: {
@@ -830,24 +830,35 @@ const questionBank = {
       ],
       answers: [
         {
-          key: 'project-summary-A1',
-          value: 'Introduce or expand high-value crops'
+          key: 'Q19-A1',
+          value: 'Introduce or expand high Value Crops',
+          desc: 'Introduce or expand high Value Crops',
+          weight: 3
         },
         {
-          key: 'project-summary-A2',
-          value: 'Introduce or expand protected crops'
+          key: 'Q19-A2',
+          value: 'Introduce or expand protected crops',
+          desc: 'Introduce or expand protected crops',
+          weight: 3
+
         },
         {
-          key: 'project-summary-A3',
-          value: 'Increased yield per hectare'
+          key: 'Q19-A3',
+          value: 'Increased yield per hectare',
+          desc: 'Increased yield per hectare',
+          weight: 1
         },
         {
-          key: 'project-summary-A4',
-          value: 'Improved quality'
+          key: 'Q19-A4',
+          value: 'Improved quality',
+          desc: 'Improved quality',
+          weight: 1
         },
         {
-          key: 'project-summary-A5',
-          value: 'Maintain productivity'
+          key: 'Q19-A5',
+          value: 'Maintain productivity',
+          desc: 'Maintain productivity',
+          weight: 0
         },
       ],
       sidebar: {
