@@ -1,6 +1,6 @@
 const urlPrefix = require('../config/server').urlPrefix
 const { getYarValue } = require('../helpers/session')
-const { ALL_QUESTIONS } = require('../config/question-bank')
+const { ALL_QUESTIONS } = require('../config/question-bank-redux') // check if irrigation works still, fix made for applicant-details page
 
 const getUrl = (urlObject, url, request, secBtn, currentUrl) => {
   const scorePath = `${urlPrefix}/score`

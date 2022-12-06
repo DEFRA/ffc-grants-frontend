@@ -21,7 +21,6 @@ const getBackUrl = (hasScore, backUrlObject, backUrl, request) => {
 
 const showBackToDetailsButton = (key, request) => {
   switch (key) {
-    case "farmer-details":
     case "business-details":
     case "applicant-details":
     case "agent-details":

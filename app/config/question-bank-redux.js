@@ -1,5 +1,5 @@
 const { MIN_GRANT, MAX_GRANT, GRANT_PERCENTAGE } = require('../helpers/grant-details')
-const { PROJECT_COST_REGEX, NUMBER_REGEX, SBI_REGEX, BUSINESSNAME_REGEX, NAME_ONLY_REGEX, EMAIL_REGEX, POSTCODE_REGEX, ONLY_TEXT_REGEX, CHARS_MIN_10 } = require('../helpers/regex-validation')
+const { PROJECT_COST_REGEX, NUMBER_REGEX, SBI_REGEX, BUSINESSNAME_REGEX, NAME_REGEX, EMAIL_REGEX, POSTCODE_REGEX, ONLY_TEXT_REGEX, CHARS_MIN_10, PHONE_REGEX, ADDRESS_REGEX } = require('../helpers/regex-validation')
 const { LICENSE_NOT_NEEDED, LICENSE_SECURED, LICENSE_EXPECTED, LICENSE_WILL_NOT_HAVE } = require('../helpers/license-dates')
 
 const { LIST_COUNTIES } = require('../helpers/all-counties')
@@ -1111,7 +1111,7 @@ const questionBank = {
         {
           key: 'applying-A1',
           value: 'Applicant',
-          redirectUrl: 'farmer-details'
+          redirectUrl: 'applicant-details'
         },
         {
           key: 'applying-A2',
@@ -1122,7 +1122,7 @@ const questionBank = {
       yarKey: 'applying'
     },
     {
-      key: 'farmer-details',
+      key: 'applicant-details',
       order: 240,
       title: 'Applicant’s details',
       hint: {
@@ -1132,7 +1132,7 @@ const questionBank = {
       url: 'applicant-details',
       baseUrl: 'applicant-details',
       nextUrl: 'check-details',
-      preValidationKeys: ['applying'],
+      preValidationKeys: [],
       backUrlObject: {
         dependentQuestionYarKey: 'applying',
         dependentAnswerKeysArray: ['applying-A2'],
@@ -1166,7 +1166,7 @@ const questionBank = {
             },
             {
               type: 'REGEX',
-              regex: NAME_ONLY_REGEX,
+              regex: NAME_REGEX,
               error: 'Name must only include letters, hyphens and apostrophes'
             }
           ]
@@ -1187,7 +1187,7 @@ const questionBank = {
             },
             {
               type: 'REGEX',
-              regex: NAME_ONLY_REGEX,
+              regex: NAME_REGEX,
               error: 'Name must only include letters, hyphens and apostrophes'
             }
           ]
@@ -1233,7 +1233,7 @@ const questionBank = {
           validate: [
             {
               type: 'NOT_EMPTY',
-              error: 'Enter your email address'
+              error: 'Confirm your email address'
             },
             {
               type: 'REGEX',
@@ -1257,7 +1257,7 @@ const questionBank = {
             {
               type: 'NOT_EMPTY_EXTRA',
               error: 'Enter a mobile number (if you do not have a mobile, enter your landline number)',
-              extraFieldsToCheck: ['landlineNumber']
+              extraFieldsToCheck: ['landline']
             },
             {
               type: 'REGEX',
@@ -1287,7 +1287,7 @@ const questionBank = {
             {
               type: 'NOT_EMPTY_EXTRA',
               error: 'Enter a landline number (if you do not have a landline, enter your mobile number)',
-              extraFieldsToCheck: ['mobileNumber']
+              extraFieldsToCheck: ['mobile']
             },
             {
               type: 'REGEX',
