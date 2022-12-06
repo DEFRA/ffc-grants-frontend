@@ -727,7 +727,7 @@ const questionBank = {
       yarKey: 'project',
     },
     {
-      key: 'irrigated-crops',
+      key: 'Q15',
       order: 14,
       title: 'What main crops will be irrigated?',
       pageTitle: 'Main crop',
@@ -744,16 +744,22 @@ const questionBank = {
       ],
       answers: [
         {
-          key: 'irrigated-crops-A1',
-          value: 'Field-scale crops (for example, potatoes, onions, carrots)',
+          key: 'Q15-A3',
+          value: 'Field-scale crops',
+          text: 'Field-scale crops (for example, potatoes, onions, carrots)',
+          desc: 'Field-scale crops (for example, potatoes, onions, carrots)',
         },
         {
-          key: 'irrigated-crops-A2',
-          value: 'Protected cropping (for example, glasshouse or poly tunnel)',
+          key: 'Q15-A1',
+          value: 'Protected cropping',
+          text: 'Protected cropping (for example, glasshouse or poly tunnel)',
+          desc: 'Protected cropping (for example, glasshouse or poly tunnel)',
         },
         {
-          key: 'irrigated-crops-A3',
-          value: 'Fruit (for example, top fruit, bush fruit)',
+          key: 'Q15-A2',
+          value: 'Fruit',
+          text: 'Fruit (for example, top fruit, bush fruit)',
+          desc: 'Fruit',
         }
       ],
       sidebar: {
@@ -831,8 +837,8 @@ const questionBank = {
       answers: [
         {
           key: 'Q19-A1',
-          value: 'Introduce or expand high Value Crops',
-          desc: 'Introduce or expand high Value Crops',
+          value: 'Introduce or expand high-value Crops',
+          desc: 'Introduce or expand high-value Crops',
           weight: 3
         },
         {
