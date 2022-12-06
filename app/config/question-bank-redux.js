@@ -1,5 +1,5 @@
 const { MIN_GRANT, MAX_GRANT, GRANT_PERCENTAGE } = require('../helpers/grant-details')
-const { PROJECT_COST_REGEX } = require('../helpers/regex-validation')
+const { PROJECT_COST_REGEX, NUMBER_REGEX, SBI_REGEX, BUSINESSNAME_REGEX } = require('../helpers/regex-validation')
 const { LICENSE_NOT_NEEDED, LICENSE_SECURED, LICENSE_EXPECTED, LICENSE_WILL_NOT_HAVE } = require('../helpers/license-dates')
 
 
@@ -932,6 +932,193 @@ const questionBank = {
         ],
       },
       yarKey: 'collaboration'
+    },
+    {
+      key: 'business-details',
+      order: 21,
+      title: 'Business details',
+      pageTitle: '',
+      url: 'business-details',
+      baseUrl: 'business-details',
+      backUrl: 'score',
+      nextUrl: 'applying',
+      preValidationKeys: [],
+      ga: [
+        { dimension: 'cd1', value: { type: 'score', value: 'Eligible' } },
+        { dimension: 'cm2', value: { type: 'journey-time' } }
+      ],
+      fundingPriorities: '',
+      type: 'multi-input',
+      minAnswerCount: '',
+      maxAnswerCount: '',
+      allFields: [
+        {
+          yarKey: 'projectName',
+          type: 'text',
+          classes: 'govuk-input--width-20',
+          label: {
+            text: 'Project name',
+            classes: 'govuk-label'
+          },
+          hint: {
+            text: 'For example, Browns Hill Farm lagoon project'
+          },
+          validate: [
+            {
+              type: 'NOT_EMPTY',
+              error: 'Enter a project name'
+            },
+            {
+              type: 'MIN_MAX_CHARS',
+              min: 0,
+              max: 100,
+              error: 'Name must be 100 characters or fewer'
+            }
+          ]
+        },
+        {
+          yarKey: 'businessName',
+          type: 'text',
+          classes: 'govuk-input--width-20',
+          label: {
+            text: 'Business name',
+            classes: 'govuk-label'
+          },
+          hint: {
+            text: "If you're registered on the Rural Payments system, enter business name as registered"
+          },
+          validate: [
+            {
+              type: 'NOT_EMPTY',
+              error: 'Enter a business name'
+            },
+            {
+              type: 'MIN_MAX_CHARS',
+              min: 0,
+              max: 100,
+              error: 'Name must be 100 characters or fewer'
+            },
+            {
+              type: 'REGEX',
+              regex: BUSINESSNAME_REGEX,
+              error: 'Name must only include letters, hyphens and apostrophes'
+            }
+          ]
+        },
+        {
+          yarKey: 'numberEmployees',
+          type: 'number',
+          classes: 'govuk-input--width-10',
+          label: {
+            text: 'Number of employees',
+            classes: 'govuk-label'
+          },
+          hint: {
+            text: 'Full-time employees, including the owner'
+          },
+          validate: [
+            {
+              type: 'NOT_EMPTY',
+              error: 'Enter the number of employees'
+            },
+            {
+              type: 'REGEX',
+              regex: NUMBER_REGEX,
+              error: 'Number of employees must be a whole number, like 305'
+            },
+            {
+              type: 'MIN_MAX',
+              min: 1,
+              max: 9999999,
+              error: 'Number of employees must be a whole number, like 305'
+            }
+          ]
+        },
+        {
+          yarKey: 'businessTurnover',
+          type: 'number',
+          classes: 'govuk-input--width-10',
+          prefix: {
+            text: '£'
+          },
+          label: {
+            text: 'Business turnover',
+            classes: 'govuk-label'
+          },
+          validate: [
+            {
+              type: 'NOT_EMPTY',
+              error: 'Enter the business turnover'
+            },
+            {
+              type: 'REGEX',
+              regex: NUMBER_REGEX,
+              error: 'Business turnover must be a whole number, like 100000'
+            },
+            {
+              type: 'MIN_MAX',
+              min: 1,
+              max: 999999999,
+              error: 'Business turnover must be a whole number, like 100000'
+            }
+          ]
+        },
+        {
+          yarKey: 'sbi',
+          type: 'text',
+          title: 'Single Business Identifier (SBI)',
+          classes: 'govuk-input govuk-input--width-10',
+          label: {
+            text: 'Single Business Identifier (SBI) - Optional',
+            classes: 'govuk-label'
+          },
+          hint: {
+            html: 'If you do not have an SBI, you will need to get one for full application'
+          },
+          validate: [
+            {
+              type: 'REGEX',
+              regex: SBI_REGEX,
+              error: 'SBI number must have 9 characters, like 011115678'
+            }
+          ]
+        }
+      ],
+      yarKey: 'businessDetails'
+
+    },
+    {
+      key: 'applying',
+      order: 22,
+      title: 'Who is applying for this grant?',
+      pageTitle: '',
+      url: 'applying',
+      baseUrl: 'applying',
+      backUrl: 'business-details',
+      preValidationKeys: [],
+      fundingPriorities: '',
+      type: 'single-answer',
+      classes: 'govuk-radios--inline govuk-fieldset__legend--l',
+      minAnswerCount: 1,
+      validate: [
+        {
+          type: 'NOT_EMPTY',
+          error: 'Select who is applying for this grant'
+        }
+      ],
+      answers: [
+        {
+          key: 'applying-A1',
+          value: 'Applicant',
+          redirectUrl: 'farmer-details'
+        },
+        {
+          key: 'applying-A2',
+          value: 'Agent',
+          redirectUrl: 'agent-details'
+        }
+      ],
+      yarKey: 'applying'
     },
   ]
 };

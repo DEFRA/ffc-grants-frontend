@@ -44,7 +44,7 @@ const customiseErrorText = (value, currentQuestion, errorList, h, request) => {
 }
 
 const checkErrors = (payload, currentQuestion, h, request) => {
-  const { yarKey, answers, validate } = currentQuestion
+  const { yarKey, answers, validate, allFields } = currentQuestion
   const conditionalAnswer = answers?.find(answer => answer.conditional)
   const errorHrefList = []
   let isconditionalAnswer

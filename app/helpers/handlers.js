@@ -113,9 +113,9 @@ const getPage = async (question, request, h) => {
       request
     )
   }
-  if (question.ga) {
-    await gapiService.processGA(request, question.ga, confirmationId)
-  }
+  // if (question.ga) {
+  //   await gapiService.processGA(request, question.ga, confirmationId)
+  // }
 
   switch (url) {
     case 'check-details': {
