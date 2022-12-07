@@ -1803,7 +1803,7 @@ const questionBank = {
     {
       key: "confirm",
       title: "Confirm and send",
-      order: 220,
+      order: 26,
       url: "confirm",
       backUrl: "check-details",
       nextUrl: "confirmation",
@@ -1830,6 +1830,62 @@ const questionBank = {
       ],
       yarKey: "consentOptional",
     },
+    {
+      key: 'confirmation',
+      order: 27,
+      title: 'Details submitted',
+      pageTitle: '',
+      url: 'confirmation',
+      baseUrl: 'confirmation',
+      preValidationKeys: [ 'consentOptional' ],
+      ga: [
+        { dimension: 'cd2', value: { type: 'score' } },
+        { dimension: 'cd5', value: { type: 'confirmationId' } },
+        { dimension: 'cm1', value: { type: 'journey-time' } }
+      ],
+      maybeEligible: true,
+      maybeEligibleContent: {
+        reference: {
+          titleText: 'Details submitted',
+          html: 'Your reference number<br><strong>{{_confirmationId_}}</strong>',
+          surveyLink: process.env.SURVEY_LINK
+        },
+        messageContent: `We have sent you a confirmation email with a record of your answers.<br/><br/>
+            If you do not get an email within 72 hours, please contact RPA helpline and follow the options for Farming Transformation Fund scheme:<br/>
+            <h1 class="govuk-heading-m">RPA helpline</h1>
+            <h2 class="govuk-heading-s">Telephone</h2>
+            Telephone: 03000 200 301<br/>
+            Monday to Friday, 9am to 5pm (except public holidays)<br/>
+            <p><a class="govuk-link" target="_blank" href="https://www.gov.uk/call-charges" rel="noopener noreferrer">Find out about call charges (opens in a new tab)</a></p>
+            <h2 class="govuk-heading-s">Email</h2>
+            <a class="govuk-link" title="Send email to RPA" target="_blank" rel="noopener noreferrer" href="mailto:ftf@rpa.gov.uk">FTF@rpa.gov.uk</a><br/><br/>
+            
+            <h2 class="govuk-heading-m">What happens next</h2>
+            <ol>
+              <li>RPA will be in touch when the full application period opens. They will tell you if your project scored well enough to get the full application form.</li>
+              <br/>
+              <li>If you submit an application, RPA will assess it against other projects and value for money. You will not automatically get a grant. The grant is expected to be highly competitive and you are competing against other projects.</li>
+              <br/>
+              <li>If your application is successful, you'll be sent a funding agreement and can begin work on the project.</li>
+            </ol>
+            `,
+        warning: {
+          text: 'You must not start the project'
+        },
+        extraMessageContent: `<p>Starting the project or committing to any costs (such as placing orders) before you receive a funding agreement will invalidate your application.</p> 
+            <p>Before you start the project, you can:</p>
+            <ul>
+              <li>get quotes from suppliers</li>
+              <li>apply for planning permission or an abstraction licence</li>
+            </ul>
+            <p class="govuk-body"><a class="govuk-link" href="${process.env.SURVEY_LINK}" target="_blank" rel="noopener noreferrer">What do you think of this service? (opens in a new tab)</a></p>
+            `
+      },
+      fundingPriorities: '',
+      type: '',
+      minAnswerCount: 1,
+      answers: []
+    }
   ],
 };
 
