@@ -52,10 +52,6 @@ const checkErrors = (payload, currentQuestion, h, request) => {
   if (currentQuestion.type === 'multi-input') {
     allFields.forEach(
       ({ yarKey: inputYarKey, validate: inputValidate, answers: inputAnswers }) => {
-        if(inputYarKey === 'emailConfirm' && payload.emailConfirm !== payload.email){
-          errorHrefList.push({ text: 'Enter an email address that matches', href: '#emailConfirm' }) // works, shows up in both fields
-        }
-
         isconditionalAnswer = inputAnswers?.find(answer => answer.conditional)?.value === payload[inputYarKey]
 
         if (inputValidate) {

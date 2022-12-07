@@ -1197,7 +1197,7 @@ const questionBank = {
           text: 'Contact details'
         },
         {
-          yarKey: 'email',
+          yarKey: 'emailAddress',
           type: 'email',
           classes: 'govuk-input--width-20',
           label: {
@@ -1224,11 +1224,8 @@ const questionBank = {
           type: 'email',
           classes: 'govuk-input--width-20',
           label: {
-            text: 'Email address',
+            text: 'Confirm email',
             classes: 'govuk-label'
-          },
-          hint: {
-            text: 'We will only use this to send you confirmation'
           },
           validate: [
             {
@@ -1239,6 +1236,11 @@ const questionBank = {
               type: 'REGEX',
               regex: EMAIL_REGEX,
               error: 'Enter an email address in the correct format, like name@example.com'
+            },
+            {
+              type: 'CONFIRMATION_ANSWER',
+              fieldsToCampare: ['emailAddress', 'emailConfirm'],
+              error: 'Enter an email address that matches'
             }
           ]
         },
@@ -1425,6 +1427,305 @@ const questionBank = {
         }
       ],
       yarKey: 'farmerDetails'
+    },
+    {
+      key: 'agent-details',
+      order: 250,
+      title: 'Agent’s details',
+      hint: {
+        text: 'Enter the agent and agent business details'
+      },
+      pageTitle: '',
+      url: 'agent-details',
+      baseUrl: 'agent-details',
+      backUrl: 'applying',
+      nextUrl: 'applicant-details',
+      // summaryPageUrl: 'check-details',
+      preValidationKeys: ['applying'],
+
+      type: 'multi-input',
+      minAnswerCount: '',
+      maxAnswerCount: '',
+      allFields: [
+        {
+          type: 'sub-heading',
+          text: 'Name'
+        },
+        {
+          yarKey: 'firstName',
+          type: 'text',
+          classes: 'govuk-input--width-20',
+          label: {
+            text: 'First name',
+            classes: 'govuk-label'
+          },
+          validate: [
+            {
+              type: 'NOT_EMPTY',
+              error: 'Enter your first name'
+            },
+            {
+              type: 'REGEX',
+              regex: NAME_REGEX,
+              error: 'Name must only include letters, hyphens and apostrophes'
+            }
+          ]
+        },
+        {
+          yarKey: 'lastName',
+          type: 'text',
+          classes: 'govuk-input--width-20',
+          label: {
+            text: 'Last name',
+            classes: 'govuk-label'
+          },
+          validate: [
+            {
+              type: 'NOT_EMPTY',
+              error: 'Enter your last name'
+            },
+            {
+              type: 'REGEX',
+              regex: NAME_REGEX,
+              error: 'Name must only include letters, hyphens and apostrophes'
+            }
+          ]
+        },
+        {
+          yarKey: 'businessName',
+          type: 'text',
+          endFieldset: 'true',
+          classes: 'govuk-input--width-20',
+          label: {
+            text: 'Business name',
+            classes: 'govuk-label'
+          },
+          validate: [
+            {
+              type: 'NOT_EMPTY',
+              error: 'Enter your business name'
+            },
+            {
+              type: 'MIN_MAX_CHARS',
+              min: 0,
+              max: 100,
+              error: 'Name must be 100 characters or fewer'
+            }
+          ]
+        },
+        {
+          type: 'sub-heading',
+          text: 'Contact details'
+        },
+        {
+          yarKey: 'emailAddress',
+          type: 'email',
+          classes: 'govuk-input--width-20',
+          label: {
+            text: 'Email address',
+            classes: 'govuk-label'
+          },
+          hint: {
+            text: 'We will only use this to send you confirmation'
+          },
+          validate: [
+            {
+              type: 'NOT_EMPTY',
+              error: 'Enter your email address'
+            },
+            {
+              type: 'REGEX',
+              regex: EMAIL_REGEX,
+              error: 'Enter an email address in the correct format, like name@example.com'
+            }
+          ]
+        },
+        {
+          yarKey: 'emailConfirm',
+          type: 'email',
+          classes: 'govuk-input--width-20',
+          label: {
+            text: 'Confirm email address',
+            classes: 'govuk-label'
+          },
+          validate: [
+            {
+              type: 'NOT_EMPTY',
+              error: 'Confirm your email address'
+            },
+            {
+              type: 'REGEX',
+              regex: EMAIL_REGEX,
+              error: 'Enter an email address in the correct format, like name@example.com'
+            },
+            {
+              type: 'CONFIRMATION_ANSWER',
+              fieldsToCampare: ['emailAddress', 'emailConfirm'],
+              error: 'Enter an email address that matches'
+            }
+          ]
+        },
+        {
+          yarKey: 'mobile',
+          type: 'tel',
+          classes: 'govuk-input--width-10',
+          label: {
+            text: 'Mobile number',
+            classes: 'govuk-label'
+          },
+          hint: {
+            text: 'We will only use this to contact you about your application'
+          },
+          validate: [
+            {
+              type: 'NOT_EMPTY_EXTRA',
+              error: 'Enter a mobile number (if you do not have a mobile, enter your landline number)',
+              extraFieldsToCheck: ['landline']
+            },
+            {
+              type: 'REGEX',
+              regex: CHARS_MIN_10,
+              error: 'Your mobile number must have at least 10 characters'
+            },
+            {
+              type: 'REGEX',
+              regex: PHONE_REGEX,
+              error: 'Enter a telephone number, like 01632 960 001, 07700 900 982 or +44 0808 157 0192'
+            }
+          ]
+        },
+        {
+          yarKey: 'landline',
+          endFieldset: 'true',
+          type: 'tel',
+          classes: 'govuk-input--width-10',
+          label: {
+            text: 'Landline number',
+            classes: 'govuk-label'
+          },
+          hint: {
+            text: 'We will only use this to contact you about your application'
+          },
+          validate: [
+            {
+              type: 'NOT_EMPTY_EXTRA',
+              error: 'Enter a landline number (if you do not have a landline, enter your mobile number)',
+              extraFieldsToCheck: ['mobile']
+            },
+            {
+              type: 'REGEX',
+              regex: CHARS_MIN_10,
+              error: 'Your landline number must have at least 10 characters'
+            },
+            {
+              type: 'REGEX',
+              regex: PHONE_REGEX,
+              error: 'Enter a telephone number, like 01632 960 001, 07700 900 982 or +44 0808 157 0192'
+            }
+          ]
+        },
+        {
+          type: 'sub-heading',
+          text: 'Business address'
+        },
+        {
+          yarKey: 'address1',
+          type: 'text',
+          classes: 'govuk-input--width-20',
+          label: {
+            html: 'Address line 1',
+            classes: 'govuk-label'
+          },
+          validate: [
+            {
+              type: 'NOT_EMPTY',
+              error: 'Enter your building and street details'
+            },
+            {
+              type: 'REGEX',
+              regex: ADDRESS_REGEX,
+              error: 'Address must only include letters, hyphens and spaces'
+            }
+          ]
+        },
+        {
+          yarKey: 'address2',
+          type: 'text',
+          classes: 'govuk-input--width-20',
+          label: {
+            html: 'Address line 2 (optional)',
+            classes: 'govuk-label'
+          },
+          validate: [
+            {
+              type: 'REGEX',
+              regex: ADDRESS_REGEX,
+              error: 'Address must only include letters, hyphens and spaces'
+            }
+          ]
+        },
+        {
+          yarKey: 'town',
+          type: 'text',
+          classes: 'govuk-input--width-10',
+          label: {
+            text: 'Town',
+            classes: 'govuk-label'
+          },
+          validate: [
+            {
+              type: 'NOT_EMPTY',
+              error: 'Enter your town'
+            },
+            {
+              type: 'REGEX',
+              regex: ONLY_TEXT_REGEX,
+              error: 'Town must only include letters, hyphens and spaces'
+            }
+          ]
+        },
+        {
+          yarKey: 'county',
+          type: 'select',
+          classes: 'govuk-input--width-10',
+          label: {
+            text: 'County',
+            classes: 'govuk-label'
+          },
+          answers: [
+            ...LIST_COUNTIES
+          ],
+          validate: [
+            {
+              type: 'NOT_EMPTY',
+              error: 'Select your county'
+            }
+          ]
+        },
+        {
+          yarKey: 'postcode',
+          type: 'text',
+          endFieldset: 'true',
+          classes: 'govuk-input--width-5',
+          label: {
+            text: 'Postcode',
+            classes: 'govuk-label'
+          },
+          validate: [
+            {
+              type: 'NOT_EMPTY',
+              error: 'Enter your postcode, like AA1 1AA'
+            },
+            {
+              type: 'REGEX',
+              regex: POSTCODE_REGEX,
+              error: 'Enter a postcode, like AA1 1AA'
+            }
+          ]
+        }
+      ],
+      yarKey: 'agentsDetails'
+
     },
   ]
 };
