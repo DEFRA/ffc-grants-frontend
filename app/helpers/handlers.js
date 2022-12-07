@@ -19,7 +19,8 @@ const {
   getCheckDetailsModel,
   getEvidenceSummaryModel,
   getDataFromYarValue,
-  getConsentOptionalData
+  getConsentOptionalData,
+  saveValuesToArray,
 } = require('./pageHelpers')
 
 const getPage = async (question, request, h) => {
@@ -137,6 +138,54 @@ const getPage = async (question, request, h) => {
     default:
       break
   }
+  if (url === 'check-details') {
+    setYarValue(request, 'reachedCheckDetails', true)
+
+    const applying = getYarValue(request, 'applying')
+    const businessDetails = getYarValue(request, 'businessDetails')
+    const agentDetails = getYarValue(request, 'agentsDetails')
+    const farmerDetails = getYarValue(request, 'farmerDetails')
+
+    const agentContact = saveValuesToArray(agentDetails, [ 'emailAddress', 'mobileNumber', 'landlineNumber' ])
+    const agentAddress = saveValuesToArray(agentDetails, [ 'address1', 'address2', 'town', 'county', 'postcode' ])
+
+    const farmerContact = saveValuesToArray(farmerDetails, [ 'emailAddress', 'mobileNumber', 'landlineNumber' ])
+    const farmerAddress = saveValuesToArray(farmerDetails, [ 'address1', 'address2', 'town', 'county', 'postcode' ])
+
+    const MODEL = {
+      ...question.pageData,
+      backUrl,
+      nextUrl,
+      applying,
+      businessDetails,
+      farmerDetails: {
+        ...farmerDetails,
+        ...(farmerDetails
+          ? {
+            name: `${farmerDetails.firstName} ${farmerDetails.lastName}`,
+            contact: farmerContact.join('<br/>'),
+            address: farmerAddress.join('<br/>')
+          }
+          : {}
+        )
+      },
+      agentDetails: {
+        ...agentDetails,
+        ...(agentDetails
+          ? {
+            name: `${agentDetails.firstName} ${agentDetails.lastName}`,
+            contact: agentContact.join('<br/>'),
+            address: agentAddress.join('<br/>')
+          }
+          : {}
+        )
+      }
+
+    }
+
+    return h.view('check-details', MODEL)
+  }
+
 
   return h.view('page', getModel(data, question, request, conditionalHtml))
 }

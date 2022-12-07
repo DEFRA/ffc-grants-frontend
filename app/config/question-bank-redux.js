@@ -934,6 +934,7 @@ const questionBank = {
       },
       yarKey: 'collaboration'
     },
+    // Goes to score route
     {
       key: 'business-details',
       order: 21,
@@ -1123,7 +1124,7 @@ const questionBank = {
     },
     {
       key: 'applicant-details',
-      order: 240,
+      order: 23,
       title: 'Applicant’s details',
       hint: {
         text: 'Enter the farmer and farm business details'
@@ -1430,7 +1431,7 @@ const questionBank = {
     },
     {
       key: 'agent-details',
-      order: 250,
+      order: 24,
       title: 'Agent’s details',
       hint: {
         text: 'Enter the agent and agent business details'
@@ -1440,7 +1441,6 @@ const questionBank = {
       baseUrl: 'agent-details',
       backUrl: 'applying',
       nextUrl: 'applicant-details',
-      // summaryPageUrl: 'check-details',
       preValidationKeys: ['applying'],
 
       type: 'multi-input',
@@ -1727,6 +1727,29 @@ const questionBank = {
       yarKey: 'agentsDetails'
 
     },
+    {
+      key: 'check-details',
+      order: 25,
+      title: "Check your details",
+      pageTitle: 'Check details',
+      url: 'check-details',
+      backUrl: 'applicant-details',
+      nextUrl: 'confirm',
+      preValidationKeys: [ 'applying' ],
+      eliminationAnswerKeys: '',
+      ineligibleContent: {},
+      pageData: {
+        businessDetailsLink: 'business-details',
+        agentDetailsLink: 'agents-details',
+        farmerDetailsLink: 'applicant-details'
+      },
+      fundingPriorities: '',
+      type: '',
+      minAnswerCount: 1,
+      answers: []
+      
+    }
+
   ]
 };
 
