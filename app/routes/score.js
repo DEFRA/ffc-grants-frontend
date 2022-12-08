@@ -38,16 +38,12 @@ module.exports = [{
       return h.redirect(startPath)
     }
     try {
-      console.log('here: ', 1);
       const msgDataToSend = getDesirabilityAnswers(request)
-      console.log('msgDataToSend: ', msgDataToSend, 3);
       // Always re-calculate our score before rendering this page
-      
+
       // call session queue to send score data
       const formatAnswersForScoring = createMsg(msgDataToSend)
-      console.log('formatAnswersForScoring: ', formatAnswersForScoring, 4);
       const msgData = await getWaterScoring(formatAnswersForScoring, request.yar.id)
-      console.log('msgData: ', msgData, 5);
       setYarValue(request, 'overAllScore', msgData)
       console.log('msgData from Score: ', msgData);
       console.log('getYar overAllScore: ', getYarValue(request, 'overAllScore'));
