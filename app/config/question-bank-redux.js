@@ -839,7 +839,7 @@ const questionBank = {
       url: "irrigation-status",
       baseUrl: "irrigation-status",
       backUrl: "irrigated-crops",
-      nextUrl: "irrigated-land",
+      nextUrl: "abstraction",
       fundingPriorities: "",
       type: "single-answer",
       minAnswerCount: 1,
@@ -860,6 +860,78 @@ const questionBank = {
         },
       ],
       yarKey: "currentlyIrrigating",
+    },
+    {
+      key: "abstraction",
+      order: 15,
+      title: "How will your use of summer abstraction or mains change?",
+      classes: "govuk-radios--inline govuk-fieldset__legend--l",
+      pageTitle: "",
+      url: "abstraction",
+      baseUrl: "abstraction",
+      backUrl: "irrigation-status",
+      nextUrl: "newpage",
+      fundingPriorities: "",
+      type: "single-answer",
+      minAnswerCount: 1,
+      ineligibleContent: {
+        messageContent:
+          `<p class="govuk-body">Your project cannot increase water use from</br>
+              summer abstraction or mains.</p>
+
+              <p class="govuk-body">
+              RPA wants to fund projects that use more</br>
+              sustainable water sources, such as:</p>
+          
+              <ul class="govuk-list govuk-list--bullet">
+                <li>winter peak-flow abstraction</li>
+                <li>rain water harvesting</li>
+                <li>the Basic Payment Scheme</li>
+                <li>bore hole/aquifer</li>
+              </ul>
+            `,
+        messageLink: {
+          url: "https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments",
+          title: "See other grants you may be eligible for.",
+        },
+      },
+      validate: [
+        {
+          type: "NOT_EMPTY",
+          error: "Select yes if you are currently irrigating",
+        },
+      ],
+      answers: [
+        {
+          key: "abstraction-A1",
+          value: "use currently",
+          redirectUrl: "newpage",
+        },
+        {
+          key: "abstraction-A2",
+          value: "Decrease  sdsds sdsdsa wwswswswsw sdsdsdsds",
+          redirectUrl: "newpage2",
+        },
+        {
+          key: "abstraction-A3",
+          value: "Stop sdsds sdsdsa wwswswswsw",
+        },
+        {
+          key: "abstraction-A4",
+          value: "Maintain and introduce or increase a sustainable water source",
+        },
+        {
+          key: "abstraction-A5",
+          value: "Maintain without introducing or increasing a sustainable water source",
+          redirectUrl: "project-items",
+        },
+        {
+          key: "abstraction-A6",
+          value: "Increase",
+          notEligible: true
+        }
+      ],
+      yarKey: "abstraction",
     },
     {
       key: "Q19",
@@ -1820,7 +1892,7 @@ const questionBank = {
               <li>shared with the Environment Agency so that they can check the details of my planned project</li>
             </ul></br>
             I am happy to be contacted by Defra and RPA (or a third-party on their behalf) about my application.</br></br>
-            So that we can continue to improve our services and schemes, we may wish to contact you in the future. Please confirm if you are happy for us, or a third-party working for us, to contact you.`
+            So that we can continue to improve our services and schemes, we may wish to contact you in the future. Please confirm if you are happy for us, or a third-party working for us, to contact you.`,
       },
       answers: [
         {
@@ -1831,24 +1903,24 @@ const questionBank = {
       yarKey: "consentOptional",
     },
     {
-      key: 'confirmation',
+      key: "confirmation",
       order: 27,
-      title: 'Details submitted',
-      pageTitle: '',
-      url: 'confirmation',
-      baseUrl: 'confirmation',
-      preValidationKeys: [ 'consentOptional' ],
+      title: "Details submitted",
+      pageTitle: "",
+      url: "confirmation",
+      baseUrl: "confirmation",
+      preValidationKeys: ["consentOptional"],
       ga: [
-        { dimension: 'cd2', value: { type: 'score' } },
-        { dimension: 'cd5', value: { type: 'confirmationId' } },
-        { dimension: 'cm1', value: { type: 'journey-time' } }
+        { dimension: "cd2", value: { type: "score" } },
+        { dimension: "cd5", value: { type: "confirmationId" } },
+        { dimension: "cm1", value: { type: "journey-time" } },
       ],
       maybeEligible: true,
       maybeEligibleContent: {
         reference: {
-          titleText: 'Details submitted',
-          html: 'Your reference number<br><strong>{{_confirmationId_}}</strong>',
-          surveyLink: process.env.SURVEY_LINK
+          titleText: "Details submitted",
+          html: "Your reference number<br><strong>{{_confirmationId_}}</strong>",
+          surveyLink: process.env.SURVEY_LINK,
         },
         messageContent: `We have sent you a confirmation email with a record of your answers.<br/><br/>
             If you do not get an email within 72 hours, please contact RPA helpline and follow the options for Farming Transformation Fund scheme:<br/>
@@ -1870,7 +1942,7 @@ const questionBank = {
             </ol>
             `,
         warning: {
-          text: 'You must not start the project'
+          text: "You must not start the project",
         },
         extraMessageContent: `<p>Starting the project or committing to any costs (such as placing orders) before you receive a funding agreement will invalidate your application.</p> 
             <p>Before you start the project, you can:</p>
@@ -1879,13 +1951,13 @@ const questionBank = {
               <li>apply for planning permission or an abstraction licence</li>
             </ul>
             <p class="govuk-body"><a class="govuk-link" href="${process.env.SURVEY_LINK}" target="_blank" rel="noopener noreferrer">What do you think of this service? (opens in a new tab)</a></p>
-            `
+            `,
       },
-      fundingPriorities: '',
-      type: '',
+      fundingPriorities: "",
+      type: "",
       minAnswerCount: 1,
-      answers: []
-    }
+      answers: [],
+    },
   ],
 };
 
