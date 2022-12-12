@@ -33,7 +33,6 @@ module.exports = [{
     }
   },
   handler: async (request, h, err) => {
-    console.log('here: ', request);
     if (!getYarValue(request, 'current-score') && !getYarValue(request, 'collaboration')) {
       return h.redirect(startPath)
     }
@@ -45,8 +44,6 @@ module.exports = [{
       const formatAnswersForScoring = createMsg(msgDataToSend)
       const msgData = await getWaterScoring(formatAnswersForScoring, request.yar.id)
       setYarValue(request, 'overAllScore', msgData)
-      console.log('msgData from Score: ', msgData);
-      console.log('getYar overAllScore: ', getYarValue(request, 'overAllScore'));
       const crop = questionBank.questions.find(question => question.key === 'Q15')
       const cropObject = addSummaryRow(crop, request)
       if (msgData) {
