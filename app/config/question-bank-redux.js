@@ -905,12 +905,10 @@ const questionBank = {
         {
           key: "abstraction-A1",
           value: "use currently",
-          redirectUrl: "newpage",
         },
         {
           key: "abstraction-A2",
           value: "Decrease  sdsds sdsdsa wwswswswsw sdsdsdsds",
-          redirectUrl: "newpage2",
         },
         {
           key: "abstraction-A3",
@@ -923,7 +921,6 @@ const questionBank = {
         {
           key: "abstraction-A5",
           value: "Maintain without introducing or increasing a sustainable water source",
-          redirectUrl: "project-items",
         },
         {
           key: "abstraction-A6",

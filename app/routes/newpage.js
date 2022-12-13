@@ -15,7 +15,7 @@ function createModel(errorList, projectInfrastucture, projectEquipment) {
     formActionLink: currentPath,
     pageTitle: 'Water Source',
     ...(errorList ? { errorList } : {}),
-    checkboxesInfrastucture: {
+    ...(projectInfrastucture ? {  checkboxesInfrastucture: {
       idPrefix: "projectInfrastucture",
       name: "projectInfrastucture",
       fieldset: {
@@ -34,8 +34,8 @@ function createModel(errorList, projectInfrastucture, projectEquipment) {
         "Bore hole/aquifer",
       ]),
       ...(errorList ? { errorMessage: { text: errorList[0].text } } : {}),
-    },
-    checkboxesEquipment: {
+    }, } : {}),
+    ...(projectEquipment ? { checkboxesEquipment: {
       idPrefix: "projectEquipment",
       name: "projectEquipment",
       fieldset: {
@@ -49,12 +49,12 @@ function createModel(errorList, projectInfrastucture, projectEquipment) {
         text: "Select all that apply."
       },
       items: setLabelData(projectEquipment, [
-        "Winter peak-flow abstraction",
-        "Rain water harvesting",
+        "ssd",
+        "ABS",
         "Bore hole/aquifer",
       ]),
       ...(errorList ? { errorMessage: { text: null } } : {}),
-    },
+    }, } : {}),
   };
 }
 
@@ -66,11 +66,20 @@ module.exports = [
       const projectInfrastucture =
         getYarValue(request, "projectInfrastucture") || null;
       const projectEquipment = getYarValue(request, "projectEquipment") || null;
-
-      return h.view(
-        viewTemplate,
-        createModel(null, projectInfrastucture, projectEquipment)
-      );
+      if(getYarValue(request, "abstraction")==='use currently'){
+        console.log('HELLO')
+        return h.view(
+          viewTemplate,
+          createModel(null, projectInfrastucture, null)
+        );
+      }
+      if(getYarValue(request, "abstraction")==='Maintain and introduce or increase a sustainable water source'){
+        console.log('HOW ARE YOU ?')
+        return h.view(
+          viewTemplate,
+          createModel(null, null, projectEquipment)
+        );
+      }
     },
   },
   {
