@@ -251,7 +251,8 @@ const questionBank = {
         },
         {
           key: 'planning-permission-A4',
-          value: 'Will not be in place by 31 January 2023'
+          value: 'Will not be in place by 31 January 2023',
+          notEligible: true
         }
       ],
       yarKey: 'planningPermission'
