@@ -90,7 +90,7 @@ describe('Country Page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/planning-permission`)
+    expect(postResponse.headers.location).toBe(`planning-permission`)
   })
 
   it('should display ineligible page when user response is \'No\'', async () => {

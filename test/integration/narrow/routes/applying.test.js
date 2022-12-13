@@ -22,6 +22,7 @@ const varListTemplate = {
   }
 }
 
+let varList
 const mockSession = {
   setYarValue: (request, key, value) => null,
   getYarValue: (request, key) => {
@@ -33,7 +34,6 @@ jest.mock('../../../../app/helpers/session', () => mockSession)
 
 
 describe('Applicant page', () => {
-
   beforeEach(() => {
     varList = { ...varListTemplate }
   })
@@ -92,6 +92,7 @@ describe('Applicant page', () => {
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
     expect(postResponse.headers.location).toBe('agent-details')
+    expect(postResponse.headers.location).toBe(`agent-details`)
   })
 
   it('if applicant: APPLICANT, should store user response and redirect to applicant details page', async () => {

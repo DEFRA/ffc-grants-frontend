@@ -117,6 +117,6 @@ describe('Check Details page', () => {
 
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(302)
-    expect(response.headers.location).toBe(`${global.__URLPREFIX__}/confirm`)
+    expect(response.headers.location).toBe(`confirm`)
   })
 })
