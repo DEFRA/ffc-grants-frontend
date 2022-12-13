@@ -30,7 +30,7 @@ describe('Farming type page', () => {
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/farming-type`,
-      payload: { farmingType: 'Horticulture', crumb: crumbToken },
+      payload: { farmingType: 'Horticulture (including ornamentals)', crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
       }
@@ -38,7 +38,7 @@ describe('Farming type page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/legal-status`)
+    expect(postResponse.headers.location).toBe(`legal-status`)
   })
 
   it('should redirect to ineligible page when farming type is \'Something else\'', async () => {

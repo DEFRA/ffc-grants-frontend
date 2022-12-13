@@ -520,6 +520,7 @@ const questionBank = {
       baseUrl: "potential-amount",
       backUrl: "project-cost",
       nextUrl: "remaining-costs",
+      preValidationKeys: [ "projectCost", "calculatedGrant" ],
       maybeEligible: true,
       maybeEligibleContent: {
         messageHeader: "You may be able to apply for a grant from this scheme",
@@ -542,6 +543,7 @@ const questionBank = {
       baseUrl: "remaining-costs",
       backUrl: "potential-amount",
       nextUrl: "SSSI",
+      preValidationKeys: [ "projectCost",  "remainingCost" ],
       fundingPriorities: "",
       type: "single-answer",
       minAnswerCount: 1,
