@@ -10,6 +10,7 @@ const nextPath = `${urlPrefix}/irrigation-systems`;
 const previousPath = `${urlPrefix}/abstraction`;
 
 function createModel(errorList, projectInfrastucture, projectEquipment) {
+  console.log(projectInfrastucture, 'projectInfrastucture')
   return {
     backLink: previousPath,
     formActionLink: currentPath,
@@ -34,7 +35,7 @@ function createModel(errorList, projectInfrastucture, projectEquipment) {
         "Bore hole/aquifer",
       ]),
       ...(errorList ? { errorMessage: { text: errorList[0].text } } : {}),
-    }, } : {}),
+    }, } : ''),
     ...(projectEquipment ? { checkboxesEquipment: {
       idPrefix: "projectEquipment",
       name: "projectEquipment",
@@ -54,7 +55,7 @@ function createModel(errorList, projectInfrastucture, projectEquipment) {
         "Bore hole/aquifer",
       ]),
       ...(errorList ? { errorMessage: { text: null } } : {}),
-    }, } : {}),
+    }, } : ''),
   };
 }
 
@@ -105,14 +106,24 @@ module.exports = [
         ];
         let { projectInfrastucture, projectEquipment } = request.payload;
 
-        if (!projectInfrastucture && !projectEquipment) {
+        if (!projectInfrastucture) {
           gapiService.sendValidationDimension(request);
           return h.view(
             viewTemplate,
             createModel(
-              errorList,
-              backUrl,
+              [errorList[0]],
               projectInfrastucture,
+              null
+            )
+          );
+        }
+        if (!projectEquipment) {
+          gapiService.sendValidationDimension(request);
+          return h.view(
+            viewTemplate,
+            createModel(
+              [errorList[1]],
+              null,
               projectEquipment
             )
           );

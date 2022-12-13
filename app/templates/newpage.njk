@@ -33,8 +33,12 @@
       <h1 class="govuk-heading-l">{{pageTitle}}</h1>
       <form method="POST" action="{{ formActionPage }}" autocomplete="off" novalidate>
         {{ crumbToken(crumb) }}
-        {{ govukCheckboxes(checkboxesInfrastucture) }}
-        {{ govukCheckboxes(checkboxesEquipment) }}
+        {% if checkboxesInfrastucture %}
+          {{ govukCheckboxes(checkboxesInfrastucture) }}
+        {% endif %}
+        {% if checkboxesEquipment %}
+            {{ govukCheckboxes(checkboxesEquipment) }}
+        {% endif %}
         {{ govukButton({
           text: "Continue",
           attributes: {id: "btnContinue"}
