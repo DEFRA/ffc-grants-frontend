@@ -2,6 +2,7 @@ const {
   MIN_GRANT,
   MAX_GRANT,
   GRANT_PERCENTAGE,
+  NAME_ONLY_REGEX
 } = require("../helpers/grant-details");
 const {
   PROJECT_COST_REGEX,
@@ -1562,6 +1563,11 @@ const questionBank = {
               max: 100,
               error: "Name must be 100 characters or fewer",
             },
+            {
+              type: 'REGEX',
+              regex: NAME_ONLY_REGEX,
+              error: 'Name must only include letters, hyphens and apostrophes'
+            }
           ],
         },
         {
