@@ -83,10 +83,10 @@ describe('Applicant details page', () => {
     expect(postResponse.payload).toContain('Enter your first name')
     expect(postResponse.payload).toContain('Enter your last name')
     expect(postResponse.payload).toContain('Enter your email address')
-    expect(postResponse.payload).toContain('Enter an email address that matches')
+    expect(postResponse.payload).toContain('Confirm your email address')
     expect(postResponse.payload).toContain('Enter your building and street details')
     expect(postResponse.payload).toContain('Select your county')
-    expect(postResponse.payload).toContain('Enter a business postcode, like AA1 1AA')
+    expect(postResponse.payload).toContain('Enter your business postcode, like AA1 1AA')
     expect(postResponse.payload).toContain('Enter a project postcode, like AA1 1AA')
   })
 
@@ -127,7 +127,7 @@ describe('Applicant details page', () => {
       method: 'POST',
       url: `${global.__URLPREFIX__}/applicant-details`,
       payload: {
-        email: 'my@@name.com',
+        emailAddress: 'my@@name.com',
         crumb: crumbToken
       },
       headers: { cookie: 'crumb=' + crumbToken }
@@ -145,7 +145,7 @@ describe('Applicant details page', () => {
       payload: {
         firstName: 'First Name',
         lastName: 'Last Name',
-        email: 'my@name.com',
+        emailAddress: 'my@name.com',
         emailConfirm: 'another@name.com',
         mobile: '07700 900 982',
         address1: 'Address 1',
@@ -251,7 +251,7 @@ describe('Applicant details page', () => {
       payload: {
         firstName: 'First Name',
         lastName: 'Last Name',
-        email: 'my@name.com',
+        emailAddress: 'my@name.com',
         emailConfirm: 'my@name.com',
         mobile: '07700 900 982',
         address1: 'Address 1',
@@ -267,7 +267,7 @@ describe('Applicant details page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/check-details`)
+    expect(postResponse.headers.location).toBe(`check-details`)
   })
 
   it('should store user response incase Agent is applying redirects to check details page, landline is optional', async () => {
@@ -278,7 +278,7 @@ describe('Applicant details page', () => {
       payload: {
         firstName: 'First Name',
         lastName: 'Last Name',
-        email: 'my@name.com',
+        emailAddress: 'my@name.com',
         emailConfirm: 'my@name.com',
         mobile: '07700 900 982',
         address1: 'Address 1',
@@ -294,7 +294,7 @@ describe('Applicant details page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/check-details`)
+    expect(postResponse.headers.location).toBe(`check-details`)
   })
 
   it('should store user response incase Agent is applying redirects to check details page, mobile is optional', async () => {
@@ -305,7 +305,7 @@ describe('Applicant details page', () => {
       payload: {
         firstName: 'First Name',
         lastName: 'Last Name',
-        email: 'my@name.com',
+        emailAddress: 'my@name.com',
         emailConfirm: 'my@name.com',
         landline: '07700 900 982',
         address1: 'Address 1',
@@ -321,7 +321,7 @@ describe('Applicant details page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/check-details`)
+    expect(postResponse.headers.location).toBe(`check-details`)
   })
 
   it('should validate - if mobile and landline are missing', async () => {
@@ -332,7 +332,7 @@ describe('Applicant details page', () => {
       payload: {
         firstName: 'First Name',
         lastName: 'Last Name',
-        email: 'my@name.com',
+        emailAddress: 'my@name.com',
         emailConfirm: 'my@name.com',
         address1: 'Address 1',
         address2: 'Address 2',
@@ -346,8 +346,8 @@ describe('Applicant details page', () => {
     }
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Enter a mobile number (If you do not have a mobile, enter your landline number)')
-    expect(postResponse.payload).toContain('Enter a landline number (If you do not have a landline, enter your mobile number)')
+    expect(postResponse.payload).toContain('Enter a mobile number (if you do not have a mobile, enter your landline number)')
+    expect(postResponse.payload).toContain('Enter a landline number (if you do not have a landline, enter your mobile number)')
   })
 
   it('should store user response and redirects to details page', async () => {
@@ -357,7 +357,7 @@ describe('Applicant details page', () => {
       payload: {
         firstName: 'First Name',
         lastName: 'Last Name',
-        email: 'my@name.com',
+        emailAddress: 'my@name.com',
         emailConfirm: 'my@name.com',
         landline: '+44 0808 157 0192',
         mobile: '07700 900 982',
@@ -374,7 +374,7 @@ describe('Applicant details page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/check-details`)
+    expect(postResponse.headers.location).toBe(`check-details`)
   })
 
   it('should validate - if both mobile and landline are missing', async () => {
@@ -384,7 +384,7 @@ describe('Applicant details page', () => {
       payload: {
         firstName: 'Farmer First Name',
         lastName: 'Farmer Last Name',
-        email: 'my@name.com',
+        emailAddress: 'my@name.com',
         emailConfirm: 'my@name.com',
         address1: 'Address 1',
         address2: 'Address 2',
@@ -399,8 +399,8 @@ describe('Applicant details page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Enter a mobile number (If you do not have a mobile, enter your landline number)')
-    expect(postResponse.payload).toContain('Enter a landline number (If you do not have a landline, enter your mobile number)')
+    expect(postResponse.payload).toContain('Enter a mobile number (if you do not have a mobile, enter your landline number)')
+    expect(postResponse.payload).toContain('Enter a landline number (if you do not have a landline, enter your mobile number)')
   })
 
   it('should validate - if both mobile and landline are empty', async () => {
@@ -422,8 +422,8 @@ describe('Applicant details page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Enter a mobile number (If you do not have a mobile, enter your landline number)')
-    expect(postResponse.payload).toContain('Enter a landline number (If you do not have a landline, enter your mobile number)')
+    expect(postResponse.payload).toContain('Enter a mobile number (if you do not have a mobile, enter your landline number)')
+    expect(postResponse.payload).toContain('Enter a landline number (if you do not have a landline, enter your mobile number)')
   })
 
   it('should validate town - not empty', async () => {
@@ -433,7 +433,7 @@ describe('Applicant details page', () => {
       payload: {
         firstName: 'Farmer First Name',
         lastName: 'Farmer Last Name',
-        email: 'my@name.com',
+        emailAddress: 'my@name.com',
         landline: '+44 0808 157 0192',
         mobile: '07700 900 982',
         address1: 'Address 1',
@@ -458,7 +458,7 @@ describe('Applicant details page', () => {
       payload: {
         firstName: 'Farmer First Name',
         lastName: 'Farmer Last Name',
-        email: 'my@name.com',
+        emailAddress: 'my@name.com',
         landline: '+44 0808 157 0192',
         mobile: '07700 900 982',
         address1: 'Address 1',
