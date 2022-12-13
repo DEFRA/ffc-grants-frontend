@@ -1801,6 +1801,7 @@ const questionBank = {
       type: "",
       minAnswerCount: 1,
       answers: [],
+      yarKey: "checkDetails",
     },
     {
       key: "confirm",
@@ -1809,8 +1810,7 @@ const questionBank = {
       url: "confirm",
       backUrl: "check-details",
       nextUrl: "confirmation",
-      preValidationKeys: ["farmerDetails"],
-      preValidationKeysRule: { condition: "ANY" },
+      preValidationKeys: ["farmerDetails", 'checkDetails'],
       maybeEligible: true,
       maybeEligibleContent: {
         messageHeader: "Confirm and send",
