@@ -193,7 +193,7 @@ const questionBank = {
       validate: [
         {
           type: 'NOT_EMPTY',
-          error: 'Select your county'
+          error: 'Select yes if the project is in England'
         }
       ],
       answers: [
