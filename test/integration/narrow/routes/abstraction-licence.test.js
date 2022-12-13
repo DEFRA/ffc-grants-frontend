@@ -82,7 +82,7 @@ describe('Abstraction licence page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/abstraction-required-condition`)
+    expect(postResponse.headers.location).toBe(`abstraction-required-condition`)
   })
 
   it('if value = \'Will not be in place by 31 January 2023\' ==> store and redirect to abstraction-required-condition page', async () => {
@@ -95,7 +95,7 @@ describe('Abstraction licence page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/abstraction-required-condition`)
+    expect(postResponse.headers.location).toBe(`abstraction-required-condition`)
   })
 
   it('if value = \'Not needed\' ==> store and redirect to project-summary page', async () => {
@@ -108,7 +108,7 @@ describe('Abstraction licence page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/project-summary`)
+    expect(postResponse.headers.location).toBe(`project-summary`)
   })
 
   it('if value = \'Secured\' ==> store and redirect to project-summary page', async () => {
@@ -121,6 +121,6 @@ describe('Abstraction licence page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/project-summary`)
+    expect(postResponse.headers.location).toBe(`project-summary`)
   })
 })

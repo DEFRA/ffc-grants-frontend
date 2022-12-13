@@ -114,15 +114,12 @@ const getPage = async (question, request, h) => {
       request
     )
   }
-  // if (question.ga) {
-  //   await gapiService.processGA(request, question.ga, confirmationId)
-  // }
 
   switch (url) {
     case 'check-details': {
       return h.view('check-details', getCheckDetailsModel(request, question, backUrl, nextUrl))
     }
-    case 'planning-permission-summary': { // double check this
+    case 'planning-permission-summary': {
       const evidenceSummaryModel = getEvidenceSummaryModel(request, question, backUrl, nextUrl)
       if (evidenceSummaryModel.redirect) {
         return h.redirect(startPageUrl)

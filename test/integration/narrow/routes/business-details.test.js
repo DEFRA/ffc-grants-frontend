@@ -279,7 +279,7 @@ describe('Project and business details page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/applying`)
+    expect(postResponse.headers.location).toBe(`applying`)
   })
 
   it('should store user response and redirects to applicant page', async () => {
@@ -301,6 +301,6 @@ describe('Project and business details page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/applying`)
+    expect(postResponse.headers.location).toBe(`applying`)
   })
 })
