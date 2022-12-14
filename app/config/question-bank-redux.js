@@ -193,7 +193,7 @@ const questionBank = {
       validate: [
         {
           type: 'NOT_EMPTY',
-          error: 'Select your county'
+          error: 'Select yes if the project is in England'
         }
       ],
       answers: [
@@ -251,7 +251,8 @@ const questionBank = {
         },
         {
           key: 'planning-permission-A4',
-          value: 'Will not be in place by 31 January 2023'
+          value: 'Will not be in place by 31 January 2023',
+          notEligible: true
         }
       ],
       yarKey: 'planningPermission'
