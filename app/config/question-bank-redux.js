@@ -2,7 +2,8 @@ const {
   MIN_GRANT,
   MAX_GRANT,
   GRANT_PERCENTAGE,
-  NAME_ONLY_REGEX
+  NAME_ONLY_REGEX,
+  MIN_MAX_NUMBER
 } = require('../helpers/grant-details')
 const {
   PROJECT_COST_REGEX,
@@ -482,7 +483,7 @@ const questionBank = {
         {
           type: 'MIN_MAX',
           min: 1,
-          max: MAX_GRANT,
+          max: MIN_MAX_NUMBER,
           error: 'Enter a whole number with a maximum of 7 digits'
         }
       ],
