@@ -195,7 +195,7 @@ describe('Agent details page', () => {
     expect(postResponse.payload).toContain('Enter an email address that matches')
   })
 
-  it.skip('should validate email in fail handler', async () => { // redundant test? the test before it does  the same thing
+  it('should throw error when confirm email is not entered', async () => {
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/agent-details`,
@@ -209,7 +209,7 @@ describe('Agent details page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Enter an email address that matches')
+    expect(postResponse.payload).toContain('Confirm your email address')
   })
 
   it('should validate landline - if typed in', async () => {
@@ -453,7 +453,7 @@ describe('Agent details page', () => {
     const postResponse = await global.__SERVER__.inject(postOptions)
     console.log('postResponse: ', postResponse.payload);
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe(`applicant-details`)
+    expect(postResponse.headers.location).toBe('applicant-details')
   })
 
   it.skip('should store user responseand redircet to check-details', async () => { // not needed anymore?? this route will never redirect to check-details

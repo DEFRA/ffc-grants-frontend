@@ -481,9 +481,9 @@ const questionBank = {
           error: 'Enter a whole number with a maximum of 7 digits'
         },
         {
-          type: 'MIN_MAX',
+          type: 'MIN_MAX_CHARS',
           min: 1,
-          max: MIN_MAX_NUMBER,
+          max: 7,
           error: 'Enter a whole number with a maximum of 7 digits'
         }
       ],

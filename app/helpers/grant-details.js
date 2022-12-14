@@ -1,6 +1,5 @@
 const MIN_GRANT = 35000
 const MAX_GRANT = 500000
-const MIN_MAX_NUMBER = 9999999
 const GRANT_PERCENTAGE = 40
 const NAME_ONLY_REGEX = /^[a-zA-Z,' -]*$/
 module.exports = {
@@ -8,5 +7,4 @@ module.exports = {
   MAX_GRANT,
   GRANT_PERCENTAGE,
   NAME_ONLY_REGEX,
-  MIN_MAX_NUMBER
 }
