@@ -17,7 +17,6 @@ const {
   getConfirmationId,
   handleConditinalHtmlData,
   getCheckDetailsModel,
-  getEvidenceSummaryModel,
   getDataFromYarValue,
   getConsentOptionalData,
   saveValuesToArray,
@@ -118,13 +117,6 @@ const getPage = async (question, request, h) => {
   switch (url) {
     case 'check-details': {
       return h.view('check-details', getCheckDetailsModel(request, question, backUrl, nextUrl))
-    }
-    case 'planning-permission-summary': {
-      const evidenceSummaryModel = getEvidenceSummaryModel(request, question, backUrl, nextUrl)
-      if (evidenceSummaryModel.redirect) {
-        return h.redirect(startPageUrl)
-      }
-      return h.view('evidence-summary', evidenceSummaryModel)
     }
     case 'score':
     case 'business-details':

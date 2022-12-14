@@ -74,33 +74,6 @@ const getCheckDetailsModel = (request, question, backUrl, nextUrl) => {
   })
 }
 
-const getEvidenceSummaryModel = (request, question, backUrl, nextUrl) => {
-  setYarValue(request, 'reachedEvidenceSummary', true)
-
-  const planningPermission = getYarValue(request, 'planningPermission')
-  const gridReference = getYarValue(request, 'gridReference')
-  const hasEvidence = !planningPermission.startsWith('Not yet')
-  if (hasEvidence && !getYarValue(request, 'PlanningPermissionEvidence')) {
-    return { redirect: true }
-  }
-
-  return ({
-    ...question.pageData,
-    backUrl,
-    nextUrl,
-    planningPermission,
-    gridReference,
-    ...(hasEvidence
-      ? {
-          evidence: {
-            planningAuthority: getYarValue(request, 'PlanningPermissionEvidence').planningAuthority,
-            planningReferenceNumber: getYarValue(request, 'PlanningPermissionEvidence').planningReferenceNumber
-          }
-        }
-      : {}
-    )
-  })
-}
 
 const getDataFromYarValue = (request, yarKey, type) => {
   let data = getYarValue(request, yarKey) || null
@@ -134,7 +107,6 @@ module.exports = {
   getConfirmationId,
   handleConditinalHtmlData,
   getCheckDetailsModel,
-  getEvidenceSummaryModel,
   getDataFromYarValue,
   getConsentOptionalData
 }
