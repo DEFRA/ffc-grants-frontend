@@ -40,7 +40,7 @@ describe('Country Page', () => {
 
   it('should load country page with no yar value sucessfully', async () => {
     varList = {
-      inEngland: null
+      inEngland: undefined
     }
     const options = {
       method: 'GET',
