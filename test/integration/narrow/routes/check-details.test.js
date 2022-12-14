@@ -5,7 +5,7 @@ describe('Check Details page', () => {
       businessDetails: {
         projectName: 'Project Name',
         businessName: 'Business Name',
-        applying: 'Farmer'
+        applying: 'Applicant'
       },
       farmerDetails: {
         firstName: 'First Name',
@@ -16,7 +16,7 @@ describe('Check Details page', () => {
         county: 'Berkshire',
         projectPostcode: 'RG6 7EE',
         businessPostcode: 'N3 4RR',
-        email: 's@s.com',
+        emailAddress: 's@s.com',
         landline: '',
         mobile: '012346789'
       },
@@ -28,11 +28,20 @@ describe('Check Details page', () => {
         town: 'Reading',
         county: 'Berkshire',
         postcode: 'RG6 7EE',
-        email: 's@s.com',
+        emailAddress: 's@s.com',
         landline: '',
         mobile: '012346789'
       }
     }
+  const mockSession = {
+    setYarValue: (request, key, value) => null,
+    getYarValue: (request, key) => {
+      if (Object.keys(varList).includes(key)) return varList[ key ]
+      else return 'Error'
+    }
+  }
+
+  jest.mock('../../../../app/helpers/session', () => mockSession)
 
   jest.mock('../../../../app/messaging/create-msg', () => ({
     getAllDetails: (request, id) => {
@@ -51,6 +60,7 @@ describe('Check Details page', () => {
     }
 
     const response = await global.__SERVER__.inject(options)
+
     expect(response.statusCode).toBe(200)
     const header = getCookieHeader(response)
     expect(header.length).toBe(2)
@@ -74,7 +84,7 @@ describe('Check Details page', () => {
     expect(response.payload).toContain('Check your details')
   })
 
-  it('should have back link to farmers-details', async () => {
+  it('should have back link to applicant-details', async () => {
     const options = {
       method: 'GET',
       url: `${global.__URLPREFIX__}/check-details`,
@@ -87,7 +97,7 @@ describe('Check Details page', () => {
     const response = await global.__SERVER__.inject(options)
     console.log(response.headers.location, 'Redirect Location')
     expect(response.statusCode).toBe(200)
-    expect(response.payload).toContain(`${global.__URLPREFIX__}/applicant-details`)
+    expect(response.payload).toContain(`<a href=\"applicant-details\" class=\"govuk-back-link\" id=\"linkBack\">Back</a>`)
   })
 
   it('should have farmers-details rendered in rows', async () => {
@@ -102,7 +112,7 @@ describe('Check Details page', () => {
 
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
-    expect(response.payload).toContain(`12 Henley Wood Road<br/>12 Henley Wood Road<br/>Reading<br/>Berkshire<br/>N3 4RR`)
+    expect(response.payload).toContain('12 Henley Wood Road<br/>12 Henley Wood Road<br/>Reading<br/>Berkshire')
   })
 
   it('should have continue button to redirect to confirm page ', async () => {
