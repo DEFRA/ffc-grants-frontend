@@ -37,7 +37,7 @@ describe('Utils', () => {
   })
 
   test('getQuestionByKey', () => {
-    const { ALL_QUESTIONS } = require('../../../../app/config/question-bank')
+    const { ALL_QUESTIONS } = require('../../../../app/config/question-bank-redux.js')
     const { getQuestionByKey } = require('../../../../app/helpers/utils')
 
     const containsKey = (searchKey) => (ALL_QUESTIONS.some(({ key }) => searchKey === key))
@@ -45,42 +45,42 @@ describe('Utils', () => {
     expect(containsKey('fake-key')).toBe(false)
     expect(getQuestionByKey('fake-key')).toBeUndefined
 
-    expect(containsKey('applicant-type')).toBe(true)
-    expect(getQuestionByKey('applicant-type')).toBeDefined
-    expect(getQuestionByKey('applicant-type')).toEqual(
+    expect(containsKey('farming-type')).toBe(true)
+    expect(getQuestionByKey('farming-type')).toBeDefined
+    expect(getQuestionByKey('farming-type')).toEqual(
       expect.objectContaining({
-        key: 'applicant-type',
-        baseUrl: 'applicant-type'
+        key: 'farming-type',
+        baseUrl: 'farming-type'
       })
     )
   })
 
   test('getQuestionAnswer', () => {
     const { getQuestionAnswer } = require('../../../../app/helpers/utils')
-    expect(getQuestionAnswer('applicant-type', 'applicant-type-A1')).toBe('Pig')
+    expect(getQuestionAnswer('farming-type', 'farming-type-A1')).toBe('Crops for the food industry')
   })
 
   test('allAnswersSelected', () => {
     const { allAnswersSelected } = require('../../../../app/helpers/utils')
 
-    const mockAnswerList = ['applicant-type-A1', 'applicant-type-A2', 'applicant-type-A3']
+    const mockAnswerList = ['farming-type-A1', 'farming-type-A2', 'farming-type-A3']
 
-    getYarValue.mockReturnValueOnce(['Pig', 'Beef'])
-    getYarValue.mockReturnValueOnce(['Pig', 'Beef', 'Dairy'])
+    getYarValue.mockReturnValueOnce(['Crops for the food industry', 'Horticulture (including ornamentals)'])
+    getYarValue.mockReturnValueOnce(['Crops for the food industry', 'Horticulture (including ornamentals)', 'Something else'])
 
-    expect(allAnswersSelected([], 'applicant-type', mockAnswerList)).toBe(false)
-    expect(allAnswersSelected([], 'applicant-type', mockAnswerList)).toBe(true)
+    expect(allAnswersSelected([], 'farming-type', mockAnswerList)).toBe(false)
+    expect(allAnswersSelected([], 'farming-type', mockAnswerList)).toBe(true)
   })
 
   test('someAnswersSelected', () => {
     const { someAnswersSelected } = require('../../../../app/helpers/utils')
 
-    const mockAnswerList = ['applicant-type-A1', 'applicant-type-A2', 'applicant-type-A3']
+    const mockAnswerList = ['farming-type-A1', 'farming-type-A2', 'farming-type-A3']
 
     getYarValue.mockReturnValueOnce([])
-    getYarValue.mockReturnValueOnce(['Pig', 'Beef', 'Dairy'])
+    getYarValue.mockReturnValueOnce(['Crops for the food industry', 'Horticulture (including ornamentals)', 'Something else'])
 
-    expect(someAnswersSelected([], 'applicant-type', mockAnswerList)).toBe(false)
-    expect(someAnswersSelected([], 'applicant-type', mockAnswerList)).toBe(true)
+    expect(someAnswersSelected([], 'farming-type', mockAnswerList)).toBe(false)
+    expect(someAnswersSelected([], 'farming-type', mockAnswerList)).toBe(true)
   })
 })
