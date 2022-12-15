@@ -27,17 +27,6 @@ describe('Get & Post Handlers', () => {
 
   const { getHandler } = require('../../../../app/helpers/handlers')
 
-  test('will redirect to start page if planning permission evidence is missing', async () => {
-    question = {
-      url: 'planning-permission-summary',
-      title: 'mock-title'
-    }
-    mockH = { redirect: jest.fn() }
-
-    await getHandler(question)({}, mockH)
-    expect(mockH.redirect).toHaveBeenCalledWith('/upgrading-cattle-housing/start')
-  })
-
   test('is eligible if calculated grant = min grant - whether grant is capped or not', async () => {
     question = {
       url: 'mock-url',
@@ -48,6 +37,6 @@ describe('Get & Post Handlers', () => {
     mockH = { redirect: jest.fn() }
 
     await getHandler(question)({}, mockH)
-    expect(mockH.redirect).toHaveBeenCalledWith('/upgrading-cattle-housing/start')
+    expect(mockH.redirect).toHaveBeenCalledWith('/water/start')
   })
 })
