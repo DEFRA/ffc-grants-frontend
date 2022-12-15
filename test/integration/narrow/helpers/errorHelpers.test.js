@@ -23,11 +23,11 @@ describe('Get & Post Handlers', () => {
     }
     expect(validateAnswerField(value, 'COMBINATION_ANSWER', details, {})).toBe(true)
 
-    value = ['Pig', 'Beef', 'Dairy']
+    value = ['Crops for the food industry', 'Horticulture (including ornamentals)', 'Something else']
     details = {
       combinationObject: {
-        questionKey: 'applicant-type',
-        combinationAnswerKeys: ['applicant-type-A1', 'applicant-type-A2', 'applicant-type-A3']
+        questionKey: 'farming-type',
+        combinationAnswerKeys: ['farming-type-A1', 'farming-type-A2', 'farming-type-A3']
       }
     }
     expect(validateAnswerField(value, 'COMBINATION_ANSWER', details, {})).toBe(true)
