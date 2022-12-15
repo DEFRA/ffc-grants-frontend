@@ -36,12 +36,15 @@ describe('create-msg', () => {
       environmentalImpact: ['env-imp']
     }
     expect(getDesirabilityAnswers({})).toEqual({
-      productsProcessed: 'prod-processed',
-      howAddingValue: 'how-av',
-      projectImpact: ['proj-imp'],
-      futureCustomers: ['future-cust'],
+      irrigatedCrops: 'irrigatedCrops',
+      irrigatedLandCurrent: 'irrigatedLandCurrent',
+      irrigatedLandTarget: 'irrigatedLandTarget',
+      waterSourceCurrent: ['waterSourceCurrent'],
+      waterSourcePlanned: ['waterSourcePlanned'],
+      irrigationCurrent: ['irrigationCurrent'],
+      irrigationPlanned: ['irrigationPlanned'],
+      productivity: 'productivity',
       collaboration: 'collaboration',
-      environmentalImpact: ['env-imp']
     })
 
     dict = {
