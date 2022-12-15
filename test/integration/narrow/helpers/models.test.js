@@ -33,12 +33,11 @@ describe('Models', () => {
       text: 'answer_text'
     }],
     backUrlObject: {
-      dependentQuestionYarKey: 'tenancyLength',
-      dependentAnswerKeysArray: ['tenancy-length-A1'],
+      dependentQuestionYarKey: 'applying',
+      dependentAnswerKeysArray: ['applying-A2'],
       urlOptions: {
-        thenUrl: 'tenancy-length',
-        elseUrl: 'tenancy-length-condition',
-        nonDependentUrl: 'tenancy'
+        thenUrl: 'agent-details',
+        elseUrl: 'applying'
       }
     },
     sidebar: {
@@ -142,10 +141,8 @@ describe('Models', () => {
 
     getUrl.mockReturnValueOnce('remaining-costs')
     getUrl.mockReturnValueOnce('tenancy')
-    getUrl.mockReturnValueOnce('tenancy')
 
     expect(getModel([], question, {}).backUrl).toBeNull()
-    expect(getModel([], question, {}).backUrl).toEqual('tenancy')
     expect(getModel([], question, {}).backUrl).toEqual('tenancy')
   })
 
@@ -178,12 +175,11 @@ describe('Models', () => {
         text: 'answer_text'
       }],
       backUrlObject: {
-        dependentQuestionYarKey: 'tenancyLength',
-        dependentAnswerKeysArray: ['tenancy-length-A1'],
+        dependentQuestionYarKey: 'applying',
+        dependentAnswerKeysArray: ['applying-A2'],
         urlOptions: {
-          thenUrl: 'tenancy-length',
-          elseUrl: 'tenancy-length-condition',
-          nonDependentUrl: 'tenancy'
+          thenUrl: 'agent-details',
+          elseUrl: 'applying'
         }
       },
       sidebar: {
@@ -249,44 +245,6 @@ describe('Models', () => {
             selected: false,
             text: 'answer_text',
             value: 'mock_answer_value'
-          }
-        ]
-      },
-      sideBarText: {
-        dependentQuestionKeys: [
-          'storage-type', 'cover-type'
-        ],
-        linkedQuestionkey: ['serviceable-capacity-increase-additional'],
-        mainHeading: 'Your project items',
-        prefixSufix: [
-          {
-            linkedPrefix: 'Increase: ',
-            linkedSufix: 'm³'
-          }
-        ],
-        values: [
-          {
-            content: [{
-              dependentAnswerExceptThese: [],
-              items: [
-                'mock-value'
-              ],
-              para: ''
-            }],
-            heading: 'Store'
-          },
-          {
-            content: [
-              {
-                dependentAnswerExceptThese: [],
-                items: [
-                  'Not needed'
-                ],
-                para: ''
-              }
-
-            ],
-            heading: 'Cover'
           }
         ]
       },
