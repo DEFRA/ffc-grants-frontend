@@ -10,7 +10,7 @@ const nextPath = `${urlPrefix}/irrigation-systems`;
 const previousPath = `${urlPrefix}/abstraction`;
 
 function createModel(errorList, projectInfrastucture, projectEquipment) {
-  console.log(projectInfrastucture, 'projectInfrastucture')
+  console.log('ERROR LIST', errorList)
   return {
     backLink: previousPath,
     formActionLink: currentPath,
@@ -36,7 +36,7 @@ function createModel(errorList, projectInfrastucture, projectEquipment) {
       ]),
       ...(errorList ? { errorMessage: { text: errorList[0].text } } : {}),
     }, } : ''),
-    ...(projectEquipment ? { checkboxesEquipment: {
+    ...(projectEquipment || projectEquipment===undefined ? { checkboxesEquipment: {
       idPrefix: "projectEquipment",
       name: "projectEquipment",
       fieldset: {
@@ -64,18 +64,16 @@ module.exports = [
     method: "GET",
     path: currentPath,
     handler: (request, h) => {
-      const projectInfrastucture =
+      let projectInfrastucture =
         getYarValue(request, "projectInfrastucture") || null;
-      const projectEquipment = getYarValue(request, "projectEquipment") || null;
+      let projectEquipment = getYarValue(request, "projectEquipment") || null;
       if(getYarValue(request, "abstraction")==='use currently'){
-        console.log('HELLO')
         return h.view(
           viewTemplate,
           createModel(null, projectInfrastucture, null)
         );
       }
       if(getYarValue(request, "abstraction")==='Maintain and introduce or increase a sustainable water source'){
-        console.log('HOW ARE YOU ?')
         return h.view(
           viewTemplate,
           createModel(null, null, projectEquipment)
@@ -96,7 +94,7 @@ module.exports = [
       handler: (request, h) => {
         const errorList = [
           {
-            text: "Select up to 2 options",
+            text: "Select up to 3 options",
             href: "#projectInfrastucture",
           },
           {
@@ -105,8 +103,10 @@ module.exports = [
           },
         ];
         let { projectInfrastucture, projectEquipment } = request.payload;
+        console.log('PAYLOAD', request.payload)
 
         if (!projectInfrastucture) {
+          projectInfrastucture = getYarValue(request, "projectInfrastucture")
           gapiService.sendValidationDimension(request);
           return h.view(
             viewTemplate,
@@ -118,6 +118,7 @@ module.exports = [
           );
         }
         if (!projectEquipment) {
+          projectEquipment = getYarValue(request, "projectEquipment")
           gapiService.sendValidationDimension(request);
           return h.view(
             viewTemplate,
@@ -129,25 +130,23 @@ module.exports = [
           );
         }
 
-        projectInfrastucture = [projectInfrastucture].flat();
-        projectEquipment = [projectEquipment].flat();
-
-        setYarValue(request, "projectInfrastucture", projectInfrastucture);
-        setYarValue(request, "projectEquipment", projectEquipment);
-
-        const projectInfrastuctureList = projectInfrastucture.filter(
-          (x) => !!x
-        );
-        const projectEquipmentList = projectEquipment.filter((x) => !!x);
-
-        const projectItemsList = [
-          ...projectInfrastuctureList,
-          ...projectEquipmentList,
-        ];
-
-        setYarValue(request, "projectItemsList", projectItemsList);
-
-        return h.redirect(nextPath);
+        if(projectInfrastucture){
+          projectInfrastucture = [projectInfrastucture].flat();
+          setYarValue(request, "projectInfrastucture", projectInfrastucture);
+          const projectInfrastuctureList = projectInfrastucture.filter((x) => !!x);
+          const projectItemsList = [...projectInfrastuctureList];
+          setYarValue(request, "projectItemsList", projectItemsList);
+          return h.redirect(nextPath);
+        }
+        
+        if(projectEquipment){
+          projectEquipment = [projectEquipment].flat();
+          setYarValue(request, "projectEquipment", projectEquipment);
+          const projectEquipmentList = projectEquipment.filter((x) => !!x);
+          const projectItemsList = [...projectEquipmentList];
+          setYarValue(request, "projectItemsList", projectItemsList);
+          return h.redirect(nextPath);
+        }
       },
     },
   },
