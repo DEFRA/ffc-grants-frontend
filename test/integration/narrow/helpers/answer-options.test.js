@@ -1,8 +1,6 @@
 const { getOptions, setOptionsLabel } = require('../../../../app/helpers/answer-options')
 describe('answer-options', () => {
   test('check getOptions()', () => {
-    formatAnswerArray.mockImplementation((a, b, c, d) => (['answer-1', 'answer-2']))
-
     let question = {
       costDataType: 'cost-data-type',
       answers: [],
