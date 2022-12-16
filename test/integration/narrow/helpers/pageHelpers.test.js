@@ -15,41 +15,8 @@ describe('Page Helpers', () => {
 
   const {
     handleConditinalHtmlData,
-    getCheckDetailsModel,
-    getEvidenceSummaryModel
+    getCheckDetailsModel
   } = require('../../../../app/helpers/pageHelpers')
-
-  test('check getEvidenceSummaryModel() returns the redirect object if planning permission is missing', () => {
-    expect(getEvidenceSummaryModel({}, {}, 'back-url', 'next-url')).toEqual({ redirect: true })
-  })
-
-  test('check getEvidenceSummaryModel() loads correct value WITH planning permission evidence', () => {
-    varList.PlanningPermissionEvidence = {
-      planningAuthority: 'planning-auth',
-      planningReferenceNumber: 'planning-ref-num'
-    }
-
-    expect(getEvidenceSummaryModel({}, {}, 'back-url', 'next-url')).toEqual({
-      backUrl: 'back-url',
-      nextUrl: 'next-url',
-      planningPermission: 'some fake value',
-      gridReference: 'grid-ref-num',
-      evidence: {
-        planningAuthority: 'planning-auth',
-        planningReferenceNumber: 'planning-ref-num'
-      }
-    })
-  })
-
-  test('check getEvidenceSummaryModel loads correct value with no planning permission evidence', () => {
-    varList.planningPermission = 'Not yet'
-
-    expect(getEvidenceSummaryModel({}, {}, 'back-url', 'next-url')).toEqual({
-      backUrl: 'back-url',
-      nextUrl: 'next-url',
-      planningPermission: 'Not yet',
-    })
-  })
 
   test('check handleConditinalHtmlData()', () => {
     let result
