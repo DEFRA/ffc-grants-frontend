@@ -17,8 +17,6 @@ const mockSession = {
 jest.mock('../../../../app/helpers/session', () => mockSession)
 
 describe('Country Page', () => {
-  const inEngland = varListTemplate.inEngland
-
   beforeEach(() => {
     varList = { ...varListTemplate }
   })

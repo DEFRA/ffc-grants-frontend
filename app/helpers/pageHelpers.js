@@ -3,7 +3,7 @@ const { setOptionsLabel } = require('../helpers/answer-options')
 const { getYarValue, setYarValue } = require('../helpers/session')
 
 const getConfirmationId = (guid) => {
-  const prefix = 'UCH'
+  const prefix = 'WM'
   return `${prefix}-${guid.substr(0, 3)}-${guid.substr(3, 3)}`.toUpperCase()
 }
 
@@ -73,7 +73,6 @@ const getCheckDetailsModel = (request, question, backUrl, nextUrl) => {
 
   })
 }
-
 
 const getDataFromYarValue = (request, yarKey, type) => {
   let data = getYarValue(request, yarKey) || null
