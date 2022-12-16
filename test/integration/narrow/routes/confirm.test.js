@@ -40,7 +40,6 @@ describe('Confirm page', () => {
     expect(response.statusCode).toBe(200)
   })
 
-
   it('should redirect to /start page if farmerAddressDetails are missing', async () => {
     varList.farmerDetails = null
     const options = {
@@ -54,21 +53,7 @@ describe('Confirm page', () => {
     expect(response.headers.location).toBe(`${global.__URLPREFIX__}/start`)
   })
 
-  it('should redirect to /start page if checkDetails are missing', async () => {
-    varList.checkDetails = null
-    const options = {
-      method: 'GET',
-      url: `${global.__URLPREFIX__}/confirm`,
-      headers: { cookie: 'crumb=' + crumbToken }
-    }
-
-    const response = await global.__SERVER__.inject(options)
-    expect(response.statusCode).toBe(302)
-    expect(response.headers.location).toBe(`${global.__URLPREFIX__}/start`)
-  })
-
-
-  it('should store user response and redirects to confirmation page', async () => {
+  it('should redirects to confirmation page when the user click continue', async () => {
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/confirm`,
@@ -78,6 +63,6 @@ describe('Confirm page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe(`confirmation`)
+    expect(postResponse.headers.location).toBe('confirmation')
   })
 })

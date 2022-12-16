@@ -1808,8 +1808,7 @@ const questionBank = {
       fundingPriorities: '',
       type: '',
       minAnswerCount: 1,
-      answers: [],
-      yarKey: 'checkDetails'
+      answers: []
     },
     {
       key: 'confirm',
@@ -1818,7 +1817,7 @@ const questionBank = {
       url: 'confirm',
       backUrl: 'check-details',
       nextUrl: 'confirmation',
-      preValidationKeys: ['farmerDetails', 'checkDetails'],
+      preValidationKeys: ['farmerDetails'],
       maybeEligible: true,
       maybeEligibleContent: {
         messageHeader: 'Confirm and send',
