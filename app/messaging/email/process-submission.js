@@ -14,7 +14,7 @@ module.exports = async function (msg) {
 
     return msgOut
   } catch (err) {
-    console.error(`[ERROR][UNABLE TO PROCESS CONTACT DETAILS RECEIVER MESSAGE][${err}]`)
+    console.error(`[ERROR][UNABLE TO PROCESS DETAILS RECEIVER MESSAGE][${err}]`)
     appInsights.logException(err, msg?.correlationId)
   }
 }
