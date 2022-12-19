@@ -27,27 +27,32 @@ const desirabilityAnswersSchema = Joi.object({
 
 function getDesirabilityAnswers (request) {
   console.log('getDesirabilityAnswers: ', 2);
-  const val = {
-    project: getDataFromYarValue(request, 'project', 'multi-answer'),
-    irrigatedCrops: request.yar.get('irrigatedCrops'),
-    irrigatedLandCurrent: Number(request.yar.get('irrigatedLandCurrent')),
-    irrigatedLandTarget: Number(request.yar.get('irrigatedLandTarget')),
-    waterSourceCurrent: getDataFromYarValue(request, 'waterSourceCurrent', 'multi-answer'),
-    waterSourcePlanned: getDataFromYarValue(request, 'waterSourcePlanned', 'multi-answer'),
-    irrigationCurrent: getDataFromYarValue(request, 'irrigationCurrent', 'multi-answer'),
-    irrigationPlanned: getDataFromYarValue(request, 'irrigationPlanned', 'multi-answer'),
-    productivity: getDataFromYarValue(request,'productivity', 'multi-answer'),
-    collaboration: request.yar.get('collaboration')
+  try {
+    const val = {
+      project: getDataFromYarValue(request, 'project', 'multi-answer'),
+      irrigatedCrops: request.yar.get('irrigatedCrops'),
+      irrigatedLandCurrent: Number(request.yar.get('irrigatedLandCurrent')),
+      irrigatedLandTarget: Number(request.yar.get('irrigatedLandTarget')),
+      waterSourceCurrent: getDataFromYarValue(request, 'waterSourceCurrent', 'multi-answer'),
+      waterSourcePlanned: getDataFromYarValue(request, 'waterSourcePlanned', 'multi-answer'),
+      irrigationCurrent: getDataFromYarValue(request, 'irrigationCurrent', 'multi-answer'),
+      irrigationPlanned: getDataFromYarValue(request, 'irrigationPlanned', 'multi-answer'),
+      productivity: getDataFromYarValue(request,'productivity', 'multi-answer'),
+      collaboration: request.yar.get('collaboration')
+    }
+    console.log('val: ', val);
+    const result = desirabilityAnswersSchema.validate(val, {
+      abortEarly: false
+    })
+    // console.log('result: ', result);
+    if (result.error) {
+      throw new Error(`The scoring data is invalid. ${result.error.message}`)
+    }
+    return result.value
+  } catch (ex) {
+    console.log(ex, 'error')
+    return null
   }
-  console.log('val: ', val);
-  const result = desirabilityAnswersSchema.validate(val, {
-    abortEarly: false
-  })
-  // console.log('result: ', result);
-  if (result.error) {
-    throw new Error(`The scoring data is invalid. ${result.error.message}`)
-  }
-  return result.value
 }
 
 module.exports = {
