@@ -18,7 +18,7 @@ describe('create-msg', () => {
       irrigationCurrent: ['irg-cur'],
       irrigationPlanned: ['irg-plan'],
       productivity: ['productivity'],
-      collaboration: 'clb'
+      collaboration: 'collaboration'
     }
     expect(getDesirabilityAnswers({})).toEqual({
       project: ['prj'],
@@ -30,16 +30,16 @@ describe('create-msg', () => {
       irrigationCurrent: ['irg-cur'],
       irrigationPlanned: ['irg-plan'],
       productivity: ['productivity'],
-      collaboration: 'clb'
+      collaboration: 'collaboration'
     })
 
     dict = {
       ...dict,
-      collaboration: 'collabration'
+      waterSourcePlanned: 'wtr-src-pln'
     }
     expect(getDesirabilityAnswers({})).toEqual({
       project: ['prj'],
-      irrigatedCrops: 'irrigated-crp',
+      irrigatedCrops: 'irrigatedCrops',
       irrigatedLandCurrent: 22,
       irrigatedLandTarget: 33,
       waterSourceCurrent: ['wtr-src-ct'],
@@ -47,12 +47,12 @@ describe('create-msg', () => {
       irrigationCurrent: ['irg-cur'],
       irrigationPlanned: ['irg-plan'],
       productivity: ['productivity'],
-      collaboration: 'collabration'
+      collaboration: 'collaboration'
     })
 
     dict = {
       ...dict,
-      irrigationPlanned: ['irg-plan']
+      collaboration: ['collaboration']
     }
     expect(getDesirabilityAnswers({})).toEqual(null)
   })
