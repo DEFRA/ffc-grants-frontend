@@ -26,7 +26,7 @@ const desirabilityAnswersSchema = Joi.object({
 })
 
 function getDesirabilityAnswers (request) {
-  console.log('getDesirabilityAnswers: ', 2);
+  console.log('getDesirabilityAnswers: ', 2)
   const val = {
     project: getDataFromYarValue(request, 'project', 'multi-answer'),
     irrigatedCrops: request.yar.get('irrigatedCrops'),
@@ -39,7 +39,7 @@ function getDesirabilityAnswers (request) {
     productivity: getDataFromYarValue(request,'productivity', 'multi-answer'),
     collaboration: request.yar.get('collaboration')
   }
-  console.log('val: ', val);
+  console.log('val: ', val)
   const result = desirabilityAnswersSchema.validate(val, {
     abortEarly: false
   })

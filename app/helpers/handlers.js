@@ -6,7 +6,6 @@ const { formatUKCurrency } = require('../helpers/data-formats')
 const { SELECT_VARIABLE_TO_REPLACE, DELETE_POSTCODE_CHARS_REGEX } = require('../helpers/regex')
 const { getUrl } = require('../helpers/urls')
 const { guardPage } = require('../helpers/page-guard')
-const { notUniqueSelection, uniqueSelection } = require('../helpers/utils')
 const senders = require('../messaging/senders')
 const createMsg = require('../messaging/create-msg')
 const emailFormatting = require('./../messaging/email/process-submission')
@@ -42,9 +41,10 @@ const getPage = async (question, request, h) => {
       }
       confirmationId = getConfirmationId(request.yar.id)
       try {
-        const emailData = await emailFormatting({ body: createMsg.getAllDetails(request, confirmationId) }, request.yar.id)
+        const overAllScore = getYarValue(request, 'overAllScore')
+        const emailData = await emailFormatting({ body: createMsg.getAllDetails(request, confirmationId), overAllScore, correlationId: request.yar.id })
         await senders.sendDesirabilitySubmitted(emailData, request.yar.id) // replace with sendDesirabilitySubmitted, and replace first param with call to function in process-submission
-        await gapiService.sendDimensionOrMetrics(request, [ {
+        await gapiService.sendDimensionOrMetrics(request, [{
           dimensionOrMetric: gapiService.dimensions.CONFIRMATION,
           value: confirmationId
         }, {
@@ -127,53 +127,6 @@ const getPage = async (question, request, h) => {
     default:
       break
   }
-  // if (url === 'check-details') {
-  //   setYarValue(request, 'reachedCheckDetails', true)
-
-  //   const applying = getYarValue(request, 'applying')
-  //   const businessDetails = getYarValue(request, 'businessDetails')
-  //   const agentDetails = getYarValue(request, 'agentsDetails')
-  //   const farmerDetails = getYarValue(request, 'farmerDetails')
-
-  //   const agentContact = saveValuesToArray(agentDetails, [ 'emailAddress', 'mobileNumber', 'landlineNumber' ])
-  //   const agentAddress = saveValuesToArray(agentDetails, [ 'address1', 'address2', 'town', 'county', 'postcode' ])
-
-  //   const farmerContact = saveValuesToArray(farmerDetails, [ 'emailAddress', 'mobileNumber', 'landlineNumber' ])
-  //   const farmerAddress = saveValuesToArray(farmerDetails, [ 'address1', 'address2', 'town', 'county', 'postcode' ])
-
-  //   const MODEL = {
-  //     ...question.pageData,
-  //     backUrl,
-  //     nextUrl,
-  //     applying,
-  //     businessDetails,
-  //     farmerDetails: {
-  //       ...farmerDetails,
-  //       ...(farmerDetails
-  //         ? {
-  //             name: `${farmerDetails.firstName} ${farmerDetails.lastName}`,
-  //             contact: farmerContact.join('<br/>'),
-  //             address: farmerAddress.join('<br/>')
-  //           }
-  //         : {}
-  //       )
-  //     },
-  //     agentDetails: {
-  //       ...agentDetails,
-  //       ...(agentDetails
-  //         ? {
-  //             name: `${agentDetails.firstName} ${agentDetails.lastName}`,
-  //             contact: agentContact.join('<br/>'),
-  //             address: agentAddress.join('<br/>')
-  //           }
-  //         : {}
-  //       )
-  //     }
-
-  //   }
-
-  //   return h.view('check-details', MODEL)
-  // }
 
   return h.view('page', getModel(data, question, request, conditionalHtml))
 }

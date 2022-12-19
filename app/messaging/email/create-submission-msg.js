@@ -1,19 +1,19 @@
 const emailConfig = require('./config/email')
 const spreadsheetConfig = require('./config/spreadsheet')
 
-function getQuestionScoreBand(questions, questionKey) {
+function getQuestionScoreBand (questions, questionKey) {
   return questions.find(question => question.key === questionKey).rating.band
 }
 
-function generateRow(rowNumber, name, value, bold = false) {
+function generateRow (rowNumber, name, value, bold = false) {
   return {
     row: rowNumber,
-    values: [ '', name, value ],
+    values: ['', name, value],
     bold
   }
 }
 
-function farmingTypeMapping(farmingType) {
+function farmingTypeMapping (farmingType) {
   switch (farmingType) {
     case 'Crops for the food industry':
       return 'Arable farmer'
@@ -24,7 +24,7 @@ function farmingTypeMapping(farmingType) {
   }
 }
 
-function calculateBusinessSize(employees, turnover) {
+function calculateBusinessSize (employees, turnover) {
   const employeesNum = Number(employees)
   const turnoverNum = Number(turnover)
 
@@ -39,7 +39,7 @@ function calculateBusinessSize(employees, turnover) {
   }
 }
 
-function addAgentDetails(agentDetails) {
+function addAgentDetails (agentDetails) {
   return [
     generateRow(26, 'Agent Surname', agentDetails?.lastName ?? ''),
     generateRow(27, 'Agent Forename', agentDetails?.firstName ?? ''),
@@ -50,12 +50,12 @@ function addAgentDetails(agentDetails) {
     generateRow(34, 'Agent Postcode (use capitals)', agentDetails?.postcode ?? ''),
     generateRow(35, 'Agent Landline number', agentDetails?.landline ?? ''),
     generateRow(36, 'Agent Mobile number', agentDetails?.mobile ?? ''),
-    generateRow(37, 'Agent Email', agentDetails?.email ?? ''),
+    generateRow(37, 'Agent Email', agentDetails?.emailAddress ?? ''),
     generateRow(28, 'Agent Business Name', agentDetails?.businessName ?? '')
   ]
 }
 
-function generateExcelFilename(scheme, projectName, businessName, referenceNumber, today) {
+function generateExcelFilename (scheme, projectName, businessName, referenceNumber, today) {
   const dateTime = new Intl.DateTimeFormat('en-GB', {
     timeStyle: 'short',
     dateStyle: 'short',
@@ -64,7 +64,7 @@ function generateExcelFilename(scheme, projectName, businessName, referenceNumbe
   return `${scheme}_${projectName}_${businessName}_${referenceNumber}_${dateTime}.xlsx`
 }
 
-function getSpreadsheetDetails(submission, desirabilityScore) {
+function getSpreadsheetDetails (submission, desirabilityScore) {
   const today = new Date()
   const todayStr = today.toLocaleDateString('en-GB')
   const subScheme = 'FTF-Water-Round 2'
@@ -98,27 +98,27 @@ function getSpreadsheetDetails(submission, desirabilityScore) {
           generateRow(45, 'Location of project (postcode)', submission.farmerDetails.projectPostcode),
           generateRow(342, 'Land owned by Farm', submission.landOwnership),
           generateRow(343, 'Tenancy for next 5 years', submission.tenancyLength ?? ''),
-          generateRow(344, 'Irrigation Infrastructure ', submission.projectItemsList.join('|')),
+          generateRow(344, 'Irrigation Infrastructure ', [submission.projectItemsList].flat().join('|')),
           generateRow(55, 'Total project expenditure', String(submission.projectCost) * 2),
           generateRow(57, 'Grant rate', '40'),
           generateRow(56, 'Grant amount requested', submission.calculatedGrant),
           generateRow(345, 'Remaining Cost to Farmer', submission.remainingCost),
           generateRow(346, 'Planning Permission Status', submission.planningPermission),
           generateRow(347, 'Abstraction License Status', submission.abstractionLicence),
-          generateRow(348, 'Irrigation Impact', submission.project.join('|')),
+          generateRow(348, 'Irrigation Impact', [submission.project].flat().join('|')),
           generateRow(349, 'Irrigation Impact Score', getQuestionScoreBand(desirabilityScore.desirability.questions, 'Q14')),
           generateRow(350, 'Irrigation Farming Scale (AKA Crop Type)', submission.irrigatedCrops),
           generateRow(351, 'Irrigation Crop Score', ''),
           generateRow(352, 'As-Is Irrigation (ha)', submission.irrigatedLandCurrent),
           generateRow(353, 'To-Be Irrigation (ha)', submission.irrigatedLandTarget),
           generateRow(354, 'Irrigation Hectare Score', getQuestionScoreBand(desirabilityScore.desirability.questions, 'Q16')),
-          generateRow(355, 'As-Is Water Source', submission.waterSourceCurrent.join('|')),
-          generateRow(356, 'To-Be Water Source', submission.waterSourcePlanned.join('|')),
+          generateRow(355, 'As-Is Water Source', [submission.waterSourceCurrent].flat().join('|')),
+          generateRow(356, 'To-Be Water Source', [submission.waterSourcePlanned].flat().join('|')),
           generateRow(357, 'Water Source Score', getQuestionScoreBand(desirabilityScore.desirability.questions, 'Q17')),
-          generateRow(358, 'As-Is Irrigation Method', submission.irrigationCurrent.join('|')),
-          generateRow(359, 'To-Be Irrigation Method', submission.irrigationPlanned.join('|')),
+          generateRow(358, 'As-Is Irrigation Method', [submission.irrigationCurrent].flat().join('|')),
+          generateRow(359, 'To-Be Irrigation Method', [submission.irrigationPlanned].flat().join('|')),
           generateRow(360, 'Irrigation Method Score', getQuestionScoreBand(desirabilityScore.desirability.questions, 'Q18')),
-          generateRow(361, 'Irrigation Productivity Benefit', submission.productivity.join('|')),
+          generateRow(361, 'Irrigation Productivity Benefit', [submission.productivity].flat().join('|')),
           generateRow(362, 'Irrigation Productivity Score', getQuestionScoreBand(desirabilityScore.desirability.questions, 'Q19')),
           generateRow(363, 'Benefits Other Farms', submission.collaboration),
           generateRow(364, 'Other Farms Benefit Score', getQuestionScoreBand(desirabilityScore.desirability.questions, 'Q20')),
@@ -131,7 +131,7 @@ function getSpreadsheetDetails(submission, desirabilityScore) {
           generateRow(367, 'Annual Turnover', submission.businessDetails.businessTurnover),
           generateRow(22, 'Employees', submission.businessDetails.numberEmployees),
           generateRow(20, 'Business size', calculateBusinessSize(submission.businessDetails.numberEmployees, submission.businessDetails.businessTurnover)),
-          generateRow(44, 'Description of project', submission.projectItemsList.join(', ').substring(0, 60)),
+          generateRow(44, 'Description of project', [submission.projectItemsList].flat().join(', ').substring(0, 60)),
           generateRow(91, 'Are you an AGENT applying on behalf of your customer', submission.applying === 'Agent' ? 'Yes' : 'No'),
           generateRow(5, 'Surname', submission.farmerDetails.lastName),
           generateRow(6, 'Forename', submission.farmerDetails.firstName),
@@ -144,7 +144,7 @@ function getSpreadsheetDetails(submission, desirabilityScore) {
           generateRow(13, 'Postcode (use capitals)', submission.farmerDetails.businessPostcode),
           generateRow(16, 'Landline number', submission.farmerDetails.landline),
           generateRow(17, 'Mobile number', submission.farmerDetails.mobile),
-          generateRow(18, 'Email', submission.farmerDetails.email),
+          generateRow(18, 'Email', submission.farmerDetails.emailAddress),
           generateRow(89, 'Customer Marketing Indicator', submission.consentOptional ? 'Yes' : 'No'),
           generateRow(368, 'Date ready for QC or decision', todayStr),
           generateRow(369, 'Eligibility Reference No.', submission.confirmationId),
@@ -166,7 +166,7 @@ function getSpreadsheetDetails(submission, desirabilityScore) {
   }
 }
 
-function getScoreChance(rating) {
+function getScoreChance (rating) {
   switch (rating.toLowerCase()) {
     case 'strong':
       return 'seems likely to'
@@ -177,12 +177,11 @@ function getScoreChance(rating) {
   }
 }
 
-
-function getEmailDetails(submission, desirabilityScore, notifyTemplate, agentApplying, rpaEmail) {
-  const email = agentApplying ? submission.agentDetails.email : submission.farmerDetails.email
+function getEmailDetails (submission, desirabilityScore, notifyTemplate, agentApplying, rpaEmail) {
+  const email = agentApplying ? submission.agentDetails.emailAddress : submission.farmerDetails.emailAddress
   return {
     notifyTemplate: emailConfig.notifyTemplate,
-    emailAddress: rpaEmail ? rpaEmail : email,
+    emailAddress: rpaEmail || email,
     details: {
       firstName: agentApplying ? submission.agentDetails.firstName : submission.farmerDetails.firstName,
       lastName: agentApplying ? submission.agentDetails.lastName : submission.farmerDetails.lastName,
@@ -194,9 +193,9 @@ function getEmailDetails(submission, desirabilityScore, notifyTemplate, agentApp
       location: `England ${submission.farmerDetails.projectPostcode}`,
       landOwnership: submission.landOwnership,
       tenancyAgreement: submission.tenancyLength ?? 'N/A',
-      infrastructureEquipment: submission.projectInfrastucture.join(', '),
-      irrigationEquipment: submission.projectEquipment.join(', '),
-      technology: submission.projectTechnology.join(', '),
+      infrastructureEquipment: [submission.projectInfrastucture].flat().join(', '),
+      irrigationEquipment: [submission.projectEquipment].flat().join(', '),
+      technology: [submission.projectTechnology].flat().join(', '),
       itemsCost: String(submission.projectCost),
       potentialFunding: submission.calculatedGrant,
       remainingCost: submission.remainingCost,
@@ -204,19 +203,19 @@ function getEmailDetails(submission, desirabilityScore, notifyTemplate, agentApp
       planningPermission: submission.planningPermission,
       abstractionLicence: submission.abstractionLicence,
       projectName: submission.businessDetails.projectName,
-      projectDetails: submission.project.join(', '),
+      projectDetails: [submission.project].flat().join(', '),
       projectDetailsScore: getQuestionScoreBand(desirabilityScore.desirability.questions, 'Q14'),
       irrigatedCrops: submission.irrigatedCrops,
       irrigatedLandCurrent: submission.irrigatedLandCurrent,
       irrigatedLandTarget: submission.irrigatedLandTarget,
       irrigatedLandScore: getQuestionScoreBand(desirabilityScore.desirability.questions, 'Q16'),
-      waterSourceCurrent: submission.waterSourceCurrent.join(', '),
-      waterSourcePlanned: submission.waterSourcePlanned.join(', '),
+      waterSourceCurrent: [submission.waterSourceCurrent].flat().join(', '),
+      waterSourcePlanned: [submission.waterSourcePlanned].flat().join(', '),
       waterSourceScore: getQuestionScoreBand(desirabilityScore.desirability.questions, 'Q17'),
-      irrigationCurrent: submission.irrigationCurrent.join(', '),
-      irrigationPlanned: submission.irrigationPlanned.join(', '),
+      irrigationCurrent: [submission.irrigationCurrent].flat().join(', '),
+      irrigationPlanned: [submission.irrigationPlanned].flat().join(', '),
       irrigationScore: getQuestionScoreBand(desirabilityScore.desirability.questions, 'Q18'),
-      productivity: submission.productivity.join(', '),
+      productivity: [submission.productivity].flat().join(', '),
       productivityScore: getQuestionScoreBand(desirabilityScore.desirability.questions, 'Q19'),
       collaboration: submission.collaboration,
       collaborationScore: getQuestionScoreBand(desirabilityScore.desirability.questions, 'Q20'),
@@ -227,8 +226,8 @@ function getEmailDetails(submission, desirabilityScore, notifyTemplate, agentApp
       agentName: submission.agentDetails?.firstName ?? 'N/A',
       agentSurname: submission.agentDetails?.lastName ?? ' ',
       agentBusinessName: submission.agentDetails?.businessName ?? 'N/A',
-      farmerEmail: submission.farmerDetails.email,
-      agentEmail: submission.agentDetails?.email ?? 'N/A',
+      farmerEmail: submission.farmerDetails.emailAddress,
+      agentEmail: submission.agentDetails?.emailAddress ?? 'N/A',
       contactConsent: submission.consentOptional ? 'Yes' : 'No',
       scoreDate: new Date().toLocaleDateString('en-GB')
 
@@ -236,7 +235,7 @@ function getEmailDetails(submission, desirabilityScore, notifyTemplate, agentApp
   }
 }
 
-function getAgentEmailDetails(submission, desirabilityScore) {
+function getAgentEmailDetails (submission, desirabilityScore) {
   if (submission.applying === 'Agent') {
     return getEmailDetails(submission, desirabilityScore, emailConfig.notifyTemplate, true, false)
   }
@@ -244,11 +243,11 @@ function getAgentEmailDetails(submission, desirabilityScore) {
   return null
 }
 
-function getApplicantEmailDetails(submission, desirabilityScore) {
+function getApplicantEmailDetails (submission, desirabilityScore) {
   return getEmailDetails(submission, desirabilityScore, emailConfig.notifyTemplate, false, false)
 }
 
-function getRPAEmailDetails(submission, desirabilityScore) {
+function getRPAEmailDetails (submission, desirabilityScore) {
   return getEmailDetails(submission, desirabilityScore, emailConfig.notifyTemplate, false, spreadsheetConfig.rpaEmail)
 }
 
