@@ -1,19 +1,19 @@
 const emailConfig = require('./config/email')
 const spreadsheetConfig = require('./config/spreadsheet')
 
-function getQuestionScoreBand(questions, questionKey) {
+function getQuestionScoreBand (questions, questionKey) {
   return questions.find(question => question.key === questionKey).rating.band
 }
 
-function generateRow(rowNumber, name, value, bold = false) {
+function generateRow (rowNumber, name, value, bold = false) {
   return {
     row: rowNumber,
-    values: [ '', name, value ],
+    values: ['', name, value],
     bold
   }
 }
 
-function farmingTypeMapping(farmingType) {
+function farmingTypeMapping (farmingType) {
   switch (farmingType) {
     case 'Crops for the food industry':
       return 'Arable farmer'
@@ -24,7 +24,7 @@ function farmingTypeMapping(farmingType) {
   }
 }
 
-function calculateBusinessSize(employees, turnover) {
+function calculateBusinessSize (employees, turnover) {
   const employeesNum = Number(employees)
   const turnoverNum = Number(turnover)
 
@@ -39,7 +39,7 @@ function calculateBusinessSize(employees, turnover) {
   }
 }
 
-function addAgentDetails(agentDetails) {
+function addAgentDetails (agentDetails) {
   return [
     generateRow(26, 'Agent Surname', agentDetails?.lastName ?? ''),
     generateRow(27, 'Agent Forename', agentDetails?.firstName ?? ''),
@@ -55,7 +55,7 @@ function addAgentDetails(agentDetails) {
   ]
 }
 
-function generateExcelFilename(scheme, projectName, businessName, referenceNumber, today) {
+function generateExcelFilename (scheme, projectName, businessName, referenceNumber, today) {
   const dateTime = new Intl.DateTimeFormat('en-GB', {
     timeStyle: 'short',
     dateStyle: 'short',
@@ -64,7 +64,7 @@ function generateExcelFilename(scheme, projectName, businessName, referenceNumbe
   return `${scheme}_${projectName}_${businessName}_${referenceNumber}_${dateTime}.xlsx`
 }
 
-function getSpreadsheetDetails(submission, desirabilityScore) {
+function getSpreadsheetDetails (submission, desirabilityScore) {
   const today = new Date()
   const todayStr = today.toLocaleDateString('en-GB')
   const subScheme = 'FTF-Water-Round 2'
@@ -166,7 +166,7 @@ function getSpreadsheetDetails(submission, desirabilityScore) {
   }
 }
 
-function getScoreChance(rating) {
+function getScoreChance (rating) {
   switch (rating.toLowerCase()) {
     case 'strong':
       return 'seems likely to'
@@ -177,12 +177,11 @@ function getScoreChance(rating) {
   }
 }
 
-
-function getEmailDetails(submission, desirabilityScore, notifyTemplate, agentApplying, rpaEmail) {
+function getEmailDetails (submission, desirabilityScore, notifyTemplate, agentApplying, rpaEmail) {
   const email = agentApplying ? submission.agentDetails.email : submission.farmerDetails.email
   return {
     notifyTemplate: emailConfig.notifyTemplate,
-    emailAddress: rpaEmail ? rpaEmail : email,
+    emailAddress: rpaEmail || email,
     details: {
       firstName: agentApplying ? submission.agentDetails.firstName : submission.farmerDetails.firstName,
       lastName: agentApplying ? submission.agentDetails.lastName : submission.farmerDetails.lastName,
@@ -236,7 +235,7 @@ function getEmailDetails(submission, desirabilityScore, notifyTemplate, agentApp
   }
 }
 
-function getAgentEmailDetails(submission, desirabilityScore) {
+function getAgentEmailDetails (submission, desirabilityScore) {
   if (submission.applying === 'Agent') {
     return getEmailDetails(submission, desirabilityScore, emailConfig.notifyTemplate, true, false)
   }
@@ -244,11 +243,11 @@ function getAgentEmailDetails(submission, desirabilityScore) {
   return null
 }
 
-function getApplicantEmailDetails(submission, desirabilityScore) {
+function getApplicantEmailDetails (submission, desirabilityScore) {
   return getEmailDetails(submission, desirabilityScore, emailConfig.notifyTemplate, false, false)
 }
 
-function getRPAEmailDetails(submission, desirabilityScore) {
+function getRPAEmailDetails (submission, desirabilityScore) {
   return getEmailDetails(submission, desirabilityScore, emailConfig.notifyTemplate, false, spreadsheetConfig.rpaEmail)
 }
 
