@@ -27,8 +27,7 @@ const desirabilityAnswersSchema = Joi.object({
 })
 
 function getDesirabilityAnswers (request) {
-  console.log('getDesirabilityAnswers: ', 2);
-  console.log(request,'REQUEST')
+  console.log('getDesirabilityAnswers: ', 2)
   try {
     const val = {
       project: getDataFromYarValue(request, 'project', 'multi-answer'),

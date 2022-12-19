@@ -24,12 +24,11 @@ async function sendMsg (sender, msgData, msgType, correlationId) {
       source: msgCfg.msgSrc,
       correlationId
     }
-  
-    console.log('sending message', msg)
-  
-    await sender.sendMessage(msg)    
+    console.log('[SENDIND MSG]', msg)
+
+    await sender.sendMessage(msg)
   } catch (err) {
-    console.log('[Error Sending the message]', err);
+    console.log('[ERROR SENDING MESSAGE]', err)
   }
 }
 
