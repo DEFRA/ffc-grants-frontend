@@ -6,7 +6,6 @@ const { formatUKCurrency } = require('../helpers/data-formats')
 const { SELECT_VARIABLE_TO_REPLACE, DELETE_POSTCODE_CHARS_REGEX } = require('../helpers/regex')
 const { getUrl } = require('../helpers/urls')
 const { guardPage } = require('../helpers/page-guard')
-
 const senders = require('../messaging/senders')
 const createMsg = require('../messaging/create-msg')
 const emailFormatting = require('./../messaging/email/process-submission')
@@ -42,9 +41,10 @@ const getPage = async (question, request, h) => {
       }
       confirmationId = getConfirmationId(request.yar.id)
       try {
-        const emailData = await emailFormatting({ body: createMsg.getAllDetails(request, confirmationId) }, request.yar.id)
+        const overAllScore = getYarValue(request, 'overAllScore')
+        const emailData = await emailFormatting({ body: createMsg.getAllDetails(request, confirmationId), overAllScore, correlationId: request.yar.id })
         await senders.sendDesirabilitySubmitted(emailData, request.yar.id) // replace with sendDesirabilitySubmitted, and replace first param with call to function in process-submission
-        await gapiService.sendDimensionOrMetrics(request, [ {
+        await gapiService.sendDimensionOrMetrics(request, [{
           dimensionOrMetric: gapiService.dimensions.CONFIRMATION,
           value: confirmationId
         }, {
