@@ -48,7 +48,7 @@ describe('Irrigation status page', () => {
     expect(response.statusCode).toBe(200)
   })
 
-  it.skip('should redirect page to irrigated-crops if current-score exists', async () => { // double check this
+  it('should redirect page to irrigated-crops if current-score exists', async () => { // double check this
     varList = {
       currentlyIrrigating: null,
       'current-score': 'value'

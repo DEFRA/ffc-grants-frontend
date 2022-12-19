@@ -6,7 +6,7 @@ const { formatUKCurrency } = require('../helpers/data-formats')
 const { SELECT_VARIABLE_TO_REPLACE, DELETE_POSTCODE_CHARS_REGEX } = require('../helpers/regex')
 const { getUrl } = require('../helpers/urls')
 const { guardPage } = require('../helpers/page-guard')
-const { notUniqueSelection, uniqueSelection } = require('../helpers/utils')
+
 const senders = require('../messaging/senders')
 const createMsg = require('../messaging/create-msg')
 const emailFormatting = require('./../messaging/email/process-submission')
@@ -118,68 +118,25 @@ const getPage = async (question, request, h) => {
     case 'check-details': {
       return h.view('check-details', getCheckDetailsModel(request, question, backUrl, nextUrl))
     }
-    case 'score':
-    case 'business-details':
-    case 'agent-details':
+    case 'irrigation-status': {
+      const currentlyIrrigating = getYarValue(request, 'currentlyIrrigating')
+      const score = getYarValue(request, 'current-score')
+      if (!currentlyIrrigating && score) {
+        return h.redirect('/water/irrigated-crops')
+      }
+    }
     case 'applicant-details': {
       return h.view('page', getModel(data, question, request, conditionalHtml))
     }
     default:
       break
   }
-  // if (url === 'check-details') {
-  //   setYarValue(request, 'reachedCheckDetails', true)
-
-  //   const applying = getYarValue(request, 'applying')
-  //   const businessDetails = getYarValue(request, 'businessDetails')
-  //   const agentDetails = getYarValue(request, 'agentsDetails')
-  //   const farmerDetails = getYarValue(request, 'farmerDetails')
-
-  //   const agentContact = saveValuesToArray(agentDetails, [ 'emailAddress', 'mobileNumber', 'landlineNumber' ])
-  //   const agentAddress = saveValuesToArray(agentDetails, [ 'address1', 'address2', 'town', 'county', 'postcode' ])
-
-  //   const farmerContact = saveValuesToArray(farmerDetails, [ 'emailAddress', 'mobileNumber', 'landlineNumber' ])
-  //   const farmerAddress = saveValuesToArray(farmerDetails, [ 'address1', 'address2', 'town', 'county', 'postcode' ])
-
-  //   const MODEL = {
-  //     ...question.pageData,
-  //     backUrl,
-  //     nextUrl,
-  //     applying,
-  //     businessDetails,
-  //     farmerDetails: {
-  //       ...farmerDetails,
-  //       ...(farmerDetails
-  //         ? {
-  //             name: `${farmerDetails.firstName} ${farmerDetails.lastName}`,
-  //             contact: farmerContact.join('<br/>'),
-  //             address: farmerAddress.join('<br/>')
-  //           }
-  //         : {}
-  //       )
-  //     },
-  //     agentDetails: {
-  //       ...agentDetails,
-  //       ...(agentDetails
-  //         ? {
-  //             name: `${agentDetails.firstName} ${agentDetails.lastName}`,
-  //             contact: agentContact.join('<br/>'),
-  //             address: agentAddress.join('<br/>')
-  //           }
-  //         : {}
-  //       )
-  //     }
-
-  //   }
-
-  //   return h.view('check-details', MODEL)
-  // }
 
   return h.view('page', getModel(data, question, request, conditionalHtml))
 }
 
 const showPostPage = (currentQuestion, request, h) => {
-  const { yarKey, answers, baseUrl, ineligibleContent, nextUrl, nextUrlObject, title, type } = currentQuestion
+  const { yarKey, answers, baseUrl, url, ineligibleContent, nextUrl, nextUrlObject, title, type } = currentQuestion
   const NOT_ELIGIBLE = { ...ineligibleContent, backLink: baseUrl }
   const payload = request.payload
 
@@ -248,11 +205,23 @@ const showPostPage = (currentQuestion, request, h) => {
   } else if (thisAnswer?.redirectUrl) {
     return h.redirect(thisAnswer?.redirectUrl)
   }
-  if (yarKey === 'projectCost') {
-    const { calculatedGrant, remainingCost, projectCost } = getGrantValues(payload[Object.keys(payload)[0]], currentQuestion.grantInfo)
-    setYarValue(request, 'calculatedGrant', calculatedGrant)
-    setYarValue(request, 'remainingCost', remainingCost)
-    setYarValue(request, 'projectCost', projectCost)
+  switch (url) {
+    // case 'irrigated-crops': {
+    //   const irrigatedCrops = getYarValue(request, 'irrigatedCrops') || null;
+    //   const score = getYarValue(request, 'current-score') || null;
+    //   console.log('here: ', irrigatedCrops, score);
+    //   if (irrigatedCrops && score) {
+    //     return h.redirect('/water/irrigated-land')
+    //   }
+    // }
+    case 'project-cost': {
+      const { calculatedGrant, remainingCost, projectCost } = getGrantValues(payload[ Object.keys(payload)[ 0 ] ], currentQuestion.grantInfo)
+      setYarValue(request, 'calculatedGrant', calculatedGrant)
+      setYarValue(request, 'remainingCost', remainingCost)
+      setYarValue(request, 'projectCost', projectCost)
+    }
+    default:
+      break
   }
   return h.redirect(getUrl(nextUrlObject, nextUrl, request, payload.secBtn, currentQuestion.url))
 }
