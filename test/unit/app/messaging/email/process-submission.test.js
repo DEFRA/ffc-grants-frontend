@@ -1,36 +1,62 @@
-jest.mock('../../../../../app/messaging/email/config/spreadsheet', () => ({
-  hideEmptyRows: true,
-  protectEnabled: false,
-  sendEmailToRpa: false,
-  protectPassword: mockPassword
-}))
-jest.mock('../../../../../app/services/app-insights')
-const mockPassword = 'mock-pwd'
+const { sendDesirabilitySubmitted } = require('../../../../../app/messaging/senders')
+jest.mock('../../../../../app/messaging/senders')
+
+const createMessageMock = require('../../../../../app/messaging/email/create-submission-msg')
+jest.mock('../../../../../app/messaging/email/create-submission-msg')
+
 const processSubmission = require('../../../../../app/messaging/email/process-submission')
-// const processSubmission = require('../../../../../app/messaging/process-submission')
 
-const cache = require('../../../../../app/config/cache');
-cache.getDesirabilityScore = jest.fn(async (_correlationId) => {})
-const appInsights = require('../../../../../app/services/app-insights')
-appInsights.logException = jest.fn((_err, _sessionId) => {})
+const contactDetailsReceiver = jest.mock()
 
-const projectDetailsReceiver = {
-  completeMessage: jest.fn(async (_message) => { return null }),
-  abandonMessage: jest.fn(async (_message) => { return null })
-}
-afterEach(() => {
-  jest.clearAllMocks()
-})
-describe('get processSubmission setup defined', () => {
-  test('Should be defined', () => {
-    expect(processSubmission).toBeDefined()
-  })
-  test('Should be called', () => {
-    expect(processSubmission('', projectDetailsReceiver)).toBeDefined()
+const appInsightsMock = require('../../../../../app/services/app-insights')
+jest.mock('../../../../../app/services/app-insights')
+
+describe('Process submission', () => {
+  beforeEach(() => {
+    jest.clearAllMocks()
   })
 
-  test('Should be called with error', async () => {
-    await expect(processSubmission(null, projectDetailsReceiver)).rejected
-    expect(appInsights.logException).toHaveBeenCalledTimes(1)
+  const msg = {
+    body: {
+      submissionDetails: 'lorem ipsum'
+    },
+    correlationId: 7357
+  }
+
+  test('Successful path', async () => {
+
+    contactDetailsReceiver.completeMessage = jest.fn()
+
+    createMessageMock.mockReturnValue(true)
+
+    sendDesirabilitySubmitted.mockResolvedValue(true)
+
+    processSubmission(msg)
+
+    expect(createMessageMock).toHaveBeenCalledTimes(1)
+
+    expect(sendDesirabilitySubmitted).toHaveBeenCalledTimes(1)
+
+    // expect used to be related to index.js
+    
+  })
+
+  test('Error path', async () => {
+    processSubmission.completeMessage = jest.fn()
+
+    createMessageMock.mockReturnValue(true)
+
+    sendDesirabilitySubmitted.mockImplementation(() => {
+      throw new Error();
+    });
+
+    appInsightsMock.logException = jest.fn()
+
+    processSubmission(msg)
+        // expect used to be related to index.js
+
+    expect(appInsightsMock.logException).toHaveBeenCalledTimes(1)
+
+
   })
 })
