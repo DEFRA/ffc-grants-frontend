@@ -159,7 +159,7 @@ const showPostPage = (currentQuestion, request, h) => {
       dataObject = {
         ...dataObject,
         [field.yarKey]: (
-          (field.yarKey === 'postcode' || field.yarKey === 'projectPostcode')
+          (field.yarKey === 'postcode' || field.yarKey === 'projectPostcode' || field.yarKey === 'businessPostcode')
             ? payloadYarVal
             : payload[field.yarKey] || ''
         ),

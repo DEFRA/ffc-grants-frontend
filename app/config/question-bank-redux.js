@@ -1816,7 +1816,7 @@ const questionBank = {
       ineligibleContent: {},
       pageData: {
         businessDetailsLink: 'business-details',
-        agentDetailsLink: 'agents-details',
+        agentDetailsLink: 'agent-details',
         farmerDetailsLink: 'applicant-details'
       },
       fundingPriorities: '',

@@ -86,7 +86,7 @@ const getDetailsInput = (detailsData, errorList) => {
               autocomplete: 'email'
             })
         }
-      :      {}
+      : {}
     ),
 
     ...(Object.prototype.hasOwnProperty.call(detailsData, 'projectPostcode') ? { inputProjPostcode: formInputObject('projectPostcode', 'govuk-input--width-5', 'Project postcode', 'The site postcode where the work will happen', { fieldName: detailsData.projectPostcode, fieldError: getFieldError(errorList, '#projectPostcode'), inputType: 'text', autocomplete: 'organization' }) } : {}),
