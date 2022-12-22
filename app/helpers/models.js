@@ -93,9 +93,9 @@ const getModel = (data, question, request, conditionalHtml = '') => {
     ...(warningDetails ? { warning: warningDetails } : {}),
     reachedCheckDetails: showBackToDetailsButton(key, request),
     reachedEvidenceSummary: showBackToEvidenceSummaryButton(key, request),
-    diaplaySecondryBtn: hasScore && score?.isDisplay,
-  };
-};
+    diaplaySecondryBtn: hasScore && score?.isDisplay
+  }
+}
 
 module.exports = {
   getModel
