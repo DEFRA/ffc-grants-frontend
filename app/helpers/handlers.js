@@ -18,7 +18,7 @@ const {
   getCheckDetailsModel,
   getDataFromYarValue,
   getConsentOptionalData,
-  saveValuesToArray,
+  saveValuesToArray
 } = require('./pageHelpers')
 
 const getPage = async (question, request, h) => {
@@ -142,15 +142,15 @@ const showPostPage = (currentQuestion, request, h) => {
   if (yarKey === 'consentOptional' && !Object.keys(payload).includes(yarKey)) {
     setYarValue(request, yarKey, '')
   }
-  for (const [ key, value ] of Object.entries(payload)) {
+  for (const [key, value] of Object.entries(payload)) {
     thisAnswer = answers?.find(answer => (answer.value === value))
 
-    if (type !== 'multi-input' && key !== 'secBtn') {
+    if (type !== 'multi-input' && key !== 'results') {
       setYarValue(request, key, key === 'projectPostcode' ? value.replace(DELETE_POSTCODE_CHARS_REGEX, '').split(/(?=.{3}$)/).join(' ').toUpperCase() : value)
     }
   }
   if (type === 'multi-input') {
-    let allFields = currentQuestion.allFields
+    const allFields = currentQuestion.allFields
 
     allFields.forEach(field => {
       const payloadYarVal = payload[field.yarKey]
@@ -207,7 +207,7 @@ const showPostPage = (currentQuestion, request, h) => {
     setYarValue(request, 'remainingCost', remainingCost)
     setYarValue(request, 'projectCost', projectCost)
   }
-  return h.redirect(getUrl(nextUrlObject, nextUrl, request, payload.secBtn, currentQuestion.url))
+  return h.redirect(getUrl(nextUrlObject, nextUrl, request, payload.results, currentQuestion.url))
 }
 
 const getHandler = (question) => {
