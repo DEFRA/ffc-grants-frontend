@@ -71,7 +71,6 @@ container:
   sendEmailToRpa: false
   rpaEmail: FTF@rpa.gov.uk
   worksheetHideEmptyRows: false
-  protectiveMonitoringUrl:
   excelUploadEnvironment: dummy
 
 livenessProbe:
