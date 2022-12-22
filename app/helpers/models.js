@@ -1,50 +1,50 @@
-const { getUrl } = require("../helpers/urls");
-const { getOptions } = require("../helpers/answer-options");
-const { getYarValue } = require("../helpers/session");
-const { allAnswersSelected } = require("../helpers/utils");
+const { getUrl } = require('../helpers/urls')
+const { getOptions } = require('../helpers/answer-options')
+const { getYarValue } = require('../helpers/session')
+const { allAnswersSelected } = require('../helpers/utils')
 
 const getDependentSideBar = (sidebar, request) => {
-  const { values, dependentQuestionKey } = sidebar;
-  const selectedAnswers = getYarValue(request, dependentQuestionKey);
+  const { values, dependentQuestionKey } = sidebar
+  const selectedAnswers = getYarValue(request, dependentQuestionKey)
 
-  values[0].content[0].items = [selectedAnswers].flat();
+  values[0].content[0].items = [selectedAnswers].flat()
 
   return {
-    ...sidebar,
-  };
+    ...sidebar
+  }
 };
 
 const getBackUrl = (hasScore, backUrlObject, backUrl, request) => {
-  const url = getUrl(backUrlObject, backUrl, request);
-  return hasScore && url === "remaining-costs" ? null : url;
-};
+  const url = getUrl(backUrlObject, backUrl, request)
+  return hasScore && url === 'remaining-costs' ? null : url
+}
 
 const showBackToDetailsButton = (key, request) => {
   switch (key) {
-    case "business-details":
-    case "applicant-details":
-    case "agent-details":
-    case "score": {
-      return !!getYarValue(request, "reachedCheckDetails");
+    case 'business-details':
+    case 'applicant-details':
+    case 'agent-details':
+    case 'score': {
+      return !!getYarValue(request, 'reachedCheckDetails')
     }
     default:
-      return false;
+      return false
   }
-};
+}
 
 const showBackToEvidenceSummaryButton = (key, request) => {
   switch (key) {
-    case "planning-permission":
-    case "planning-permission-evidence":
-    case "grid-reference": {
-      return !!getYarValue(request, "reachedEvidenceSummary");
+    case 'planning-permission':
+    case 'planning-permission-evidence':
+    case 'grid-reference': {
+      return !!getYarValue(request, 'reachedEvidenceSummary')
     }
     default:
-      return false;
+      return false
   }
-};
+}
 
-const getModel = (data, question, request, conditionalHtml = "") => {
+const getModel = (data, question, request, conditionalHtml = '') => {
   let {
     type,
     backUrl,
@@ -56,20 +56,20 @@ const getModel = (data, question, request, conditionalHtml = "") => {
     score,
     label,
     warning,
-    warningCondition,
-  } = question;
-  const hasScore = !!getYarValue(request, "current-score");
+    warningCondition
+  } = question
+  const hasScore = !!getYarValue(request, 'current-score')
 
-  title = title ?? label?.text;
+  title = title ?? label?.text
 
   const sideBarText = sidebar?.dependentQuestionKey
     ? getDependentSideBar(sidebar, request)
-    : sidebar;
+    : sidebar
 
-  let warningDetails;
+  let warningDetails
   if (warningCondition) {
     const { dependentWarningQuestionKey, dependentWarningAnswerKeysArray } =
-      warningCondition;
+      warningCondition
     if (
       allAnswersSelected(
         request,
@@ -77,10 +77,10 @@ const getModel = (data, question, request, conditionalHtml = "") => {
         dependentWarningAnswerKeysArray
       )
     ) {
-      warningDetails = warningCondition.warning;
+      warningDetails = warningCondition.warning
     }
   } else if (warning) {
-    warningDetails = warning;
+    warningDetails = warning
   }
   return {
     type,
@@ -93,10 +93,10 @@ const getModel = (data, question, request, conditionalHtml = "") => {
     ...(warningDetails ? { warning: warningDetails } : {}),
     reachedCheckDetails: showBackToDetailsButton(key, request),
     reachedEvidenceSummary: showBackToEvidenceSummaryButton(key, request),
-    diaplaySecondryBtn: hasScore && score?.isDisplay,
-  };
-};
+    diaplaySecondryBtn: hasScore && score?.isDisplay
+  }
+}
 
 module.exports = {
-  getModel,
-};
+  getModel
+}

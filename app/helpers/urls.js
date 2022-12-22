@@ -6,21 +6,7 @@ const getUrl = (urlObject, url, request, secBtn, currentUrl) => {
   const scorePath = `${urlPrefix}/score`
   const chekDetailsPath = `${urlPrefix}/check-details`
 
-  let secBtnPath
-  if (secBtn === 'Back to score') {
-    secBtnPath = scorePath
-  } else {
-    switch (currentUrl) { // check if you still need it
-      case 'planning-permission':
-      case 'planning-permission-evidence':
-      case 'grid-reference': {
-        secBtnPath = `${urlPrefix}/planning-permission-summary`
-        break
-      }
-      default:
-        secBtnPath = chekDetailsPath
-    }
-  }
+  const secBtnPath = secBtn === 'Back to score' ? scorePath : chekDetailsPath
 
   if (!urlObject) {
     return secBtn ? secBtnPath : url

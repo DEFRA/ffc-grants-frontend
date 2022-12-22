@@ -664,13 +664,11 @@ const questionBank = {
       answers: [
         {
           key: 'abstraction-licence-A1',
-          value: LICENSE_NOT_NEEDED,
-          redirectUrl: 'project-summary'
+          value: LICENSE_NOT_NEEDED
         },
         {
           key: 'abstraction-licence-A2',
           value: LICENSE_SECURED,
-          redirectUrl: 'project-summary'
         },
         {
           key: 'abstraction-licence-A3',
@@ -713,6 +711,10 @@ const questionBank = {
       nextUrl: 'irrigated-crops',
       fundingPriorities: '',
       type: 'multi-answer',
+      score: {
+        isScore: true,
+        isDisplay: true
+      },
       minAnswerCount: '',
       maxAnswerCount: '',
       validate: [
@@ -794,6 +796,10 @@ const questionBank = {
       baseUrl: 'irrigated-crops',
       backUrl: 'project-summary',
       type: 'single-answer',
+      score: {
+        isScore: true,
+        isDisplay: true
+      },
       validate: [
         {
           type: 'NOT_EMPTY',
@@ -879,6 +885,10 @@ const questionBank = {
       backUrl: 'irrigation-systems',
       nextUrl: 'collaboration',
       type: 'multi-answer',
+      score: {
+        isScore: true,
+        isDisplay: true
+      },
       validate: [
         {
           type: 'NOT_EMPTY',
@@ -951,6 +961,10 @@ const questionBank = {
       nextUrl: 'score',
       type: 'single-answer',
       minAnswerCount: 1,
+      score: {
+        isScore: true,
+        isDisplay: true
+      },
       hint: {
         text: 'For example, if you intend to supply water via a water sharing agreement as a result of this project.'
       },
@@ -1802,7 +1816,7 @@ const questionBank = {
       ineligibleContent: {},
       pageData: {
         businessDetailsLink: 'business-details',
-        agentDetailsLink: 'agents-details',
+        agentDetailsLink: 'agent-details',
         farmerDetailsLink: 'applicant-details'
       },
       fundingPriorities: '',

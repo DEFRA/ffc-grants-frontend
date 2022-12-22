@@ -456,7 +456,7 @@ describe('Agent details page', () => {
     expect(postResponse.headers.location).toBe('applicant-details')
   })
 
-  it.skip('should store user responseand redircet to check-details', async () => { // not needed anymore?? this route will never redirect to check-details
+  it('should store user responseand redircet to check-details', async () => {
     varList.applying = 'Agent'
     const postOptions = {
       method: 'POST',
