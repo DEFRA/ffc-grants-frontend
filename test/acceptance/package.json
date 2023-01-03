@@ -32,7 +32,7 @@
     "@wdio/selenium-standalone-service": "^5.11.0",
     "@wdio/static-server-service": "^5.14.4",
     "axe-webdriverio": "^0.2.0",
-    "browserstack-local": "^1.4.8",
+    "browserstack-local": "^1.5.1",
     "chai": "^4.1.2",
     "cross-env": "^5.2.0",
     "ecstatic": "^4.1.4",
