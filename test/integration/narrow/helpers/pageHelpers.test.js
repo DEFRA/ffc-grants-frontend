@@ -85,7 +85,7 @@ describe('Page Helpers', () => {
         postcode: 'farmer-postcode',
         name: 'Farmer FLastName',
         contact: 'farmer-email<br/>farmer-landline',
-        address: 'farmer-address1<br/>farmer-address2<br/>farmer-town<br/>farmer-county<br/>farmer-postcode'
+        address: 'farmer-address1<br/>farmer-address2<br/>farmer-town<br/>farmer-county'
       },
       agentDetails: {
         firstName: 'Agent',
