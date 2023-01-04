@@ -76,7 +76,7 @@ describe('Water tenancy page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/tenancy-length`)
+    expect(postResponse.headers.location).toBe(`tenancy-length`)
   })
 
   it('should redirect to project items page when user selects "Yes"', async () => {
@@ -91,6 +91,6 @@ describe('Water tenancy page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/project-items`)
+    expect(postResponse.headers.location).toBe(`project-items`)
   })
 })

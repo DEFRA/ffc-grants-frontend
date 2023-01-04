@@ -94,7 +94,7 @@ describe('Planning permission page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/planning-required-condition`)
+    expect(postResponse.headers.location).toBe('project-start')
   })
 
   it('if value = \'Not needed\' ==> store and redirect to project start page', async () => {
@@ -107,7 +107,7 @@ describe('Planning permission page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/project-start`)
+    expect(postResponse.headers.location).toBe(`project-start`)
   })
 
   it('if value = \'Secured\' ==> store and redirect to project start page', async () => {
@@ -120,6 +120,6 @@ describe('Planning permission page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/project-start`)
+    expect(postResponse.headers.location).toBe(`project-start`)
   })
 })

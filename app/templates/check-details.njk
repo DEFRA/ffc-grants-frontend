@@ -12,7 +12,7 @@
 {% block beforeContent %}
   {{ govukBackLink({
     text: "Back",
-    href: backLink,
+    href: backUrl,
 	  attributes: {id: 'linkBack'}
   }) }}
 {% endblock %}
@@ -23,149 +23,151 @@
       <div class="govuk-grid-column-two-thirds">
         <h1 class="govuk-heading-l">Check your details</h1>
         
-      {% if businessDetails %}
-
-      <div>
-        <h2 class="govuk-heading-m check-detail-heading">Business details</h2>
-        <a class="govuk-link check-detail-change" title="Change business details" href="{{businessDetailsLink}}">Change <span class="govuk-visually-hidden"> business details</span></a>
-        <hr/>
-      </div>
+        <div>
+          <h2 class="govuk-heading-m check-detail-heading">Business details</h2>
+          <a class="check-detail-change" title="Change business details" href="{{businessDetailsLink}}">Change<span class="govuk-visually-hidden">Change business details</span></a>
+          <hr/>
+        </div>
       
-      {{ govukSummaryList({
-        rows: [
-          {
-            key: {
-              text: "Project name"
-            },
-            value: {
-              text:  businessDetails.projectName
-            }
-          },
-          {
-            key: {
-              text: "Business name"
-            },
-            value: {
-              text: businessDetails.businessName
-            }
-          },
-          {
-            key: {
-              text: "Number of employees"
-            },
-            value: {
-              text: businessDetails.numberEmployees
-            }
-          },
-          {
-            key: {
-              text: "Business turnover"
-            },
-            value: {
-              text: businessDetails.businessTurnover
-            }
-          },
-          {
-            key: {
-              text: "Single Business Identifier (SBI)"
-            },
-            value: {
-              text: businessDetails.sbi
-            }
-          }
+        {{ govukSummaryList({
+            rows: [
+              {
+                key: {
+                  text: "Project name"
+                },
+                value: {
+                  text:  businessDetails.projectName
+                }
+              },
+              {
+                key: {
+                  text: "Business name"
+                },
+                value: {
+                  text: businessDetails.businessName
+                }
+              },
+              {
+                key: {
+                  text: "Number of employees"
+                },
+                value: {
+                  text: businessDetails.numberEmployees
+                }
+              },
+              {
+                key: {
+                  text: "Business turnover"
+                },
+                value: {
+                  text: businessDetails.businessTurnover
+                }
+              },
+              {
+                key: {
+                  text: "Single Business Identifier (SBI)"
+                },
+                value: {
+                  text: businessDetails.sbi
+                }
+              }
+            ]
+          })
+        }}
+        
+        {% if applying == 'Agent' %}
 
-        ]
-      }) }}
+          <div>
+            <h2 class="govuk-heading-m check-detail-heading">Agent's details</h2>
+            <a title="Change agent's details" class="check-detail-change" href="{{agentDetailsLink}}">Change<span class="govuk-visually-hidden">Change agent's details</span></a>
+            <hr/>
+          </div>
+          
+          {{ govukSummaryList({
+            rows: [
+              {
+                key: {
+                  text: "Name"
+                },
+                value: {
+                  text: agentDetails.name
+                }
+              },
+              {
+                key: {
+                  text: "Business name"
+                },
+                value: {
+                  html: agentDetails.businessName
+                }
+              },
+              {
+                key: {
+                  text: "Contact details"
+                },
+                value: {
+                  html: agentDetails.contact
+                }
+              },
+              {
+                key: {
+                  text: "Business address"
+                },
+                value: {
+                  html: agentDetails.address
+                }
+              }
+            ]
+          }) }}
+        {% endif %}
 
-      {% endif %}
-  
-      {% if agentDetails %}
-      <div>
-        <h2 class="govuk-heading-m check-detail-heading">Agent's details</h2>
-        <a title="Change agent's details" class="govuk-link check-detail-change" href="{{agentDetailsLink}}">Change <span class="govuk-visually-hidden"> agent's details</span></a>
-        <hr/>
+        <br/>
+      
+        {% set farmerSummaryItems = [
+            {
+              key: {
+                text: "Name"
+              },
+              value: {
+                text:  farmerDetails.name
+              }
+            },
+            {
+              key: {
+                text: "Contact details"
+              },
+              value: {
+                html: farmerDetails.contact
+              }
+            },
+            {
+              key: {
+                text: "Business address"
+              },
+              value: {
+                html: farmerDetails.address
+              }
+            },
+            {
+              key: {
+                text: "Project postcode"
+              },
+              value: {
+                html: farmerDetails.projectPostcode
+              }
+            }
+          ]
+        %}
+
+        <div>
+            <h2 class="govuk-heading-m check-detail-heading">Applicant’s details</h2>
+            <a title="Change Applicant’s details" class="check-detail-change" href="{{farmerDetailsLink}}">Change<span class="govuk-visually-hidden">Change applicant's details</span></a>
+            <hr/>
+        </div>
+
+        {{ govukSummaryList({ rows: farmerSummaryItems }) }}
+      
       </div>
-      {{ govukSummaryList({
-        rows: [
-          {
-            key: {
-              text: "Name"
-            },
-            value: {
-              text:  agentDetails
-            }
-          },
-          {
-            key: {
-              text: "Business name"
-            },
-            value: {
-              html: agentBusinessName
-            }
-          },
-          {
-            key: {
-              text: "Contact details"
-            },
-            value: {
-              html: agentContactDetails
-            }
-          },
-          {
-            key: {
-              text: "Business address"
-            },
-            value: {
-              html: agentAddressDetails
-            }
-          }
-        ]
-      }) }}
-      {% endif %}
-      <br/>
-      {% if farmerDetails %}
-      {% set farmerSummaryItems = [
-          {
-            key: {
-              text: "Name"
-            },
-            value: {
-              text:  farmerDetails
-            }
-          },
-          {
-            key: {
-              text: "Contact details"
-            },
-            value: {
-              html: farmerContactDetails
-            }
-          },
-          {
-            key: {
-              text: "Business address"
-            },
-            value: {
-              html: farmerAddressDetails
-            }
-          },
-          {
-            key: {
-              text: "Project postcode"
-            },
-            value: {
-              html: farmerProjectPostcode
-            }
-          }
-        ] %}
-<div>
-    <h2 class="govuk-heading-m check-detail-heading">Applicant details</h2>
-    <a title="Change farmer's details" class="govuk-link check-detail-change" href="{{farmerDetailsLink}}">Change <span class="govuk-visually-hidden"> farmer's details</span></a>
-    <hr/>
-</div>
-      {{ govukSummaryList({ rows: farmerSummaryItems }) }}
-      {% endif %}
-
     </div>
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">

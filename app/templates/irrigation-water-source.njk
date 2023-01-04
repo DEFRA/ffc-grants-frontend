@@ -4,7 +4,7 @@
 {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
-{% from "./components/macro.njk" import crumbToken, sideBar,multiSideBar, conditionalButtons%}
+{% from "./components/macro.njk" import crumbToken, sideBar,multiSideBarOld, conditionalButtons%}
 
 {% block pageTitle %}
   {% if errorList %}
@@ -51,7 +51,7 @@
 
     {% if currentlyIrrigating %}
           {{ 
-            multiSideBar([
+            multiSideBarOld([
               {
                 heading:"Funding priorities",
                 content: [
@@ -76,7 +76,7 @@
 
         {% else %}
           {{ 
-            multiSideBar([
+            multiSideBarOld([
               {
                 heading:"Funding priorities",
                 content: [

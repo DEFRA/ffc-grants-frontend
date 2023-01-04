@@ -2,7 +2,6 @@ const { crumbToken } = require('./test-helper')
 const varListTemplate = {
   farmingType: 'some fake crop',
   legalStatus: 'fale status',
-  inEngland: 'Yes',
   'current-score': ''
 }
 
@@ -18,8 +17,6 @@ const mockSession = {
 jest.mock('../../../../app/helpers/session', () => mockSession)
 
 describe('Country Page', () => {
-  const inEngland = varListTemplate.inEngland
-
   beforeEach(() => {
     varList = { ...varListTemplate }
   })
@@ -39,20 +36,18 @@ describe('Country Page', () => {
   })
 
   it('should load country page with no yar value sucessfully', async () => {
-    varList = {
-      inEngland: null
-    }
     const options = {
       method: 'GET',
       url: `${global.__URLPREFIX__}/country`
     }
 
     const response = await global.__SERVER__.inject(options)
-    expect(response.statusCode).toBe(302)
+    expect(response.statusCode).toBe(200)
   })
 
   it('should redirect to project summary page when theres score ', async () => {
     varList['current-score'] = true
+    varList.inEngland = 'Yes'
     const options = {
       method: 'GET',
       url: `${global.__URLPREFIX__}/country`
@@ -82,7 +77,7 @@ describe('Country Page', () => {
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/country`,
-      payload: { inEngland, crumb: crumbToken },
+      payload: { inEngland: 'Yes', crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
       }
@@ -90,7 +85,7 @@ describe('Country Page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/planning-permission`)
+    expect(postResponse.headers.location).toBe('planning-permission')
   })
 
   it('should display ineligible page when user response is \'No\'', async () => {

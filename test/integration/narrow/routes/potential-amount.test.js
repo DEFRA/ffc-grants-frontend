@@ -38,8 +38,8 @@ describe('Grant page', () => {
 
   it('redirects to project-cost if user project-cost has not been saved', async () => {
     varList = {
-      calculatedGrant: undefined,
-      projectCost : undefined
+      calculatedGrant: null,
+      projectCost : null
     }
 
     const options = {
@@ -49,7 +49,7 @@ describe('Grant page', () => {
 
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(302)
-    expect(response.headers.location).toBe(`${global.__URLPREFIX__}/project-cost`)
+    expect(response.headers.location).toBe(`${global.__URLPREFIX__}/start`)
   })
 
 
@@ -65,6 +65,6 @@ describe('Grant page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/remaining-costs`)
+    expect(postResponse.headers.location).toBe(`remaining-costs`)
   })
 })

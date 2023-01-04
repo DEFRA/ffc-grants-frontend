@@ -79,7 +79,7 @@ describe('Project details page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/collaboration`)
+    expect(postResponse.headers.location).toBe(`collaboration`)
   })
 
   it('should display the error summary if more than two options are selected', async () => {

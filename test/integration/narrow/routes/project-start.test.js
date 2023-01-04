@@ -78,7 +78,7 @@ describe('Project start page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/tenancy`)
+    expect(postResponse.headers.location).toBe('tenancy')
   })
 
   it('should redirect to ineligible page when user selects "Yes, we have begun project work"', async () => {
@@ -108,6 +108,6 @@ describe('Project start page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/tenancy`)
+    expect(postResponse.headers.location).toBe('tenancy')
   })
 })

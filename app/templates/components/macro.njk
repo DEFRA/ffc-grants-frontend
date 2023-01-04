@@ -27,7 +27,39 @@
   </div>
 {% endmacro %}
 
-{% macro multiSideBar(sideBars, heading_tag='h3') %}
+{% macro multiSideBar(sideBars) %}
+  <div class="govuk-grid-column-one-third  govuk-!-padding-top-4 govuk-body">
+    <hr class="sideBarColor"/>
+    {% set sideBarSubHeadingTag = 'h2' %}
+    {% if sideBars.mainHeading %}
+      {% set sideBarSubHeadingTag = 'h3' %}
+      <h2 class="govuk-heading-m" id="subsection-title-{{ sideBars.mainHeading.replace(' ', '-') | lower }}">{{ sideBars.mainHeading }}</h2>
+    {% endif %}
+    {% for sidebar in sideBars.values %}
+      {% if sidebar.heading %}
+      <{{ sideBarSubHeadingTag }} class="govuk-heading-s" id="subsection-title-{{ sidebar.heading.replace(' ', '-') | lower }}">
+        {{ sidebar.heading }}
+      </{{ sideBarSubHeadingTag }}>
+      {% endif %}
+      {% for content in sidebar.content %}
+        <p>{{ content.para  | striptags(true) | escape | nl2br }}</p>
+        <ul class="govuk-list govuk-list--bullet">
+          {% for item in content.items %}
+            <li>{{ item }}</li>
+          {% endfor %}
+        </ul>
+        {% if content.additionalPara %}
+          <p>{{ content.additionalPara  | striptags(true) | escape | nl2br }}</p>
+        {% endif %}
+      {% endfor %}
+    {% endfor %}
+    {% if sideBars.details %}
+      {{ govukDetails(sideBars.details) }}
+    {% endif %}
+  </div>
+{% endmacro %}
+
+{% macro multiSideBarOld(sideBars, heading_tag='h3') %}
   <div class="govuk-grid-column-one-third  govuk-!-padding-top-4 govuk-body">
     <hr class="sideBarColor"/>
 
@@ -55,9 +87,10 @@
   </div>
 {% endmacro %}
 
-{% macro conditionalButtons (showSecondaryButton, buttonText = 'Back to score') %}
+
+{% macro conditionalButtons (showSecondaryButton, buttonText = 'Continue', secButtonText = 'Back to score') %}
   {{ govukButton({
-      text: "Continue",
+      text: buttonText,
       attributes: {id: "btnContinue"}
     })
   }} &nbsp;
@@ -65,9 +98,9 @@
   {% if showSecondaryButton %}
     {{ govukButton({
         classes: "govuk-button--secondary",
-        text: buttonText,
+        text: secButtonText,
         name: "results",
-        value: "results",
+        value: secButtonText,
         attributes: {id: buttonText.split(' ').join('-')}
       })
     }}

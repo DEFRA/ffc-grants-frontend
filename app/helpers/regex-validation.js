@@ -9,6 +9,12 @@ const IRRIGATED_LAND_REGEX = /^(\d+([.]\d?)?|[.]\d)$/
 const ONLY_ZEROES_REGEX = /^0+$/
 const ADDRESS_REGEX = /^[a-zA-Z0-9' -]*$/
 const TOWN_REGEX = /^[a-zA-Z -]+$/
+const SBI_REGEX = /^(\d{0}|\d{9})$/
+const ONLY_TEXT_REGEX = /^[a-zA-Z\s]+$/
+const CHARS_MIN_10 = /^.{10,}$/
+const EMAIL_REGEX = /^\w+([.-](\w+))*@[a-zA-Z0-9]+([_-][a-zA-Z0-9]+)*(\.[a-zA-Z]{2,5})+$/
+
+
 
 module.exports = {
   POSTCODE_REGEX,
@@ -21,5 +27,9 @@ module.exports = {
   IRRIGATED_LAND_REGEX,
   ONLY_ZEROES_REGEX,
   TOWN_REGEX,
-  ADDRESS_REGEX
+  ADDRESS_REGEX,
+  SBI_REGEX,
+  ONLY_TEXT_REGEX,
+  CHARS_MIN_10,
+  EMAIL_REGEX
 }

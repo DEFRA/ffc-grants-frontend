@@ -449,7 +449,7 @@ module.exports = {
       order: 24,
       title: 'Farmers details',
       pageTitle: '',
-      url: 'farmer-details',
+      url: 'applicant-details',
       yarKey: 'farmerDetails'
     }
   ]

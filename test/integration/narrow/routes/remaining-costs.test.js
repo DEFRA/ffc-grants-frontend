@@ -48,7 +48,7 @@ describe('Remaining costs page', () => {
     expect(postResponse.statusCode).toBe(200)
   })
 
-  it('redirects to /project-cost if projectCost value has not been saved', async () => {
+  it('redirects to /start if remainingCost value has not been saved', async () => {
     varList.remainingCost = null
 
     const options = {
@@ -60,7 +60,7 @@ describe('Remaining costs page', () => {
 
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(302)
-    expect(response.headers.location).toBe(`${global.__URLPREFIX__}/project-cost`)
+    expect(response.headers.location).toBe(`${global.__URLPREFIX__}/start`)
   })
 
   it('should redirects to peoject summary page if thers score ', async () => {
@@ -113,6 +113,6 @@ describe('Remaining costs page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/SSSI`)
+    expect(postResponse.headers.location).toBe(`SSSI`)
   })
 })
