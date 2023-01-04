@@ -55,7 +55,7 @@ describe('Page Helpers', () => {
       address2: 'farmer-address2',
       town: 'farmer-town',
       county: 'farmer-county',
-      postcode: 'farmer-postcode'
+      businessPostcode: 'farmer-postcode'
     }
     varList.agentsDetails = {
       firstName: 'Agent',
@@ -82,7 +82,7 @@ describe('Page Helpers', () => {
         address2: 'farmer-address2',
         town: 'farmer-town',
         county: 'farmer-county',
-        postcode: 'farmer-postcode',
+        businessPostcode: 'farmer-postcode',
         name: 'Farmer FLastName',
         contact: 'farmer-email<br/>farmer-landline',
         address: 'farmer-address1<br/>farmer-address2<br/>farmer-town<br/>farmer-county<br/>farmer-postcode'
