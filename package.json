@@ -1,6 +1,6 @@
 {
   "name": "ffc-grants-frontend",
-  "version": "2.8.2",
+  "version": "3.0.1",
   "description": "Frontend Grants microservice.",
   "main": "app/index.js",
   "scripts": {
@@ -41,13 +41,18 @@
     "bcrypt": "^5.0.1",
     "dialog-polyfill": "^0.5.6",
     "dotenv": "^16.0.1",
-    "ffc-messaging": "^2.5.1",
+    "ffc-messaging": "^2.6.2",
     "ffc-protective-monitoring": "^1.0.3",
     "govuk-frontend": "^4.3.1",
     "joi": "^17.6.0",
     "jsdom": "^20.0.0",
     "nunjucks": "^3.2.3",
     "uuid": "^8.3.2"
+  },
+  "overrides": {
+    "@azure/identity": {
+      "jsonwebtoken": "9.0.0"
+      }
   },
   "devDependencies": {
     "@hapi/catbox-memory": "^5.0.1",
@@ -64,7 +69,7 @@
     "sass": "^1.54.7",
     "sass-loader": "^13.0.2",
     "snyk": "^1.1051.0",
-    "standard": "^16.0.4",
+    "standard": "^16.0.3",
     "string-replace-loader": "^3.1.0",
     "style-loader": "^3.3.1",
     "webpack": "^5.74.0",

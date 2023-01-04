@@ -5,7 +5,7 @@ describe('Confirmation page', () => {
     jest.mock('../../../../app/messaging')
     jest.mock('ffc-messaging')
   })
-  it.skip('should load page successfully with 500', async () => { // no idea what this test is trying to do
+  it.skip('should load page successfully with 500', async () => { // Look into this one  later
     const senders = require('../../../../app/messaging/senders')
     senders.sendDesirabilitySubmitted = jest.fn(async function (model, yarId) {
       throw new Error('Some error')
@@ -15,7 +15,7 @@ describe('Confirmation page', () => {
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/confirm`,
-      payload: { crumb: crumbToken },
+      payload: { consentMain: true, crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
       }

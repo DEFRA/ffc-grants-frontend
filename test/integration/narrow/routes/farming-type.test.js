@@ -1,6 +1,29 @@
 const { crumbToken } = require('./test-helper')
+const varListTemplate = {
+  farmingType: 'some fake crop',
+  legalStatus: 'fale status',
+  'current-score': ''
+}
+
+let varList
+const mockSession = {
+  setYarValue: (request, key, value) => null,
+  getYarValue: (request, key) => {
+    if (Object.keys(varList).includes(key)) return varList[key]
+    else return 'Error'
+  }
+}
+
+jest.mock('../../../../app/helpers/session', () => mockSession)
 
 describe('Farming type page', () => {
+  beforeEach(() => {
+    varList = { ...varListTemplate }
+  })
+
+  afterEach(() => {
+    jest.resetAllMocks()
+  })
   it('should load page successfully', async () => {
     const options = {
       method: 'GET',
@@ -55,5 +78,17 @@ describe('Farming type page', () => {
     expect(postResponse.payload).toContain(
       'You cannot apply for a grant from this scheme'
     )
+  })
+  it('should load redirect to project summary page if thers score', async () => {
+    varList['current-score'] = true
+
+    const options = {
+      method: 'GET',
+      url: `${global.__URLPREFIX__}/farming-type`
+    }
+
+    const response = await global.__SERVER__.inject(options)
+    expect(response.statusCode).toBe(302)
+    expect(response.headers.location).toBe(`${global.__URLPREFIX__}/project-summary`)
   })
 })

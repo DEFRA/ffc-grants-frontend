@@ -1,6 +1,5 @@
 const { crumbToken } = require('./test-helper')
 describe('Irrigated crops page', () => {
-
   const varListTemplate = {
     project: 'some fake data',
     irrigatedCrops: 'some crop'
@@ -65,7 +64,7 @@ describe('Irrigated crops page', () => {
     expect(postResponse.payload).toContain('Select the main crop you will be irrigating')
   })
 
-  it('should store user response and redirects to irrigated land page', async () => {
+  it('should store user response and redirects to irrigation status page', async () => {
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/irrigated-crops`,
@@ -77,14 +76,14 @@ describe('Irrigated crops page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe(`irrigation-status`)
+    expect(postResponse.headers.location).toBe('irrigation-status')
   })
 
   it.skip('should store user response and redirects to score', async () => { // double check this
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/irrigated-crops`,
-      payload: { irrigatedCrops: 'some fake data', results: 'result', crumb: crumbToken },
+      payload: { irrigatedCrops: 'some fake data', results: 'Back to score', crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
       }
@@ -93,20 +92,5 @@ describe('Irrigated crops page', () => {
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
     expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/score`)
-  })
-
-  it.skip('should store user response and redirects to irrigated-land', async () => { // double check this
-    const postOptions = {
-      method: 'POST',
-      url: `${global.__URLPREFIX__}/irrigated-crops`,
-      payload: { irrigatedCrops: 'some fake data', score: 'result', crumb: crumbToken },
-      headers: {
-        cookie: 'crumb=' + crumbToken
-      }
-    }
-
-    const postResponse = await global.__SERVER__.inject(postOptions)
-    expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe(`irrigated-land`)
   })
 })
