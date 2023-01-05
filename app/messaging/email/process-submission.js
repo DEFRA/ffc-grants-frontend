@@ -1,4 +1,3 @@
-// const { sendDesirabilitySubmitted } = require('../senders')
 const createMsg = require('./create-submission-msg')
 const appInsights = require('../../services/app-insights')
 
