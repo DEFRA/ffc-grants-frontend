@@ -1,6 +1,5 @@
 module.exports = [
   'abstractionLicence',
-  'agentDetails',
   'applying',
   'isArable',
   'businessDetails',
@@ -9,6 +8,7 @@ module.exports = [
   'consentOptional',
   'inEngland',
   'farmerDetails',
+  'agentDetails',
   'farmingType',
   'irrigatedCrops',
   'irrigatedLandCurrent',
