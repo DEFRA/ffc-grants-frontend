@@ -57,7 +57,7 @@ describe('Page Helpers', () => {
       county: 'farmer-county',
       businessPostcode: 'farmer-postcode'
     }
-    varList.agentsDetails = {
+    varList.agentDetails = {
       firstName: 'Agent',
       lastName: 'ALastName',
       emailAddress: 'agent-email',

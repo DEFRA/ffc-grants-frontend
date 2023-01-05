@@ -33,7 +33,7 @@ const getCheckDetailsModel = (request, question, backUrl, nextUrl) => {
 
   const applying = getYarValue(request, 'applying')
   const businessDetails = getYarValue(request, 'businessDetails')
-  const agentDetails = getYarValue(request, 'agentsDetails')
+  const agentDetails = getYarValue(request, 'agentDetails')
   const farmerDetails = getYarValue(request, 'farmerDetails')
 
   const agentContact = saveValuesToArray(agentDetails, ['emailAddress', 'mobileNumber', 'landlineNumber'])

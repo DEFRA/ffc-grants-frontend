@@ -1801,7 +1801,7 @@ const questionBank = {
           ]
         }
       ],
-      yarKey: 'agentsDetails'
+      yarKey: 'agentDetails'
     },
     {
       key: 'check-details',
