@@ -37,7 +37,7 @@
     "@hapi/vision": "^7.0.0",
     "@hapi/wreck": "^18.0.0",
     "@hapi/yar": "^11.0.0",
-    "applicationinsights": "^2.3.4",
+    "applicationinsights": "^2.3.6",
     "bcrypt": "^5.0.1",
     "dialog-polyfill": "^0.5.6",
     "dotenv": "^16.0.1",
