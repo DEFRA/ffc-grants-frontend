@@ -159,4 +159,12 @@ describe('Create submission message', () => {
 
     expect(msg.spreadsheet.worksheets[0].rows.find(r => r.row === 20).values[2]).toBe('Large')
   })
+
+  test('getscorechance function', () => {
+    let msg = createMsg(farmerSubmission, desirabilityScore,'strong')
+    expect(msg.getScoreChance).toBe('seems likely to')
+
+    msg = createMsg(farmerSubmission, desirabilityScore)
+    expect(msg.getScoreChance).toBe('seems unlikely to')
+  })
 })

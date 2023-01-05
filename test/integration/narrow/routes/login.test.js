@@ -1,34 +1,56 @@
-const { crumbToken } = require('./test-helper')
+const { crumbToken } = require("./test-helper");
 
-describe('Login page', () => {
+describe("Login page", () => {
   afterEach(() => {
-    jest.resetAllMocks()
-  })
+    jest.resetAllMocks();
+  });
 
-  it.skip('Should load page successfully', async () => {
+  it.skip("Should load page successfully", async () => {
     const options = {
-      method: 'GET',
+      method: "GET",
       url: `${global.__URLPREFIX__}/login`,
       headers: {
-        cookie: 'crumb=' + crumbToken
-      }
-    }
+        cookie: "crumb=" + crumbToken,
+      },
+    };
 
-    const response = await global.__SERVER__.inject(options)
-    expect(response.statusCode).toBe(200)
-  })
-
-  it('should not authentic if incorrect details provided', async () => {
+    const response = await global.__SERVER__.inject(options);
+    expect(response.statusCode).toBe(200);
+  });
+  it("should not authentic if incorrect details provided", async () => {
     const postOptions = {
-      method: 'POST',
+      method: "POST",
       url: `${global.__URLPREFIX__}/login`,
-      payload: { username: 'some conscent', password: 'password', crumb: crumbToken },
-      headers: { cookie: 'crumb=' + crumbToken }
-    }
+      payload: {
+        username: "some conscent",
+        password: "password",
+        crumb: crumbToken,
+      },
+      headers: { cookie: "crumb=" + crumbToken },
+    };
 
-    const postResponse = await global.__SERVER__.inject(postOptions)
-    expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Enter the username and password you&#39;ve been given')
+    const postResponse = await global.__SERVER__.inject(postOptions);
+    expect(postResponse.statusCode).toBe(200);
+    expect(postResponse.payload).toContain(
+      "Enter the username and password you&#39;ve been given"
+    );
+  });
 
-  })
-})
+  it("login with incorrect details goes to fail action", async () => {
+    const postOptions = {
+      method: "POST",
+      url: `${global.__URLPREFIX__}/login`,
+      payload: {
+        username: "username",
+        password: "password",
+        crumb: crumbToken,
+      },
+      headers: { cookie: "crumb=" + crumbToken },
+    };
+
+    const postResponse = await global.__SERVER__.inject(postOptions);
+    expect(postResponse.statusCode).toBe(200);
+    expect(postResponse.payload).toContain("login");
+  });
+
+});

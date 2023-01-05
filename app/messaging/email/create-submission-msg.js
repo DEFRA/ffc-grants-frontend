@@ -251,11 +251,12 @@ function getRPAEmailDetails (submission, desirabilityScore) {
   return getEmailDetails(submission, desirabilityScore, emailConfig.notifyTemplate, false, spreadsheetConfig.rpaEmail)
 }
 
-module.exports = function (submission, desirabilityScore) {
+module.exports = function (submission, desirabilityScore,rating='') {
   return {
     applicantEmail: getApplicantEmailDetails(submission, desirabilityScore),
     agentEmail: getAgentEmailDetails(submission, desirabilityScore),
     rpaEmail: spreadsheetConfig.sendEmailToRpa ? getRPAEmailDetails(submission, desirabilityScore) : '',
-    spreadsheet: getSpreadsheetDetails(submission, desirabilityScore)
+    spreadsheet: getSpreadsheetDetails(submission, desirabilityScore),
+    getScoreChance:getScoreChance(rating)
   }
 }
