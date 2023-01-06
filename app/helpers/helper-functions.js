@@ -30,89 +30,8 @@ function setLabelData (data, labelData) {
   })
 }
 
-function formInputObject (name, classes, text, hint, inputInfo, value) {
-  const { fieldName, fieldError, inputType, autocomplete } = inputInfo
-  return {
-    id: name,
-    name,
-    classes,
-    autocomplete: autocomplete || 'on',
-    ...(text ? { label: { html: text } } : {}),
-    ...(hint ? { hint: { text: hint } } : {}),
-    ...(value ? { type: 'hidden' } : { type: inputType }),
-    ...(value ? { value: value } : {}),
-    ...(fieldName ? { value: fieldName } : {}),
-    ...(fieldError ? { errorMessage: { text: fieldError } } : {})
-  }
-}
-
-function getPostCodeHtml (postcodeData, error) {
-  const postcode = postcodeData || ''
-
-  return !error
-    ? `<div>
-        <label class="govuk-label" for="projectPostcode">
-          What is the site postcode?<br/><br/> Postcode
-        </label>
-        <input class="govuk-input govuk-!-width-one-third" id="projectPostcode" name="projectPostcode" value="${postcode}">
-      </div>`
-    : `<div class="govuk-form-group--error">
-        <label class="govuk-label" for="projectPostcode">
-          What is the site postcode?<br/><br/> Postcode
-        </label>
-        <span id="post-code-error" class="govuk-error-message">
-          <span class="govuk-visually-hidden">
-            Error:
-          </span>
-          ${error[0].text}
-        </span>
-        <input class="govuk-input govuk-!-width-one-third govuk-input--error" autocomplete="off" id="projectPostcode" name="projectPostcode" value="${postcode}">
-      </div>`
-}
-function getSbiHtml (sbiData, error) {
-  const sbi = sbiData || ''
-
-  return !error
-    ? `<div>
-        <label class="govuk-label" for="sbi">
-        SBI Number
-        </label>
-        <input class="govuk-input govuk-!-width-one-third" id="sbi" name="sbi" value="${sbi}">
-      </div>`
-    : `<div class="govuk-form-group--error">
-        <label class="govuk-label" for="sbi">
-        SBI Number
-        </label>
-        <span id="post-code-error" class="govuk-error-message">
-          <span class="govuk-visually-hidden">
-            Error:
-          </span>
-          ${error.text}
-        </span>
-        <input class="govuk-input govuk-!-width-one-third govuk-input--error" autocomplete="off" id="sbi" name="sbi" value="${sbi}">
-      </div>`
-}
-function errorExtractor (data) {
-  const { details } = data
-  const errorObject = {}
-
-  details.forEach((detail) => {
-    if (detail.path.length > 0) {
-      const errorKey = detail.path.join().replace(/,/gi, '.')
-      errorObject[errorKey] = `error.${errorKey}.${detail.type}`
-    } else if (detail.context.label) {
-      errorObject[detail.context.label] = `error.${detail.context.label}.${detail.type}`
-    }
-  })
-
-  return errorObject
-}
-
-function getErrorMessage (object) {
-  return lookupErrorText(object[Object.keys(object)[0]])
-}
-
 function getGrantValues (projectCost) {
+  console.log('getGrantValues',projectCost)
   const calculatedGrant = Number(GRANT_PERCENTAGE * projectCost / 100).toFixed(2)
   const remainingCost = Number(projectCost - calculatedGrant).toFixed(2)
 
@@ -123,42 +42,20 @@ function isInteger (number) {
   // NOT using Number.isInteger() because
   //  - not working on Internet Explorer
   //  - Number.isInteger(40000.00) === false ( instead of true )
-
+console.log('integer',number)
   return (number - Math.floor(number)) === 0
 }
 
 function formatUKCurrency (costPounds) {
+  console.log('formatUKCurrency',costPounds)
   return (isInteger(costPounds))
     ? Number(costPounds).toLocaleString('en-GB')
     : Number(costPounds).toLocaleString('en-GB', { minimumFractionDigits: 0, maximumFractionDigits: 0 })
 }
 
-function formatApplicationCode (guid) {
-  return `WM-${guid.substr(0, 3)}-${guid.substr(3, 3)}`.toUpperCase()
-}
-function itemInObject (object, item) {
-  return (
-    !!object && Object.keys(object).includes(item)
-  )
-}
-
-function fetchObjectItem (object, item) {
-  return (
-    !!object && Object.keys(object).includes(item) && object[item]
-  ) || null
-}
-
-function fetchListObjectItems (object, itemsList) {
-  if (!object) {
-    return itemsList.map(item => null)
-  }
-
-  return (itemsList.map(item => (
-    (Object.keys(object).includes(item) && object[item]) || null
-  )))
-}
-
 function findErrorList ({ details }, inputFields) {
+  console.log('findErrorList',details)
+  console.log('inputFields',inputFields)
   const errorCodes = inputFields.map(input => {
     const foundErrorList = details.filter(({ context: { label: valLabel } }) => (valLabel === input))
 
@@ -175,35 +72,12 @@ function findErrorList ({ details }, inputFields) {
   ))
 }
 
-const getErrorList = (fields, err, phoneErrors) => {
-  const errorList = []
-
-  fields.forEach(field => {
-    const fieldError = findErrorList(err, [field])[0]
-    if (field === 'mobile' && phoneErrors) {
-      errorList.push(...phoneErrors)
-    }
-    if (fieldError) {
-      errorList.push({ text: fieldError, href: `#${field}` })
-    }
-  })
-  return errorList
-}
 
 module.exports = {
   isChecked,
   setLabelData,
-  formInputObject,
-  getPostCodeHtml,
-  errorExtractor,
-  getErrorMessage,
   getGrantValues,
   formatUKCurrency,
-  itemInObject,
-  fetchObjectItem,
-  fetchListObjectItems,
-  findErrorList,
-  formatApplicationCode,
-  getSbiHtml,
-  getErrorList
+  isInteger,
+  findErrorList
 }
