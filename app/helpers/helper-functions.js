@@ -31,7 +31,6 @@ function setLabelData (data, labelData) {
 }
 
 function getGrantValues (projectCost) {
-  console.log('getGrantValues',projectCost)
   const calculatedGrant = Number(GRANT_PERCENTAGE * projectCost / 100).toFixed(2)
   const remainingCost = Number(projectCost - calculatedGrant).toFixed(2)
 
@@ -42,20 +41,16 @@ function isInteger (number) {
   // NOT using Number.isInteger() because
   //  - not working on Internet Explorer
   //  - Number.isInteger(40000.00) === false ( instead of true )
-console.log('integer',number)
   return (number - Math.floor(number)) === 0
 }
 
 function formatUKCurrency (costPounds) {
-  console.log('formatUKCurrency',costPounds)
   return (isInteger(costPounds))
     ? Number(costPounds).toLocaleString('en-GB')
     : Number(costPounds).toLocaleString('en-GB', { minimumFractionDigits: 0, maximumFractionDigits: 0 })
 }
 
 function findErrorList ({ details }, inputFields) {
-  console.log('findErrorList',details)
-  console.log('inputFields',inputFields)
   const errorCodes = inputFields.map(input => {
     const foundErrorList = details.filter(({ context: { label: valLabel } }) => (valLabel === input))
 
