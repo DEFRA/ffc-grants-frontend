@@ -1929,3 +1929,75 @@ module.exports = {
   ALL_URLS,
   YAR_KEYS
 }
+
+
+// incoming Change of Summer Abstraction/Mains (No Journey)
+// {
+//   key: 'mains',
+//   order: ?,
+//   title: 'Are you going to use water from summer abstraction or mains?',
+//   classes: 'govuk-radios--inline govuk-fieldset__legend--l',
+//   pageTitle: '',
+//   url: 'mains',
+//   baseUrl: 'mains',
+//   backUrl: 'irrigation-status',
+//   nextUrl: 'new-water-source',
+//   preValidationKeys: '',
+//   fundingPriorities: '',
+//   type: 'single-answer',
+//   minAnswerCount: 1,
+//   ineligibleContent: {
+//     messageContent: `Your project cannot increase water use from summer abstraction or mains. 
+//                      RPA wants to fund projects that use more sustainable water sources, such as: 
+//         <div class="govuk-inset-text">
+//           You can use:
+//           <ul class="govuk-list govuk-list--bullet">
+//             <li>water peak-flow abstraction</li>
+//             <li>rain water harvesting</li>
+//             <li>bore hole/aquifer</li>
+//           </ul>
+//         </div>
+//         `,
+//     messageLink: {
+//       url: 'https://www.gov.uk/government/collections/rural-payments-and-grants',
+//       title: 'See other grants you may be eligible for.'
+//     }
+//   },
+//   validate: [
+//     {
+//       type: 'NOT_EMPTY',
+//       error:
+//         'Select yes if you are going to use summer abstraction or mains'
+//     }
+//   ],
+//   answers: [
+//     {
+//       key: 'mains-A1',
+//       value: 'Yes',
+//       notEligible: true
+//     },
+//     {
+//       key: 'mains-A2',
+//       value: 'No',  
+//     }
+//   ],
+//   sidebar: {
+//     values: [
+//       {
+//         heading: 'Eligibility',
+//         content: [
+//           {
+//             para: `Your project cannot increase water use from summer abstraction or mains.\n\n
+//                    RPA wants to fund projects that use more sustainable water sources, such as: `,
+//             items: [
+//               'winter peak-flow abstraction',
+//               'rain water harvesting',
+//               'bore hole/aquifer'
+//             ]
+//           }
+//         ]
+//       }
+//     ]
+//   },
+//   yarKey: 'mains'
+// }
