@@ -126,7 +126,7 @@ const questionBank = {
       validate: [
         {
           type: 'NOT_EMPTY',
-          error: 'Select the legal status of the farm business'
+          error: 'Select the legal status of the business'
         }
       ],
       answers: [
