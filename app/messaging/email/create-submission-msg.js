@@ -196,7 +196,7 @@ function getEmailDetails (submission, desirabilityScore, notifyTemplate, agentAp
       infrastructureEquipment: [submission.projectInfrastucture].flat().join(', '),
       irrigationEquipment: [submission.projectEquipment].flat().join(', '),
       technology: [submission.projectTechnology].flat().join(', '),
-      itemsCost: String(submission.projectCost.toFixed(2)),
+      itemsCost: String(submission.projectCost),
       potentialFunding: submission.calculatedGrant,
       remainingCost: submission.remainingCost,
       projectStarted: submission.projectStarted,
