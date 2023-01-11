@@ -2001,3 +2001,68 @@ module.exports = {
 //   },
 //   yarKey: 'mains'
 // }
+
+
+// Grants-1436
+// {
+//   key: 'new-water-source',
+//   order: ?,
+//   title: 'What will be the new water source?',
+//   hint: {
+//     text: 'Select up to 2 options'
+//   },
+//   pageTitle: '',
+//   url: 'new-water-source',
+//   baseUrl: 'new-water-source',
+//   backUrl: 'mains',
+//   nextUrl: 'irrigation-water-source',
+//   fundingPriorities: '',
+//   type: 'multi-answer',
+//   score: {
+//     isScore: ?,
+//     isDisplay: ?
+//   },
+//   minAnswerCount: '',
+//   maxAnswerCount: '',
+//   validate: [
+//     {
+//       type: 'NOT_EMPTY',
+//       error: 'Select the options that apply to you'
+//     }
+//   ],
+//   answers: [
+//     {
+//       key: 'new-water-source-A1',
+//       value: 'Winter peak-flow abstraction',
+//       redirectUrl: 'irrigation-water-source'
+//     },
+//     {
+//       key: 'new-water-source-A2',
+//       value: 'rain water harvesting',
+//       redirectUrl: 'irrigation-water-source'
+//     },
+//     {
+//       key: 'new-water-source-A3',
+//       value: 'Increase irrigation',
+//       redirectUrl: 'bore hole/aquifer
+//     }
+//   ],
+//   sidebar: {
+//     values: [
+//       {
+//         heading: 'Funding priorities',
+//         content: [
+//           {
+//             para: 'RPA wants to fund projects that use more sustainable water sources, such as:',
+//             items: [
+//               'winter peak-flow abstraction',
+//               'rain water harvesting',
+//               'bore hole/aquifer'
+//             ]
+//           }
+//         ]
+//       }
+//     ]
+//   },
+//   yarKey: 'newWaterSource'
+// },
