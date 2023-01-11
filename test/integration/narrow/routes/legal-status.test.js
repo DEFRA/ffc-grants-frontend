@@ -62,7 +62,7 @@ describe('Legal status page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Select the legal status of the farm business')
+    expect(postResponse.payload).toContain('Select the legal status of the business')
   })
 
   it('should store user response and redirects to project details page', async () => {
