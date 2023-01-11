@@ -15,9 +15,8 @@ const getDependentSideBar = (sidebar, request) => {
 };
 
 const getBackUrl = (hasScore, backUrlObject, backUrl, request) => {
-  const exclusionList = ['abstraction-licence', 'remaining-costs']
   const url = getUrl(backUrlObject, backUrl, request)
-  return hasScore && exclusionList.includes(url) ? null : url
+  return hasScore && url === 'abstraction-licence' ? null : url
 }
 
 const showBackToDetailsButton = (key, request) => {

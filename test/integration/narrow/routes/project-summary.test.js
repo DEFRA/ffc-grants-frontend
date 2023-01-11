@@ -95,4 +95,15 @@ describe('Project summary page', () => {
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.payload).toContain('If you select &#39;None of the above&#39;, you cannot select another option')
   })
+
+  it('should not have a back link if score is present', async () => {
+    const options = {
+      method: 'GET',
+      payload: { score: 1 },
+      url: `${global.__URLPREFIX__}/project-summary`
+      }
+      const response = await global.__SERVER__.inject(options)
+      expect(response.statusCode).toBe(200)
+      expect(response.payload).not.toContain('govuk-back-link')
+    })
 })
