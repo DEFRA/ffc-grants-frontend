@@ -7,7 +7,7 @@ const getGrantValues = (projectCostValue, grantsInfo) => {
     calculatedGrant = Math.min(calculatedGrant, maxGrant)
   }
   const remainingCost = Number(projectCostValue - calculatedGrant).toFixed(2)
-  const projectCost = Number(projectCostValue).toFixed(2)
+  const projectCost = Number(projectCostValue)
   const isEligible = (
     (minGrant <= calculatedGrant) && (calculatedGrant <= maxGrant)
   )
