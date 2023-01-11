@@ -104,13 +104,14 @@ describe('Project summary page', () => {
   })
 
   it('should have a back link if score NOT reached', async () => {
+    varList[ 'current-score' ] = null;
     const options = {
       method: 'GET',
       url: `${global.__URLPREFIX__}/project-summary`
     }
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
-    expect(response.payload).toContain(`<a href=\"abstraction-licence\" class=\"govuk-back-link\" id=\"linkBack\">Back</a>`)
+    expect(response.payload).toContain(`<a href=\"abstraction-licence\" class=\"govuk-back-link\">Back</a>`)
   })
 
   it('should not have a back link if score is present', async () => {
@@ -121,6 +122,6 @@ describe('Project summary page', () => {
     }
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
-    expect(response.payload).not.toContain(`<a href=\"abstraction-licence\" class=\"govuk-back-link\" id=\"linkBack\">Back</a>`)
+    expect(response.payload).not.toContain(`<a href=\"abstraction-licence\" class=\"govuk-back-link\">Back</a>`)
   })
 })
