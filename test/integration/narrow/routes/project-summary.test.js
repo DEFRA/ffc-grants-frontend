@@ -1,33 +1,40 @@
+const { not } = require('joi')
 const { crumbToken } = require('./test-helper')
-describe('Project summary page', () => {
-  const varList = {
-    farmingType: 'some fake crop',
-    legalStatus: 'fale status',
-    inEngland: 'Yes',
-    projectStarted: 'No',
-    landOwnership: 'Yes',
-    projectItemsList: {
-      projectEquipment: ['Boom', 'Trickle']
-    },
-    projectCost: '12345678',
-    remainingCost: 14082.00,
-    payRemainingCosts: 'Yes',
-    planningPermission: 'Will not be in place by 31 January 2023',
-    abstractionLicence: 'Not needed',
-    sSSI: 'Yes'
+const varListTemplate = {
+  farmingType: 'some fake crop',
+  legalStatus: 'fale status',
+  inEngland: 'Yes',
+  projectStarted: 'No',
+  landOwnership: 'Yes',
+  projectItemsList: {
+    projectEquipment: ['Boom', 'Trickle']
+  },
+  projectCost: '12345678',
+  remainingCost: 14082.00,
+  payRemainingCosts: 'Yes',
+  planningPermission: 'Will not be in place by 31 January 2023',
+  abstractionLicence: 'Not needed',
+  sSSI: 'Yes'
+}
+let varList
+const mockSession = {
+  setYarValue: (request, key, value) => null,
+  getYarValue: (request, key) => {
+    if (Object.keys(varList).includes(key)) return varList[key]
+    else return 'Error'
   }
+}
 
-  jest.mock('../../../../app/helpers/session', () => ({
-    setYarValue: (request, key, value) => null,
-    getYarValue: (request, key) => {
-      if (Object.keys(varList).includes(key)) return varList[key]
-      else return 'Error'
-    }
-  }))
-
+jest.mock('../../../../app/helpers/session', () => mockSession)
+describe('Project summary page', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
+    varList = { ...varListTemplate }
   })
+
+  afterEach(() => {
+    jest.resetAllMocks()
+  })
+
   it('should load page successfully', async () => {
     const options = {
       method: 'GET',
@@ -96,14 +103,24 @@ describe('Project summary page', () => {
     expect(postResponse.payload).toContain('If you select &#39;None of the above&#39;, you cannot select another option')
   })
 
-  it('should not have a back link if score is present', async () => {
+  it('should have a back link if score NOT reached', async () => {
     const options = {
       method: 'GET',
-      payload: { score: 1 },
       url: `${global.__URLPREFIX__}/project-summary`
-      }
-      const response = await global.__SERVER__.inject(options)
-      expect(response.statusCode).toBe(200)
-      expect(response.payload).not.toContain('govuk-back-link')
-    })
+    }
+    const response = await global.__SERVER__.inject(options)
+    expect(response.statusCode).toBe(200)
+    expect(response.payload).toContain(`<a href=\"abstraction-licence\" class=\"govuk-back-link\" id=\"linkBack\">Back</a>`)
+  })
+
+  it('should not have a back link if score is present', async () => {
+    varList['current-score'] = 'some score'
+    const options = {
+      method: 'GET',
+      url: `${global.__URLPREFIX__}/project-summary`
+    }
+    const response = await global.__SERVER__.inject(options)
+    expect(response.statusCode).toBe(200)
+    expect(response.payload).not.toContain(`<a href=\"abstraction-licence\" class=\"govuk-back-link\" id=\"linkBack\">Back</a>`)
+  })
 })
