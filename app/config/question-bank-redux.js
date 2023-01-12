@@ -281,6 +281,14 @@ const questionBank = {
       url: 'project-start',
       baseUrl: 'project-start',
       backUrl: 'planning-permission',
+      backUrlObject: {
+        dependentQuestionYarKey: 'planningPermission',
+        dependentAnswerKeysArray: ['planning-permission-A1', 'planning-permission-A2'],
+        urlOptions: {
+          thenUrl: 'planning-permission',
+          elseUrl: 'planning-permission-condition'
+        }
+      },
       nextUrl: 'tenancy',
       ineligibleContent: {
         messageContent:
