@@ -136,9 +136,9 @@ describe('Models', () => {
   test('inspect getModel().backUrl', () => {
     getYarValue.mockReturnValueOnce('mock-value')
     getYarValue.mockReturnValueOnce('mock-value')
-    getYarValue.mockReturnValueOnce(undefined)
+    getYarValue.mockReturnValueOnce(false)
 
-    getUrl.mockReturnValueOnce('remaining-costs')
+    getUrl.mockReturnValueOnce(null)
     getUrl.mockReturnValueOnce('tenancy')
     getUrl.mockReturnValueOnce('tenancy')
 
