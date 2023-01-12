@@ -94,7 +94,7 @@ describe('Planning permission page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe('project-start')
+    expect(postResponse.headers.location).toBe('planning-permission-condition')
   })
 
   it('if value = \'Not needed\' ==> store and redirect to project start page', async () => {

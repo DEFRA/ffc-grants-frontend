@@ -248,7 +248,8 @@ const questionBank = {
         { key: 'planning-permission-A2', value: 'Secured' },
         {
           key: 'planning-permission-A3',
-          value: 'Should be in place by 31 January 2023'
+          value: 'Should be in place by 31 January 2023',
+          redirectUrl: 'planning-permission-condition'
         },
         {
           key: 'planning-permission-A4',
@@ -257,6 +258,20 @@ const questionBank = {
         }
       ],
       yarKey: 'planningPermission'
+    },
+    {
+      key: 'planning-permission-condition',
+      order: 4.1,
+      url: 'planning-permission-condition',
+      backUrl: 'planning-permission',
+      nextUrl: 'project-start',
+      maybeEligible: true,
+      preValidationKeys: ['planningPermission'],
+      maybeEligibleContent: {
+        messageHeader: 'You may be able to apply for a grant from this scheme',
+        messageContent: 'Any planning permission must be in place by 31 January 2024 (the end of the application window).'
+      },
+      yarKey: 'PlanningPermissionCondition'
     },
     {
       key: 'project-start',
