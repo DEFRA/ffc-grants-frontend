@@ -173,7 +173,7 @@ const questionBank = {
         insetText: {
           text: 'Scotland, Wales and Northern Ireland have other grants available.'
         },
-        messageContent: 'This grant is only for projects in England.'
+        messageContent: 'This grant is only for projects in England.<br/>Scotland, Wales and Northern Ireland have other grants available.',
       },
       fundingPriorities: '',
       type: 'single-answer',
