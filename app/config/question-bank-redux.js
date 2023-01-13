@@ -144,7 +144,6 @@ const questionBank = {
           key: 'legal-status-A11',
           value: 'Community benefit society (BenCom)'
         },
-        { key: 'legal-status-A12', value: 'Industrial and provident society' },
         {
           value: 'divider'
         },
