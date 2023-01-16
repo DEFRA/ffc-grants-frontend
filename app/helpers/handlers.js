@@ -12,6 +12,8 @@ const emailFormatting = require('./../messaging/email/process-submission')
 const gapiService = require('../services/gapi-service')
 const { startPageUrl } = require('../config/server')
 
+const { noMainsA1, noMainsA2 } = require('../helpers/water-source-configs')
+
 const {
   getConfirmationId,
   handleConditinalHtmlData,
@@ -21,7 +23,27 @@ const {
   saveValuesToArray
 } = require('./pageHelpers')
 
+// Add url check to load config from water-source-sonfigs.js based on 'mains' and 'currentlyIrrigating' question answers
 const getPage = async (question, request, h) => {
+  if (question.key == 'water-source') {
+    let currentlyIrrigating = getYarValue(request, 'currentlyIrrigating')
+    if (currentlyIrrigating === 'No') {
+      switch (getYarValue(request, 'mains')) {
+        case `Don't use currently`:
+          question = noMainsA1
+        case 'Decrease':
+          question = noMainsA2
+        case 'Stop':
+        case 'Maintain and introduce or increase a sustainable water source':
+        case 'Maintain without introducing or increasing a sustainable water source':
+        default:
+          break 
+      }
+      
+    } else {
+      console.log('yes route tbc', question)
+    }
+  } 
   const { url, backUrl, nextUrlObject, type, title, yarKey, preValidationKeys, preValidationKeysRule } = question
   const nextUrl = getUrl(nextUrlObject, question.nextUrl, request)
   const isRedirect = guardPage(request, preValidationKeys, preValidationKeysRule)
