@@ -12,11 +12,11 @@ const getDependentSideBar = (sidebar, request) => {
   return {
     ...sidebar
   }
-};
+}
 
 const getBackUrl = (hasScore, backUrlObject, backUrl, request) => {
   const url = getUrl(backUrlObject, backUrl, request)
-  return hasScore && url === 'remaining-costs' ? null : url
+  return hasScore && url === 'abstraction-licence' ? null : url
 }
 
 const showBackToDetailsButton = (key, request) => {
