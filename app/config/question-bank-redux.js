@@ -345,7 +345,7 @@ const questionBank = {
         },
         {
           key: 'project-start-A3',
-          value: 'No, we have not started work on the project'
+          value: 'No, we have not done any work on this project yet'
         }
       ],
       yarKey: 'projectStarted'
@@ -383,7 +383,7 @@ const questionBank = {
         {
           type: 'NOT_EMPTY',
           error:
-            'Select yes if the land will have a tenancy agreement in place for 5 years after the final grant payment'
+            'Select yes if the planned project is on land the business owns'
         }
       ],
       answers: [
@@ -404,7 +404,7 @@ const questionBank = {
       key: 'tenancy-length',
       order: 7,
       title:
-        'Do you a tenancy agreement for 5 years after the final grant payment?',
+        'Do you have a tenancy agreement for 5 years after the final grant payment?',
       hint: {
         text: 'The location of the project'
       },

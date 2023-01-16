@@ -61,7 +61,7 @@ describe('Water tenancy page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Select yes if the land will have a tenancy agreement in place for 5 years after the final grant payment')
+    expect(postResponse.payload).toContain('Select yes if the planned project is on land the business owns')
   })
 
   it('should redirect to tenancy length page when user selects "No"', async () => {
