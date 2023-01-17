@@ -95,6 +95,9 @@ describe('Project start page', () => {
     expect(postResponse.payload).toContain(
       'You cannot apply for a grant from this scheme'
     )
+    expect(postResponse.payload).toContain(
+      'You cannot apply for a grant if you have already started work on the project.'
+    )
   })
   it('should redirect to ineligible page when user selects "Yes, preparatory work"', async () => {
     const postOptions = {

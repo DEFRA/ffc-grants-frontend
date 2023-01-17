@@ -290,13 +290,14 @@ const questionBank = {
       },
       nextUrl: 'tenancy',
       ineligibleContent: {
+        messageHeader: 'You cannot apply for a grant from this scheme',
         messageContent:
           'You cannot apply for a grant if you have already started work on the project.',
         insetText: {
           text: 'Starting the project or committing to any costs (such as placing orders) before you receive a funding agreement invalidates your application.'
         },
         messageLink: {
-          url: 'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments',
+          url: 'https://www.gov.uk/government/collections/rural-payments-and-grants',
           title: 'See other grants you may be eligible for.'
         }
       },
@@ -451,7 +452,7 @@ const questionBank = {
               messageHeader:
                 'You may be able to apply for a grant from this scheme',
               messageContent:
-                'You will need to extend your tenancy agreement before you can complete a full application.'
+                'You will need to extend your tenancy agreement for 5 years after the final grant payment.'
             }
           }
         }
@@ -462,9 +463,9 @@ const questionBank = {
     {
       key: 'project-cost',
       order: 8,
-      title: 'What is the estimated cost of the items?',
+      title: 'What is the total estimated cost of the items?',
       pageTitle: '',
-      classes: 'govuk-input--width-10', // TODO: input width is not applied
+      classes: 'govuk-input--width-10',
       url: 'project-cost',
       baseUrl: 'project-cost',
       backUrl: 'project-items',
