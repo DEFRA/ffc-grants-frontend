@@ -144,7 +144,6 @@ const questionBank = {
           key: 'legal-status-A11',
           value: 'Community benefit society (BenCom)'
         },
-        { key: 'legal-status-A12', value: 'Industrial and provident society' },
         {
           value: 'divider'
         },
@@ -173,7 +172,7 @@ const questionBank = {
         insetText: {
           text: 'Scotland, Wales and Northern Ireland have other grants available.'
         },
-        messageContent: 'This grant is only for projects in England.'
+        messageContent: 'This grant is only for projects in England.<br/>Scotland, Wales and Northern Ireland have other grants available.',
       },
       fundingPriorities: '',
       type: 'single-answer',
