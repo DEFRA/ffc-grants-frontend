@@ -10,7 +10,7 @@ const formatUKCurrency = (costPounds) => {
   costPounds = costPounds.toString().replace(/,/g, '')
   return isInteger(costPounds)
     ? Number(costPounds).toLocaleString('en-GB')
-    : Number(costPounds).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+    : Number(costPounds).toLocaleString('en-GB', { minimumFractionDigits: 0, maximumFractionDigits: 0 })
 }
 module.exports = {
   formatUKCurrency
