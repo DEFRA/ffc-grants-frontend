@@ -1,7 +1,7 @@
 const getGrantValues = (projectCostValue, grantsInfo) => {
   const { minGrant, maxGrant, grantPercentage, cappedGrant } = grantsInfo
 
-  let calculatedGrant = grantPercentage ? Number(grantPercentage * projectCostValue / 100).toFixed(2) : projectCostValue
+  let calculatedGrant = grantPercentage ? Number(grantPercentage * projectCostValue / 100).toFixed(0) : projectCostValue
 
   if (cappedGrant) {
     calculatedGrant = Math.min(calculatedGrant, maxGrant)
