@@ -1,10 +1,10 @@
 const { crumbToken } = require('./test-helper')
-const varListTemplate = {
+let varListTemplate = {
   farmingType: 'some fake crop',
   legalStatus: 'fale status',
   inEngland: 'Yes',
   projectStarted: 'No, we have not done any work on this project yet',
-  'current-score': ''
+  'current-score': '',
 }
 
 let varList
@@ -110,4 +110,34 @@ describe('Project start page', () => {
     expect(postResponse.statusCode).toBe(302)
     expect(postResponse.headers.location).toBe('tenancy')
   })
+
+  it(`page loads with correct back link when planning permission is "Should be in place by 31 January 2023" `, async () => {
+    const options = {
+      method: 'GET',
+      url: `${global.__URLPREFIX__}/project-start`
+    }
+    const response = await global.__SERVER__.inject(options)
+    expect(response.statusCode).toBe(200)
+    expect(response.payload).toContain('<a href=\"planning-permission-condition\" class=\"govuk-back-link\">Back</a>')
+  })
+
+  it('page loads with correct back link when planning permission is Secured', async () => {
+    varListTemplate = {
+      farmingType: 'some fake crop',
+      legalStatus: 'fale status',
+      inEngland: 'Yes',
+      planningPermission:'Secured',
+      projectStarted: 'No, we have not done any work on this project yet',
+      'current-score': '',
+    }
+    varList = { ...varListTemplate }
+    const options = {
+      method: 'GET',
+      url: `${global.__URLPREFIX__}/project-start`
+    }
+    const response = await global.__SERVER__.inject(options)
+    expect(response.statusCode).toBe(200)
+    expect(response.payload).toContain('<a href=\"planning-permission\" class=\"govuk-back-link\">Back</a>')
+  })
+
 })

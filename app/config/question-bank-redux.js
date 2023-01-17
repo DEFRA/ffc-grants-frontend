@@ -247,7 +247,8 @@ const questionBank = {
         { key: 'planning-permission-A2', value: 'Secured' },
         {
           key: 'planning-permission-A3',
-          value: 'Should be in place by 31 January 2023'
+          value: 'Should be in place by 31 January 2023',
+          redirectUrl: 'planning-permission-condition'
         },
         {
           key: 'planning-permission-A4',
@@ -258,6 +259,20 @@ const questionBank = {
       yarKey: 'planningPermission'
     },
     {
+      key: 'planning-permission-condition',
+      order: 4.1,
+      url: 'planning-permission-condition',
+      backUrl: 'planning-permission',
+      nextUrl: 'project-start',
+      maybeEligible: true,
+      preValidationKeys: ['planningPermission'],
+      maybeEligibleContent: {
+        messageHeader: 'You may be able to apply for a grant from this scheme',
+        messageContent: 'Any planning permission must be in place by 31 January 2024 (the end of the application window).'
+      },
+      yarKey: 'PlanningPermissionCondition'
+    },
+    {
       key: 'project-start',
       order: 5,
       title: 'Have you already started work on the project?',
@@ -265,6 +280,14 @@ const questionBank = {
       url: 'project-start',
       baseUrl: 'project-start',
       backUrl: 'planning-permission',
+      backUrlObject: {
+        dependentQuestionYarKey: 'planningPermission',
+        dependentAnswerKeysArray: ['planning-permission-A1', 'planning-permission-A2'],
+        urlOptions: {
+          thenUrl: 'planning-permission',
+          elseUrl: 'planning-permission-condition'
+        }
+      },
       nextUrl: 'tenancy',
       ineligibleContent: {
         messageContent:
