@@ -2,8 +2,7 @@ const {
   MIN_GRANT,
   MAX_GRANT,
   GRANT_PERCENTAGE,
-  NAME_ONLY_REGEX,
-  MIN_MAX_NUMBER
+  NAME_ONLY_REGEX
 } = require('../helpers/grant-details')
 const {
   PROJECT_COST_REGEX,
@@ -873,7 +872,7 @@ const questionBank = {
       url: 'irrigation-status',
       baseUrl: 'irrigation-status',
       backUrl: 'irrigated-crops',
-      nextUrl: 'irrigated-land',
+      nextUrl: 'mains',
       fundingPriorities: '',
       type: 'single-answer',
       minAnswerCount: 1,
@@ -894,6 +893,83 @@ const questionBank = {
         }
       ],
       yarKey: 'currentlyIrrigating'
+    },
+    {
+      key: 'mains',
+      order: 16,
+      title: 'How will your use of summer abstraction or mains change?',
+      pageTitle: '',
+      url: 'mains',
+      baseUrl: 'mains',
+      backUrl: 'irrigation-status',
+      nextUrl: 'irrigation-water-source',
+      type: 'single-answer',
+      validate: [
+        {
+          type: 'NOT_EMPTY',
+          error: 'select the options that apply to you'
+        }
+      ],
+      answers: [
+        {
+          key: 'mains-A1',
+          value: "Don't use currently"
+        },
+        {
+          key: 'mains-A2',
+          value: 'Decrease'
+        },
+        {
+          key: 'mains-A3',
+          value: 'Stop'
+        },
+        {
+          key: 'mains-A4',
+          value: 'Maintain and introduce or increase a sustainable water source'
+        },
+        {
+          key: 'mains-A5',
+          value: 'Maintain without introducing or increasing a sustainable water source'
+        },
+        {
+          key: 'mains-A6',
+          value: 'Increase',
+          notEligible: true
+        }
+
+      ],
+      ineligibleContent: {
+        messageContent:
+          `Your project cannot increase water use from summer abstraction or mains. 
+          <br><br>
+          RPA wants to fund projects that use more sustainable water sources, such as:
+          <ul class="govuk-list govuk-list--bullet">
+                <li>water peak-flow abstraction</li>
+                <li>rain water harvesting</li>
+                <li>bore hole/aquifer</li>
+          </ul>`,
+        messageLink: {
+          url: 'https://www.gov.uk/government/collections/rural-payments-and-grants',
+          title: 'See other grants you may be eligible for.'
+        }
+      },
+      sidebar: {
+        values: [
+          {
+            heading: 'Eligibility',
+            content: [
+              {
+                para: 'Your project cannot increase water use from summer abstraction or mains'
+              },
+              {
+                para: 'RPA wants to fund projects that use more sustainable water sources, such as:',
+                items: ['winter peak-flow abstraction', 'rain water harvesting', 'bore hole/aquifer']
+              }
+            ]
+          }
+        ]
+      },
+      yarKey: 'mains'
     },
     {
       key: 'Q19',
