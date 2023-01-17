@@ -1,5 +1,12 @@
 const lookupErrorText = require('./lookupErrorText')
 const { GRANT_PERCENTAGE } = require('../helpers/grant-details')
+const {
+  DONT_USE,
+  DECREASE,
+  STOP_MAINTAIN_INTRODUCE_CURRENT,
+  STOP_MAINTAIN_INTRODUCE_PLANNED,
+  MAINTAIN
+} = require('../helpers/water-source-data')
 
 function isChecked (data, option) {
   return !!data && data.includes(option)
@@ -66,7 +73,32 @@ function findErrorList ({ details }, inputFields) {
       : lookupErrorText(err)
   ))
 }
+const getCurrentWaterSourceOptions = (mains) => {
+  switch (mains) {
+    case 'Don\'t use currently':
+      return DONT_USE
+    case 'Decrease':
+      return DECREASE
+    case 'Maintain without introducing or increasing a sustainable water source':
+      return MAINTAIN
+    default:
+      return STOP_MAINTAIN_INTRODUCE_CURRENT
+  }
+}
 
+const getPlannedWaterSourceOptions = (mains) => {
+  console.log('I got planned mains')
+  switch (mains) {
+    case 'Don\'t use currently':
+      return DONT_USE
+    case 'Decrease':
+      return DECREASE
+    case 'Maintain without introducing or increasing a sustainable water source':
+      return MAINTAIN
+    default:
+      return STOP_MAINTAIN_INTRODUCE_PLANNED
+  }
+}
 
 module.exports = {
   isChecked,
@@ -74,5 +106,7 @@ module.exports = {
   getGrantValues,
   formatUKCurrency,
   isInteger,
-  findErrorList
+  findErrorList,
+  getCurrentWaterSourceOptions,
+  getPlannedWaterSourceOptions
 }
