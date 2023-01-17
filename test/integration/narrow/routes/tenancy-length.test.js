@@ -43,6 +43,7 @@ describe('Water tenancy length page', () => {
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
     expect(postResponse.payload).toContain('You may be able to apply for a grant from this scheme')
+    expect(postResponse.payload).toContain('You will need to extend your tenancy agreement before you can complete a full application')
   })
 
   it('should redirect to project items page when user selects "Yes"', async () => {

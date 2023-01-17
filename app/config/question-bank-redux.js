@@ -452,7 +452,7 @@ const questionBank = {
               messageHeader:
                 'You may be able to apply for a grant from this scheme',
               messageContent:
-                'You will need to extend your tenancy agreement before you can complete a full application.'
+                'You will need to extend your tenancy agreement for 5 years after the final grant payment.'
             }
           }
         }
