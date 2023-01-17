@@ -174,6 +174,32 @@ module.exports = {
     {
       key: 'Q16',
       order: 16,
+      title: 'Where does your current irrigation water come from?',
+      pageTitle: 'Irrigation source',
+      url: 'irrigation-water-source',
+      yarKey: 'waterSourceCurrent',
+      fundingPriorities: 'Improve the environment <br/> Improving water sustainability',
+      type: 'multiple-answer',
+      answerCount: 2,
+      group: 'Q16',
+      answer: []
+    },
+    {
+      key: 'Q16b',
+      order: 16.1,
+      title: 'Where will your irrigation water come from?',
+      pageTitle: 'Irrigation source',
+      url: 'irrigation-water-source',
+      yarKey: 'waterSourcePlanned',
+      fundingPriorities: 'Improve the environment <br/> Improving water sustainability',
+      type: 'multiple-answer',
+      answerCount: 2,
+      group: 'Q16',
+      answer: []
+    },
+    {
+      key: 'Q17',
+      order: 17,
       title: 'How much land is currently irrigated per year?',
       pageTitle: 'Irrigated land',
       desc: 'Enter figure in hectares (ha)',
@@ -185,89 +211,17 @@ module.exports = {
       yarKey: 'irrigatedLandCurrent'
     },
     {
-      key: 'Q16a',
-      order: 16.1,
+      key: 'Q17a',
+      order: 17.1,
       title: 'How much land will be irrigated after the project?',
       pageTitle: 'Irrigated land',
       desc: 'Enter figure in hectares (ha)',
       fundingPriorities: 'Improve productivity',
-      group: 'Q16',
+      group: 'Q17',
       type: 'number',
       unit: 'hectares',
       url: 'irrigated-land',
       yarKey: 'irrigatedLandTarget'
-    },
-    {
-      key: 'Q17',
-      order: 17,
-      title: 'Where does your current irrigation water come from?',
-      pageTitle: 'Irrigation source',
-      url: 'irrigation-water-source',
-      yarKey: 'waterSourceCurrent',
-      fundingPriorities: 'Improve the environment <br/> Improving water sustainability',
-      type: 'multiple-answer',
-      answerCount: 2,
-      group: 'Q17',
-      answer: [
-        {
-          key: 'Q17a-A1',
-          desc: 'Peak-flow/winter abstraction'
-        },
-        {
-          key: 'Q17a-A2',
-          desc: 'Rain water harvesting'
-        },
-        {
-          key: 'Q17a-A3',
-          desc: 'Bore hole / aquifer'
-        },
-        {
-          key: 'Q17a-A4',
-          desc: 'Summer water surface abstraction'
-        },
-        {
-          key: 'Q17a-A5',
-          desc: 'Mains'
-        },
-        {
-          key: 'Q17a-A6',
-          desc: 'Not currently irrigating'
-        }
-      ]
-    },
-    {
-      key: 'Q17b',
-      order: 17.1,
-      title: 'Where will your irrigation water come from?',
-      pageTitle: 'Irrigation source',
-      url: 'irrigation-water-source',
-      yarKey: 'waterSourcePlanned',
-      fundingPriorities: 'Improve the environment <br/> Improving water sustainability',
-      type: 'multiple-answer',
-      answerCount: 2,
-      group: 'Q17',
-      answer: [
-        {
-          key: 'Q17b-A1',
-          desc: 'Peak-flow/winter abstraction'
-        },
-        {
-          key: 'Q17b-A2',
-          desc: 'Rain water harvesting'
-        },
-        {
-          key: 'Q17b-A3',
-          desc: 'Bore hole / aquifer'
-        },
-        {
-          key: 'Q17b-A4',
-          desc: 'Summer water surface abstraction'
-        },
-        {
-          key: 'Q17b-A5',
-          desc: 'Mains'
-        }
-      ]
     },
     {
       key: 'Q18',
