@@ -549,7 +549,7 @@ const questionBank = {
       preValidationKeys: ['projectCost', 'calculatedGrant'],
       maybeEligible: true,
       maybeEligibleContent: {
-        messageHeader: 'You may be able to apply for a grant from this scheme',
+        messageHeader: 'Potential grant funding',
         messageContent: `You may be able to apply for a grant of up to £{{_calculatedGrant_}},
         based on the estimated cost of £{{_projectCost_}}.`,
         warning: {
@@ -1051,7 +1051,7 @@ const questionBank = {
             classes: 'govuk-label'
           },
           hint: {
-            text: 'For example, Browns Hill Farm lagoon project'
+            text: 'For example, Browns Hill Farm reservoir'
           },
           validate: [
             {
@@ -1159,7 +1159,7 @@ const questionBank = {
           title: 'Single Business Identifier (SBI)',
           classes: 'govuk-input govuk-input--width-10',
           label: {
-            text: 'Single Business Identifier (SBI) - Optional',
+            text: 'Single Business Identifier (SBI) (Optional)',
             classes: 'govuk-label'
           },
           hint: {
