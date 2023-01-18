@@ -1859,7 +1859,7 @@ const questionBank = {
       maybeEligibleContent: {
         messageHeader: 'Confirm and send',
         messageContent: `I confirm that, to the best of my knowledge, the details I have provided are correct.</br></br>
-            I understand the project’s eligibility and estimated grant amount is based on the answers I provided.</br></br>
+            I understand the project’s eligibility and score is based on the answers I provided.</br></br>
             I am aware that the information I submit will be:</br>
             <ul>
               <li>checked by the RPA</li>
