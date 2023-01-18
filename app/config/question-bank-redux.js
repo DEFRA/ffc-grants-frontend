@@ -928,8 +928,8 @@ const questionBank = {
       answers: [
         {
           key: 'Q19-A1',
-          value: 'Introduce or expand high-value Crops',
-          desc: 'Introduce or expand high-value Crops',
+          value: 'Introduce or expand high-value crops',
+          desc: 'Introduce or expand high-value crops',
           weight: 3
         },
         {
