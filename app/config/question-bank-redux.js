@@ -169,7 +169,7 @@ const questionBank = {
       backUrl: 'legal-status',
       nextUrl: 'planning-permission',
       ineligibleContent: {
-        insetText: {
+        insertText: {
           text: 'Scotland, Wales and Northern Ireland have other grants available.'
         },
         messageContent: 'This grant is only for projects in England.<br/>Scotland, Wales and Northern Ireland have other grants available.',
@@ -293,7 +293,7 @@ const questionBank = {
         messageHeader: 'You cannot apply for a grant from this scheme',
         messageContent:
           'You cannot apply for a grant if you have already started work on the project.',
-        insetText: {
+        insertText: {
           text: 'Starting the project or committing to any costs (such as placing orders) before you receive a funding agreement invalidates your application.'
         },
         messageLink: {
@@ -513,7 +513,7 @@ const questionBank = {
       ineligibleContent: {
         messageContent:
           'You can only apply for a grant of up to 40% of the estimated costs. ',
-        insetText: {
+        insertText: {
           text: 'The minimum grant you can apply for is £35,000 (40% of £87,500). The maximum grant is £500,000.'
         },
         messageLink: {
@@ -928,8 +928,8 @@ const questionBank = {
       answers: [
         {
           key: 'Q19-A1',
-          value: 'Introduce or expand high-value Crops',
-          desc: 'Introduce or expand high-value Crops',
+          value: 'Introduce or expand high-value crops',
+          desc: 'Introduce or expand high-value crops',
           weight: 3
         },
         {
@@ -964,7 +964,7 @@ const questionBank = {
             content: [
               {
                 para: 'RPA wants to fund projects that:',
-                items: ['improve productivity']
+                items: ['improve water sustainability']
               }
             ]
           }
@@ -1859,7 +1859,7 @@ const questionBank = {
       maybeEligibleContent: {
         messageHeader: 'Confirm and send',
         messageContent: `I confirm that, to the best of my knowledge, the details I have provided are correct.</br></br>
-            I understand the project’s eligibility and estimated grant amount is based on the answers I provided.</br></br>
+            I understand the project’s eligibility and score is based on the answers I provided.</br></br>
             I am aware that the information I submit will be:</br>
             <ul>
               <li>checked by the RPA</li>
