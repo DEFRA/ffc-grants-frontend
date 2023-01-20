@@ -27,8 +27,8 @@
         {{ messageContent | safe}}
       </p>
 
-      {% if insertText %} 
-        {{ govukInsetText(insertText) }}
+      {% if insetText %} 
+        {{ govukInsetText(insetText) }}
       {% endif %}
 
       {% if details %} 
@@ -40,7 +40,7 @@
       {% endif %}
 
       {% if messageLink %}
-        <p class="govuk-body"><a href="{{messageLink.url}}" class="govuk-link">{{messageLink.title}}</a></p>
+        <p class="govuk-body"><a href="{{messageLink.url}}" class="govuk-link" target="_blank" rel="noopener noreferrer">{{messageLink.title}}</a></p>
       {% endif %}
       
     </div>

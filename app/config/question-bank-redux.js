@@ -169,10 +169,7 @@ const questionBank = {
       backUrl: 'legal-status',
       nextUrl: 'planning-permission',
       ineligibleContent: {
-        insertText: {
-          text: 'Scotland, Wales and Northern Ireland have other grants available.'
-        },
-        messageContent: 'This grant is only for projects in England.<br/>Scotland, Wales and Northern Ireland have other grants available.',
+        messageContent: 'This grant is only for projects in England.<br/>Scotland, Wales and Northern Ireland have other grants available. ',
       },
       fundingPriorities: '',
       type: 'single-answer',
@@ -293,7 +290,7 @@ const questionBank = {
         messageHeader: 'You cannot apply for a grant from this scheme',
         messageContent:
           'You cannot apply for a grant if you have already started work on the project.',
-        insertText: {
+        insetText: {
           text: 'Starting the project or committing to any costs (such as placing orders) before you receive a funding agreement invalidates your application.'
         },
         messageLink: {
@@ -476,7 +473,7 @@ const questionBank = {
         text: '£'
       },
       label: {
-        text: 'What is the estimated cost of the items?',
+        text: 'What is the total estimated cost of the items?',
         classes: 'govuk-label--l',
         isPageHeading: true
       },
@@ -513,7 +510,7 @@ const questionBank = {
       ineligibleContent: {
         messageContent:
           'You can only apply for a grant of up to 40% of the estimated costs. ',
-        insertText: {
+        insetText: {
           text: 'The minimum grant you can apply for is £35,000 (40% of £87,500). The maximum grant is £500,000.'
         },
         messageLink: {
