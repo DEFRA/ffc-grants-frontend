@@ -169,10 +169,7 @@ const questionBank = {
       backUrl: 'legal-status',
       nextUrl: 'planning-permission',
       ineligibleContent: {
-        insertText: {
-          text: 'Scotland, Wales and Northern Ireland have other grants available.'
-        },
-        messageContent: 'This grant is only for projects in England.<br/>Scotland, Wales and Northern Ireland have other grants available.',
+        messageContent: 'This grant is only for projects in England.<br/>Scotland, Wales and Northern Ireland have other grants available. ',
       },
       fundingPriorities: '',
       type: 'single-answer',
@@ -476,7 +473,7 @@ const questionBank = {
         text: '£'
       },
       label: {
-        text: 'What is the estimated cost of the items?',
+        text: 'What is the total estimated cost of the items?',
         classes: 'govuk-label--l',
         isPageHeading: true
       },
