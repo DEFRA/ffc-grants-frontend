@@ -290,7 +290,7 @@ const questionBank = {
         messageHeader: 'You cannot apply for a grant from this scheme',
         messageContent:
           'You cannot apply for a grant if you have already started work on the project.',
-        insetText: {
+        insertText: {
           text: 'Starting the project or committing to any costs (such as placing orders) before you receive a funding agreement invalidates your application.'
         },
         messageLink: {
@@ -510,7 +510,7 @@ const questionBank = {
       ineligibleContent: {
         messageContent:
           'You can only apply for a grant of up to 40% of the estimated costs. ',
-        insetText: {
+        insertText: {
           text: 'The minimum grant you can apply for is £35,000 (40% of £87,500). The maximum grant is £500,000.'
         },
         messageLink: {
