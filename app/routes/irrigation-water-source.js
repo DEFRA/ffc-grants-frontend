@@ -3,6 +3,8 @@ const { setLabelData, findErrorList, getCurrentWaterSourceOptions, getPlannedWat
 const { setYarValue, getYarValue } = require('../helpers/session')
 const urlPrefix = require('../config/server').urlPrefix
 const gapiService = require('../services/gapi-service')
+const { guardPage } = require('../helpers/page-guard')
+const { startPageUrl } = require('../config/server')
 
 const viewTemplate = 'irrigation-water-source'
 const currentPath = `${urlPrefix}/${viewTemplate}`
@@ -13,6 +15,7 @@ const scorePath = `${urlPrefix}/score`
 function createModel(currentlyIrrigating, errorList, currentData, plannedData, hasScore, mains) {
   return {
     backLink: previousPath,
+    preValidationKeys: ['mains'],
     formActionPage: currentPath,
     hasScore,
     ...errorList ? { errorList } : {},
@@ -66,6 +69,10 @@ module.exports = [
     method: 'GET',
     path: currentPath,
     handler: (request, h) => {
+      const isRedirect = guardPage(request, ['mains'],)
+      if (isRedirect) {
+        return h.redirect(startPageUrl)
+      } 
       const currentData = getYarValue(request, 'waterSourceCurrent') || null
       const plannedData = getYarValue(request, 'waterSourcePlanned') || null
 

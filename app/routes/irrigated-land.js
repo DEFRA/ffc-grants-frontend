@@ -4,6 +4,8 @@ const { IRRIGATED_LAND_REGEX, ONLY_ZEROES_REGEX } = require('../helpers/regex-va
 const { setYarValue, getYarValue } = require('../helpers/session')
 const urlPrefix = require('../config/server').urlPrefix
 const gapiService = require('../services/gapi-service')
+const { guardPage } = require('../helpers/page-guard')
+const { startPageUrl } = require('../config/server')
 
 const viewTemplate = 'irrigated-land'
 const currentPath = `${urlPrefix}/${viewTemplate}`
@@ -71,6 +73,10 @@ module.exports = [
     method: 'GET',
     path: currentPath,
     handler: (request, h) => {
+      const isRedirect = guardPage(request, ['currentlyIrrigating'],)
+      if (isRedirect) {
+        return h.redirect(startPageUrl)
+      } 
       const irrigatedLandCurrent = getYarValue(request, 'irrigatedLandCurrent')
       const irrigatedLandTarget = getYarValue(request, 'irrigatedLandTarget')
       const currentData = irrigatedLandCurrent || null
