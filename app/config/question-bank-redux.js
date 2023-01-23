@@ -168,10 +168,7 @@ const questionBank = {
       backUrl: 'legal-status',
       nextUrl: 'planning-permission',
       ineligibleContent: {
-        insetText: {
-          text: 'Scotland, Wales and Northern Ireland have other grants available.'
-        },
-        messageContent: 'This grant is only for projects in England.<br/>Scotland, Wales and Northern Ireland have other grants available.',
+        messageContent: 'This grant is only for projects in England.<br/>Scotland, Wales and Northern Ireland have other grants available. ',
       },
       fundingPriorities: '',
       type: 'single-answer',
@@ -292,7 +289,7 @@ const questionBank = {
         messageHeader: 'You cannot apply for a grant from this scheme',
         messageContent:
           'You cannot apply for a grant if you have already started work on the project.',
-        insetText: {
+        insertText: {
           text: 'Starting the project or committing to any costs (such as placing orders) before you receive a funding agreement invalidates your application.'
         },
         messageLink: {
@@ -475,7 +472,7 @@ const questionBank = {
         text: '£'
       },
       label: {
-        text: 'What is the estimated cost of the items?',
+        text: 'What is the total estimated cost of the items?',
         classes: 'govuk-label--l',
         isPageHeading: true
       },
@@ -512,7 +509,7 @@ const questionBank = {
       ineligibleContent: {
         messageContent:
           'You can only apply for a grant of up to 40% of the estimated costs. ',
-        insetText: {
+        insertText: {
           text: 'The minimum grant you can apply for is £35,000 (40% of £87,500). The maximum grant is £500,000.'
         },
         messageLink: {
@@ -548,7 +545,7 @@ const questionBank = {
       preValidationKeys: ['projectCost', 'calculatedGrant'],
       maybeEligible: true,
       maybeEligibleContent: {
-        messageHeader: 'You may be able to apply for a grant from this scheme',
+        messageHeader: 'Potential grant funding',
         messageContent: `You may be able to apply for a grant of up to £{{_calculatedGrant_}},
         based on the estimated cost of £{{_projectCost_}}.`,
         warning: {
@@ -1004,8 +1001,8 @@ const questionBank = {
       answers: [
         {
           key: 'Q19-A1',
-          value: 'Introduce or expand high-value Crops',
-          desc: 'Introduce or expand high-value Crops',
+          value: 'Introduce or expand high-value crops',
+          desc: 'Introduce or expand high-value crops',
           weight: 3
         },
         {
@@ -1040,7 +1037,7 @@ const questionBank = {
             content: [
               {
                 para: 'RPA wants to fund projects that:',
-                items: ['improve productivity']
+                items: ['improve water sustainability']
               }
             ]
           }
@@ -1090,7 +1087,7 @@ const questionBank = {
             content: [
               {
                 para: 'RPA wants to fund projects that:',
-                items: ['improve productivity']
+                items: ['improve water sustainability']
               }
             ]
           }
@@ -1127,7 +1124,7 @@ const questionBank = {
             classes: 'govuk-label'
           },
           hint: {
-            text: 'For example, Browns Hill Farm lagoon project'
+            text: 'For example, Browns Hill Farm reservoir'
           },
           validate: [
             {
@@ -1235,7 +1232,7 @@ const questionBank = {
           title: 'Single Business Identifier (SBI)',
           classes: 'govuk-input govuk-input--width-10',
           label: {
-            text: 'Single Business Identifier (SBI) - Optional',
+            text: 'Single Business Identifier (SBI) (Optional)',
             classes: 'govuk-label'
           },
           hint: {
@@ -1935,7 +1932,7 @@ const questionBank = {
       maybeEligibleContent: {
         messageHeader: 'Confirm and send',
         messageContent: `I confirm that, to the best of my knowledge, the details I have provided are correct.</br></br>
-            I understand the project’s eligibility and estimated grant amount is based on the answers I provided.</br></br>
+            I understand the project’s eligibility and score is based on the answers I provided.</br></br>
             I am aware that the information I submit will be:</br>
             <ul>
               <li>checked by the RPA</li>

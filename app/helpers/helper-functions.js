@@ -44,17 +44,8 @@ function getGrantValues (projectCost) {
   return { calculatedGrant, remainingCost }
 }
 
-function isInteger (number) {
-  // NOT using Number.isInteger() because
-  //  - not working on Internet Explorer
-  //  - Number.isInteger(40000.00) === false ( instead of true )
-  return (number - Math.floor(number)) === 0
-}
-
 function formatUKCurrency (costPounds) {
-  return (isInteger(costPounds))
-    ? Number(costPounds).toLocaleString('en-GB')
-    : Number(costPounds).toLocaleString('en-GB', { minimumFractionDigits: 0, maximumFractionDigits: 0 })
+  return Number(costPounds).toLocaleString('en-GB', { minimumFractionDigits: 0, maximumFractionDigits: 0 })
 }
 
 function findErrorList ({ details }, inputFields) {
@@ -105,7 +96,6 @@ module.exports = {
   setLabelData,
   getGrantValues,
   formatUKCurrency,
-  isInteger,
   findErrorList,
   getCurrentWaterSourceOptions,
   getPlannedWaterSourceOptions
