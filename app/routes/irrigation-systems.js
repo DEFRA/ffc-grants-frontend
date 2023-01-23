@@ -7,7 +7,7 @@ const gapiService = require('../services/gapi-service')
 const viewTemplate = 'irrigation-systems'
 const currentPath = `${urlPrefix}/${viewTemplate}`
 const previousPath = `${urlPrefix}/irrigation-water-source`
-const nextPath = `${urlPrefix}/productivity`
+const nextPath = `${urlPrefix}/irrigated-crops`
 const scorePath = `${urlPrefix}/score`
 
 function createModel (currentlyIrrigating, errorList, currentData, plannedData, hasScore) {

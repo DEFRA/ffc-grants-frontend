@@ -30,7 +30,7 @@ async function createServer () {
   await server.register(vision)
   await server.register(require('./plugins/cookies'))
   await server.register(require('./plugins/error-pages'))
-  await server.register(require('./plugins/pageGuard'))
+  //await server.register(require('./plugins/pageGuard'))
   if (authConfig.enabled) {
     await server.register(require('./plugins/auth'))
   }

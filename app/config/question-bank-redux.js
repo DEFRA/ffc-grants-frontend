@@ -669,7 +669,7 @@ const questionBank = {
       url: 'abstraction-licence',
       baseUrl: 'abstraction-licence',
       backUrl: 'SSSI',
-      nextUrl: 'project-summary',
+      nextUrl: 'irrigation-status',
       fundingPriorities: '',
       type: 'single-answer',
       minAnswerCount: 1,
@@ -717,150 +717,6 @@ const questionBank = {
       yarKey: 'abstractionLicence'
     },
     {
-      key: 'project-summary',
-      order: 13,
-      title: 'What impact will the project have?',
-      hint: {
-        text: 'Select up to 2 options'
-      },
-      pageTitle: '',
-      url: 'project-summary',
-      baseUrl: 'project-summary',
-      backUrl: 'abstraction-licence',
-      nextUrl: 'irrigated-crops',
-      fundingPriorities: '',
-      type: 'multi-answer',
-      score: {
-        isScore: true,
-        isDisplay: true
-      },
-      minAnswerCount: '',
-      maxAnswerCount: '',
-      validate: [
-        {
-          type: 'NOT_EMPTY',
-          error: 'Select up to 2 options to describe your project’s impact'
-        },
-        {
-          type: 'STANDALONE_ANSWER',
-          error:
-            "If you select 'None of the above', you cannot select another option",
-          standaloneObject: {
-            questionKey: 'project-summary',
-            answerKey: 'project-summary-A5'
-          }
-        },
-        {
-          type: 'MAX_SELECT',
-          error: 'Select up to 2 options to describe your project’s impact',
-          max: 2
-        }
-      ],
-      answers: [
-        {
-          key: 'project-summary-A1',
-          value: 'Change water source',
-          redirectUrl: 'irrigated-crops'
-        },
-        {
-          key: 'project-summary-A2',
-          value: 'Improve irrigation efficiency',
-          redirectUrl: 'irrigated-crops'
-        },
-        {
-          key: 'project-summary-A3',
-          value: 'Increase irrigation',
-          redirectUrl: 'irrigated-crops'
-        },
-        {
-          key: 'project-summary-A4',
-          value: 'Introduce irrigation',
-          redirectUrl: 'irrigated-crops'
-        },
-        {
-          value: 'divider'
-        },
-        {
-          key: 'project-summary-A5',
-          value: 'None of the above',
-          redirectUrl: 'irrigated-crops'
-        }
-      ],
-      sidebar: {
-        values: [
-          {
-            heading: 'Funding priorities',
-            content: [
-              {
-                para: 'RPA wants to fund projects that:',
-                items: [
-                  'improve productivity',
-                  'improve the environment ',
-                  'improve water sustainability'
-                ]
-              }
-            ]
-          }
-        ]
-      },
-      yarKey: 'project'
-    },
-    {
-      key: 'Q15',
-      order: 14,
-      title: 'What main crops will be irrigated?',
-      pageTitle: 'Main crop',
-      url: 'irrigated-crops',
-      nextUrl: 'irrigation-status',
-      baseUrl: 'irrigated-crops',
-      backUrl: 'project-summary',
-      type: 'single-answer',
-      score: {
-        isScore: true,
-        isDisplay: true
-      },
-      validate: [
-        {
-          type: 'NOT_EMPTY',
-          error: 'Select the main crop you will be irrigating'
-        }
-      ],
-      answers: [
-        {
-          key: 'Q15-A3',
-          value: 'Field-scale crops',
-          text: 'Field-scale crops (for example, potatoes, onions, carrots)',
-          desc: 'Field-scale crops (for example, potatoes, onions, carrots)'
-        },
-        {
-          key: 'Q15-A1',
-          value: 'Protected cropping',
-          text: 'Protected cropping (for example, glasshouse or poly tunnel)',
-          desc: 'Protected cropping (for example, glasshouse or poly tunnel)'
-        },
-        {
-          key: 'Q15-A2',
-          value: 'Fruit',
-          text: 'Fruit (for example, top fruit, bush fruit)',
-          desc: 'Fruit'
-        }
-      ],
-      sidebar: {
-        values: [
-          {
-            heading: 'Funding priorities',
-            content: [
-              {
-                para: 'RPA wants to fund projects that:',
-                items: ['improve productivity']
-              }
-            ]
-          }
-        ]
-      },
-      yarKey: 'irrigatedCrops'
-    },
-    {
       key: 'irrigation-status',
       order: 15,
       title: 'Are you currently irrigating?',
@@ -868,7 +724,7 @@ const questionBank = {
       pageTitle: '',
       url: 'irrigation-status',
       baseUrl: 'irrigation-status',
-      backUrl: 'irrigated-crops',
+      backUrl: 'abstraction-licence',
       nextUrl: 'mains',
       fundingPriorities: '',
       type: 'single-answer',
@@ -969,6 +825,61 @@ const questionBank = {
       yarKey: 'mains'
     },
     {
+      key: 'Q15',
+      order: 14,
+      title: 'What main crops will be irrigated?',
+      pageTitle: 'Main crop',
+      url: 'irrigated-crops',
+      nextUrl: 'irrigated-land',
+      baseUrl: 'irrigated-crops',
+      backUrl: 'irrigation-systems',
+      type: 'single-answer',
+      score: {
+        isScore: true,
+        isDisplay: true
+      },
+      validate: [
+        {
+          type: 'NOT_EMPTY',
+          error: 'Select the main crop you will be irrigating'
+        }
+      ],
+      answers: [
+        {
+          key: 'Q15-A3',
+          value: 'Field-scale crops',
+          text: 'Field-scale crops (for example, potatoes, onions, carrots)',
+          desc: 'Field-scale crops (for example, potatoes, onions, carrots)'
+        },
+        {
+          key: 'Q15-A1',
+          value: 'Protected cropping',
+          text: 'Protected cropping (for example, glasshouse or poly tunnel)',
+          desc: 'Protected cropping (for example, glasshouse or poly tunnel)'
+        },
+        {
+          key: 'Q15-A2',
+          value: 'Fruit',
+          text: 'Fruit (for example, top fruit, bush fruit)',
+          desc: 'Fruit'
+        }
+      ],
+      sidebar: {
+        values: [
+          {
+            heading: 'Funding priorities',
+            content: [
+              {
+                para: 'RPA wants to fund projects that:',
+                items: ['improve productivity']
+              }
+            ]
+          }
+        ]
+      },
+      yarKey: 'irrigatedCrops'
+    },
+    {
       key: 'Q19',
       order: 19,
       title: 'How will the project improve productivity?',
@@ -978,7 +889,7 @@ const questionBank = {
       pageTitle: '',
       url: 'productivity',
       baseUrl: 'productivity',
-      backUrl: 'irrigation-systems',
+      backUrl: 'irrigated-land',
       nextUrl: 'collaboration',
       type: 'multi-answer',
       score: {
@@ -1045,6 +956,100 @@ const questionBank = {
       },
       yarKey: 'productivity'
     },
+// ******** THIS QUESTION IS ELIMANATED FROM THE JOURNEY *******/////
+    // {
+    //   key: 'project-summary',
+    //   order: 13,
+    //   title: 'What impact will the project have?',
+    //   hint: {
+    //     text: 'Select up to 2 options'
+    //   },
+    //   pageTitle: '',
+    //   url: 'project-summary',
+    //   baseUrl: 'project-summary',
+    //   backUrl: 'abstraction-licence',
+    //   nextUrl: 'irrigated-crops',
+    //   fundingPriorities: '',
+    //   type: 'multi-answer',
+    //   score: {
+    //     isScore: true,
+    //     isDisplay: true
+    //   },
+    //   minAnswerCount: '',
+    //   maxAnswerCount: '',
+    //   validate: [
+    //     {
+    //       type: 'NOT_EMPTY',
+    //       error: 'Select up to 2 options to describe your project’s impact'
+    //     },
+    //     {
+    //       type: 'STANDALONE_ANSWER',
+    //       error:
+    //         "If you select 'None of the above', you cannot select another option",
+    //       standaloneObject: {
+    //         questionKey: 'project-summary',
+    //         answerKey: 'project-summary-A5'
+    //       }
+    //     },
+    //     {
+    //       type: 'MAX_SELECT',
+    //       error: 'Select up to 2 options to describe your project’s impact',
+    //       max: 2
+    //     }
+    //   ],
+    //   answers: [
+    //     {
+    //       key: 'project-summary-A1',
+    //       value: 'Change water source',
+    //       redirectUrl: 'irrigated-crops'
+    //     },
+    //     {
+    //       key: 'project-summary-A2',
+    //       value: 'Improve irrigation efficiency',
+    //       redirectUrl: 'irrigated-crops'
+    //     },
+    //     {
+    //       key: 'project-summary-A3',
+    //       value: 'Increase irrigation',
+    //       redirectUrl: 'irrigated-crops'
+    //     },
+    //     {
+    //       key: 'project-summary-A4',
+    //       value: 'Introduce irrigation',
+    //       redirectUrl: 'irrigated-crops'
+    //     },
+    //     {
+    //       value: 'divider'
+    //     },
+    //     {
+    //       key: 'project-summary-A5',
+    //       value: 'None of the above',
+    //       redirectUrl: 'irrigated-crops'
+    //     }
+    //   ],
+    //   sidebar: {
+    //     values: [
+    //       {
+    //         heading: 'Funding priorities',
+    //         content: [
+    //           {
+    //             para: 'RPA wants to fund projects that:',
+    //             items: [
+    //               'improve productivity',
+    //               'improve the environment ',
+    //               'improve water sustainability'
+    //             ]
+    //           }
+    //         ]
+    //       }
+    //     ]
+    //   },
+    //   yarKey: 'project'
+    // },
+  
+   
+  
+   
     {
       key: 'collaboration',
       order: 20,
