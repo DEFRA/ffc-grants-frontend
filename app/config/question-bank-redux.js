@@ -961,7 +961,7 @@ const questionBank = {
             content: [
               {
                 para: 'RPA wants to fund projects that:',
-                items: ['improve water sustainability']
+                items: ['improve productivity']
               }
             ]
           }
