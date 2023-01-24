@@ -170,7 +170,9 @@ const questionBank = {
       nextUrl: 'planning-permission',
       ineligibleContent: {
         messageContent: 'This grant is only for projects in England.',
-        insertText: 'Scotland, Wales and Northern Ireland have other grants available.'
+        insertText: {
+          text: 'Scotland, Wales and Northern Ireland have other grants available.',
+        }
       },
       fundingPriorities: '',
       type: 'single-answer',
