@@ -1,17 +1,5 @@
 {
-  "Q14": [
-    {
-      "key": "Q14",
-      "title": "Project impact",
-      "answers": {
-        "Q14-A1": "Change water source",
-        "Q14-A2": "Improve irrigation efficiency",
-        "Q14-A3": "Introduce irrigation",
-        "Q14-A4": "Increase irrigation",
-        "Q14-A5": "None of the above"
-      }
-    }
-  ],
+  
   "Q15": [
     {
       "key": "Q15",
@@ -38,7 +26,7 @@
       "key": "Q17a",
       "title": "Current water source",
       "answers": {
-        "Q17a-A1": "Peak-flow/winter abstraction",
+        "Q17a-A1": "Winter peak-flow abstraction",
         "Q17a-A2": "Rain water harvesting",
         "Q17a-A3": "Bore hole/aquifer",
         "Q17a-A4": "Summer water surface abstraction",
@@ -50,7 +38,7 @@
       "key": "Q17b",
       "title": "Future water source",
       "answers": {
-        "Q17b-A1": "Peak-flow/winter abstraction",
+        "Q17b-A1": "Winter peak-flow abstraction",
         "Q17b-A2": "Rain water harvesting",
         "Q17b-A3": "Bore hole/aquifer",
         "Q17b-A4": "Summer water surface abstraction",

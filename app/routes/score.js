@@ -37,7 +37,6 @@ module.exports = [{
       return h.redirect(startPath)
     }
     try {
-      setYarValue(request, 'project', ['Introduce Irrigation'])
 
       const msgDataToSend = getDesirabilityAnswers(request)
       // Always re-calculate our score before rendering this page

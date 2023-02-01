@@ -14,7 +14,6 @@ function getAllDetails (request, confirmationId) {
 }
 
 const desirabilityAnswersSchema = Joi.object({
-  project: Joi.array().items(Joi.string()),
   irrigatedCrops: Joi.string(),
   irrigatedLandCurrent: Joi.number(),
   irrigatedLandTarget: Joi.number(),
@@ -30,7 +29,6 @@ function getDesirabilityAnswers (request) {
   console.log('getDesirabilityAnswers: ', 2)
   try {
     const val = {
-      project: getDataFromYarValue(request, 'project', 'multi-answer'),
       irrigatedCrops: getYarValue(request, 'irrigatedCrops'),
       irrigatedLandCurrent: getYarValue(request, 'irrigatedLandCurrent'),
       irrigatedLandTarget: getYarValue(request, 'irrigatedLandTarget'),
