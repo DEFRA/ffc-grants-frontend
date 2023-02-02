@@ -36,10 +36,10 @@ const getCheckDetailsModel = (request, question, backUrl, nextUrl) => {
   const agentDetails = getYarValue(request, 'agentDetails')
   const farmerDetails = getYarValue(request, 'farmerDetails')
 
-  const agentContact = saveValuesToArray(agentDetails, ['emailAddress', 'mobileNumber', 'landlineNumber'])
+  const agentContact = saveValuesToArray(agentDetails, ['emailAddress', 'mobile', 'landline'])
   const agentAddress = saveValuesToArray(agentDetails, ['address1', 'address2', 'town', 'county', 'postcode'])
 
-  const farmerContact = saveValuesToArray(farmerDetails, ['emailAddress', 'mobileNumber', 'landlineNumber'])
+  const farmerContact = saveValuesToArray(farmerDetails, ['emailAddress', 'mobile', 'landline'])
   const farmerAddress = saveValuesToArray(farmerDetails, ['address1', 'address2', 'town', 'county', 'businessPostcode'])
 
   return ({
