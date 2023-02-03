@@ -7,25 +7,6 @@ const msgData = {
   desirability: {
     questions: [
       {
-        key: 'Q14',
-        answers: [
-          {
-            key: 'Q14',
-            title: 'Project details',
-            input: [
-              {
-                key: 'Q14-A3',
-                value: 'Increase irrigation'
-              }
-            ]
-          }
-        ],
-        rating: {
-          score: 1,
-          band: 'Weak'
-        }
-      },
-      {
         key: 'Q16',
         answers: [
           {
@@ -156,12 +137,11 @@ const msgData = {
       }
     ],
     overallRating: {
-      score: 76.5,
+      score: 72.5,
       band: 'Strong'
     }
   },
   questionMapping: {
-    Q14: 'project',
     Q15: 'irrigatedCrops',
     Q16a: 'irrigatedLandCurrent',
     Q16b: 'irrigatedLandTarget',

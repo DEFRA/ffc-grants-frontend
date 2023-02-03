@@ -1,5 +1,27 @@
 const { getCookieHeader, getCrumbCookie, crumbToken } = require('./test-helper')
+
+const varListTemplate = {
+  'current-score': null
+}
+
+let varList
+const mockSession = {
+  setYarValue: (request, key, value) => null,
+  getYarValue: (request, key) => {
+    if (Object.keys(varList).includes(key)) return varList[key]
+    else return 'Error'
+  }
+}
+
+jest.mock('../../../../app/helpers/session', () => mockSession)
+
 describe('Water tenancy length page', () => {
+  beforeEach(() => {
+    varList = { ...varListTemplate }
+  })
+  afterEach(() => {
+    jest.resetAllMocks()
+  })
   let crumCookie
   it('should load page successfully', async () => {
     const options = {

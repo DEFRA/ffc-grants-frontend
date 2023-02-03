@@ -77,6 +77,7 @@ module.exports = [
       if (isRedirect) {
         return h.redirect(startPageUrl)
       } 
+
       const irrigatedLandCurrent = getYarValue(request, 'irrigatedLandCurrent')
       const irrigatedLandTarget = getYarValue(request, 'irrigatedLandTarget')
       const currentData = irrigatedLandCurrent || null

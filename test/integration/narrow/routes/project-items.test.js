@@ -8,7 +8,7 @@ const varListTemplate = {
   projectItemsList: {
     projectEquipment: ['Boom', 'Trickle']
   },
-  'current-score': ''
+  'current-score': null
 }
 
 let varList
@@ -22,7 +22,7 @@ const mockSession = {
 
 jest.mock('../../../../app/helpers/session', () => mockSession)
 
-describe('Irrigation water source page', () => {
+describe('project items page', () => {
   beforeEach(() => {
     varList = { ...varListTemplate }
   })
@@ -41,7 +41,7 @@ describe('Irrigation water source page', () => {
       projectItemsList: {
         projectEquipment: ['Boom', 'Trickle']
       },
-      'current-score': ''
+      'current-score': null
     }
 
     const options = {
@@ -76,7 +76,7 @@ describe('Irrigation water source page', () => {
 
   it('should load page if land ownership is null', async () => {
 
-    varList.landOwnership = undefined
+    varList.landOwnership = null
     const options = {
       method: 'GET',
       url: `${global.__URLPREFIX__}/project-items`
@@ -95,7 +95,7 @@ describe('Irrigation water source page', () => {
 
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(302)
-    expect(response.headers.location).toBe(`${global.__URLPREFIX__}/project-summary`)
+    expect(response.headers.location).toBe(`${global.__URLPREFIX__}/summer-abstraction-mains`)
   })
 
   it('should return error message if no option is selected', async () => {
@@ -112,11 +112,12 @@ describe('Irrigation water source page', () => {
     expect(postResponse.statusCode).toBe(200)
     expect(postResponse.payload).toContain('Select all the items your project needs')
   })
-  it('redirects to project-summary if user projectInfrastucture or projectEquipment or projectTechnology has not been saved', async () => {
+  it('redirects to summer-abstraction-mains if user projectInfrastucture or projectEquipment or projectTechnology has not been saved', async () => {
     varList = {
       projectInfrastucture: undefined,
       projectEquipment : undefined,
-      projectTechnology : undefined
+      projectTechnology : undefined,
+      'current-score': true
     }
 
     const options = {
@@ -126,7 +127,7 @@ describe('Irrigation water source page', () => {
 
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(302)
-    expect(response.headers.location).toBe(`${global.__URLPREFIX__}/project-summary`)
+    expect(response.headers.location).toBe(`${global.__URLPREFIX__}/summer-abstraction-mains`)
 
   })
   it('should store user response from column: "projectInfrastucture" and redirect to project cost page', async () => {

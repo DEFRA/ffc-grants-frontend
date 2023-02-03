@@ -73,7 +73,7 @@ it('should store valid user input and redirect to irrgation-water-source page', 
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe('irrgation-water-source')
+    expect(postResponse.headers.location).toBe('irrigation-water-source')
 })
 
 it('should display ineligible page when user response is \'Yes\'', async () => {

@@ -6,7 +6,7 @@ const gapiService = require('../services/gapi-service')
 const { guardPage } = require('../helpers/page-guard')
 const { startPageUrl } = require('../config/server')
 
-const viewTemplate = 'irrigation-systems'
+const viewTemplate = 'irrigation-system'
 const currentPath = `${urlPrefix}/${viewTemplate}`
 const previousPath = `${urlPrefix}/irrigation-water-source`
 const nextPath = `${urlPrefix}/irrigated-crops`
@@ -69,6 +69,12 @@ module.exports = [
       if (isRedirect) {
         return h.redirect(startPageUrl)
       } 
+
+      if (getYarValue(request, 'current-score')) {
+        // check if score and if question is before scoring question. If it is, move to score results
+        return h.redirect(`${urlPrefix}/summer-abstraction-mains`)
+      }
+
       const currentData = getYarValue(request, 'irrigationCurrent') || null
       const plannedData = getYarValue(request, 'irrigationPlanned') || null
 
@@ -123,6 +129,8 @@ module.exports = [
 
         setYarValue(request, 'irrigationCurrent', irrigationCurrent)
         setYarValue(request, 'irrigationPlanned', irrigationPlanned)
+
+        console.log('setting yarValues here', getYarValue(request, 'irrigationPlanned'))
         return results ? h.redirect(scorePath) : h.redirect(nextPath)
       }
     }

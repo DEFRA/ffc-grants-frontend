@@ -4,7 +4,7 @@ let varListTemplate = {
   legalStatus: 'fale status',
   inEngland: 'Yes',
   projectStarted: 'No, we have not done any work on this project yet',
-  'current-score': '',
+  'current-score': null,
 }
 
 let varList
@@ -48,7 +48,7 @@ describe('Project start page', () => {
 
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(302)
-    expect(response.headers.location).toBe(`${global.__URLPREFIX__}/project-summary`)
+    expect(response.headers.location).toBe(`${global.__URLPREFIX__}/summer-abstraction-mains`)
   })
 
   it('should returns error message in body if no option is selected', async () => {
@@ -131,7 +131,7 @@ describe('Project start page', () => {
       inEngland: 'Yes',
       planningPermission:'Secured',
       projectStarted: 'No, we have not done any work on this project yet',
-      'current-score': '',
+      'current-score': null,
     }
     varList = { ...varListTemplate }
     const options = {

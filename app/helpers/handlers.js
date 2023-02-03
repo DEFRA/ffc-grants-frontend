@@ -10,7 +10,7 @@ const senders = require('../messaging/senders')
 const createMsg = require('../messaging/create-msg')
 const emailFormatting = require('./../messaging/email/process-submission')
 const gapiService = require('../services/gapi-service')
-const { startPageUrl } = require('../config/server')
+const { startPageUrl, urlPrefix } = require('../config/server')
 
 const {
   getConfirmationId,
@@ -27,6 +27,10 @@ const getPage = async (question, request, h) => {
   const isRedirect = guardPage(request, preValidationKeys, preValidationKeysRule)
   if (isRedirect) {
     return h.redirect(startPageUrl)
+  }
+  if (getYarValue(request, 'current-score') && question.order < 15) { 
+    // check if score and if question is before scoring question. If it is, move to score results
+    return h.redirect(`${urlPrefix}/summer-abstraction-mains`)
   }
   let confirmationId = ''
 
