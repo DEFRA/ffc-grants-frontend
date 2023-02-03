@@ -14,7 +14,7 @@ const varListTemplate = {
   planningPermission: 'Will not be in place by 31 January 2023',
   abstractionLicence: 'Not needed',
   sSSI: 'Yes',
-  'current-score': ''
+  'current-score': null
 
 }
 
@@ -64,7 +64,7 @@ describe('SSSI page', () => {
       planningPermission: 'Will not be in place by 31 January 2023',
       abstractionLicence: 'Not needed',
       sSSI: undefined,
-      'current-score': ''
+      'current-score': null
 
     }
     const options = {

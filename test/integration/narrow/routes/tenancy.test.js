@@ -5,7 +5,7 @@ const varListTemplate = {
   inEngland: 'Yes',
   projectStarted: 'No',
   landOwnership: 'Yes',
-  'current-score': ''
+  'current-score': null
 }
 
 let varList

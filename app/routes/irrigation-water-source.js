@@ -73,6 +73,12 @@ module.exports = [
       if (isRedirect) {
         return h.redirect(startPageUrl)
       } 
+
+      if (getYarValue(request, 'current-score')) {
+        // check if score and if question is before scoring question. If it is, move to score results
+        return h.redirect(`${urlPrefix}/project-summary`)
+      }
+
       const currentData = getYarValue(request, 'waterSourceCurrent') || null
       const plannedData = getYarValue(request, 'waterSourcePlanned') || null
 

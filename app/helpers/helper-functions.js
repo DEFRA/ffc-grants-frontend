@@ -78,7 +78,6 @@ const getCurrentWaterSourceOptions = (mains) => {
 }
 
 const getPlannedWaterSourceOptions = (mains) => {
-  console.log('I got planned mains')
   switch (mains) {
     case 'Don\'t use currently':
       return DONT_USE

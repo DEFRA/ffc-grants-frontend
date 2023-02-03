@@ -14,7 +14,7 @@ const varListTemplate = {
   payRemainingCosts: 'Yes',
   planningPermission: 'Will not be in place by 31 January 2023',
   abstractionLicence: 'Not needed',
-  'current-score': ''
+  'current-score': null
 }
 
 let varList
@@ -108,7 +108,7 @@ describe('Abstraction licence page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe(`project-summary`)
+    expect(postResponse.headers.location).toBe(`irrigation-status`)
   })
 
   it('if value = \'Secured\' ==> store and redirect to project-summary page', async () => {
@@ -121,6 +121,6 @@ describe('Abstraction licence page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe(`project-summary`)
+    expect(postResponse.headers.location).toBe(`irrigation-status`)
   })
 })

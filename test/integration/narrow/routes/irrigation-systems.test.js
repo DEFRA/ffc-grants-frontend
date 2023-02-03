@@ -22,7 +22,7 @@ const varListTemplate = {
   waterSourcePlanned: ['some source 2', 'another source'],
   irrigationCurrent: ['some source 2', 'another source'],
   irrigationPlanned: ['some souce 2'],
-  'current-score': ''
+  'current-score': null
 }
 
 let varList
@@ -60,7 +60,7 @@ describe('Irrigation syatems page', () => {
     varList = {
       irrigationCurrent: null,
       irrigationPlanned: null,
-      'current-score': 'yes'
+      'current-score': null
     }
     const options = {
       method: 'GET',
@@ -99,7 +99,7 @@ describe('Irrigation syatems page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/productivity`)
+    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/irrigated-crops`)
   })
 
   it('should store user response and redirects to score page if results', async () => {
@@ -134,7 +134,7 @@ describe('Irrigation syatems page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/productivity`)
+    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/irrigated-crops`)
   })
   
   it('redirects to irrigation-systems if user irrigationCurrent, irrigationPlanned and currentlyIrrigating has not been saved', async () => {

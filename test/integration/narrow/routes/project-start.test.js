@@ -4,7 +4,7 @@ let varListTemplate = {
   legalStatus: 'fale status',
   inEngland: 'Yes',
   projectStarted: 'No, we have not done any work on this project yet',
-  'current-score': '',
+  'current-score': null,
 }
 
 let varList
@@ -131,7 +131,7 @@ describe('Project start page', () => {
       inEngland: 'Yes',
       planningPermission:'Secured',
       projectStarted: 'No, we have not done any work on this project yet',
-      'current-score': '',
+      'current-score': null,
     }
     varList = { ...varListTemplate }
     const options = {

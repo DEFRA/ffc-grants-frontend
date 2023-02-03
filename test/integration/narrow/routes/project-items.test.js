@@ -8,7 +8,7 @@ const varListTemplate = {
   projectItemsList: {
     projectEquipment: ['Boom', 'Trickle']
   },
-  'current-score': ''
+  'current-score': null
 }
 
 let varList
@@ -22,7 +22,7 @@ const mockSession = {
 
 jest.mock('../../../../app/helpers/session', () => mockSession)
 
-describe('Irrigation water source page', () => {
+describe('project items page', () => {
   beforeEach(() => {
     varList = { ...varListTemplate }
   })
@@ -41,7 +41,7 @@ describe('Irrigation water source page', () => {
       projectItemsList: {
         projectEquipment: ['Boom', 'Trickle']
       },
-      'current-score': ''
+      'current-score': null
     }
 
     const options = {
@@ -76,14 +76,14 @@ describe('Irrigation water source page', () => {
 
   it('should load page if land ownership is null', async () => {
 
-    varList.landOwnership = undefined
+    varList.landOwnership = null
     const options = {
       method: 'GET',
       url: `${global.__URLPREFIX__}/project-items`
     }
 
     const response = await global.__SERVER__.inject(options)
-    expect(response.statusCode).toBe(302)
+    expect(response.statusCode).toBe(200)
   })
 
   it('should redirect to project summary page if theres score', async () => {
@@ -116,7 +116,8 @@ describe('Irrigation water source page', () => {
     varList = {
       projectInfrastucture: undefined,
       projectEquipment : undefined,
-      projectTechnology : undefined
+      projectTechnology : undefined,
+      'current-score': true
     }
 
     const options = {

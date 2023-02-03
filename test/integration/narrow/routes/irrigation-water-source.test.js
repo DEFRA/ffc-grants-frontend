@@ -21,7 +21,7 @@ const varListTemplate = {
   irrigatedLandTarget: '456',
   waterSourceCurrent: ['some source 1'],
   waterSourcePlanned: ['some source 2', 'another source'],
-  'current-score': ''
+  'current-score': null
 }
 
 let varList
@@ -60,7 +60,8 @@ describe('Irrigation water source page', () => {
   it('should load page with no yars successfully', async () => {
     varList = {
       waterSourceCurrent: null,
-      waterSourcePlanned: null
+      waterSourcePlanned: null,
+      'current-score': null
     }
 
     const options = {

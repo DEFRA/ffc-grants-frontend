@@ -57,9 +57,6 @@
   "projectCost": 100000,
   "calculatedGrant": "40000.00",
   "remainingCost": "60000.00",
-  "project": [
-    "Improve irrigation efficiency"
-  ],
   "projectInfrastucture": [
     "Irrigation pump(s) and controls",
     "Electricity installation for pump house"

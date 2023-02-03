@@ -17,7 +17,7 @@ const varListTemplate = {
   project: ['some fake project'],
   irrigatedCrops: 'some crop',
   currentlyIrrigating: 'yes',
-  'current-score': ''
+  'current-score': null
 
 }
 
@@ -57,7 +57,8 @@ describe('Irrigated Land page', () => {
   it('should load page if no yar values successfully', async () => {
     varList = {
       irrigatedLandCurrent: null,
-      irrigatedLandTarget: null
+      irrigatedLandTarget: null,
+      'current-score': null
     }
     const options = {
       method: 'GET',
@@ -270,7 +271,7 @@ describe('Irrigated Land page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/irrigation-water-source`)
+    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/productivity`)
   })
 
   it('should store user response and redirects to score page', async () => {

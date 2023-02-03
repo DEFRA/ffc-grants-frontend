@@ -12,7 +12,7 @@ const varListTemplate = {
   projectCost: '12345678',
   remainingCost: 14082.00,
   payRemainingCosts: 'Yes',
-  'current-score': ''
+  'current-score': null
 
 }
 

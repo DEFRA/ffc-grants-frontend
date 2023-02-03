@@ -3,6 +3,7 @@ const { setYarValue, getYarValue } = require('../helpers/session')
 const { setLabelData } = require('../helpers/helper-functions')
 const urlPrefix = require('../config/server').urlPrefix
 const gapiService = require('../services/gapi-service')
+const { guardPage } = require('../helpers/page-guard')
 
 const viewTemplate = 'project-items'
 const currentPath = `${urlPrefix}/${viewTemplate}`
@@ -91,6 +92,16 @@ module.exports = [
     method: 'GET',
     path: currentPath,
     handler: (request, h) => {
+      const isRedirect = guardPage(request, ['currentlyIrrigating'],)
+      if (isRedirect) {
+        return h.redirect(startPageUrl)
+      } 
+
+      if (getYarValue(request, 'current-score')) {
+        // check if score and if question is before scoring question. If it is, move to score results
+        return h.redirect(`${urlPrefix}/project-summary`)
+      }
+
       const landOwnership = getYarValue(request, 'landOwnership') || null
       const backUrl = landOwnership === 'No' ? tenancyLengthPath : tenancyPath
 

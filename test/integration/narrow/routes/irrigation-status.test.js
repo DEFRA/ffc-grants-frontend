@@ -14,7 +14,7 @@ const varListTemplate = {
   planningPermission: 'Will not be in place by 31 January 2023',
   abstractionLicence: 'Not needed',
   sSSI: 'Yes',
-  'current-score': ''
+  'current-score': null
 
 }
 
@@ -48,7 +48,7 @@ describe('Irrigation status page', () => {
     expect(response.statusCode).toBe(200)
   })
 
-  it('should load and redirect page to irrigated-land if current-score exists', async () => { // double check this
+  it('should load and redirect page to project-summary if current-score exists', async () => { // double check this
     varList = {
       currentlyIrrigating: 'some value',
       'current-score': 'value'
@@ -61,7 +61,7 @@ describe('Irrigation status page', () => {
 
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(302)
-    expect(response.headers.location).toBe(`${global.__URLPREFIX__}/irrigated-land`)
+    expect(response.headers.location).toBe(`${global.__URLPREFIX__}/project-summary`)
   })
 
   it('should return an error message if no option is selected', async () => {
@@ -87,6 +87,6 @@ describe('Irrigation status page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe('irrigated-land')
+    expect(postResponse.headers.location).toBe('mains')
   })
 })
