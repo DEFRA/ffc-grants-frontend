@@ -755,7 +755,8 @@ const questionBank = {
         },
         {
           key: 'currentlyIrrigating-A2',
-          value: 'No'
+          value: 'No',
+          redirectUrl: 'mains-no'
         }
       ],
       yarKey: 'currentlyIrrigating'
@@ -763,7 +764,8 @@ const questionBank = {
     {
       key: 'mains',
       order: 16,
-      title: 'How will your use of summer abstraction or mains change?',
+      title: 'Are you going to increase the use of water from summer abstraction or mains?',
+      classes: 'govuk-radios--inline govuk-fieldset__legend--l',
       pageTitle: '',
       url: 'mains',
       baseUrl: 'mains',
@@ -780,30 +782,75 @@ const questionBank = {
       answers: [
         {
           key: 'mains-A1',
-          value: "Don't use currently"
+          value: 'Yes',
+          notEligible: true
         },
         {
           key: 'mains-A2',
-          value: 'Decrease'
-        },
-        {
-          key: 'mains-A3',
-          value: 'Stop'
-        },
-        {
-          key: 'mains-A4',
-          value: 'Maintain and introduce or increase a sustainable water source'
-        },
-        {
-          key: 'mains-A5',
-          value: 'Maintain without introducing or increasing a sustainable water source'
-        },
-        {
-          key: 'mains-A6',
-          value: 'Increase',
-          notEligible: true
+          value: 'No'
         }
-
+      ],
+      ineligibleContent: {
+        messageContent:
+          `Your project cannot increase water use from summer abstraction or mains. 
+          <br><br>
+          RPA wants to fund projects that use more sustainable water sources, such as:
+          <ul class="govuk-list govuk-list--bullet">
+                <li>water peak-flow abstraction</li>
+                <li>rain water harvesting</li>
+                <li>bore hole/aquifer</li>
+          </ul>`,
+        messageLink: {
+          url: 'https://www.gov.uk/government/collections/rural-payments-and-grants',
+          title: 'See other grants you may be eligible for.'
+        }
+      },
+      sidebar: {
+        values: [
+          {
+            heading: 'Eligibility',
+            content: [
+              {
+                para: 'Your project cannot increase water use from summer abstraction or mains'
+              },
+              {
+                para: 'RPA wants to fund projects that use more sustainable water sources, such as:',
+                items: ['winter peak-flow abstraction', 'rain water harvesting', 'bore hole/aquifer']
+              }
+            ]
+          }
+        ]
+      },
+      yarKey: 'mains'
+    },
+    {
+      key: 'mains-No',
+      order: 16,
+      title: 'Are you going to use water from summer abstraction or mains?',
+      classes: 'govuk-radios--inline govuk-fieldset__legend--l',
+      pageTitle: '',
+      url: 'mains-no',
+      baseUrl: 'mains-no',
+      backUrl: 'irrigation-status',
+      nextUrl: 'irrigation-water-source',
+      preValidationKeys: ['currentlyIrrigating'],
+      type: 'single-answer',
+      validate: [
+        {
+          type: 'NOT_EMPTY',
+          error: 'select the options that apply to you'
+        }
+      ],
+      answers: [
+        {
+          key: 'mains-A1',
+          value: 'Yes',
+          notEligible: true
+        },
+        {
+          key: 'mains-A2',
+          value: 'No'
+        }
       ],
       ineligibleContent: {
         messageContent:

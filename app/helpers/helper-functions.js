@@ -1,18 +1,15 @@
 const lookupErrorText = require('./lookupErrorText')
 const { GRANT_PERCENTAGE } = require('../helpers/grant-details')
 const {
-  DONT_USE,
-  DECREASE,
-  STOP_MAINTAIN_INTRODUCE_CURRENT,
-  STOP_MAINTAIN_INTRODUCE_PLANNED,
-  MAINTAIN
+  WATER_SOURCE,
+  SUSTAINABLE_WATER_SOURCE
 } = require('../helpers/water-source-data')
 
 function isChecked (data, option) {
   return !!data && data.includes(option)
 }
 
-function setLabelData (data, labelData) {
+function setLabelData(data, labelData) {
   return labelData.map((label) => {
     if (typeof (label) === 'string' && label !== 'divider') {
       return {
@@ -77,18 +74,8 @@ const getCurrentWaterSourceOptions = (mains) => {
   }
 }
 
-const getPlannedWaterSourceOptions = (mains) => {
-  console.log('I got planned mains')
-  switch (mains) {
-    case 'Don\'t use currently':
-      return DONT_USE
-    case 'Decrease':
-      return DECREASE
-    case 'Maintain without introducing or increasing a sustainable water source':
-      return MAINTAIN
-    default:
-      return STOP_MAINTAIN_INTRODUCE_PLANNED
-  }
+const getPlannedWaterSourceOptions = (currentlyIrrigating) => {
+  return currentlyIrrigating === 'Yes' ? WATER_SOURCE : SUSTAINABLE_WATER_SOURCE
 }
 
 module.exports = {
