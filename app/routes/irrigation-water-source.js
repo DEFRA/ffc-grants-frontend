@@ -1,5 +1,5 @@
 const Joi = require('joi')
-const { setLabelData, findErrorList, getCurrentWaterSourceOptions, getPlannedWaterSourceOptions } = require('../helpers/helper-functions')
+const { setLabelData, findErrorList, getPlannedWaterSourceOptions } = require('../helpers/helper-functions')
 const { setYarValue, getYarValue } = require('../helpers/session')
 const urlPrefix = require('../config/server').urlPrefix
 const gapiService = require('../services/gapi-service')
@@ -11,8 +11,9 @@ const currentPath = `${urlPrefix}/${viewTemplate}`
 const previousPath = `${urlPrefix}/mains`
 const nextPath = `${urlPrefix}/irrigation-systems`
 const scorePath = `${urlPrefix}/score`
+const { WATER_SOURCE } = require('../helpers/water-source-data')
 
-function createModel(currentlyIrrigating, errorList, currentData, plannedData, hasScore, mains) {
+function createModel (currentlyIrrigating, errorList, currentData, plannedData, hasScore) {
   return {
     backLink: previousPath,
     preValidationKeys: ['mains'],
@@ -44,7 +45,7 @@ function createModel(currentlyIrrigating, errorList, currentData, plannedData, h
       hint: {
         text: 'Select up to 2 options'
       },
-      items: setLabelData(currentData, getCurrentWaterSourceOptions(mains)),
+      items: setLabelData(currentData, WATER_SOURCE),
       ...(errorList && errorList[0].href === '#waterSourceCurrent' ? { errorMessage: { text: errorList[0].text } } : {})
     },
     waterSourcePlanned: {
@@ -58,7 +59,7 @@ function createModel(currentlyIrrigating, errorList, currentData, plannedData, h
       hint: {
         text: 'Select up to 2 options'
       },
-      items: setLabelData(plannedData, getPlannedWaterSourceOptions(mains)),
+      items: setLabelData(plannedData, getPlannedWaterSourceOptions(currentlyIrrigating)),
       ...(errorList && errorList[errorList.length - 1].href === '#waterSourcePlanned' ? { errorMessage: { text: errorList[errorList.length - 1].text } } : {})
     }
   }
@@ -69,7 +70,7 @@ module.exports = [
     method: 'GET',
     path: currentPath,
     handler: (request, h) => {
-      const isRedirect = guardPage(request, ['mains'],)
+      const isRedirect = guardPage(request, ['mains'])
       if (isRedirect) {
         return h.redirect(startPageUrl)
       } 
@@ -82,7 +83,7 @@ module.exports = [
       const currentData = getYarValue(request, 'waterSourceCurrent') || null
       const plannedData = getYarValue(request, 'waterSourcePlanned') || null
 
-      return h.view(viewTemplate, createModel(getYarValue(request, 'currentlyIrrigating'), null, currentData, plannedData, getYarValue(request, 'current-score'), getYarValue(request, 'mains')))
+      return h.view(viewTemplate, createModel(getYarValue(request, 'currentlyIrrigating'), null, currentData, plannedData, getYarValue(request, 'current-score')))
     }
   },
   {
