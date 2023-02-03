@@ -8,15 +8,15 @@ const { startPageUrl } = require('../config/server')
 
 const viewTemplate = 'irrigation-water-source'
 const currentPath = `${urlPrefix}/${viewTemplate}`
-const previousPath = `${urlPrefix}/mains`
-const nextPath = `${urlPrefix}/irrigation-systems`
+const previousPath = `${urlPrefix}/summer-abstraction-mains`
+const nextPath = `${urlPrefix}/irrigation-system`
 const scorePath = `${urlPrefix}/score`
 const { WATER_SOURCE } = require('../helpers/water-source-data')
 
 function createModel (currentlyIrrigating, errorList, currentData, plannedData, hasScore) {
   return {
     backLink: previousPath,
-    preValidationKeys: ['mains'],
+    preValidationKeys: ['summerAbstractionMains'],
     formActionPage: currentPath,
     hasScore,
     ...errorList ? { errorList } : {},
@@ -70,7 +70,7 @@ module.exports = [
     method: 'GET',
     path: currentPath,
     handler: (request, h) => {
-      const isRedirect = guardPage(request, ['mains'])
+      const isRedirect = guardPage(request, ['summerAbstractionMains'])
       if (isRedirect) {
         return h.redirect(startPageUrl)
       } 
@@ -134,6 +134,9 @@ module.exports = [
 
         setYarValue(request, 'waterSourceCurrent', waterSourceCurrent)
         setYarValue(request, 'waterSourcePlanned', waterSourcePlanned)
+
+        console.log('setting yarValues here', getYarValue(request, 'irrigationPlanned'))
+
         return results ? h.redirect(scorePath) : h.redirect(nextPath)
       }
     }

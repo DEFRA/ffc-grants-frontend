@@ -771,7 +771,7 @@ const questionBank = {
       url: "summer-abstraction-mains",
       baseUrl: "summer-abstraction-mains",
       backUrl: "irrigation-status",
-      nextUrl: "irrgation-water-source",
+      nextUrl: "irrigation-water-source",
       preValidationKeys: "",
       fundingPriorities: "",
       type: "single-answer",
@@ -830,141 +830,7 @@ const questionBank = {
       },
       yarKey: "summerAbstractionMains",
     },
-    {
-    key: 'irrgation-water-source',
-    order: 17,
-    title: 'Where will the irrigation water come from?',
-    pageTitle: '',
-      hint: {
-        text: 'Select all that apply'
-      },
-    url: 'irrgation-water-source',
-    baseUrl: 'irrgation-water-source',
-    backUrl: 'summer-abstraction-mains',
-    nextUrl: 'irrigation-system',
-    fundingPriorities: '',
-    type: 'multi-answer',
-    minAnswerCount: '',
-    maxAnswerCount: '',
-    validate: [
-      {
-        type: 'NOT_EMPTY',
-        error: 'Select the options that apply to you'
-      }
-    ],
-    answers: [
-      {
-        key: 'irrgation-water-source-A1',
-        value: 'Winter peak-flow abstraction'
-      },
-      {
-        key: 'irrgation-water-source-A2',
-        value: 'rain water harvesting',
-      },
-      {
-        key: 'irrgation-water-source-A3',
-        value: 'Bore hole/aquifer'
-      }
-    ],
-    sidebar: {
-      values: [
-        {
-          heading: 'Funding priorities',
-          content: [
-            {
-              para: 'RPA wants to fund projects that use more sustainable water sources, such as:',
-              items: [
-                'winter peak-flow abstraction',
-                'rain water harvesting',
-                'bore hole/aquifer'
-              ]
-            },
-            {
-              para: 'RPA will not fund projects that increase water usage from:',
-              items: [
-                'summer water surface abstraction',
-                'mains'
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    yarKey: 'irrgationWaterSource'
-  },
-  {
-    key: 'irrigation-system',
-    order: 18,
-    title: 'What systems will be used to irrigate?',
-    pageTitle: '',
-      hint: {
-        text: 'Select up to 2 options'
-      },
-    url: 'irrigation-system',
-    baseUrl: 'irrigation-system',
-    backUrl: 'irrgation-water-source',
-    nextUrl: 'irrigated-crops',
-    fundingPriorities: '',
-    type: 'multi-answer',
-    minAnswerCount: '',
-    maxAnswerCount: '',
-    validate: [
-      {
-        type: 'NOT_EMPTY',
-        error: 'Select up to 2 options'
-      },
-      {
-        type: "MAX_SELECT",
-        error:"Select up to 2 options",
-        max: 2,
-      }
-    ],
-    answers: [
-      {
-        key: 'irrigation-system-A1',
-        value: 'Trickle'
-      },
-      {
-        key: 'irrigation-system-A2',
-        value: 'Boom'
-      },
-      {
-        key: 'irrigation-system-A3',
-        value: 'Ebb and flow'
-      },
-      {
-        key: 'irrigation-system-A4',
-        value: 'Capillary bed'
-      },
-      {
-        key: 'irrigation-system-A5',
-        value: 'Sprinklers'
-      },
-      {
-        key: 'irrigation-system-A6',
-        value: 'Mist'
-      },
-      {
-        key: 'irrigation-system-A7',
-        value: 'Rain gun'
-      }
-    ],
-    sidebar: {
-      values: [
-        {
-          heading: 'Funding priorities',
-          content: [
-            {
-              para: `RPA wants to fund projects that move from less efficient irrigation systems to more efficient ones.
-
-                    For example, moving from rain gun to trickle.`
-            }
-          ]
-        }
-      ]
-    },
-    yarKey: 'irrigationSystem'
-  },
+    
     // {
     //   key: 'mains',
     //   order: 16,
@@ -1043,7 +909,7 @@ const questionBank = {
     //   },
     //   yarKey: 'mains'
     // },
-    // next page is irrigation-water-source, then irrigation-systems
+    // next page is irrigation-water-source, then irrigation-system
     {
       key: "irrigated-crops",
       order: 19,

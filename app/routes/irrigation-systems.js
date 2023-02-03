@@ -6,7 +6,7 @@ const gapiService = require('../services/gapi-service')
 const { guardPage } = require('../helpers/page-guard')
 const { startPageUrl } = require('../config/server')
 
-const viewTemplate = 'irrigation-systems'
+const viewTemplate = 'irrigation-system'
 const currentPath = `${urlPrefix}/${viewTemplate}`
 const previousPath = `${urlPrefix}/irrigation-water-source`
 const nextPath = `${urlPrefix}/irrigated-crops`
@@ -129,6 +129,8 @@ module.exports = [
 
         setYarValue(request, 'irrigationCurrent', irrigationCurrent)
         setYarValue(request, 'irrigationPlanned', irrigationPlanned)
+
+        console.log('setting yarValues here', getYarValue(request, 'irrigationPlanned'))
         return results ? h.redirect(scorePath) : h.redirect(nextPath)
       }
     }
