@@ -3,6 +3,8 @@ const { setLabelData, findErrorList } = require('../helpers/helper-functions')
 const { setYarValue, getYarValue } = require('../helpers/session')
 const urlPrefix = require('../config/server').urlPrefix
 const gapiService = require('../services/gapi-service')
+const { guardPage } = require('../helpers/page-guard')
+const { startPageUrl } = require('../config/server')
 
 const viewTemplate = 'irrigation-systems'
 const currentPath = `${urlPrefix}/${viewTemplate}`
@@ -63,6 +65,10 @@ module.exports = [
     method: 'GET',
     path: currentPath,
     handler: (request, h) => {
+      const isRedirect = guardPage(request, ['waterSourcePlanned'],)
+      if (isRedirect) {
+        return h.redirect(startPageUrl)
+      } 
       const currentData = getYarValue(request, 'irrigationCurrent') || null
       const plannedData = getYarValue(request, 'irrigationPlanned') || null
 

@@ -90,6 +90,7 @@ const questionBank = {
       baseUrl: 'legal-status',
       backUrl: 'farming-type',
       nextUrl: 'country',
+      preValidationKeys: ['farmingType'],
       ineligibleContent: {
         messageContent:
           'This is only open to a business with a different legal status.',
@@ -167,6 +168,7 @@ const questionBank = {
       baseUrl: 'country',
       backUrl: 'legal-status',
       nextUrl: 'planning-permission',
+      preValidationKeys: ['legalStatus'],
       ineligibleContent: {
         messageContent: 'This grant is only for projects in England.',
         insertText: {
@@ -210,6 +212,7 @@ const questionBank = {
       baseUrl: 'planning-permission',
       backUrl: 'country',
       nextUrl: 'project-start',
+      preValidationKeys: ['inEngland'],
       ineligibleContent: {
         messageContent:
           'Any planning permission must be in place by 31 January 2023 (the end of the application window).',
@@ -279,6 +282,7 @@ const questionBank = {
       url: 'project-start',
       baseUrl: 'project-start',
       backUrl: 'planning-permission',
+      preValidationKeys: ['planningPermission'],
       backUrlObject: {
         dependentQuestionYarKey: 'planningPermission',
         dependentAnswerKeysArray: ['planning-permission-A1', 'planning-permission-A2'],
@@ -364,6 +368,7 @@ const questionBank = {
       nextUrl: 'project-items',
       fundingPriorities: '',
       type: 'single-answer',
+      preValidationKeys: ['projectStarted'],
       minAnswerCount: 1,
       sidebar: {
         values: [
@@ -415,6 +420,7 @@ const questionBank = {
       nextUrl: 'project-items',
       fundingPriorities: '',
       type: 'single-answer',
+      preValidationKeys: ['landOwnership'],
       minAnswerCount: 1,
       sidebar: {
         values: [
@@ -470,6 +476,7 @@ const questionBank = {
       backUrl: 'project-items',
       nextUrl: 'potential-amount',
       fundingPriorities: '',
+      preValidationKeys: ['landOwnership'],
       type: 'input',
       prefix: {
         text: '£'
@@ -641,6 +648,7 @@ const questionBank = {
       nextUrl: 'abstraction-licence',
       fundingPriorities: '',
       type: 'single-answer',
+      preValidationKeys: ['payRemainingCosts'],
       minAnswerCount: 1,
       validate: [
         {
@@ -675,6 +683,7 @@ const questionBank = {
       nextUrl: 'irrigation-status',
       fundingPriorities: '',
       type: 'single-answer',
+      preValidationKeys: ['sSSI'],
       minAnswerCount: 1,
       validate: [
         {
@@ -731,6 +740,7 @@ const questionBank = {
       nextUrl: 'mains',
       fundingPriorities: '',
       type: 'single-answer',
+      preValidationKeys: ['abstractionLicence'],
       minAnswerCount: 1,
       validate: [
         {
@@ -759,6 +769,7 @@ const questionBank = {
       baseUrl: 'mains',
       backUrl: 'irrigation-status',
       nextUrl: 'irrigation-water-source',
+      preValidationKeys: ['currentlyIrrigating'],
       type: 'single-answer',
       validate: [
         {
@@ -827,6 +838,7 @@ const questionBank = {
       },
       yarKey: 'mains'
     },
+    // next page is irrigation-water-source, then irrigation-systems
     {
       key: 'Q15',
       order: 14,
@@ -836,6 +848,7 @@ const questionBank = {
       nextUrl: 'irrigated-land',
       baseUrl: 'irrigated-crops',
       backUrl: 'irrigation-systems',
+      preValidationKeys: ['irrigationPlanned'],
       type: 'single-answer',
       score: {
         isScore: true,
@@ -882,6 +895,7 @@ const questionBank = {
       },
       yarKey: 'irrigatedCrops'
     },
+    // next page is irrigated-land
     {
       key: 'Q19',
       order: 19,
@@ -895,6 +909,7 @@ const questionBank = {
       backUrl: 'irrigated-land',
       nextUrl: 'collaboration',
       type: 'multi-answer',
+      preValidationKeys: ['irrigatedLandTarget'],
       score: {
         isScore: true,
         isDisplay: true
@@ -1063,6 +1078,7 @@ const questionBank = {
       baseUrl: 'collaboration',
       backUrl: 'productivity',
       nextUrl: 'score',
+      preValidationKeys: ['productivity'],
       type: 'single-answer',
       minAnswerCount: 1,
       score: {
@@ -1113,7 +1129,7 @@ const questionBank = {
       baseUrl: 'business-details',
       backUrl: 'score',
       nextUrl: 'applying',
-      preValidationKeys: [],
+      preValidationKeys: ['score-calculated'],
       ga: [
         { dimension: 'cd1', value: { type: 'score', value: 'Eligible' } },
         { dimension: 'cm2', value: { type: 'journey-time' } }
@@ -1265,7 +1281,7 @@ const questionBank = {
       url: 'applying',
       baseUrl: 'applying',
       backUrl: 'business-details',
-      preValidationKeys: [],
+      preValidationKeys: ['businessDetails'],
       fundingPriorities: '',
       type: 'single-answer',
       classes: 'govuk-radios--inline govuk-fieldset__legend--l',
@@ -1301,7 +1317,7 @@ const questionBank = {
       url: 'applicant-details',
       baseUrl: 'applicant-details',
       nextUrl: 'check-details',
-      preValidationKeys: [],
+      preValidationKeys: ['applying'],
       backUrlObject: {
         dependentQuestionYarKey: 'applying',
         dependentAnswerKeysArray: ['applying-A2'],
