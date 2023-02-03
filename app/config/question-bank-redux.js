@@ -168,7 +168,10 @@ const questionBank = {
       backUrl: 'legal-status',
       nextUrl: 'planning-permission',
       ineligibleContent: {
-        messageContent: 'This grant is only for projects in England.<br/>Scotland, Wales and Northern Ireland have other grants available. ',
+        messageContent: 'This grant is only for projects in England.',
+        insertText: {
+          text: 'Scotland, Wales and Northern Ireland have other grants available.',
+        }
       },
       fundingPriorities: '',
       type: 'single-answer',
@@ -948,7 +951,7 @@ const questionBank = {
             content: [
               {
                 para: 'RPA wants to fund projects that:',
-                items: ['improve water sustainability']
+                items: ['improve productivity']
               }
             ]
           }
