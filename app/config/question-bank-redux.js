@@ -788,8 +788,8 @@ const questionBank = {
                           </div>
                           `,
         messageLink: {
-          url: "https://www.gov.uk/government/collections/rural-payments-and-grants",
-          title: "See other grants you may be eligible for.",
+          url: 'https://www.gov.uk/government/collections/rural-payments-and-grants',
+          title: 'See other grants you may be eligible for.',
         },
       },
       validate: [
@@ -830,86 +830,8 @@ const questionBank = {
       },
       yarKey: "summerAbstractionMains",
     },
-    
-    // {
-    //   key: 'mains',
-    //   order: 16,
-    //   title: 'How will your use of summer abstraction or mains change?',
-    //   pageTitle: '',
-    //   url: 'mains',
-    //   baseUrl: 'mains',
-    //   backUrl: 'irrigation-status',
-    //   nextUrl: 'irrigation-water-source',
-    //   preValidationKeys: ['currentlyIrrigating'],
-    //   type: 'single-answer',
-    //   validate: [
-    //     {
-    //       type: 'NOT_EMPTY',
-    //       error: 'select the options that apply to you'
-    //     }
-    //   ],
-    //   answers: [
-    //     {
-    //       key: 'mains-A1',
-    //       value: "Don't use currently"
-    //     },
-    //     {
-    //       key: 'mains-A2',
-    //       value: 'Decrease'
-    //     },
-    //     {
-    //       key: 'mains-A3',
-    //       value: 'Stop'
-    //     },
-    //     {
-    //       key: 'mains-A4',
-    //       value: 'Maintain and introduce or increase a sustainable water source'
-    //     },
-    //     {
-    //       key: 'mains-A5',
-    //       value: 'Maintain without introducing or increasing a sustainable water source'
-    //     },
-    //     {
-    //       key: 'mains-A6',
-    //       value: 'Increase',
-    //       notEligible: true
-    //     }
 
-    //   ],
-    //   ineligibleContent: {
-    //     messageContent:
-    //       `Your project cannot increase water use from summer abstraction or mains.
-    //       <br><br>
-    //       RPA wants to fund projects that use more sustainable water sources, such as:
-    //       <ul class="govuk-list govuk-list--bullet">
-    //             <li>water peak-flow abstraction</li>
-    //             <li>rain water harvesting</li>
-    //             <li>bore hole/aquifer</li>
-    //       </ul>`,
-    //     messageLink: {
-    //       url: 'https://www.gov.uk/government/collections/rural-payments-and-grants',
-    //       title: 'See other grants you may be eligible for.'
-    //     }
-    //   },
-    //   sidebar: {
-    //     values: [
-    //       {
-    //         heading: 'Eligibility',
-    //         content: [
-    //           {
-    //             para: 'Your project cannot increase water use from summer abstraction or mains'
-    //           },
-    //           {
-    //             para: 'RPA wants to fund projects that use more sustainable water sources, such as:',
-    //             items: ['winter peak-flow abstraction', 'rain water harvesting', 'bore hole/aquifer']
-    //           }
-    //         ]
-    //       }
-    //     ]
-    //   },
-    //   yarKey: 'mains'
-    // },
-    // next page is irrigation-water-source, then irrigation-system
+    // next page is irrigation-water-source, then irrigation-systems
     {
       key: "irrigated-crops",
       order: 19,
@@ -919,7 +841,6 @@ const questionBank = {
       nextUrl: "irrigated-land",
       baseUrl: "irrigated-crops",
       backUrl: "irrigation-system",
-      // preValidationKeys: ["irrigationPlanned"],
       type: "single-answer",
       score: {
         isScore: true,
@@ -1045,97 +966,6 @@ const questionBank = {
       },
       yarKey: "productivity",
     },
-    // ******** THIS QUESTION IS ELIMANATED FROM THE JOURNEY *******/////
-    // {
-    //   key: 'project-summary',
-    //   order: 13,
-    //   title: 'What impact will the project have?',
-    //   hint: {
-    //     text: 'Select up to 2 options'
-    //   },
-    //   pageTitle: '',
-    //   url: 'project-summary',
-    //   baseUrl: 'project-summary',
-    //   backUrl: 'abstraction-licence',
-    //   nextUrl: 'irrigated-crops',
-    //   fundingPriorities: '',
-    //   type: 'multi-answer',
-    //   score: {
-    //     isScore: true,
-    //     isDisplay: true
-    //   },
-    //   minAnswerCount: '',
-    //   maxAnswerCount: '',
-    //   validate: [
-    //     {
-    //       type: 'NOT_EMPTY',
-    //       error: 'Select up to 2 options to describe your project’s impact'
-    //     },
-    //     {
-    //       type: 'STANDALONE_ANSWER',
-    //       error:
-    //         "If you select 'None of the above', you cannot select another option",
-    //       standaloneObject: {
-    //         questionKey: 'project-summary',
-    //         answerKey: 'project-summary-A5'
-    //       }
-    //     },
-    //     {
-    //       type: 'MAX_SELECT',
-    //       error: 'Select up to 2 options to describe your project’s impact',
-    //       max: 2
-    //     }
-    //   ],
-    //   answers: [
-    //     {
-    //       key: 'project-summary-A1',
-    //       value: 'Change water source',
-    //       redirectUrl: 'irrigated-crops'
-    //     },
-    //     {
-    //       key: 'project-summary-A2',
-    //       value: 'Improve irrigation efficiency',
-    //       redirectUrl: 'irrigated-crops'
-    //     },
-    //     {
-    //       key: 'project-summary-A3',
-    //       value: 'Increase irrigation',
-    //       redirectUrl: 'irrigated-crops'
-    //     },
-    //     {
-    //       key: 'project-summary-A4',
-    //       value: 'Introduce irrigation',
-    //       redirectUrl: 'irrigated-crops'
-    //     },
-    //     {
-    //       value: 'divider'
-    //     },
-    //     {
-    //       key: 'project-summary-A5',
-    //       value: 'None of the above',
-    //       redirectUrl: 'irrigated-crops'
-    //     }
-    //   ],
-    //   sidebar: {
-    //     values: [
-    //       {
-    //         heading: 'Funding priorities',
-    //         content: [
-    //           {
-    //             para: 'RPA wants to fund projects that:',
-    //             items: [
-    //               'improve productivity',
-    //               'improve the environment ',
-    //               'improve water sustainability'
-    //             ]
-    //           }
-    //         ]
-    //       }
-    //     ]
-    //   },
-    //   yarKey: 'project'
-    // },
-
     {
       key: "collaboration",
       order: 20,
