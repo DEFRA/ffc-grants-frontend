@@ -17,7 +17,7 @@ describe('Check Details page', () => {
         projectPostcode: 'RG6 7EE',
         businessPostcode: 'N3 4RR',
         emailAddress: 's@s.com',
-        landline: '',
+        landline: '9876543210',
         mobile: '012346789'
       },
       agentDetails: {
@@ -29,7 +29,7 @@ describe('Check Details page', () => {
         county: 'Berkshire',
         postcode: 'RG6 7EE',
         emailAddress: 's@s.com',
-        landline: '',
+        landline: '9876543210',
         mobile: '012346789'
       }
     }
@@ -113,6 +113,8 @@ describe('Check Details page', () => {
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
     expect(response.payload).toContain('12 Henley Wood Road<br/>12 Henley Wood Road<br/>Reading<br/>Berkshire')
+    expect(response.payload).toContain('012346789')
+    expect(response.payload).toContain('9876543210')
   })
 
   it('should have continue button to redirect to confirm page ', async () => {

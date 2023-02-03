@@ -100,6 +100,7 @@ describe('Country Page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.payload).toContain('You cannot apply for a grant from this scheme')
-    expect(postResponse.payload).toContain('This grant is only for projects in England.<br/>Scotland, Wales and Northern Ireland have other grants available.')
+    expect(postResponse.payload).toContain('This grant is only for projects in England.')
+    expect(postResponse.payload).toContain('Scotland, Wales and Northern Ireland have other grants available.')
   })
 })
