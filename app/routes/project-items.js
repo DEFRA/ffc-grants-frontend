@@ -4,6 +4,7 @@ const { setLabelData } = require('../helpers/helper-functions')
 const urlPrefix = require('../config/server').urlPrefix
 const gapiService = require('../services/gapi-service')
 const { guardPage } = require('../helpers/page-guard')
+const { startPageUrl } = require('../config/server')
 
 const viewTemplate = 'project-items'
 const currentPath = `${urlPrefix}/${viewTemplate}`
@@ -92,7 +93,7 @@ module.exports = [
     method: 'GET',
     path: currentPath,
     handler: (request, h) => {
-      const isRedirect = guardPage(request, ['currentlyIrrigating'],)
+      const isRedirect = guardPage(request, ['landOwnership'],)
       if (isRedirect) {
         return h.redirect(startPageUrl)
       } 
