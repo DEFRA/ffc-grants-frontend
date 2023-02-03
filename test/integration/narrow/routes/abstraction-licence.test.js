@@ -56,7 +56,7 @@ describe('Abstraction licence page', () => {
 
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(302)
-    expect(response.headers.location).toBe(`${global.__URLPREFIX__}/project-summary`)
+    expect(response.headers.location).toBe(`${global.__URLPREFIX__}/summer-abstraction-mains`)
   })
 
   it('should return an error message if no option is selected', async () => {
@@ -98,7 +98,7 @@ describe('Abstraction licence page', () => {
     expect(postResponse.headers.location).toBe(`abstraction-required-condition`)
   })
 
-  it('if value = \'Not needed\' ==> store and redirect to project-summary page', async () => {
+  it('if value = \'Not needed\' ==> store and redirect to summer-abstraction-mains page', async () => {
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/abstraction-licence`,
@@ -111,7 +111,7 @@ describe('Abstraction licence page', () => {
     expect(postResponse.headers.location).toBe(`irrigation-status`)
   })
 
-  it('if value = \'Secured\' ==> store and redirect to project-summary page', async () => {
+  it('if value = \'Secured\' ==> store and redirect to summer-abstraction-mains page', async () => {
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/abstraction-licence`,

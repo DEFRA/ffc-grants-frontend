@@ -72,7 +72,7 @@ module.exports = [
 
       if (getYarValue(request, 'current-score')) {
         // check if score and if question is before scoring question. If it is, move to score results
-        return h.redirect(`${urlPrefix}/project-summary`)
+        return h.redirect(`${urlPrefix}/summer-abstraction-mains`)
       }
 
       const currentData = getYarValue(request, 'irrigationCurrent') || null

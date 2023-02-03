@@ -95,7 +95,7 @@ describe('project items page', () => {
 
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(302)
-    expect(response.headers.location).toBe(`${global.__URLPREFIX__}/project-summary`)
+    expect(response.headers.location).toBe(`${global.__URLPREFIX__}/summer-abstraction-mains`)
   })
 
   it('should return error message if no option is selected', async () => {
@@ -112,7 +112,7 @@ describe('project items page', () => {
     expect(postResponse.statusCode).toBe(200)
     expect(postResponse.payload).toContain('Select all the items your project needs')
   })
-  it('redirects to project-summary if user projectInfrastucture or projectEquipment or projectTechnology has not been saved', async () => {
+  it('redirects to summer-abstraction-mains if user projectInfrastucture or projectEquipment or projectTechnology has not been saved', async () => {
     varList = {
       projectInfrastucture: undefined,
       projectEquipment : undefined,
@@ -127,7 +127,7 @@ describe('project items page', () => {
 
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(302)
-    expect(response.headers.location).toBe(`${global.__URLPREFIX__}/project-summary`)
+    expect(response.headers.location).toBe(`${global.__URLPREFIX__}/summer-abstraction-mains`)
 
   })
   it('should store user response from column: "projectInfrastucture" and redirect to project cost page', async () => {
