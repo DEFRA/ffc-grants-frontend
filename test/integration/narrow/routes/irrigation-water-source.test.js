@@ -103,7 +103,7 @@ describe('Irrigation water source page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/irrigation-systems`)
+    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/irrigation-system`)
   })
 
   it('should store user response and redirects to scores page', async () => {
