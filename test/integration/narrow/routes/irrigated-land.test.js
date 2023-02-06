@@ -335,4 +335,20 @@ describe('Irrigated Land page', () => {
     expect(response.payload).not.toContain('<h1 class="govuk-heading-l">Irrigated land</h1>')
     expect(response.payload).toContain('How much land will be irrigated per year after the project?')
   })
+
+  it('should redirect to start if previous question not answered', async () => {
+    varList.currentlyIrrigating = null
+
+    const options = {
+      method: 'GET',
+      url: `${global.__URLPREFIX__}/irrigated-land`,
+      headers: {
+        cookie: 'crumb=' + crumbToken
+      }
+    }
+
+    const response = await global.__SERVER__.inject(options)
+    expect(response.statusCode).toBe(302)
+    expect(response.headers.location).toBe(`${global.__URLPREFIX__}/start`)
+  })
 })

@@ -226,4 +226,20 @@ describe('Irrigation water source page', () => {
     expect(response.payload).not.toContain('<h1 class="govuk-heading-l">Water source</h1>')
     expect(response.payload).toContain('Where will the irrigation water come from?')
   })
+
+  it('should redirect to start if previous question not answered', async () => {
+    varList.summerAbstractionMains = null
+
+    const options = {
+      method: 'GET',
+      url: `${global.__URLPREFIX__}/irrigation-water-source`,
+      headers: {
+        cookie: 'crumb=' + crumbToken
+      }
+    }
+
+    const response = await global.__SERVER__.inject(options)
+    expect(response.statusCode).toBe(302)
+    expect(response.headers.location).toBe(`${global.__URLPREFIX__}/start`)
+  })
 })
