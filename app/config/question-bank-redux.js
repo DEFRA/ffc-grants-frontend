@@ -796,7 +796,7 @@ const questionBank = {
         {
           type: 'NOT_EMPTY',
           error:
-            'Select yes if you are going to use summer abstraction or mains',
+            'Select yes if you’re going to use summer abstraction or mains',
         },
       ],
       answers: [
