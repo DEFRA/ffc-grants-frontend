@@ -721,7 +721,7 @@ const questionBank = {
             content: [
               {
                 para: `You must have secured abstraction licences or variations before you submit a full application.\n
-                              Any abstraction licences or variations must be in place by 31 January 2023.`,
+                              Any abstraction licences or variations must be in place by 31 January 2024.`,
                 items: [],
               },
             ],
