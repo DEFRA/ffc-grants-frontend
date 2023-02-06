@@ -6,26 +6,6 @@
   "desirability": {
     "questions": [
       {
-        "key": "Q14",
-        "answers": [
-          {
-            "key": "Q14",
-            "title": "The project will:",
-            "input": [
-              {
-                "key": "Q14-A4",
-                "value": "Increase irrigation"
-              }
-            ]
-          }
-        ],
-        "rating": {
-          "score": 1,
-          "band": "Weak",
-          "importance": null
-        }
-      },
-      {
         "key": "Q16",
         "answers": [
           {

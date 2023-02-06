@@ -2,7 +2,7 @@ const { crumbToken } = require('./test-helper')
 const varListTemplate = {
   farmingType: 'some fake crop',
   legalStatus: 'fale status',
-  'current-score': ''
+  'current-score': null
 }
 
 let varList
@@ -89,6 +89,6 @@ describe('Farming type page', () => {
 
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(302)
-    expect(response.headers.location).toBe(`${global.__URLPREFIX__}/project-summary`)
+    expect(response.headers.location).toBe(`${global.__URLPREFIX__}/summer-abstraction-mains`)
   })
 })

@@ -21,7 +21,7 @@ const varListTemplate = {
   irrigatedLandTarget: '456',
   waterSourceCurrent: ['some source 1'],
   waterSourcePlanned: ['some source 2', 'another source'],
-  'current-score': ''
+  'current-score': null
 }
 
 let varList
@@ -60,7 +60,8 @@ describe('Irrigation water source page', () => {
   it('should load page with no yars successfully', async () => {
     varList = {
       waterSourceCurrent: null,
-      waterSourcePlanned: null
+      waterSourcePlanned: null,
+      'current-score': null
     }
 
     const options = {
@@ -102,7 +103,7 @@ describe('Irrigation water source page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/irrigation-systems`)
+    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/irrigation-system`)
   })
 
   it('should store user response and redirects to scores page', async () => {

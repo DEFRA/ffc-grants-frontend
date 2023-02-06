@@ -1,18 +1,22 @@
 const Joi = require('joi')
-const { setLabelData, findErrorList } = require('../helpers/helper-functions')
+const { setLabelData, findErrorList, getPlannedWaterSourceOptions } = require('../helpers/helper-functions')
 const { setYarValue, getYarValue } = require('../helpers/session')
 const urlPrefix = require('../config/server').urlPrefix
 const gapiService = require('../services/gapi-service')
+const { guardPage } = require('../helpers/page-guard')
+const { startPageUrl } = require('../config/server')
 
 const viewTemplate = 'irrigation-water-source'
 const currentPath = `${urlPrefix}/${viewTemplate}`
-const previousPath = `${urlPrefix}/irrigated-land`
-const nextPath = `${urlPrefix}/irrigation-systems`
+const previousPath = `${urlPrefix}/summer-abstraction-mains`
+const nextPath = `${urlPrefix}/irrigation-system`
 const scorePath = `${urlPrefix}/score`
+const { WATER_SOURCE } = require('../helpers/water-source-data')
 
-function createModel(currentlyIrrigating, errorList, currentData, plannedData, hasScore) {
+function createModel (currentlyIrrigating, errorList, currentData, plannedData, hasScore) {
   return {
     backLink: previousPath,
+    preValidationKeys: ['summerAbstractionMains'],
     formActionPage: currentPath,
     hasScore,
     ...errorList ? { errorList } : {},
@@ -41,7 +45,7 @@ function createModel(currentlyIrrigating, errorList, currentData, plannedData, h
       hint: {
         text: 'Select up to 2 options'
       },
-      items: setLabelData(currentData, ['Peak-flow/winter abstraction', 'Bore hole/aquifer', 'Rain water harvesting', 'Summer water surface abstraction', 'Mains']),
+      items: setLabelData(currentData, WATER_SOURCE),
       ...(errorList && errorList[0].href === '#waterSourceCurrent' ? { errorMessage: { text: errorList[0].text } } : {})
     },
     waterSourcePlanned: {
@@ -55,7 +59,7 @@ function createModel(currentlyIrrigating, errorList, currentData, plannedData, h
       hint: {
         text: 'Select up to 2 options'
       },
-      items: setLabelData(plannedData, ['Peak-flow/winter abstraction', 'Bore hole/aquifer', 'Rain water harvesting', 'Summer water surface abstraction', 'Mains']),
+      items: setLabelData(plannedData, getPlannedWaterSourceOptions(currentlyIrrigating)),
       ...(errorList && errorList[errorList.length - 1].href === '#waterSourcePlanned' ? { errorMessage: { text: errorList[errorList.length - 1].text } } : {})
     }
   }
@@ -66,6 +70,12 @@ module.exports = [
     method: 'GET',
     path: currentPath,
     handler: (request, h) => {
+      const isRedirect = guardPage(request, ['summerAbstractionMains'])
+      if (isRedirect) {
+        return h.redirect(startPageUrl)
+      } 
+
+
       const currentData = getYarValue(request, 'waterSourceCurrent') || null
       const plannedData = getYarValue(request, 'waterSourcePlanned') || null
 
@@ -120,6 +130,7 @@ module.exports = [
 
         setYarValue(request, 'waterSourceCurrent', waterSourceCurrent)
         setYarValue(request, 'waterSourcePlanned', waterSourcePlanned)
+
         return results ? h.redirect(scorePath) : h.redirect(nextPath)
       }
     }

@@ -20,7 +20,7 @@ describe('cookies route', () => {
     global.__VALIDSESSION__ = false
     const options = {
       method: 'GET',
-      url: '/project-summary',
+      url: '/summer-abstraction-mains',
       headers: {
         cookie: 'crumb=' + crumbToken,
         referer: 'localhost/applicant-details'

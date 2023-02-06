@@ -3,8 +3,7 @@ const {
   MAX_GRANT,
   GRANT_PERCENTAGE,
   NAME_ONLY_REGEX,
-  MIN_MAX_NUMBER
-} = require('../helpers/grant-details')
+} = require('../helpers/grant-details');
 const {
   PROJECT_COST_REGEX,
   NUMBER_REGEX,
@@ -16,21 +15,21 @@ const {
   ONLY_TEXT_REGEX,
   CHARS_MIN_10,
   PHONE_REGEX,
-  ADDRESS_REGEX
-} = require('../helpers/regex-validation')
+  ADDRESS_REGEX,
+} = require('../helpers/regex-validation');
 const {
   LICENSE_NOT_NEEDED,
   LICENSE_SECURED,
   LICENSE_EXPECTED,
-  LICENSE_WILL_NOT_HAVE
-} = require('../helpers/license-dates')
+  LICENSE_WILL_NOT_HAVE,
+} = require('../helpers/license-dates');
 
-const { LIST_COUNTIES } = require('../helpers/all-counties')
+const { LIST_COUNTIES } = require('../helpers/all-counties');
 
 const questionBank = {
   grantScheme: {
     key: 'WM001',
-    name: 'Water Management'
+    name: 'Water Management',
   },
   questions: [
     {
@@ -44,7 +43,7 @@ const questionBank = {
       nextUrl: 'legal-status',
       ineligibleContent: {
         messageContent:
-          'This grant is only available to:<ul class="govuk-list govuk-list--bullet"><li> arable and horticultural farming businesses that supply the food industry</li><li>nurseries growing ornamentals</li><li>forestry nurseries</li></ul><p class="govuk-body"> <a class="govuk-link" href=\'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments\'>See other grants you may be eligible for.</a></p>'
+          "This grant is only available to:<ul class='govuk-list govuk-list--bullet'><li> arable and horticultural farming businesses that supply the food industry</li><li>nurseries growing ornamentals</li><li>forestry nurseries</li></ul><p class='govuk-body'> <a class='govuk-link' href=\'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments\'>See other grants you may be eligible for.</a></p>",
       },
       fundingPriorities: '',
       type: 'single-answer',
@@ -59,28 +58,28 @@ const questionBank = {
                 items: [
                   'arable and horticultural farming businesses supplying the food industry',
                   'nurseries growing ornamentals',
-                  'forestry nurseries'
-                ]
-              }
-            ]
-          }
-        ]
+                  'forestry nurseries',
+                ],
+              },
+            ],
+          },
+        ],
       },
       validate: [
         {
           type: 'NOT_EMPTY',
-          error: 'Select the crops you are growing'
-        }
+          error: 'Select the crops you are growing',
+        },
       ],
       answers: [
         { key: 'farming-type-A1', value: 'Crops for the food industry' },
         {
           key: 'farming-type-A2',
-          value: 'Horticulture (including ornamentals)'
+          value: 'Horticulture (including ornamentals)',
         },
-        { key: 'farming-type-A3', value: 'Something else', notEligible: true }
+        { key: 'farming-type-A3', value: 'Something else', notEligible: true },
       ],
-      yarKey: 'farmingType'
+      yarKey: 'farmingType',
     },
     {
       key: 'legal-status',
@@ -91,21 +90,22 @@ const questionBank = {
       baseUrl: 'legal-status',
       backUrl: 'farming-type',
       nextUrl: 'country',
+      preValidationKeys: ['farmingType'],
       ineligibleContent: {
         messageContent:
           'This is only open to a business with a different legal status.',
         details: {
           summaryText: 'Who is eligible',
-          html: '<ul class="govuk-list govuk-list--bullet"><li>Sole trader</li><li>Partnership</li><li>Limited company</li><li>Charity</li><li>Trust</li><li>Limited liability partnership</li><li>Community interest company</li><li>Limited partnership</li><li>Industrial and provident society</li><li>Co-operative society (Co-Op)</li><li>Community benefit society (BenCom)</li></ul>'
+          html: "<ul class='govuk-list govuk-list--bullet'><li>Sole trader</li><li>Partnership</li><li>Limited company</li><li>Charity</li><li>Trust</li><li>Limited liability partnership</li><li>Community interest company</li><li>Limited partnership</li><li>Industrial and provident society</li><li>Co-operative society (Co-Op)</li><li>Community benefit society (BenCom)</li></ul>",
         },
         messageLink: {
           url: 'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments',
-          title: 'See other grants you may be eligible for.'
+          title: 'See other grants you may be eligible for.',
         },
         warning: {
           text: 'Other types of business may be supported in future schemes',
-          iconFallbackText: 'Warning'
-        }
+          iconFallbackText: 'Warning',
+        },
       },
       fundingPriorities: '',
       type: 'single-answer',
@@ -117,17 +117,17 @@ const questionBank = {
             content: [
               {
                 para: 'Public organisations and local authorities cannot apply for this grant.',
-                items: []
-              }
-            ]
-          }
-        ]
+                items: [],
+              },
+            ],
+          },
+        ],
       },
       validate: [
         {
           type: 'NOT_EMPTY',
-          error: 'Select the legal status of the business'
-        }
+          error: 'Select the legal status of the business',
+        },
       ],
       answers: [
         { key: 'legal-status-A1', value: 'Sole Trader' },
@@ -142,25 +142,25 @@ const questionBank = {
         { key: 'legal-status-A10', value: 'Co-operative society (Co-Op)' },
         {
           key: 'legal-status-A11',
-          value: 'Community benefit society (BenCom)'
+          value: 'Community benefit society (BenCom)',
         },
         {
-          value: 'divider'
+          value: 'divider',
         },
         {
           key: 'legal-status-A13',
           value: 'None of the above',
-          notEligible: true
-        }
+          notEligible: true,
+        },
       ],
-      yarKey: 'legalStatus'
+      yarKey: 'legalStatus',
     },
     {
       key: 'country',
       order: 3,
       classes: 'govuk-radios--inline govuk-fieldset__legend--l',
       hint: {
-        text: 'The location of the project'
+        text: 'The location of the project',
       },
       title: 'Is the planned project in England?',
       pageTitle: '',
@@ -168,11 +168,10 @@ const questionBank = {
       baseUrl: 'country',
       backUrl: 'legal-status',
       nextUrl: 'planning-permission',
+      preValidationKeys: ['legalStatus'],
       ineligibleContent: {
-        messageContent: 'This grant is only for projects in England.',
-        insertText: {
-          text: 'Scotland, Wales and Northern Ireland have other grants available.',
-        }
+        messageContent:
+          'This grant is only for projects in England.<br/>Scotland, Wales and Northern Ireland have other grants available. ',
       },
       fundingPriorities: '',
       type: 'single-answer',
@@ -184,23 +183,23 @@ const questionBank = {
             content: [
               {
                 para: 'This grant is only for projects in England. Scotland, Wales and Northern Ireland have other grants available.',
-                items: []
-              }
-            ]
-          }
-        ]
+                items: [],
+              },
+            ],
+          },
+        ],
       },
       validate: [
         {
           type: 'NOT_EMPTY',
-          error: 'Select yes if the project is in England'
-        }
+          error: 'Select yes if the project is in England',
+        },
       ],
       answers: [
         { key: 'country-A1', value: 'Yes' },
-        { key: 'country-A2', value: 'No', notEligible: true }
+        { key: 'country-A2', value: 'No', notEligible: true },
       ],
-      yarKey: 'inEngland'
+      yarKey: 'inEngland',
     },
     {
       key: 'planning-permission',
@@ -211,13 +210,14 @@ const questionBank = {
       baseUrl: 'planning-permission',
       backUrl: 'country',
       nextUrl: 'project-start',
+      preValidationKeys: ['inEngland'],
       ineligibleContent: {
         messageContent:
           'Any planning permission must be in place by 31 January 2023 (the end of the application window).',
         messageLink: {
           url: 'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments',
-          title: 'See other grants you may be eligible for.'
-        }
+          title: 'See other grants you may be eligible for.',
+        },
       },
       fundingPriorities: '',
       type: 'single-answer',
@@ -230,17 +230,17 @@ const questionBank = {
               {
                 para: `You must have secured planning permission before you submit a full application.
                 \n\nAny planning permission must be in place by 31 January 2023.`,
-                items: []
-              }
-            ]
-          }
-        ]
+                items: [],
+              },
+            ],
+          },
+        ],
       },
       validate: [
         {
           type: 'NOT_EMPTY',
-          error: 'Select when the project will have planning permission'
-        }
+          error: 'Select when the project will have planning permission',
+        },
       ],
       answers: [
         { key: 'planning-permission-A1', value: 'Not needed' },
@@ -248,15 +248,15 @@ const questionBank = {
         {
           key: 'planning-permission-A3',
           value: 'Should be in place by 31 January 2023',
-          redirectUrl: 'planning-permission-condition'
+          redirectUrl: 'planning-permission-condition',
         },
         {
           key: 'planning-permission-A4',
           value: 'Will not be in place by 31 January 2023',
-          notEligible: true
-        }
+          notEligible: true,
+        },
       ],
-      yarKey: 'planningPermission'
+      yarKey: 'planningPermission',
     },
     {
       key: 'planning-permission-condition',
@@ -268,9 +268,10 @@ const questionBank = {
       preValidationKeys: ['planningPermission'],
       maybeEligibleContent: {
         messageHeader: 'You may be able to apply for a grant from this scheme',
-        messageContent: 'Any planning permission must be in place by 31 January 2024 (the end of the application window).'
+        messageContent:
+          'Any planning permission must be in place by 31 January 2024 (the end of the application window).',
       },
-      yarKey: 'PlanningPermissionCondition'
+      yarKey: 'PlanningPermissionCondition',
     },
     {
       key: 'project-start',
@@ -280,13 +281,17 @@ const questionBank = {
       url: 'project-start',
       baseUrl: 'project-start',
       backUrl: 'planning-permission',
+      preValidationKeys: ['planningPermission'],
       backUrlObject: {
         dependentQuestionYarKey: 'planningPermission',
-        dependentAnswerKeysArray: ['planning-permission-A1', 'planning-permission-A2'],
+        dependentAnswerKeysArray: [
+          'planning-permission-A1',
+          'planning-permission-A2',
+        ],
         urlOptions: {
           thenUrl: 'planning-permission',
-          elseUrl: 'planning-permission-condition'
-        }
+          elseUrl: 'planning-permission-condition',
+        },
       },
       nextUrl: 'tenancy',
       ineligibleContent: {
@@ -294,12 +299,12 @@ const questionBank = {
         messageContent:
           'You cannot apply for a grant if you have already started work on the project.',
         insertText: {
-          text: 'Starting the project or committing to any costs (such as placing orders) before you receive a funding agreement invalidates your application.'
+          text: 'Starting the project or committing to any costs (such as placing orders) before you receive a funding agreement invalidates your application.',
         },
         messageLink: {
           url: 'https://www.gov.uk/government/collections/rural-payments-and-grants',
-          title: 'See other grants you may be eligible for.'
-        }
+          title: 'See other grants you may be eligible for.',
+        },
       },
       fundingPriorities: '',
       type: 'single-answer',
@@ -314,48 +319,48 @@ const questionBank = {
                       \nBefore you start the project, you can:`,
                 items: [
                   'get quotes from suppliers',
-                  'apply for planning permission or an abstraction licence (these can take a long time)'
-                ]
-              }
-            ]
-          }
-        ]
+                  'apply for planning permission or an abstraction licence (these can take a long time)',
+                ],
+              },
+            ],
+          },
+        ],
       },
       validate: [
         {
           type: 'NOT_EMPTY',
-          error: 'Select whether you have started work on the project'
-        }
+          error: 'Select whether you have started work on the project',
+        },
       ],
       answers: [
         {
           key: 'project-start-A1',
           value: 'Yes, preparatory work',
           hint: {
-            text: 'For example, quotes from suppliers, applying for planning permission'
-          }
+            text: 'For example, quotes from suppliers, applying for planning permission',
+          },
         },
         {
           key: 'project-start-A2',
           value: 'Yes, we have begun project work',
           hint: {
-            text: 'For example, digging, signing contracts, placing orders'
+            text: 'For example, digging, signing contracts, placing orders',
           },
-          notEligible: true
+          notEligible: true,
         },
         {
           key: 'project-start-A3',
-          value: 'No, we have not done any work on this project yet'
-        }
+          value: 'No, we have not done any work on this project yet',
+        },
       ],
-      yarKey: 'projectStarted'
+      yarKey: 'projectStarted',
     },
     {
       key: 'tenancy',
       order: 6,
       title: 'Is the planned project on land the farm business owns?',
       hint: {
-        text: 'The location of the project'
+        text: 'The location of the project',
       },
       classes: 'govuk-radios--inline govuk-fieldset__legend--l',
       pageTitle: '',
@@ -365,6 +370,7 @@ const questionBank = {
       nextUrl: 'project-items',
       fundingPriorities: '',
       type: 'single-answer',
+      preValidationKeys: ['projectStarted'],
       minAnswerCount: 1,
       sidebar: {
         values: [
@@ -373,32 +379,32 @@ const questionBank = {
             content: [
               {
                 para: 'You must own the land or have a tenancy in place for 5 years after the final grant payment.',
-                items: []
-              }
-            ]
-          }
-        ]
+                items: [],
+              },
+            ],
+          },
+        ],
       },
       validate: [
         {
           type: 'NOT_EMPTY',
           error:
-            'Select yes if the planned project is on land the business owns'
-        }
+            'Select yes if the planned project is on land the business owns',
+        },
       ],
       answers: [
         {
           key: 'tenancy-A1',
           value: 'Yes',
-          redirectUrl: 'project-items'
+          redirectUrl: 'project-items',
         },
         {
           key: 'tenancy-A2',
           value: 'No',
-          redirectUrl: 'tenancy-length'
-        }
+          redirectUrl: 'tenancy-length',
+        },
       ],
-      yarKey: 'landOwnership'
+      yarKey: 'landOwnership',
     },
     {
       key: 'tenancy-length',
@@ -406,7 +412,7 @@ const questionBank = {
       title:
         'Do you have a tenancy agreement for 5 years after the final grant payment?',
       hint: {
-        text: 'The location of the project'
+        text: 'The location of the project',
       },
       classes: 'govuk-radios--inline govuk-fieldset__legend--l',
       pageTitle: '',
@@ -416,6 +422,7 @@ const questionBank = {
       nextUrl: 'project-items',
       fundingPriorities: '',
       type: 'single-answer',
+      preValidationKeys: ['landOwnership'],
       minAnswerCount: 1,
       sidebar: {
         values: [
@@ -424,24 +431,24 @@ const questionBank = {
             content: [
               {
                 para: 'You must own the land or have a tenancy in place for 5 years after the final grant payment.',
-                items: []
-              }
-            ]
-          }
-        ]
+                items: [],
+              },
+            ],
+          },
+        ],
       },
       validate: [
         {
           type: 'NOT_EMPTY',
           error:
-            'Select yes if the land will have a tenancy agreement in place for 5 years after the final grant payment.'
-        }
+            'Select yes if the land will have a tenancy agreement in place for 5 years after the final grant payment.',
+        },
       ],
       answers: [
         {
           key: 'tenancy-length-A1',
           value: 'Yes',
-          redirectUrl: 'project-items'
+          redirectUrl: 'project-items',
         },
         {
           key: 'tenancy-length-A2',
@@ -452,12 +459,12 @@ const questionBank = {
               messageHeader:
                 'You may be able to apply for a grant from this scheme',
               messageContent:
-                'You will need to extend your tenancy agreement for 5 years after the final grant payment.'
-            }
-          }
-        }
+                'You will need to extend your tenancy agreement for 5 years after the final grant payment.',
+            },
+          },
+        },
       ],
-      yarKey: 'tenancyLength'
+      yarKey: 'tenancyLength',
     },
     // Goes to the project items page
     {
@@ -471,55 +478,56 @@ const questionBank = {
       backUrl: 'project-items',
       nextUrl: 'potential-amount',
       fundingPriorities: '',
+      preValidationKeys: ['landOwnership'],
       type: 'input',
       prefix: {
-        text: '£'
+        text: '£',
       },
       label: {
         text: 'What is the total estimated cost of the items?',
         classes: 'govuk-label--l',
-        isPageHeading: true
+        isPageHeading: true,
       },
       hint: {
         html: `
           <p>You can only apply for a grant of up to 40% of the estimated costs. The minimum grant you can apply for this project is £35,000 (40% of £87,500). The maximum grant is £500,000.<p/>
           <p>Do not include VAT.<p/>
           <p>Enter amount, for example 95,000<p/>
-          `
+          `,
       },
       grantInfo: {
         minGrant: MIN_GRANT,
         maxGrant: MAX_GRANT,
         grantPercentage: GRANT_PERCENTAGE,
-        cappedGrant: true
+        cappedGrant: true,
       },
       validate: [
         {
           type: 'NOT_EMPTY',
-          error: 'Enter the estimated cost for the items'
+          error: 'Enter the estimated cost for the items',
         },
         {
           type: 'REGEX',
           regex: PROJECT_COST_REGEX,
-          error: 'Enter a whole number with a maximum of 7 digits'
+          error: 'Enter a whole number with a maximum of 7 digits',
         },
         {
           type: 'MIN_MAX_CHARS',
           min: 1,
           max: 7,
-          error: 'Enter a whole number with a maximum of 7 digits'
-        }
+          error: 'Enter a whole number with a maximum of 7 digits',
+        },
       ],
       ineligibleContent: {
         messageContent:
           'You can only apply for a grant of up to 40% of the estimated costs. ',
         insertText: {
-          text: 'The minimum grant you can apply for is £35,000 (40% of £87,500). The maximum grant is £500,000.'
+          text: 'The minimum grant you can apply for is £35,000 (40% of £87,500). The maximum grant is £500,000.',
         },
         messageLink: {
           url: 'https://www.gov.uk/government/collections/rural-payments-and-grants',
-          title: 'See other grants you may be eligible for.'
-        }
+          title: 'See other grants you may be eligible for.',
+        },
       },
       sidebar: {
         values: [
@@ -528,15 +536,15 @@ const questionBank = {
             content: [
               {
                 para: '',
-                items: []
-              }
-            ]
-          }
+                items: [],
+              },
+            ],
+          },
         ],
-        dependentQuestionKey: 'projectItemsList'
+        dependentQuestionKey: 'projectItemsList',
       },
       answers: [],
-      yarKey: 'projectCost'
+      yarKey: 'projectCost',
     },
     {
       key: 'potential-amount',
@@ -554,10 +562,10 @@ const questionBank = {
         based on the estimated cost of £{{_projectCost_}}.`,
         warning: {
           text: 'There’s no guarantee the project will receive a grant.',
-          iconFallbackText: 'Warning'
-        }
+          iconFallbackText: 'Warning',
+        },
       },
-      yarKey: 'potentialAmount'
+      yarKey: 'potentialAmount',
     },
     {
       key: 'remaining-costs',
@@ -575,9 +583,9 @@ const questionBank = {
       minAnswerCount: 1,
       ineligibleContent: {
         messageContent: `You cannot use public money (for example, grant funding from government or local authorities) towards the project costs.
-            <div class="govuk-inset-text">
+            <div class='govuk-inset-text'>
               You can use:
-              <ul class="govuk-list govuk-list--bullet">
+              <ul class='govuk-list govuk-list--bullet'>
                 <li>loans</li>
                 <li>overdrafts</li>
                 <li>the Basic Payment Scheme</li>
@@ -587,26 +595,26 @@ const questionBank = {
             `,
         messageLink: {
           url: 'https://www.gov.uk/government/collections/rural-payments-and-grants',
-          title: 'See other grants you may be eligible for.'
-        }
+          title: 'See other grants you may be eligible for.',
+        },
       },
       validate: [
         {
           type: 'NOT_EMPTY',
           error:
-            'Select yes if you can pay the remaining costs without using any other grant money'
-        }
+            'Select yes if you can pay the remaining costs without using any other grant money',
+        },
       ],
       answers: [
         {
           key: 'remaining-costs-A1',
-          value: 'Yes'
+          value: 'Yes',
         },
         {
           key: 'remaining-costs-A2',
           value: 'No',
-          notEligible: true
-        }
+          notEligible: true,
+        },
       ],
       sidebar: {
         values: [
@@ -620,14 +628,14 @@ const questionBank = {
                   'loans',
                   'overdrafts',
                   'the Basic Payment Scheme',
-                  'agri-environment schemes such as the Countryside Stewardship Scheme'
-                ]
-              }
-            ]
-          }
-        ]
+                  'agri-environment schemes such as the Countryside Stewardship Scheme',
+                ],
+              },
+            ],
+          },
+        ],
       },
-      yarKey: 'payRemainingCosts'
+      yarKey: 'payRemainingCosts',
     },
     {
       key: 'SSSI',
@@ -642,27 +650,28 @@ const questionBank = {
       nextUrl: 'abstraction-licence',
       fundingPriorities: '',
       type: 'single-answer',
+      preValidationKeys: ['payRemainingCosts'],
       minAnswerCount: 1,
       validate: [
         {
           type: 'NOT_EMPTY',
           error:
-            'Select yes if the project directly impacts a Site of Special Scientific Interest'
-        }
+            'Select yes if the project directly impacts a Site of Special Scientific Interest',
+        },
       ],
       answers: [
         {
           key: 'SSSI-A1',
           value: 'Yes',
-          redirectUrl: 'abstraction-licence'
+          redirectUrl: 'abstraction-licence',
         },
         {
           key: 'SSSI-A2',
           value: 'No',
-          redirectUrl: 'abstraction-licence'
-        }
+          redirectUrl: 'abstraction-licence',
+        },
       ],
-      yarKey: 'sSSI'
+      yarKey: 'sSSI',
     },
     {
       key: 'abstraction-licence',
@@ -673,21 +682,22 @@ const questionBank = {
       url: 'abstraction-licence',
       baseUrl: 'abstraction-licence',
       backUrl: 'SSSI',
-      nextUrl: 'project-summary',
+      nextUrl: 'irrigation-status',
       fundingPriorities: '',
       type: 'single-answer',
+      preValidationKeys: ['sSSI'],
       minAnswerCount: 1,
       validate: [
         {
           type: 'NOT_EMPTY',
           error:
-            'Select when the project will have an abstraction licence or variation'
-        }
+            'Select when the project will have an abstraction licence or variation',
+        },
       ],
       answers: [
         {
           key: 'abstraction-licence-A1',
-          value: LICENSE_NOT_NEEDED
+          value: LICENSE_NOT_NEEDED,
         },
         {
           key: 'abstraction-licence-A2',
@@ -696,13 +706,13 @@ const questionBank = {
         {
           key: 'abstraction-licence-A3',
           value: LICENSE_EXPECTED,
-          redirectUrl: 'abstraction-required-condition'
+          redirectUrl: 'abstraction-required-condition',
         },
         {
           key: 'abstraction-licence-A4',
           value: LICENSE_WILL_NOT_HAVE,
-          redirectUrl: 'abstraction-required-condition'
-        }
+          redirectUrl: 'abstraction-required-condition',
+        },
       ],
       sidebar: {
         values: [
@@ -712,157 +722,13 @@ const questionBank = {
               {
                 para: `You must have secured abstraction licences or variations before you submit a full application.\n
                               Any abstraction licences or variations must be in place by 31 January 2023.`,
-                items: []
-              }
-            ]
-          }
-        ]
+                items: [],
+              },
+            ],
+          },
+        ],
       },
-      yarKey: 'abstractionLicence'
-    },
-    {
-      key: 'project-summary',
-      order: 13,
-      title: 'What impact will the project have?',
-      hint: {
-        text: 'Select up to 2 options'
-      },
-      pageTitle: '',
-      url: 'project-summary',
-      baseUrl: 'project-summary',
-      backUrl: 'abstraction-licence',
-      nextUrl: 'irrigated-crops',
-      fundingPriorities: '',
-      type: 'multi-answer',
-      score: {
-        isScore: true,
-        isDisplay: true
-      },
-      minAnswerCount: '',
-      maxAnswerCount: '',
-      validate: [
-        {
-          type: 'NOT_EMPTY',
-          error: 'Select up to 2 options to describe your project’s impact'
-        },
-        {
-          type: 'STANDALONE_ANSWER',
-          error:
-            "If you select 'None of the above', you cannot select another option",
-          standaloneObject: {
-            questionKey: 'project-summary',
-            answerKey: 'project-summary-A5'
-          }
-        },
-        {
-          type: 'MAX_SELECT',
-          error: 'Select up to 2 options to describe your project’s impact',
-          max: 2
-        }
-      ],
-      answers: [
-        {
-          key: 'project-summary-A1',
-          value: 'Change water source',
-          redirectUrl: 'irrigated-crops'
-        },
-        {
-          key: 'project-summary-A2',
-          value: 'Improve irrigation efficiency',
-          redirectUrl: 'irrigated-crops'
-        },
-        {
-          key: 'project-summary-A3',
-          value: 'Increase irrigation',
-          redirectUrl: 'irrigated-crops'
-        },
-        {
-          key: 'project-summary-A4',
-          value: 'Introduce irrigation',
-          redirectUrl: 'irrigated-crops'
-        },
-        {
-          value: 'divider'
-        },
-        {
-          key: 'project-summary-A5',
-          value: 'None of the above',
-          redirectUrl: 'irrigated-crops'
-        }
-      ],
-      sidebar: {
-        values: [
-          {
-            heading: 'Funding priorities',
-            content: [
-              {
-                para: 'RPA wants to fund projects that:',
-                items: [
-                  'improve productivity',
-                  'improve the environment ',
-                  'improve water sustainability'
-                ]
-              }
-            ]
-          }
-        ]
-      },
-      yarKey: 'project'
-    },
-    {
-      key: 'Q15',
-      order: 14,
-      title: 'What main crops will be irrigated?',
-      pageTitle: 'Main crop',
-      url: 'irrigated-crops',
-      nextUrl: 'irrigation-status',
-      baseUrl: 'irrigated-crops',
-      backUrl: 'project-summary',
-      type: 'single-answer',
-      score: {
-        isScore: true,
-        isDisplay: true
-      },
-      validate: [
-        {
-          type: 'NOT_EMPTY',
-          error: 'Select the main crop you will be irrigating'
-        }
-      ],
-      answers: [
-        {
-          key: 'Q15-A3',
-          value: 'Field-scale crops',
-          text: 'Field-scale crops (for example, potatoes, onions, carrots)',
-          desc: 'Field-scale crops (for example, potatoes, onions, carrots)'
-        },
-        {
-          key: 'Q15-A1',
-          value: 'Protected cropping',
-          text: 'Protected cropping (for example, glasshouse or poly tunnel)',
-          desc: 'Protected cropping (for example, glasshouse or poly tunnel)'
-        },
-        {
-          key: 'Q15-A2',
-          value: 'Fruit',
-          text: 'Fruit (for example, top fruit, bush fruit)',
-          desc: 'Fruit'
-        }
-      ],
-      sidebar: {
-        values: [
-          {
-            heading: 'Funding priorities',
-            content: [
-              {
-                para: 'RPA wants to fund projects that:',
-                items: ['improve productivity']
-              }
-            ]
-          }
-        ]
-      },
-      yarKey: 'irrigatedCrops'
+      yarKey: 'abstractionLicence',
     },
     {
       key: 'irrigation-status',
@@ -872,90 +738,139 @@ const questionBank = {
       pageTitle: '',
       url: 'irrigation-status',
       baseUrl: 'irrigation-status',
-      backUrl: 'irrigated-crops',
-      nextUrl: 'irrigated-land',
+      backUrl: 'abstraction-licence',
+      nextUrl: 'summer-abstraction-mains',
       fundingPriorities: '',
       type: 'single-answer',
+      preValidationKeys: ['abstractionLicence'],
       minAnswerCount: 1,
       validate: [
         {
           type: 'NOT_EMPTY',
-          error: 'Select yes if you are currently irrigating'
-        }
+          error: 'Select yes if you are currently irrigating',
+        },
       ],
       answers: [
         {
           key: 'currentlyIrrigating-A1',
-          value: 'Yes'
+          value: 'Yes',
         },
         {
           key: 'currentlyIrrigating-A2',
           value: 'No'
         }
       ],
-      yarKey: 'currentlyIrrigating'
+      yarKey: 'currentlyIrrigating',
     },
     {
-      key: 'Q19',
-      order: 19,
-      title: 'How will the project improve productivity?',
-      hint: {
-        html: 'Productivity is about how much is produced relative to inputs (for example, increased yield for the same inputs or the same yield with lower inputs).<br/><br/> Select up to 2 options'
-      },
+      key: 'summer-abstraction-mains',
+      order: 16,
+      title: 'Are you going to use water from summer abstraction or mains?',
+      classes: 'govuk-radios--inline govuk-fieldset__legend--l',
       pageTitle: '',
-      url: 'productivity',
-      baseUrl: 'productivity',
-      backUrl: 'irrigation-systems',
-      nextUrl: 'collaboration',
-      type: 'multi-answer',
-      score: {
-        isScore: true,
-        isDisplay: true
+      url: 'summer-abstraction-mains',
+      baseUrl: 'summer-abstraction-mains',
+      backUrl: 'irrigation-status',
+      nextUrl: 'irrigation-water-source',
+      preValidationKeys: '',
+      fundingPriorities: '',
+      type: 'single-answer',
+      minAnswerCount: 1,
+      ineligibleContent: {
+        messageContent: `Your project cannot increase water use from summer abstraction or mains. 
+                          <div class='govuk-inset-text'>
+                          RPA wants to fund projects that use more sustainable water sources, such as:</br></br>
+                            <ul class='govuk-list govuk-list--bullet'>
+                              <li>water peak-flow abstraction</li>
+                              <li>rain water harvesting</li>
+                              <li>bore hole/aquifer</li>
+                            </ul>
+                          </div>
+                          `,
+        messageLink: {
+          url: 'https://www.gov.uk/government/collections/rural-payments-and-grants',
+          title: 'See other grants you may be eligible for.',
+        },
       },
       validate: [
         {
           type: 'NOT_EMPTY',
           error:
-            'Select up to 2 options to describe how your project will improve productivity'
+            'Select yes if you are going to use summer abstraction or mains',
         },
-        {
-          type: 'MAX_SELECT',
-          error:
-            'Select up to 2 options to describe how your project will improve productivity',
-          max: 2
-        }
       ],
       answers: [
         {
-          key: 'Q19-A1',
-          value: 'Introduce or expand high-value crops',
-          desc: 'Introduce or expand high-value crops',
-          weight: 3
+          key: 'summer-abstraction-mains-A1',
+          value: 'Yes',
+          notEligible: true,
         },
         {
-          key: 'Q19-A2',
-          value: 'Introduce or expand protected crops',
-          desc: 'Introduce or expand protected crops',
-          weight: 3
+          key: 'summer-abstraction-mains-A2',
+          value: 'No',
+        },
+      ],
+      sidebar: {
+        values: [
+          {
+            heading: 'Eligibility',
+            content: [
+              {
+                para: `Your project cannot increase water use from summer abstraction or mains.\n\n
+                  RPA wants to fund projects that use more sustainable water sources, such as: `,
+                items: [
+                  'winter peak-flow abstraction',
+                  'rain water harvesting',
+                  'bore hole/aquifer',
+                ],
+              },
+            ],
+          },
+        ],
+      },
+      yarKey: 'summerAbstractionMains',
+    },
+
+    // next page is irrigation-water-source, then irrigation-systems
+    {
+      key: 'irrigated-crops',
+      order: 19,
+      title: 'What main crops will be irrigated?',
+      pageTitle: 'Main crop',
+      url: 'irrigated-crops',
+      nextUrl: 'irrigated-land',
+      baseUrl: 'irrigated-crops',
+      backUrl: 'irrigation-system',
+      type: 'single-answer',
+      score: {
+        isScore: true,
+        isDisplay: true,
+      },
+      validate: [
+        {
+          type: 'NOT_EMPTY',
+          error: 'Select the main crop you will be irrigating',
+        },
+      ],
+      answers: [
+        {
+          key: 'Q15-A3',
+          value: 'Field-scale crops',
+          text: 'Field-scale crops (for example, potatoes, onions, carrots)',
+          desc: 'Field-scale crops (for example, potatoes, onions, carrots)',
         },
         {
-          key: 'Q19-A3',
-          value: 'Increased yield per hectare',
-          desc: 'Increased yield per hectare',
-          weight: 1
+          key: 'Q15-A1',
+          value: 'Protected cropping',
+          text: 'Protected cropping (for example, glasshouse or poly tunnel)',
+          desc: 'Protected cropping (for example, glasshouse or poly tunnel)',
         },
         {
-          key: 'Q19-A4',
-          value: 'Improved quality',
-          desc: 'Improved quality',
-          weight: 1
+          key: 'Q15-A2',
+          value: 'Fruit',
+          text: 'Fruit (for example, top fruit, bush fruit)',
+          desc: 'Fruit',
         },
-        {
-          key: 'Q19-A5',
-          value: 'Maintain productivity',
-          desc: 'Maintain productivity',
-          weight: 0
-        }
       ],
       sidebar: {
         values: [
@@ -964,13 +879,92 @@ const questionBank = {
             content: [
               {
                 para: 'RPA wants to fund projects that:',
-                items: ['improve productivity']
-              }
-            ]
-          }
-        ]
+                items: ['improve productivity'],
+              },
+            ],
+          },
+        ],
       },
-      yarKey: 'productivity'
+      yarKey: 'irrigatedCrops',
+    },
+    // next page is irrigated-land
+    {
+      key: 'Q19',
+      order: 19,
+      title: 'How will the project improve productivity?',
+      hint: {
+        html: 'Productivity is about how much is produced relative to inputs (for example, increased yield for the same inputs or the same yield with lower inputs).<br/><br/> Select up to 2 options',
+      },
+      pageTitle: '',
+      url: 'productivity',
+      baseUrl: 'productivity',
+      backUrl: 'irrigated-land',
+      nextUrl: 'collaboration',
+      type: 'multi-answer',
+      preValidationKeys: ['irrigatedLandTarget'],
+      score: {
+        isScore: true,
+        isDisplay: true,
+      },
+      validate: [
+        {
+          type: 'NOT_EMPTY',
+          error:
+            'Select up to 2 options to describe how your project will improve productivity',
+        },
+        {
+          type: 'MAX_SELECT',
+          error:
+            'Select up to 2 options to describe how your project will improve productivity',
+          max: 2,
+        },
+      ],
+      answers: [
+        {
+          key: 'Q19-A1',
+          value: 'Introduce or expand high-value crops',
+          desc: 'Introduce or expand high-value crops',
+          weight: 3,
+        },
+        {
+          key: 'Q19-A2',
+          value: 'Introduce or expand protected crops',
+          desc: 'Introduce or expand protected crops',
+          weight: 3,
+        },
+        {
+          key: 'Q19-A3',
+          value: 'Increased yield per hectare',
+          desc: 'Increased yield per hectare',
+          weight: 1,
+        },
+        {
+          key: 'Q19-A4',
+          value: 'Improved quality',
+          desc: 'Improved quality',
+          weight: 1,
+        },
+        {
+          key: 'Q19-A5',
+          value: 'Maintain productivity',
+          desc: 'Maintain productivity',
+          weight: 0,
+        },
+      ],
+      sidebar: {
+        values: [
+          {
+            heading: 'Funding priorities',
+            content: [
+              {
+                para: 'RPA wants to fund projects that:',
+                items: ['improve water sustainability'],
+              },
+            ],
+          },
+        ],
+      },
+      yarKey: 'productivity',
     },
     {
       key: 'collaboration',
@@ -982,30 +976,31 @@ const questionBank = {
       baseUrl: 'collaboration',
       backUrl: 'productivity',
       nextUrl: 'score',
+      preValidationKeys: ['productivity'],
       type: 'single-answer',
       minAnswerCount: 1,
       score: {
         isScore: true,
-        isDisplay: true
+        isDisplay: true,
       },
       hint: {
-        text: 'For example, if you intend to supply water via a water sharing agreement as a result of this project.'
+        text: 'For example, if you intend to supply water via a water sharing agreement as a result of this project.',
       },
       validate: [
         {
           type: 'NOT_EMPTY',
-          error: 'Select yes if water will be supplied to other farms'
-        }
+          error: 'Select yes if water will be supplied to other farms',
+        },
       ],
       answers: [
         {
           key: 'collaboration-A1',
-          value: 'Yes'
+          value: 'Yes',
         },
         {
           key: 'collaboration-A2',
-          value: 'No'
-        }
+          value: 'No',
+        },
       ],
       sidebar: {
         values: [
@@ -1014,13 +1009,13 @@ const questionBank = {
             content: [
               {
                 para: 'RPA wants to fund projects that:',
-                items: ['improve water sustainability']
-              }
-            ]
-          }
-        ]
+                items: ['improve water sustainability'],
+              },
+            ],
+          },
+        ],
       },
-      yarKey: 'collaboration'
+      yarKey: 'collaboration',
     },
     // Goes to score route
     {
@@ -1032,10 +1027,10 @@ const questionBank = {
       baseUrl: 'business-details',
       backUrl: 'score',
       nextUrl: 'applying',
-      preValidationKeys: [],
+      preValidationKeys: ['score-calculated'],
       ga: [
         { dimension: 'cd1', value: { type: 'score', value: 'Eligible' } },
-        { dimension: 'cm2', value: { type: 'journey-time' } }
+        { dimension: 'cm2', value: { type: 'journey-time' } },
       ],
       fundingPriorities: '',
       type: 'multi-input',
@@ -1048,23 +1043,23 @@ const questionBank = {
           classes: 'govuk-input--width-20',
           label: {
             text: 'Project name',
-            classes: 'govuk-label'
+            classes: 'govuk-label',
           },
           hint: {
-            text: 'For example, Browns Hill Farm reservoir'
+            text: 'For example, Browns Hill Farm reservoir',
           },
           validate: [
             {
               type: 'NOT_EMPTY',
-              error: 'Enter a project name'
+              error: 'Enter a project name',
             },
             {
               type: 'MIN_MAX_CHARS',
               min: 0,
               max: 100,
-              error: 'Name must be 100 characters or fewer'
-            }
-          ]
+              error: 'Name must be 100 characters or fewer',
+            },
+          ],
         },
         {
           yarKey: 'businessName',
@@ -1072,28 +1067,28 @@ const questionBank = {
           classes: 'govuk-input--width-20',
           label: {
             text: 'Business name',
-            classes: 'govuk-label'
+            classes: 'govuk-label',
           },
           hint: {
-            text: "If you're registered on the Rural Payments system, enter business name as registered"
+            text: "If you're registered on the Rural Payments system, enter business name as registered",
           },
           validate: [
             {
               type: 'NOT_EMPTY',
-              error: 'Enter a business name'
+              error: 'Enter a business name',
             },
             {
               type: 'MIN_MAX_CHARS',
               min: 0,
               max: 100,
-              error: 'Name must be 100 characters or fewer'
+              error: 'Name must be 100 characters or fewer',
             },
             {
               type: 'REGEX',
               regex: BUSINESSNAME_REGEX,
-              error: 'Name must only include letters, hyphens and apostrophes'
-            }
-          ]
+              error: 'Name must only include letters, hyphens and apostrophes',
+            },
+          ],
         },
         {
           yarKey: 'numberEmployees',
@@ -1101,57 +1096,57 @@ const questionBank = {
           classes: 'govuk-input--width-10',
           label: {
             text: 'Number of employees',
-            classes: 'govuk-label'
+            classes: 'govuk-label',
           },
           hint: {
-            text: 'Full-time employees, including the owner'
+            text: 'Full-time employees, including the owner',
           },
           validate: [
             {
               type: 'NOT_EMPTY',
-              error: 'Enter the number of employees'
+              error: 'Enter the number of employees',
             },
             {
               type: 'REGEX',
               regex: NUMBER_REGEX,
-              error: 'Number of employees must be a whole number, like 305'
+              error: 'Number of employees must be a whole number, like 305',
             },
             {
               type: 'MIN_MAX',
               min: 1,
               max: 9999999,
-              error: 'Number of employees must be a whole number, like 305'
-            }
-          ]
+              error: 'Number of employees must be a whole number, like 305',
+            },
+          ],
         },
         {
           yarKey: 'businessTurnover',
           type: 'number',
           classes: 'govuk-input--width-10',
           prefix: {
-            text: '£'
+            text: '£',
           },
           label: {
             text: 'Business turnover',
-            classes: 'govuk-label'
+            classes: 'govuk-label',
           },
           validate: [
             {
               type: 'NOT_EMPTY',
-              error: 'Enter the business turnover'
+              error: 'Enter the business turnover',
             },
             {
               type: 'REGEX',
               regex: NUMBER_REGEX,
-              error: 'Business turnover must be a whole number, like 100000'
+              error: 'Business turnover must be a whole number, like 100000',
             },
             {
               type: 'MIN_MAX',
               min: 1,
               max: 999999999,
-              error: 'Business turnover must be a whole number, like 100000'
-            }
-          ]
+              error: 'Business turnover must be a whole number, like 100000',
+            },
+          ],
         },
         {
           yarKey: 'sbi',
@@ -1160,21 +1155,21 @@ const questionBank = {
           classes: 'govuk-input govuk-input--width-10',
           label: {
             text: 'Single Business Identifier (SBI) (Optional)',
-            classes: 'govuk-label'
+            classes: 'govuk-label',
           },
           hint: {
-            html: 'If you do not have an SBI, you will need to get one for full application'
+            html: 'If you do not have an SBI, you will need to get one for full application',
           },
           validate: [
             {
               type: 'REGEX',
               regex: SBI_REGEX,
-              error: 'SBI number must have 9 characters, like 011115678'
-            }
-          ]
-        }
+              error: 'SBI number must have 9 characters, like 011115678',
+            },
+          ],
+        },
       ],
-      yarKey: 'businessDetails'
+      yarKey: 'businessDetails',
     },
     {
       key: 'applying',
@@ -1184,7 +1179,7 @@ const questionBank = {
       url: 'applying',
       baseUrl: 'applying',
       backUrl: 'business-details',
-      preValidationKeys: [],
+      preValidationKeys: ['businessDetails'],
       fundingPriorities: '',
       type: 'single-answer',
       classes: 'govuk-radios--inline govuk-fieldset__legend--l',
@@ -1192,42 +1187,42 @@ const questionBank = {
       validate: [
         {
           type: 'NOT_EMPTY',
-          error: 'Select who is applying for this grant'
-        }
+          error: 'Select who is applying for this grant',
+        },
       ],
       answers: [
         {
           key: 'applying-A1',
           value: 'Applicant',
-          redirectUrl: 'applicant-details'
+          redirectUrl: 'applicant-details',
         },
         {
           key: 'applying-A2',
           value: 'Agent',
-          redirectUrl: 'agent-details'
-        }
+          redirectUrl: 'agent-details',
+        },
       ],
-      yarKey: 'applying'
+      yarKey: 'applying',
     },
     {
       key: 'applicant-details',
       order: 23,
       title: 'Applicant’s details',
       hint: {
-        text: 'Enter the farmer and farm business details'
+        text: 'Enter the farmer and farm business details',
       },
       pageTitle: '',
       url: 'applicant-details',
       baseUrl: 'applicant-details',
       nextUrl: 'check-details',
-      preValidationKeys: [],
+      preValidationKeys: ['applying'],
       backUrlObject: {
         dependentQuestionYarKey: 'applying',
         dependentAnswerKeysArray: ['applying-A2'],
         urlOptions: {
           thenUrl: 'agent-details',
-          elseUrl: 'applying'
-        }
+          elseUrl: 'applying',
+        },
       },
       fundingPriorities: '',
       type: 'multi-input',
@@ -1237,7 +1232,7 @@ const questionBank = {
       allFields: [
         {
           type: 'sub-heading',
-          text: 'Name'
+          text: 'Name',
         },
         {
           yarKey: 'firstName',
@@ -1245,19 +1240,19 @@ const questionBank = {
           classes: 'govuk-input--width-20',
           label: {
             text: 'First name',
-            classes: 'govuk-label'
+            classes: 'govuk-label',
           },
           validate: [
             {
               type: 'NOT_EMPTY',
-              error: 'Enter your first name'
+              error: 'Enter your first name',
             },
             {
               type: 'REGEX',
               regex: NAME_REGEX,
-              error: 'Name must only include letters, hyphens and apostrophes'
-            }
-          ]
+              error: 'Name must only include letters, hyphens and apostrophes',
+            },
+          ],
         },
         {
           yarKey: 'lastName',
@@ -1266,23 +1261,23 @@ const questionBank = {
           classes: 'govuk-input--width-20',
           label: {
             text: 'Last name',
-            classes: 'govuk-label'
+            classes: 'govuk-label',
           },
           validate: [
             {
               type: 'NOT_EMPTY',
-              error: 'Enter your last name'
+              error: 'Enter your last name',
             },
             {
               type: 'REGEX',
               regex: NAME_REGEX,
-              error: 'Name must only include letters, hyphens and apostrophes'
-            }
-          ]
+              error: 'Name must only include letters, hyphens and apostrophes',
+            },
+          ],
         },
         {
           type: 'sub-heading',
-          text: 'Contact details'
+          text: 'Contact details',
         },
         {
           yarKey: 'emailAddress',
@@ -1290,23 +1285,23 @@ const questionBank = {
           classes: 'govuk-input--width-20',
           label: {
             text: 'Email address',
-            classes: 'govuk-label'
+            classes: 'govuk-label',
           },
           hint: {
-            text: 'We will only use this to send you confirmation'
+            text: 'We will only use this to send you confirmation',
           },
           validate: [
             {
               type: 'NOT_EMPTY',
-              error: 'Enter your email address'
+              error: 'Enter your email address',
             },
             {
               type: 'REGEX',
               regex: EMAIL_REGEX,
               error:
-                'Enter an email address in the correct format, like name@example.com'
-            }
-          ]
+                'Enter an email address in the correct format, like name@example.com',
+            },
+          ],
         },
         {
           yarKey: 'emailConfirm',
@@ -1314,25 +1309,25 @@ const questionBank = {
           classes: 'govuk-input--width-20',
           label: {
             text: 'Confirm email',
-            classes: 'govuk-label'
+            classes: 'govuk-label',
           },
           validate: [
             {
               type: 'NOT_EMPTY',
-              error: 'Confirm your email address'
+              error: 'Confirm your email address',
             },
             {
               type: 'REGEX',
               regex: EMAIL_REGEX,
               error:
-                'Enter an email address in the correct format, like name@example.com'
+                'Enter an email address in the correct format, like name@example.com',
             },
             {
               type: 'CONFIRMATION_ANSWER',
               fieldsToCampare: ['emailAddress', 'emailConfirm'],
-              error: 'Enter an email address that matches'
-            }
-          ]
+              error: 'Enter an email address that matches',
+            },
+          ],
         },
         {
           yarKey: 'mobile',
@@ -1340,30 +1335,30 @@ const questionBank = {
           classes: 'govuk-input--width-10',
           label: {
             text: 'Mobile number',
-            classes: 'govuk-label'
+            classes: 'govuk-label',
           },
           hint: {
-            text: 'We will only use this to contact you about your application'
+            text: 'We will only use this to contact you about your application',
           },
           validate: [
             {
               type: 'NOT_EMPTY_EXTRA',
               error:
                 'Enter a mobile number (if you do not have a mobile, enter your landline number)',
-              extraFieldsToCheck: ['landline']
+              extraFieldsToCheck: ['landline'],
             },
             {
               type: 'REGEX',
               regex: CHARS_MIN_10,
-              error: 'Your mobile number must have at least 10 characters'
+              error: 'Your mobile number must have at least 10 characters',
             },
             {
               type: 'REGEX',
               regex: PHONE_REGEX,
               error:
-                'Enter a telephone number, like 01632 960 001, 07700 900 982 or +44 0808 157 0192'
-            }
-          ]
+                'Enter a telephone number, like 01632 960 001, 07700 900 982 or +44 0808 157 0192',
+            },
+          ],
         },
         {
           yarKey: 'landline',
@@ -1372,34 +1367,34 @@ const questionBank = {
           classes: 'govuk-input--width-10',
           label: {
             text: 'Landline number',
-            classes: 'govuk-label'
+            classes: 'govuk-label',
           },
           hint: {
-            text: 'We will only use this to contact you about your application'
+            text: 'We will only use this to contact you about your application',
           },
           validate: [
             {
               type: 'NOT_EMPTY_EXTRA',
               error:
                 'Enter a landline number (if you do not have a landline, enter your mobile number)',
-              extraFieldsToCheck: ['mobile']
+              extraFieldsToCheck: ['mobile'],
             },
             {
               type: 'REGEX',
               regex: CHARS_MIN_10,
-              error: 'Your landline number must have at least 10 characters'
+              error: 'Your landline number must have at least 10 characters',
             },
             {
               type: 'REGEX',
               regex: PHONE_REGEX,
               error:
-                'Enter a telephone number, like 01632 960 001, 07700 900 982 or +44 0808 157 0192'
-            }
-          ]
+                'Enter a telephone number, like 01632 960 001, 07700 900 982 or +44 0808 157 0192',
+            },
+          ],
         },
         {
           type: 'sub-heading',
-          text: 'Business address'
+          text: 'Business address',
         },
         {
           yarKey: 'address1',
@@ -1407,19 +1402,19 @@ const questionBank = {
           classes: 'govuk-input--width-20',
           label: {
             html: 'Address line 1',
-            classes: 'govuk-label'
+            classes: 'govuk-label',
           },
           validate: [
             {
               type: 'NOT_EMPTY',
-              error: 'Enter your building and street details'
+              error: 'Enter your building and street details',
             },
             {
               type: 'REGEX',
               regex: ADDRESS_REGEX,
-              error: 'Address must only include letters, hyphens and spaces'
-            }
-          ]
+              error: 'Address must only include letters, hyphens and spaces',
+            },
+          ],
         },
         {
           yarKey: 'address2',
@@ -1427,15 +1422,15 @@ const questionBank = {
           classes: 'govuk-input--width-20',
           label: {
             html: 'Address line 2 (optional)',
-            classes: 'govuk-label'
+            classes: 'govuk-label',
           },
           validate: [
             {
               type: 'REGEX',
               regex: ADDRESS_REGEX,
-              error: 'Address must only include letters, hyphens and spaces'
-            }
-          ]
+              error: 'Address must only include letters, hyphens and spaces',
+            },
+          ],
         },
         {
           yarKey: 'town',
@@ -1443,19 +1438,19 @@ const questionBank = {
           classes: 'govuk-input--width-10',
           label: {
             text: 'Town',
-            classes: 'govuk-label'
+            classes: 'govuk-label',
           },
           validate: [
             {
               type: 'NOT_EMPTY',
-              error: 'Enter your town'
+              error: 'Enter your town',
             },
             {
               type: 'REGEX',
               regex: ONLY_TEXT_REGEX,
-              error: 'Town must only include letters, hyphens and spaces'
-            }
-          ]
+              error: 'Town must only include letters, hyphens and spaces',
+            },
+          ],
         },
         {
           yarKey: 'county',
@@ -1463,15 +1458,15 @@ const questionBank = {
           classes: 'govuk-input--width-10',
           label: {
             text: 'County',
-            classes: 'govuk-label'
+            classes: 'govuk-label',
           },
           answers: [...LIST_COUNTIES],
           validate: [
             {
               type: 'NOT_EMPTY',
-              error: 'Select your county'
-            }
-          ]
+              error: 'Select your county',
+            },
+          ],
         },
         {
           yarKey: 'businessPostcode',
@@ -1479,19 +1474,19 @@ const questionBank = {
           classes: 'govuk-input--width-5',
           label: {
             text: 'Business postcode',
-            classes: 'govuk-label'
+            classes: 'govuk-label',
           },
           validate: [
             {
               type: 'NOT_EMPTY',
-              error: 'Enter your business postcode, like AA1 1AA'
+              error: 'Enter your business postcode, like AA1 1AA',
             },
             {
               type: 'REGEX',
               regex: POSTCODE_REGEX,
-              error: 'Enter a business postcode, like AA1 1AA'
-            }
-          ]
+              error: 'Enter a business postcode, like AA1 1AA',
+            },
+          ],
         },
         {
           yarKey: 'projectPostcode',
@@ -1500,32 +1495,32 @@ const questionBank = {
           classes: 'govuk-input--width-5',
           label: {
             text: 'Project postcode',
-            classes: 'govuk-label'
+            classes: 'govuk-label',
           },
           hint: {
-            text: 'The site postcode where the work will happen'
+            text: 'The site postcode where the work will happen',
           },
           validate: [
             {
               type: 'NOT_EMPTY',
-              error: 'Enter a project postcode, like AA1 1AA'
+              error: 'Enter a project postcode, like AA1 1AA',
             },
             {
               type: 'REGEX',
               regex: POSTCODE_REGEX,
-              error: 'Enter a project postcode, like AA1 1AA'
-            }
-          ]
-        }
+              error: 'Enter a project postcode, like AA1 1AA',
+            },
+          ],
+        },
       ],
-      yarKey: 'farmerDetails'
+      yarKey: 'farmerDetails',
     },
     {
       key: 'agent-details',
       order: 24,
       title: 'Agent’s details',
       hint: {
-        text: 'Enter the agent and agent business details'
+        text: 'Enter the agent and agent business details',
       },
       pageTitle: '',
       url: 'agent-details',
@@ -1540,7 +1535,7 @@ const questionBank = {
       allFields: [
         {
           type: 'sub-heading',
-          text: 'Name'
+          text: 'Name',
         },
         {
           yarKey: 'firstName',
@@ -1548,19 +1543,19 @@ const questionBank = {
           classes: 'govuk-input--width-20',
           label: {
             text: 'First name',
-            classes: 'govuk-label'
+            classes: 'govuk-label',
           },
           validate: [
             {
               type: 'NOT_EMPTY',
-              error: 'Enter your first name'
+              error: 'Enter your first name',
             },
             {
               type: 'REGEX',
               regex: NAME_REGEX,
-              error: 'Name must only include letters, hyphens and apostrophes'
-            }
-          ]
+              error: 'Name must only include letters, hyphens and apostrophes',
+            },
+          ],
         },
         {
           yarKey: 'lastName',
@@ -1568,19 +1563,19 @@ const questionBank = {
           classes: 'govuk-input--width-20',
           label: {
             text: 'Last name',
-            classes: 'govuk-label'
+            classes: 'govuk-label',
           },
           validate: [
             {
               type: 'NOT_EMPTY',
-              error: 'Enter your last name'
+              error: 'Enter your last name',
             },
             {
               type: 'REGEX',
               regex: NAME_REGEX,
-              error: 'Name must only include letters, hyphens and apostrophes'
-            }
-          ]
+              error: 'Name must only include letters, hyphens and apostrophes',
+            },
+          ],
         },
         {
           yarKey: 'businessName',
@@ -1589,29 +1584,29 @@ const questionBank = {
           classes: 'govuk-input--width-20',
           label: {
             text: 'Business name',
-            classes: 'govuk-label'
+            classes: 'govuk-label',
           },
           validate: [
             {
               type: 'NOT_EMPTY',
-              error: 'Enter your business name'
+              error: 'Enter your business name',
             },
             {
               type: 'MIN_MAX_CHARS',
               min: 0,
               max: 100,
-              error: 'Name must be 100 characters or fewer'
+              error: 'Name must be 100 characters or fewer',
             },
             {
               type: 'REGEX',
               regex: NAME_ONLY_REGEX,
-              error: 'Name must only include letters, hyphens and apostrophes'
-            }
-          ]
+              error: 'Name must only include letters, hyphens and apostrophes',
+            },
+          ],
         },
         {
           type: 'sub-heading',
-          text: 'Contact details'
+          text: 'Contact details',
         },
         {
           yarKey: 'emailAddress',
@@ -1619,23 +1614,23 @@ const questionBank = {
           classes: 'govuk-input--width-20',
           label: {
             text: 'Email address',
-            classes: 'govuk-label'
+            classes: 'govuk-label',
           },
           hint: {
-            text: 'We will only use this to send you confirmation'
+            text: 'We will only use this to send you confirmation',
           },
           validate: [
             {
               type: 'NOT_EMPTY',
-              error: 'Enter your email address'
+              error: 'Enter your email address',
             },
             {
               type: 'REGEX',
               regex: EMAIL_REGEX,
               error:
-                'Enter an email address in the correct format, like name@example.com'
-            }
-          ]
+                'Enter an email address in the correct format, like name@example.com',
+            },
+          ],
         },
         {
           yarKey: 'emailConfirm',
@@ -1643,25 +1638,25 @@ const questionBank = {
           classes: 'govuk-input--width-20',
           label: {
             text: 'Confirm email address',
-            classes: 'govuk-label'
+            classes: 'govuk-label',
           },
           validate: [
             {
               type: 'NOT_EMPTY',
-              error: 'Confirm your email address'
+              error: 'Confirm your email address',
             },
             {
               type: 'REGEX',
               regex: EMAIL_REGEX,
               error:
-                'Enter an email address in the correct format, like name@example.com'
+                'Enter an email address in the correct format, like name@example.com',
             },
             {
               type: 'CONFIRMATION_ANSWER',
               fieldsToCampare: ['emailAddress', 'emailConfirm'],
-              error: 'Enter an email address that matches'
-            }
-          ]
+              error: 'Enter an email address that matches',
+            },
+          ],
         },
         {
           yarKey: 'mobile',
@@ -1669,30 +1664,30 @@ const questionBank = {
           classes: 'govuk-input--width-10',
           label: {
             text: 'Mobile number',
-            classes: 'govuk-label'
+            classes: 'govuk-label',
           },
           hint: {
-            text: 'We will only use this to contact you about your application'
+            text: 'We will only use this to contact you about your application',
           },
           validate: [
             {
               type: 'NOT_EMPTY_EXTRA',
               error:
                 'Enter a mobile number (if you do not have a mobile, enter your landline number)',
-              extraFieldsToCheck: ['landline']
+              extraFieldsToCheck: ['landline'],
             },
             {
               type: 'REGEX',
               regex: CHARS_MIN_10,
-              error: 'Your mobile number must have at least 10 characters'
+              error: 'Your mobile number must have at least 10 characters',
             },
             {
               type: 'REGEX',
               regex: PHONE_REGEX,
               error:
-                'Enter a telephone number, like 01632 960 001, 07700 900 982 or +44 0808 157 0192'
-            }
-          ]
+                'Enter a telephone number, like 01632 960 001, 07700 900 982 or +44 0808 157 0192',
+            },
+          ],
         },
         {
           yarKey: 'landline',
@@ -1701,34 +1696,34 @@ const questionBank = {
           classes: 'govuk-input--width-10',
           label: {
             text: 'Landline number',
-            classes: 'govuk-label'
+            classes: 'govuk-label',
           },
           hint: {
-            text: 'We will only use this to contact you about your application'
+            text: 'We will only use this to contact you about your application',
           },
           validate: [
             {
               type: 'NOT_EMPTY_EXTRA',
               error:
                 'Enter a landline number (if you do not have a landline, enter your mobile number)',
-              extraFieldsToCheck: ['mobile']
+              extraFieldsToCheck: ['mobile'],
             },
             {
               type: 'REGEX',
               regex: CHARS_MIN_10,
-              error: 'Your landline number must have at least 10 characters'
+              error: 'Your landline number must have at least 10 characters',
             },
             {
               type: 'REGEX',
               regex: PHONE_REGEX,
               error:
-                'Enter a telephone number, like 01632 960 001, 07700 900 982 or +44 0808 157 0192'
-            }
-          ]
+                'Enter a telephone number, like 01632 960 001, 07700 900 982 or +44 0808 157 0192',
+            },
+          ],
         },
         {
           type: 'sub-heading',
-          text: 'Business address'
+          text: 'Business address',
         },
         {
           yarKey: 'address1',
@@ -1736,19 +1731,19 @@ const questionBank = {
           classes: 'govuk-input--width-20',
           label: {
             html: 'Address line 1',
-            classes: 'govuk-label'
+            classes: 'govuk-label',
           },
           validate: [
             {
               type: 'NOT_EMPTY',
-              error: 'Enter your building and street details'
+              error: 'Enter your building and street details',
             },
             {
               type: 'REGEX',
               regex: ADDRESS_REGEX,
-              error: 'Address must only include letters, hyphens and spaces'
-            }
-          ]
+              error: 'Address must only include letters, hyphens and spaces',
+            },
+          ],
         },
         {
           yarKey: 'address2',
@@ -1756,15 +1751,15 @@ const questionBank = {
           classes: 'govuk-input--width-20',
           label: {
             html: 'Address line 2 (optional)',
-            classes: 'govuk-label'
+            classes: 'govuk-label',
           },
           validate: [
             {
               type: 'REGEX',
               regex: ADDRESS_REGEX,
-              error: 'Address must only include letters, hyphens and spaces'
-            }
-          ]
+              error: 'Address must only include letters, hyphens and spaces',
+            },
+          ],
         },
         {
           yarKey: 'town',
@@ -1772,19 +1767,19 @@ const questionBank = {
           classes: 'govuk-input--width-10',
           label: {
             text: 'Town',
-            classes: 'govuk-label'
+            classes: 'govuk-label',
           },
           validate: [
             {
               type: 'NOT_EMPTY',
-              error: 'Enter your town'
+              error: 'Enter your town',
             },
             {
               type: 'REGEX',
               regex: ONLY_TEXT_REGEX,
-              error: 'Town must only include letters, hyphens and spaces'
-            }
-          ]
+              error: 'Town must only include letters, hyphens and spaces',
+            },
+          ],
         },
         {
           yarKey: 'county',
@@ -1792,15 +1787,15 @@ const questionBank = {
           classes: 'govuk-input--width-10',
           label: {
             text: 'County',
-            classes: 'govuk-label'
+            classes: 'govuk-label',
           },
           answers: [...LIST_COUNTIES],
           validate: [
             {
               type: 'NOT_EMPTY',
-              error: 'Select your county'
-            }
-          ]
+              error: 'Select your county',
+            },
+          ],
         },
         {
           yarKey: 'postcode',
@@ -1809,22 +1804,22 @@ const questionBank = {
           classes: 'govuk-input--width-5',
           label: {
             text: 'Postcode',
-            classes: 'govuk-label'
+            classes: 'govuk-label',
           },
           validate: [
             {
               type: 'NOT_EMPTY',
-              error: 'Enter your postcode, like AA1 1AA'
+              error: 'Enter your postcode, like AA1 1AA',
             },
             {
               type: 'REGEX',
               regex: POSTCODE_REGEX,
-              error: 'Enter a postcode, like AA1 1AA'
-            }
-          ]
-        }
+              error: 'Enter a postcode, like AA1 1AA',
+            },
+          ],
+        },
       ],
-      yarKey: 'agentDetails'
+      yarKey: 'agentDetails',
     },
     {
       key: 'check-details',
@@ -1840,12 +1835,12 @@ const questionBank = {
       pageData: {
         businessDetailsLink: 'business-details',
         agentDetailsLink: 'agent-details',
-        farmerDetailsLink: 'applicant-details'
+        farmerDetailsLink: 'applicant-details',
       },
       fundingPriorities: '',
       type: '',
       minAnswerCount: 1,
-      answers: []
+      answers: [],
     },
     {
       key: 'confirm',
@@ -1866,15 +1861,15 @@ const questionBank = {
               <li>shared with the Environment Agency so that they can check the details of my planned project</li>
             </ul></br>
             I am happy to be contacted by Defra and RPA (or a third-party on their behalf) about my application.</br></br>
-            So that we can continue to improve our services and schemes, we may wish to contact you in the future. Please confirm if you are happy for us, or a third-party working for us, to contact you.`
+            So that we can continue to improve our services and schemes, we may wish to contact you in the future. Please confirm if you are happy for us, or a third-party working for us, to contact you.`,
       },
       answers: [
         {
           key: 'consentOptional',
-          value: 'CONSENT_OPTIONAL'
-        }
+          value: 'CONSENT_OPTIONAL',
+        },
       ],
-      yarKey: 'consentOptional'
+      yarKey: 'consentOptional',
     },
     {
       key: 'confirmation',
@@ -1887,26 +1882,26 @@ const questionBank = {
       ga: [
         { dimension: 'cd2', value: { type: 'score' } },
         { dimension: 'cd5', value: { type: 'confirmationId' } },
-        { dimension: 'cm1', value: { type: 'journey-time' } }
+        { dimension: 'cm1', value: { type: 'journey-time' } },
       ],
       maybeEligible: true,
       maybeEligibleContent: {
         reference: {
           titleText: 'Details submitted',
           html: 'Your reference number<br><strong>{{_confirmationId_}}</strong>',
-          surveyLink: process.env.SURVEY_LINK
+          surveyLink: process.env.SURVEY_LINK,
         },
         messageContent: `We have sent you a confirmation email with a record of your answers.<br/><br/>
             If you do not get an email within 72 hours, please contact RPA helpline and follow the options for Farming Transformation Fund scheme:<br/>
-            <h1 class="govuk-heading-m">RPA helpline</h1>
-            <h2 class="govuk-heading-s">Telephone</h2>
+            <h1 class='govuk-heading-m'>RPA helpline</h1>
+            <h2 class='govuk-heading-s'>Telephone</h2>
             Telephone: 03000 200 301<br/>
             Monday to Friday, 9am to 5pm (except public holidays)<br/>
-            <p><a class="govuk-link" target="_blank" href="https://www.gov.uk/call-charges" rel="noopener noreferrer">Find out about call charges (opens in a new tab)</a></p>
-            <h2 class="govuk-heading-s">Email</h2>
-            <a class="govuk-link" title="Send email to RPA" target="_blank" rel="noopener noreferrer" href="mailto:ftf@rpa.gov.uk">FTF@rpa.gov.uk</a><br/><br/>
+            <p><a class='govuk-link' target='_blank' href='https://www.gov.uk/call-charges' rel='noopener noreferrer'>Find out about call charges (opens in a new tab)</a></p>
+            <h2 class='govuk-heading-s'>Email</h2>
+            <a class='govuk-link' title='Send email to RPA' target='_blank' rel='noopener noreferrer' href='mailto:ftf@rpa.gov.uk'>FTF@rpa.gov.uk</a><br/><br/>
             
-            <h2 class="govuk-heading-m">What happens next</h2>
+            <h2 class='govuk-heading-m'>What happens next</h2>
             <ol>
               <li>RPA will be in touch when the full application period opens. They will tell you if your project scored well enough to get the full application form.</li>
               <br/>
@@ -1916,7 +1911,7 @@ const questionBank = {
             </ol>
             `,
         warning: {
-          text: 'You must not start the project'
+          text: 'You must not start the project',
         },
         extraMessageContent: `<p>Starting the project or committing to any costs (such as placing orders) before you receive a funding agreement will invalidate your application.</p> 
             <p>Before you start the project, you can:</p>
@@ -1924,31 +1919,31 @@ const questionBank = {
               <li>get quotes from suppliers</li>
               <li>apply for planning permission or an abstraction licence</li>
             </ul>
-            <p class="govuk-body"><a class="govuk-link" href="${process.env.SURVEY_LINK}" target="_blank" rel="noopener noreferrer">What do you think of this service? (opens in a new tab)</a></p>
-            `
+            <p class='govuk-body'><a class='govuk-link' href='${process.env.SURVEY_LINK}' target='_blank' rel='noopener noreferrer'>What do you think of this service? (opens in a new tab)</a></p>
+            `,
       },
       fundingPriorities: '',
       type: '',
       minAnswerCount: 1,
-      answers: []
-    }
-  ]
-}
+      answers: [],
+    },
+  ],
+};
 
-const ALL_QUESTIONS = []
+const ALL_QUESTIONS = [];
 
 questionBank.questions.forEach((question) => {
-  ALL_QUESTIONS.push(question)
-})
-const ALL_URLS = []
-ALL_QUESTIONS.forEach((item) => ALL_URLS.push(item.url))
+  ALL_QUESTIONS.push(question);
+});
+const ALL_URLS = [];
+ALL_QUESTIONS.forEach((item) => ALL_URLS.push(item.url));
 
-const YAR_KEYS = ['calculatedGrant', 'remainingCost', 'projectItemsList']
-ALL_QUESTIONS.forEach((item) => YAR_KEYS.push(item.yarKey))
+const YAR_KEYS = ['calculatedGrant', 'remainingCost', 'projectItemsList'];
+ALL_QUESTIONS.forEach((item) => YAR_KEYS.push(item.yarKey));
 
 module.exports = {
   questionBank,
   ALL_QUESTIONS,
   ALL_URLS,
-  YAR_KEYS
-}
+  YAR_KEYS,
+};

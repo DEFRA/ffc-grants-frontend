@@ -9,7 +9,6 @@ describe('create-msg', () => {
     getYarValue.mockImplementation((req, key) => (dict[key]))
 
     dict = {
-      project: ['prj'],
       irrigatedCrops: 'irrigatedCrops',
       irrigatedLandCurrent: 22,
       irrigatedLandTarget: 33,
@@ -21,7 +20,6 @@ describe('create-msg', () => {
       collaboration: 'collaboration'
     }
     expect(getDesirabilityAnswers({})).toEqual({
-      project: ['prj'],
       irrigatedCrops: 'irrigatedCrops',
       irrigatedLandCurrent: 22,
       irrigatedLandTarget: 33,
@@ -38,7 +36,6 @@ describe('create-msg', () => {
       waterSourcePlanned: 'wtr-src-pln'
     }
     expect(getDesirabilityAnswers({})).toEqual({
-      project: ['prj'],
       irrigatedCrops: 'irrigatedCrops',
       irrigatedLandCurrent: 22,
       irrigatedLandTarget: 33,
