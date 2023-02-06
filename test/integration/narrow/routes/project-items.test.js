@@ -8,7 +8,10 @@ const varListTemplate = {
   projectItemsList: {
     projectEquipment: ['Boom', 'Trickle']
   },
-  'current-score': null
+  'current-score': null,
+  projectInfrastructure: 'hello',
+  projectEquipment: 'hello2',
+  projectTechnology: 'hello3'
 }
 
 let varList
@@ -114,9 +117,9 @@ describe('project items page', () => {
   })
   it('redirects to summer-abstraction-mains if user projectInfrastucture or projectEquipment or projectTechnology has not been saved', async () => {
     varList = {
-      projectInfrastucture: undefined,
-      projectEquipment : undefined,
-      projectTechnology : undefined,
+      projectInfrastucture: null,
+      projectEquipment : null,
+      projectTechnology : null,
       'current-score': true
     }
 
