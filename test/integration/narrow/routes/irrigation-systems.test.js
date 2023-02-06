@@ -22,7 +22,7 @@ const varListTemplate = {
   waterSourcePlanned: ['some source 2', 'another source'],
   irrigationCurrent: ['some source 2', 'another source'],
   irrigationPlanned: ['some souce 2'],
-  'current-score': ''
+  'current-score': null
 }
 
 let varList
@@ -49,7 +49,7 @@ describe('Irrigation syatems page', () => {
   it('should load page successfully', async () => {
     const options = {
       method: 'GET',
-      url: `${global.__URLPREFIX__}/irrigation-systems`
+      url: `${global.__URLPREFIX__}/irrigation-system`
     }
 
     const response = await global.__SERVER__.inject(options)
@@ -60,11 +60,11 @@ describe('Irrigation syatems page', () => {
     varList = {
       irrigationCurrent: null,
       irrigationPlanned: null,
-      'current-score': 'yes'
+      'current-score': null
     }
     const options = {
       method: 'GET',
-      url: `${global.__URLPREFIX__}/irrigation-systems`
+      url: `${global.__URLPREFIX__}/irrigation-system`
     }
 
     const response = await global.__SERVER__.inject(options)
@@ -74,7 +74,7 @@ describe('Irrigation syatems page', () => {
   it('should returns error message if no water system option is selected', async () => {
     const postOptions = {
       method: 'POST',
-      url: `${global.__URLPREFIX__}/irrigation-systems`,
+      url: `${global.__URLPREFIX__}/irrigation-system`,
       payload: { crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
@@ -90,7 +90,7 @@ describe('Irrigation syatems page', () => {
   it('should store user response and redirects to productivity page', async () => {
     const postOptions = {
       method: 'POST',
-      url: `${global.__URLPREFIX__}/irrigation-systems`,
+      url: `${global.__URLPREFIX__}/irrigation-system`,
       payload: { irrigationCurrent: 'fake current system', irrigationPlanned: 'fake new system', crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
@@ -99,13 +99,13 @@ describe('Irrigation syatems page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/productivity`)
+    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/irrigated-crops`)
   })
 
   it('should store user response and redirects to score page if results', async () => {
     const postOptions = {
       method: 'POST',
-      url: `${global.__URLPREFIX__}/irrigation-systems`,
+      url: `${global.__URLPREFIX__}/irrigation-system`,
       payload: { irrigationCurrent: 'fake current system', irrigationPlanned: 'fake new system', results: '234', crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
@@ -125,7 +125,7 @@ describe('Irrigation syatems page', () => {
     
     const postOptions = {
       method: 'POST',
-      url: `${global.__URLPREFIX__}/irrigation-systems`,
+      url: `${global.__URLPREFIX__}/irrigation-system`,
       payload: { irrigationCurrent: '', irrigationPlanned: '', crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
@@ -134,13 +134,13 @@ describe('Irrigation syatems page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/productivity`)
+    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/irrigated-crops`)
   })
   
   it('redirects to irrigation-systems if user irrigationCurrent, irrigationPlanned and currentlyIrrigating has not been saved', async () => {
     const postOptions = {
       method: 'POST',
-      url: `${global.__URLPREFIX__}/irrigation-systems`,
+      url: `${global.__URLPREFIX__}/irrigation-system`,
       payload: { irrigationCurrent: undefined, irrigationPlanned: undefined, currentlyIrrigating: undefined, crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
@@ -153,7 +153,7 @@ describe('Irrigation syatems page', () => {
   it('should display the error summary if more than two options are selected', async () => {
     const postOptions = {
       method: 'POST',
-      url: `${global.__URLPREFIX__}/irrigation-systems`,
+      url: `${global.__URLPREFIX__}/irrigation-system`,
       payload: {
         irrigationCurrent: ['some option-1', 'some option-2', 'some option-3'],
         irrigationPlanned: ['another-option-1', 'another-option-2', 'another-option-3'],
@@ -177,7 +177,7 @@ describe('Irrigation syatems page', () => {
     }
     const postOptions = {
       method: 'POST',
-      url: `${global.__URLPREFIX__}/irrigation-systems`,
+      url: `${global.__URLPREFIX__}/irrigation-system`,
       payload: {
         irrigationCurrent: ['1', '2', '3'],
         irrigationPlanned: [],
@@ -200,7 +200,7 @@ describe('Irrigation syatems page', () => {
     }    
     const postOptions = {
       method: 'POST',
-      url: `${global.__URLPREFIX__}/irrigation-systems`,
+      url: `${global.__URLPREFIX__}/irrigation-system`,
       payload: {
         irrigationCurrent: [],
         irrigationPlanned: ['another-option-1', 'another-option-2', 'another-option-3'],
@@ -219,7 +219,7 @@ describe('Irrigation syatems page', () => {
   it('should display the current irrrigation systems question if the user selected YES for currently irrigating', async () => {
     const options = {
       method: 'GET',
-      url: `${global.__URLPREFIX__}/irrigation-systems`,
+      url: `${global.__URLPREFIX__}/irrigation-system`,
       headers: {
         cookie: 'crumb=' + crumbToken
       }
@@ -236,7 +236,7 @@ describe('Irrigation syatems page', () => {
     varList.currentlyIrrigating = 'No'
     const options = {
       method: 'GET',
-      url: `${global.__URLPREFIX__}/irrigation-systems`,
+      url: `${global.__URLPREFIX__}/irrigation-system`,
       headers: {
         cookie: 'crumb=' + crumbToken
       }

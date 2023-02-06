@@ -5,7 +5,7 @@ const varListTemplate = {
   inEngland: 'Yes',
   projectStarted: 'No',
   landOwnership: 'Yes',
-  'current-score': ''
+  'current-score': null
 }
 
 let varList
@@ -46,7 +46,7 @@ describe('Water tenancy page', () => {
 
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(302)
-    expect(response.headers.location).toBe(`${global.__URLPREFIX__}/project-summary`)
+    expect(response.headers.location).toBe(`${global.__URLPREFIX__}/summer-abstraction-mains`)
   })
 
   it('should returns error message in body if no option is selected', async () => {

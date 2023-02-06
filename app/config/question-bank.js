@@ -211,7 +211,7 @@ module.exports = {
       answer: [
         {
           key: 'Q17a-A1',
-          desc: 'Peak-flow/winter abstraction'
+          desc: 'Winter peak-flow abstraction'
         },
         {
           key: 'Q17a-A2',
@@ -219,7 +219,7 @@ module.exports = {
         },
         {
           key: 'Q17a-A3',
-          desc: 'Bore hole / aquifer'
+          desc: 'Bore hole/aquifer'
         },
         {
           key: 'Q17a-A4',
@@ -257,7 +257,7 @@ module.exports = {
         },
         {
           key: 'Q17b-A3',
-          desc: 'Bore hole / aquifer'
+          desc: 'Bore hole/aquifer'
         },
         {
           key: 'Q17b-A4',
@@ -276,7 +276,7 @@ module.exports = {
       pageTitle: 'Irrigation system',
       fundingPriorities: 'Improve the environment <br/> Improving water sustainability',
       group: 'Q18',
-      url: 'irrigation-systems',
+      url: 'irrigation-system',
       yarKey: 'irrigationCurrent',
       type: 'multiple-answer',
       answerCount: 2,
@@ -324,7 +324,7 @@ module.exports = {
       title: 'What systems will be used to irrigate?',
       pageTitle: 'Irrigation system',
       group: 'Q18',
-      url: 'irrigation-systems',
+      url: 'irrigation-system',
       yarKey: 'irrigationPlanned',
       type: 'multiple-answer',
       fundingPriorities: 'Reducing environmental imapact <br/> Improving water sustainability',

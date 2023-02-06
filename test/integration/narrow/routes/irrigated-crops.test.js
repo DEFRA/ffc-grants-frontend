@@ -2,7 +2,8 @@ const { crumbToken } = require('./test-helper')
 describe('Irrigated crops page', () => {
   const varListTemplate = {
     project: 'some fake data',
-    irrigatedCrops: 'some crop'
+    irrigatedCrops: 'some crop',
+    'current-score': null
   }
 
   let varList
@@ -35,7 +36,8 @@ describe('Irrigated crops page', () => {
 
   it('should load page with no yar successfully', async () => {
     varList = {
-      irrigatedCrops: null
+      irrigatedCrops: null,
+      'current-score': null
     }
     const options = {
       method: 'GET',
@@ -76,7 +78,7 @@ describe('Irrigated crops page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe('irrigation-status')
+    expect(postResponse.headers.location).toBe('irrigated-land')
   })
 
   it('should store user response and redirects to score', async () => {

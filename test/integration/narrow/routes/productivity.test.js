@@ -34,7 +34,7 @@ describe('Project details page', () => {
         case 'productivity':
           return [productivity]
         default:
-          return 'Error'
+          return null
       }
     }
   }))

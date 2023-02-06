@@ -1,6 +1,7 @@
 const varListTemplate = {
   calculatedGrant: 123,
-  projectCost : 122
+  projectCost : 122,
+  'current-score': null
 }
 
 let varList

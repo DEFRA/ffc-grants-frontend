@@ -1,7 +1,6 @@
 module.exports = {
   desirabilityQuestions: require('./desirability-questions'),
   desirabilityInputQuestionMapping: {
-    Q14: 'project',
     Q15: 'irrigatedCrops',
     Q16a: 'irrigatedLandCurrent',
     Q16b: 'irrigatedLandTarget',

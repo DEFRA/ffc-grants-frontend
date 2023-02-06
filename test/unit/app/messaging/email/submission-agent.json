@@ -69,10 +69,6 @@
   "projectCost": 100000,
   "calculatedGrant": "40000.00",
   "remainingCost": "60000.00",
-  "project": [
-    "Change water source",
-    "Introduce irrigation"
-  ],
   "projectInfrastucture": [
     "Construction of reservoir",
     "Water meter"

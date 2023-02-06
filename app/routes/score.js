@@ -37,6 +37,7 @@ module.exports = [{
       return h.redirect(startPath)
     }
     try {
+
       const msgDataToSend = getDesirabilityAnswers(request)
       // Always re-calculate our score before rendering this page
 

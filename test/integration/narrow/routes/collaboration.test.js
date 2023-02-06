@@ -10,6 +10,7 @@ describe('Collaboration page', () => {
   const irrigationPlanned = ['some souce 2']
   const productivity = ['some option-1', 'some option-2']
   const collaboration = 'some fake data'
+  const currentScore = null
 
   jest.mock('../../../../app/helpers/session', () => ({
     setYarValue: (request, key, value) => null,
@@ -33,6 +34,8 @@ describe('Collaboration page', () => {
           return [irrigationPlanned]
         case 'productivity':
           return [productivity]
+        case 'current-score':
+          return [currentScore]
         default:
           return 'Error'
       }

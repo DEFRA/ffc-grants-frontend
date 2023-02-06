@@ -14,7 +14,7 @@ const varListTemplate = {
   planningPermission: 'Will not be in place by 31 January 2023',
   abstractionLicence: 'Not needed',
   sSSI: 'Yes',
-  'current-score': ''
+  'current-score': null
 
 }
 
@@ -64,7 +64,7 @@ describe('SSSI page', () => {
       planningPermission: 'Will not be in place by 31 January 2023',
       abstractionLicence: 'Not needed',
       sSSI: undefined,
-      'current-score': ''
+      'current-score': null
 
     }
     const options = {
@@ -85,7 +85,7 @@ describe('SSSI page', () => {
 
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(302)
-    expect(response.headers.location).toBe(`${global.__URLPREFIX__}/project-summary`)
+    expect(response.headers.location).toBe(`${global.__URLPREFIX__}/summer-abstraction-mains`)
   })
 
   it('should return an error message if no option is selected', async () => {

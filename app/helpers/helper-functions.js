@@ -1,11 +1,15 @@
 const lookupErrorText = require('./lookupErrorText')
 const { GRANT_PERCENTAGE } = require('../helpers/grant-details')
+const {
+  WATER_SOURCE,
+  SUSTAINABLE_WATER_SOURCE
+} = require('../helpers/water-source-data')
 
 function isChecked (data, option) {
   return !!data && data.includes(option)
 }
 
-function setLabelData (data, labelData) {
+function setLabelData(data, labelData) {
   return labelData.map((label) => {
     if (typeof (label) === 'string' && label !== 'divider') {
       return {
@@ -57,11 +61,29 @@ function findErrorList ({ details }, inputFields) {
       : lookupErrorText(err)
   ))
 }
+const getCurrentWaterSourceOptions = (mains) => {
+  switch (mains) {
+    case 'Don\'t use currently':
+      return DONT_USE
+    case 'Decrease':
+      return DECREASE
+    case 'Maintain without introducing or increasing a sustainable water source':
+      return MAINTAIN
+    default:
+      return STOP_MAINTAIN_INTRODUCE_CURRENT
+  }
+}
+
+const getPlannedWaterSourceOptions = (currentlyIrrigating) => {
+  return currentlyIrrigating === 'Yes' ? WATER_SOURCE : SUSTAINABLE_WATER_SOURCE
+}
 
 module.exports = {
   isChecked,
   setLabelData,
   getGrantValues,
   formatUKCurrency,
-  findErrorList
+  findErrorList,
+  getCurrentWaterSourceOptions,
+  getPlannedWaterSourceOptions
 }
