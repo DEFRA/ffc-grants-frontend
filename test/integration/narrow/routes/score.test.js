@@ -193,6 +193,8 @@ describe('Score page', () => {
     expect(getDesirabilityAnswersSpy).toHaveBeenCalledTimes(1)
     expect(getWaterScoringSpy).toHaveBeenCalledTimes(1)
   })
+
+  it('should load page if scoring fails', async () => {
     jest.mock('@hapi/wreck')
     const options = {
       method: 'GET',
