@@ -4,6 +4,9 @@ const varList = {
   'current-score': 'wer'
 }
 
+// jest.mock('../../../../app/messaging/application')
+// const { getWaterScoring } = require('../../../../app/messaging/application')
+
 jest.mock('../../../../app/helpers/session', () => ({
   setYarValue: (request, key, value) => null,
   getYarValue: (request, key) => {
@@ -25,7 +28,8 @@ describe('Score page', () => {
   })
   const getWaterScoringSpy = jest.spyOn(newSender, 'getWaterScoring').mockImplementation(() => {
     return scoreData;
-  })
+  }) 
+
   beforeEach(async () => {
     global.__SERVER__.stop()
     jest.mock('../../../../app/messaging')
@@ -189,6 +193,53 @@ describe('Score page', () => {
     expect(getDesirabilityAnswersSpy).toHaveBeenCalledTimes(1)
     expect(getWaterScoringSpy).toHaveBeenCalledTimes(1)
   })
+
+  it('should load page if scoring fails', async () => {
+    jest.mock('@hapi/wreck')
+    const options = {
+      method: 'GET',
+      url: `${global.__URLPREFIX__}/score`
+    }
+    scoreData.desirability.overallRating.band = 'Weak'
+    const wreckResponse = {
+      payload: scoreData,
+      res: {
+        statusCode: 200
+      }
+    }
+
+    jest.spyOn(newSender, 'getWaterScoring').mockImplementationOnce(() => { throw new Error('error')})
+    Wreck.get = jest.fn(async function (url, type) {
+      return wreckResponse
+    })
+    const response = await server.inject(options)
+    expect(response.statusCode).toBe(200)
+    
+  })
+
+  it('should load page if scoring null', async () => {
+    jest.mock('@hapi/wreck')
+    const options = {
+      method: 'GET',
+      url: `${global.__URLPREFIX__}/score`
+    }
+    scoreData.desirability.overallRating.band = 'Weak'
+    const wreckResponse = {
+      payload: scoreData,
+      res: {
+        statusCode: 200
+      }
+    }
+
+    jest.spyOn(newSender, 'getWaterScoring').mockImplementationOnce(() => { return null })
+    Wreck.get = jest.fn(async function (url, type) {
+      return wreckResponse
+    })
+    const response = await server.inject(options)
+    expect(response.statusCode).toBe(200)
+
+  })
+
   it('redirects to project business details page', async () => {
     const postOptions = {
       method: 'POST',

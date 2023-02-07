@@ -248,4 +248,20 @@ describe('Irrigation syatems page', () => {
     expect(response.payload).toContain('What systems will be used to irrigate?')
     expect(response.payload).not.toContain('What systems are currently used to irrigate?')
   })
+
+  it('should redirect to start if previous question not answered', async () => {
+    varList.waterSourcePlanned = null
+
+    const options = {
+      method: 'GET',
+      url: `${global.__URLPREFIX__}/irrigation-system`,
+      headers: {
+        cookie: 'crumb=' + crumbToken
+      }
+    }
+
+    const response = await global.__SERVER__.inject(options)
+    expect(response.statusCode).toBe(302)
+    expect(response.headers.location).toBe(`${global.__URLPREFIX__}/start`)
+  })
 })
