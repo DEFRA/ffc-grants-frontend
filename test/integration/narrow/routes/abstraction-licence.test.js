@@ -94,8 +94,8 @@ describe('Abstraction licence page', () => {
     }
 
     const postResponse = await global.__SERVER__.inject(postOptions)
-    expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe(`abstraction-required-condition`)
+    expect(postResponse.statusCode).toBe(200)
+    expect(postResponse.payload).toContain('You cannot apply for a grant from this scheme')
   })
 
   it('if value = \'Not needed\' ==> store and redirect to summer-abstraction-mains page', async () => {
