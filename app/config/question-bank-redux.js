@@ -687,6 +687,13 @@ const questionBank = {
       type: 'single-answer',
       preValidationKeys: ['sSSI'],
       minAnswerCount: 1,
+      ineligibleContent: {
+        messageContent: `Any abstraction licences must be in place by 31 January 2024 (the end of the application window).`,
+        messageLink: {
+          url: 'https://www.gov.uk/government/collections/rural-payments-and-grants',
+          title: 'See other grants you may be eligible for.'
+        }
+      },
       validate: [
         {
           type: 'NOT_EMPTY',
@@ -711,7 +718,7 @@ const questionBank = {
         {
           key: 'abstraction-licence-A4',
           value: LICENSE_WILL_NOT_HAVE,
-          redirectUrl: 'abstraction-required-condition'
+          notEligible: true
         }
       ],
       sidebar: {
@@ -721,7 +728,7 @@ const questionBank = {
             content: [
               {
                 para: `You must have secured abstraction licences or variations before you submit a full application.\n
-                              Any abstraction licences or variations must be in place by 31 January 2023.`,
+                              Any abstraction licences or variations must be in place by 31 January 2024.`,
                 items: []
               }
             ]
