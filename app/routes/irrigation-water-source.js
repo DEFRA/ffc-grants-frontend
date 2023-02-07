@@ -43,7 +43,7 @@ function createModel (currentlyIrrigating, errorList, currentData, plannedData, 
         }
       },
       hint: {
-        text: 'Select up to 2 options'
+        text: 'Select all that apply'
       },
       items: setLabelData(currentData, WATER_SOURCE),
       ...(errorList && errorList[0].href === '#waterSourceCurrent' ? { errorMessage: { text: errorList[0].text } } : {})
@@ -57,7 +57,7 @@ function createModel (currentlyIrrigating, errorList, currentData, plannedData, 
         }
       },
       hint: {
-        text: 'Select up to 2 options'
+        text: 'Select all that apply'
       },
       items: setLabelData(plannedData, getPlannedWaterSourceOptions(currentlyIrrigating)),
       ...(errorList && errorList[errorList.length - 1].href === '#waterSourcePlanned' ? { errorMessage: { text: errorList[errorList.length - 1].text } } : {})
@@ -89,8 +89,8 @@ module.exports = [
       validate: {
         options: { abortEarly: false },
         payload: Joi.object({
-          waterSourceCurrent: Joi.array().max(2).single().required(),
-          waterSourcePlanned: Joi.array().max(2).single().required(),
+          waterSourceCurrent: Joi.array().single().required(),
+          waterSourcePlanned: Joi.array().single().required(),
           results: Joi.any()
 
         }),

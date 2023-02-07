@@ -72,11 +72,11 @@ describe('Abstraction licence page', () => {
     expect(postResponse.payload).toContain('Select when the project will have an abstraction licence or variation')
   })
 
-  it('if value = \'Should be in place by 31 January 2023\' ==> store and redirect to abstraction-required-condition page', async () => {
+  it('if value = \'Should be in place by 31 January 2024\' ==> store and redirect to abstraction-required-condition page', async () => {
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/abstraction-licence`,
-      payload: { abstractionLicence: 'Should be in place by 31 January 2023', crumb: crumbToken },
+      payload: { abstractionLicence: 'Should be in place by 31 January 2024', crumb: crumbToken },
       headers: { cookie: 'crumb=' + crumbToken }
     }
 
@@ -85,11 +85,11 @@ describe('Abstraction licence page', () => {
     expect(postResponse.headers.location).toBe(`abstraction-required-condition`)
   })
 
-  it('if value = \'Will not be in place by 31 January 2023\' ==> store and redirect to abstraction-required-condition page', async () => {
+  it('if value = \'Will not be in place by 31 January 2024\' ==> store and redirect to abstraction-required-condition page', async () => {
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/abstraction-licence`,
-      payload: { abstractionLicence: 'Will not be in place by 31 January 2023', crumb: crumbToken },
+      payload: { abstractionLicence: 'Will not be in place by 31 January 2024', crumb: crumbToken },
       headers: { cookie: 'crumb=' + crumbToken }
     }
 
