@@ -46,7 +46,7 @@ it('should load page successfully', async () => {
 
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
-    expect(response.payload).toContain('Will you increase your use of summer abstraction or mains?')
+    expect(response.payload).toContain('Will you use water from summer abstraction or mains?')
 })
 
 
