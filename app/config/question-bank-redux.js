@@ -772,7 +772,7 @@ const questionBank = {
     {
       key: 'summer-abstraction-mains',
       order: 16,
-      title: 'Will you increase your use of summer abstraction or mains?',
+      title: 'Will you use water from summer abstraction or mains?',
       classes: 'govuk-radios--inline govuk-fieldset__legend--l',
       pageTitle: '',
       url: 'summer-abstraction-mains',
