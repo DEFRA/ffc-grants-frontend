@@ -2,7 +2,7 @@ const { formatAnswers } = require('../../../../app/helpers/score-table-helper');
 
 
 describe('Score table helper functions', () => {
-	test.only('formatAnswers()', () => {
+	test('formatAnswers()', () => {
 		const answersSample = [
 			{
 				"key": "Q16a",
