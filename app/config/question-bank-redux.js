@@ -778,7 +778,7 @@ const questionBank = {
       url: 'summer-abstraction-mains',
       baseUrl: 'summer-abstraction-mains',
       backUrl: 'irrigation-status',
-      nextUrl: 'irrigation-water-source',
+      nextUrl: 'water-source',
       preValidationKeys: '',
       fundingPriorities: '',
       type: 'single-answer',
@@ -838,7 +838,7 @@ const questionBank = {
       yarKey: 'summerAbstractionMains'
     },
 
-    // next page is irrigation-water-source, then irrigation-systems
+    // next page is water-source, then irrigation-systems
     {
       key: 'irrigated-crops',
       order: 19,

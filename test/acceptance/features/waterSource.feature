@@ -61,7 +61,7 @@ Feature: IrrigationWaterSource
       #        When I add "<hectare_2>" to the inputfield "#irrigatedLandTarget"
       #        And I click on Continue button
       #        And I pause for 500ms
-      #        Then I expect that the url contains "/irrigation-water-source"
+      #        Then I expect that the url contains "/water-source"
       #        When I click irrigation "<waterSource_Current>" button 
       #        And I click on Continue button
       #        And I pause for 500ms

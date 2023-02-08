@@ -26,7 +26,7 @@ const tableOrder = [
 		order: 1,
 		title: 'Irrigation water source',
 		pagesTitle: 'Irrigation source',
-		url: 'irrigation-water-source',
+		url: 'water-source',
 		fundingPriorities: 'Improve the environment <br/> Improving water sustainability',
 		yarKey: 'waterSourceCurrent',
 	},
