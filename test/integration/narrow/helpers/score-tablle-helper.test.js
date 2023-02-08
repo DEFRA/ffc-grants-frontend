@@ -58,7 +58,7 @@ describe('Score table helper functions', () => {
 
 		const answersSample2 = [
 		];
-		
+
 
 		const result = [
 			{
