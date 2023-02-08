@@ -86,8 +86,11 @@
         {% for question in questions %}
         <tr class="govuk-table__row">
           <th scope="row" class="govuk-table__header">
+            {% if question.title %}
+              {{question.title}}<br/><br/>
+            {% endif %}
             {% for answer in question.answers %}
-              {{answer.title}}
+              {{answer.title}}<br/><br/>
               <ul class="govuk-list govuk-list--bullet govuk-!-font-size-16">
                 {% for selectedAns in answer.input %}
                 <li>{{selectedAns.value}} {{question.unit}}</li>

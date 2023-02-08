@@ -1,12 +1,11 @@
 const { getDesirabilityAnswers } = require('../messaging/create-msg')
-const questionBank = require('../config/question-bank')
 const gapiService = require('../services/gapi-service')
 const { setYarValue, getYarValue } = require('../helpers/session')
 const { addSummaryRow } = require('../helpers/score-helpers')
 const { getWaterScoring } = require('../messaging/application')
 
 const createMsg = require('./../messaging/scoring/create-desirability-msg')
-
+const { formatAnswers, tableOrder } = require('../helpers/score-table-helper')
 
 const urlPrefix = require('../config/server').urlPrefix
 
@@ -45,19 +44,20 @@ module.exports = [{
       const formatAnswersForScoring = createMsg(msgDataToSend)
       const msgData = await getWaterScoring(formatAnswersForScoring, request.yar.id)
       setYarValue(request, 'overAllScore', msgData)
-      const crop = questionBank.questions.find(question => question.key === 'Q15')
+      const crop = tableOrder.find(question => question.key === 'Q15')
       const cropObject = addSummaryRow(crop, request)
       if (msgData) {
         msgData.desirability.questions.push(cropObject)
         const questions = msgData.desirability.questions.map(desirabilityQuestion => {
-          const bankQuestion = questionBank.questions.filter(bankQuestionD => bankQuestionD.key === desirabilityQuestion.key)[0]
-          desirabilityQuestion.title = bankQuestion.title
-          desirabilityQuestion.desc = bankQuestion.desc ?? ''
-          desirabilityQuestion.url = `${urlPrefix}/${bankQuestion.url}`
-          desirabilityQuestion.order = bankQuestion.order
-          desirabilityQuestion.unit = bankQuestion?.unit
-          desirabilityQuestion.pageTitle = bankQuestion.pageTitle
-          desirabilityQuestion.fundingPriorities = bankQuestion.fundingPriorities
+          const tableQuestion = tableOrder.filter(tableQuestionD => tableQuestionD.key === desirabilityQuestion.key)[0]
+          desirabilityQuestion.title = tableQuestion.title
+          desirabilityQuestion.desc = tableQuestion.desc ?? ''
+          desirabilityQuestion.url = `${urlPrefix}/${tableQuestion.url}`
+          desirabilityQuestion.order = tableQuestion.order
+          desirabilityQuestion.unit = tableQuestion?.unit
+          desirabilityQuestion.pageTitle = tableQuestion.pageTitle
+          desirabilityQuestion.fundingPriorities = tableQuestion.fundingPriorities
+          desirabilityQuestion.answers = formatAnswers(desirabilityQuestion.answers);
           return desirabilityQuestion
         })
         let scoreChance
