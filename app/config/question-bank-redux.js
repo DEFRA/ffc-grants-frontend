@@ -688,7 +688,7 @@ const questionBank = {
       preValidationKeys: ['sSSI'],
       minAnswerCount: 1,
       ineligibleContent: {
-        messageContent: `Any abstraction licences must be in place by 31 January 2024 (the end of the application window).`,
+        messageContent: 'Any abstraction licences must be in place by 31 January 2024 (the end of the application window).',
         messageLink: {
           url: 'https://www.gov.uk/government/collections/rural-payments-and-grants',
           title: 'See other grants you may be eligible for.'
@@ -772,7 +772,7 @@ const questionBank = {
     {
       key: 'summer-abstraction-mains',
       order: 16,
-      title: 'Will you use water from summer abstraction or mains?',
+      title: 'Will you {{_currentlyIrrigating_}} summer abstraction or mains?',
       classes: 'govuk-radios--inline govuk-fieldset__legend--l',
       pageTitle: '',
       url: 'summer-abstraction-mains',
