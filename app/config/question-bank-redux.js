@@ -746,6 +746,14 @@ const questionBank = {
       url: 'irrigation-status',
       baseUrl: 'irrigation-status',
       backUrl: 'abstraction-licence',
+      backUrlObject: {
+        dependentQuestionYarKey: 'abstractionLicence',
+        dependentAnswerKeysArray: ['abstraction-licence-A3'],
+        urlOptions: {
+          thenUrl: 'abstraction-required-condition',
+          elseUrl: 'abstraction-licence'
+        }
+      },
       nextUrl: 'summer-abstraction-mains',
       fundingPriorities: '',
       type: 'single-answer',

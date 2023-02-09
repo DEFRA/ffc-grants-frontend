@@ -2,7 +2,7 @@ const urlPrefix = require('../config/server').urlPrefix
 
 const MAYBE_ELIGIBLE = {
   backLink: `${urlPrefix}/abstraction-licence`,
-  nextUrl: `${urlPrefix}/project-summary`,
+  nextUrl: `${urlPrefix}/irrigation-status`,
   messageHeader: 'You may be able to apply for this grant',
   messageContent: `
   Any abstraction licences or variations must be in place by 31 January 2024.
