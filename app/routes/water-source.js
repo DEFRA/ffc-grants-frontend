@@ -74,7 +74,6 @@ module.exports = [
       if (isRedirect) {
         return h.redirect(startPageUrl)
       }
-
       const currentData = getYarValue(request, 'waterSourceCurrent') || null
       const plannedData = getYarValue(request, 'waterSourcePlanned') || null
 
