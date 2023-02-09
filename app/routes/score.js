@@ -49,6 +49,7 @@ module.exports = [{
       if (msgData) {
         msgData.desirability.questions.push(cropObject)
         const questions = msgData.desirability.questions.map(desirabilityQuestion => {
+          // console.log('here ---/: ', JSON.stringify(msgData));
           const tableQuestion = tableOrder.filter(tableQuestionD => tableQuestionD.key === desirabilityQuestion.key)[0]
           desirabilityQuestion.title = tableQuestion.title
           desirabilityQuestion.desc = tableQuestion.desc ?? ''

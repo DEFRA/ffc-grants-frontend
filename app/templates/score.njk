@@ -90,7 +90,9 @@
               {{question.title}}<br/><br/>
             {% endif %}
             {% for answer in question.answers %}
-              {{answer.title}}<br/><br/>
+              {% if answer.title %}
+                {{answer.title}}<br/><br/>
+              {% endif %}
               <ul class="govuk-list govuk-list--bullet govuk-!-font-size-16">
                 {% for selectedAns in answer.input %}
                 <li>{{selectedAns.value}} {{question.unit}}</li>

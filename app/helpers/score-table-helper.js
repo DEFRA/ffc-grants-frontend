@@ -1,26 +1,37 @@
 const formatAnswers = (answers) => {
-	answers.forEach((answer) => {
-		// shorten the answer title as per design
-		if (answer.title.startsWith('Current')) {
-			answer.title = 'Current';
-		} else if (answer.title.startsWith('Future')) {
-			answer.title = 'Future';
-		}
+	// if it's 2 answers and the value of the first answer is "Not currently irrigating" or 0 hectare
+	if (answers.length > 1 && (answers[ 0 ].input[ 0 ].value === "Not currently irrigating" || answers[ 0 ].input[ 0 ].value === 0)) {
+		// remove the title of the second answer if it is "Not currently irrigating"
+		answers[ 1 ].title = null;
 
-		// replace the answer title as per design
-		if (answer.title === 'Main crop') {
-			answer.title = 'Crops';
-		}
+		// remove the first answer if it is "Not currently irrigating" (i.e. empty)
+		answers.shift();
+	} else {
+		// format the answer title if "currently irrigating"
+		answers.forEach((answer) => {
+			// shorten the answer title as per design
+			if (answer.title.startsWith('Current')) {
+				answer.title = 'Current';
+			} else if (answer.title.startsWith('Future')) {
+				answer.title = 'Future';
+			}
 
-		if (answer.title === 'Water sharing') {
-			answer.title = 'Other farms';
-		}
-	});
+			// replace the answer title as per design
+			if (answer.title === 'Main crop') {
+				answer.title = 'Crops';
+			}
+
+			if (answer.title === 'Water sharing') {
+				answer.title = 'Other farms';
+			}
+		});
+
+	}
+
 	return answers;
 };
 
 const tableOrder = [
-
 	{
 		key: 'Q17',
 		order: 1,
@@ -39,7 +50,6 @@ const tableOrder = [
 		url: 'irrigation-system',
 		yarKey: 'irrigationCurrent',
 	},
-
 	{
 		key: 'Q15',
 		order: 3,
@@ -47,7 +57,6 @@ const tableOrder = [
 		fundingPriorities: 'Improve productivity',
 		url: 'irrigated-crops',
 		yarKey: 'irrigatedCrops',
-
 	},
 	{
 		key: 'Q16',
@@ -79,7 +88,6 @@ const tableOrder = [
 		yarKey: 'collaboration',
 	},
 ];
-
 module.exports = {
 	formatAnswers,
 	tableOrder,
