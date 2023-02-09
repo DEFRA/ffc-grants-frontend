@@ -7,12 +7,7 @@ const formatAnswers = (answers) => {
 		answers.shift();
 	} else {
 		// remove the answer title if it is "Not currently irrigating"
-	
 		answers.forEach((answer) => {
-			if (answer.input.length > 1) {
-				console.log('val 1: ', answer.input[0].value);
-				console.log('val 2: ', answer.input[1].value);
-			}
 			// shorten the answer title as per design
 			if (answer.title.startsWith('Current')) {
 				answer.title = 'Current';
