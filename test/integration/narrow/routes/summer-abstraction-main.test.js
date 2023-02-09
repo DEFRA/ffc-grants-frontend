@@ -46,7 +46,7 @@ it('should load page successfully', async () => {
 
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
-    expect(response.payload).toContain('Will you increase your use of summer abstraction or mains?')
+    expect(response.payload).toContain('Will you use water from summer abstraction or mains?')
 })
 
 
@@ -73,7 +73,7 @@ it('should store valid user input and redirect to irrgation-water-source page', 
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe('irrigation-water-source')
+    expect(postResponse.headers.location).toBe('water-source')
 })
 
 it('should display ineligible page when user response is \'Yes\'', async () => {
