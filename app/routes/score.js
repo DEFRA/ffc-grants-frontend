@@ -48,6 +48,7 @@ module.exports = [{
       const cropObject = addSummaryRow(crop, request)
       if (msgData) {
         msgData.desirability.questions.push(cropObject)
+        // console.log('here ---/: ', JSON.stringify(msgData));
         const questions = msgData.desirability.questions.map(desirabilityQuestion => {
           const tableQuestion = tableOrder.filter(tableQuestionD => tableQuestionD.key === desirabilityQuestion.key)[0]
           desirabilityQuestion.title = tableQuestion.title

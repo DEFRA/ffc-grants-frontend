@@ -1,21 +1,37 @@
 const formatAnswers = (answers) => {
-	answers.forEach((answer) => {
-		// shorten the answer title as per design
-		if (answer.title.startsWith('Current')) {
-			answer.title = 'Current';
-		} else if (answer.title.startsWith('Future')) {
-			answer.title = 'Future';
-		}
+	if (answers.length > 1 && (answers[0].input[0].value === "Not currently irrigating" || answers[0].input[0].value === 0)) {
+		// remove the title of the second answer if it is "Not currently irrigating"
+		answers[1].title = null;
 
-		// replace the answer title as per design
-		if (answer.title === 'Main crop') {
-			answer.title = 'Crops';
-		}
+		// remove the first answer if it is "Not currently irrigating" (i.e. empty)
+		answers.shift();
+	} else {
+		// remove the answer title if it is "Not currently irrigating"
+	
+		answers.forEach((answer) => {
+			if (answer.input.length > 1) {
+				console.log('val 1: ', answer.input[0].value);
+				console.log('val 2: ', answer.input[1].value);
+			}
+			// shorten the answer title as per design
+			if (answer.title.startsWith('Current')) {
+				answer.title = 'Current';
+			} else if (answer.title.startsWith('Future')) {
+				answer.title = 'Future';
+			}
+	
+			// replace the answer title as per design
+			if (answer.title === 'Main crop') {
+				answer.title = 'Crops';
+			}
+	
+			if (answer.title === 'Water sharing') {
+				answer.title = 'Other farms';
+			}
+		});
 
-		if (answer.title === 'Water sharing') {
-			answer.title = 'Other farms';
-		}
-	});
+	}
+
 	return answers;
 };
 
