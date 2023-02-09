@@ -27,7 +27,6 @@ const formatAnswers = (answers) => {
 		});
 
 	}
-
 	return answers;
 };
 
