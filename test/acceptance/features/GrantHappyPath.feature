@@ -79,7 +79,7 @@ Feature: Grant
     #     When I add "101" to the inputfield "#irrigatedLandTarget"
     #     And I click on Continue button
     #     And I pause for 500ms
-    #     Then I expect that the url contains "/irrigation-water-source"
+    #     Then I expect that the url contains "/water-source"
     #     When I click on irrigation water source button
     #     When I click on the element "#waterSourcePlanned"    
     #     And I click on Continue button
@@ -186,7 +186,7 @@ Feature: Grant
     #    When I add "<hectare_2>" to the inputfield "#irrigatedLandTarget"
     #    And I click on Continue button
     #    And I pause for 500ms
-    #    Then I expect that the url contains "/irrigation-water-source"
+    #    Then I expect that the url contains "/water-source"
     #    And I pause for 1000ms
     #    When I click irrigation "<waterSource_Current>" button 
     #    And I click irrigation "<waterSource_Target>" button

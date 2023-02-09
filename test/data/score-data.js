@@ -40,7 +40,7 @@ const msgData = {
         answers: [
           {
             key: 'Q17a',
-            title: 'Where does your current irrigation water come from?',
+            title: 'What is your current water source?',
             input: [
               {
                 key: 'Q17a-A6',
