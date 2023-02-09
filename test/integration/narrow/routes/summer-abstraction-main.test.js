@@ -58,6 +58,7 @@ describe('summer abstractionmains page', () => {
     expect(response.payload).toContain('Will you use water from summer abstraction or mains?')
   })
   it('should load correct question for currently irrigating YES Journey', async () => {
+    varList.currentlyIrrigating = 'Yes'
     const options = {
       method: 'GET',
       url: `${global.__URLPREFIX__}/summer-abstraction-mains`
