@@ -1,4 +1,5 @@
 const formatAnswers = (answers) => {
+	// if it's 2 answers and the value of the first answer is "Not currently irrigating" or 0 hectare
 	if (answers.length > 1 && (answers[0].input[0].value === "Not currently irrigating" || answers[0].input[0].value === 0)) {
 		// remove the title of the second answer if it is "Not currently irrigating"
 		answers[1].title = null;
@@ -6,7 +7,7 @@ const formatAnswers = (answers) => {
 		// remove the first answer if it is "Not currently irrigating" (i.e. empty)
 		answers.shift();
 	} else {
-		// remove the answer title if it is "Not currently irrigating"
+		// format the answer title if "currently irrigating"
 		answers.forEach((answer) => {
 			// shorten the answer title as per design
 			if (answer.title.startsWith('Current')) {
