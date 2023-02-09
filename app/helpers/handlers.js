@@ -17,9 +17,13 @@ const {
   handleConditinalHtmlData,
   getCheckDetailsModel,
   getDataFromYarValue,
-  getConsentOptionalData,
-  saveValuesToArray
+  getConsentOptionalData
 } = require('./pageHelpers')
+
+const {
+  SUMMER_ABSTRACTION_MAINS_YES,
+  SUMMER_ABSTRACTION_MAINS_NO
+} = require('../helpers/water-source-data')
 
 const getPage = async (question, request, h) => {
   const { url, backUrl, nextUrlObject, type, title, yarKey, preValidationKeys, preValidationKeysRule } = question
@@ -28,7 +32,7 @@ const getPage = async (question, request, h) => {
   if (isRedirect) {
     return h.redirect(startPageUrl)
   }
-  if (getYarValue(request, 'current-score') && question.order < 15) { 
+  if (getYarValue(request, 'current-score') && question.order < 15) {
     // check if score and if question is before scoring question. If it is, move to score results
     return h.redirect(`${urlPrefix}/summer-abstraction-mains`)
   }
@@ -99,9 +103,12 @@ const getPage = async (question, request, h) => {
   if (title) {
     question = {
       ...question,
-      title: title.replace(SELECT_VARIABLE_TO_REPLACE, (_ignore, additionalYarKeyName) => (
-        formatUKCurrency(getYarValue(request, additionalYarKeyName) || 0)
-      ))
+      title: title.replace(SELECT_VARIABLE_TO_REPLACE, (_ignore, additionalYarKeyName) => {
+        if (additionalYarKeyName === 'currentlyIrrigating') {
+          return getYarValue(request, additionalYarKeyName) === 'Yes' ? SUMMER_ABSTRACTION_MAINS_YES : SUMMER_ABSTRACTION_MAINS_NO
+        }
+        return formatUKCurrency(getYarValue(request, additionalYarKeyName) || 0)
+      })
     }
   }
 

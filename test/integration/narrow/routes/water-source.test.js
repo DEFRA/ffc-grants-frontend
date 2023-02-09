@@ -47,7 +47,7 @@ describe('Irrigation water source page', () => {
   it('should load page successfully', async () => {
     const options = {
       method: 'GET',
-      url: `${global.__URLPREFIX__}/irrigation-water-source`,
+      url: `${global.__URLPREFIX__}/water-source`,
       headers: {
         cookie: 'crumb=' + crumbToken
       }
@@ -66,7 +66,7 @@ describe('Irrigation water source page', () => {
 
     const options = {
       method: 'GET',
-      url: `${global.__URLPREFIX__}/irrigation-water-source`,
+      url: `${global.__URLPREFIX__}/water-source`,
       headers: {
         cookie: 'crumb=' + crumbToken
       }
@@ -78,7 +78,7 @@ describe('Irrigation water source page', () => {
   it('should returns error message if no current water source option is selected', async () => {
     const postOptions = {
       method: 'POST',
-      url: `${global.__URLPREFIX__}/irrigation-water-source`,
+      url: `${global.__URLPREFIX__}/water-source`,
       payload: { waterSourcePlanned: 'another-option-1', crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
@@ -87,13 +87,13 @@ describe('Irrigation water source page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Select the options that apply')
+    expect(postResponse.payload).toContain('Select where your current irrigation water comes from')
   })
 
   it('should returns error message if no planned water source option is selected', async () => {
     const postOptions = {
       method: 'POST',
-      url: `${global.__URLPREFIX__}/irrigation-water-source`,
+      url: `${global.__URLPREFIX__}/water-source`,
       payload: { waterSourceCurrent: 'some option-1', crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
@@ -102,13 +102,13 @@ describe('Irrigation water source page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Select the options that apply')
+    expect(postResponse.payload).toContain('Select where your irrigation water will come from')
   })
 
   it('should store user response and redirects to irrigated crops page', async () => {
     const postOptions = {
       method: 'POST',
-      url: `${global.__URLPREFIX__}/irrigation-water-source`,
+      url: `${global.__URLPREFIX__}/water-source`,
       payload: { waterSourceCurrent: 'some option-1', waterSourcePlanned: 'another-option-1', crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
@@ -123,7 +123,7 @@ describe('Irrigation water source page', () => {
   it('should store user response and redirects to scores page', async () => {
     const postOptions = {
       method: 'POST',
-      url: `${global.__URLPREFIX__}/irrigation-water-source`,
+      url: `${global.__URLPREFIX__}/water-source`,
       payload: { waterSourceCurrent: 'some option-1', waterSourcePlanned: 'another-option-1', results: 'result', crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
@@ -135,10 +135,10 @@ describe('Irrigation water source page', () => {
     expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/score`)
   })
 
-  it('redirects to irrigation-water-source if user waterSourceCurrent and waterSourcePlanned have not been saved', async () => {
+  it('redirects to water-source if user waterSourceCurrent and waterSourcePlanned have not been saved', async () => {
     const postOptions = {
       method: 'POST',
-      url: `${global.__URLPREFIX__}/irrigation-water-source`,
+      url: `${global.__URLPREFIX__}/water-source`,
       payload: { waterSourceCurrent: undefined, waterSourcePlanned: undefined, crumb: crumbToken },
       headers: {
         cookie: 'crumb=' + crumbToken
@@ -151,7 +151,7 @@ describe('Irrigation water source page', () => {
   it('should display the current water source question if the user selected YES for currently irrigating', async () => {
     const options = {
       method: 'GET',
-      url: `${global.__URLPREFIX__}/irrigation-water-source`,
+      url: `${global.__URLPREFIX__}/water-source`,
       headers: {
         cookie: 'crumb=' + crumbToken
       }
@@ -160,7 +160,7 @@ describe('Irrigation water source page', () => {
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
     expect(response.payload).toContain('<h1 class="govuk-heading-l">Water source</h1>')
-    expect(response.payload).toContain('Where does your current irrigation water come from?')
+    expect(response.payload).toContain('What is your current water source?')
     expect(response.payload).toContain('Where will the irrigation water come from?')
   })
 
@@ -168,7 +168,7 @@ describe('Irrigation water source page', () => {
     varList.currentlyIrrigating = 'No'
     const options = {
       method: 'GET',
-      url: `${global.__URLPREFIX__}/irrigation-water-source`,
+      url: `${global.__URLPREFIX__}/water-source`,
       headers: {
         cookie: 'crumb=' + crumbToken
       }
@@ -185,7 +185,7 @@ describe('Irrigation water source page', () => {
 
     const options = {
       method: 'GET',
-      url: `${global.__URLPREFIX__}/irrigation-water-source`,
+      url: `${global.__URLPREFIX__}/water-source`,
       headers: {
         cookie: 'crumb=' + crumbToken
       }
