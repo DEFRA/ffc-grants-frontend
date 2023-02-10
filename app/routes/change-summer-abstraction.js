@@ -25,8 +25,6 @@ function createModel(pageType, decreaseSummerAbstract, decreaseMains, errorList,
         default:
             pageTitle = 'How will your use of summer abstraction and mains change?'
     }
-
-    console.log('page loading, njk issue')
     
     return {
         backLink: hasScore ? `${urlPrefix}/water-source` : previousPath,
@@ -105,7 +103,8 @@ module.exports = [
                 options: { abortEarly: false },
                 payload: Joi.object({
                     decreaseSummerAbstract: Joi.string().required(),
-                    decreaseMains: Joi.string().required()
+                    decreaseMains: Joi.string().required(),
+                    results: Joi.any()
                 }),
                 failAction: (request, h, err) => {
                     gapiService.sendValidationDimension(request)
@@ -132,7 +131,7 @@ module.exports = [
                             text: decreaseSummerAbstractError,
                             href: '#decreaseSummerAbstract'
                         })
-                    } else if (decreaseMainsError) {
+                    } else {
                         errorList.push({
                             text: decreaseMainsError,
                             href: '#decreaseMains'

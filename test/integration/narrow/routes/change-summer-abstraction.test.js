@@ -35,6 +35,19 @@ describe('Decrease summer abstraction Page', () => {
         expect(response.payload).toContain('How will your use of summer abstraction and mains change?')
     })
 
+    it('should load page successfully if both values already exist', async () => {
+        varList.decreaseSummerAbstract = 'hello'
+        varList.decreaseMains = 'hello'
+        const options = {
+            method: 'GET',
+            url: `${global.__URLPREFIX__}/change-summer-abstraction`
+        }
+
+        const response = await global.__SERVER__.inject(options)
+        expect(response.statusCode).toBe(200)
+        expect(response.payload).toContain('How will your use of summer abstraction and mains change?')
+    })
+
     // update next two tests when page switching sorted
     xit('should load page successfully with only decreaseSummerAbstraction', async () => {
         const options = {
@@ -123,6 +136,21 @@ describe('Decrease summer abstraction Page', () => {
         const response = await global.__SERVER__.inject(options)
         expect(response.statusCode).toBe(302)
         expect(response.headers.location).toBe(`${global.__URLPREFIX__}/start`)
+    })
+
+    it('should store user response and redirects to score', async () => {
+        const postOptions = {
+            method: 'POST',
+            url: `${global.__URLPREFIX__}/change-summer-abstraction`,
+            payload: { decreaseSummerAbstract: 'some fake data', decreaseMains: 'more fake data', results: 'Back to score', crumb: crumbToken },
+            headers: {
+                cookie: 'crumb=' + crumbToken
+            }
+        }
+
+        const postResponse = await global.__SERVER__.inject(postOptions)
+        expect(postResponse.statusCode).toBe(302)
+        expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/score`)
     })
 
 })
