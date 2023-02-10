@@ -1,6 +1,7 @@
 {% extends '.layout.njk' %}
 
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "./components/macro.njk" import crumbToken, sideBar, conditionalButtons %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
@@ -34,20 +35,29 @@
       <form method="POST" action="{{ formActionPage }}" autocomplete="off" novalidate="novalidate">
         {{ crumbToken(crumb)}}
 
-        {# {% if currentlyIrrigating %}
-          {{ govukInput(currentInput) }}
+        {% if summerOnly %}
+            {{ govukCheckboxes(summerInput) }}
+            {{ govukInput(hiddenInputMains) }}
+
+        {% elif mainsOnly %}
+            {{ govukCheckboxes(mainsInput) }}
+            {{ govukInput(hiddenInputSummer) }}
+
         {% else %}
-          {{ govukInput(hiddenInput) }}
-        {% endif %} #}
+            {{ govukCheckboxes(summerInput) }}
+            {{ govukCheckboxes(mainsInput) }}
+
+        {% endif %}
         
-        {# {{ govukInput(irrigatedLandTarget) }} #}
         {{ conditionalButtons(hasScore) }}
       </form>
     </div>
     
-    {{ sideBar("Funding priorities","RPA wants to fund projects that:",
+    {{ sideBar("Eligibility", "Your project cannot increase water use from summer abstraction or mains. \n\n RPA wants to fund projects that use more sustainable water sources such as:",
     [
-    "improve productivity"
+    "winter peak-flow abstraction",
+    "rain water harvesting",
+    "bore hole/aquifer"
     ], 'h3') }}
    
     

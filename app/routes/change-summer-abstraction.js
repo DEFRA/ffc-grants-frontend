@@ -1,9 +1,5 @@
-// 3 variations of this page, make in same style as irrigation pages
-// 2 yar keys (summerAbstract, mains)
-// NEITHER KEY GUARANTEED
-
 const Joi = require('joi')
-const { findErrorList } = require('../helpers/helper-functions')
+const { findErrorList, setLabelData } = require('../helpers/helper-functions')
 const { setYarValue, getYarValue } = require('../helpers/session')
 const urlPrefix = require('../config/server').urlPrefix
 const gapiService = require('../services/gapi-service')
@@ -13,73 +9,67 @@ const { startPageUrl } = require('../config/server')
 const viewTemplate = 'change-summer-abstraction'
 const currentPath = `${urlPrefix}/${viewTemplate}`
 const previousPath = `${urlPrefix}/water-source`
-const nextPath = `${urlPrefix}/irrigation-systems`
+const nextPath = `${urlPrefix}/irrigation-system`
 const scorePath = `${urlPrefix}/score`
 
-function createModel(waterSourceCurrent, waterSourcePlanned, errorList, hasScore) {
-    // currentlyIrrigating = currentlyIrrigating.toLowerCase()
-
-    // page title created before (3 options, ternary wont work)
-    // hidden input changes based on requirements?
-
-    // create 3 inputs for njk? or one input customised based on previous answers?
-
-    let pageTitle = 'hello there'
+function createModel(pageType, decreaseSummerAbstract, decreaseMains, errorList, hasScore) {
+    let pageTitle
 
     // update options accordingly, based on page swap requirements
-    if (1) {
-        pageTitle = 'How will your use of summer abstraction and mains change'
-    } else if (2) {
-        pageTitle = 'How will your use of summer abstraction change'
-    } else {
-        pagetitle = 'How will your use of mains change?'
+
+    switch (pageType) {
+        case 'summerOnly': 
+            pageTitle = 'How will your use of summer abstraction change?'
+        case 'mainsOnly': 
+            pagetitle = 'How will your use of mains change?'
+        default:
+            pageTitle = 'How will your use of summer abstraction and mains change?'
     }
 
+    console.log('page loading, njk issue')
+    
     return {
         backLink: hasScore ? `${urlPrefix}/water-source` : previousPath,
         formActionPage: currentPath,
         hasScore: hasScore,
         ...errorList ? { errorList } : {},
         pageTitle: pageTitle,
-        hiddenInput: {
-            id: 'irrigatedLandCurrent',
-            name: 'irrigatedLandCurrent',
-            value: '0',
+        pageType: pageType,
+        summerOnly: pageType === 'summerOnly',
+        mainsOnly: pageType === 'mainsOnly',
+        hiddenInputSummer: {
+            id: 'decreaseSummerAbstract',
+            name: 'decreaseSummerAbstract',
+            value: 'Not summer abstraction',
             type: 'hidden'
         },
-        currentInput: {
-            classes: 'govuk-input--width-4',
-            id: 'irrigatedLandCurrent',
-            name: 'irrigatedLandCurrent',
-            type: 'number',
-            suffix: {
-                text: 'ha'
-            },
-            label: {
-                html: '<h2 class="govuk-heading-m">How much land is currently irrigated per year?</h2>'
-            },
-            hint: {
-                text: 'Enter figure in hectares (ha), for example 543.5'
-            },
-            ...(irrigatedLandCurrent ? { value: irrigatedLandCurrent } : {}),
-            ...(errorList && errorList[0].href === '#irrigatedLandCurrent' ? { errorMessage: { text: errorList[0].text } } : {})
+        hiddenInputMains: {
+            id: 'decreaseMains',
+            name: 'decreaseMains',
+            value: 'Not mains',
+            type: 'hidden',
         },
-        irrigatedLandTarget: {
-            classes: 'govuk-input--width-4',
-            id: 'irrigatedLandTarget',
-            name: 'irrigatedLandTarget',
-            label: {
-                html: '<h2 class="govuk-heading-m">How much land will be irrigated per year after the project?</h2>'
+        summerInput: {
+            idPrefix: 'decreaseSummerAbstract',
+            name: 'decreaseSummerAbstract',
+            fieldset: {
+                legend: {
+                    html: pageType === 'SummerOnly' ? '' : '<h2 class="govuk-heading-m">Summer water surface abstraction</h2>'
+                }
             },
-            hint: {
-                text: 'Enter figure in hectares (ha), for example 543.5'
+            items: setLabelData(decreaseSummerAbstract, ['Decrease', 'No change']),
+            ...(errorList && errorList[0].href === '#decreaseSummerAbstract' ? { errorMessage: { text: errorList[0].text } } : {})
+        },
+        mainsInput: {
+            idPrefix: 'decreaseMains',
+            name: 'decreaseMains',
+            fieldset: {
+                legend: {
+                    html: pageType === 'mainsOnly' ? '' : '<h2 class="govuk-heading-m">Mains</h2>'
+                }
             },
-            type: 'number',
-            suffix: {
-                text: 'ha'
-            },
-            ...(irrigatedLandTarget ? { value: irrigatedLandTarget } : {}),
-            ...(errorList && errorList[errorList.length - 1].href === '#irrigatedLandTarget' ? { errorMessage: { text: errorList[errorList.length - 1].text } } : {})
+            items: setLabelData(decreaseMains, ['Decrease', 'No change']),
+            ...(errorList && errorList[errorList.length - 1].href === '#decreaseMains' ? { errorMessage: { text: errorList[errorList.length - 1].text } } : {})
         }
     }
 }
@@ -89,18 +79,22 @@ module.exports = [
         method: 'GET',
         path: currentPath,
         handler: (request, h) => {
-            const isRedirect = guardPage(request, ['currentlyIrrigating'],)
-            if (isRedirect) {
-                return h.redirect(startPageUrl)
-            }
+            // make water source planned?
+            // const isRedirect = guardPage(request, ['currentlyIrrigating'],)
+            // if (isRedirect) {
+            //     return h.redirect(startPageUrl)
+            // }
 
-            const irrigatedLandCurrent = getYarValue(request, 'irrigatedLandCurrent')
-            const irrigatedLandTarget = getYarValue(request, 'irrigatedLandTarget')
-            const currentData = irrigatedLandCurrent || null
-            const TargetData = irrigatedLandTarget || null
-            // const currentlyIrrigating = getYarValue(request, 'currentlyIrrigating')
+            const decreaseSummerAbstract = getYarValue(request, 'decreaseSummerAbstract')
+            const decreaseMains = getYarValue(request, 'decreaseMains')
+            
+            const summerData = decreaseSummerAbstract || null
+            const mainsData = decreaseMains || null
 
-            return h.view(viewTemplate, createModel(currentData, TargetData, null, getYarValue(request, 'current-score')))
+            // temp var for development, will replace with page switching from water source
+            const pageType = ''
+
+            return h.view(viewTemplate, createModel(pageType, summerData, mainsData, null, getYarValue(request, 'current-score')))
         }
     },
     {
@@ -110,69 +104,54 @@ module.exports = [
             validate: {
                 options: { abortEarly: false },
                 payload: Joi.object({
-                    irrigatedLandCurrent: Joi.string().regex(IRRIGATED_LAND_REGEX).required(),
-                    irrigatedLandTarget: Joi.string().regex(IRRIGATED_LAND_REGEX).required(),
+                    decreaseSummerAbstract: Joi.any(),
+                    decreaseMains: Joi.any(),
                     results: Joi.any()
                 }),
                 failAction: (request, h, err) => {
                     gapiService.sendValidationDimension(request)
+                    let { decreaseSummerAbstract, decreaseMains } = request.payload
                     const errorList = []
                     let [
-                        irrigatedLandCurrentError, irrigatedLandTargetError
-                    ] = findErrorList(err, ['irrigatedLandCurrent', 'irrigatedLandTarget'])
+                        decreaseSummerAbstractError, decreaseMainsError
+                    ] = findErrorList(err, ['decreaseSummerAbstract', 'decreaseMains'])
 
-                    if (irrigatedLandTargetError == null && ONLY_ZEROES_REGEX.test(request.payload.irrigatedLandTarget)) {
-                        irrigatedLandTargetError = 'Figure must be higher than 0'
-                    }
-
-                    if (irrigatedLandCurrentError) {
+                    if (decreaseSummerAbstractError) {
                         errorList.push({
-                            text: irrigatedLandCurrentError,
-                            href: '#irrigatedLandCurrent'
+                            text: decreaseSummerAbstractError,
+                            href: '#decreaseSummerAbstract'
                         })
                     }
 
-                    if (irrigatedLandTargetError) {
+                    if (decreaseMainsError) {
                         errorList.push({
-                            text: irrigatedLandTargetError,
-                            href: '#irrigatedLandTarget'
+                            text: decreaseMainsError,
+                            href: '#decreaseMains'
                         })
                     }
 
-                    const { irrigatedLandCurrent, irrigatedLandTarget } = request.payload
+                    decreaseSummerAbstract = decreaseSummerAbstract ? [decreaseSummerAbstract].flat() : decreaseSummerAbstract
+                    decreaseMains = decreaseMains ? [decreaseMains].flat() : decreaseMains
+
                     // const currentlyIrrigating = getYarValue(request, 'currentlyIrrigating')
 
-                    return h.view(viewTemplate, createModel(irrigatedLandCurrent, irrigatedLandTarget, errorList, getYarValue(request, 'current-score'))).takeover()
+                    // will be getYarValue from water source?
+                    let pageType = ''
+
+                    return h.view(viewTemplate, createModel(pageType, decreaseSummerAbstract, decreaseMains, errorList, getYarValue(request, 'current-score'))).takeover()
                 }
             },
             handler: (request, h) => {
-                const { irrigatedLandCurrent, irrigatedLandTarget, results } = request.payload
-                const hasScore = getYarValue(request, 'current-score')
+                let { decreaseSummerAbstract, decreaseMains, results } = request.payload
+                // const hasScore = getYarValue(request, 'current-score')
                 // const currentlyIrrigating = getYarValue(request, 'currentlyIrrigating')
 
-                if (Number(irrigatedLandTarget) === 0 ||
-                    (Number(irrigatedLandTarget) < Number(irrigatedLandCurrent))
-                ) {
-                    const irrigatedLandCurrentError = null
-                    const irrigatedLandTargetError = (Number(irrigatedLandTarget) === 0)
-                        ? 'Figure must be higher than 0'
-                        : 'Figure must be equal to or higher than current hectares'
+                decreaseSummerAbstract = [decreaseSummerAbstract].flat()
+                decreaseMains = [decreaseMains].flat()
 
-                    const errorList = [{
-                        text: irrigatedLandCurrentError,
-                        href: '#irrigatedLandCurrent'
-                    },
-                    {
-                        text: irrigatedLandTargetError,
-                        href: '#irrigatedLandTarget'
-                    }
-                    ]
+                setYarValue(request, 'decreaseSummerAbstract', decreaseSummerAbstract)
+                setYarValue(request, 'decreaseMains', decreaseMains)
 
-                    return h.view(viewTemplate, createModel(irrigatedLandCurrent, irrigatedLandTarget, errorList, hasScore))
-                }
-
-                setYarValue(request, 'irrigatedLandCurrent', irrigatedLandCurrent)
-                setYarValue(request, 'irrigatedLandTarget', irrigatedLandTarget)
                 return results ? h.redirect(scorePath) : h.redirect(nextPath)
             }
         }
