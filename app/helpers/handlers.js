@@ -183,9 +183,12 @@ const showPostPage = (currentQuestion, request, h) => {
   if (title) {
     currentQuestion = {
       ...currentQuestion,
-      title: title.replace(SELECT_VARIABLE_TO_REPLACE, (_ignore, additionalYarKeyName) => (
-        formatUKCurrency(getYarValue(request, additionalYarKeyName) || 0)
-      ))
+      title: title.replace(SELECT_VARIABLE_TO_REPLACE, (_ignore, additionalYarKeyName) => {
+        if (additionalYarKeyName === 'currentlyIrrigating') {
+          return getYarValue(request, additionalYarKeyName) === 'Yes' ? SUMMER_ABSTRACTION_MAINS_YES : SUMMER_ABSTRACTION_MAINS_NO
+        }
+        return formatUKCurrency(getYarValue(request, additionalYarKeyName) || 0)
+      })
     }
   }
 
