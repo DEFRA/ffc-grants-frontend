@@ -8,7 +8,7 @@ const { startPageUrl } = require('../config/server')
 
 const viewTemplate = 'irrigation-system'
 const currentPath = `${urlPrefix}/${viewTemplate}`
-const previousPath = `${urlPrefix}/irrigation-water-source`
+const previousPath = `${urlPrefix}/water-source`
 const nextPath = `${urlPrefix}/irrigated-crops`
 const scorePath = `${urlPrefix}/score`
 
@@ -54,7 +54,7 @@ function createModel (currentlyIrrigating, errorList, currentData, plannedData, 
       hint: {
         text: 'Select up to 2 options'
       },
-      items: setLabelData(plannedData, ['Boom', 'Capillary bed', 'Ebb and flow', 'Mist', 'Rain gun', 'Sprinklers', 'Trickle']),
+      items: setLabelData(plannedData, ['Trickle', 'Boom', 'Ebb and flow', 'Capillary bed','Sprinklers', 'Mist', 'Rain gun']),
       ...(errorList && errorList[errorList.length - 1].href === '#irrigationPlanned' ? { errorMessage: { text: errorList[errorList.length - 1].text } } : {})
     }
   }

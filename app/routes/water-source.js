@@ -6,7 +6,7 @@ const gapiService = require('../services/gapi-service')
 const { guardPage } = require('../helpers/page-guard')
 const { startPageUrl } = require('../config/server')
 
-const viewTemplate = 'irrigation-water-source'
+const viewTemplate = 'water-source'
 const currentPath = `${urlPrefix}/${viewTemplate}`
 const previousPath = `${urlPrefix}/summer-abstraction-mains`
 const nextPath = `${urlPrefix}/irrigation-system`
@@ -39,7 +39,7 @@ function createModel (currentlyIrrigating, errorList, currentData, plannedData, 
       name: 'waterSourceCurrent',
       fieldset: {
         legend: {
-          html: '<h2 class="govuk-heading-m">Where does your current irrigation water come from?</h2>'
+          html: '<h2 class="govuk-heading-m">What is your current water source?</h2>'
         }
       },
       hint: {
@@ -73,9 +73,7 @@ module.exports = [
       const isRedirect = guardPage(request, ['summerAbstractionMains'])
       if (isRedirect) {
         return h.redirect(startPageUrl)
-      } 
-
-
+      }
       const currentData = getYarValue(request, 'waterSourceCurrent') || null
       const plannedData = getYarValue(request, 'waterSourcePlanned') || null
 

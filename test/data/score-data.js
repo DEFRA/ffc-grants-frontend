@@ -11,7 +11,7 @@ const msgData = {
         answers: [
           {
             key: 'Q16a',
-            title: 'How much land is currently irrigated per year?',
+            title: 'Current land irrigated',
             input: [
               {
                 key: null,
@@ -21,7 +21,7 @@ const msgData = {
           },
           {
             key: 'Q16b',
-            title: 'How much land will be irrigated after the project?',
+            title: 'Future land irrigated',
             input: [
               {
                 key: null,
@@ -40,7 +40,7 @@ const msgData = {
         answers: [
           {
             key: 'Q17a',
-            title: 'Where does your current irrigation water come from?',
+            title: 'Current water source',
             input: [
               {
                 key: 'Q17a-A6',
@@ -50,7 +50,7 @@ const msgData = {
           },
           {
             key: 'Q17b',
-            title: 'Where will the irrigation water come from?',
+            title: 'Future water source',
             input: [
               {
                 key: 'Q17b-A2',
@@ -69,7 +69,7 @@ const msgData = {
         answers: [
           {
             key: 'Q18a',
-            title: 'What systems are currently used to irrigate?',
+            title: 'Current irrigation systems',
             input: [
               {
                 key: 'Q18a-A6',
@@ -79,7 +79,7 @@ const msgData = {
           },
           {
             key: 'Q18b',
-            title: 'What systems will be used to irrigate?',
+            title: 'Future irrigation systems',
             input: [
               {
                 key: 'Q18b-A3',
@@ -98,7 +98,7 @@ const msgData = {
         answers: [
           {
             key: 'Q19',
-            title: 'How will the project improve productivity?',
+            title: 'Productivity',
             input: [
               {
                 key: 'Q19-A5',
@@ -121,7 +121,7 @@ const msgData = {
         answers: [
           {
             key: 'Q20',
-            title: 'Will water be supplied to other farms?',
+            title: 'Water sharing',
             input: [
               {
                 key: 'Q20-A1',

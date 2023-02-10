@@ -9,7 +9,7 @@ function isChecked (data, option) {
   return !!data && data.includes(option)
 }
 
-function setLabelData(data, labelData) {
+function setLabelData (data, labelData) {
   return labelData.map((label) => {
     if (typeof (label) === 'string' && label !== 'divider') {
       return {
