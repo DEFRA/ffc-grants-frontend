@@ -80,10 +80,10 @@ module.exports = [
         path: currentPath,
         handler: (request, h) => {
             // make water source planned?
-            // const isRedirect = guardPage(request, ['currentlyIrrigating'],)
-            // if (isRedirect) {
-            //     return h.redirect(startPageUrl)
-            // }
+            const isRedirect = guardPage(request, ['waterSourcePlanned'],)
+            if (isRedirect) {
+                return h.redirect(startPageUrl)
+            }
 
             const decreaseSummerAbstract = getYarValue(request, 'decreaseSummerAbstract')
             const decreaseMains = getYarValue(request, 'decreaseMains')
@@ -104,9 +104,8 @@ module.exports = [
             validate: {
                 options: { abortEarly: false },
                 payload: Joi.object({
-                    decreaseSummerAbstract: Joi.any(),
-                    decreaseMains: Joi.any(),
-                    results: Joi.any()
+                    decreaseSummerAbstract: Joi.string().required(),
+                    decreaseMains: Joi.string().required()
                 }),
                 failAction: (request, h, err) => {
                     gapiService.sendValidationDimension(request)
@@ -116,14 +115,24 @@ module.exports = [
                         decreaseSummerAbstractError, decreaseMainsError
                     ] = findErrorList(err, ['decreaseSummerAbstract', 'decreaseMains'])
 
-                    if (decreaseSummerAbstractError) {
+                    if (decreaseSummerAbstractError && decreaseMainsError) {
+                        console.log('well we are here')
+                        errorList.push({
+                            text: 'Select how your use of summer abstraction and mains will change',
+                            href: '#decreaseSummerAbstract'
+                        },
+                        {
+                            text: 'Select how your use of summer abstraction and mains will change',
+                            href: '#decreaseMains'
+                        })
+
+                        // error.decreaseMains.any.required
+                    } else if (decreaseSummerAbstractError) {
                         errorList.push({
                             text: decreaseSummerAbstractError,
                             href: '#decreaseSummerAbstract'
                         })
-                    }
-
-                    if (decreaseMainsError) {
+                    } else if (decreaseMainsError) {
                         errorList.push({
                             text: decreaseMainsError,
                             href: '#decreaseMains'
@@ -132,8 +141,6 @@ module.exports = [
 
                     decreaseSummerAbstract = decreaseSummerAbstract ? [decreaseSummerAbstract].flat() : decreaseSummerAbstract
                     decreaseMains = decreaseMains ? [decreaseMains].flat() : decreaseMains
-
-                    // const currentlyIrrigating = getYarValue(request, 'currentlyIrrigating')
 
                     // will be getYarValue from water source?
                     let pageType = ''
