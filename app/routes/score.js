@@ -42,10 +42,13 @@ module.exports = [{
 
       // call session queue to send score data
       const formatAnswersForScoring = createMsg(msgDataToSend)
+
       const msgData = await getWaterScoring(formatAnswersForScoring, request.yar.id)
+
       setYarValue(request, 'overAllScore', msgData)
       const crop = tableOrder.find(question => question.key === 'Q15')
       const cropObject = addSummaryRow(crop, request)
+
       if (msgData) {
         msgData.desirability.questions.push(cropObject)
         const questions = msgData.desirability.questions.map(desirabilityQuestion => {
