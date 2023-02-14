@@ -35,20 +35,15 @@
       <form method="POST" action="{{ formActionPage }}" autocomplete="off" novalidate="novalidate">
         {{ crumbToken(crumb)}}
 
-        {% if summerOnly %}
+  
+
+        {% if displaySummerObstraction %}
             {{ govukRadios(summerInput) }}
-            {{ govukInput(hiddenInputMains) }}
+          {% endif %}
+        {% if displayMains %}
+    {{ govukRadios(mainsInput) }}
+               {% endif %}
 
-        {% elif mainsOnly %}
-            {{ govukRadios(mainsInput) }}
-            {{ govukInput(hiddenInputSummer) }}
-
-        {% else %}
-            {{ govukRadios(summerInput) }}
-            {{ govukRadios(mainsInput) }}
-
-        {% endif %}
-        
         {{ conditionalButtons(hasScore) }}
       </form>
     </div>
