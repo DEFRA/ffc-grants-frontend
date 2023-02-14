@@ -1,7 +1,7 @@
 const { crumbToken } = require('./test-helper')
 const varListTemplate = {
     'current-score': null,
-    waterSourcePlanned: 'hello'
+    waterSourcePlanned: ['Summer water surface abstraction', 'Mains']
 }
 
 let varList
@@ -50,6 +50,7 @@ describe('Decrease summer abstraction Page', () => {
 
     // update next two tests when page switching sorted
     it('should load page successfully with only summerAbstractChangeion', async () => {
+        varList.watersourcePlanned = ['Summer water surface abstraction']
         const options = {
             method: 'GET',
             url: `${global.__URLPREFIX__}/change-summer-abstraction`
@@ -61,6 +62,8 @@ describe('Decrease summer abstraction Page', () => {
     })
 
     it('should load page successfully with only mainsChange', async () => {
+        varList.watersourcePlanned = ['Mains']
+
         const options = {
             method: 'GET',
             url: `${global.__URLPREFIX__}/change-summer-abstraction`
@@ -73,6 +76,7 @@ describe('Decrease summer abstraction Page', () => {
 
 
     it('should return an error message if no option is selected', async () => {
+        varList.waterSourcePlanned = ['Summer water surface abstraction', 'Mains']
         const postOptions = {
             method: 'POST',
             url: `${global.__URLPREFIX__}/change-summer-abstraction`,
@@ -85,7 +89,10 @@ describe('Decrease summer abstraction Page', () => {
         expect(postResponse.payload).toContain('Select how your use of summer abstraction will change')
         expect(postResponse.payload).toContain('Select how your use of mains will change')
     })
+
     it('should return an error message if decrease Mains selected and summerAbstractChange not selected', async () => {
+        varList.waterSourcePlanned = ['Summer water surface abstraction', 'Mains']
+
         const postOptions = {
             method: 'POST',
             url: `${global.__URLPREFIX__}/change-summer-abstraction`,
@@ -99,6 +106,8 @@ describe('Decrease summer abstraction Page', () => {
     })
 
     it('should return an error message if summerAbstractChange selected and mainsChange not selected', async () => {
+        varList.waterSourcePlanned = ['Summer water surface abstraction', 'Mains']
+
         const postOptions = {
             method: 'POST',
             url: `${global.__URLPREFIX__}/change-summer-abstraction`,
@@ -111,6 +120,8 @@ describe('Decrease summer abstraction Page', () => {
         expect(postResponse.payload).toContain('Select how your use of mains will change')
     })
     it('should store user input and redirect to irrigation system page', async () => {
+        varList.waterSourcePlanned = ['Summer water surface abstraction', 'Mains']
+
         const postOptions = {
             method: 'POST',
             url: `${global.__URLPREFIX__}/change-summer-abstraction`,
@@ -140,6 +151,8 @@ describe('Decrease summer abstraction Page', () => {
     })
 
     it('should store user response and redirects to score', async () => {
+        varList.waterSourcePlanned = ['Summer water surface abstraction', 'Mains']
+
         const postOptions = {
             method: 'POST',
             url: `${global.__URLPREFIX__}/change-summer-abstraction`,
