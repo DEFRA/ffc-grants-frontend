@@ -182,14 +182,14 @@ const showPostPage = (currentQuestion, request, h) => {
     setYarValue(request, yarKey, dataObject)
   }
 
-  if (title) {
+  if (title === 'Will you {{_currentlyIrrigating_}} summer abstraction or mains?') {
     currentQuestion = {
       ...currentQuestion,
       title: title.replace(SELECT_VARIABLE_TO_REPLACE, (_ignore, additionalYarKeyName) => {
         if (additionalYarKeyName === 'currentlyIrrigating') {
           return getYarValue(request, additionalYarKeyName) === 'Yes' ? SUMMER_ABSTRACTION_MAINS_YES : SUMMER_ABSTRACTION_MAINS_NO
         }
-        return formatUKCurrency(getYarValue(request, additionalYarKeyName) || 0)
+          return formatUKCurrency(getYarValue(request, additionalYarKeyName) || 0)
       }),
       validate: [
         {
@@ -199,7 +199,7 @@ const showPostPage = (currentQuestion, request, h) => {
           if (additionalYarKeyName === 'currentlyIrrigating') {
             return getYarValue(request, additionalYarKeyName) === 'Yes' ?  SUMMER_ABSTRACTION_MAINS_YES_ERROR: SUMMER_ABSTRACTION_MAINS_NO_ERROR
           }
-          return formatUKCurrency(getYarValue(request, additionalYarKeyName) || 0)
+            return formatUKCurrency(getYarValue(request, additionalYarKeyName) || 0)
         })
         }
     ]
