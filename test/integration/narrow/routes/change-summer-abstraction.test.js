@@ -36,8 +36,8 @@ describe('Decrease summer abstraction Page', () => {
     })
 
     it('should load page successfully if both values already exist', async () => {
-        varList.decreaseSummerAbstract = 'hello'
-        varList.decreaseMains = 'hello'
+        varList.summerAbstractChange = 'hello'
+        varList.mainsChange = 'hello'
         const options = {
             method: 'GET',
             url: `${global.__URLPREFIX__}/change-summer-abstraction`
@@ -49,7 +49,7 @@ describe('Decrease summer abstraction Page', () => {
     })
 
     // update next two tests when page switching sorted
-    xit('should load page successfully with only decreaseSummerAbstraction', async () => {
+    it('should load page successfully with only summerAbstractChangeion', async () => {
         const options = {
             method: 'GET',
             url: `${global.__URLPREFIX__}/change-summer-abstraction`
@@ -60,7 +60,7 @@ describe('Decrease summer abstraction Page', () => {
         expect(response.payload).toContain('How will your use of summer abstraction change?')
     })
 
-    xit('should load page successfully with only decreaseMains', async () => {
+    it('should load page successfully with only mainsChange', async () => {
         const options = {
             method: 'GET',
             url: `${global.__URLPREFIX__}/change-summer-abstraction`
@@ -82,13 +82,14 @@ describe('Decrease summer abstraction Page', () => {
 
         const postResponse = await global.__SERVER__.inject(postOptions)
         expect(postResponse.statusCode).toBe(200)
-        expect(postResponse.payload).toContain('Select how your use of summer abstraction and mains will change')
+        expect(postResponse.payload).toContain('Select how your use of summer abstraction will change')
+        expect(postResponse.payload).toContain('Select how your use of mains will change')
     })
-    it('should return an error message if decrease Mains selected and decreaseSummerabstract not selected', async () => {
+    it('should return an error message if decrease Mains selected and summerAbstractChange not selected', async () => {
         const postOptions = {
             method: 'POST',
             url: `${global.__URLPREFIX__}/change-summer-abstraction`,
-            payload: { decreaseMains: 'Yes', crumb: crumbToken },
+            payload: { mainsChange: 'Yes', crumb: crumbToken },
             headers: { cookie: 'crumb=' + crumbToken }
         }
 
@@ -97,11 +98,11 @@ describe('Decrease summer abstraction Page', () => {
         expect(postResponse.payload).toContain('Select how your use of summer abstraction will change')
     })
 
-    it('should return an error message if decreaseSummerAbstract selected and decreaseMains not selected', async () => {
+    it('should return an error message if summerAbstractChange selected and mainsChange not selected', async () => {
         const postOptions = {
             method: 'POST',
             url: `${global.__URLPREFIX__}/change-summer-abstraction`,
-            payload: { decreaseSummerAbstract: 'Yes', crumb: crumbToken },
+            payload: { summerAbstractChange: 'Yes', crumb: crumbToken },
             headers: { cookie: 'crumb=' + crumbToken }
         }
 
@@ -113,7 +114,7 @@ describe('Decrease summer abstraction Page', () => {
         const postOptions = {
             method: 'POST',
             url: `${global.__URLPREFIX__}/change-summer-abstraction`,
-            payload: { decreaseSummerAbstract: 'Yes', decreaseMains: 'Yes', crumb: crumbToken },
+            payload: { summerAbstractChange: 'Yes', mainsChange: 'Yes', crumb: crumbToken },
             headers: { cookie: 'crumb=' + crumbToken }
         }
 
@@ -142,7 +143,7 @@ describe('Decrease summer abstraction Page', () => {
         const postOptions = {
             method: 'POST',
             url: `${global.__URLPREFIX__}/change-summer-abstraction`,
-            payload: { decreaseSummerAbstract: 'some fake data', decreaseMains: 'more fake data', results: 'Back to score', crumb: crumbToken },
+            payload: { summerAbstractChange: 'some fake data', mainsChange: 'more fake data', results: 'Back to score', crumb: crumbToken },
             headers: {
                 cookie: 'crumb=' + crumbToken
             }
