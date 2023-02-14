@@ -26,7 +26,6 @@ const desirabilityAnswersSchema = Joi.object({
 })
 
 function getDesirabilityAnswers (request) {
-  console.log('getDesirabilityAnswers: ', 2)
   try {
     const val = {
       irrigatedCrops: getYarValue(request, 'irrigatedCrops'),
