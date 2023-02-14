@@ -48,26 +48,12 @@
         {{ conditionalButtons(hasScore) }}
       </form>
     </div>
-
-    {% if currentlyIrrigating %}
-          {{ 
-            sideBar(
-              "Funding priorities","RPA wants to fund projects that:",
-              [
-                "improve the environment","improve water sustainability"
-              ], 'h3'
-            )
-          }}
-
-        {% else %}
-          {{ 
-            sideBar(
-              "Funding priorities",
-              "RPA wants to fund projects that move from less efficient irrigation systems to more efficient ones.\n
-              For example, moving from rain gun to trickle.",[],'h2'
-            )
-          }}
-
-        {% endif %}
+    {{ 
+      sideBar(
+        "Funding priorities",
+        "RPA wants to fund projects that move from less efficient irrigation systems to more efficient ones.\n
+        For example, moving from rain gun to trickle.",[],'h2'
+      )
+    }}
   </div>
 {% endblock %}
