@@ -25,7 +25,6 @@
     "errorList": errorList
     }) }}
   {% endif %}
-
 {% endblock %}
 
 {% block content %}
@@ -35,14 +34,13 @@
       <form method="POST" action="{{ formActionPage }}" autocomplete="off" novalidate="novalidate">
         {{ crumbToken(crumb)}}
 
-  
-
         {% if displaySummerObstraction %}
-            {{ govukRadios(summerInput) }}
-          {% endif %}
+          {{ govukRadios(summerInput) }}
+        {% endif %}
+
         {% if displayMains %}
-    {{ govukRadios(mainsInput) }}
-               {% endif %}
+          {{ govukRadios(mainsInput) }}
+        {% endif %}
 
         {{ conditionalButtons(hasScore) }}
       </form>
@@ -54,7 +52,5 @@
     "rain water harvesting",
     "bore hole/aquifer"
     ], 'h3') }}
-   
-    
   </div>
 {% endblock %}
