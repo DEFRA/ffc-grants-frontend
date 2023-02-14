@@ -1,165 +1,115 @@
-const Joi = require('joi')
-const { findErrorList, setLabelData } = require('../helpers/helper-functions')
+const { setLabelData } = require('../helpers/helper-functions')
 const { setYarValue, getYarValue } = require('../helpers/session')
+const { validateAnswerField } = require('../helpers/errorHelpers')
 const urlPrefix = require('../config/server').urlPrefix
 const gapiService = require('../services/gapi-service')
 const { guardPage } = require('../helpers/page-guard')
 const { startPageUrl } = require('../config/server')
-
+const { UNSUSTAINABLE_WATER_SOURCE } = require('../helpers/water-source-data')
 const viewTemplate = 'change-summer-abstraction'
 const currentPath = `${urlPrefix}/${viewTemplate}`
 const previousPath = `${urlPrefix}/water-source`
 const nextPath = `${urlPrefix}/irrigation-system`
 const scorePath = `${urlPrefix}/score`
 
-function createModel(pageType, decreaseSummerAbstract, decreaseMains, errorList, hasScore) {
-    let pageTitle
+function createModel (unsustainableSourceType, summerAbstractChange, mainsChange, errorList, hasScore) {
+  return {
+    backLink: hasScore ? `${urlPrefix}/water-source` : previousPath,
+    formActionPage: currentPath,
+    hasScore: hasScore,
+    displayMains: unsustainableSourceType.includes('Mains'),
+    displaySummerObstraction: unsustainableSourceType.includes('Summer water surface abstraction'),
+    ...errorList ? { errorList } : {},
+    pageTitle: unsustainableSourceType.length > 1 ? 'How will your use of summer abstraction and mains change?' : `How will your use of ${unsustainableSourceType[0].toLowerCase()} change?`,
 
-    // update options accordingly, based on page swap requirements
-
-    switch (pageType) {
-        case 'summerOnly': 
-            pageTitle = 'How will your use of summer abstraction change?'
-        case 'mainsOnly': 
-            pagetitle = 'How will your use of mains change?'
-        default:
-            pageTitle = 'How will your use of summer abstraction and mains change?'
-    }
-    
-    return {
-        backLink: hasScore ? `${urlPrefix}/water-source` : previousPath,
-        formActionPage: currentPath,
-        hasScore: hasScore,
-        ...errorList ? { errorList } : {},
-        pageTitle: pageTitle,
-        pageType: pageType,
-        summerOnly: pageType === 'summerOnly',
-        mainsOnly: pageType === 'mainsOnly',
-        hiddenInputSummer: {
-            id: 'decreaseSummerAbstract',
-            name: 'decreaseSummerAbstract',
-            value: 'Not summer abstraction',
-            type: 'hidden'
-        },
-        hiddenInputMains: {
-            id: 'decreaseMains',
-            name: 'decreaseMains',
-            value: 'Not mains',
-            type: 'hidden',
-        },
-        summerInput: {
-            idPrefix: 'decreaseSummerAbstract',
-            name: 'decreaseSummerAbstract',
-            fieldset: {
-                legend: {
-                    html: pageType === 'SummerOnly' ? '' : '<h2 class="govuk-heading-m">Summer water surface abstraction</h2>'
-                }
-            },
-            items: setLabelData(decreaseSummerAbstract, ['Decrease', 'No change']),
-            ...(errorList && errorList[0].href === '#decreaseSummerAbstract' ? { errorMessage: { text: errorList[0].text } } : {})
-        },
-        mainsInput: {
-            idPrefix: 'decreaseMains',
-            name: 'decreaseMains',
-            fieldset: {
-                legend: {
-                    html: pageType === 'mainsOnly' ? '' : '<h2 class="govuk-heading-m">Mains</h2>'
-                }
-            },
-            items: setLabelData(decreaseMains, ['Decrease', 'No change']),
-            ...(errorList && errorList[errorList.length - 1].href === '#decreaseMains' ? { errorMessage: { text: errorList[errorList.length - 1].text } } : {})
+    summerInput: {
+      idPrefix: 'summerAbstractChange',
+      name: 'summerAbstractChange',
+      fieldset: {
+        legend: {
+          html: checkSingleUnsustainableSource(unsustainableSourceType, 'Summer water surface abstraction') ? '<h2 class="govuk-heading-m">Summer water surface abstraction</h2>' : ''
         }
+      },
+      items: setLabelData(summerAbstractChange, ['Decrease', 'No change']),
+      ...(errorList && errorList[0].href === '#summerAbstractChange' ? { errorMessage: { text: errorList[0].text } } : {})
+    },
+
+    mainsInput: {
+      idPrefix: 'mainsChange',
+      name: 'mainsChange',
+      fieldset: {
+        legend: {
+          html: checkSingleUnsustainableSource(unsustainableSourceType, 'Mains') ? '<h2 class="govuk-heading-m">Mains</h2>' : ''
+        }
+      },
+      items: setLabelData(mainsChange, ['Decrease', 'No change']),
+      ...(errorList && errorList[errorList.length - 1].href === '#mainsChange' ? { errorMessage: { text: errorList[errorList.length - 1].text } } : {})
     }
+  }
+}
+
+function checkSingleUnsustainableSource (unsustainableSourceType, source) {
+  return unsustainableSourceType.length > 1 && unsustainableSourceType.includes(source)
 }
 
 module.exports = [
-    {
-        method: 'GET',
-        path: currentPath,
-        handler: (request, h) => {
-            // make water source planned?
-            const isRedirect = guardPage(request, ['waterSourcePlanned'],)
-            if (isRedirect) {
-                return h.redirect(startPageUrl)
-            }
+  {
+    method: 'GET',
+    path: currentPath,
+    handler: (request, h) => {
+      const isRedirect = guardPage(request, ['waterSourcePlanned'])
+      if (isRedirect) {
+        return h.redirect(startPageUrl)
+      }
 
-            const decreaseSummerAbstract = getYarValue(request, 'decreaseSummerAbstract')
-            const decreaseMains = getYarValue(request, 'decreaseMains')
-            
-            const summerData = decreaseSummerAbstract || null
-            const mainsData = decreaseMains || null
+      const summerAbstractChange = getYarValue(request, 'summerAbstractChange') || null
+      const mainsChange = getYarValue(request, 'mainsChange') || null
+      const unsustainableSourceType = getYarValue(request, 'waterSourcePlanned').filter(source => UNSUSTAINABLE_WATER_SOURCE.includes(source))
 
-            // temp var for development, will replace with page switching from water source
-            const pageType = ''
-
-            return h.view(viewTemplate, createModel(pageType, summerData, mainsData, null, getYarValue(request, 'current-score')))
-        }
-    },
-    {
-        method: 'POST',
-        path: currentPath,
-        options: {
-            validate: {
-                options: { abortEarly: false },
-                payload: Joi.object({
-                    decreaseSummerAbstract: Joi.string().required(),
-                    decreaseMains: Joi.string().required(),
-                    results: Joi.any()
-                }),
-                failAction: (request, h, err) => {
-                    gapiService.sendValidationDimension(request)
-                    let { decreaseSummerAbstract, decreaseMains } = request.payload
-                    const errorList = []
-                    let [
-                        decreaseSummerAbstractError, decreaseMainsError
-                    ] = findErrorList(err, ['decreaseSummerAbstract', 'decreaseMains'])
-
-                    if (decreaseSummerAbstractError && decreaseMainsError) {
-                        console.log('well we are here')
-                        errorList.push({
-                            text: 'Select how your use of summer abstraction and mains will change',
-                            href: '#decreaseSummerAbstract'
-                        },
-                        {
-                            text: 'Select how your use of summer abstraction and mains will change',
-                            href: '#decreaseMains'
-                        })
-
-                        // error.decreaseMains.any.required
-                    } else if (decreaseSummerAbstractError) {
-                        errorList.push({
-                            text: decreaseSummerAbstractError,
-                            href: '#decreaseSummerAbstract'
-                        })
-                    } else {
-                        errorList.push({
-                            text: decreaseMainsError,
-                            href: '#decreaseMains'
-                        })
-                    }
-
-                    decreaseSummerAbstract = decreaseSummerAbstract ? [decreaseSummerAbstract].flat() : decreaseSummerAbstract
-                    decreaseMains = decreaseMains ? [decreaseMains].flat() : decreaseMains
-
-                    // will be getYarValue from water source?
-                    let pageType = ''
-
-                    return h.view(viewTemplate, createModel(pageType, decreaseSummerAbstract, decreaseMains, errorList, getYarValue(request, 'current-score'))).takeover()
-                }
-            },
-            handler: (request, h) => {
-                let { decreaseSummerAbstract, decreaseMains, results } = request.payload
-                // const hasScore = getYarValue(request, 'current-score')
-                // const currentlyIrrigating = getYarValue(request, 'currentlyIrrigating')
-
-                decreaseSummerAbstract = [decreaseSummerAbstract].flat()
-                decreaseMains = [decreaseMains].flat()
-
-                setYarValue(request, 'decreaseSummerAbstract', decreaseSummerAbstract)
-                setYarValue(request, 'decreaseMains', decreaseMains)
-
-                return results ? h.redirect(scorePath) : h.redirect(nextPath)
-            }
-        }
+      return h.view(viewTemplate, createModel(unsustainableSourceType, summerAbstractChange, mainsChange, null, getYarValue(request, 'current-score')))
     }
+  },
+  {
+    method: 'POST',
+    path: currentPath,
+    options: {
+
+      handler: (request, h) => {
+        const { summerAbstractChange, mainsChange, results } = request.payload
+        // const hasScore = getYarValue(request, 'current-score')
+        // const currentlyIrrigating = getYarValue(request, 'currentlyIrrigating')
+        const unsustainableSourceType = getYarValue(request, 'waterSourcePlanned').filter(source => UNSUSTAINABLE_WATER_SOURCE.includes(source))
+        const errorList = []
+        const summerAbstractChangeError = unsustainableSourceType.includes('Summer water surface abstraction')
+          ? (validateAnswerField(summerAbstractChange, 'NOT_EMPTY', {}, {}) === false)
+          : null
+        const mainsError = unsustainableSourceType.includes('Mains')
+          ? (validateAnswerField(mainsChange, 'NOT_EMPTY', {}, {}) === false)
+          : null
+
+        if (summerAbstractChangeError) {
+          errorList.push({
+            text: 'Select how your use of summer abstraction will change',
+            href: '#summerAbstractChange'
+          })
+        }
+        if (mainsError) {
+          errorList.push({
+            text: 'Select how your use of mains will change',
+            href: '#mainsChange'
+          })
+        }
+
+        if (errorList.length > 0) {
+          gapiService.sendValidationDimension(request)
+          return h.view(viewTemplate, createModel(unsustainableSourceType, summerAbstractChange, mainsChange, errorList, getYarValue(request, 'current-score'))).takeover()
+        }
+
+        setYarValue(request, 'summerAbstractChange', summerAbstractChange)
+        setYarValue(request, 'mainsChange', mainsChange)
+
+        return results ? h.redirect(scorePath) : h.redirect(nextPath)
+      }
+    }
+  }
 ]
