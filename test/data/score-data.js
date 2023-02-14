@@ -140,17 +140,6 @@ const msgData = {
       score: 72.5,
       band: 'Strong'
     }
-  },
-  questionMapping: {
-    Q15: 'irrigatedCrops',
-    Q16a: 'irrigatedLandCurrent',
-    Q16b: 'irrigatedLandTarget',
-    Q17a: 'waterSourceCurrent',
-    Q17b: 'waterSourcePlanned',
-    Q18a: 'irrigationCurrent',
-    Q18b: 'irrigationPlanned',
-    Q19: 'productivity',
-    Q20: 'collaboration'
   }
 }
 module.exports = msgData

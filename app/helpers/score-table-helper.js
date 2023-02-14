@@ -3,25 +3,24 @@ const formatAnswers = (answers) => {
 	if (answers.length > 1 && (answers[ 0 ].input[ 0 ].value === "Not currently irrigating" || answers[ 0 ].input[ 0 ].value === 0)) {
 		// remove the title of the second answer if it is "Not currently irrigating"
 		answers[ 1 ].title = null;
-
 		// remove the first answer if it is "Not currently irrigating" (i.e. empty)
 		answers.shift();
 	} else {
 		// format the answer title if "currently irrigating"
 		answers.forEach((answer) => {
 			// shorten the answer title as per design
-			if (answer.title.startsWith('Current')) {
+			if (answer.title && answer.title.startsWith('Current')) {
 				answer.title = 'Current';
-			} else if (answer.title.startsWith('Future')) {
+			} else if (answer.title && answer.title.startsWith('Future')) {
 				answer.title = 'Future';
 			}
 
 			// replace the answer title as per design
-			if (answer.title === 'Main crop') {
+			if (answer.title && answer.title === 'Main crop') {
 				answer.title = 'Crops';
 			}
 
-			if (answer.title === 'Water sharing') {
+			if (answer.title && answer.title === 'Water sharing') {
 				answer.title = 'Other farms';
 			}
 		});
