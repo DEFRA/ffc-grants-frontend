@@ -73,10 +73,10 @@ module.exports = [
     method: 'GET',
     path: currentPath,
     handler: (request, h) => {
-      const isRedirect = guardPage(request, ['currentlyIrrigating'],)
+      const isRedirect = guardPage(request, ['currentlyIrrigating'])
       if (isRedirect) {
         return h.redirect(startPageUrl)
-      } 
+      }
 
       const irrigatedLandCurrent = getYarValue(request, 'irrigatedLandCurrent')
       const irrigatedLandTarget = getYarValue(request, 'irrigatedLandTarget')
