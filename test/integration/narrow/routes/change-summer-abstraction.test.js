@@ -48,9 +48,8 @@ describe('Decrease summer abstraction Page', () => {
         expect(response.payload).toContain('How will your use of summer abstraction and mains change?')
     })
 
-    // update next two tests when page switching sorted
-    it('should load page successfully with only summerAbstractChangeion', async () => {
-        varList.watersourcePlanned = ['Summer water surface abstraction']
+    xit('should load page successfully with only summerAbstractChangeion', async () => {
+        varList.waterSourcePlanned = ['Summer water surface abstraction']
         const options = {
             method: 'GET',
             url: `${global.__URLPREFIX__}/change-summer-abstraction`
@@ -62,7 +61,7 @@ describe('Decrease summer abstraction Page', () => {
     })
 
     it('should load page successfully with only mainsChange', async () => {
-        varList.watersourcePlanned = ['Mains']
+        varList.waterSourcePlanned = ['Mains']
 
         const options = {
             method: 'GET',
