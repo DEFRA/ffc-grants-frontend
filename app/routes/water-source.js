@@ -9,7 +9,6 @@ const { startPageUrl } = require('../config/server')
 const viewTemplate = 'water-source'
 const currentPath = `${urlPrefix}/${viewTemplate}`
 const previousPath = `${urlPrefix}/summer-abstraction-mains`
-let nextPath = `${urlPrefix}/irrigation-system`
 const scorePath = `${urlPrefix}/score`
 const { WATER_SOURCE, UNSUSTAINABLE_WATER_SOURCE } = require('../helpers/water-source-data')
 
@@ -122,18 +121,12 @@ module.exports = [
       },
       handler: (request, h) => {
         let { waterSourceCurrent, waterSourcePlanned, results } = request.payload
-
         waterSourceCurrent = [waterSourceCurrent].flat()
         waterSourcePlanned = [waterSourcePlanned].flat()
+        const nextPath = waterSourcePlanned.some(source => UNSUSTAINABLE_WATER_SOURCE.includes(source)) ? `${urlPrefix}/change-summer-abstraction` : `${urlPrefix}/irrigation-system`
 
         setYarValue(request, 'waterSourceCurrent', waterSourceCurrent)
         setYarValue(request, 'waterSourcePlanned', waterSourcePlanned)
-
-        waterSourcePlanned
-        console.log(waterSourcePlanned.some(source => UNSUSTAINABLE_WATER_SOURCE.includes(source)),'LLLLLL')
-        if (waterSourcePlanned.some( source => UNSUSTAINABLE_WATER_SOURCE.includes(source) )) {
-          nextPath = `${urlPrefix}/change-summer-abstraction`
-        }
 
         return results ? h.redirect(scorePath) : h.redirect(nextPath)
       }
