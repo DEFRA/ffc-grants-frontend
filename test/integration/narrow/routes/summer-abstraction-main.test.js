@@ -29,7 +29,7 @@ const mockSession = {
 
 jest.mock('../../../../app/helpers/session', () => mockSession)
 
-describe('summer abstractionmains page', () => {
+describe('summer water surface abstractionmains page', () => {
   beforeEach(() => {
     varList = { ...varListTemplate }
   })
@@ -55,7 +55,7 @@ describe('summer abstractionmains page', () => {
     }
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
-    expect(response.payload).toContain('Will you use water from summer abstraction or mains?')
+    expect(response.payload).toContain('Will you use water from summer water surface abstraction or mains?')
   })
   it('should load correct question for currently irrigating YES Journey', async () => {
     varList.currentlyIrrigating = 'Yes'
@@ -65,7 +65,7 @@ describe('summer abstractionmains page', () => {
     }
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
-    expect(response.payload).toContain('Will you increase your use of summer abstraction or mains?')
+    expect(response.payload).toContain('Will you increase your use of summer water surface abstraction or mains?')
   })
 
   it('should return an error message if no option is selected and currentlyIrrigating = Yes', async () => {
@@ -79,7 +79,7 @@ describe('summer abstractionmains page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Select yes if you’re increasing use of water from summer abstraction or mains')
+    expect(postResponse.payload).toContain('Select yes if you’re increasing use of water from summer water surface abstraction or mains')
   })
 
   it('should return an error message if no option is selected and currentlyIrrigating = No', async () => {
@@ -93,7 +93,7 @@ describe('summer abstractionmains page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Select yes if you’re going to use summer abstraction or mains')
+    expect(postResponse.payload).toContain('Select yes if you’re going to use summer water surface abstraction or mains')
   })
 
   it('should store valid user input and redirect to irrgation-water-source page', async () => {
@@ -121,6 +121,6 @@ describe('summer abstractionmains page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.payload).toContain('You cannot apply for a grant from this scheme')
-    expect(postResponse.payload).toContain('Your project cannot increase water use from summer abstraction or mains.')
+    expect(postResponse.payload).toContain('Your project cannot increase water use from summer water surface abstraction or mains.')
   })
 })

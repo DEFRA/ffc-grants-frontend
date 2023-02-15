@@ -15,7 +15,7 @@ const mockSession = {
 
 jest.mock('../../../../app/helpers/session', () => mockSession)
 
-describe('Decrease summer abstraction Page', () => {
+describe('Decrease summer water surface abstraction Page', () => {
     beforeEach(() => {
         varList = { ...varListTemplate }
     })
@@ -32,7 +32,7 @@ describe('Decrease summer abstraction Page', () => {
 
         const response = await global.__SERVER__.inject(options)
         expect(response.statusCode).toBe(200)
-        expect(response.payload).toContain('How will your use of summer abstraction and mains change?')
+        expect(response.payload).toContain('How will your use of summer water surface abstraction and mains change?')
     })
 
     it('should load page successfully if both values already exist', async () => {
@@ -45,7 +45,7 @@ describe('Decrease summer abstraction Page', () => {
 
         const response = await global.__SERVER__.inject(options)
         expect(response.statusCode).toBe(200)
-        expect(response.payload).toContain('How will your use of summer abstraction and mains change?')
+        expect(response.payload).toContain('How will your use of summer water surface abstraction and mains change?')
     })
 
     xit('should load page successfully with only summerAbstractChangeion', async () => {
@@ -57,7 +57,7 @@ describe('Decrease summer abstraction Page', () => {
 
         const response = await global.__SERVER__.inject(options)
         expect(response.statusCode).toBe(200)
-        expect(response.payload).toContain('How will your use of summer abstraction change?')
+        expect(response.payload).toContain('How will your use of summer water surface abstraction change?')
     })
 
     it('should load page successfully with only mainsChange', async () => {
@@ -85,7 +85,7 @@ describe('Decrease summer abstraction Page', () => {
 
         const postResponse = await global.__SERVER__.inject(postOptions)
         expect(postResponse.statusCode).toBe(200)
-        expect(postResponse.payload).toContain('Select how your use of summer abstraction will change')
+        expect(postResponse.payload).toContain('Select how your use of summer water surface abstraction will change')
         expect(postResponse.payload).toContain('Select how your use of mains will change')
     })
 
@@ -101,7 +101,7 @@ describe('Decrease summer abstraction Page', () => {
 
         const postResponse = await global.__SERVER__.inject(postOptions)
         expect(postResponse.statusCode).toBe(200)
-        expect(postResponse.payload).toContain('Select how your use of summer abstraction will change')
+        expect(postResponse.payload).toContain('Select how your use of summer water surface abstraction will change')
     })
 
     it('should return an error message if summerAbstractChange selected and mainsChange not selected', async () => {

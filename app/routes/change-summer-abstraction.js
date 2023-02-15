@@ -20,7 +20,7 @@ function createModel (unsustainableSourceType, summerAbstractChange, mainsChange
     displayMains: unsustainableSourceType.includes('Mains'),
     displaySummerObstraction: unsustainableSourceType.includes('Summer water surface abstraction'),
     ...errorList ? { errorList } : {},
-    pageTitle: unsustainableSourceType.length > 1 ? 'How will your use of summer abstraction and mains change?' : `How will your use of ${unsustainableSourceType[0].toLowerCase()} change?`,
+    pageTitle: unsustainableSourceType.length > 1 ? 'How will your use of summer water surface abstraction and mains change?' : `How will your use of ${unsustainableSourceType[0].toLowerCase()} change?`,
 
     summerInput: {
       idPrefix: 'summerAbstractChange',
@@ -89,7 +89,7 @@ module.exports = [
 
         if (summerAbstractChangeError) {
           errorList.push({
-            text: 'Select how your use of summer abstraction will change',
+            text: 'Select how your use of summer water surface abstraction will change',
             href: '#summerAbstractChange'
           })
         }

@@ -780,7 +780,7 @@ const questionBank = {
     {
       key: 'summer-abstraction-mains',
       order: 16,
-      title: 'Will you {{_currentlyIrrigating_}} summer abstraction or mains?',
+      title: 'Will you {{_currentlyIrrigating_}} summer water surface abstraction or mains?',
       classes: 'govuk-radios--inline govuk-fieldset__legend--l',
       pageTitle: '',
       url: 'summer-abstraction-mains',
@@ -792,7 +792,7 @@ const questionBank = {
       type: 'single-answer',
       minAnswerCount: 1,
       ineligibleContent: {
-        messageContent: `Your project cannot increase water use from summer abstraction or mains. 
+        messageContent: `Your project cannot increase water use from summer water surface abstraction or mains. 
                           <div class='govuk-inset-text'>
                           RPA wants to fund projects that use more sustainable water sources, such as:</br></br>
                             <ul class='govuk-list govuk-list--bullet'>
@@ -830,7 +830,7 @@ const questionBank = {
             heading: 'Eligibility',
             content: [
               {
-                para: `Your project cannot increase water use from summer abstraction or mains.\n\n
+                para: `Your project cannot increase water use from summer water surface abstraction or mains.\n\n
                   RPA wants to fund projects that use more sustainable water sources, such as: `,
                 items: [
                   'winter peak-flow abstraction',

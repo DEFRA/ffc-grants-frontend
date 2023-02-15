@@ -96,7 +96,7 @@ const errors = {
   'error.currentlyIrrigating.any.required': 'Select yes if you are currently irrigating',
   'error.applying.any.required': 'Select who is applying for this grant',
   'error.productivity.max': 'Select up to 2 options to describe how your project will improve productivity',
-  'error.decreaseSummerAbstract.any.required': 'Select how your use of summer abstraction will change',
+  'error.decreaseSummerAbstract.any.required': 'Select how your use of summer water surface abstraction will change',
   'error.decreaseMains.any.required': 'Select how your use of mains will change'
 }
 const lookupErrorText = (key) => {
