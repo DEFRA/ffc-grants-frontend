@@ -73,10 +73,10 @@ const checkErrors = (payload, currentQuestion, h, request) => {
   }
   if (Object.keys(payload).length === 0 && currentQuestion.type) {
     placeholderInputError = validate.find(
-      ({ type, dependentKey, ...details }) => (validateAnswerField(payload[yarKey], type, details, payload) === false))
-
+    ({ type, dependentKey, ...details }) => (validateAnswerField(payload[yarKey], type, details, payload) === false))
+    const checkDependantError =  getYarValue(request, placeholderInputError?.dependentYarKey)
     errorHrefList.push({
-      text: placeholderInputError.error,
+      text: checkDependantError === 'No' ? placeholderInputError.dependantError : placeholderInputError.error,
       href: `#${placeholderInputError.dependentKey ?? yarKey}`
     })
     return customiseErrorText('', currentQuestion, errorHrefList, h, request)

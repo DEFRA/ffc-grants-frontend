@@ -14,6 +14,7 @@ const varListTemplate = {
   planningPermission: 'Will not be in place by 31 January 2023',
   abstractionLicence: 'Not needed',
   sSSI: 'Yes',
+  currentlyIrrigating: 'No',
   'current-score': ''
 
 }
@@ -67,7 +68,6 @@ describe('summer water surface abstractionmains page', () => {
     expect(response.statusCode).toBe(200)
     expect(response.payload).toContain('Will you increase your use of summer water surface abstraction or mains?')
   })
-
   it('should return an error message if no option is selected and currentlyIrrigating = Yes', async () => {
     varList.currentlyIrrigating = 'Yes'
     const postOptions = {
@@ -81,7 +81,6 @@ describe('summer water surface abstractionmains page', () => {
     expect(postResponse.statusCode).toBe(200)
     expect(postResponse.payload).toContain('Select yes if you’re increasing use of water from summer abstraction or mains')
   })
-
   it('should return an error message if no option is selected and currentlyIrrigating = No', async () => {
     varList.currentlyIrrigating = 'No'
     const postOptions = {

@@ -810,7 +810,10 @@ const questionBank = {
       validate: [
         {
           type: 'NOT_EMPTY',
-          error:'{{_currentlyIrrigating_}}'
+          dependentYarKey:'currentlyIrrigating',
+          error:'Select yes if you’re increasing use of water from summer abstraction or mains',
+          dependantError:'Select yes if you’re going to use summer abstraction or mains'
+            
         }
       ],
       answers: [
