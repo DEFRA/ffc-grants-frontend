@@ -14,6 +14,7 @@ const varListTemplate = {
   planningPermission: 'Will not be in place by 31 January 2023',
   abstractionLicence: 'Not needed',
   sSSI: 'Yes',
+  currentlyIrrigating: 'No',
   'current-score': ''
 
 }
@@ -94,7 +95,6 @@ describe('summer water surface abstractionmains page', () => {
     expect(postResponse.payload).toContain('Select yes if you’re going to use summer abstraction or mains')
   })
 
- 
   it('should store valid user input and redirect to irrgation-water-source page', async () => {
     const postOptions = {
       method: 'POST',
