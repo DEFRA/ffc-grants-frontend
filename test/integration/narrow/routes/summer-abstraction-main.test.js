@@ -29,7 +29,7 @@ const mockSession = {
 
 jest.mock('../../../../app/helpers/session', () => mockSession)
 
-describe('summer abstractionmains page', () => {
+describe('summer water surface abstractionmains page', () => {
   beforeEach(() => {
     varList = { ...varListTemplate }
   })
@@ -55,7 +55,7 @@ describe('summer abstractionmains page', () => {
     }
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
-    expect(response.payload).toContain('Will you use water from summer abstraction or mains?')
+    expect(response.payload).toContain('Will you use water from summer water surface abstraction or mains?')
   })
   it('should load correct question for currently irrigating YES Journey', async () => {
     varList.currentlyIrrigating = 'Yes'
@@ -65,7 +65,7 @@ describe('summer abstractionmains page', () => {
     }
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
-    expect(response.payload).toContain('Will you increase your use of summer abstraction or mains?')
+    expect(response.payload).toContain('Will you increase your use of summer water surface abstraction or mains?')
   })
 
   it('should return an error message if no option is selected and currentlyIrrigating = Yes', async () => {

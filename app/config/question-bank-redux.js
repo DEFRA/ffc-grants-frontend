@@ -780,7 +780,7 @@ const questionBank = {
     {
       key: 'summer-abstraction-mains',
       order: 16,
-      title: 'Will you {{_currentlyIrrigating_}} summer abstraction or mains?',
+      title: 'Will you {{_currentlyIrrigating_}} summer water surface abstraction or mains?',
       classes: 'govuk-radios--inline govuk-fieldset__legend--l',
       pageTitle: '',
       url: 'summer-abstraction-mains',

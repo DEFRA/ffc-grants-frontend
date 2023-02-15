@@ -9,9 +9,8 @@ const { startPageUrl } = require('../config/server')
 const viewTemplate = 'water-source'
 const currentPath = `${urlPrefix}/${viewTemplate}`
 const previousPath = `${urlPrefix}/summer-abstraction-mains`
-const nextPath = `${urlPrefix}/irrigation-system`
 const scorePath = `${urlPrefix}/score`
-const { WATER_SOURCE } = require('../helpers/water-source-data')
+const { WATER_SOURCE, UNSUSTAINABLE_WATER_SOURCE } = require('../helpers/water-source-data')
 
 function createModel (currentlyIrrigating, errorList, currentData, plannedData, hasScore) {
   return {
@@ -117,14 +116,17 @@ module.exports = [
           waterSourceCurrent = waterSourceCurrent ? [waterSourceCurrent].flat() : waterSourceCurrent
           waterSourcePlanned = waterSourcePlanned ? [waterSourcePlanned].flat() : waterSourcePlanned
 
+          setYarValue(request, 'summerAbstractChange', null)
+          setYarValue(request, 'mainsChange', null)
+
           return h.view(viewTemplate, createModel(getYarValue(request, 'currentlyIrrigating'), errorList, waterSourceCurrent, waterSourcePlanned, getYarValue(request, 'current-score'))).takeover()
         }
       },
       handler: (request, h) => {
         let { waterSourceCurrent, waterSourcePlanned, results } = request.payload
-
         waterSourceCurrent = [waterSourceCurrent].flat()
         waterSourcePlanned = [waterSourcePlanned].flat()
+        const nextPath = waterSourcePlanned.some(source => UNSUSTAINABLE_WATER_SOURCE.includes(source)) ? `${urlPrefix}/change-summer-abstraction` : `${urlPrefix}/irrigation-system`
 
         setYarValue(request, 'waterSourceCurrent', waterSourceCurrent)
         setYarValue(request, 'waterSourcePlanned', waterSourcePlanned)

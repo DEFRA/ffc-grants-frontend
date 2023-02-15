@@ -5,6 +5,7 @@ const urlPrefix = require('../config/server').urlPrefix
 const gapiService = require('../services/gapi-service')
 const { guardPage } = require('../helpers/page-guard')
 const { startPageUrl } = require('../config/server')
+const { UNSUSTAINABLE_WATER_SOURCE } = require('../helpers/water-source-data')
 
 const viewTemplate = 'irrigation-system'
 const currentPath = `${urlPrefix}/${viewTemplate}`
@@ -12,9 +13,9 @@ const previousPath = `${urlPrefix}/water-source`
 const nextPath = `${urlPrefix}/irrigated-crops`
 const scorePath = `${urlPrefix}/score`
 
-function createModel (currentlyIrrigating, errorList, currentData, plannedData, hasScore) {
+function createModel (currentlyIrrigating, errorList, currentData, plannedData, hasScore, unsustainableSourceType) {
   return {
-    backLink: previousPath,
+    backLink: (unsustainableSourceType.length > 0) ? `${urlPrefix}/change-summer-abstraction` : previousPath,
     formActionPage: currentPath,
     hasScore,
     ...errorList ? { errorList } : {},
@@ -70,12 +71,14 @@ module.exports = [
         return h.redirect(startPageUrl)
       } 
 
+      const unsustainableSourceType = getYarValue(request, 'waterSourcePlanned').filter(source => UNSUSTAINABLE_WATER_SOURCE.includes(source))
 
       const currentData = getYarValue(request, 'irrigationCurrent') || null
       const plannedData = getYarValue(request, 'irrigationPlanned') || null
 
       const currentlyIrrigating = getYarValue(request, 'currentlyIrrigating')
-      return h.view(viewTemplate, createModel(currentlyIrrigating, null, currentData, plannedData, getYarValue(request, 'current-score')))
+
+      return h.view(viewTemplate, createModel(currentlyIrrigating, null, currentData, plannedData, getYarValue(request, 'current-score'), unsustainableSourceType))
     }
   },
   {
@@ -115,7 +118,9 @@ module.exports = [
           irrigationCurrent = irrigationCurrent ? [irrigationCurrent].flat() : irrigationCurrent
           irrigationPlanned = irrigationPlanned ? [irrigationPlanned].flat() : irrigationPlanned
 
-          return h.view(viewTemplate, createModel(currentlyIrrigating, errorList, irrigationCurrent, irrigationPlanned, getYarValue(request, 'current-score'))).takeover()
+          const unsustainableSourceType = getYarValue(request, 'waterSourcePlanned').filter(source => UNSUSTAINABLE_WATER_SOURCE.includes(source))
+
+          return h.view(viewTemplate, createModel(currentlyIrrigating, errorList, irrigationCurrent, irrigationPlanned, getYarValue(request, 'current-score'), unsustainableSourceType)).takeover()
         }
       },
       handler: (request, h) => {

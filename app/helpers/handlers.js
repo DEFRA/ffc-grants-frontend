@@ -182,7 +182,7 @@ const showPostPage = (currentQuestion, request, h) => {
     setYarValue(request, yarKey, dataObject)
   }
 
-  if (title === 'Will you {{_currentlyIrrigating_}} summer abstraction or mains?') {
+  if (title === 'Will you {{_currentlyIrrigating_}} summer water surface abstraction or mains?') {
     currentQuestion = {
       ...currentQuestion,
       title: title.replace(SELECT_VARIABLE_TO_REPLACE, (_ignore, additionalYarKeyName) => {

@@ -1,0 +1,56 @@
+{% extends '.layout.njk' %}
+
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "./components/macro.njk" import crumbToken, sideBar, conditionalButtons %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+
+{% block pageTitle %}
+  {% if errorList %}
+    Error: 
+  {% endif %} {{pageTitle}} - {{siteTitle}}
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+    text: "Back",
+    href: backLink,
+	  attributes: {id: 'linkBack'}
+  }) }}
+
+  {% if errorList %}
+    {{govukErrorSummary ({
+    "titleText": "There is a problem",
+    "errorList": errorList
+    }) }}
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-l">{{pageTitle}}</h1>
+      <form method="POST" action="{{ formActionPage }}" autocomplete="off" novalidate="novalidate">
+        {{ crumbToken(crumb)}}
+
+        {% if displaySummerObstraction %}
+          {{ govukRadios(summerInput) }}
+        {% endif %}
+
+        {% if displayMains %}
+          {{ govukRadios(mainsInput) }}
+        {% endif %}
+
+        {{ conditionalButtons(hasScore) }}
+      </form>
+    </div>
+    
+    {{ sideBar("Eligibility", "Your project cannot increase water use from summer abstraction or mains. \n\n RPA wants to fund projects that use more sustainable water sources such as:",
+    [
+    "winter peak-flow abstraction",
+    "rain water harvesting",
+    "bore hole/aquifer"
+    ], 'h3') }}
+  </div>
+{% endblock %}
