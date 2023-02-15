@@ -58,9 +58,10 @@ describe('Irrigation syatems page', () => {
 
   it('should load page with no yarValues successfully', async () => {
     varList = {
+      waterSourcePlanned: ['hello'],
       irrigationCurrent: null,
-      irrigationPlanned: null,
-      'current-score': null
+      irrigationPlanned: null
+      // 'current-score': null
     }
     const options = {
       method: 'GET',
@@ -173,7 +174,8 @@ describe('Irrigation syatems page', () => {
   it('should display the error summary if irrigationCurrent has 3 options selected', async () => {
     varList = {
       irrigationCurrent: null,
-      irrigationPlanned: null
+      irrigationPlanned: null,
+      waterSourcePlanned: ['hello']
     }
     const postOptions = {
       method: 'POST',
@@ -196,7 +198,9 @@ describe('Irrigation syatems page', () => {
   it('should display the error summary if irrigationPlanned has 3 options selected', async () => {
     varList = {
       irrigationCurrent: null,
-      irrigationPlanned: null
+      irrigationPlanned: null,
+      waterSourcePlanned: ['hello']
+
     }    
     const postOptions = {
       method: 'POST',
