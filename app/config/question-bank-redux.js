@@ -810,7 +810,8 @@ const questionBank = {
       validate: [
         {
           type: 'NOT_EMPTY',
-          error:'{{_currentlyIrrigating_}}'
+          error:
+            'Select yes if you’re going to use summer abstraction or mains'
         }
       ],
       answers: [
