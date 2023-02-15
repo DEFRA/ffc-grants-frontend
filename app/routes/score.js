@@ -50,6 +50,11 @@ module.exports = [{
       const cropObject = addSummaryRow(crop, request)
 
       if (msgData) {
+        // Add the irrigation rating to the crop object
+        const irrigationRating = msgData.desirability.questions.find(question => question.key === 'Q16').rating;
+        // the crops question (Q15) doesn't have a rating
+        cropObject.rating = irrigationRating;
+
         msgData.desirability.questions.push(cropObject)
         const questions = msgData.desirability.questions.map(desirabilityQuestion => {
           const tableQuestion = tableOrder.filter(tableQuestionD => tableQuestionD.key === desirabilityQuestion.key)[0]
@@ -61,6 +66,7 @@ module.exports = [{
           desirabilityQuestion.pageTitle = tableQuestion.pageTitle
           desirabilityQuestion.fundingPriorities = tableQuestion.fundingPriorities
           desirabilityQuestion.answers = formatAnswers(desirabilityQuestion.answers);
+
           return desirabilityQuestion
         })
         let scoreChance
