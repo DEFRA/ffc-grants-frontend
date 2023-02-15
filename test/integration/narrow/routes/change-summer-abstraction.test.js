@@ -85,7 +85,7 @@ describe('Decrease summer water surface abstraction Page', () => {
 
         const postResponse = await global.__SERVER__.inject(postOptions)
         expect(postResponse.statusCode).toBe(200)
-        expect(postResponse.payload).toContain('Select how your use of summer water surface abstraction will change')
+        expect(postResponse.payload).toContain('Select how your use of summer abstraction will change')
         expect(postResponse.payload).toContain('Select how your use of mains will change')
     })
 
@@ -101,7 +101,7 @@ describe('Decrease summer water surface abstraction Page', () => {
 
         const postResponse = await global.__SERVER__.inject(postOptions)
         expect(postResponse.statusCode).toBe(200)
-        expect(postResponse.payload).toContain('Select how your use of summer water surface abstraction will change')
+        expect(postResponse.payload).toContain('Select how your use of summer abstraction will change')
     })
 
     it('should return an error message if summerAbstractChange selected and mainsChange not selected', async () => {

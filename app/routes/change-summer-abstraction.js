@@ -89,7 +89,7 @@ module.exports = [
 
         if (summerAbstractChangeError) {
           errorList.push({
-            text: 'Select how your use of summer water surface abstraction will change',
+            text: 'Select how your use of summer abstraction will change',
             href: '#summerAbstractChange'
           })
         }
