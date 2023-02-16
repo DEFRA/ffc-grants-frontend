@@ -12,6 +12,29 @@ const previousPath = `${urlPrefix}/summer-abstraction-mains`
 const scorePath = `${urlPrefix}/score`
 const { WATER_SOURCE, UNSUSTAINABLE_WATER_SOURCE } = require('../helpers/water-source-data')
 
+let waterSourceArray = []
+let waterSourcePlannedArray = []
+const schema = Joi.object({
+  waterSourceCurrent: Joi.array().single().required().custom((value, helper) => {
+    waterSourceArray = value.filter((item) => UNSUSTAINABLE_WATER_SOURCE.includes(item))
+    console.log('waterSourceCurrent - : ', value);
+    console.log('waterSourceCurrent - filtered : ', waterSourceArray);
+    return value;
+  }),
+  waterSourcePlanned: Joi.array().single().required().custom((value, helper) => {
+    waterSourcePlannedArray = value.filter((item) => UNSUSTAINABLE_WATER_SOURCE.includes(item))
+    if (waterSourceArray.length > 0 && waterSourcePlannedArray.length > 0) {
+      const unSustainableWaterSourceReused = waterSourceArray.some((item) => waterSourcePlannedArray.includes(item))
+      if (unSustainableWaterSourceReused) {
+        return helper.message('You cannot increase use of an unsustainable water source')
+      }
+      return true;
+    }
+  }),
+  results: Joi.any()
+
+});
+
 function createModel (currentlyIrrigating, errorList, currentData, plannedData, hasScore) {
   return {
     backLink: previousPath,
@@ -85,45 +108,42 @@ module.exports = [
     options: {
       validate: {
         options: { abortEarly: false },
-        payload: Joi.object({
-          waterSourceCurrent: Joi.array().single().required(),
-          waterSourcePlanned: Joi.array().single().required(),
-          results: Joi.any()
-
-        }),
+        payload: schema,
         failAction: (request, h, err) => {
           gapiService.sendValidationDimension(request)
           let { waterSourceCurrent, waterSourcePlanned } = request.payload
+          // console.log('here: ', waterSourceCurrent, waterSourcePlanned);
           const errorList = []
           const [
             waterSourceCurrentError, waterSourcePlannedError
           ] = findErrorList(err, ['waterSourceCurrent', 'waterSourcePlanned'])
-
+          
           if (waterSourceCurrentError) {
             errorList.push({
               text: waterSourceCurrentError,
               href: '#waterSourceCurrent'
             })
           }
-
+          
           if (waterSourcePlannedError) {
             errorList.push({
               text: waterSourcePlannedError,
               href: '#waterSourcePlanned'
             })
           }
-
+          
           waterSourceCurrent = waterSourceCurrent ? [waterSourceCurrent].flat() : waterSourceCurrent
           waterSourcePlanned = waterSourcePlanned ? [waterSourcePlanned].flat() : waterSourcePlanned
-
+          
           setYarValue(request, 'summerAbstractChange', null)
           setYarValue(request, 'mainsChange', null)
-
+          
           return h.view(viewTemplate, createModel(getYarValue(request, 'currentlyIrrigating'), errorList, waterSourceCurrent, waterSourcePlanned, getYarValue(request, 'current-score'))).takeover()
         }
       },
       handler: (request, h) => {
         let { waterSourceCurrent, waterSourcePlanned, results } = request.payload
+        console.log('Handler here: ', waterSourceCurrent, waterSourcePlanned);
         waterSourceCurrent = [waterSourceCurrent].flat()
         waterSourcePlanned = [waterSourcePlanned].flat()
         const nextPath = waterSourcePlanned.some(source => UNSUSTAINABLE_WATER_SOURCE.includes(source)) ? `${urlPrefix}/change-summer-abstraction` : `${urlPrefix}/irrigation-system`
