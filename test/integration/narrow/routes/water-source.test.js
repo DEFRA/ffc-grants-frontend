@@ -209,12 +209,12 @@ describe('Water-source page - Validations', () => {
   })
 
   describe('[Increase use of an unsustainable water is DISALLOWED]: "Summer water surface abstraction" and "Mains"', () => {
-    it("ERRORS if the user selects [Mains] for planned water source AND they are currently using the same USUSTAINABLE water source", async () => {
+    it("ERRORS if the user selects [Mains] for planned water source AND they are NOT currently using the same water source", async () => {
       const postOptionsExample = {
         method: 'POST',
         url: `${global.__URLPREFIX__}/water-source`,
         payload: {
-          waterSourceCurrent: 'Mains',
+          waterSourceCurrent: 'Summer water surface abstraction',
           waterSourcePlanned: 'Mains',
           crumb: crumbToken
         },
@@ -228,12 +228,12 @@ describe('Water-source page - Validations', () => {
       expect(postResponseMains.payload).toContain('You cannot increase use of an unsustainable water source')
     })
 
-    it("ERRORS if the user selects [Summer water surface abstraction] for planned water source AND they are currently using the same USUSTAINABLE water source", async () => {
+    it("ERRORS if the user selects [Summer water surface abstraction] for planned water source AND they are NOT currently using the same water source", async () => {
       const postOptionsExample = {
         method: 'POST',
         url: `${global.__URLPREFIX__}/water-source`,
         payload: {
-          waterSourceCurrent: 'Summer water surface abstraction',
+          waterSourceCurrent: 'Mains',
           waterSourcePlanned: 'Summer water surface abstraction',
           crumb: crumbToken
         },
