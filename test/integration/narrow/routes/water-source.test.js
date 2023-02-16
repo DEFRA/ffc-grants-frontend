@@ -7,20 +7,20 @@ const varListTemplate = {
   projectStarted: 'No',
   landOwnership: 'Yes',
   projectItemsList: {
-    projectEquipment: ['Boom', 'Trickle']
+    projectEquipment: [ 'Boom', 'Trickle' ]
   },
   projectCost: '12345678',
   remainingCost: 14082.00,
   payRemainingCosts: 'Yes',
   sSSI: 'yes',
   abstractionLicence: 'Not needed',
-  project: ['some fake project'],
+  project: [ 'some fake project' ],
   irrigatedCrops: 'some crop',
   currentlyIrrigating: 'Yes',
   irrigatedLandCurrent: '123',
   irrigatedLandTarget: '456',
-  waterSourceCurrent: ['some source 1'],
-  waterSourcePlanned: ['some source 2', 'another source'],
+  waterSourceCurrent: [ 'some source 1' ],
+  waterSourcePlanned: [ 'some source 2', 'another source' ],
   'current-score': null
 }
 
@@ -28,7 +28,7 @@ let varList
 const mockSession = {
   setYarValue: (request, key, value) => null,
   getYarValue: (request, key) => {
-    if (Object.keys(varList).includes(key)) return varList[key]
+    if (Object.keys(varList).includes(key)) return varList[ key ]
     else return 'Error'
   }
 }
@@ -74,35 +74,6 @@ describe('Irrigation water source page', () => {
 
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
-  })
-  it('should returns error message if no current water source option is selected', async () => {
-    const postOptions = {
-      method: 'POST',
-      url: `${global.__URLPREFIX__}/water-source`,
-      payload: { waterSourcePlanned: 'another-option-1', crumb: crumbToken },
-      headers: {
-        cookie: 'crumb=' + crumbToken
-      }
-    }
-
-    const postResponse = await global.__SERVER__.inject(postOptions)
-    expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Select where your current irrigation water comes from')
-  })
-
-  it('should returns error message if no planned water source option is selected', async () => {
-    const postOptions = {
-      method: 'POST',
-      url: `${global.__URLPREFIX__}/water-source`,
-      payload: { waterSourceCurrent: 'some option-1', crumb: crumbToken },
-      headers: {
-        cookie: 'crumb=' + crumbToken
-      }
-    }
-
-    const postResponse = await global.__SERVER__.inject(postOptions)
-    expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Select where your irrigation water will come from')
   })
 
   it('should store user response and redirects to irrigated crops page', async () => {
@@ -196,3 +167,83 @@ describe('Irrigation water source page', () => {
     expect(response.headers.location).toBe(`${global.__URLPREFIX__}/start`)
   })
 })
+
+
+describe('Water-source page - Validations', () => {
+  beforeEach(() => {
+    varList = { ...varListTemplate }
+  })
+
+  afterEach(() => {
+    jest.clearAllMocks()
+  })
+
+  it('should returns error message if no current water source option is selected', async () => {
+    const postOptions = {
+      method: 'POST',
+      url: `${global.__URLPREFIX__}/water-source`,
+      payload: { waterSourcePlanned: 'another-option-1', crumb: crumbToken },
+      headers: {
+        cookie: 'crumb=' + crumbToken
+      }
+    }
+
+    const postResponse = await global.__SERVER__.inject(postOptions)
+    expect(postResponse.statusCode).toBe(200)
+    expect(postResponse.payload).toContain('Select where your current irrigation water comes from')
+  })
+
+  it('should returns error message if no planned water source option is selected', async () => {
+    const postOptions = {
+      method: 'POST',
+      url: `${global.__URLPREFIX__}/water-source`,
+      payload: { waterSourceCurrent: 'some option-1', crumb: crumbToken },
+      headers: {
+        cookie: 'crumb=' + crumbToken
+      }
+    }
+
+    const postResponse = await global.__SERVER__.inject(postOptions)
+    expect(postResponse.statusCode).toBe(200)
+    expect(postResponse.payload).toContain('Select where your irrigation water will come from')
+  })
+
+  describe('[Increase use of an unsustainable water is DISALLOWED]: "Summer water surface abstraction" and "Mains"', () => {
+    it("ERRORS if the user selects [Mains] for planned water source AND they are NOT currently using the same water source", async () => {
+      const postOptionsExample = {
+        method: 'POST',
+        url: `${global.__URLPREFIX__}/water-source`,
+        payload: {
+          waterSourceCurrent: 'Summer water surface abstraction',
+          waterSourcePlanned: 'Mains',
+          crumb: crumbToken
+        },
+        headers: {
+          cookie: 'crumb=' + crumbToken
+        }
+      }
+
+      const postResponseMains = await global.__SERVER__.inject(postOptionsExample)
+      expect(postResponseMains.statusCode).toBe(200)
+      expect(postResponseMains.payload).toContain('You cannot increase use of an unsustainable water source')
+    })
+
+    it("ERRORS if the user selects [Summer water surface abstraction] for planned water source AND they are NOT currently using the same water source", async () => {
+      const postOptionsExample = {
+        method: 'POST',
+        url: `${global.__URLPREFIX__}/water-source`,
+        payload: {
+          waterSourceCurrent: 'Mains',
+          waterSourcePlanned: 'Summer water surface abstraction',
+          crumb: crumbToken
+        },
+        headers: {
+          cookie: 'crumb=' + crumbToken
+        }
+      }
+      const postResponseSummer = await global.__SERVER__.inject(postOptionsExample)
+      expect(postResponseSummer.statusCode).toBe(200)
+      expect(postResponseSummer.payload).toContain('You cannot increase use of an unsustainable water source')
+    })
+  });
+});

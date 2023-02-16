@@ -12,6 +12,28 @@ const previousPath = `${urlPrefix}/summer-abstraction-mains`
 const scorePath = `${urlPrefix}/score`
 const { WATER_SOURCE, UNSUSTAINABLE_WATER_SOURCE } = require('../helpers/water-source-data')
 
+let waterSourceArray = []
+let waterSourcePlannedArray = []
+const schema = Joi.object({
+  waterSourceCurrent: Joi.array().single().required().custom((value, helper) => {
+    waterSourceArray = value.filter((item) => UNSUSTAINABLE_WATER_SOURCE.includes(item))
+    return value;
+  }),
+  waterSourcePlanned: Joi.array().single().required().custom((value, helper) => {
+    waterSourcePlannedArray = value.filter((item) => UNSUSTAINABLE_WATER_SOURCE.includes(item))
+    if (waterSourceArray.length > 0 && waterSourcePlannedArray.length > 0) {
+      const newUnsustainableWaterSources = waterSourcePlannedArray.filter((item) => !waterSourceArray.includes(item))
+      // if the user has selected an unsustainable water source that they are NOT currently using
+      if (newUnsustainableWaterSources.length > 0) {
+        return helper.message('You cannot increase use of an unsustainable water source')
+      }
+      return true;
+    }
+  }),
+  results: Joi.any()
+
+});
+
 function createModel (currentlyIrrigating, errorList, currentData, plannedData, hasScore) {
   return {
     backLink: previousPath,
@@ -85,12 +107,7 @@ module.exports = [
     options: {
       validate: {
         options: { abortEarly: false },
-        payload: Joi.object({
-          waterSourceCurrent: Joi.array().single().required(),
-          waterSourcePlanned: Joi.array().single().required(),
-          results: Joi.any()
-
-        }),
+        payload: schema,
         failAction: (request, h, err) => {
           gapiService.sendValidationDimension(request)
           let { waterSourceCurrent, waterSourcePlanned } = request.payload
