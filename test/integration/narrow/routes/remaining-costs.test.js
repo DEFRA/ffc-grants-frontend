@@ -74,7 +74,7 @@ describe('Remaining costs page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/summer-abstraction-mains`)
+    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/water-source`)
   })
 
   it('should return an error message if no option is selected', async () => {
