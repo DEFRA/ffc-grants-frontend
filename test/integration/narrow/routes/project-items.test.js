@@ -98,7 +98,7 @@ describe('project items page', () => {
 
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(302)
-    expect(response.headers.location).toBe(`${global.__URLPREFIX__}/summer-abstraction-mains`)
+    expect(response.headers.location).toBe(`${global.__URLPREFIX__}/water-source`)
   })
 
   it('should return error message if no option is selected', async () => {
