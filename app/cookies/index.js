@@ -45,6 +45,7 @@ module.exports = {
     `${urlPrefix}/assets`,
     '/healthy',
     '/healthz',
-    `${urlPrefix}/login`
+    `${urlPrefix}/login`,
+    `${urlPrefix}/confirmation`
   ]
 }

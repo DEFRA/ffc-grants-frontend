@@ -79,7 +79,7 @@ describe('summer water surface abstractionmains page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Select yes if you’re increasing use of water from summer abstraction or mains')
+    expect(postResponse.payload).toContain('Select yes if you’re increasing use of water from summer water surface abstraction or mains')
   })
   it('should return an error message if no option is selected and currentlyIrrigating = No', async () => {
     varList.currentlyIrrigating = 'No'
