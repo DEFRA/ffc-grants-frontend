@@ -32,9 +32,9 @@ const getPage = async (question, request, h) => {
   if (isRedirect) {
     return h.redirect(startPageUrl)
   }
-  if (getYarValue(request, 'current-score') && question.order < 15) {
+  if (getYarValue(request, 'current-score') && question.order < 17) {
     // check if score and if question is before scoring question. If it is, move to score results
-    return h.redirect(`${urlPrefix}/summer-abstraction-mains`)
+    return h.redirect(`${urlPrefix}/water-source`)
   }
   let confirmationId = ''
 
