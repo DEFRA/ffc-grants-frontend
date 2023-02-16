@@ -13,11 +13,13 @@
 {% endblock %}
 
 {% block beforeContent %}
+ {% if not hasScore %}
   {{ govukBackLink({
     text: "Back",
     href: backLink,
 	  attributes: {id: 'linkBack'}
   }) }}
+  {% endif %}
 
   {% if errorList %}
     {{govukErrorSummary ({
