@@ -811,7 +811,7 @@ const questionBank = {
         {
           type: 'NOT_EMPTY',
           dependentYarKey:'currentlyIrrigating',
-          error:'Select yes if you’re increasing use of water from summer water surface abstraction or main',
+          error:'Select yes if you’re increasing use of water from summer abstraction or main',
           dependantError:'Select yes if you’re going to use summer abstraction or mains'
             
         }
