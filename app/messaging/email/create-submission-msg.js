@@ -68,7 +68,7 @@ function getSpreadsheetDetails (submission, desirabilityScore) {
   const today = new Date()
   const todayStr = today.toLocaleDateString('en-GB')
   const subScheme = 'FTF-Water-Round 2'
-
+  submission.project = ''
   return {
     filename: generateExcelFilename(
       subScheme.trim(),
@@ -105,6 +105,8 @@ function getSpreadsheetDetails (submission, desirabilityScore) {
           generateRow(345, 'Remaining Cost to Farmer', submission.remainingCost),
           generateRow(346, 'Planning Permission Status', submission.planningPermission),
           generateRow(347, 'Abstraction License Status', submission.abstractionLicence),
+          generateRow(348, 'Irrigation Impact', [submission.project].flat().join('|')),
+          generateRow(349, 'Irrigation Impact Score', 'Strong'),
           generateRow(350, 'Irrigation Farming Scale (AKA Crop Type)', submission.irrigatedCrops),
           generateRow(351, 'Irrigation Crop Score', ''),
           generateRow(352, 'As-Is Irrigation (ha)', submission.irrigatedLandCurrent),
@@ -177,6 +179,8 @@ function getScoreChance (rating) {
 
 function getEmailDetails (submission, desirabilityScore, notifyTemplate, agentApplying, rpaEmail) {
   const email = agentApplying ? submission.agentDetails.emailAddress : submission.farmerDetails.emailAddress
+  submission.project = ''
+
   return {
     notifyTemplate: emailConfig.notifyTemplate,
     emailAddress: rpaEmail || email,
@@ -201,6 +205,8 @@ function getEmailDetails (submission, desirabilityScore, notifyTemplate, agentAp
       planningPermission: submission.planningPermission,
       abstractionLicence: submission.abstractionLicence,
       projectName: submission.businessDetails.projectName,
+      projectDetails: [submission.project].flat().join(', '),
+      projectDetailsScore: 'Strong',
       irrigatedCrops: submission.irrigatedCrops,
       irrigatedLandCurrent: submission.irrigatedLandCurrent,
       irrigatedLandTarget: submission.irrigatedLandTarget,
