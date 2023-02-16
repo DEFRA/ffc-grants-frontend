@@ -17,8 +17,6 @@ let waterSourcePlannedArray = []
 const schema = Joi.object({
   waterSourceCurrent: Joi.array().single().required().custom((value, helper) => {
     waterSourceArray = value.filter((item) => UNSUSTAINABLE_WATER_SOURCE.includes(item))
-    console.log('waterSourceCurrent - : ', value);
-    console.log('waterSourceCurrent - filtered : ', waterSourceArray);
     return value;
   }),
   waterSourcePlanned: Joi.array().single().required().custom((value, helper) => {
@@ -112,38 +110,36 @@ module.exports = [
         failAction: (request, h, err) => {
           gapiService.sendValidationDimension(request)
           let { waterSourceCurrent, waterSourcePlanned } = request.payload
-          // console.log('here: ', waterSourceCurrent, waterSourcePlanned);
           const errorList = []
           const [
             waterSourceCurrentError, waterSourcePlannedError
           ] = findErrorList(err, ['waterSourceCurrent', 'waterSourcePlanned'])
-          
+
           if (waterSourceCurrentError) {
             errorList.push({
               text: waterSourceCurrentError,
               href: '#waterSourceCurrent'
             })
           }
-          
+
           if (waterSourcePlannedError) {
             errorList.push({
               text: waterSourcePlannedError,
               href: '#waterSourcePlanned'
             })
           }
-          
+
           waterSourceCurrent = waterSourceCurrent ? [waterSourceCurrent].flat() : waterSourceCurrent
           waterSourcePlanned = waterSourcePlanned ? [waterSourcePlanned].flat() : waterSourcePlanned
-          
+
           setYarValue(request, 'summerAbstractChange', null)
           setYarValue(request, 'mainsChange', null)
-          
+
           return h.view(viewTemplate, createModel(getYarValue(request, 'currentlyIrrigating'), errorList, waterSourceCurrent, waterSourcePlanned, getYarValue(request, 'current-score'))).takeover()
         }
       },
       handler: (request, h) => {
         let { waterSourceCurrent, waterSourcePlanned, results } = request.payload
-        console.log('Handler here: ', waterSourceCurrent, waterSourcePlanned);
         waterSourceCurrent = [waterSourceCurrent].flat()
         waterSourcePlanned = [waterSourcePlanned].flat()
         const nextPath = waterSourcePlanned.some(source => UNSUSTAINABLE_WATER_SOURCE.includes(source)) ? `${urlPrefix}/change-summer-abstraction` : `${urlPrefix}/irrigation-system`
