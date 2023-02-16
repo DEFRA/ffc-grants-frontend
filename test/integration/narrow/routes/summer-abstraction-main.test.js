@@ -92,7 +92,7 @@ describe('summer water surface abstractionmains page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Select yes if you’re going to use summer abstraction or mains')
+    expect(postResponse.payload).toContain('Select yes if you’re going to use summer water surface abstraction or mains')
   })
 
   it('should store valid user input and redirect to irrgation-water-source page', async () => {
