@@ -27,11 +27,10 @@ const schema = Joi.object({
       if (newUnsustainableWaterSources.length > 0) {
         return helper.message('You cannot increase use of an unsustainable water source')
       }
-      return true;
+      return value;
     }
   }),
   results: Joi.any()
-
 });
 
 function createModel (currentlyIrrigating, errorList, currentData, plannedData, hasScore) {
