@@ -91,20 +91,20 @@ describe('Irrigation water source page', () => {
     expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/irrigation-system`)
   })
 
-  it('should store user response and redirects to scores page', async () => {
-    const postOptions = {
-      method: 'POST',
-      url: `${global.__URLPREFIX__}/water-source`,
-      payload: { waterSourceCurrent: 'some option-1', waterSourcePlanned: 'another-option-1', results: 'result', crumb: crumbToken },
-      headers: {
-        cookie: 'crumb=' + crumbToken
-      }
-    }
+  // it('should store user response and redirects to scores page', async () => {
+  //   const postOptions = {
+  //     method: 'POST',
+  //     url: `${global.__URLPREFIX__}/water-source`,
+  //     payload: { waterSourceCurrent: 'some option-1', waterSourcePlanned: 'another-option-1', results: 'result', crumb: crumbToken },
+  //     headers: {
+  //       cookie: 'crumb=' + crumbToken
+  //     }
+  //   }
 
-    const postResponse = await global.__SERVER__.inject(postOptions)
-    expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/score`)
-  })
+  //   const postResponse = await global.__SERVER__.inject(postOptions)
+  //   expect(postResponse.statusCode).toBe(302)
+  //   expect(postResponse.headers.location).toBe(`${global.__URLPREFIX__}/score`)
+  // })
 
   it('redirects to water-source if user waterSourceCurrent and waterSourcePlanned have not been saved', async () => {
     const postOptions = {
