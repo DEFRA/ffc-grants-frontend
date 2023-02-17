@@ -21,14 +21,28 @@ const schema = Joi.object({
   }),
   waterSourcePlanned: Joi.array().single().required().custom((value, helper) => {
     waterSourcePlannedArray = value.filter((item) => UNSUSTAINABLE_WATER_SOURCE.includes(item))
+
+    // if the user has selected a planned unsustainable water source that they are NOT currently using
+    const newUnsustainableWaterSourcesPlanned = waterSourceArray.length === 0 && waterSourcePlannedArray.length > 0;
+    if (newUnsustainableWaterSourcesPlanned) {
+      waterSourceArray = []
+      waterSourcePlannedArray = []
+      return helper.error('custom')
+    }
+
     if (waterSourceArray.length > 0 && waterSourcePlannedArray.length > 0) {
       const newUnsustainableWaterSources = waterSourcePlannedArray.filter((item) => !waterSourceArray.includes(item))
       // if the user has selected an unsustainable water source that they are NOT currently using
-      if (newUnsustainableWaterSources.length > 0) {
-        return helper.message('You cannot increase use of an unsustainable water source')
+      if (newUnsustainableWaterSources.length > 0 || newUnsustainableWaterSourcesPlanned) {
+        waterSourceArray = []
+        waterSourcePlannedArray = []
+        return helper.error('custom')
       }
+
       return value;
     }
+
+    return value;
   }),
   results: Joi.any()
 });
