@@ -23,9 +23,9 @@ const schema = Joi.object({
     waterSourcePlannedArray = value.filter((item) => UNSUSTAINABLE_WATER_SOURCE.includes(item))
     if (waterSourceArray.length > 0 && waterSourcePlannedArray.length > 0) {
       const newUnsustainableWaterSources = waterSourcePlannedArray.filter((item) => !waterSourceArray.includes(item))
-
+      const newUnsustainableWaterSourcesPlanned = waterSourceArray.length === 0 && waterSourcePlannedArray.length > 0;
       // if the user has selected an unsustainable water source that they are NOT currently using
-      if (newUnsustainableWaterSources.length > 0) {
+      if (newUnsustainableWaterSources.length > 0 || newUnsustainableWaterSourcesPlanned) {
         waterSourceArray = []
         waterSourcePlannedArray = []
         return helper.error('custom')
