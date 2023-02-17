@@ -144,7 +144,7 @@ module.exports = [
         }
       },
       handler: (request, h) => {
-        let { waterSourceCurrent, waterSourcePlanned, results } = request.payload
+        let { waterSourceCurrent, waterSourcePlanned } = request.payload
         waterSourceCurrent = [waterSourceCurrent].flat()
         waterSourcePlanned = [waterSourcePlanned].flat()
         const nextPath = waterSourcePlanned.some(source => UNSUSTAINABLE_WATER_SOURCE.includes(source)) ? `${urlPrefix}/change-summer-abstraction` : `${urlPrefix}/irrigation-system`
@@ -152,7 +152,7 @@ module.exports = [
         setYarValue(request, 'waterSourceCurrent', waterSourceCurrent)
         setYarValue(request, 'waterSourcePlanned', waterSourcePlanned)
 
-        return results ? h.redirect(scorePath) : h.redirect(nextPath)
+        return h.redirect(nextPath)
       }
     }
   }
