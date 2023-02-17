@@ -23,12 +23,17 @@ const schema = Joi.object({
     waterSourcePlannedArray = value.filter((item) => UNSUSTAINABLE_WATER_SOURCE.includes(item))
     if (waterSourceArray.length > 0 && waterSourcePlannedArray.length > 0) {
       const newUnsustainableWaterSources = waterSourcePlannedArray.filter((item) => !waterSourceArray.includes(item))
+
       // if the user has selected an unsustainable water source that they are NOT currently using
       if (newUnsustainableWaterSources.length > 0) {
-        return helper.message('You cannot increase use of an unsustainable water source')
+        waterSourceArray = []
+        waterSourcePlannedArray = []
+        return helper.error('custom')
+      } else {
+        return value;
       }
-      return value;
     }
+    return value;
   }),
   results: Joi.any()
 });
