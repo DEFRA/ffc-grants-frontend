@@ -21,17 +21,30 @@ const schema = Joi.object({
   }),
   waterSourcePlanned: Joi.array().single().required().custom((value, helper) => {
     waterSourcePlannedArray = value.filter((item) => UNSUSTAINABLE_WATER_SOURCE.includes(item))
+
+    // if the user has selected a planned unsustainable water source that they are NOT currently using
+    const newUnsustainableWaterSourcesPlanned = waterSourceArray.length === 0 && waterSourcePlannedArray.length > 0;
+    if (newUnsustainableWaterSourcesPlanned) {
+      waterSourceArray = []
+      waterSourcePlannedArray = []
+      return helper.error('custom')
+    }
+
     if (waterSourceArray.length > 0 && waterSourcePlannedArray.length > 0) {
       const newUnsustainableWaterSources = waterSourcePlannedArray.filter((item) => !waterSourceArray.includes(item))
       // if the user has selected an unsustainable water source that they are NOT currently using
-      if (newUnsustainableWaterSources.length > 0) {
-        return helper.message('You cannot increase use of an unsustainable water source')
+      if (newUnsustainableWaterSources.length > 0 || newUnsustainableWaterSourcesPlanned) {
+        waterSourceArray = []
+        waterSourcePlannedArray = []
+        return helper.error('custom')
       }
-      return true;
+
+      return value;
     }
+
+    return value;
   }),
   results: Joi.any()
-
 });
 
 function createModel (currentlyIrrigating, errorList, currentData, plannedData, hasScore) {
@@ -140,7 +153,7 @@ module.exports = [
         }
       },
       handler: (request, h) => {
-        let { waterSourceCurrent, waterSourcePlanned, results } = request.payload
+        let { waterSourceCurrent, waterSourcePlanned } = request.payload
         waterSourceCurrent = [waterSourceCurrent].flat()
         waterSourcePlanned = [waterSourcePlanned].flat()
         const nextPath = waterSourcePlanned.some(source => UNSUSTAINABLE_WATER_SOURCE.includes(source)) ? `${urlPrefix}/change-summer-abstraction` : `${urlPrefix}/irrigation-system`
@@ -148,7 +161,7 @@ module.exports = [
         setYarValue(request, 'waterSourceCurrent', waterSourceCurrent)
         setYarValue(request, 'waterSourcePlanned', waterSourcePlanned)
 
-        return results ? h.redirect(scorePath) : h.redirect(nextPath)
+        return h.redirect(nextPath)
       }
     }
   }
