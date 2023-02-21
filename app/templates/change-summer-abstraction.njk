@@ -45,12 +45,22 @@
         {{ conditionalButtons(hasScore) }}
       </form>
     </div>
-    
-    {{ sideBar("Funding Priorities", "RPA wants to fund projects that use more sustainable water sources, such as:",
+
+    {% if displayMains and displaySummerObstraction %}
+      {{ sideBar("Funding Priorities", "RPA wants to fund projects that use more sustainable water sources, such as:",
+    [
+    "winter peak-flow abstraction",
+    "rain water harvesting",
+    "bore hole/aquifer"
+    ], 'h3') }}
+    {% else %}
+      {{ sideBar("Funding Priorities", "RPA wants to fund projects that use more sustainable water sources, such as:",
     [
     "winter peak-flow abstraction",
     "rain water harvesting",
     "bore hole/aquifer"
     ], 'h2') }}
+    {% endif %}
+
   </div>
 {% endblock %}
