@@ -45,7 +45,7 @@ const tableOrder = [
 		title: 'Irrigation system',
 		pageTitle: 'Irrigation system',
 		fundingPriorities: 'Improve the environment <br/> Improving water sustainability',
-		url: 'irrigation-system',ty
+		url: 'irrigation-system',
 		yarKey: 'irrigationCurrent',
 	},
 	{
