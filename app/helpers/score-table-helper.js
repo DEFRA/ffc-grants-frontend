@@ -31,7 +31,7 @@ const formatAnswers = (answers) => {
 
 const tableOrder = [
 	{
-		key: 'Q17',
+		key: 'water-source',
 		order: 1,
 		title: 'Irrigation water source',
 		pagesTitle: 'Irrigation source',
@@ -40,16 +40,16 @@ const tableOrder = [
 		yarKey: 'waterSourceCurrent',
 	},
 	{
-		key: 'Q18',
+		key: 'irrigation-system',
 		order: 2,
 		title: 'Irrigation system',
 		pageTitle: 'Irrigation system',
 		fundingPriorities: 'Improve the environment <br/> Improving water sustainability',
-		url: 'irrigation-system',
+		url: 'irrigation-system',ty
 		yarKey: 'irrigationCurrent',
 	},
 	{
-		key: 'Q15',
+		key: 'irrigated-crops',
 		order: 3,
 		pageTitle: 'Main crop',
 		fundingPriorities: 'Improve productivity',
@@ -57,7 +57,7 @@ const tableOrder = [
 		yarKey: 'irrigatedCrops',
 	},
 	{
-		key: 'Q16',
+		key: 'irrigated-land',
 		order: 4,
 		title: 'Irrigated land',
 		pageTitle: 'Irrigated land',
@@ -68,7 +68,7 @@ const tableOrder = [
 		yarKey: 'irrigatedLandCurrent'
 	},
 	{
-		key: 'Q19',
+		key: 'productivity',
 		order: 5,
 		pageTitle: 'Productivity',
 		fundingPriorities: 'Improve productivity',
@@ -77,7 +77,7 @@ const tableOrder = [
 		yarKey: 'productivity',
 	},
 	{
-		key: 'Q20',
+		key: 'collaboration',
 		order: 6,
 		pageTitle: 'Other farms',
 		fundingPriorities: 'Improve water sustainability',

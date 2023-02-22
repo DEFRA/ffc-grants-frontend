@@ -7,10 +7,10 @@ const msgData = {
   desirability: {
     questions: [
       {
-        key: 'Q16',
+        key: 'irrigated-land',
         answers: [
           {
-            key: 'Q16a',
+            key: 'irrigated-land-a',
             title: 'Current land irrigated',
             input: [
               {
@@ -20,7 +20,7 @@ const msgData = {
             ]
           },
           {
-            key: 'Q16b',
+            key: 'irrigated-land-b',
             title: 'Future land irrigated',
             input: [
               {
@@ -36,24 +36,24 @@ const msgData = {
         }
       },
       {
-        key: 'Q17',
+        key: 'water-source',
         answers: [
           {
-            key: 'Q17a',
+            key: 'water-source-a',
             title: 'Current water source',
             input: [
               {
-                key: 'Q17a-A6',
+                key: 'water-source-a-A6',
                 value: 'Not currently irrigating'
               }
             ]
           },
           {
-            key: 'Q17b',
+            key: 'water-source-b',
             title: 'Future water source',
             input: [
               {
-                key: 'Q17b-A2',
+                key: 'water-source-b-A2',
                 value: 'Bore hole / aquifer'
               }
             ]
@@ -65,24 +65,24 @@ const msgData = {
         }
       },
       {
-        key: 'Q18',
+        key: 'irrigation-system',
         answers: [
           {
-            key: 'Q18a',
+            key: 'irrigation-system-a',
             title: 'Current irrigation systems',
             input: [
               {
-                key: 'Q18a-A6',
+                key: 'irrigation-system-a-A6',
                 value: 'Not currently irrigating'
               }
             ]
           },
           {
-            key: 'Q18b',
+            key: 'irrigation-system-b',
             title: 'Future irrigation systems',
             input: [
               {
-                key: 'Q18b-A3',
+                key: 'irrigation-system-b-A3',
                 value: 'Ebb and flood or capillary bed'
               }
             ]
@@ -94,18 +94,18 @@ const msgData = {
         }
       },
       {
-        key: 'Q19',
+        key: 'productivity',
         answers: [
           {
-            key: 'Q19',
+            key: 'productivity',
             title: 'Productivity',
             input: [
               {
-                key: 'Q19-A5',
+                key: 'productivity-A5',
                 value: 'Maintain productivity'
               },
               {
-                key: 'Q19-A3',
+                key: 'productivity-A3',
                 value: 'Increased yield per hectare'
               }
             ]
@@ -117,14 +117,14 @@ const msgData = {
         }
       },
       {
-        key: 'Q20',
+        key: 'collaboration',
         answers: [
           {
-            key: 'Q20',
+            key: 'collaboration',
             title: 'Water sharing',
             input: [
               {
-                key: 'Q20-A1',
+                key: 'collaboration-A1',
                 value: 'Yes'
               }
             ]

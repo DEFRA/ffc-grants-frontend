@@ -5,7 +5,7 @@ describe('Score table helper functions', () => {
 	test('formatAnswers(), currently irrigating scenario (YES Scenario)', () => {
 		const answersSample1 = [
 			{
-				"key": "Q16a",
+				"key": "irrigated-land-a",
 				"title": "Current land irrigated",
 				"input": [
 					{
@@ -15,7 +15,7 @@ describe('Score table helper functions', () => {
 				]
 			},
 			{
-				"key": "Q16b",
+				"key": "irrigated-land-b",
 				"title": "Future land irrigated",
 				"input": [
 					{
@@ -28,11 +28,11 @@ describe('Score table helper functions', () => {
 
 		const answersSample2 = [
 			{
-				"key": "Q19",
+				"key": "productivity",
 				"title": "Productivity",
 				"input": [
 					{
-						"key": "Q19-A1",
+						"key": "productivity-A1",
 						"value": "Introduce or expand high-value crops"
 					}
 				]
@@ -41,11 +41,11 @@ describe('Score table helper functions', () => {
 
 		const answersSample3 = [
 			{
-				"key": "Q15",
+				"key": "irrigated-crops",
 				"title": "Main crop",
 				"input": [
 					{
-						"key": "Q19-A1",
+						"key": "productivity-A1",
 						"value": "Introduce or expand high-value crops"
 					}
 				]
@@ -53,11 +53,11 @@ describe('Score table helper functions', () => {
 		];
 		const answersSample4 = [
 			{
-				"key": "Q20",
+				"key": "collaboration",
 				"title": "Water sharing",
 				"input": [
 					{
-						"key": "Q19-A1",
+						"key": "productivity-A1",
 						"value": "Introduce or expand high-value crops"
 					}
 				]
@@ -67,7 +67,7 @@ describe('Score table helper functions', () => {
 
 		const result1 = [
 			{
-				"key": "Q16a",
+				"key": "irrigated-land-a",
 				"title": "Current",
 				"input": [
 					{
@@ -77,7 +77,7 @@ describe('Score table helper functions', () => {
 				],
 			},
 			{
-				"key": "Q16b",
+				"key": "irrigated-land-b",
 				"title": "Future",
 				"input": [
 					{
@@ -90,11 +90,11 @@ describe('Score table helper functions', () => {
 
 		const result2 = [
 			{
-				"key": "Q19",
+				"key": "productivity",
 				"title": "Productivity",
 				"input": [
 					{
-						"key": "Q19-A1",
+						"key": "productivity-A1",
 						"value": "Introduce or expand high-value crops"
 					}
 				]
@@ -103,11 +103,11 @@ describe('Score table helper functions', () => {
 
 		const result3 = [
 			{
-				"key": "Q15",
+				"key": "irrigated-crops",
 				"title": "Crops",
 				"input": [
 					{
-						"key": "Q19-A1",
+						"key": "productivity-A1",
 						"value": "Introduce or expand high-value crops"
 					}
 				]
@@ -116,11 +116,11 @@ describe('Score table helper functions', () => {
 
 		const result4 = [
 			{
-				"key": "Q20",
+				"key": "collaboration",
 				"title": "Other farms",
 				"input": [
 					{
-						"key": "Q19-A1",
+						"key": "productivity-A1",
 						"value": "Introduce or expand high-value crops"
 					}
 				]
@@ -138,21 +138,21 @@ describe('Score table helper functions', () => {
 		// Not currently irrigating answer
 		const answersSample1 = [
 			{
-				"key": "Q18a",
+				"key": "irrigation-system-a",
 				"title": "Current irrigation systems",
 				"input": [
 					{
-						"key": "Q18a-A8",
+						"key": "irrigation-system-a-A8",
 						"value": "Not currently irrigating"
 					}
 				]
 			},
 			{
-				"key": "Q18b",
+				"key": "irrigation-system-b",
 				"title": "Future irrigation systems",
 				"input": [
 					{
-						"key": "Q18b-A6",
+						"key": "irrigation-system-b-A6",
 						"value": "Boom"
 					}
 				]
@@ -162,7 +162,7 @@ describe('Score table helper functions', () => {
 		// Number of hectares irrigated is 0
 		const answersSample2 = [
 			{
-				"key": "Q16a",
+				"key": "irrigated-land-a",
 				"title": "Current land irrigated",
 				"input": [
 					{
@@ -172,7 +172,7 @@ describe('Score table helper functions', () => {
 				]
 			},
 			{
-				"key": "Q16b",
+				"key": "irrigated-land-b",
 				"title": "Future land irrigated",
 				"input": [
 					{
@@ -186,11 +186,11 @@ describe('Score table helper functions', () => {
 
 		const result1 = [
 			{
-				"key": "Q18b",
+				"key": "irrigation-system-b",
 				"title": null,
 				"input": [
 					{
-						"key": "Q18b-A6",
+						"key": "irrigation-system-b-A6",
 						"value": "Boom"
 					}
 				],
@@ -199,7 +199,7 @@ describe('Score table helper functions', () => {
 
 		const result2 = [
 			{
-				"key": "Q16b",
+				"key": "irrigated-land-b",
 				"title": null,
 				"input": [
 					{

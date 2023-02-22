@@ -1,14 +1,14 @@
 module.exports = {
   desirabilityQuestions: require('./desirability-questions'),
   desirabilityInputQuestionMapping: {
-    Q15: 'irrigatedCrops',
-    Q16a: 'irrigatedLandCurrent',
-    Q16b: 'irrigatedLandTarget',
-    Q17a: 'waterSourceCurrent',
-    Q17b: 'waterSourcePlanned',
-    Q18a: 'irrigationCurrent',
-    Q18b: 'irrigationPlanned',
-    Q19: 'productivity',
-    Q20: 'collaboration'
+    'irrigated-crops': 'irrigatedCrops',
+    'irrigated-land-a': 'irrigatedLandCurrent',
+    'irrigated-land-b': 'irrigatedLandTarget',
+    'water-source-a': 'waterSourceCurrent',
+    'water-source-b': 'waterSourcePlanned',
+    'irrigation-system-a': 'irrigationCurrent',
+    'irrigation-system-b': 'irrigationPlanned',
+    productivity: 'productivity',
+    collaboration: 'collaboration'
   }
 }

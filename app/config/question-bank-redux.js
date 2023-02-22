@@ -871,19 +871,19 @@ const questionBank = {
       ],
       answers: [
         {
-          key: 'Q15-A3',
+          key: 'irrigated-crops-A3',
           value: 'Field-scale crops',
           text: 'Field-scale crops (for example, potatoes, onions, carrots)',
           desc: 'Field-scale crops (for example, potatoes, onions, carrots)'
         },
         {
-          key: 'Q15-A1',
+          key: 'irrigated-crops-A1',
           value: 'Protected cropping',
           text: 'Protected cropping (for example, glasshouse or poly tunnel)',
           desc: 'Protected cropping (for example, glasshouse or poly tunnel)'
         },
         {
-          key: 'Q15-A2',
+          key: 'irrigated-crops-A2',
           value: 'Fruit',
           text: 'Fruit (for example, top fruit, bush fruit)',
           desc: 'Fruit'
@@ -906,7 +906,7 @@ const questionBank = {
     },
     // next page is irrigated-land
     {
-      key: 'Q19',
+      key: 'productivity',
       order: 19,
       title: 'How will the project improve productivity?',
       hint: {
@@ -938,31 +938,31 @@ const questionBank = {
       ],
       answers: [
         {
-          key: 'Q19-A1',
+          key: 'productivity-A1',
           value: 'Introduce or expand high-value crops',
           desc: 'Introduce or expand high-value crops',
           weight: 3
         },
         {
-          key: 'Q19-A2',
+          key: 'productivity-A2',
           value: 'Introduce or expand protected crops',
           desc: 'Introduce or expand protected crops',
           weight: 3
         },
         {
-          key: 'Q19-A3',
+          key: 'productivity-A3',
           value: 'Increased yield per hectare',
           desc: 'Increased yield per hectare',
           weight: 1
         },
         {
-          key: 'Q19-A4',
+          key: 'productivity-A4',
           value: 'Improved quality',
           desc: 'Improved quality',
           weight: 1
         },
         {
-          key: 'Q19-A5',
+          key: 'productivity-A5',
           value: 'Maintain productivity',
           desc: 'Maintain productivity',
           weight: 0

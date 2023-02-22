@@ -6,10 +6,10 @@
   "desirability": {
     "questions": [
       {
-        "key": "Q16",
+        "key": "irrigated-land",
         "answers": [
           {
-            "key": "Q16a",
+            "key": "irrigated-land-a",
             "title": "How much land is currently irrigated per year?",
             "input": [
               {
@@ -19,7 +19,7 @@
             ]
           },
           {
-            "key": "Q16b",
+            "key": "irrigated-land-b",
             "title": "How much land will be irrigated after the project?",
             "input": [
               {
@@ -36,20 +36,20 @@
         }
       },
       {
-        "key": "Q17",
+        "key": "water-source",
         "answers": [
           {
-            "key": "Q17a",
+            "key": "water-source-a",
             "title": "What is your current water source?",
             "input": [
               {
-                "key": "Q17a-A6",
+                "key": "water-source-a-A6",
                 "value": "Not currently irrigating"
               }
             ]
           },
           {
-            "key": "Q17b",
+            "key": "water-source-b",
             "title": "Where will your irrigation water come from?",
             "input": [
               {
@@ -65,20 +65,20 @@
         }
       },
       {
-        "key": "Q18",
+        "key": "irrigation-system",
         "answers": [
           {
-            "key": "Q18a",
+            "key": "irrigation-system-a",
             "title": "What systems are currently used to irrigate?",
             "input": [
               {
-                "key": "Q18a-A8",
+                "key": "irrigation-system-a-A8",
                 "value": "Not currently irrigating"
               }
             ]
           },
           {
-            "key": "Q18b",
+            "key": "irrigation-system-b",
             "title": "What systems will be used to irrigate?",
             "input": [
               {
@@ -94,18 +94,18 @@
         }
       },
       {
-        "key": "Q19",
+        "key": "productivity",
         "answers": [
           {
-            "key": "Q19",
+            "key": "productivity",
             "title": "How will the project improve productivity?",
             "input": [
               {
-                "key": "Q19-A5",
+                "key": "productivity-A5",
                 "value": "Maintain productivity"
               },
               {
-                "key": "Q19-A3",
+                "key": "productivity-A3",
                 "value": "Increased yield per hectare"
               }
             ]
@@ -118,14 +118,14 @@
         }
       },
       {
-        "key": "Q20",
+        "key": "collaboration",
         "answers": [
           {
-            "key": "Q20",
+            "key": "collaboration",
             "title": "Will water be supplied to other farms?",
             "input": [
               {
-                "key": "Q20-A1",
+                "key": "collaboration-A1",
                 "value": "Yes"
               }
             ]
