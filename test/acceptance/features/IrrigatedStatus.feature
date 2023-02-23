@@ -39,10 +39,6 @@ Feature: IrrigatedStatus
       #        When I click the "<remainingCost>" buttons
       #        And I click on Continue button
       #        And I pause for 500ms
-      #        Then I expect that the url contains "/SSSI"
-      #        When I click the "<SSSI>" button
-      #        And I click on Continue button
-      #        And I pause for 500ms
       #        Then I expect that the url contains "/abstraction-licence"
       #        When I click on abstraction licence button
       #        When I click on abstraction "<licence>" button
@@ -61,7 +57,7 @@ Feature: IrrigatedStatus
       #        And I pause for 500ms
       #        Then I expect that the url contains "/irrigated-land"
       #        Examples:
-      #        |projectItems |SSSI|licence  |projectSummary     |remainingCost|cropsIrrigated     |status|
-      #        |construction |yes |secured  |changeWater        | yes         |cropIrrigation     | yes  |              
-      #        |engrFees     |yes |secured  |increaseIrrigation | yes         |fruitIrrigation    | no   |
+      #        |projectItems |licence  |projectSummary     |remainingCost|cropsIrrigated     |status|
+      #        |construction |secured  |changeWater        | yes         |cropIrrigation     | yes  |              
+      #        |engrFees     |secured  |increaseIrrigation | yes         |fruitIrrigation    | no   |
              

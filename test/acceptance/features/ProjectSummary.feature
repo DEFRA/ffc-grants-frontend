@@ -34,10 +34,6 @@
 #              When I click the "<remainingCost>" buttons
 #              And I click on Continue button
 #              And I pause for 500ms
-#              Then I expect that the url contains "/SSSI"
-#              When I click the "<SSSI>" button
-#              And I click on Continue button
-#              And I pause for 500ms
 #              Then I expect that the url contains "/abstraction-licence"
 #              When I click on abstraction licence button
 #              When I click on abstraction "<licence>" button
@@ -49,8 +45,8 @@
 #              And I pause for 500ms
 #              Then I expect that element "#project-error" contains the text "Select up to 2 options to describe your project’s impact"
 #              Examples:
-#              |projectItems |SSSI|licence  |projectSummary                           |remainingCost|
-#              |construction |yes |secured  |changeWater&IncreaseIrrig&IntroIrrigation| yes         |
+#              |projectItems |licence  |projectSummary                           |remainingCost|
+#              |construction |secured  |changeWater&IncreaseIrrig&IntroIrrigation| yes         |
                                 
 #              Scenario Outline: Choosing project is non impact (None of the above)
 #              Given I open the url "/water/farming-type"
@@ -87,10 +83,6 @@
 #              When I click the "<remainingCost>" buttons
 #              And I click on Continue button
 #              And I pause for 500ms
-#              Then I expect that the url contains "/SSSI"
-#              When I click the "<SSSI>" button
-#              And I click on Continue button
-#              And I pause for 500ms
 #              Then I expect that the url contains "/abstraction-licence"
 #              When I click on abstraction licence button
 #              When I click on abstraction "<licence>" button
@@ -102,7 +94,7 @@
 #              And I pause for 500ms
 #              Then I expect that the url contains "/irrigated-crops" 
 #              Examples:
-#              |projectItems |SSSI|licence  |projectSummary  |remainingCost|
-#              |overFlow     |no  |notNeeded| noneOfTheAbove | yes         |      
+#              |projectItems |licence  |projectSummary  |remainingCost|
+#              |overFlow     |notNeeded| noneOfTheAbove | yes         |      
 
              

@@ -25,7 +25,6 @@ import ProjectItems from '../pageobjects/ffc-grant-project-items'
 // import ProjectCost from '../pageobjects/ffc-grant-project-cost'
 // import PotentialAmount from '../pageobjects/ffc-grant-potential-amount'
 import RemainingCosts from '../pageobjects/ffc-grant-remaing-cost'
-import SSSI from '../pageobjects/ffc-grant-sssi'
 import Licence from '../pageobjects/ffc-grant-abstraction-licence'
 import ProjectSummary from '../pageobjects/ffc-grant-project-summary'
 import IrrigatedCrops from '../pageobjects/ffc-grant-irrigated-crops'
@@ -204,19 +203,6 @@ When(/^I click the "([^"]*)?" buttons$/, function (remainingCost) {
     console.log(remainingCost)
   } else if (remainingCost === 'no') {
     RemainingCosts.clickOnNoRemainingCost()
-  }
-})
-
-When(/^I click on SSSI button$/, function () {
-  SSSI.clickOnYesSSSI()
-})
-
-When(/^I click the "([^"]*)?" button$/, function (sssi) {
-  if (sssi === 'yes') {
-    SSSI.clickOnYesSSSI()
-    console.log(sssi)
-  } else if (sssi === 'no') {
-    SSSI.clickOnNoSSSI()
   }
 })
 

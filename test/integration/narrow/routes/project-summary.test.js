@@ -13,8 +13,7 @@ const varListTemplate = {
   remainingCost: 14082.00,
   payRemainingCosts: 'Yes',
   planningPermission: 'Will not be in place by 31 January 2023',
-  abstractionLicence: 'Not needed',
-  sSSI: 'Yes'
+  abstractionLicence: 'Not needed'
 }
 let varList
 const mockSession = {

@@ -34,10 +34,6 @@
 #              When I click on the element "#payRemainingCosts"
 #              And I click on Continue button
 #              And I pause for 500ms
-#              Then I expect that the url contains "/SSSI"
-#              When I click the "<SSSI>" button
-#              And I click on Continue button
-#              And I pause for 500ms
 #              Then I expect that the url contains "/abstraction-licence"
 #              When I click on abstraction licence button
 #              When I click on abstraction "<licence>" button
@@ -45,9 +41,9 @@
 #              And I pause for 500ms
 #              Then I expect that the url contains "/project-summary"
 #              Examples:
-#              |projectItems     |SSSI|licence  |
-#              |construction     |yes |secured  |
-#             #  |overFlow         |no  |notNeeded|
+#              |projectItems     |licence  |
+#              |construction     |secured  |
+#             #  |overFlow       |notNeeded|
 
 
 #             #  Scenario Outline: Choosing different Abstraction Licence
@@ -89,10 +85,6 @@
 #             #  When I click the "<remainingCost>" buttons
 #             #  And I click on Continue button
 #             #  And I pause for 500ms
-#             #  Then I expect that the url contains "/SSSI"
-#             #  When I click the "<sSSI>" button
-#             #  And I click on Continue button
-#             #  And I pause for 500ms
 #             #  Then I expect that the url contains "/abstraction-licence"
 #             #  When I click on abstraction licence button
 #             #  When I click on abstraction "<licence>" button
@@ -103,6 +95,6 @@
 #             #  And I pause for 500ms
 #             #  Then I expect that the url contains "/project-summary"
 #             #  Examples:
-#             #  |projectItems     |SSSI|licence              |remainingCost|
-#             #  |syntheticliner   |yes |expectToHaveLicence  |   yes       |
-#             #  |engrFees         |no  |notHaveLicence       |   yes       |
+#             #  |projectItems    |licence              |remainingCost|
+#             #  |syntheticliner  |expectToHaveLicence  |   yes       |
+#             #  |engrFees        |notHaveLicence       |   yes       |

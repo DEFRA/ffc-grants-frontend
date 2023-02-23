@@ -576,7 +576,7 @@ const questionBank = {
       url: 'remaining-costs',
       baseUrl: 'remaining-costs',
       backUrl: 'potential-amount',
-      nextUrl: 'SSSI',
+      nextUrl: 'abstraction-licence',
       preValidationKeys: ['projectCost', 'remainingCost'],
       fundingPriorities: '',
       type: 'single-answer',
@@ -638,42 +638,6 @@ const questionBank = {
       yarKey: 'payRemainingCosts'
     },
     {
-      key: 'SSSI',
-      order: 11,
-      title:
-        'Does the project directly impact a Site of Special Scientific Interest?',
-      classes: 'govuk-radios--inline govuk-fieldset__legend--l',
-      pageTitle: '',
-      url: 'SSSI',
-      baseUrl: 'SSSI',
-      backUrl: 'remaining-costs',
-      nextUrl: 'abstraction-licence',
-      fundingPriorities: '',
-      type: 'single-answer',
-      preValidationKeys: ['payRemainingCosts'],
-      minAnswerCount: 1,
-      validate: [
-        {
-          type: 'NOT_EMPTY',
-          error:
-            'Select yes if the project directly impacts a Site of Special Scientific Interest'
-        }
-      ],
-      answers: [
-        {
-          key: 'SSSI-A1',
-          value: 'Yes',
-          redirectUrl: 'abstraction-licence'
-        },
-        {
-          key: 'SSSI-A2',
-          value: 'No',
-          redirectUrl: 'abstraction-licence'
-        }
-      ],
-      yarKey: 'sSSI'
-    },
-    {
       key: 'abstraction-licence',
       order: 12,
       title:
@@ -681,11 +645,11 @@ const questionBank = {
       pageTitle: '',
       url: 'abstraction-licence',
       baseUrl: 'abstraction-licence',
-      backUrl: 'SSSI',
+      backUrl: 'remaining-costs',
       nextUrl: 'irrigation-status',
       fundingPriorities: '',
       type: 'single-answer',
-      preValidationKeys: ['sSSI'],
+      preValidationKeys: ['payRemainingCosts'],
       minAnswerCount: 1,
       ineligibleContent: {
         messageContent: 'Any abstraction licences must be in place by 31 January 2024 (the end of the application window).',

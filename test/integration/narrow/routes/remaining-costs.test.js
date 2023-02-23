@@ -103,7 +103,7 @@ describe('Remaining costs page', () => {
     expect(postResponse.payload).toContain('You cannot apply for a grant from this scheme')
   })
 
-  it('user selects YES -> store valid user input and redirect to SSSI', async () => {
+  it('user selects YES -> store valid user input and redirect to abstraction-licence', async () => {
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/remaining-costs`,
@@ -113,6 +113,6 @@ describe('Remaining costs page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(302)
-    expect(postResponse.headers.location).toBe(`SSSI`)
+    expect(postResponse.headers.location).toBe(`abstraction-licence`)
   })
 })
