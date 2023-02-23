@@ -88,6 +88,5 @@
   "payRemainingCosts": "Yes",
   "score-calculated": true,
   "tenancyLength": null,
-  "landOwnership": "Yes",
-  "sSSI": "No"
+  "landOwnership": "Yes"
 }

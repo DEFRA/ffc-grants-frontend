@@ -47,10 +47,6 @@
     #          When I click the "<remainingCost>" buttons
     #          And I click on Continue button
     #          And I pause for 500ms
-    #          Then I expect that the url contains "/SSSI"
-    #          When I click the "<SSSI>" button
-    #          And I click on Continue button
-    #          And I pause for 500ms
     #          Then I expect that the url contains "/abstraction-licence"
     #          When I click on abstraction licence button
     #          When I click on abstraction "<licence>" button
@@ -68,9 +64,9 @@
     #          Then I expect that the url contains "/irrigation-status"  
     #        #  Then I expect that element "#project-error" contains the text "Select up to 2 options to describe your project’s impact"
     #          Examples:
-    #          |projectItems |SSSI|licence  |projectSummary     |remainingCost|cropsIrrigated     |
-    #          |construction |yes |secured  |changeWater        | yes         |cropIrrigation     |               
-    #          |engrFees     |yes |secured  |increaseIrrigation  | yes        |fruitIrrigation    |  
-    #          |overFlow     |yes |notNeeded|improveIrrigation  | yes         |croppingIrrigation |
-    #         # |engrFees     |yes |secured  |increaseIrrigation  | yes        |fruitIrrigation    |  
+    #          |projectItems |licence  |projectSummary     |remainingCost|cropsIrrigated     |
+    #          |construction |secured  |changeWater        | yes         |cropIrrigation     |               
+    #          |engrFees     |secured  |increaseIrrigation  | yes        |fruitIrrigation    |  
+    #          |overFlow     |notNeeded|improveIrrigation  | yes         |croppingIrrigation |
+    #         # |engrFees    |secured  |increaseIrrigation  | yes        |fruitIrrigation    |  
               
