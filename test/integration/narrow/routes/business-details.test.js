@@ -15,7 +15,6 @@ describe('Project and business details page', () => {
     payRemainingCosts: 'Yes',
     planningPermission: 'Will not be in place by 31 January 2023',
     abstractionLicence: 'Not needed',
-    sSSI: 'Yes',
     businessDetails: {
       projectName: 'Project Name',
       businessName: 'Business Name'

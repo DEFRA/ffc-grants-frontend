@@ -39,10 +39,6 @@ Feature: IrrigatedLand
       #        When I click the "<remainingCost>" buttons
       #        And I click on Continue button
       #        And I pause for 500ms
-      #        Then I expect that the url contains "/SSSI"
-      #        When I click the "<SSSI>" button
-      #        And I click on Continue button
-      #        And I pause for 500ms
       #        Then I expect that the url contains "/abstraction-licence"
       #        When I click on abstraction licence button
       #        When I click on abstraction "<licence>" button
@@ -67,10 +63,10 @@ Feature: IrrigatedLand
       #        Then I expect that element "#irrigatedLandTarget-error" contains the text "<errorExpectedMessage>"
 
       #        Examples:
-      #        |projectItems |SSSI|licence  |projectSummary     |remainingCost|cropsIrrigated     |status|hectare_1|hectare_2|errorExpectedMessage                                       |
-      #        |construction |yes |secured  |changeWater        | yes         |cropIrrigation     | yes  |    0    |   0     |Figure must be higher than 0                               |
-      #        |engrFees     |yes |secured  |increaseIrrigation | yes         |fruitIrrigation    | yes  |    10   |   9     |Figure must be equal to or higher than current hectares    |
-      #        |overFlow     |yes |secured  |increaseIrrigation | yes         |fruitIrrigation    | yes  |         |         |Enter how many hectares will be irrigated after the project|
+      #        |projectItems |licence  |projectSummary     |remainingCost|cropsIrrigated     |status|hectare_1|hectare_2|errorExpectedMessage                                       |
+      #        |construction |secured  |changeWater        | yes         |cropIrrigation     | yes  |    0    |   0     |Figure must be higher than 0                               |
+      #        |engrFees     |secured  |increaseIrrigation | yes         |fruitIrrigation    | yes  |    10   |   9     |Figure must be equal to or higher than current hectares    |
+      #        |overFlow     |secured  |increaseIrrigation | yes         |fruitIrrigation    | yes  |         |         |Enter how many hectares will be irrigated after the project|
              
              
             

@@ -32,6 +32,5 @@ module.exports = [
   'payRemainingCosts',
   'score-calculated',
   'tenancyLength',
-  'landOwnership',
-  'sSSI'
+  'landOwnership'
 ]

@@ -37,10 +37,7 @@ Feature: IrrigationWaterSource
       #        When I click the "<remainingCost>" buttons
       #        And I click on Continue button
       #        And I pause for 500ms
-      #        Then I expect that the url contains "/SSSI"
-      #        When I click the "<SSSI>" button
-      #        And I click on Continue button
-      #        And I pause for 500ms
+
       #        Then I expect that the url contains "/abstraction-licence"
       #        When I click on abstraction licence button
       #        When I click on abstraction "<licence>" button
@@ -67,10 +64,10 @@ Feature: IrrigationWaterSource
       #        And I pause for 500ms
       #        Then I expect that element "#waterSourcePlanned-error" contains the text "Select up to 2 options for where your irrigation water will come from"
       #        Examples:
-      #        |projectItems |SSSI|licence  |projectSummary     |remainingCost|cropsIrrigated     |status|hectare_1|hectare_2|waterSource_Current  |                                                                                      
-      #        |construction |yes |secured  |changeWater        | yes         |cropIrrigation     | yes  |    7    |   8     |currentPeakFlow      |                             
-      #        |engrFees     |yes |secured  |increaseIrrigation | yes         |fruitIrrigation    | yes  |    10   |   11    |RainWater&MainsWaterC|                    
-      #       #|overFlow     |yes |secured  |increaseIrrigation | yes         |fruitIrrigation    | yes  |         |         |                     |                                                                     |
+      #        |projectItems |licence  |projectSummary     |remainingCost|cropsIrrigated     |status|hectare_1|hectare_2|waterSource_Current  |                                                                                      
+      #        |construction |secured  |changeWater        | yes         |cropIrrigation     | yes  |    7    |   8     |currentPeakFlow      |                             
+      #        |engrFees     |secured  |increaseIrrigation | yes         |fruitIrrigation    | yes  |    10   |   11    |RainWater&MainsWaterC|                    
+      #       #|overFlow     |secured  |increaseIrrigation | yes         |fruitIrrigation    | yes  |         |         |                     |                                                                     |
              
              
             

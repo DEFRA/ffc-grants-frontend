@@ -12,7 +12,6 @@ const varListTemplate = {
   projectCost: '12345678',
   remainingCost: 14082.00,
   payRemainingCosts: 'Yes',
-  sSSI: 'yes',
   abstractionLicence: 'Not needed',
   project: [ 'some fake project' ],
   irrigatedCrops: 'some crop',

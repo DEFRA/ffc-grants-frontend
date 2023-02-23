@@ -40,10 +40,6 @@
 #              When I click the "<remainingCost>" buttons
 #              And I click on Continue button
 #              And I pause for 500ms
-#              Then I expect that the url contains "/SSSI"
-#              When I click the "<SSSI>" button
-#              And I click on Continue button
-#              And I pause for 500ms
 #              Then I expect that the url contains "/abstraction-licence"
 #              When I click on abstraction licence button
 #              When I click on abstraction "<licence>" button
@@ -104,8 +100,8 @@
 
 #    #         Then I expect that the url contains "/applying"                    
 #              Examples:
-#              |projectItems |SSSI|licence  |projectSummary     |remainingCost|cropsIrrigated     |status|hectare_1|hectare_2|waterSource_Current|waterSource_Target|irrigationSystem_Current|irrigationSystem_Target|productivity   |projectName|businessName|employeeNo|turnover|                                                                                  
-#              |construction |yes |secured  |changeWater        | yes         |cropIrrigation     | yes  |    7    |   8     |currentPeakFlow    |plannedPeakFlow   |currentBoom             |plannedBoom            |protectedCrops |           |            |  1000aa  |  drs123|
-#             # |engrFees     |yes |secured  |increaseIrrigation | yes         |fruitIrrigation    | yes  |    10   |   11    |currentMainsWater  |plannedRainWater  |currentRain             |plannedRain            |improvedQuality|           |            |          |        |   
-#             #|overFlow     |yes |secured  |increaseIrrigation | yes         |fruitIrrigation    | yes  |         |         |                    |                                                                     
+#              |projectItems |licence  |projectSummary     |remainingCost|cropsIrrigated     |status|hectare_1|hectare_2|waterSource_Current|waterSource_Target|irrigationSystem_Current|irrigationSystem_Target|productivity   |projectName|businessName|employeeNo|turnover|                                                                                  
+#              |construction |secured  |changeWater        | yes         |cropIrrigation     | yes  |    7    |   8     |currentPeakFlow    |plannedPeakFlow   |currentBoom             |plannedBoom            |protectedCrops |           |            |  1000aa  |  drs123|
+#             # |engrFees    |secured  |increaseIrrigation | yes         |fruitIrrigation    | yes  |    10   |   11    |currentMainsWater  |plannedRainWater  |currentRain             |plannedRain            |improvedQuality|           |            |          |        |   
+#             #|overFlow     |secured  |increaseIrrigation | yes         |fruitIrrigation    | yes  |         |         |                    |                                                                     
                                                                                                                                                                                                                                    
