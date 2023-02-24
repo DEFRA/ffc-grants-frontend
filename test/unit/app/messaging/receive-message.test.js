@@ -24,11 +24,11 @@ describe('receive message tests', () => {
     const messageId = { id: 1 }
     const config = { queue: 'yes' }
 
-    mockReceiveMessages.mockResolvedValue([{ body: { message: 'hello' } }])
+    mockReceiveMessages.mockResolvedValue([{ body: { desirability: {questions: 'hello'} } }])
 
     const result = await receiveSessionMessage(messageId, config)
 
-    expect(result).toEqual({ message: 'hello' })
+    expect(result).toEqual({ desirability: {questions: 'hello'}  })
 
     expect(mockAcceptSession).toHaveBeenCalledTimes(1)
     expect(mockReceiveMessages).toHaveBeenCalledTimes(1)
