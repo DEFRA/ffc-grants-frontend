@@ -7,7 +7,7 @@ async function receiveMessage (messageId, config) {
   const messages = await receiver.receiveMessages(1, { maxWaitTimeInMs: 50000 })
   if (messages && messages.length) {
     result = messages[0].body
-    console.log(result.desirability.questions, '[Result Received]')
+    console.log(result.desirability, '[Result Received]')
     await receiver.completeMessage(messages[0])
   }
   await receiver.closeConnection()
