@@ -1,100 +1,100 @@
 {
   
-  "Q15": [
+  "irrigated-crops": [
     {
-      "key": "Q15",
+      "key": "irrigated-crops",
       "title": "Main crops",
       "answers": {
-        "Q15-A1": "Protected cropping",
-        "Q15-A2": "Fruit",
-        "Q15-A3": "Field-scale crops"
+        "irrigated-crops-A1": "Protected cropping",
+        "irrigated-crops-A2": "Fruit",
+        "irrigated-crops-A3": "Field-scale crops"
       }
     }
   ],
-  "Q16": [
+  "irrigated-land": [
     {
-      "key": "Q16a",
+      "key": "irrigated-land-a",
       "title": "Current land irrigated"
     },
     {
-      "key": "Q16b",
+      "key": "irrigated-land-b",
       "title": "Future land irrigated"
     }
   ],
-  "Q17": [
+  "water-source": [
     {
-      "key": "Q17a",
+      "key": "water-source-a",
       "title": "Current water source",
       "answers": {
-        "Q17a-A1": "Winter peak-flow abstraction",
-        "Q17a-A2": "Rain water harvesting",
-        "Q17a-A3": "Bore hole/aquifer",
-        "Q17a-A4": "Summer water surface abstraction",
-        "Q17a-A5": "Mains",
-        "Q17a-A6": "Not currently irrigating"
+        "water-source-a-A1": "Winter peak-flow abstraction",
+        "water-source-a-A2": "Rain water harvesting",
+        "water-source-a-A3": "Bore hole/aquifer",
+        "water-source-a-A4": "Summer water surface abstraction",
+        "water-source-a-A5": "Mains",
+        "water-source-a-A6": "Not currently irrigating"
       }
     },
     {
-      "key": "Q17b",
+      "key": "water-source-b",
       "title": "Future water source",
       "answers": {
-        "Q17b-A1": "Winter peak-flow abstraction",
-        "Q17b-A2": "Rain water harvesting",
-        "Q17b-A3": "Bore hole/aquifer",
-        "Q17b-A4": "Summer water surface abstraction",
-        "Q17b-A5": "Mains"
+        "water-source-b-A1": "Winter peak-flow abstraction",
+        "water-source-b-A2": "Rain water harvesting",
+        "water-source-b-A3": "Bore hole/aquifer",
+        "water-source-b-A4": "Summer water surface abstraction",
+        "water-source-b-A5": "Mains"
       }
     }
   ],
-  "Q18": [
+  "irrigation-system": [
     {
-      "key": "Q18a",
+      "key": "irrigation-system-a",
       "title": "Current irrigation systems",
       "answers": {
-        "Q18a-A1": "Trickle",
-        "Q18a-A2": "Mist",
-        "Q18a-A3": "Ebb and flow",
-        "Q18a-A4": "Sprinklers",
-        "Q18a-A5": "Capillary bed",
-        "Q18a-A6": "Boom",
-        "Q18a-A7": "Rain gun",
-        "Q18a-A8": "Not currently irrigating"
+        "irrigation-system-a-A1": "Trickle",
+        "irrigation-system-a-A2": "Mist",
+        "irrigation-system-a-A3": "Ebb and flow",
+        "irrigation-system-a-A4": "Sprinklers",
+        "irrigation-system-a-A5": "Capillary bed",
+        "irrigation-system-a-A6": "Boom",
+        "irrigation-system-a-A7": "Rain gun",
+        "irrigation-system-a-A8": "Not currently irrigating"
       }
     },
     {
-      "key": "Q18b",
+      "key": "irrigation-system-b",
       "title": "Future irrigation systems",
       "answers": {
-        "Q18b-A1": "Trickle",
-        "Q18b-A2": "Mist",
-        "Q18b-A3": "Ebb and flow",
-        "Q18b-A4": "Sprinklers",
-        "Q18b-A5": "Capillary bed",
-        "Q18b-A6": "Boom",
-        "Q18b-A7": "Rain gun"
+        "irrigation-system-b-A1": "Trickle",
+        "irrigation-system-b-A2": "Mist",
+        "irrigation-system-b-A3": "Ebb and flow",
+        "irrigation-system-b-A4": "Sprinklers",
+        "irrigation-system-b-A5": "Capillary bed",
+        "irrigation-system-b-A6": "Boom",
+        "irrigation-system-b-A7": "Rain gun"
       }
     }
   ],
-  "Q19": [
+  "productivity": [
     {
-      "key": "Q19",
+      "key": "productivity",
       "title": "Productivity",
       "answers": {
-        "Q19-A1": "Introduce or expand high-value crops",
-        "Q19-A2": "Introduce or expand protected crops",
-        "Q19-A3": "Increased yield per hectare",
-        "Q19-A4": "Improved quality",
-        "Q19-A5": "Maintain productivity"
+        "productivity-A1": "Introduce or expand high-value crops",
+        "productivity-A2": "Introduce or expand protected crops",
+        "productivity-A3": "Increased yield per hectare",
+        "productivity-A4": "Improved quality",
+        "productivity-A5": "Maintain productivity"
       }
     }
   ],
-  "Q20": [
+  "collaboration": [
     {
-      "key": "Q20",
+      "key": "collaboration",
       "title": "Water sharing",
       "answers": {
-        "Q20-A1": "Yes",
-        "Q20-A2": "No"
+        "collaboration-A1": "Yes",
+        "collaboration-A2": "No"
       }
     }
   ]

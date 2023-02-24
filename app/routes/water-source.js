@@ -9,7 +9,6 @@ const { startPageUrl } = require('../config/server')
 const viewTemplate = 'water-source'
 const currentPath = `${urlPrefix}/${viewTemplate}`
 const previousPath = `${urlPrefix}/summer-abstraction-mains`
-const scorePath = `${urlPrefix}/score`
 const { WATER_SOURCE, UNSUSTAINABLE_WATER_SOURCE } = require('../helpers/water-source-data')
 
 let waterSourceArray = []
@@ -39,10 +38,10 @@ const schema = Joi.object({
         return helper.error('custom')
       }
 
-      return value;
+      return value
     }
 
-    return value;
+    return value
   }),
   results: Joi.any()
 });

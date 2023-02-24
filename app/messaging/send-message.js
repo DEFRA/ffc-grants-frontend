@@ -4,7 +4,7 @@ const createMessage = require('./create-message')
 const sendMessage = async (body, type, config, options) => {
   const message = createMessage(body, type, options)
   const sender = new MessageSender(config)
-  console.log('[MESSAGE MADE]', message)
+  console.log('[MESSAGE MADE]', JSON.stringify(message))
   try {
     await sender.sendMessage(message)
   } catch (err) {

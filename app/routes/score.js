@@ -46,13 +46,13 @@ module.exports = [{
       const msgData = await getWaterScoring(formatAnswersForScoring, request.yar.id)
 
       setYarValue(request, 'overAllScore', msgData)
-      const crop = tableOrder.find(question => question.key === 'Q15')
+      const crop = tableOrder.find(question => question.key === 'irrigated-crops')
       const cropObject = addSummaryRow(crop, request)
 
       if (msgData) {
         // Add the irrigation rating to the crop object
-        const irrigationRating = msgData.desirability.questions.find(question => question.key === 'Q16').rating;
-        // the crops question (Q15) doesn't have a rating
+        const irrigationRating = msgData.desirability.questions.find(question => question.key === 'irrigated-land').rating;
+        // the crops question (irrigated-crops) doesn't have a rating
         cropObject.rating = irrigationRating;
 
         msgData.desirability.questions.push(cropObject)
