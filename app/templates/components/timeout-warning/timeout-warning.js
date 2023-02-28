@@ -148,7 +148,7 @@ function getAtText (minLeftText, secondsLeft, secLeftText, minutesLeft) {
   return atText
 }
 function runTimer (seconds, timers, iOS, timerRunOnce, $accessibleCountdown, $module, $countdown) {
-  const minutesLeft = parseInt(seconds / 60, 10)
+  const minutesLeft = parseInt(seconds / 60, 5)
   const secondsLeft = parseInt(seconds % 60, 10)
   const timerExpired = minutesLeft < 1 && secondsLeft < 1
   const minLeftText = (minutesLeft > 1 ? 's' : '')
