@@ -36,9 +36,11 @@
   {% if showTimeout %}  
     {{govukTimeoutWarning({
       "modalIdleTime":sessionTimeoutInMin,
-      "modalVisibleTime":10,
+      "modalVisibleTime":5, 
       "redirectUrl":timeoutPath
     })}}
+           {# change modalVisibleTime this to 15? 5? #}
+
   {% endif %}
 {% endblock %}
 
