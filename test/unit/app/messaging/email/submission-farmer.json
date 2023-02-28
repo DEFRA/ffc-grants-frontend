@@ -77,5 +77,6 @@
   "payRemainingCosts": "Yes",
   "score-calculated": true,
   "tenancyLength": null,
-  "landOwnership": "Yes"
+  "landOwnership": "Yes",
+  "currentlyIrrigating":"Yes"
 }
