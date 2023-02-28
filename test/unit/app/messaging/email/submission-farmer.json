@@ -78,5 +78,8 @@
   "score-calculated": true,
   "tenancyLength": null,
   "landOwnership": "Yes",
-  "currentlyIrrigating":"Yes"
+  "currentlyIrrigating":"Yes",
+  "summerAbstractionMains":"No",
+  "mainsChange":"Decrease",
+  "summerAbstractChange":"No change"
 }
