@@ -46,6 +46,24 @@
       }
     }
   ],
+  "change-summer-abstraction": [
+    {
+      "key": "change-summer-abstraction-a",
+      "title": "Summer abstraction change",
+      "answers": {
+        "change-summer-abstraction-a-A1": "Decrease",
+        "change-summer-abstraction-a-A2": "No change"
+      }
+    },
+    {
+      "key": "change-summer-abstraction-b",
+      "title": "Mains change",
+      "answers": {
+        "change-summer-abstraction-b-A1": "Decrease",
+        "change-summer-abstraction-b-A2": "No change"
+      }
+    }
+  ],
   "irrigation-system": [
     {
       "key": "irrigation-system-a",

@@ -65,6 +65,35 @@ const msgData = {
         }
       },
       {
+        key: 'change-summer-abstraction',
+        answers: [
+          {
+            key: 'change-summer-abstraction-a',
+            title: 'Current water source',
+            input: [
+              {
+                key: 'change-summer-abstraction-a-A1',
+                value: 'Decrease'
+              }
+            ]
+          },
+          {
+            key: 'chnage-summer-abstraction-b',
+            title: 'Future water source',
+            input: [
+              {
+                key: 'change-summer-abstraction-b-A2',
+                value: 'No change'
+              }
+            ]
+          }
+        ],
+        rating: {
+          score: 0,
+          band: 'Strong'
+        }
+      },
+      {
         key: 'irrigation-system',
         answers: [
           {

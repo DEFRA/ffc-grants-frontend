@@ -106,7 +106,7 @@ describe('Score page', () => {
 		}
 
 		jest.spyOn(newSender, 'getWaterScoring').mockImplementationOnce(() => {
-			// console.log('Spy: STRONG', JSON.stringify(scoreData));
+			console.log('Spy: STRONG', JSON.stringify(scoreData));
 			return scoreData;
 		})
 
