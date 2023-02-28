@@ -49,7 +49,7 @@
   "change-summer-abstraction": [
     {
       "key": "change-summer-abstraction-a",
-      "title": "Summer abstraction change",
+      "title": "Summer water surface abstraction",
       "answers": {
         "change-summer-abstraction-a-A1": "Decrease",
         "change-summer-abstraction-a-A2": "No change"
@@ -57,7 +57,7 @@
     },
     {
       "key": "change-summer-abstraction-b",
-      "title": "Mains change",
+      "title": "Mains",
       "answers": {
         "change-summer-abstraction-b-A1": "Decrease",
         "change-summer-abstraction-b-A2": "No change"
