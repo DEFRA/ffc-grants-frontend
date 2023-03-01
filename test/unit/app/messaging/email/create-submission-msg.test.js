@@ -85,7 +85,7 @@ describe('Create submission message', () => {
       'location', 'landOwnership', 'tenancyAgreement', 'infrastructureEquipment',
       'irrigationEquipment', 'technology', 'itemsCost', 'potentialFunding', 'remainingCost',
       'projectStarted', 'planningPermission', 'abstractionLicence', 'projectName',
-      'projectDetails', 'projectDetailsScore', 'irrigatedCrops', 'irrigatedLandCurrent',
+      'projectDetails', 'projectDetailsScore', 'irrigatedCrops', 'irrigatedCropsScore', 'irrigatedLandCurrent',
       'irrigatedLandTarget', 'irrigatedLandScore', 'waterSourceCurrent', 'waterSourcePlanned',
       'waterSourceScore', 'irrigationCurrent', 'irrigationPlanned', 'irrigationScore',
       'productivity', 'productivityScore', 'collaboration', 'collaborationScore', 'businessName',

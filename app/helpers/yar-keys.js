@@ -32,5 +32,9 @@ module.exports = [
   'payRemainingCosts',
   'score-calculated',
   'tenancyLength',
-  'landOwnership'
+  'landOwnership',
+  'summerAbstractionMains',
+  'summerAbstractChange',
+  'mainsChange',
+  'currentlyIrrigating'
 ]
