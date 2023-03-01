@@ -14,6 +14,8 @@ describe('create-msg', () => {
       irrigatedLandTarget: 33,
       waterSourceCurrent: ['wtr-src-ct'],
       waterSourcePlanned: ['wtr-src-pln'],
+      summerAbstractChange: 'smr-abs-chn',
+      mainsChange: null,
       irrigationCurrent: ['irg-cur'],
       irrigationPlanned: ['irg-plan'],
       productivity: ['productivity'],
@@ -25,6 +27,8 @@ describe('create-msg', () => {
       irrigatedLandTarget: 33,
       waterSourceCurrent: ['wtr-src-ct'],
       waterSourcePlanned: ['wtr-src-pln'],
+      summerAbstractChange: 'smr-abs-chn',
+      mainsChange: ' ',
       irrigationCurrent: ['irg-cur'],
       irrigationPlanned: ['irg-plan'],
       productivity: ['productivity'],
@@ -33,7 +37,9 @@ describe('create-msg', () => {
 
     dict = {
       ...dict,
-      waterSourcePlanned: 'wtr-src-pln'
+      waterSourcePlanned: 'wtr-src-pln',
+      mainsChange: 'mns-chn',
+      summerAbstractChange: null
     }
     expect(getDesirabilityAnswers({})).toEqual({
       irrigatedCrops: 'irrigatedCrops',
@@ -41,6 +47,8 @@ describe('create-msg', () => {
       irrigatedLandTarget: 33,
       waterSourceCurrent: ['wtr-src-ct'],
       waterSourcePlanned: ['wtr-src-pln'],
+      summerAbstractChange: ' ',
+      mainsChange: 'mns-chn',
       irrigationCurrent: ['irg-cur'],
       irrigationPlanned: ['irg-plan'],
       productivity: ['productivity'],
