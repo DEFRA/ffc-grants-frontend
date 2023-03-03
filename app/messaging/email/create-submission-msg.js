@@ -212,7 +212,7 @@ function getEmailDetails (submission, desirabilityScore, notifyTemplate, agentAp
       mainsChange: submission.mainsChange ? submission.mainsChange : 'N/A',
       currentlyIrrigating: submission.currentlyIrrigating,
       summerAbstractionMains: submission.summerAbstractionMains,
-      isCurrentlyIrrigating: submission.currentlyIrrigating === 'Yes' ? true : false,
+      isCurrentlyIrrigating:submission.currentlyIrrigating === 'Yes' ? true : false,
       notCurrentlyIrrigating: submission.currentlyIrrigating === `No` ? true : false,
       irrigatedLandCurrent: submission.irrigatedLandCurrent,
       irrigatedLandTarget: submission.irrigatedLandTarget,
