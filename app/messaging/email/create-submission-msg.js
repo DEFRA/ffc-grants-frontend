@@ -95,6 +95,7 @@ function getSpreadsheetDetails (submission, desirabilityScore) {
           generateRow(341, 'Grant Application Window', ''),
           generateRow(53, 'Business Type', farmingTypeMapping(submission.farmingType)),
           generateRow(23, 'Status of applicant', submission.legalStatus),
+          generateRow(376, 'Project Started', submission.projectStarted),
           generateRow(45, 'Location of project (postcode)', submission.farmerDetails.projectPostcode),
           generateRow(342, 'Land owned by Farm', submission.landOwnership),
           generateRow(343, 'Tenancy for next 5 years', submission.tenancyLength ?? ''),
@@ -105,7 +106,7 @@ function getSpreadsheetDetails (submission, desirabilityScore) {
           generateRow(345, 'Remaining Cost to Farmer', submission.remainingCost),
           generateRow(346, 'Planning Permission Status', submission.planningPermission),
           generateRow(347, 'Abstraction License Status', submission.abstractionLicence),
-          generateRow(348, 'Irrigation Impact', [submission.project].flat().join('|')),
+          generateRow(348, 'Irrigation Maturity ("project details")', [submission.project].flat().join('|')),
           generateRow(349, 'Irrigation Impact Score', 'Strong'),
           generateRow(350, 'Irrigation Farming Scale (AKA Crop Type)', submission.irrigatedCrops),
           generateRow(351, 'Irrigation Crop Score', ''),
@@ -115,8 +116,8 @@ function getSpreadsheetDetails (submission, desirabilityScore) {
           generateRow(355, 'As-Is Water Source', [submission.waterSourceCurrent].flat().join('|')),
           generateRow(356, 'To-Be Water Source', [submission.waterSourcePlanned].flat().join('|')),
           generateRow(357, 'Water Source Score', getQuestionScoreBand(desirabilityScore.desirability.questions, 'water-source')),
-          generateRow(358, 'As-Is Irrigation Method', [submission.irrigationCurrent].flat().join('|')),
-          generateRow(359, 'To-Be Irrigation Method', [submission.irrigationPlanned].flat().join('|')),
+          generateRow(358, 'Current Irrigation Method', [submission.irrigationCurrent].flat().join('|')),
+          generateRow(359, 'Future Irrigation Method', [submission.irrigationPlanned].flat().join('|')),
           generateRow(360, 'Irrigation Method Score', getQuestionScoreBand(desirabilityScore.desirability.questions, 'irrigation-system')),
           generateRow(361, 'Irrigation Productivity Benefit', [submission.productivity].flat().join('|')),
           generateRow(362, 'Irrigation Productivity Score', getQuestionScoreBand(desirabilityScore.desirability.questions, 'productivity')),
@@ -158,6 +159,7 @@ function getSpreadsheetDetails (submission, desirabilityScore) {
           generateRow(95, 'Measure table', '99'),
           generateRow(96, 'Measure year', '99'),
           generateRow(375, 'OA percent', String(desirabilityScore.desirability.overallRating.score)),
+          generateRow(49, 'Site of Special Scientific Interest (SSSI)', submission.sSSI),
           ...addAgentDetails(submission.agentDetails)
         ]
       }
