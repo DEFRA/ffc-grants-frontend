@@ -21,7 +21,7 @@ module.exports = {
           const cookiesPolicy = getCurrentPolicy(request, h)
           request.response.source.manager._context.cookiesPolicy = cookiesPolicy
           request.response.source.manager._context.showTimeout = showTimeout
-          request.response.source.manager._context.sessionTimeoutInMin = (cacheConfig.expiresIn / 60000) - 10
+          request.response.source.manager._context.sessionTimeoutInMin = (cacheConfig.expiresIn / 60000) - 5
           request.response.source.manager._context.surveyLink = surveyLink
         }
 
