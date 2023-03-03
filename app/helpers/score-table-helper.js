@@ -44,7 +44,7 @@ const tableOrder = [
 		order: 1,
 		title: 'Change summer abstraction',
 		pagesTitle: 'Change summer abstraction',
-		url: 'wchange-summer-abstraction',
+		url: 'change-summer-abstraction',
 		fundingPriorities: 'Improve the environment <br/> Improving water sustainability',
 		yarKey: 'summerAbstractChange',
 	},

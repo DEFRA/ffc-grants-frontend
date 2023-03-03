@@ -160,6 +160,9 @@ module.exports = [
         setYarValue(request, 'waterSourceCurrent', waterSourceCurrent)
         setYarValue(request, 'waterSourcePlanned', waterSourcePlanned)
 
+        setYarValue(request, 'summerAbstractChange', null)
+        setYarValue(request, 'mainsChange', null)
+
         return h.redirect(nextPath)
       }
     }
