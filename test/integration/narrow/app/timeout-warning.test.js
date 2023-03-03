@@ -42,7 +42,7 @@ describe('Timeout Warning', () => {
       timers: [],
       $countdown: 'mqs_.timer',
       $accessibleCountdown: 'mqs_.at-timer',
-      idleMinutesBeforeTimeOut: 25,
+      idleMinutesBeforeTimeOut: 20,
       timeOutRedirectUrl: 'timeout',
       minutesTimeOutModalVisible: 5,
       timeUserLastInteractedWithPage: ''

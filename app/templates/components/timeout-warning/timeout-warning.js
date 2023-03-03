@@ -14,7 +14,7 @@ function TimeoutWarning ($module) {
   this.$countdown = $module.querySelector('.timer')
   this.$accessibleCountdown = $module.querySelector('.at-timer')
   // UI countdown specific settings
-  this.idleMinutesBeforeTimeOut = $module.getAttribute('data-minutes-idle-timeout') ? $module.getAttribute('data-minutes-idle-timeout') : 25
+  this.idleMinutesBeforeTimeOut = $module.getAttribute('data-minutes-idle-timeout') ? $module.getAttribute('data-minutes-idle-timeout') : 20
   this.timeOutRedirectUrl = $module.getAttribute('data-url-redirect') ? $module.getAttribute('data-url-redirect') : 'timeout'
   this.minutesTimeOutModalVisible = $module.getAttribute('data-minutes-modal-visible') ? $module.getAttribute('data-minutes-modal-visible') : 5
   this.timeUserLastInteractedWithPage = ''
