@@ -159,6 +159,7 @@ function getSpreadsheetDetails (submission, desirabilityScore) {
           generateRow(95, 'Measure table', '99'),
           generateRow(96, 'Measure year', '99'),
           generateRow(375, 'OA percent', String(desirabilityScore.desirability.overallRating.score)),
+          generateRow(49, 'Site of Special Scientific Interest (SSSI)', ''),
           ...addAgentDetails(submission.agentDetails)
         ]
       }
