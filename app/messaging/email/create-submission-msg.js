@@ -208,7 +208,7 @@ function getEmailDetails (submission, desirabilityScore, notifyTemplate, agentAp
       projectDetailsScore: 'Strong',
       irrigatedCrops: submission.irrigatedCrops,
       irrigatedCropsScore: getQuestionScoreBand(desirabilityScore.desirability.questions, 'irrigated-land'),
-      summerAbstractChange: submission.summerAbstractChange ? submission.summerAbstractChange : 'N/A',
+      summerAbstractChange: submission.summerAbstractChange || 'N/A',
       mainsChange: submission.mainsChange ? submission.mainsChange : 'N/A',
       currentlyIrrigating: submission.currentlyIrrigating,
       summerAbstractionMains: submission.summerAbstractionMains,
