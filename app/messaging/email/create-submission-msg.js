@@ -210,7 +210,7 @@ function getEmailDetails (submission, desirabilityScore, notifyTemplate, agentAp
       irrigatedCropsScore: getQuestionScoreBand(desirabilityScore.desirability.questions, 'irrigated-land'),
       summerAbstractChange: submission.summerAbstractChange ?? 'N/A',
       mainsChange: submission.mainsChange ?? 'N/A',
-      currentlyIrrigating: submission.currentlyIrrigating,
+      currentlyIrrigating: submission.currentlyIrrigating ?? 'N/A',
       summerAbstractionMains: submission.summerAbstractionMains,
       isCurrentlyIrrigating:submission.currentlyIrrigating === 'Yes' ?? true ,
       notCurrentlyIrrigating: submission.currentlyIrrigating === `No` ?? true ,
