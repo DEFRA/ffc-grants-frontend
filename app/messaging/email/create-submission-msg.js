@@ -95,6 +95,7 @@ function getSpreadsheetDetails (submission, desirabilityScore) {
           generateRow(341, 'Grant Application Window', ''),
           generateRow(53, 'Business Type', farmingTypeMapping(submission.farmingType)),
           generateRow(23, 'Status of applicant', submission.legalStatus),
+          generateRow(376, 'Project Started', submission.projectStarted),
           generateRow(45, 'Location of project (postcode)', submission.farmerDetails.projectPostcode),
           generateRow(342, 'Land owned by Farm', submission.landOwnership),
           generateRow(343, 'Tenancy for next 5 years', submission.tenancyLength ?? ''),
@@ -158,6 +159,7 @@ function getSpreadsheetDetails (submission, desirabilityScore) {
           generateRow(95, 'Measure table', '99'),
           generateRow(96, 'Measure year', '99'),
           generateRow(375, 'OA percent', String(desirabilityScore.desirability.overallRating.score)),
+          generateRow(49, 'Site of Special Scientific Interest (SSSI)', ''),
           ...addAgentDetails(submission.agentDetails)
         ]
       }
