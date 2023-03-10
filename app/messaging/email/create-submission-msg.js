@@ -126,7 +126,7 @@ function getSpreadsheetDetails (submission, desirabilityScore) {
           generateRow(365, 'OA score', desirabilityScore.desirability.overallRating.band),
           generateRow(366, 'Date of OA decision', ''),
           generateRow(42, 'Project name', submission.businessDetails.projectName),
-          generateRow(4, 'Single business identifier (SBI)', submission.businessDetails.sbi || '000000000'), // sbi is '' if not set so use || instead of ??
+          generateRow(4, 'Single business identifier (SBI)', submission.businessDetails.sbi || '000000000'),
           generateRow(7, 'Business name', submission.businessDetails.businessName),
           generateRow(367, 'Annual Turnover', submission.businessDetails.businessTurnover),
           generateRow(22, 'Employees', submission.businessDetails.numberEmployees),
