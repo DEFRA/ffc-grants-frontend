@@ -46,8 +46,8 @@
   },
   "farmingType": "Horticulture (including ornamentals)",
   "irrigatedCrops": "Fruit",
-  "irrigatedLandCurrent": "0",
-  "irrigatedLandTarget": "2",
+  "irrigatedLandCurrent": 22,
+  "irrigatedLandTarget": 2,
   "irrigationCurrent": [
     "Not currently irrigating"
   ],
@@ -92,5 +92,6 @@
   "currentlyIrrigating":"Yes",
   "summerAbstractionMains":"No",
   "mainsChange":"Decrease",
-  "summerAbstractChange":"No change"
+  "summerAbstractChange":"No change",
+  "isCurrentlyIrrigating":true
 }
