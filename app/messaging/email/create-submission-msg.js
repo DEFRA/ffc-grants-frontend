@@ -131,7 +131,7 @@ function getSpreadsheetDetails (submission, desirabilityScore) {
           generateRow(367, 'Annual Turnover', submission.businessDetails.businessTurnover),
           generateRow(22, 'Employees', submission.businessDetails.numberEmployees),
           generateRow(20, 'Business size', calculateBusinessSize(submission.businessDetails.numberEmployees, submission.businessDetails.businessTurnover)),
-          generateRow(44, 'Description of project', [submission.projectItemsList].flat().join(', ').substring(0, 60)),
+          generateRow(44, 'Description of project', ' '.substring(0, 60)),
           generateRow(91, 'Are you an AGENT applying on behalf of your customer', submission.applying === 'Agent' ? 'Yes' : 'No'),
           generateRow(5, 'Surname', submission.farmerDetails.lastName),
           generateRow(6, 'Forename', submission.farmerDetails.firstName),
