@@ -11,7 +11,7 @@ const varListTemplate = {
   projectCost: '12345678',
   remainingCost: 14082.00,
   payRemainingCosts: 'Yes',
-  planningPermission: 'Will not be in place by 31 January 2023',
+  planningPermission: 'Will not be in place by 31 October 2024',
   abstractionLicence: 'Not needed',
   businessDetails: {
     projectName: 'Project Name',
@@ -52,7 +52,7 @@ describe('Applicant details page', () => {
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
   })
-  
+
   it('should load page if getYarValues not found', async () => {
 
     varList = {
@@ -67,7 +67,7 @@ describe('Applicant details page', () => {
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
   })
-  
+
 
   it('should return various error messages if no data is entered', async () => {
     const postOptions = {
@@ -152,7 +152,7 @@ describe('Applicant details page', () => {
         town: 'MyTown',
         county: 'Devon',
         projectPostcode: 'AA1 1AA',
-        businessPostcode:'AA1 1AA',
+        businessPostcode: 'AA1 1AA',
         crumb: crumbToken
       },
       headers: { cookie: 'crumb=' + crumbToken }
@@ -257,7 +257,7 @@ describe('Applicant details page', () => {
         address2: 'Address 2',
         town: 'MyTown',
         county: 'Devon',
-        businessPostcode:'AA1 1AA',
+        businessPostcode: 'AA1 1AA',
         projectPostcode: 'AA1 1AA',
         crumb: crumbToken
       },
@@ -284,7 +284,7 @@ describe('Applicant details page', () => {
         address2: 'Address 2',
         town: 'MyTown',
         county: 'Devon',
-        businessPostcode:'AA1 1AA',
+        businessPostcode: 'AA1 1AA',
         projectPostcode: 'AA1 1AA',
         crumb: crumbToken
       },
@@ -311,7 +311,7 @@ describe('Applicant details page', () => {
         address2: 'Address 2',
         town: 'MyTown',
         county: 'Devon',
-        businessPostcode:'AA1 1AA',
+        businessPostcode: 'AA1 1AA',
         projectPostcode: 'AA1 1AA',
         crumb: crumbToken
       },
@@ -337,7 +337,7 @@ describe('Applicant details page', () => {
         address2: 'Address 2',
         town: 'MyTown',
         county: 'Devon',
-        businessPostcode:'AA1 1AA',
+        businessPostcode: 'AA1 1AA',
         projectPostcode: 'AA1 1AA',
         crumb: crumbToken
       },
@@ -364,7 +364,7 @@ describe('Applicant details page', () => {
         address2: 'Address 2',
         town: 'MyTown',
         county: 'Devon',
-        businessPostcode:'AA1 1AA',
+        businessPostcode: 'AA1 1AA',
         projectPostcode: 'AA1 1AA',
         crumb: crumbToken
       },
@@ -389,7 +389,7 @@ describe('Applicant details page', () => {
         address2: 'Address 2',
         town: 'MyTown',
         county: 'Devon',
-        businessPostcode:'AA1 1AA',
+        businessPostcode: 'AA1 1AA',
         projectPostcode: 'AA1 1AA',
         crumb: crumbToken
       },
@@ -438,7 +438,7 @@ describe('Applicant details page', () => {
         address1: 'Address 1',
         address2: 'Address 2',
         county: 'Devon',
-        businessPostcode:'AA1 1AA',
+        businessPostcode: 'AA1 1AA',
         projectPostcode: 'AA1 1AA',
         crumb: crumbToken
       },
@@ -464,7 +464,7 @@ describe('Applicant details page', () => {
         address2: 'Address 2',
         town: '12345',
         county: 'Devon',
-        businessPostcode:'AA1 1AA',
+        businessPostcode: 'AA1 1AA',
         projectPostcode: 'AA1 1AA',
         crumb: crumbToken
       },

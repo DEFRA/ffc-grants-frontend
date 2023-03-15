@@ -11,7 +11,7 @@ const varListTemplate = {
   projectCost: '12345678',
   remainingCost: 14082.00,
   payRemainingCosts: 'Yes',
-  planningPermission: 'Will not be in place by 31 January 2023',
+  planningPermission: 'Will not be in place by 31 October 2024',
   abstractionLicence: 'Not needed',
   currentlyIrrigating: 'No',
   'current-score': ''
