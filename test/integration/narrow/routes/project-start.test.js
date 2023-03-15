@@ -114,7 +114,7 @@ describe('Project start page', () => {
     expect(postResponse.headers.location).toBe('tenancy')
   })
 
-  it(`page loads with correct back link when planning permission is "Should be in place by 31 January 2023" `, async () => {
+  it(`page loads with correct back link when planning permission is "Should be in place by 31 October 2024" `, async () => {
     const options = {
       method: 'GET',
       url: `${global.__URLPREFIX__}/project-start`
@@ -129,7 +129,7 @@ describe('Project start page', () => {
       farmingType: 'some fake crop',
       legalStatus: 'fale status',
       inEngland: 'Yes',
-      planningPermission:'Secured',
+      planningPermission: 'Secured',
       projectStarted: 'No, we have not done any work on this project yet',
       'current-score': null,
     }

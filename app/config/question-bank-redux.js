@@ -213,7 +213,7 @@ const questionBank = {
       preValidationKeys: ['inEngland'],
       ineligibleContent: {
         messageContent:
-          'Any planning permission must be in place by 31 January 2023 (the end of the application window).',
+          'Any planning permission must be in place by 31 October 2024 (the end of the application window).',
         messageLink: {
           url: 'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments',
           title: 'See other grants you may be eligible for.'
@@ -229,7 +229,7 @@ const questionBank = {
             content: [
               {
                 para: `You must have secured planning permission before you submit a full application.
-                \n\nAny planning permission must be in place by 31 January 2023.`,
+                \n\nAny planning permission must be in place by 31 October 2024.`,
                 items: []
               }
             ]
@@ -247,12 +247,12 @@ const questionBank = {
         { key: 'planning-permission-A2', value: 'Secured' },
         {
           key: 'planning-permission-A3',
-          value: 'Should be in place by 31 January 2023',
+          value: 'Should be in place by 31 October 2024',
           redirectUrl: 'planning-permission-condition'
         },
         {
           key: 'planning-permission-A4',
-          value: 'Will not be in place by 31 January 2023',
+          value: 'Will not be in place by 31 October 2024',
           notEligible: true
         }
       ],
@@ -269,7 +269,7 @@ const questionBank = {
       maybeEligibleContent: {
         messageHeader: 'You may be able to apply for a grant from this scheme',
         messageContent:
-          'Any planning permission must be in place by 31 January 2024 (the end of the application window).'
+          'Any planning permission must be in place by 31 October 2024 (the end of the application window).'
       },
       yarKey: 'PlanningPermissionCondition'
     },
@@ -652,7 +652,7 @@ const questionBank = {
       preValidationKeys: ['payRemainingCosts'],
       minAnswerCount: 1,
       ineligibleContent: {
-        messageContent: 'Any abstraction licences must be in place by 31 January 2024 (the end of the application window).',
+        messageContent: 'Any abstraction licences must be in place by 31 October 2024 (the end of the application window).',
         messageLink: {
           url: 'https://www.gov.uk/government/collections/rural-payments-and-grants',
           title: 'See other grants you may be eligible for.'
@@ -692,7 +692,7 @@ const questionBank = {
             content: [
               {
                 para: `You must have secured abstraction licences or variations before you submit a full application.\n
-                              Any abstraction licences or variations must be in place by 31 January 2024.`,
+                              Any abstraction licences or variations must be in place by 31 October 2024.`,
                 items: []
               }
             ]
@@ -774,10 +774,10 @@ const questionBank = {
       validate: [
         {
           type: 'NOT_EMPTY',
-          dependentYarKey:'currentlyIrrigating',
-          error:'Select yes if you’re increasing use of water from summer abstraction or mains',
-          dependantError:'Select yes if you’re going to use summer abstraction or mains'
-            
+          dependentYarKey: 'currentlyIrrigating',
+          error: 'Select yes if you’re increasing use of water from summer abstraction or mains',
+          dependantError: 'Select yes if you’re going to use summer abstraction or mains'
+
         }
       ],
       answers: [
