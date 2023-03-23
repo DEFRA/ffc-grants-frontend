@@ -756,7 +756,7 @@ const questionBank = {
       type: 'single-answer',
       minAnswerCount: 1,
       ineligibleContent: {
-        messageContent: `Your project cannot increase water use from summer abstraction or mains. 
+        messageContent: `Your project cannot introduce or increase water use from summer abstraction or mains 
                           <div class='govuk-inset-text'>
                           RPA wants to fund projects that use more sustainable water sources, such as:</br></br>
                             <ul class='govuk-list govuk-list--bullet'>
