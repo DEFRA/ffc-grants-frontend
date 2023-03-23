@@ -652,7 +652,7 @@ const questionBank = {
       preValidationKeys: ['payRemainingCosts'],
       minAnswerCount: 1,
       ineligibleContent: {
-        messageContent: 'Any abstraction licences must be in place by 31 October 2024 (the end of the application window).',
+        messageContent: 'You must have secured abstraction licences or variations before you submit a full application.',
         messageLink: {
           url: 'https://www.gov.uk/government/collections/rural-payments-and-grants',
           title: 'See other grants you may be eligible for.'
