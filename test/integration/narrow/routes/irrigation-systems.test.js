@@ -231,7 +231,7 @@ describe('Irrigation syatems page', () => {
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
     expect(response.payload).toContain('<h1 class="govuk-heading-l">Irrigation system</h1>')
-    expect(response.payload).toContain('What systems are currently used to irrigate?')
+    expect(response.payload).toContain('What is your current irrigation system?')
     expect(response.payload).toContain('What systems will be used to irrigate?')
   })
 
@@ -249,7 +249,7 @@ describe('Irrigation syatems page', () => {
     expect(response.statusCode).toBe(200)
     expect(response.payload).not.toContain('<h1 class="govuk-heading-l">Irrigation system</h1>')
     expect(response.payload).toContain('What systems will be used to irrigate?')
-    expect(response.payload).not.toContain('What systems are currently used to irrigate?')
+    expect(response.payload).not.toContain('What is your current irrigation system?')
   })
 
   it('should redirect to start if previous question not answered', async () => {
