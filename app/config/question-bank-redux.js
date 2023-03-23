@@ -965,7 +965,7 @@ const questionBank = {
         isDisplay: true
       },
       hint: {
-        text: 'For example, if you intend to supply water via a water sharing agreement as a result of this project.'
+        text: 'For example, if you intend to supply some of the water via a water sharing agreement as a result of this project'
       },
       validate: [
         {
