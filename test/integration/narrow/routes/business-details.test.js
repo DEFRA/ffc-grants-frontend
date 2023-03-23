@@ -96,7 +96,7 @@ describe('Project and business details page', () => {
     expect(postResponse.payload).toContain('Number of employees must be a whole number, like 305')
   })
 
-  it('should validate number of employees - character limit is 7', async () => {
+  it('should validate number of employees - character limit is 4', async () => {
     const postOptions = {
       method: 'POST',
       url: `${global.__URLPREFIX__}/business-details`,
@@ -111,7 +111,7 @@ describe('Project and business details page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.statusCode).toBe(200)
-    expect(postResponse.payload).toContain('Number of employees must be a whole number, like 305')
+    expect(postResponse.payload).toContain('Number must be between 1-9999')
   })
 
   it('should validate business turnover - only digits', async () => {
