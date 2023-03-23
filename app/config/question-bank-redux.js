@@ -269,7 +269,7 @@ const questionBank = {
       maybeEligibleContent: {
         messageHeader: 'You may be able to apply for a grant from this scheme',
         messageContent:
-          'Any planning permission must be in place by 31 October 2024 (the end of the application window).'
+          'You must have secured planning permission before you submit a full application.'
       },
       yarKey: 'PlanningPermissionCondition'
     },
