@@ -19,7 +19,7 @@
     "test:debug": "node --inspect-brk=0.0.0.0 ./node_modules/@wdio/cli/bin/wdio.js wdio.conf.js"
   },
   "dependencies": {
-    "@babel/cli": "^7.2.3",
+    "@babel/cli": "^7.21.0",
     "@babel/plugin-proposal-export-default-from": "^7.5.2",
     "@babel/preset-env": "^7.4.2",
     "@babel/register": "^7.4.0",
