@@ -1074,7 +1074,7 @@ const questionBank = {
         {
           yarKey: 'numberEmployees',
           type: 'number',
-          classes: 'govuk-input--width-10',
+          classes: 'govuk-input--width-4',
           label: {
             text: 'Number of employees',
             classes: 'govuk-label'
@@ -1091,12 +1091,6 @@ const questionBank = {
               type: 'REGEX',
               regex: NUMBER_REGEX,
               error: 'Number of employees must be a whole number, like 305'
-            },
-            {
-              type: 'MIN_MAX_CHARS',
-              min: 1,
-              max: 4,
-              error: 'Number must be between 1-9999'
             },
             {
               type: 'MIN_MAX',
