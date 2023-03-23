@@ -52,7 +52,7 @@
   "overrides": {
     "@azure/identity": {
       "jsonwebtoken": "9.0.0"
-      }
+    }
   },
   "devDependencies": {
     "@hapi/catbox-memory": "^5.0.1",
