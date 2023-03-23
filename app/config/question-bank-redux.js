@@ -874,7 +874,7 @@ const questionBank = {
       order: 19,
       title: 'How will the project improve productivity?',
       hint: {
-        html: 'Productivity is about how much is produced relative to inputs (for example, increased yield for the same inputs or the same yield with lower inputs).<br/><br/> Select up to 2 options'
+        html: 'Select up to 2 options'
       },
       pageTitle: '',
       url: 'productivity',
@@ -915,14 +915,14 @@ const questionBank = {
         },
         {
           key: 'productivity-A3',
-          value: 'Increased yield per hectare',
-          desc: 'Increased yield per hectare',
+          value: 'Increase yield per hectare',
+          desc: 'Increase yield per hectare',
           weight: 1
         },
         {
           key: 'productivity-A4',
-          value: 'Improved quality',
-          desc: 'Improved quality',
+          value: 'Improve quality',
+          desc: 'Improve quality',
           weight: 1
         },
         {
