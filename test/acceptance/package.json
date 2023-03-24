@@ -24,7 +24,7 @@
     "@babel/preset-env": "^7.4.2",
     "@babel/register": "^7.4.0",
     "@rpii/wdio-report-events": "^0.2.0",
-    "@types/cucumber": "^4.0.5",
+    "@types/cucumber": "^4.0.7",
     "@wdio/browserstack-service": "^7.29.1",
     "@wdio/cli": "^7.30.2",
     "@wdio/config": "^5.11.0",
