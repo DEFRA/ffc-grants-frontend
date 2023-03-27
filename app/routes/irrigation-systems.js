@@ -34,14 +34,14 @@ function createModel (currentlyIrrigating, errorList, currentData, plannedData, 
       name: 'irrigationCurrent',
       fieldset: {
         legend: {
-          html: '<h2 class="govuk-heading-m">What systems are currently used to irrigate?</h2>'
+          html: '<h2 class="govuk-heading-m">What is your current irrigation system?</h2>'
         }
       },
       hint: {
         text: 'Select up to 2 options'
       },
       items: setLabelData(currentData,
-        ['Boom', 'Capillary bed', 'Ebb and flow', 'Mist', 'Rain gun', 'Sprinklers', 'Trickle']),
+        ['Trickle','Boom', 'Ebb and flow', 'Capillary bed', 'Sprinklers', 'Mist', 'Rain gun', ]),
       ...(errorList && errorList[0].href === '#irrigationCurrent' ? { errorMessage: { text: errorList[0].text } } : {})
     },
     irrigationPlanned: {

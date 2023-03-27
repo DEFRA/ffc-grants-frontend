@@ -135,7 +135,7 @@ const msgData = {
               },
               {
                 key: 'productivity-A3',
-                value: 'Increased yield per hectare'
+                value: 'Increase yield per hectare'
               }
             ]
           }

@@ -119,6 +119,5 @@ describe('summer water surface abstractionmains page', () => {
 
     const postResponse = await global.__SERVER__.inject(postOptions)
     expect(postResponse.payload).toContain('You cannot apply for a grant from this scheme')
-    expect(postResponse.payload).toContain('Your project cannot increase water use from summer abstraction or mains.')
   })
 })

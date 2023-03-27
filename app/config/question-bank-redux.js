@@ -213,7 +213,7 @@ const questionBank = {
       preValidationKeys: ['inEngland'],
       ineligibleContent: {
         messageContent:
-          'Any planning permission must be in place by 31 October 2024 (the end of the application window).',
+          'You must have secured planning permission before you submit a full application.',
         messageLink: {
           url: 'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments',
           title: 'See other grants you may be eligible for.'
@@ -269,7 +269,7 @@ const questionBank = {
       maybeEligibleContent: {
         messageHeader: 'You may be able to apply for a grant from this scheme',
         messageContent:
-          'Any planning permission must be in place by 31 October 2024 (the end of the application window).'
+          'You must have secured planning permission before you submit a full application.'
       },
       yarKey: 'PlanningPermissionCondition'
     },
@@ -652,7 +652,7 @@ const questionBank = {
       preValidationKeys: ['payRemainingCosts'],
       minAnswerCount: 1,
       ineligibleContent: {
-        messageContent: 'Any abstraction licences must be in place by 31 October 2024 (the end of the application window).',
+        messageContent: 'You must have secured abstraction licences or variations before you submit a full application.',
         messageLink: {
           url: 'https://www.gov.uk/government/collections/rural-payments-and-grants',
           title: 'See other grants you may be eligible for.'
@@ -756,7 +756,7 @@ const questionBank = {
       type: 'single-answer',
       minAnswerCount: 1,
       ineligibleContent: {
-        messageContent: `Your project cannot increase water use from summer abstraction or mains. 
+        messageContent: `Your project cannot introduce or increase water use from summer abstraction or mains 
                           <div class='govuk-inset-text'>
                           RPA wants to fund projects that use more sustainable water sources, such as:</br></br>
                             <ul class='govuk-list govuk-list--bullet'>
@@ -874,7 +874,7 @@ const questionBank = {
       order: 19,
       title: 'How will the project improve productivity?',
       hint: {
-        html: 'Productivity is about how much is produced relative to inputs (for example, increased yield for the same inputs or the same yield with lower inputs).<br/><br/> Select up to 2 options'
+        html: 'Select up to 2 options'
       },
       pageTitle: '',
       url: 'productivity',
@@ -915,14 +915,14 @@ const questionBank = {
         },
         {
           key: 'productivity-A3',
-          value: 'Increased yield per hectare',
-          desc: 'Increased yield per hectare',
+          value: 'Increase yield per hectare',
+          desc: 'Increase yield per hectare',
           weight: 1
         },
         {
           key: 'productivity-A4',
-          value: 'Improved quality',
-          desc: 'Improved quality',
+          value: 'Improve quality',
+          desc: 'Improve quality',
           weight: 1
         },
         {
@@ -965,7 +965,7 @@ const questionBank = {
         isDisplay: true
       },
       hint: {
-        text: 'For example, if you intend to supply water via a water sharing agreement as a result of this project.'
+        text: 'For example, if you intend to supply some of the water via a water sharing agreement as a result of this project'
       },
       validate: [
         {
@@ -1074,7 +1074,7 @@ const questionBank = {
         {
           yarKey: 'numberEmployees',
           type: 'number',
-          classes: 'govuk-input--width-10',
+          classes: 'govuk-input--width-4',
           label: {
             text: 'Number of employees',
             classes: 'govuk-label'
@@ -1095,8 +1095,8 @@ const questionBank = {
             {
               type: 'MIN_MAX',
               min: 1,
-              max: 9999999,
-              error: 'Number of employees must be a whole number, like 305'
+              max: 9999,
+              error: 'Number must be between 1-9999'
             }
           ]
         },
