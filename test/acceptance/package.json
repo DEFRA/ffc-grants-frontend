@@ -15,7 +15,9 @@
     "selenium"
   ],
   "scripts": {
-    "test": "wdio wdio.conf.js",
+    "test": "wdio wdio.bs.conf.js",
+    "test:local": "wdio wdio.local.conf.js",
+    "test:browserstack": "wdio wdio.bs.conf.js",
     "test:debug": "node --inspect-brk=0.0.0.0 ./node_modules/@wdio/cli/bin/wdio.js wdio.conf.js"
   },
   "dependencies": {
@@ -44,7 +46,12 @@
     "ws": "^7.2.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.4.0",
+    "@babel/core": "^7.16.5",
+    "@babel/plugin-proposal-export-default-from": "^7.16.7",
+    "@babel/plugin-syntax-export-default-from": "^7.8.3",
+    "@babel/preset-env": "^7.16.5",
+    "@babel/register": "^7.16.5",
+    "@wdio/browserstack-service": "^7.16.13",
     "@rpii/wdio-html-reporter": "^7.0.0",
     "@wdio/cucumber-framework": "^7.30.0",
     "@wdio/local-runner": "^7.30.1",
