@@ -25,7 +25,7 @@ const copyprovider = (key) => {
     18: "Problems using the online service",
     19: "If you have any problems using the online service, contact the RPA.",
     20: "Telephone",
-    21: "Telephone: 0300 0200 301",
+    21: "Telephone: 03000 200 301",
     22: "Monday to Friday, 9am to 5pm (except public holidays)",
     23: "Find out about call charges",
     24: "(opens in a new tab)",
