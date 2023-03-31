@@ -24,6 +24,17 @@ function farmingTypeMapping (farmingType) {
   }
 }
 
+const getMappedLicenceValues = (licence) => {
+  switch (licence) {
+    case 'Should be in place by 31 October 2024':
+      return 'Applied for'
+    case 'Secured':
+      return 'Approved'
+    default:
+      return 'Not needed'
+  }
+}
+
 function calculateBusinessSize (employees, turnover) {
   const employeesNum = Number(employees)
   const turnoverNum = Number(turnover)
@@ -99,17 +110,16 @@ function getSpreadsheetDetails (submission, desirabilityScore) {
           generateRow(45, 'Location of project (postcode)', submission.farmerDetails.projectPostcode),
           generateRow(342, 'Land owned by Farm', submission.landOwnership),
           generateRow(343, 'Tenancy for next 5 years', submission.tenancyLength ?? ''),
-          generateRow(344, 'Irrigation Infrastructure ', [submission.projectItemsList].flat().join('|')),
           generateRow(55, 'Total project expenditure', String(submission.projectCost.toFixed(2))),
           generateRow(57, 'Grant rate', '40'),
           generateRow(56, 'Grant amount requested', submission.calculatedGrant),
           generateRow(345, 'Remaining Cost to Farmer', submission.remainingCost),
-          generateRow(346, 'Planning Permission Status', submission.planningPermission),
-          generateRow(347, 'Abstraction License Status', submission.abstractionLicence),
-          generateRow(348, 'Irrigation Impact', [submission.project].flat().join('|')),
-          generateRow(349, 'Irrigation Impact Score', 'Strong'),
+          generateRow(346, 'Planning Permission Status', getMappedLicenceValues(submission.planningPermission)),
+          generateRow(347, 'Abstraction License Status', getMappedLicenceValues(submission.abstractionLicence)),
+          generateRow(348, 'Irrigation Impact', ''),
+          generateRow(349, 'Irrigation Impact Score', ''),
           generateRow(350, 'Irrigation Farming Scale (AKA Crop Type)', submission.irrigatedCrops),
-          generateRow(351, 'Irrigation Crop Score', ''),
+          generateRow(351, 'Irrigation Crop Score', getQuestionScoreBand(desirabilityScore.desirability.questions, 'irrigated-land')),
           generateRow(352, 'As-Is Irrigation (ha)', submission.irrigatedLandCurrent),
           generateRow(353, 'To-Be Irrigation (ha)', submission.irrigatedLandTarget),
           generateRow(354, 'Irrigation Hectare Score', getQuestionScoreBand(desirabilityScore.desirability.questions, 'irrigated-land')),
@@ -131,7 +141,7 @@ function getSpreadsheetDetails (submission, desirabilityScore) {
           generateRow(367, 'Annual Turnover', submission.businessDetails.businessTurnover),
           generateRow(22, 'Employees', submission.businessDetails.numberEmployees),
           generateRow(20, 'Business size', calculateBusinessSize(submission.businessDetails.numberEmployees, submission.businessDetails.businessTurnover)),
-          generateRow(44, 'Description of project', ' '.substring(0, 60)),
+          generateRow(44, 'Description of project', [submission.projectItemsList].flat().join('|')),
           generateRow(91, 'Are you an AGENT applying on behalf of your customer', submission.applying === 'Agent' ? 'Yes' : 'No'),
           generateRow(5, 'Surname', submission.farmerDetails.lastName),
           generateRow(6, 'Forename', submission.farmerDetails.firstName),
@@ -148,6 +158,8 @@ function getSpreadsheetDetails (submission, desirabilityScore) {
           generateRow(89, 'Customer Marketing Indicator', submission.consentOptional ? 'Yes' : 'No'),
           generateRow(368, 'Date ready for QC or decision', todayStr),
           generateRow(369, 'Eligibility Reference No.', submission.confirmationId),
+          generateRow(403, 'Summer Change', summerAbstractChange ?? ''),
+          generateRow(404, 'Mains Change', submission.mainsChange ?? ''),
           generateRow(94, 'Current location of file', 'NA Automated'),
           generateRow(92, 'RAG rating', 'Green'),
           generateRow(93, 'RAG date reviewed ', todayStr),
@@ -155,7 +167,7 @@ function getSpreadsheetDetails (submission, desirabilityScore) {
           generateRow(370, 'Status', 'Pending RPA review'),
           generateRow(371, 'Rationale', ''),
           generateRow(372, 'Decision maker', ''),
-          generateRow(85, 'Full Application Submission Date', (new Date(today.setMonth(today.getMonth() + 6))).toLocaleDateString('en-GB')),
+          generateRow(85, 'Full Application Submission Date', (new Date('October 31, 2024').toLocaleDateString('en-GB')),
           generateRow(95, 'Measure table', '99'),
           generateRow(96, 'Measure year', '99'),
           generateRow(375, 'OA percent', String(desirabilityScore.desirability.overallRating.score)),
