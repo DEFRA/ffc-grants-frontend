@@ -80,20 +80,21 @@ const sendDimensionOrMetrics = async (request, dimenisons) => {
     appInsights.logException(request, { error: err })
   }
 }
-const sendEligibilityEvent = async (request, isEligible = true) => {
-  if (!isEligible) {
+const sendEligibilityEvent = async (request, notEligible = true) => {
+  if (notEligible) {
     await sendDimensionOrMetrics(request, [{
       dimensionOrMetric: metrics.ELIMINATION,
       value: getTimeofJourneySinceStart(request).toString()
     },
     {
       dimensionOrMetric: dimensions.ELIMINATION,
-      value: isEligible
+      value: false
     }])
+    console.log('[ NOT ELIGIBLE MATRIC SENT ]')
   } else {
     await sendDimensionOrMetric(request, {
       dimensionOrMetric: dimensions.ELIMINATION,
-      value: isEligible
+      value: notEligible
     })
   }
 }
