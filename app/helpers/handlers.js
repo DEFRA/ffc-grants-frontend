@@ -201,7 +201,7 @@ const showPostPage = (currentQuestion, request, h) => {
   }
 
   if (thisAnswer?.notEligible || (yarKey === 'projectCost' ? !getGrantValues(payload[Object.keys(payload)[0]], currentQuestion.grantInfo).isEligible : null)) {
-    gapiService.sendEligibilityEvent(request, !!thisAnswer?.notEligible)
+    gapiService.sendEligibilityEvent(request, 'true')
     if (thisAnswer?.alsoMaybeEligible) {
       const {
         maybeEligibleContent
