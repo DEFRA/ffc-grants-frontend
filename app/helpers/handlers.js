@@ -125,6 +125,8 @@ const getPage = async (question, request, h) => {
     )
   }
 
+  await processGA(question, request, confirmationId)
+
   switch (url) {
     case 'check-details': {
       return h.view('check-details', getCheckDetailsModel(request, question, backUrl, nextUrl))
@@ -233,6 +235,12 @@ const getHandler = (question) => {
 const getPostHandler = (currentQuestion) => {
   return (request, h) => {
     return showPostPage(currentQuestion, request, h)
+  }
+}
+
+const processGA = async (question, request, confirmationId) => {
+  if (question.ga) {
+    await gapiService.processGA(request, question.ga, confirmationId)
   }
 }
 
