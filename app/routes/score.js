@@ -36,7 +36,6 @@ module.exports = [{
       return h.redirect(startPath)
     }
     try {
-
       const msgDataToSend = getDesirabilityAnswers(request)
       // Always re-calculate our score before rendering this page
 
@@ -53,7 +52,7 @@ module.exports = [{
         // Add the irrigation rating to the crop object
         const irrigationRating = msgData.desirability.questions.find(question => question.key === 'irrigated-land').rating;
         // the crops question (irrigated-crops) doesn't have a rating
-        cropObject.rating = irrigationRating;
+        cropObject.rating = irrigationRating
 
         msgData.desirability.questions.push(cropObject)
         const questions = msgData.desirability.questions.map(desirabilityQuestion => {
