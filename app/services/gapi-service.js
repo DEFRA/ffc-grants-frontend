@@ -1,5 +1,7 @@
 const appInsights = require('./app-insights')
-const { getYarValue } = require('../helpers/session')
+const { getYarValue, setYarValue } = require('../helpers/session')
+const { sendMonitoringEvent } = require('../services/protective-monitoring-service')
+
 const blockDefaultPageViews = [
   'applicant-details', 'confirmation', 'score'
 ]
@@ -108,49 +110,48 @@ const getTimeofJourneySinceStart = (request) => {
   return 0
 }
 
-// const processGA = async (request, ga, _score, _confirmationId) => {
-//   if (ga && Array.isArray(ga)) {
-//     const cmcds = []
-//     ga.forEach(async gaConfig => {
-//       if (gaConfig.journeyStart) {
-//         setYarValue(request, 'journey-start-time', Date.now())
-//         console.log('[JOURNEY STARTED] ')
-//       }
-//       if (gaConfig.dimension) {
-//         let value
-//         switch (gaConfig.value.type) {
-//           case 'yar':
-//             value = getYarValue(request, gaConfig.value.key)
-//             break
-//           case 'custom':
-//             value = gaConfig.value.value
-//             break
-//           case 'score':
-//             value = gaConfig.value.value
-//             break
-//           case 'confirmationId':
-//             await sendMonitoringEvent(request, request.yar.id, 'FTF-JOURNEY-COMPLETED', '0706')
-//             value = gaConfig.value.value
-//             break
-//           case 'journey-time':
-//             value = getTimeofJourneySinceStart(request).toString()
-//             break
-//           default:
-//             value = gaConfig.value.value
-//         }
+const processGA = async (request, ga, _score, _confirmationId) => {
+  if (ga && Array.isArray(ga)) {
+    const cmcds = []
+    ga.forEach(async gaConfig => {
+      if (gaConfig.journeyStart) {
+        setYarValue(request, 'journey-start-time', Date.now())
+        console.log('[JOURNEY STARTED] ')
+      }
+      if (gaConfig.dimension) {
+        let value
+        switch (gaConfig.value.type) {
+          case 'yar':
+            value = getYarValue(request, gaConfig.value.key)
+            break
+          case 'custom':
+            value = gaConfig.value.value
+            break
+          case 'score':
+            value = gaConfig.value.value
+            break
+          case 'confirmationId':
+            await sendMonitoringEvent(request, request.yar.id, 'FTF-JOURNEY-COMPLETED', '0706')
+            value = gaConfig.value.value
+            break
+          case 'journey-time':
+            value = getTimeofJourneySinceStart(request).toString()
+            break
+          default:
+            value = gaConfig.value.value
+        }
 
-//         cmcds.push({
-//           dimensionOrMetric: gaConfig.dimension,
-//           value: value?.toString()
-//         })
-//       }
-//     })
-//     if (cmcds.length > 0) {
-//       await sendDimensionOrMetrics(request, cmcds)
-//     }
-//   }
-// }
-
+        cmcds.push({
+          dimensionOrMetric: gaConfig.dimension,
+          value: value?.toString()
+        })
+      }
+    })
+    if (cmcds.length > 0) {
+      await sendDimensionOrMetrics(request, cmcds)
+    }
+  }
+}
 
 module.exports = {
   sendEvent,
@@ -164,5 +165,5 @@ module.exports = {
   sendDimensionOrMetrics,
   isBlockDefaultPageView,
   sendValidationDimension,
-  // processGA
+  processGA
 }
