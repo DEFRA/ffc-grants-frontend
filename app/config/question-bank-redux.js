@@ -41,6 +41,7 @@ const questionBank = {
       baseUrl: 'farming-type',
       backUrl: 'start',
       nextUrl: 'legal-status',
+      ga: [{ journeyStart: true }],
       ineligibleContent: {
         messageContent:
           'This grant is only available to:<ul class=\'govuk-list govuk-list--bullet\'><li> arable and horticultural farming businesses that supply the food industry</li><li>nurseries growing ornamentals</li><li>forestry nurseries</li></ul><p class=\'govuk-body\'> <a class=\'govuk-link\' href=\'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments\'>See other grants you may be eligible for.</a></p>'
@@ -754,6 +755,9 @@ const questionBank = {
       preValidationKeys: '',
       fundingPriorities: '',
       type: 'single-answer',
+      ga: [
+        { dimension: 'cm2', value: { type: 'journey-time' } }
+      ],
       minAnswerCount: 1,
       ineligibleContent: {
         messageContent: `Your project cannot introduce or increase water use from summer abstraction or mains 
@@ -1009,10 +1013,6 @@ const questionBank = {
       backUrl: 'score',
       nextUrl: 'applying',
       preValidationKeys: ['score-calculated'],
-      ga: [
-        { dimension: 'cd1', value: { type: 'score', value: 'Eligible' } },
-        { dimension: 'cm2', value: { type: 'journey-time' } }
-      ],
       fundingPriorities: '',
       type: 'multi-input',
       minAnswerCount: '',

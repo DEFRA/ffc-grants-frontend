@@ -35,18 +35,18 @@ const getMappedLicenceValues = (licence) => {
   }
 }
 
-function calculateBusinessSize (employees, turnover) {
+function calculateBusinessSize (employees) {
   const employeesNum = Number(employees)
-  const turnoverNum = Number(turnover)
 
-  if (employeesNum < 10 && turnoverNum < 1740000) { // €2m turnover
-    return 'Micro'
-  } else if (employeesNum < 50 && turnoverNum < 8680000) { // €10m turnover
-    return 'Small'
-  } else if (employeesNum < 250 && turnoverNum < 43410000) { // €50m turnover
-    return 'Medium'
-  } else {
-    return 'Large'
+  switch (true) {
+    case (employeesNum < 10):
+      return 'Micro'
+    case (employeesNum < 50):
+      return 'Small'
+    case (employeesNum < 250):
+      return 'Medium'
+    default:
+      return 'Large'
   }
 }
 
