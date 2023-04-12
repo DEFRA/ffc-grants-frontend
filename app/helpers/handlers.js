@@ -57,7 +57,7 @@ const getPage = async (question, request, h) => {
           value: confirmationId
         }, {
           dimensionOrMetric: gapiService.dimensions.FINALSCORE,
-          value: 'Eligible'
+          value: getYarValue(request, 'current-score')
         },
         {
           dimensionOrMetric: gapiService.metrics.CONFIRMATION,
@@ -201,7 +201,6 @@ const showPostPage = (currentQuestion, request, h) => {
   }
 
   if (thisAnswer?.notEligible || (yarKey === 'projectCost' ? !getGrantValues(payload[Object.keys(payload)[0]], currentQuestion.grantInfo).isEligible : null)) {
-    gapiService.sendEligibilityEvent(request, 'true')
     if (thisAnswer?.alsoMaybeEligible) {
       const {
         maybeEligibleContent
@@ -213,6 +212,7 @@ const showPostPage = (currentQuestion, request, h) => {
       return h.view('maybe-eligible', MAYBE_ELIGIBLE)
     }
 
+    gapiService.sendEligibilityEvent(request, !!thisAnswer?.notEligible)
     return h.view('not-eligible', NOT_ELIGIBLE)
   } else if (thisAnswer?.redirectUrl) {
     return h.redirect(thisAnswer?.redirectUrl)
