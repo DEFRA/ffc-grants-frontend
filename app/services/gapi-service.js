@@ -3,7 +3,9 @@ const { getYarValue, setYarValue } = require('../helpers/session')
 const { sendMonitoringEvent } = require('../services/protective-monitoring-service')
 
 const blockDefaultPageViews = [
-  'applicant-details', 'confirmation', 'score'
+  'start', 'applying', 'confirmation', 'remaining-costs',
+  'project-cost', 'project-start', 'planning-permission', 'score',
+  'country', 'legal-status', 'farming-type'
 ]
 const isBlockDefaultPageView = (url) => {
   const currentUrl = url.pathname.split('/').pop().toString().toLowerCase()
@@ -80,7 +82,7 @@ const sendDimensionOrMetrics = async (request, dimenisons) => {
     appInsights.logException(request, { error: err })
   }
 }
-const sendEligibilityEvent = async (request, notEligible = true) => {
+const sendEligibilityEvent = async (request, notEligible = false) => {
   if (notEligible) {
     await sendDimensionOrMetrics(request, [{
       dimensionOrMetric: metrics.ELIMINATION,
