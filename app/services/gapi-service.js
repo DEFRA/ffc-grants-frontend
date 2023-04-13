@@ -2,11 +2,7 @@ const appInsights = require('./app-insights')
 const { getYarValue, setYarValue } = require('../helpers/session')
 const { sendMonitoringEvent } = require('../services/protective-monitoring-service')
 
-const blockDefaultPageViews = [
-  'start', 'applying', 'confirmation', 'remaining-costs', 'farming-type', 'abstraction-licence',
-  'project-cost', 'project-start', 'planning-permission', 'score',
-  'country', 'legal-status', 'summer-abstraction-mains'
-]
+const blockDefaultPageViews = ['start', 'applying', 'confirmation', 'remaining-costs', 'farming-type', 'abstraction-licence', 'project-cost', 'project-start', 'planning-permission', 'score', 'country', 'legal-status', 'summer-abstraction-mains']
 const isBlockDefaultPageView = (url) => {
   const currentUrl = url.pathname.split('/').pop().toString().toLowerCase()
   return blockDefaultPageViews.indexOf(currentUrl) >= 0

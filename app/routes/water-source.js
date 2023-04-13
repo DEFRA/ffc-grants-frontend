@@ -16,7 +16,7 @@ let waterSourcePlannedArray = []
 const schema = Joi.object({
   waterSourceCurrent: Joi.array().single().required().custom((value, helper) => {
     waterSourceArray = value.filter((item) => UNSUSTAINABLE_WATER_SOURCE.includes(item))
-    return value;
+    return value
   }),
   waterSourcePlanned: Joi.array().single().required().custom((value, helper) => {
     waterSourcePlannedArray = value.filter((item) => UNSUSTAINABLE_WATER_SOURCE.includes(item))

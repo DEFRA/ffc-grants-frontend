@@ -724,6 +724,9 @@ const questionBank = {
       type: 'single-answer',
       preValidationKeys: ['abstractionLicence'],
       minAnswerCount: 1,
+      ga: [
+        { dimension: 'cm2', value: { type: 'journey-time' } }
+      ],
       validate: [
         {
           type: 'NOT_EMPTY',
@@ -755,9 +758,6 @@ const questionBank = {
       preValidationKeys: '',
       fundingPriorities: '',
       type: 'single-answer',
-      ga: [
-        { dimension: 'cm2', value: { type: 'journey-time' } }
-      ],
       minAnswerCount: 1,
       ineligibleContent: {
         messageContent: `Your project cannot introduce or increase water use from summer abstraction or mains 
@@ -943,7 +943,7 @@ const questionBank = {
             content: [
               {
                 para: 'RPA wants to fund projects that:',
-                items: ['improve water sustainability']
+                items: ['Improve productivity']
               }
             ]
           }
@@ -1873,7 +1873,7 @@ const questionBank = {
           surveyLink: process.env.SURVEY_LINK
         },
         messageContent: `We have sent you a confirmation email with a record of your answers.<br/><br/>
-            If you do not get an email within 72 hours, please contact RPA helpline and follow the options for Farming Transformation Fund scheme:<br/>
+            If you do not get an email within 72 hours, please call RPA helpline and follow the options for Farming Transformation Fund scheme:<br/>
             <h1 class='govuk-heading-m'>RPA helpline</h1>
             <h2 class='govuk-heading-s'>Telephone</h2>
             Telephone: 0300 0200 301<br/>
