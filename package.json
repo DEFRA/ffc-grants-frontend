@@ -46,7 +46,7 @@
     "govuk-frontend": "^4.3.1",
     "joi": "^17.6.0",
     "jsdom": "^20.0.0",
-    "nunjucks": "^3.2.3",
+    "nunjucks": "^3.2.4",
     "uuid": "^8.3.2"
   },
   "overrides": {
