@@ -14,7 +14,7 @@ const schema = Joi.object({
   surveyLink: Joi.string().default('https://defragroup.eu.qualtrics.com/jfe/preview/SV_e9fFpJ6tySfdHYa?Q_CHL=preview&Q_SurveyVersionID=current'),
   cookiePassword: Joi.string().default('dummycookiepassworddummycookiepassword'),
   googleTagManagerKey: Joi.string().default('GTM-WJ5C78H'),
-  googleTagManagerServerKey: Joi.string().default('UA-179628664-4'),
+  googleTagManagerServerKey: Joi.string().default('G-1NQ7QYDS14'),
   protectiveMonitoringUrl: Joi.string().allow(''),
   startPageUrl: Joi.string().default(`${urlPrefix}${startPageUrl}`),
   cookieOptions: Joi.object({
