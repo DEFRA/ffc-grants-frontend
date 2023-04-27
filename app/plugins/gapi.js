@@ -33,7 +33,7 @@ exports.plugin = {
     })
 
     server.ext('onPostStop', async () => {
-      await analytics.shutdown()
+      //await analytics.shutdown()
       server.log(['hapi-gapi'], 'All buffered events sent to the Google Analytics Measurement Protocol API.')
     })
   }
