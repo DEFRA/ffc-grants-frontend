@@ -1,6 +1,6 @@
 {
   "name": "ffc-grants-frontend",
-  "version": "3.10.8",
+  "version": "3.11.0",
   "description": "Frontend Grants microservice.",
   "main": "app/index.js",
   "scripts": {
@@ -28,7 +28,7 @@
   },
   "homepage": "https://github.com/DEFRA/ffc-grants-frontend#readme",
   "dependencies": {
-    "@defra/hapi-gapi": "^1.3.1",
+    "@defra/hapi-gapi": "^2.0.0",
     "@hapi/catbox-redis": "^6.0.2",
     "@hapi/cookie": "^11.0.2",
     "@hapi/crumb": "^8.0.1",
@@ -45,8 +45,8 @@
     "ffc-protective-monitoring": "^1.0.3",
     "govuk-frontend": "^4.3.1",
     "joi": "^17.6.0",
-    "jsdom": "^20.0.0",
-    "nunjucks": "^3.2.3",
+    "jsdom": "^21.1.1",
+    "nunjucks": "^3.2.4",
     "uuid": "^8.3.2"
   },
   "overrides": {
@@ -68,7 +68,7 @@
     "resolve-url-loader": "^5.0.0",
     "sass": "^1.54.7",
     "sass-loader": "^13.0.2",
-    "snyk": "^1.1051.0",
+    "snyk": "^1.1146.0",
     "standard": "^16.0.3",
     "string-replace-loader": "^3.1.0",
     "style-loader": "^3.3.1",

@@ -20,6 +20,8 @@ exports.plugin = {
         const statusFamily = Math.floor(response.statusCode / 100)
         if (statusFamily === 2 && response.variety === 'view' && !gapiService.isBlockDefaultPageView(request.url)) {
           await gapiService.sendDimensionOrMetric(request, { dimensionOrMetric: gapiService.dimensions.PRIMARY, value: true })
+          console.log('from plugin Metrics Sending analytics page-view for %s', request.route.path)
+
         }
         if (statusFamily === 5) {
           await request.ga.event({ category: 'Exception', action: request.route.path, label: response.statusCode })
@@ -31,7 +33,7 @@ exports.plugin = {
     })
 
     server.ext('onPostStop', async () => {
-      await analytics.shutdown()
+      //await analytics.shutdown()
       server.log(['hapi-gapi'], 'All buffered events sent to the Google Analytics Measurement Protocol API.')
     })
   }
