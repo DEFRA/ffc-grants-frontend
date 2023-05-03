@@ -50,8 +50,8 @@ async function createServer () {
         { key: 'Cache-Control', value: 'no-cache' },
         { key: 'Referrer-Policy', value: 'no-referrer' },
         {
-          key: 'Content-Security-Policy',
-          value: getSecurityPolicy()
+          key: 'Content-Security-Policy'
+          // value: getSecurityPolicy()
         }
       ]
     }
@@ -62,6 +62,7 @@ async function createServer () {
     options: {
       propertySettings: [
         {
+          key: config.analyticsPropertyApi,
           id: config.googleTagManagerServerKey,
           hitTypes: ['pageview']
         }

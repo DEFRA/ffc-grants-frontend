@@ -7,6 +7,7 @@
 {% set assetPath = urlPrefix + "/assets" %}
 {% set timeoutPath = urlPrefix + "/session-timeout" %}
 {% set siteTitle = "Check if you can apply for a Farming Transformation Fund water grant - GOV.UK" %}
+
 {% block pageTitle %}
   {{siteTitle}}
 {% endblock %}
@@ -14,9 +15,11 @@
 {% block head %}
   <meta name="robots" content="noindex, nofollow">
   <%= htmlWebpackPlugin.tags.headTags %>
+
   {% if cookiesPolicy.analytics %}
     {% include "tag-manager/head-content.njk" %}
   {% endif %}
+
 {% endblock %}
 
 {% block header %}
@@ -47,9 +50,9 @@
   {% if not cookiesPolicy.confirmed %}
     {% include "cookies/cookie-banner.njk" %}
   {% endif %}
-  {% if cookiesPolicy.analytics %}
+  {# {% if cookiesPolicy.analytics %} #}
     {% include "tag-manager/body-content.njk" %}
-  {% endif %}
+  {# {% endif %} #}
 {% endblock %}
 
 {% block footer %}

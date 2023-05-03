@@ -58,6 +58,7 @@ container:
   sessionCacheTTL: 1200000
   googleTagManagerKey: dummy
   googleTagManagerServerKey: dummy
+  analyticsPropertyApi: dummy
   startPageUrl: dummy
   serviceEndDate: dummy
   serviceEndTime: dummy
