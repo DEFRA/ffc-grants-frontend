@@ -81,14 +81,9 @@ module.exports = [{
             break
         }
         setYarValue(request, 'current-score', msgData.desirability.overallRating.band)
-        // await gapiService.sendDimensionOrMetrics(request, [{
-        //   dimensionOrMetric: gapiService.dimensions.SCORE,
-        //   value: msgData.desirability.overallRating.band
-        // },
-        // {
-        //   dimensionOrMetric: gapiService.metrics.SCORE,
-        //   value: 'TIME'
-        // }])
+        // send score event to GA
+        await gapiService.sendGAEvent(request, { name: gapiService.eventTypes.SCORE, params: { score_presented: msgData.desirability.overallRating.band}})
+
         return h.view(viewTemplate, createModel({
           titleText: msgData.desirability.overallRating.band,
           scoreData: msgData,
@@ -100,6 +95,7 @@ module.exports = [{
       }
     } catch (error) {
       request.log(error)
+      // await gapiService.sendGAEvent(request, { name: gapiService.categories.EXCEPTION, params: { error: error.message }})
       // await gapiService.sendEvent(request, gapiService.categories.EXCEPTION, 'Error')
     }
     request.log(err)

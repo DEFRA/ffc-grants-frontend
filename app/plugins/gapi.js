@@ -10,21 +10,21 @@ exports.plugin = {
      * @param options the hapi-gapi configuration settings
      */
   register: async (server, options) => {
-    function getAllFuncs(toCheck) {
-      const props = []
-      const obj = toCheck
-      do {
-        props.push(...Object.getOwnPropertyNames(obj))
-      } while (obj === Object.getPrototypeOf(obj))
+    // function getAllFuncs(toCheck) {
+    //   const props = []
+    //   const obj = toCheck
+    //   do {
+    //     props.push(...Object.getOwnPropertyNames(obj))
+    //   } while (obj === Object.getPrototypeOf(obj))
 
-      return props.sort().filter((e, i, arr) => {
-        if (e !== arr[ i + 1 ] && typeof toCheck[ e ] === 'function') return true
-      })
-    }
+    //   return props.sort().filter((e, i, arr) => {
+    //     if (e !== arr[ i + 1 ] && typeof toCheck[ e ] === 'function') return true
+    //   })
+    // }
     // console.log('here OPTIONS: ', options);
     const analytics = new Analytics(options)
-    console.log('lol: ', JSON.stringify(analytics));
-    console.log('lolll: ', getAllFuncs(analytics));
+    // console.log('lol: ', JSON.stringify(analytics));
+    // console.log('lolll: ', getAllFuncs(analytics));
     server.decorate('request', 'ga', request => analytics.ga(request), { apply: true })
 
     server.ext('onPreResponse', async (request, h) => {
@@ -32,7 +32,7 @@ exports.plugin = {
         const response = request.response
         const statusFamily = Math.floor(response.statusCode / 100)
         if (statusFamily === 2 && response.variety === 'view' && !gapiService.isBlockDefaultPageView(request.url)) {
-          // await gapiService.sendDimensionOrMetric(request, { dimensionOrMetric: gapiService.dimensions.PRIMARY, value: true })
+          // await gapiService.sendxDimensionOrMetric(request, { dimensionOrMetric: gapiService.dimensions.PRIMARY, value: true })
           console.log('NOT: from plugin Metrics Sending analytics page-view for %s', request.route.path)
 
         }

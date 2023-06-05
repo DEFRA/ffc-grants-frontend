@@ -9,7 +9,7 @@ const isBlockDefaultPageView = (url) => {
 }
 
 const grant_type = 'Water Management'
-const dimensions = {
+const dimensions = { // get rid of this
   SCORE: 'cd1',
   FINALSCORE: 'cd2',
   CONFIRMATION: 'cd5',
@@ -19,14 +19,14 @@ const dimensions = {
   PRIMARY: 'cd7',
   VALIDATION: 'cd8'
 }
-const metrics = {
+const metrics = { // get rid of this
   SCORE: 'cm3',
   CONFIRMATION: 'cm1',
   ELIGIBILITY: 'cm2',
   ELIMINATION: 'cm4' // -- here
 }
 
-const actions = {
+const actions = { // keep this
   START: 'Start',
   SCORE: 'Score',
   CONFIRMATION: 'Confirmation',
@@ -41,6 +41,15 @@ const categories = {
   JOURNEY: 'Journey'
 }
 
+const eventTypes = {
+  PAGEVIEW: 'pageview',
+  SCORE: 'score',
+  ELIGIBILITY: 'eligibility',
+  CONFIRMATION: 'confirmation',
+  ELIMINATION: 'elimination', // -- here
+  EXCEPTION: 'exception',
+}
+// generic one that's used in weird ways!
 const sendEvent = async (request, category, action) => {
   console.log('sendEvent: -------', JSON.stringify(request));
   try {
@@ -53,9 +62,8 @@ const sendEvent = async (request, category, action) => {
     appInsights.logException(request, { error: err })
   }
 }
+// This function sends the page view
 const sendDimensionOrMetric = async (request, { dimensionOrMetric, value }) => {
-  // console.log('A VIEW REQUEST: ', request);
-  // used in plugin gapi.js:22, onResponse
   try {
     const dmetrics = {}
     dmetrics[dimensionOrMetric] = value
@@ -68,18 +76,19 @@ const sendDimensionOrMetric = async (request, { dimensionOrMetric, value }) => {
     appInsights.logException(request, { error: err })
   }
 }
+// sends some UA metrics -- scrap!
 const sendValidationDimension = async (request) => {
   // send validation dimension
   console.log('------: sendValidationDimension:', request.yar?.id);
   await sendDimensionOrMetric(request, { dimensionOrMetric: dimensions.VALIDATION, value: true })
 }
+// sends some UA metrics with page view -- scrap after stealing that cool replacer!
 const sendDimensionOrMetrics = async (request, dimenisons) => {
-  console.log('------: sendDimensionOrMetrics:', request.yar?.id);
   // -- here
   try {
     const dmetrics = {}
     dimenisons.forEach(item => {
-      if (item.value === 'TIME') {
+      if (item.value === 'TIME') { // Cool!!
         item.value = getTimeofJourneySinceStart(request).toString()
       }
       dmetrics[item.dimensionOrMetric] = item.value
@@ -94,48 +103,43 @@ const sendDimensionOrMetrics = async (request, dimenisons) => {
   }
 }
 
-const sendEliminationEvent = async (request, metrics) => {
-  console.log('WHOLE REQ.: sendEliminationEvent ---', request);
-  // console.log('WHOLE REQ.: sendEliminationEvent ---', JSON.stringify(request));
-  console.log('++++++++: SEND ELIMINATION EVENT', request.yar?.id);
+const sendGAEvent = async (request, metrics) => {
+  const timeSinceStart = getTimeofJourneySinceStart(request).toString()
+  const page_path = request.route.path
+  const {name, params} = metrics;
+  const isEliminationEvent = name === eventTypes.ELIMINATION;
+  const isScoreEvent = name === eventTypes.SCORE;
+  const isConfirmationEvent = name === eventTypes.CONFIRMATION;
   const dmetrics = {
-    ...metrics,
-    user_type: 'Agent',
-    page_location: request.route.path,
+    ...params,
+    ...(isEliminationEvent && { elimination_time: timeSinceStart }),
+    ...(isScoreEvent && { score_time: timeSinceStart }),
+    ...(isConfirmationEvent && { confirmation_time: timeSinceStart }),
+    ...(params.score_presented && { score_presented: params.score_presented }),
+    ...(params.score && {score: params.score}),
+    ...(params.user_type &&{ user_type: params.user_type}),
     grant_type,
-    journey_continued: 'false',
-    elimination_time: getTimeofJourneySinceStart(request).toString()
+    page_path,
+    page_title: page_path,
+    test: 'testig v.1.6'
   }
   try {
-    const event = { name: 'elimination', params: dmetrics }
+    console.log('dmetrics:::::: ', dmetrics);
+    const event = { name, params: dmetrics }
     await request.ga.view(request, [ event ])
-    console.log('Metrics Sending analytics "elimination" for %s', request.route.path)
+    console.log('Metrics Sending analytics %s for %s', name, request.route.path)
   } catch (err) {
     appInsights.logException(request, { error: err })
   }
-  console.log('[ ELIMINATION MATRIC SENT ]')
+  console.log('[ %s MATRIC SENT ]', name.toUpperCase())
 }
-const sendEligibilityEvent = async (request, notEligible = false) => {
-  if (notEligible) {
-    await sendDimensionOrMetrics(request, [{
-      dimensionOrMetric: metrics.ELIMINATION, // -- here
-      value: getTimeofJourneySinceStart(request).toString(),
-      elimination_Time: getTimeofJourneySinceStart(request).toString() // -- here
-    }])
-    console.log('[ NOT ELIGIBLE MATRIC SENT ]')
-  } else {
-    await sendDimensionOrMetric(request, {
-      dimensionOrMetric: dimensions.ELIMINATION, // -- here
-      value: isEligible
-    })
-  }
-}
-const sendJourneyTime = async (request, metric) => {
-  await sendDimensionOrMetric(request, {
-    dimensionOrMetric: metric,
-    value: getTimeofJourneySinceStart(request).toString()
-  })
-}
+
+// const sendJourneyTime = async (request, metric) => {
+//   await sendDimensionOrMetric(request, {
+//     dimensionOrMetric: metric,
+//     value: getTimeofJourneySinceStart(request).toString()
+//   })
+// }
 const getTimeofJourneySinceStart = (request) => {
   if (getYarValue(request, 'journey-start-time')) {
     return Math.abs(((new Date()).getTime() - (new Date(getYarValue(request, 'journey-start-time'))).getTime()) / 1000)
@@ -189,15 +193,14 @@ const processGA = async (request, ga, _score, _confirmationId) => {
 module.exports = {
   sendEvent,
   sendDimensionOrMetric,
-  sendEligibilityEvent,
   dimensions,
   categories,
   metrics,
   actions,
-  sendJourneyTime,
+  // sendJourneyTime,
   sendDimensionOrMetrics,
   isBlockDefaultPageView,
   sendValidationDimension,
   processGA,
-  sendEliminationEvent
+  sendGAEvent,
 }
