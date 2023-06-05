@@ -101,7 +101,7 @@ module.exports = [
         }
 
         if (errorList.length > 0) {
-          gapiService.sendValidationDimension(request)
+          // gapiService.sendValidationDimension(request)
           return h.view(viewTemplate, createModel(unsustainableSourceType, summerAbstractChange, mainsChange, errorList, getYarValue(request, 'current-score'))).takeover()
         }
 

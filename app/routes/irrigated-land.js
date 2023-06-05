@@ -99,7 +99,7 @@ module.exports = [
           results: Joi.any()
         }),
         failAction: (request, h, err) => {
-          gapiService.sendValidationDimension(request)
+          // gapiService.sendValidationDimension(request)
           const errorList = []
           let [
             irrigatedLandCurrentError, irrigatedLandTargetError

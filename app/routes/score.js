@@ -81,14 +81,14 @@ module.exports = [{
             break
         }
         setYarValue(request, 'current-score', msgData.desirability.overallRating.band)
-        await gapiService.sendDimensionOrMetrics(request, [{
-          dimensionOrMetric: gapiService.dimensions.SCORE,
-          value: msgData.desirability.overallRating.band
-        },
-        {
-          dimensionOrMetric: gapiService.metrics.SCORE,
-          value: 'TIME'
-        }])
+        // await gapiService.sendDimensionOrMetrics(request, [{
+        //   dimensionOrMetric: gapiService.dimensions.SCORE,
+        //   value: msgData.desirability.overallRating.band
+        // },
+        // {
+        //   dimensionOrMetric: gapiService.metrics.SCORE,
+        //   value: 'TIME'
+        // }])
         return h.view(viewTemplate, createModel({
           titleText: msgData.desirability.overallRating.band,
           scoreData: msgData,
@@ -100,7 +100,7 @@ module.exports = [{
       }
     } catch (error) {
       request.log(error)
-      await gapiService.sendEvent(request, gapiService.categories.EXCEPTION, 'Error')
+      // await gapiService.sendEvent(request, gapiService.categories.EXCEPTION, 'Error')
     }
     request.log(err)
     return h.view('500')

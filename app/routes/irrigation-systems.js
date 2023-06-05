@@ -93,7 +93,7 @@ module.exports = [
           results: Joi.any()
         }),
         failAction: (request, h, err) => {
-          gapiService.sendValidationDimension(request)
+          // gapiService.sendValidationDimension(request)
           let { irrigationCurrent, irrigationPlanned } = request.payload
           const currentlyIrrigating = getYarValue(request, 'currentlyIrrigating')
           const errorList = []

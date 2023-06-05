@@ -2,16 +2,18 @@ const appInsights = require('./app-insights')
 const { getYarValue, setYarValue } = require('../helpers/session')
 const { sendMonitoringEvent } = require('../services/protective-monitoring-service')
 
-const blockDefaultPageViews = ['start', 'applying']
+const blockDefaultPageViews = ['start', 'applying'] // -- blocked pages
 const isBlockDefaultPageView = (url) => {
   const currentUrl = url.pathname.split('/').pop().toString().toLowerCase()
   return blockDefaultPageViews.indexOf(currentUrl) >= 0
 }
+
+const grant_type = 'Water Management'
 const dimensions = {
   SCORE: 'cd1',
   FINALSCORE: 'cd2',
   CONFIRMATION: 'cd5',
-  ELIMINATION: 'cd6',
+  ELIMINATION: 'cd6', // -- here
   AGENTFORMER: 'cd3',
   ANALYTICS: 'cd4',
   PRIMARY: 'cd7',
@@ -21,25 +23,26 @@ const metrics = {
   SCORE: 'cm3',
   CONFIRMATION: 'cm1',
   ELIGIBILITY: 'cm2',
-  ELIMINATION: 'cm4'
+  ELIMINATION: 'cm4' // -- here
 }
 
 const actions = {
   START: 'Start',
   SCORE: 'Score',
   CONFIRMATION: 'Confirmation',
-  ELIMINATION: 'Elimination'
+  ELIMINATION: 'Elimination'  // -- here
 }
 const categories = {
   SCORE: 'Score',
   EXCEPTION: 'Exception',
   CONFIRMATION: 'Confirmation',
-  ELIMINATION: 'Elimination',
+  ELIMINATION: 'Elimination', // -- here
   AGENTFORMER: 'Agent-Former',
   JOURNEY: 'Journey'
 }
 
 const sendEvent = async (request, category, action) => {
+  console.log('sendEvent: -------', JSON.stringify(request));
   try {
     await request.ga.event({
       category: category,
@@ -51,10 +54,14 @@ const sendEvent = async (request, category, action) => {
   }
 }
 const sendDimensionOrMetric = async (request, { dimensionOrMetric, value }) => {
+  // console.log('A VIEW REQUEST: ', request);
+  // used in plugin gapi.js:22, onResponse
   try {
     const dmetrics = {}
     dmetrics[dimensionOrMetric] = value
-    console.log(dmetrics,'GGGGGGGGGGGGGGGGGG')
+    console.log('here: sendDimensionOrMetric: ', dmetrics);
+    // -- here sedning pageView
+    // console.log('here: ', 'tryin pageView!', request.ga.pageView);
     await request.ga.pageView(dmetrics)
     console.log('Metric Sending analytics page-view for %s', request.route.path)
   } catch (err) {
@@ -62,9 +69,13 @@ const sendDimensionOrMetric = async (request, { dimensionOrMetric, value }) => {
   }
 }
 const sendValidationDimension = async (request) => {
-  sendDimensionOrMetric(request, { dimensionOrMetric: dimensions.VALIDATION, value: true })
+  // send validation dimension
+  console.log('------: sendValidationDimension:', request.yar?.id);
+  await sendDimensionOrMetric(request, { dimensionOrMetric: dimensions.VALIDATION, value: true })
 }
 const sendDimensionOrMetrics = async (request, dimenisons) => {
+  console.log('------: sendDimensionOrMetrics:', request.yar?.id);
+  // -- here
   try {
     const dmetrics = {}
     dimenisons.forEach(item => {
@@ -73,27 +84,49 @@ const sendDimensionOrMetrics = async (request, dimenisons) => {
       }
       dmetrics[item.dimensionOrMetric] = item.value
     })
+    // -- here
+    // var entire = request.ga.pageView.toString(); 
+    // console.log('here: ', 'tryin pageView! TEXT', entire);
     await request.ga.pageView(dmetrics)
     console.log('Metrics Sending analytics page-view for %s', request.route.path)
   } catch (err) {
     appInsights.logException(request, { error: err })
   }
 }
+
+const sendEliminationEvent = async (request, metrics) => {
+  console.log('WHOLE REQ.: sendEliminationEvent ---', request);
+  // console.log('WHOLE REQ.: sendEliminationEvent ---', JSON.stringify(request));
+  console.log('++++++++: SEND ELIMINATION EVENT', request.yar?.id);
+  const dmetrics = {
+    ...metrics,
+    user_type: 'Agent',
+    page_location: request.route.path,
+    grant_type,
+    journey_continued: 'false',
+    elimination_time: getTimeofJourneySinceStart(request).toString()
+  }
+  try {
+    const event = { name: 'elimination', params: dmetrics }
+    await request.ga.view(request, [ event ])
+    console.log('Metrics Sending analytics "elimination" for %s', request.route.path)
+  } catch (err) {
+    appInsights.logException(request, { error: err })
+  }
+  console.log('[ ELIMINATION MATRIC SENT ]')
+}
 const sendEligibilityEvent = async (request, notEligible = false) => {
   if (notEligible) {
     await sendDimensionOrMetrics(request, [{
-      dimensionOrMetric: metrics.ELIMINATION,
-      value: getTimeofJourneySinceStart(request).toString()
-    },
-    {
-      dimensionOrMetric: dimensions.ELIMINATION,
-      value: false
+      dimensionOrMetric: metrics.ELIMINATION, // -- here
+      value: getTimeofJourneySinceStart(request).toString(),
+      elimination_Time: getTimeofJourneySinceStart(request).toString() // -- here
     }])
     console.log('[ NOT ELIGIBLE MATRIC SENT ]')
   } else {
     await sendDimensionOrMetric(request, {
-      dimensionOrMetric: dimensions.ELIMINATION,
-      value: notEligible
+      dimensionOrMetric: dimensions.ELIMINATION, // -- here
+      value: isEligible
     })
   }
 }
@@ -148,7 +181,7 @@ const processGA = async (request, ga, _score, _confirmationId) => {
       }
     })
     if (cmcds.length > 0) {
-      await sendDimensionOrMetrics(request, cmcds)
+      // await sendDimensionOrMetrics(request, cmcds)
     }
   }
 }
@@ -165,5 +198,6 @@ module.exports = {
   sendDimensionOrMetrics,
   isBlockDefaultPageView,
   sendValidationDimension,
-  processGA
+  processGA,
+  sendEliminationEvent
 }

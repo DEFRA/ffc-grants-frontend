@@ -62,9 +62,9 @@ async function createServer () {
     options: {
       propertySettings: [
         {
-          key: config.analyticsPropertyApi,
+          key: config.analyticsPropertyApi, // here were we reference the key
           id: config.googleTagManagerServerKey,
-          hitTypes: ['pageview']
+          hitTypes: [ 'pageview']
         }
       ],
       sessionIdProducer: async request => {

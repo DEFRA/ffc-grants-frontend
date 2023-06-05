@@ -121,7 +121,7 @@ module.exports = [
         options: { abortEarly: false },
         payload: schema,
         failAction: (request, h, err) => {
-          gapiService.sendValidationDimension(request)
+          // gapiService.sendValidationDimension(request)
           let { waterSourceCurrent, waterSourcePlanned } = request.payload
           const errorList = []
           const [

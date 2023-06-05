@@ -13,7 +13,7 @@ services:
       AUTH_USERNAME: ${AUTH_USERNAME:-grants}
       AUTH_PASSWORD_HASH: ${AUTH_PASSWORD_HASH:-grants}
       GOOGLE_TAG_MANAGER_KEY: 'GTM-WJ5C78H'
-      GOOGLE_TAG_MANAGER_SERVER_KEY: 'UA-179628664-4'
+      GOOGLE_TAG_MANAGER_SERVER_KEY: 'G-1NQ7QYDS14'
       COOKIE_PASSWORD: thisistestcookiepasswordthisistestcookiepasswordthisistestcookiepassword
       SERVICE_BUS_HOST: ${SERVICE_BUS_HOST:-notset}
       SERVICE_BUS_PASSWORD: ${SERVICE_BUS_PASSWORD:-notset}

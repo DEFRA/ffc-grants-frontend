@@ -135,7 +135,7 @@ module.exports = [
         } = request.payload
 
         if (!projectInfrastucture && !projectEquipment && !projectTechnology) {
-          gapiService.sendValidationDimension(request)
+          // gapiService.sendValidationDimension(request)
           return h.view(
             viewTemplate,
             createModel(

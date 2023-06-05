@@ -52,18 +52,20 @@ const getPage = async (question, request, h) => {
         const overAllScore = getYarValue(request, 'overAllScore')
         const emailData = await emailFormatting({ body: createMsg.getAllDetails(request, confirmationId), overAllScore, correlationId: request.yar.id })
         await senders.sendDesirabilitySubmitted(emailData, request.yar.id) // replace with sendDesirabilitySubmitted, and replace first param with call to function in process-submission
-        await gapiService.sendDimensionOrMetrics(request, [{
-          dimensionOrMetric: gapiService.dimensions.CONFIRMATION,
-          value: confirmationId
-        }, {
-          dimensionOrMetric: gapiService.dimensions.FINALSCORE,
-          value: getYarValue(request, 'current-score')
-        },
-        {
-          dimensionOrMetric: gapiService.metrics.CONFIRMATION,
-          value: 'TIME'
-        }
-        ])
+        // -- here we send ga event SCORE
+        // await gapiService.sendDimensionOrMetric(request, [{
+        // await gapiService.sendDimensionOrMetrics(request, [{
+        //   dimensionOrMetric: gapiService.dimensions.CONFIRMATION,
+        //   value: confirmationId
+        // }, {
+        //   dimensionOrMetric: gapiService.dimensions.FINALSCORE,
+        //   value: getYarValue(request, 'current-score')
+        // },
+        // {
+        //   dimensionOrMetric: gapiService.metrics.CONFIRMATION,
+        //   value: 'TIME'
+        // }
+        // ])
         console.log('Confirmation event sent')
       } catch (err) {
         console.log('ERROR: ', err)
@@ -201,6 +203,7 @@ const showPostPage = (currentQuestion, request, h) => {
   }
 
   if (thisAnswer?.notEligible || (yarKey === 'projectCost' ? !getGrantValues(payload[Object.keys(payload)[0]], currentQuestion.grantInfo).isEligible : null)) {
+    // gapiService.sendEligibilityEvent(request, !!thisAnswer?.notEligible) // -- here - sends elemenation event to GA
     if (thisAnswer?.alsoMaybeEligible) {
       const {
         maybeEligibleContent
@@ -212,7 +215,8 @@ const showPostPage = (currentQuestion, request, h) => {
       return h.view('maybe-eligible', MAYBE_ELIGIBLE)
     }
 
-    gapiService.sendEligibilityEvent(request, !!thisAnswer?.notEligible)
+    // gapiService.sendEligibilityEvent(request, !!thisAnswer?.notEligible)
+    gapiService.sendEliminationEvent(request, {})
     return h.view('not-eligible', NOT_ELIGIBLE)
   } else if (thisAnswer?.redirectUrl) {
     return h.redirect(thisAnswer?.redirectUrl)
@@ -240,7 +244,7 @@ const getPostHandler = (currentQuestion) => {
 
 const processGA = async (question, request, confirmationId) => {
   if (question.ga) {
-    await gapiService.processGA(request, question.ga, confirmationId)
+    // await gapiService.processGA(request, question.ga, confirmationId)
   }
 }
 
