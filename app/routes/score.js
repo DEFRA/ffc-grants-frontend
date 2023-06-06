@@ -50,7 +50,7 @@ module.exports = [{
 
       if (msgData) {
         // Add the irrigation rating to the crop object
-        const irrigationRating = msgData.desirability.questions.find(question => question.key === 'irrigated-land').rating;
+        const irrigationRating = msgData.desirability.questions.find(question => question.key === 'irrigated-land').rating
         // the crops question (irrigated-crops) doesn't have a rating
         cropObject.rating = irrigationRating
 
@@ -64,7 +64,7 @@ module.exports = [{
           desirabilityQuestion.unit = tableQuestion?.unit
           desirabilityQuestion.pageTitle = tableQuestion.pageTitle
           desirabilityQuestion.fundingPriorities = tableQuestion.fundingPriorities
-          desirabilityQuestion.answers = formatAnswers(desirabilityQuestion.answers);
+          desirabilityQuestion.answers = formatAnswers(desirabilityQuestion.answers)
 
           return desirabilityQuestion
         })
@@ -82,7 +82,7 @@ module.exports = [{
         }
         setYarValue(request, 'current-score', msgData.desirability.overallRating.band)
         // send score event to GA
-        await gapiService.sendGAEvent(request, { name: gapiService.eventTypes.SCORE, params: { score_presented: msgData.desirability.overallRating.band}})
+        await gapiService.sendGAEvent(request, { name: gapiService.eventTypes.SCORE, params: { score_presented: msgData.desirability.overallRating.band } })
 
         return h.view(viewTemplate, createModel({
           titleText: msgData.desirability.overallRating.band,

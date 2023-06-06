@@ -53,7 +53,7 @@ const getPage = async (question, request, h) => {
         const emailData = await emailFormatting({ body: createMsg.getAllDetails(request, confirmationId), overAllScore, correlationId: request.yar.id })
         await senders.sendDesirabilitySubmitted(emailData, request.yar.id) // replace with sendDesirabilitySubmitted, and replace first param with call to function in process-submission
         // -- here we send ga event SCORE
-        await gapiService.sendGAEvent(request, { name: gapiService.eventTypes.SCORE, params: {score: overAllScore}})
+        // await gapiService.sendGAEvent(request, { name: gapiService.eventTypes.SCORE, params: { score: overAllScore } })
         // await gapiService.sendDimensionOrMetric(request, [{
         // await gapiService.sendDimensionOrMetrics(request, [{
         //   dimensionOrMetric: gapiService.dimensions.CONFIRMATION,
@@ -217,7 +217,7 @@ const showPostPage = (currentQuestion, request, h) => {
     }
 
     // send elimination event to GA
-    gapiService.sendGAEvent(request, {name: 'elimination', params: {}})
+    gapiService.sendGAEvent(request, { name: 'elimination', params: {} })
     return h.view('not-eligible', NOT_ELIGIBLE)
   } else if (thisAnswer?.redirectUrl) {
     return h.redirect(thisAnswer?.redirectUrl)

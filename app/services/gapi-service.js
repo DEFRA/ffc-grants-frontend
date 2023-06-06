@@ -30,7 +30,7 @@ const actions = { // keep this
   START: 'Start',
   SCORE: 'Score',
   CONFIRMATION: 'Confirmation',
-  ELIMINATION: 'Elimination'  // -- here
+  ELIMINATION: 'Elimination' // -- here
 }
 const categories = {
   SCORE: 'Score',
@@ -47,11 +47,11 @@ const eventTypes = {
   ELIGIBILITY: 'eligibility',
   CONFIRMATION: 'confirmation',
   ELIMINATION: 'elimination', // -- here
-  EXCEPTION: 'exception',
+  EXCEPTION: 'exception'
 }
 // generic one that's used in weird ways!
 const sendEvent = async (request, category, action) => {
-  console.log('sendEvent: -------', JSON.stringify(request));
+  console.log('sendEvent: -------', JSON.stringify(request))
   try {
     await request.ga.event({
       category: category,
@@ -67,7 +67,7 @@ const sendDimensionOrMetric = async (request, { dimensionOrMetric, value }) => {
   try {
     const dmetrics = {}
     dmetrics[dimensionOrMetric] = value
-    console.log('here: sendDimensionOrMetric: ', dmetrics);
+    console.log('here: sendDimensionOrMetric: ', dmetrics)
     // -- here sedning pageView
     // console.log('here: ', 'tryin pageView!', request.ga.pageView);
     await request.ga.pageView(dmetrics)
@@ -79,7 +79,7 @@ const sendDimensionOrMetric = async (request, { dimensionOrMetric, value }) => {
 // sends some UA metrics -- scrap!
 const sendValidationDimension = async (request) => {
   // send validation dimension
-  console.log('------: sendValidationDimension:', request.yar?.id);
+  console.log('------: sendValidationDimension:', request.yar?.id)
   await sendDimensionOrMetric(request, { dimensionOrMetric: dimensions.VALIDATION, value: true })
 }
 // sends some UA metrics with page view -- scrap after stealing that cool replacer!
@@ -94,7 +94,7 @@ const sendDimensionOrMetrics = async (request, dimenisons) => {
       dmetrics[item.dimensionOrMetric] = item.value
     })
     // -- here
-    // var entire = request.ga.pageView.toString(); 
+    // var entire = request.ga.pageView.toString();
     // console.log('here: ', 'tryin pageView! TEXT', entire);
     await request.ga.pageView(dmetrics)
     console.log('Metrics Sending analytics page-view for %s', request.route.path)
@@ -106,27 +106,27 @@ const sendDimensionOrMetrics = async (request, dimenisons) => {
 const sendGAEvent = async (request, metrics) => {
   const timeSinceStart = getTimeofJourneySinceStart(request).toString()
   const page_path = request.route.path
-  const {name, params} = metrics;
-  const isEliminationEvent = name === eventTypes.ELIMINATION;
-  const isScoreEvent = name === eventTypes.SCORE;
-  const isConfirmationEvent = name === eventTypes.CONFIRMATION;
+  const { name, params } = metrics
+  const isEliminationEvent = name === eventTypes.ELIMINATION
+  const isScoreEvent = name === eventTypes.SCORE
+  const isConfirmationEvent = name === eventTypes.CONFIRMATION
   const dmetrics = {
     ...params,
     ...(isEliminationEvent && { elimination_time: timeSinceStart }),
     ...(isScoreEvent && { score_time: timeSinceStart }),
     ...(isConfirmationEvent && { confirmation_time: timeSinceStart }),
     ...(params.score_presented && { score_presented: params.score_presented }),
-    ...(params.score && {score: params.score}),
-    ...(params.user_type &&{ user_type: params.user_type}),
+    ...(params.score && { score: params.score }),
+    ...(params.user_type && { user_type: params.user_type }),
     grant_type,
     page_path,
     page_title: page_path,
     test: 'testig v.1.6'
   }
   try {
-    console.log('dmetrics:::::: ', dmetrics);
+    console.log('dmetrics:::::: ', dmetrics)
     const event = { name, params: dmetrics }
-    await request.ga.view(request, [ event ])
+    await request.ga.view(request, [event])
     console.log('Metrics Sending analytics %s for %s', name, request.route.path)
   } catch (err) {
     appInsights.logException(request, { error: err })
@@ -202,5 +202,5 @@ module.exports = {
   isBlockDefaultPageView,
   sendValidationDimension,
   processGA,
-  sendGAEvent,
+  sendGAEvent
 }

@@ -1,4 +1,4 @@
-const Analytics = require('../../hapi-gapi/lib/analytics')
+const Analytics = require('../hapi-gapi/lib/analytics')
 const gapiService = require('../services/gapi-service')
 
 exports.plugin = {
