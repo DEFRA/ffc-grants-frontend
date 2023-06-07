@@ -105,22 +105,22 @@ const sendDimensionOrMetrics = async (request, dimenisons) => {
 
 const sendGAEvent = async (request, metrics) => {
   const timeSinceStart = getTimeofJourneySinceStart(request).toString()
-  const page_path = request.route.path
+  const pagePath = request.route.path
   const { name, params } = metrics
   const isEliminationEvent = name === eventTypes.ELIMINATION
   const isScoreEvent = name === eventTypes.SCORE
   const isConfirmationEvent = name === eventTypes.CONFIRMATION
   const dmetrics = {
     ...params,
-    ...(isEliminationEvent && { elimination_time: timeSinceStart }),
+    ...(isEliminationEvent && { elimination_time: '00:00:50' }),
     ...(isScoreEvent && { score_time: timeSinceStart }),
     ...(isConfirmationEvent && { confirmation_time: timeSinceStart }),
     ...(params.score_presented && { score_presented: params.score_presented }),
-    ...(params.score && { score: params.score }),
+    ...(params.final_score && { final_score: params.final_score }),
     ...(params.user_type && { user_type: params.user_type }),
     grant_type,
-    page_path,
-    page_title: page_path,
+    pagePath,
+    page_title: pagePath,
     test: 'testig v.1.6'
   }
   try {

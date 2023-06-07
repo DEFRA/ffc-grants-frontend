@@ -44,7 +44,7 @@ module.exports = [{
 
       const msgData = await getWaterScoring(formatAnswersForScoring, request.yar.id)
 
-      setYarValue(request, 'overAllScore', msgData)
+      // setYarValue(request, 'overAllScore', msgData.desirability.overallRating.band)
       const crop = tableOrder.find(question => question.key === 'irrigated-crops')
       const cropObject = addSummaryRow(crop, request)
 
@@ -82,7 +82,7 @@ module.exports = [{
         }
         setYarValue(request, 'current-score', msgData.desirability.overallRating.band)
         // send score event to GA
-        await gapiService.sendGAEvent(request, { name: gapiService.eventTypes.SCORE, params: { score_presented: msgData.desirability.overallRating.band } })
+        await gapiService.sendGAEvent(request, { name: 'score', params: { score_presented: msgData.desirability.overallRating.band } })
 
         return h.view(viewTemplate, createModel({
           titleText: msgData.desirability.overallRating.band,
@@ -94,9 +94,9 @@ module.exports = [{
         throw new Error('Score not received.')
       }
     } catch (error) {
-      request.log(error)
-      // await gapiService.sendGAEvent(request, { name: gapiService.categories.EXCEPTION, params: { error: error.message }})
-      // await gapiService.sendEvent(request, gapiService.categories.EXCEPTION, 'Error')
+      console.log(error)
+      await gapiService.sendGAEvent(request, { name: gapiService.categories.EXCEPTION, params: { error: error.message } })
+      await gapiService.sendEvent(request, gapiService.categories.EXCEPTION, 'Error')
     }
     request.log(err)
     return h.view('500')
