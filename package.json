@@ -51,7 +51,8 @@
   },
   "overrides": {
     "@azure/identity": {
-      "jsonwebtoken": "9.0.0"
+      "jsonwebtoken": "9.0.0",
+      "fast-xml-parser": ">=4.2.4"
     }
   },
   "devDependencies": {
