@@ -21,10 +21,10 @@ describe('Score page', () => {
 	const getDesirabilityAnswersSpy = jest.spyOn(createMsg, 'getDesirabilityAnswers').mockImplementation(() => {
 		return {
 			test: 'test'
-		};
+		}
 	})
 	const getWaterScoringSpy = jest.spyOn(newSender, 'getWaterScoring').mockImplementation(() => {
-		Promise.resolve(scoreData);
+		Promise.resolve(scoreData)
 	})
 
 	beforeEach(async () => {
