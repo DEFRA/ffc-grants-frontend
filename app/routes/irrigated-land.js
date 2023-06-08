@@ -3,7 +3,6 @@ const { findErrorList } = require('../helpers/helper-functions')
 const { IRRIGATED_LAND_REGEX, ONLY_ZEROES_REGEX } = require('../helpers/regex-validation')
 const { setYarValue, getYarValue } = require('../helpers/session')
 const urlPrefix = require('../config/server').urlPrefix
-const gapiService = require('../services/gapi-service')
 const { guardPage } = require('../helpers/page-guard')
 const { startPageUrl } = require('../config/server')
 
@@ -99,7 +98,6 @@ module.exports = [
           results: Joi.any()
         }),
         failAction: (request, h, err) => {
-          // gapiService.sendValidationDimension(request)
           const errorList = []
           let [
             irrigatedLandCurrentError, irrigatedLandTargetError

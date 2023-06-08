@@ -1,4 +1,4 @@
-const Analytics = require('../hapi-gapi/lib/analytics')
+const Analytics = require('@defra//hapi-gapi/lib/analytics')
 const gapiService = require('../services/gapi-service')
 
 exports.plugin = {
@@ -20,7 +20,6 @@ exports.plugin = {
         if (statusFamily === 2 && response.variety === 'view' && !gapiService.isBlockDefaultPageView(request.url)) {
           await gapiService.sendGAEvent(request, { name: gapiService.eventTypes.PAGEVIEW, params: { page_path: request.route.path, page_title: request.route.fingerprint } })
           console.log('NOT: from plugin Metrics Sending analytics page-view for %s', request.route.path)
-
         }
         if (statusFamily === 5) {
           await request.ga.event({ category: 'Exception', action: request.route.path, label: response.statusCode })
@@ -32,8 +31,8 @@ exports.plugin = {
     })
 
     server.ext('onPostStop', async () => {
-      await analytics.shutdown()
-      server.log([ 'hapi-gapi' ], 'All buffered events sent to the Google Analytics Measurement Protocol API.')
+     // await analytics.shutdown()
+      server.log(['hapi-gapi'], 'All buffered events sent to the Google Analytics Measurement Protocol API.')
     })
   }
 }

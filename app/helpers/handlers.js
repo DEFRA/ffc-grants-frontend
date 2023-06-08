@@ -53,10 +53,6 @@ const getPage = async (question, request, h) => {
         const overAllScore = getYarValue(request, 'overAllScore')
         const emailData = await emailFormatting({ body: createMsg.getAllDetails(request, confirmationId), overAllScore, correlationId: request.yar.id })
         await senders.sendDesirabilitySubmitted(emailData, request.yar.id) // replace with sendDesirabilitySubmitted, and replace first param with call to function in process-submission
-        // -- here we send ga event confirmation
-        // await gapiService.sendGAEvent(request, { name: 'confirmation', params: { final_score: overAllScore, user_type: getYarValue(request, 'applying') } })
-
-        console.log('[CONFIRMATION EVENT SENT]')
       } catch (err) {
         console.log('ERROR: ', err)
       }
