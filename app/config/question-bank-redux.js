@@ -41,7 +41,7 @@ const questionBank = {
       baseUrl: 'farming-type',
       backUrl: 'start',
       nextUrl: 'legal-status',
-      ga: [{ journeyStart: true }],
+      ga: { journeyStart: true },
       ineligibleContent: {
         messageContent:
           'This grant is only available to:<ul class=\'govuk-list govuk-list--bullet\'><li> arable and horticultural farming businesses that supply the food industry</li><li>nurseries growing ornamentals</li><li>forestry nurseries</li></ul><p class=\'govuk-body\'> <a class=\'govuk-link\' href=\'https://www.gov.uk/topic/farming-food-grants-payments/rural-grants-payments\'>See other grants you may be eligible for.</a></p>'
@@ -724,9 +724,6 @@ const questionBank = {
       type: 'single-answer',
       preValidationKeys: ['abstractionLicence'],
       minAnswerCount: 1,
-      ga: [
-        { dimension: 'cm2', value: { type: 'journey-time' } }
-      ],
       validate: [
         {
           type: 'NOT_EMPTY',
@@ -1209,7 +1206,6 @@ const questionBank = {
       type: 'multi-input',
       minAnswerCount: '',
       maxAnswerCount: '',
-      ga: [{ dimension: 'cd3', value: { type: 'yar', key: 'applying' } }],
       allFields: [
         {
           type: 'sub-heading',
@@ -1860,11 +1856,7 @@ const questionBank = {
       url: 'confirmation',
       baseUrl: 'confirmation',
       preValidationKeys: ['farmerDetails'],
-      ga: [
-        { dimension: 'cd2', value: { type: 'score' } },
-        { dimension: 'cd5', value: { type: 'confirmationId' } },
-        { dimension: 'cm1', value: { type: 'journey-time' } }
-      ],
+      ga: { name: 'confirmation', params: { } },
       maybeEligible: true,
       maybeEligibleContent: {
         reference: {
