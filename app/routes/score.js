@@ -44,7 +44,7 @@ module.exports = [{
 
       const msgData = await getWaterScoring(formatAnswersForScoring, request.yar.id)
 
-      // setYarValue(request, 'overAllScore', msgData.desirability.overallRating.band)
+      setYarValue(request, 'overAllScore', msgData)
       const crop = tableOrder.find(question => question.key === 'irrigated-crops')
       const cropObject = addSummaryRow(crop, request)
 
