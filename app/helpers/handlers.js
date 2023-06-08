@@ -37,6 +37,7 @@ const getPage = async (question, request, h) => {
     return h.redirect(`${urlPrefix}/water-source`)
   }
   let confirmationId = ''
+  await processGA(question, request)
 
   if (question.maybeEligible) {
     let { maybeEligibleContent } = question
@@ -49,25 +50,13 @@ const getPage = async (question, request, h) => {
       }
       confirmationId = getConfirmationId(request.yar.id)
       try {
-        const overAllScore = getYarValue(request, 'current-score')
+        const overAllScore = getYarValue(request, 'overAllScore')
         const emailData = await emailFormatting({ body: createMsg.getAllDetails(request, confirmationId), overAllScore, correlationId: request.yar.id })
         await senders.sendDesirabilitySubmitted(emailData, request.yar.id) // replace with sendDesirabilitySubmitted, and replace first param with call to function in process-submission
-        // -- here we send ga event SCORE
-        await gapiService.sendGAEvent(request, { name: 'confirmation', params: { final_score: getYarValue(request, 'current-score') } })
-        // await gapiService.sendDimensionOrMetric(request, [{
-        // await gapiService.sendDimensionOrMetrics(request, [{
-        //   dimensionOrMetric: gapiService.dimensions.CONFIRMATION,
-        //   value: confirmationId
-        // }, {
-        //   dimensionOrMetric: gapiService.dimensions.FINALSCORE,
-        //   value: getYarValue(request, 'current-score')
-        // },
-        // {
-        //   dimensionOrMetric: gapiService.metrics.CONFIRMATION,
-        //   value: 'TIME'
-        // }
-        // ])
-        console.log('Confirmation event sent')
+        // -- here we send ga event confirmation
+        // await gapiService.sendGAEvent(request, { name: 'confirmation', params: { final_score: overAllScore, user_type: getYarValue(request, 'applying') } })
+
+        console.log('[CONFIRMATION EVENT SENT]')
       } catch (err) {
         console.log('ERROR: ', err)
       }
@@ -127,8 +116,6 @@ const getPage = async (question, request, h) => {
       request
     )
   }
-
-  await processGA(question, request, confirmationId)
 
   switch (url) {
     case 'check-details': {
@@ -204,7 +191,6 @@ const showPostPage = (currentQuestion, request, h) => {
   }
 
   if (thisAnswer?.notEligible || (yarKey === 'projectCost' ? !getGrantValues(payload[Object.keys(payload)[0]], currentQuestion.grantInfo).isEligible : null)) {
-    // gapiService.sendEligibilityEvent(request, !!thisAnswer?.notEligible) // -- here - sends elemenation event to GA
     if (thisAnswer?.alsoMaybeEligible) {
       const {
         maybeEligibleContent
@@ -243,9 +229,14 @@ const getPostHandler = (currentQuestion) => {
   }
 }
 
-const processGA = async (question, request, confirmationId) => {
+const processGA = async (question, request) => {
   if (question.ga) {
-    // await gapiService.processGA(request, question.ga, confirmationId)
+    if (question.ga.journeyStart) {
+      setYarValue(request, 'journey-start-time', Date.now())
+      console.log('[JOURNEY STARTED] ')
+    } else {
+      await gapiService.sendGAEvent(request, question.ga)
+    }
   }
 }
 
