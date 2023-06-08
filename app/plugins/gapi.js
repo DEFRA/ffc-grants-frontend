@@ -1,4 +1,4 @@
-const Analytics = require('@defra//hapi-gapi/lib/analytics')
+const Analytics = require('@defra/hapi-gapi/lib/analytics')
 const gapiService = require('../services/gapi-service')
 
 exports.plugin = {
@@ -28,11 +28,6 @@ exports.plugin = {
         console.log(`[THIS IS GA ERROR: ${error}]`)
       }
       return h.continue
-    })
-
-    server.ext('onPostStop', async () => {
-     // await analytics.shutdown()
-      server.log(['hapi-gapi'], 'All buffered events sent to the Google Analytics Measurement Protocol API.')
     })
   }
 }
