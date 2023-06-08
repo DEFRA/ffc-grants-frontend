@@ -182,7 +182,6 @@ const showPostPage = (currentQuestion, request, h) => {
 
   const errors = checkErrors(payload, currentQuestion, h, request)
   if (errors) {
-    gapiService.sendValidationDimension(request)
     return errors
   }
 
