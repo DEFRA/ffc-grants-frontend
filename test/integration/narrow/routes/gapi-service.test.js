@@ -31,7 +31,10 @@ const eventError = jest.fn(async (obj) => {
 
 const request = {
   ga: {
-    event: eventSuccess
+    view: eventSuccess
+  },
+  route: {
+    path: 'somePath'
   },
   yar: {
     id: 'Some ID',
