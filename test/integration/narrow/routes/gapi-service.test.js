@@ -5,9 +5,17 @@ appInsights.logException = jest.fn((req, event) => {
 
 jest.mock('../../../../app/helpers/session', () => {
   const original = jest.requireActual('../../../../app/helpers/session')
+  const varList = {
+    'journey-start-time': (new Date()).getTime(),
+    'current-score': 'some mock score'
+  }
   return {
     ...original,
-    setYarValue: jest.fn((a, b, c) => {})
+    setYarValue: (request, key, value) => null,
+	  getYarValue: (request, key) => {
+		if (Object.keys(varList).includes(key)) return varList[ key ]
+		else return 'Error'
+	}
   }
 })
 
@@ -66,31 +74,25 @@ describe('get gapiService setup', () => {
   //   expect(result).toBe(undefined)
   // })
 
-  test('Call sendGAEvent successfully', async () => {
+  test('custom event CONFIRMATION sent successfully', async () => {
     const result = await gapiService.sendGAEvent(request, { name: 'confirmation', pram: {} })
     expect(result).toBe(undefined)
   })
 
-  // test('Call sendEligibilityEvent successfully', async () => {
-  //   let result = await gapiService.sendEligibilityEvent(request)
-  //   expect(result).toBe(undefined)
+  test('custom event ELIGIBILITY PASSED sent successfully', async () => {
+    const result = await gapiService.sendGAEvent(request, { name: 'eligibility_passed', pram: {} })
+    expect(result).toBe(undefined)
+  })
 
-  //   result = await gapiService.sendEligibilityEvent(request, false)
-  //   expect(result).toBe(undefined)
-  // })
+  test('custom event CONFIRMATION sent successfully', async () => {
+    const result = await gapiService.sendGAEvent(request, { name: 'confirmation', pram: {} })
+    expect(result).toBe(undefined)
+  })
 
-  // test('Call sendEvent throw error', async () => {
-  //   let result = await gapiService.sendEvent(requestError, 'CATEGORY', 'ACTION')
-  //   expect(result).toBe(undefined)
-
-  //   result = await gapiService.sendEvent({}, 'CATEGORY', 'ACTION')
-  //   expect(result).toBe(undefined)
-  // })
-
-  // test('Call sendDimensionOrMetric throw error', async () => {
-  //   const result = await gapiService.sendDimensionOrMetric(requestError, { dimensionOrMetric: 'cd1', value: 'some value' })
-  //   expect(result).toBe(undefined)
-  // })
+  test('custom event SCORE sent successfully', async () => {
+    const result = await gapiService.sendGAEvent(request, { name: 'score', pram: {} })
+    expect(result).toBe(undefined)
+  })
 
   // test('Call sendDimensionOrMetrics', async () => {
   //   const items = [
