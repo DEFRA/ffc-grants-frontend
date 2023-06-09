@@ -91,12 +91,11 @@ module.exports = [{
           scoreChance: scoreChance
         }))
       } else {
-        throw new Error('Score not received.')
+        throw new Error('[SCORE NOT RECEIVED]')
       }
     } catch (error) {
       console.log(error)
-      await gapiService.sendGAEvent(request, { name: gapiService.categories.EXCEPTION, params: { error: error.message } })
-      await gapiService.sendEvent(request, gapiService.categories.EXCEPTION, 'Error')
+      await gapiService.sendGAEvent(request, { name: gapiService.eventTypes.EXCEPTION, params: { error: error.message } })
     }
     request.log(err)
     return h.view('500')
