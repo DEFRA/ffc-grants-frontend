@@ -69,11 +69,6 @@ describe('get gapiService setup', () => {
     expect(gapiService).toBeDefined()
   })
 
-  // test('Call sendEvent successfully', async () => {
-  //   const result = await gapiService.sendEvent(request, 'CATEGORY', 'ACTION')
-  //   expect(result).toBe(undefined)
-  // })
-
   test('custom event CONFIRMATION sent successfully', async () => {
     const result = await gapiService.sendGAEvent(request, { name: 'confirmation', pram: {} })
     expect(result).toBe(undefined)
@@ -90,18 +85,14 @@ describe('get gapiService setup', () => {
   })
 
   test('custom event SCORE sent successfully', async () => {
-    const result = await gapiService.sendGAEvent(request, { name: 'score', pram: {} })
+    const result = await gapiService.sendGAEvent(request, { name: 'score', pram: { score_presented: 'fake score' } })
     expect(result).toBe(undefined)
   })
 
-  // test('Call sendDimensionOrMetrics', async () => {
-  //   const items = [
-  //     { dimensionOrMetric: 'cd1', value: 'some value' },
-  //     { dimensionOrMetric: 'cd2', value: 'TIME' }
-  //   ]
-  //   const result = await gapiService.sendDimensionOrMetrics(request, items)
-  //   expect(result).toBe(undefined)
-  // })
+  test('custom event ELIMINATION sent successfully', async () => {
+    const result = await gapiService.sendGAEvent(request, { name: 'elimination', pram: {} })
+    expect(result).toBe(undefined)
+  })
 
   // test('Call sendEligibilityEvent throw error', async () => {
   //   const result = await gapiService.sendEligibilityEvent(requestError)
