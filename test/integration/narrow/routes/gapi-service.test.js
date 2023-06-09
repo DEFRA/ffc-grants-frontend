@@ -30,7 +30,7 @@ jest.mock('../../../../app/services/protective-monitoring-service', () => {
 const gapiService = require('../../../../app/services/gapi-service')
 
 const eventSuccess = jest.fn(async (obj) => {
-  return null
+  return 'ok'
 })
 
 const eventError = jest.fn(async (obj) => {
@@ -93,7 +93,16 @@ describe('get gapiService setup', () => {
     const result = await gapiService.sendGAEvent(request, { name: 'elimination', pram: {} })
     expect(result).toBe(undefined)
   })
+  test('test isBlockDefaultPageView() -> false', () => {
+    const result = gapiService.isBlockDefaultPageView({ pathname: '/water/country' })
+    expect(result).toBe(false)
+  })
 
+  test('test isBlockDefaultPageView()-> true', () => {
+    const result = gapiService.isBlockDefaultPageView({ pathname: '/water/applying' })
+    expect(result).toBe(true)
+  })
+  
   // test('Call sendEligibilityEvent throw error', async () => {
   //   const result = await gapiService.sendEligibilityEvent(requestError)
   //   expect(result).toBe(undefined)
@@ -107,56 +116,6 @@ describe('get gapiService setup', () => {
 
   // test('Call processGA - empty ga', async () => {
   //   const ga = []
-  //   const result = await gapiService.processGA(request, ga)
-  //   expect(result).toBe(undefined)
-  // })
-
-  // test('Call processGA - populated ga', async () => {
-  //   const ga = [
-  //     { journeyStart: 'mock-journey-start' },
-  //     { dimension: 0 },
-  //     {
-  //       dimension: 12,
-  //       value: {
-  //         type: 'yar',
-  //         key: 'key-yar'
-  //       }
-  //     },
-  //     {
-  //       dimension: 12,
-  //       value: {
-  //         type: 'custom',
-  //         value: 'value-custom'
-  //       }
-  //     },
-  //     {
-  //       dimension: 12,
-  //       value: {
-  //         type: 'score'
-  //       }
-  //     },
-  //     {
-  //       dimension: 12,
-  //       value: {
-  //         type: 'confirmationId',
-  //         key: 'value-confirmationId'
-  //       }
-  //     },
-  //     {
-  //       dimension: 12,
-  //       value: {
-  //         type: 'journey-time'
-  //       }
-  //     },
-  //     {
-  //       dimension: 12,
-  //       value: {
-  //         type: 'mock-switch-default',
-  //         value: 'value-mock-switch-default'
-  //       }
-  //     }
-  //   ]
-
   //   const result = await gapiService.processGA(request, ga)
   //   expect(result).toBe(undefined)
   // })
