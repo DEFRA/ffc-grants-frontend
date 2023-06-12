@@ -15,6 +15,9 @@ services:
       NODE_ENV: development
       GOOGLE_TAG_MANAGER_KEY: 'GTM-WJ5C78H'
       GOOGLE_TAG_MANAGER_SERVER_KEY: 'G-1NQ7QYDS14'
+      ANALYTICS_PROPERTY_API: 'NVW29SmFTueM1qVawk2H2Q'
+      ANALYTICS_TAG_KEY: 'GT-MJPRKW7'
+
     ports:
       - "3000:3000"
       - "9229:9229"

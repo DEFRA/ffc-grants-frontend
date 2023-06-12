@@ -23,6 +23,7 @@ data:
   GOOGLE_TAG_MANAGER_KEY: {{ .Values.container.googleTagManagerKey | quote }}
   GOOGLE_TAG_MANAGER_SERVER_KEY: {{ .Values.container.googleTagManagerServerKey | quote }}
   ANALYTICS_PROPERTY_API: {{ .Values.container.analyticsPropertyApi | quote }}
+  ANALYTICS_TAG_KEY: {{ .Values.container.analyticsTagKey | quote }}
   START_PAGE_URL: {{ .Values.container.startPageUrl | quote }}
   SERVICE_END_DATE : {{ .Values.container.serviceEndDate | quote }}
   SERVICE_END_TIME : {{ .Values.container.serviceEndTime | quote }}
