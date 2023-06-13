@@ -62,8 +62,8 @@ async function createServer () {
     options: {
       propertySettings: [
         {
-          key: config.analyticsPropertyApi,
-          id: config.googleTagManagerServerKey,
+          key: process.env.ANALYTICS_PROPERTY_API,
+          id: process.env.GOOGLE_TAG_MANAGER_SERVER_KEY,
           hitTypes: ['pageview']
         }
       ],
@@ -134,6 +134,7 @@ async function createServer () {
       serviceName: 'FFC Grants Service',
       pageTitle: 'FFC Grants Service - GOV.UK',
       googleTagManagerKey: config.googleTagManagerKey,
+      analyticsTagKey: config.analyticsTagKey,
       startPageUrl: config.startPageUrl
     }
   })

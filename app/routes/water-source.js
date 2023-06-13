@@ -102,13 +102,15 @@ module.exports = [
   {
     method: 'GET',
     path: currentPath,
-    handler: (request, h) => {
+    handler: async (request, h) => {
       const isRedirect = guardPage(request, ['summerAbstractionMains'])
       if (isRedirect) {
         return h.redirect(startPageUrl)
       }
       const currentData = getYarValue(request, 'waterSourceCurrent') || null
       const plannedData = getYarValue(request, 'waterSourcePlanned') || null
+
+      await gapiService.sendGAEvent(request, { name: 'eligibility_passed', params: { } })
 
       return h.view(viewTemplate, createModel(getYarValue(request, 'currentlyIrrigating'), null, currentData, plannedData, getYarValue(request, 'current-score')))
     }
@@ -121,7 +123,6 @@ module.exports = [
         options: { abortEarly: false },
         payload: schema,
         failAction: (request, h, err) => {
-          gapiService.sendValidationDimension(request)
           let { waterSourceCurrent, waterSourcePlanned } = request.payload
           const errorList = []
           const [

@@ -2,7 +2,6 @@ const Joi = require('joi')
 const { setYarValue, getYarValue } = require('../helpers/session')
 const { setLabelData } = require('../helpers/helper-functions')
 const urlPrefix = require('../config/server').urlPrefix
-const gapiService = require('../services/gapi-service')
 const { guardPage } = require('../helpers/page-guard')
 const { startPageUrl } = require('../config/server')
 
@@ -135,7 +134,6 @@ module.exports = [
         } = request.payload
 
         if (!projectInfrastucture && !projectEquipment && !projectTechnology) {
-          gapiService.sendValidationDimension(request)
           return h.view(
             viewTemplate,
             createModel(

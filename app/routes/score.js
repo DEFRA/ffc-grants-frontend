@@ -50,7 +50,7 @@ module.exports = [{
 
       if (msgData) {
         // Add the irrigation rating to the crop object
-        const irrigationRating = msgData.desirability.questions.find(question => question.key === 'irrigated-land').rating;
+        const irrigationRating = msgData.desirability.questions.find(question => question.key === 'irrigated-land').rating
         // the crops question (irrigated-crops) doesn't have a rating
         cropObject.rating = irrigationRating
 
@@ -64,7 +64,7 @@ module.exports = [{
           desirabilityQuestion.unit = tableQuestion?.unit
           desirabilityQuestion.pageTitle = tableQuestion.pageTitle
           desirabilityQuestion.fundingPriorities = tableQuestion.fundingPriorities
-          desirabilityQuestion.answers = formatAnswers(desirabilityQuestion.answers);
+          desirabilityQuestion.answers = formatAnswers(desirabilityQuestion.answers)
 
           return desirabilityQuestion
         })
@@ -81,14 +81,9 @@ module.exports = [{
             break
         }
         setYarValue(request, 'current-score', msgData.desirability.overallRating.band)
-        await gapiService.sendDimensionOrMetrics(request, [{
-          dimensionOrMetric: gapiService.dimensions.SCORE,
-          value: msgData.desirability.overallRating.band
-        },
-        {
-          dimensionOrMetric: gapiService.metrics.SCORE,
-          value: 'TIME'
-        }])
+        // send score event to GA
+        await gapiService.sendGAEvent(request, { name: 'score', params: { score_presented: msgData.desirability.overallRating.band } })
+
         return h.view(viewTemplate, createModel({
           titleText: msgData.desirability.overallRating.band,
           scoreData: msgData,
@@ -96,11 +91,11 @@ module.exports = [{
           scoreChance: scoreChance
         }))
       } else {
-        throw new Error('Score not received.')
+        throw new Error('[SCORE NOT RECEIVED]')
       }
     } catch (error) {
-      request.log(error)
-      await gapiService.sendEvent(request, gapiService.categories.EXCEPTION, 'Error')
+      console.log(error)
+      await gapiService.sendGAEvent(request, { name: gapiService.eventTypes.EXCEPTION, params: { error: error.message } })
     }
     request.log(err)
     return h.view('500')

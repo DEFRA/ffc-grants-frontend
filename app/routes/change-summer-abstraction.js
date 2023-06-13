@@ -2,7 +2,6 @@ const { setLabelData } = require('../helpers/helper-functions')
 const { setYarValue, getYarValue } = require('../helpers/session')
 const { validateAnswerField } = require('../helpers/errorHelpers')
 const urlPrefix = require('../config/server').urlPrefix
-const gapiService = require('../services/gapi-service')
 const { guardPage } = require('../helpers/page-guard')
 const { startPageUrl } = require('../config/server')
 const { UNSUSTAINABLE_WATER_SOURCE } = require('../helpers/water-source-data')
@@ -101,7 +100,6 @@ module.exports = [
         }
 
         if (errorList.length > 0) {
-          gapiService.sendValidationDimension(request)
           return h.view(viewTemplate, createModel(unsustainableSourceType, summerAbstractChange, mainsChange, errorList, getYarValue(request, 'current-score'))).takeover()
         }
 

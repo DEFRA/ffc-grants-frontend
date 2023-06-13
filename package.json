@@ -1,6 +1,6 @@
 {
   "name": "ffc-grants-frontend",
-  "version": "3.11.1",
+  "version": "3.11.2",
   "description": "Frontend Grants microservice.",
   "main": "app/index.js",
   "scripts": {
@@ -28,7 +28,7 @@
   },
   "homepage": "https://github.com/DEFRA/ffc-grants-frontend#readme",
   "dependencies": {
-    "@defra/hapi-gapi": "^2.0.0",
+    "@defra/hapi-gapi": "^2.1.1",
     "@hapi/catbox-redis": "^6.0.2",
     "@hapi/cookie": "^11.0.2",
     "@hapi/crumb": "^8.0.1",
@@ -51,7 +51,8 @@
   },
   "overrides": {
     "@azure/identity": {
-      "jsonwebtoken": "9.0.0"
+      "jsonwebtoken": "9.0.0",
+      "fast-xml-parser": ">=4.2.4"
     }
   },
   "devDependencies": {
