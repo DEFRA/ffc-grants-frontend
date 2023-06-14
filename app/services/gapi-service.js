@@ -2,10 +2,9 @@ const appInsights = require('./app-insights')
 const { getYarValue, setYarValue } = require('../helpers/session')
 const { sendMonitoringEvent } = require('../services/protective-monitoring-service')
 
-const blockDefaultPageViews = ['start', 'applying'] // -- blocked pages
-const isBlockDefaultPageView = (url) => {
+const isBlockDefaultPageView = (array, url) => {
   const currentUrl = url.pathname.split('/').pop().toString().toLowerCase()
-  return blockDefaultPageViews.indexOf(currentUrl) >= 0
+  return array.indexOf(currentUrl) >= 0
 }
 
 const grant_type = 'Water Management'

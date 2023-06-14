@@ -51,7 +51,7 @@ async function createServer () {
         { key: 'Referrer-Policy', value: 'no-referrer' },
         {
           key: 'Content-Security-Policy'
-          // value: getSecurityPolicy()
+         // value: getSecurityPolicy()
         }
       ]
     }
@@ -69,6 +69,10 @@ async function createServer () {
       ],
       sessionIdProducer: async request => {
         return request.yar ? request.yar.id : Uuid.v4()
+      },
+      trackAnalytics: async request => {
+        console.log('HELLO WORLD ')
+        return true
       },
       batchSize: 20,
       batchInterval: 15000
