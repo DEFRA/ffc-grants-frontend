@@ -84,6 +84,7 @@ module.exports = [{
         // send score event to GA
         await gapiService.sendGAEvent(request, { name: 'score', params: { score_presented: msgData.desirability.overallRating.band } })
 
+        setYarValue(request, 'onScorePage', true)
         return h.view(viewTemplate, createModel({
           titleText: msgData.desirability.overallRating.band,
           scoreData: msgData,
