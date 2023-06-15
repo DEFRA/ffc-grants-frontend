@@ -15,7 +15,7 @@ const schema = Joi.object({
   cookiePassword: Joi.string().default('dummycookiepassworddummycookiepassword'),
   googleTagManagerKey: Joi.string().default('GTM-WJ5C78H'),
   googleTagManagerServerKey: Joi.string().default('G-1NQ7QYDS14'),
-  analyticsPropertyApi: Joi.string().default(process.env.ANALYTICS_PROPERTY_API),
+  analyticsPropertyApi: Joi.string().default('dummy'),
   analyticsTagKey: Joi.string().default('GT-MJPRKW7'),
   protectiveMonitoringUrl: Joi.string().allow(''),
   startPageUrl: Joi.string().default(`${urlPrefix}${startPageUrl}`),
