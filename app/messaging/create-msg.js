@@ -42,7 +42,6 @@ function getDesirabilityAnswers (request) {
       productivity: getDataFromYarValue(request,'productivity', 'multi-answer'),
       collaboration: getYarValue(request, 'collaboration'),
     }
-    // console.log('val: ', val);
     const result = desirabilityAnswersSchema.validate(val, {
       abortEarly: false
     })
