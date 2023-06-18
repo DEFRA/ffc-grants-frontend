@@ -50,8 +50,8 @@ function getDesirabilityAnswers (request) {
       throw new Error(`The scoring data is invalid. ${result.error.message}`)
     }
     return result.value
-  } catch (ex) {
-    console.log(ex, 'error')
+  } catch (err) {
+    console.log(err, '[ERROR]')
     return null
   }
 }
