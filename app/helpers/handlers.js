@@ -135,8 +135,6 @@ const showPostPage = (currentQuestion, request, h) => {
   const NOT_ELIGIBLE = { ...ineligibleContent, backLink: baseUrl }
   const payload = request.payload
 
-  setYarValue(request, 'onScorePage', false)
-
   let thisAnswer
   let dataObject
 
@@ -235,6 +233,7 @@ const processGA = async (question, request) => {
       await gapiService.sendGAEvent(request, question.ga)
     }
   }
+  setYarValue(request, 'onScorePage', false)
 
 }
 
