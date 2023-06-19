@@ -135,6 +135,7 @@ const showPostPage = (currentQuestion, request, h) => {
   const NOT_ELIGIBLE = { ...ineligibleContent, backLink: baseUrl }
   const payload = request.payload
 
+  setYarValue(request, 'onScorePage', false)
   let thisAnswer
   let dataObject
 
