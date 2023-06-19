@@ -234,8 +234,6 @@ const processGA = async (question, request) => {
       await gapiService.sendGAEvent(request, question.ga)
     }
   }
-  setYarValue(request, 'onScorePage', false)
-
 }
 
 module.exports = {
