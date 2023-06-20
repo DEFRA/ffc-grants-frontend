@@ -1,12 +1,19 @@
 {% if googleTagManagerKey %}
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id={{analyticsTagKey}}"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  var referrer = document.referrer;
-  var host = window.location.hostname;
-  function gtag(){dataLayer.push({...arguments, referrer, host});}
-  gtag('js', new Date());
-  gtag('config', '{{analyticsTagKey}}');
-</script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id={{analyticsTagKey}}"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    var referrer = document.referrer || 'direct';
+    var host = window.location.hostname;
+    var grantType = document.title.split("-")[1]
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+    gtag('config', '{{analyticsTagKey}}', {
+      referrer: referrer,
+      hostname: host,
+      grant_type: grantType
+    });
+  </script>
 {% endif %}
