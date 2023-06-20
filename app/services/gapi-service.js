@@ -35,7 +35,7 @@ const sendGAEvent = async (request, metrics) => {
     ...(isConfirmationEvent && { final_score: getYarValue(request, 'current-score'), user_type: getYarValue(request, 'applying'), confirmation_time: timeSinceStart }),
     ...(params?.score_presented && { score_presented: params.score_presented }),
     grant_type,
-    page_path
+    page_title: page_path
   }
   try {
     console.log('dmetrics:::::: ', dmetrics)
