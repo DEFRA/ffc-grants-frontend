@@ -165,7 +165,6 @@ module.exports = [
         setYarValue(request, 'mainsChange', null)
 
         setYarValue(request, 'onScorePage', false)
-
         return h.redirect(nextPath)
       }
     }
