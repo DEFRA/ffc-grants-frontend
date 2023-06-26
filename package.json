@@ -38,7 +38,7 @@
     "@hapi/wreck": "^18.0.0",
     "@hapi/yar": "^11.0.0",
     "applicationinsights": "^2.3.4",
-    "bcrypt": "^5.0.1",
+    "bcrypt": "^5.1.0",
     "dialog-polyfill": "^0.5.6",
     "dotenv": "^16.0.1",
     "ffc-messaging": "^2.6.5",
