@@ -1,6 +1,6 @@
 {
   "name": "ffc-grants-frontend",
-  "version": "3.11.9",
+  "version": "3.11.10",
   "description": "Frontend Grants microservice.",
   "main": "app/index.js",
   "scripts": {
@@ -45,7 +45,7 @@
     "ffc-protective-monitoring": "^1.0.3",
     "govuk-frontend": "^4.3.1",
     "joi": "^17.6.0",
-    "jsdom": "^21.1.1",
+    "jsdom": "^22.1.0",
     "nunjucks": "^3.2.4",
     "uuid": "^8.3.2"
   },
@@ -53,7 +53,8 @@
     "@azure/identity": {
       "jsonwebtoken": "9.0.0",
       "fast-xml-parser": ">=4.2.4"
-    }
+    },
+    "semver": "7.5.3"
   },
   "devDependencies": {
     "@hapi/catbox-memory": "^5.0.1",
