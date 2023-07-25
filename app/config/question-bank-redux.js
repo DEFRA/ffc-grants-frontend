@@ -1070,7 +1070,7 @@ const questionBank = {
         },
         {
           yarKey: 'numberEmployees',
-          type: 'number',
+          type: 'text',
           classes: 'govuk-input--width-4',
           label: {
             text: 'Number of employees',
