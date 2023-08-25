@@ -1,38 +1,61 @@
+const browserstack = require('browserstack-local')
 const { ReportAggregator, HtmlReporter } = require('@rpii/wdio-html-reporter')
 const log4js = require('@log4js-node/log4js-api')
+const cucumberJson = require('wdio-cucumberjs-json-reporter')
 const logger = log4js.getLogger('default')
-const envRoot = (process.env.TEST_ENVIRONMENT_ROOT_URL || 'http://host.docker.internal:3000')
+const _ = require('lodash')
+const timeStamp = new Date().toLocaleString()
+const envRoot = (process.env.TEST_ENVIRONMENT_ROOT_URL || 'http://host.docker.internal:3004')
 const chromeArgs = process.env.CHROME_ARGS ? process.env.CHROME_ARGS.split(' ') : []
 const maxInstances = process.env.MAX_INSTANCES ? Number(process.env.MAX_INSTANCES) : 5
+const user = process.env.BROWSERSTACK_USERNAME
+const key = process.env.BROWSERSTACK_ACCESS_KEY
+const parallel = process.env.BROWSERSTACK_PARALLEL_RUNS ? Number(process.env.BROWSERSTACK_PARALLEL_RUNS) : 1
+const automationEnabled = 'true'
 
 exports.config = {
-  hostname: 'selenium',
-  path: '/wd/hub',
+  hostname: 'hub-cloud.browserstack.com',
+  user,
+  key,
   specs: ['./features/**/*.feature'],
-  exclude: ['./scratch/**'],
+  parallel,
   maxInstances,
-  capabilities: [{
-    maxInstances,
-    acceptInsecureCerts: true,
-    browserName: 'chrome',
-    'goog:chromeOptions': {
-      args: chromeArgs
+  capabilities: [
+    {
+      'bstack:options': {
+        os: 'Windows',
+        'projectName': 'DEFRA/ffc-grants/slurry-web',
+        osVersion: '10',
+        browserVersion: '112.0',
+        browserName: 'Chrome',
+        'buildName': 'Chrome 112 compatibility - ' + timeStamp,
+        local: true,
+        networkLogs: true,
+        seleniumVersion: '3.14.0',
+        userName: user,
+        accessKey: key
+      },
+      // chrome
+      maxInstances,
+      acceptInsecureCerts: true,
+      'google:chromeOptions': {
+        args: chromeArgs
+      }
     }
-  }],
-  //
+  ],
   // ===================
   // Test Configurations
   // ===================
   // Define all options that are relevant for the WebdriverIO instance here
-  logLevel: 'warn',
+  logLevel: 'info',
   bail: 0,
-  baseUrl: envRoot + '/selenium:4444',
+  baseUrl: envRoot,
   waitforTimeout: 10000,
   connectionRetryTimeout: 90000,
-  connectionRetryCount: 3,
-  services: ['selenium-standalone'],
+  connectionRetryCount: 1,
+  services: ['browserstack'],
   framework: 'cucumber',
-  specFileRetries: 3,
+  specFileRetries: 0,
   specFileRetriesDelay: 30,
   reporters: ['spec',
     [HtmlReporter, {
@@ -45,7 +68,6 @@ exports.config = {
       LOG: logger
     }]
   ],
-
   // If you are using Cucumber you need to specify the location of your step definitions.
   cucumberOpts: {
     require: ['./steps/**/*.js'], // <string[]> (file/dir) require files before executing features
@@ -63,35 +85,48 @@ exports.config = {
     timeout: 60000, // <number> timeout for step definitions
     ignoreUndefinedDefinitions: false // <boolean> Enable this config to treat undefined definitions as warnings.
   },
-
-  // =====
+  // ====
   // Hooks
   // =====
   onPrepare: function (config, capabilities) {
-    console.log(`Running tests against: ${envRoot}\n`)
-
+    if (automationEnabled === 'false') {
+      console.log('Automation tests disable, exiting tests.')
+      process.exit(0)
+    }
     const reportAggregator = new ReportAggregator({
       outputDir: './html-reports/',
       filename: 'acceptance-test-suite-report.html',
       reportTitle: 'Acceptance Tests Report',
       browserName: capabilities.browserName
-      // to use the template override option, can point to your own file in the test project:
-      // templateFilename: path.resolve(__dirname, '../template/wdio-html-reporter-alt-template.hbs')
     })
     reportAggregator.clean()
-
     global.reportAggregator = reportAggregator
+    console.log('Connecting local')
+    return new Promise(function (resolve, reject) {
+      exports.bs_local = new browserstack.Local()
+      const bsLocalArgs = {
+        key,
+        verbose: 'true',
+        onlyAutomate: 'true'
+      }
+      exports.bs_local.start(bsLocalArgs, function (error) {
+        if (error) return reject(error)
+        console.log('Connected. Now testing...')
+        resolve()
+      })
+    })
   },
 
   onComplete: function (exitCode, config, capabilities, results) {
     (async () => {
       await global.reportAggregator.createReport()
     })()
+    exports.bs_local.stop()
+    console.log('Testing complete, binary closed')
   },
 
   beforeSession: function () {
     const chai = require('chai')
-
     global.expect = chai.expect
     global.assert = chai.assert
     global.should = chai.should()
@@ -101,15 +136,16 @@ exports.config = {
     if (result.passed) {
       return
     }
-
     const path = require('path')
     const moment = require('moment')
-
     const screenshotFileName = ctx.uri.split('.feature')[0].split('/').slice(-1)[0]
     const timestamp = moment().format('YYYYMMDD-HHmmss.SSS')
     const filepath = path.join('./html-reports/screenshots/', screenshotFileName + '-' + timestamp + '.png')
-
     browser.saveScreenshot(filepath)
     process.emit('test:screenshot', filepath)
+  },
+
+  beforeFeature: async function (uri, feature) {
+    await browser.maximizeWindow()
   }
 }
