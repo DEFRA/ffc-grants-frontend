@@ -45,6 +45,9 @@
     "webdriverio": "^7.30.2",
     "ws": "^7.2.0"
   },
+  "overrides": {
+    "semver": "7.5.3"
+  },
   "devDependencies": {
     "@babel/core": "^7.16.5",
     "@babel/plugin-proposal-export-default-from": "^7.16.7",
