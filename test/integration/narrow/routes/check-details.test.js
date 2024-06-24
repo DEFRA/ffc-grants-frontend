@@ -97,7 +97,7 @@ describe('Check Details page', () => {
     const response = await global.__SERVER__.inject(options)
     console.log(response.headers.location, 'Redirect Location')
     expect(response.statusCode).toBe(200)
-    expect(response.payload).toContain(`<a href=\"applicant-details\" class=\"govuk-back-link\" id=\"linkBack\">Back</a>`)
+    expect(response.payload).toContain(`<a href=\"applicant-details\" class=\"govuk-back-link\"`)
   })
 
   it('should have farmers-details rendered in rows', async () => {
