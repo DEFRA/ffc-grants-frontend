@@ -6,7 +6,7 @@ module.exports = {
   options: {
     handler: {
       directory: {
-        path: ['app/assets/dist', 'node_modules/govuk-frontend/govuk/assets']
+        path: ['app/assets/dist', 'node_modules/govuk-frontend/dist/govuk/assets']
       }
     },
     cache: {

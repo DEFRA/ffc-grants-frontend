@@ -1,8 +1,7 @@
-{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "dist/govuk/components/button/macro.njk" import govukButton %}
 
 {% macro crumbToken(crumb) %}
-  <input type="hidden" name="crumb" id="crumb"
-    value="{{ crumb }}"  autocomplete="off" />
+ <input type="hidden" name="crumb" id="crumb" value="{{ crumb }}" autocomplete="off"/>
 {% endmacro %}
 
 {% macro sideBar(heading, para, items, heading_tag="h3") %}

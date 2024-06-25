@@ -1,6 +1,7 @@
-$govuk-assets-path: "~govuk-frontend/govuk/assets/";
-@import "~govuk-frontend/govuk/all";
-@import "../../templates/components/timeout-warning/timeout-warning";
+$govuk-assets-path: "~govuk-frontend/dist/govuk/assets/";
+$govuk-font-family-tabular: "~govuk-frontend/dist/govuk/helpers/typography.scss";
+@import "node_modules/govuk-frontend/dist/govuk/all.scss";
+@import "../../templates/components/timeout-warning/timeout-warning.scss";
 .nojs-hidden {
   display: none;
 }

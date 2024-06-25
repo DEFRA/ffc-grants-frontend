@@ -1,6 +1,6 @@
-{% extends "govuk/template.njk" %}
-{% from "govuk/components/header/macro.njk" import govukHeader %}
-{% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
+{% extends "dist/govuk/template.njk" %}
+{% from "dist/govuk/components/header/macro.njk" import govukHeader %}
+{% from "dist/govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
 {% from "../../templates/components/timeout-warning/macro.njk" import govukTimeoutWarning %}
 
 {% set urlPrefix = "<%= htmlWebpackPlugin.options.metadata.urlPrefix %>" %}

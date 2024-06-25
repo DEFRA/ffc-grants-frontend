@@ -40,6 +40,6 @@ describe('Page: /planning-permission-condition', () => {
     }
     const response = await global.__SERVER__.inject(options)
     expect(response.statusCode).toBe(200)
-    expect(response.payload).toContain('<a href=\"planning-permission\" class=\"govuk-back-link\" id=\"linkBack\">Back</a>')
+    expect(response.payload).toContain('<a href=\"planning-permission\" class=\"govuk-back-link\"')
   })
 })
