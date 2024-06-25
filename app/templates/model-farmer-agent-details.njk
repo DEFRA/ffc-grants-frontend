@@ -1,11 +1,11 @@
 {% extends '.layout.njk' %}
 
 {% from "./components/macro.njk" import conditionalButtons %}
-{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
-{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
-{% from "govuk/components/input/macro.njk" import govukInput %}
-{% from "govuk/components/select/macro.njk" import govukSelect %}
-{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "dist/govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "dist/govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+{% from "dist/govuk/components/input/macro.njk" import govukInput %}
+{% from "dist/govuk/components/select/macro.njk" import govukSelect %}
+{% from "dist/govuk/components/radios/macro.njk" import govukRadios %}
 
 {% block pageTitle %}
   {% if errorList %}

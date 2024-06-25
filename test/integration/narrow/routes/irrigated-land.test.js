@@ -300,7 +300,7 @@ describe('Irrigated Land page', () => {
     }
 
     const postResponse = await global.__SERVER__.inject(postOptions)
-    expect(postResponse.payload).toContain('<input class="govuk-input" id="irrigatedLandCurrent" name="irrigatedLandCurrent" type="hidden" value="0">')
+    expect(postResponse.payload).toContain('class="govuk-input" id="irrigatedLandCurrent" name="irrigatedLandCurrent" type="hidden" value="0"')
   })
 
   it('should display the current irrigated land question if the user selected YES for currently irrigating', async () => {

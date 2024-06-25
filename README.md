@@ -7,190 +7,6 @@ Evaluation happen is two step:
 - Common eligibility questions - unable to answer these questions correctly will make application eligible.
 - Scoring questions - these are project spcefic questions which send to scoring service and return respose with score, which give possibility of application chances.
 
-## Prerequisites
-
-- Access to an instance of an
-[Azure Service Bus](https://docs.microsoft.com/en-us/azure/service-bus-messaging/)(ASB).
-- Docker
-- Docker Compose
-
-Optional:
-
-- Kubernetes
-- Helm
-
-### Azure Service Bus
-
-This service depends on a valid Azure Service Bus connection string for
-asynchronous communication.  The following environment variables need to be set
-in any non-production (`!config.isProd`) environment before the Docker
-container is started. When deployed into an appropriately configured AKS
-cluster (where [AAD Pod Identity](https://github.com/Azure/aad-pod-identity) is
-configured) the micro-service will use AAD Pod Identity through the manifests
-for
-[azure-identity](./helm/ffc-grants-claim-service/templates/azure-identity.yaml)
-and
-[azure-identity-binding](./helm/ffc-grants-claim-service/templates/azure-identity-binding.yaml).
-
-| Name                   | Description                                                                                |
-| ----                   | -----------                                                                                |
-| SERVICE_BUS_HOST       | Azure Service Bus hostname, e.g. `myservicebus.servicebus.windows.net`                     |
-| SERVICE_BUS_PASSWORD   | Azure Service Bus SAS policy key                                                           |
-| SERVICE_BUS_USER       | Azure Service Bus SAS policy name, e.g. `RootManageSharedAccessKey`                        |
-
-## Environment variables
-
-The following environment variables are required by the application container.
-Values for development are set in the Docker Compose configuration. Default
-values for production-like deployments are set in the Helm chart and may be
-overridden by build and release pipelines.
-
-| Name                           | Description                               | Required  | Default            | Valid                       | Notes                                                                             |
-| ----                           | -----------                               | :-------: | -------            | -----                       | -----                                                                             |
-| APPINSIGHTS_CLOUDROLE          | Role used for filtering metrics           | no        |                    |                             | Set to `ffc-grants-frontend` in docker compose files                               |
-| APPINSIGHTS_INSTRUMENTATIONKEY | Key for application insight               | no        |                    |                             | App insights only enabled if key is present. Note: Silently fails for invalid key |
-| CACHE_NAME                     | Cache name                                | no        | redisCache         |                             |                                                                                   |
-| COOKIE_PASSWORD                | Redis cookie password                     | yes       |                    |                             |                                                                                   |
-| NODE_ENV                       | Node environment                          | no        | development        | development,test,production |                                                                                   |
-| PORT                           | Port number                               | no        | 3000               |                             |                                                                                   |
-| REDIS_HOSTNAME                 | Redis host                                | no        | localhost          |                             |                                                                                   |
-| REDIS_PORT                     | Redis port                                | no        | 6379               |                             |                                                                                   |
-| SESSION_CACHE_TTL              | Redis session timeout                     | no        | 30                 |                             |                                                                                   |
-| REDIS_PASSWORD                 | Redis password                            | no        | password           |                            |                                                                                   |
-| REDIS_PARTITION                | Redis partion                             | no        | password           |                            |                                                                                   |
-| GOOGLE_TAG_MANAGER_KEY         | client side google tag key                | no        | GTM1234            |                             |                                                                                   |
-| GOOGLE_TAG_MANAGER_SERVER_KEY  | server side google analytic key           | no        | GA123456           |                             |                                                                                   |
-| PROTECTIVE_MONITORING_URL      | protective monitoring url                 | no        | url                |                             |                                                                                   |
-| START_PAGE_URL                 | start page url                            | no        | url                |                             |                                                                                   |
-| COOKIE_TTL_IN_MILLIS           | cookie timeout                            | no        | 31,536,000,000 (1 year) |                             |                                                                                   |
-| AUTH_USERNAME                  | auth username                             | no        | username           |                             |                                                                                   |
-| AUTH_PASSWORD_HASH             | auth password hash (bycrpt)               | no        | hash password      |                             |                                                                                   |
-| LOGIN_REQUIRED                 | is login required                         | no        | true/false         |                             |                                                                                   |
-| PROJECT_DETAILS_QUEUE_ADDRESS  | service queue address                     | no        |                    |                             |                                                                                   |
-| CONTACT_DETAILS_QUEUE_ADDRESS  | service queue address                     | no        |                    |                             |                                                                                   |
-| POLLING_INTERVAL               | polling interval to get score             | no        | 60                 |                             |                                                                                   |
-| POLLING_RETRIES                | polling retries                           | no        | 10                 |                             |                                                                                   |
-| BACKEND_POLLING_HOST           | polling host to retrieve score            | yes       | url                |                             |                                                                                   |
-
-Running the integration tests locally requires access to ASB, this can be
-achieved by setting the following environment variables:
-`SERVICE_BUS_HOST`, `SERVICE_BUS_USER`, `SERVICE_BUS_PASSWORD`.
-`PROJECT_DETAILS_QUEUE_ADDRESS`, `CONTACT_DETAILS_QUEUE_ADDRESS` must be set to a valid, developer specific queue that is
-available on ASB e.g. `ffc-grants-fronend-<initials>` where `<initials>` are the
-initials of the developer.
-
-## Test structure
-
-The tests have been structured into subfolders of ./test as per the
-[Microservice test approach and repository structure](https://eaflood.atlassian.net/wiki/spaces/FPS/pages/1845396477/Microservice+test+approach+and+repository+structure)
-
-## How to run tests
-
-A convenience script is provided to run automated tests in a containerised
-environment. This will rebuild images before running tests via docker-compose,
-using a combination of `docker-compose.yaml` and `docker-compose.test.yaml`.
-The command given to `docker-compose run` may be customised by passing
-arguments to the test script.
-
-Examples:
-
-```bash
-# Run all tests
-scripts/test
-
-# Run tests with file watch
-scripts/test -w
-```
-
-### Running ZAP scan
-
-A docker-compose exists for running a
-[ZAP Baseline Scan](https://www.zaproxy.org/docs/docker/baseline-scan/).
-Primarily this will be run during CI. It can also be run locally via the
-[zap](./scripts/zap) script.
-
-### Running accessibility tests
-
-A docker-compose exists for running an
-[AXE](https://www.npmjs.com/package/@axe-core/cli).
-Primarily this will be run during CI. It can also be run locally via the
-[AXE](./scripts/axe) script.
-
-### Running acceptance tests
-
-See [README](./test/acceptance/README.md).
-
-## Running the application
-
-The application is designed to run in containerised environments, using Docker
-Compose in development and Kubernetes in production.
-
-- A Helm chart is provided for production deployments to Kubernetes.
-
-### Build container image
-
-Container images are built using Docker Compose, with the same images used to
-run the service with either Docker Compose or Kubernetes.
-
-When using the Docker Compose files in development the local `app` folder will
-be mounted on top of the `app` folder within the Docker container, hiding the
-CSS files that were generated during the Docker build.  For the site to render
-correctly locally `npm run build` must be run on the host system.
-
-By default, the start script will build (or rebuild) images so there will
-rarely be a need to build images manually. However, this can be achieved
-through the Docker Compose
-[build](https://docs.docker.com/compose/reference/build/) command:
-
-```bash
-# Build container images
-docker-compose build
-```
-
-### Start and stop the service
-
-Use Docker Compose to run service locally.
-
-`docker-compose up`
-
-Additional Docker Compose files are provided for scenarios such as linking to
-other running services.
-
-Link to other services:
-
-```bash
-docker-compose -f docker-compose.yaml -f docker-compose.override.yaml -f docker-compose.link.yaml up
-```
-
-#### Accessing the pod
-
-The service is exposed via a Kubernetes ingress, which requires an ingress
-controller to be running on the cluster. For example, the NGINX Ingress
-Controller may be installed via Helm.  
-
-Alternatively, a local port may be forwarded to the pod:
-
-```bash
-# Forward local port to the Kubernetes deployment
-kubectl port-forward --namespace=ffc-grants deployment/ffc-grants-fronend 3000:3000
-```
-
-Once the port is forwarded or an ingress controller is installed, the service
-can be accessed and tested in the same way as described in the
-[Test the service](#test-the-service) section above.
-
-#### Probes
-
-The service has both an Http readiness probe and an Http liveness probe
-configured to receive at the below end points.
-
-Readiness: `/healthy`
-Liveness: `/healthz`
-
-## CI pipeline
-
-This service uses the [FFC CI pipeline](https://github.com/DEFRA/ffc-jenkins-pipeline-library)
-
 ## Licence
 
 THIS INFORMATION IS LICENSED UNDER THE CONDITIONS OF THE OPEN GOVERNMENT LICENCE found at:
@@ -206,3 +22,96 @@ The following attribution statement MUST be cited in your products and applicati
 The Open Government Licence (OGL) was developed by the Controller of Her Majesty's Stationery Office (HMSO) to enable information providers in the public sector to license the use and re-use of their information under a common open licence.
 
 It is designed to encourage use and re-use of information freely and flexibly, with only a few conditions.
+
+
+## Project Description
+
+This repository contains all the code for the Front end (water) grant frontend application, which provides a series of questions for a user to determine what they need from the grant application, if the grant is something they can apply for and how strong their application is. If the user finishes the application, it also submits their answers along with their contact details for review.
+
+The strength of the application is checked via a request sent to and received from the **ffc-grants-desirability-scoring** service using Azure Service Bus Session Queues, and the users' answers and details are submitted via a request sent to the **ffc-grants-desirability-notification** service using an Azure Service Bus Topic
+
+
+## Project Requirements
+
+This application requires the following to be run locally:
+
+- Node
+- Docker
+- Access to Azure, and the Azure SND environment
+- A running instance of **ffc-grants-desirability-scoring** (This is optional, and only needed if navigating to or past the _/score_ page)
+ - This also means you will need PostgreSQL, with the latest Front end (water) DB script containing the Front end (water)  Scoring algorithm
+ - This also means you will need A DEFRA VPN connection (AKA being connected to OpenVPN)
+- A running instance of **ffc-grants-desirability-notification** (This is optional, and only needed for sending/receiving the Email after the application is complete)
+
+### Environment Variables
+
+There are many required Environment Variables needed for this project, which would be saved in a .env file. The following is a list of all of these, with a brief description of what they are needed/used for:
+
+Environment Variable Name | Brief Description | Example (if needed)
+--- | --- | ---
+PORT | Used to Determine what Port the application should run on when running locally. Usually this is set to 3600 | 3600
+SERVICE_BUS_HOST | The Azure Host Address that contains the necessary Service Buses | N/A
+SERVICE_BUS_PASSWORD | The password in order to access the Azure Service Buses | N/A
+SERVICE_BUS_USER | The user in order to access the Azure Service Buses | N/A
+COOKIE_PASSWORD | The password needed for authorizing the cookies | N/A
+BACKEND_POLLING_HOST | The localhost address for Backend Polling (This should be the full localhost address and should ***not*** have the same port as specified in **PORT** ) | http://localhost:3021/
+NODE_ENV | The environemnt to be used locally (this is only needed for things like the cookie authentication etc) | dev
+SITE_URL | The url of the local application (This should have the same port number used in **PORT**) | localhost:3600
+APPINSIGHT_INSTRUMENTATION_KEY | The key needed to connect to App Insights | N/A
+REDIS_HOSTNAME | The hostname needed for connecting to Azure Redis | N/A
+REDIS_PORT | The port needed for connecting to Azure Redis | N/A
+REDIS_PASSWORD | The password needed for connecting to Azure Redis | N/A
+REDIS_PARTITION | The name of the application, needed for Azure Redis | ffc-grants-frontend
+SERVER_TIMEOUT | How long the server timeout should be when running loclaly | 5
+--- | ---  | ---
+SCORE_REQUEST_QUEUE_ADDRESS | The name of the Azure Service Bus Queue used for sending the score request (without the users initials) | ffc-grants-queue-req
+SCORE_RESPONSE_QUEUE_ADDRESS | The name of the Azure Service Bus Queue used for receiving the score data from the scoring service (without the users initials) | ffc-grants-queue-res
+MESSAGE_QUEUE_SUFFIX | The users initials, which would be used at the end of the scoring queues | -zd
+--- | --- | ---
+LOGIN_REQUIRED | A vaiable to determine whether the login screen should be active or not (Optional, app automatically sets to false if this is absent) | false
+AUTH_USERNAME | The username needed for the login screen (Optional, only needed if LOGIN_REQUIRED is true) | grants
+AUTH_PASSWORD_HASH | The password needed for the login screen (Optional, only needed if LOGIN_REQUIRED is true) | grants
+--- | --- | ---
+NOTIFY_EMAIL_TEMPLATE | The email template needed for the application | N/A
+NOTIFY_EMAIL_VERANDA_TEMPLATE | The email template needed if veranda journey is selected for the application | N/A
+WORKSHEET_HIDE_EMPTY_ROWS | A true/false value to determine if empty rows in the DORA excel sheet should be hidden (defaults to true) | true
+WORKSHEET_PROTECT_ENABLED | A true/false value to determine if the DORA excel sheet should be protected (defaults to false) | false
+SEND_EMAIL_TO_RPA |A true/false value to determine if the generated email should be sent to RPA (default to false) | false
+WORKSHEET_PROTECT_PASSWORD | The password to protect the DORA excel sheet | N/A
+EXCEL_UPLOAD_ENVIRONMENT | The environment to upload the DORA excel sheet to | DEV
+DESIRABILITY_SUBMITTED_TOPIC_ADDRESS | The name of the Azure Service Bus Topic used for sending the Email and DORA details | ffc-grants-topic
+--- | --- | ---
+GOOGLE_TAG_MANAGER_KEY | The key needed to connect to Google Tag Manager (Optional, only required if needing to send analytics to Google Analytics) | N/A
+GOOGLE_TAG_MANAGER_SERVER_KEY | The server key needed to connect to Google Tag Manager (Optional, only required if needing to send analytics to Google Analytics) | N/A
+ANALYTICS_PROPERTY_API | The API key needed for connecting to Google Analytics (Optional, only required if needing to send analytics to Google Analytics) | N/A
+ANALYTICS_TAG_KEY | The key needed to send analytics to Google Analytics (Optional, only required if needing to send analytics to Google Analytics) | N/A
+
+All of these values can be found in either the Azure App Configurations for the SND environment, or the Azure Service Bus for the SND environment.
+
+
+## Starting the application
+
+Before starting the application, make sure to run 'npm install' from the root of the application to install all of the necessary dependencies.
+
+### Running the application
+
+Once all the dependencies have been installed, start up Docker and then run the command 'docker-compose up --build'. This will build the application using the .env variables specified, and then will run and host the application on the localhost port specified in the .env file.
+
+Once the Docker application is running, the frontend application can be accessed by entering the localhost port in any web browser, followed by **/water/start**
+
+e.g localhost:3600/water/start
+
+In order to access the _/score_ page, the **ffc-grants-desirability-scoring** service must be running locally, and the DEFRA VPN connection must be active (this is required to send and receive requests via Azure Service Buses)
+
+Please note: There is a page guard in effect in this service which will stop a user from jumping to a url out of logic. If the user needs to access a specific page (such as _/score_), they would need to navigate through the grant as normal.
+
+### Stopping the application
+
+In order to stop the frontendapplication, press **CTRL + C** in the docker terminal, and enter **Y** if prompted. If other services are running (such as _ffc-grants-desirability-scoring_), this would need to be repeated in their respective docker terminals.
+
+### Running unit tests
+
+To run unit tests in this application, run 'npm run test' in the terminal from the root of the application.
+
+Please note: Some Mac users have not been able to run this in the terminal successfully. Instead, these users would run 'scripts/test', which also runs all of the unit tests. The only difference between using this command is that all of the tests are run via docker instead of node.
+

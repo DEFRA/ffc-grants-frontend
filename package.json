@@ -1,6 +1,6 @@
 {
   "name": "ffc-grants-frontend",
-  "version": "3.11.12",
+  "version": "3.13.0",
   "description": "Frontend Grants microservice.",
   "main": "app/index.js",
   "scripts": {
@@ -43,7 +43,7 @@
     "dotenv": "^16.0.1",
     "ffc-messaging": "^2.6.5",
     "ffc-protective-monitoring": "^1.0.3",
-    "govuk-frontend": "^4.3.1",
+    "govuk-frontend": "^5.4.0",
     "joi": "^17.6.0",
     "jsdom": "^22.1.0",
     "nunjucks": "^3.2.4",

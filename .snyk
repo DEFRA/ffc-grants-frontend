@@ -12,4 +12,9 @@ ignore:
         reason: None Given
         expires: 2023-07-21T08:40:36.737Z
         created: 2023-06-21T08:40:36.742Z
+  SNYK-JS-INFLIGHT-6095116:
+    - '*':
+        reason: None Given
+        expires: 2024-07-24T12:35:56.228Z
+        created: 2024-06-24T12:35:56.231Z
 patch: {}
